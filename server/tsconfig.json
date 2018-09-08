@@ -6,6 +6,7 @@
         "rootDir": "./src",
         "outDir": "./dist",
         "sourceMap": false,
+        "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "noUnusedLocals": true,
         "noImplicitThis": true,
