@@ -4,10 +4,40 @@
   "description": "PolyPaint's server",
   "main": "index.js",
   "scripts": {
+    "start": "concurrently --kill-others \"tsc -w\" \"nodemon dist/index.js\"",
     "test": "test"
   },
-  "author": "",
-  "license": "ISC",
+  "contributors": [
+    {
+      "name": "Sébastien Chagnon",
+      "email": "chagnon.s21@gmail.com"
+    },
+    {
+      "name": "Eric Sida Li",
+      "email": "eric.sida.li@gmail.com"
+    },
+    {
+      "name": "Audrey Labrie",
+      "email": "au.labrie@gmail.com"
+    },
+    {
+      "name": "Pascal Lacasse",
+      "email": "pascal.lacasse@hotmail.fr"
+    },
+    {
+      "name": "Jean-Paul Cech",
+      "email": "jeanpaulcech@yahoo.ca"
+    },
+    {
+      "name": "Ayman Amous",
+      "email": "aymenamous@gmail.com"
+    },
+    {
+      "name": "Mohamed Laziz Taouali",
+      "email": "aziztaouali@gmail.com"
+    }
+  ],
+  "license": "GPL-3.0",
   "dependencies": {
     "@types/cors": "^2.8.4",
     "@types/express": "^4.16.0",
