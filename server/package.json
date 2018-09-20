@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently --kill-others \"tsc -w\" \"nodemon dist/www.js\"",
     "production": "tsc; node dist/www.js",
-    "test": "test"
+    "test": "mocha -r ts-node/register 'src/**/*.spec.ts'"
   },
   "contributors": [
     {
@@ -50,5 +50,12 @@
     "nodemon": "^1.18.4",
     "rxjs": "^6.3.2",
     "typescript": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.5",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.1"
   }
 }
