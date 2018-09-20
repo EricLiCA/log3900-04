@@ -64,4 +64,4 @@ The `hotfix branches` branch off `master`, and are for fixing critical bugs foun
 
 ### Merging
 
-We use GitHub's pull request system to merge a branch.
+Only use GitHub's pull request system to merge a branch, and each pull request must be reviewed by another team member.
