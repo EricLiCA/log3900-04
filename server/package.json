@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently --kill-others \"tsc -w\" \"nodemon dist/www.js\"",
+    "production": "tsc; node dist/www.js",
     "test": "test"
   },
   "contributors": [
