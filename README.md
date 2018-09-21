@@ -1,6 +1,6 @@
 # PolyPaint
 
-[![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04.svg?style=svg)](https://circleci.com/gh/EricLiCA/log3900-04)
+[![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04)
 
 PolyPaint is the third year Bachelor's of Engineering (Software Engineering) project at Polytechnique Montréal done during the Fall semester of 2018. The goal of the project is to build a multi-platform application that enables users to collaboratively create, edit, and save images via a desktop client for Windows 10, an iPad application, and a website.
 
