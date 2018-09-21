@@ -14,10 +14,10 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/server
+    working_directory: ~/project
 
     steps:
       - checkout
       - run: ls -la
       - run: cd server; yarn install
-      - run: yarn test
+      - run: cd server; yarn test
