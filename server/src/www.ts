@@ -1,5 +1,7 @@
 import { Application } from './app';
 import { SERVER_PORT } from './configs/http';
+import { SocketServer } from './socket-server';
+
 import * as http from 'http';
 
 const application: Application = Application.bootstrap();
@@ -17,6 +19,8 @@ const server = http.createServer(application.app);
 server.listen(appPort);
 server.on('error', onError);
 server.on('listening', onListening);
+
+SocketServer.setServer(server);
 
 /**
  * Normalize the port number from string to number
