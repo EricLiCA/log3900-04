@@ -8,7 +8,7 @@ describe('ChatService', () => {
     let socket: SocketIOClient.Socket;
 
     before(() => {
-        server.listen(3002, () => {
+        server.listen(TEST_PORT, () => {
             console.log(`Testing on port ${TEST_PORT}`);
         });
     });
@@ -21,10 +21,13 @@ describe('ChatService', () => {
     });
 
     after(() => {
+        server.close();
+    });
+    
+    afterEach(() => {
         if (socket.connected) {
             socket.disconnect();
         }
-        server.close();
     });
 
     describe('getInstance()', () => {
