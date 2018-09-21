@@ -1,6 +1,7 @@
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as express from "express";
+import * as httpLogger from "morgan";
 import * as path from "path";
 
 import { HelloWorld } from "./routes/hello-world";
@@ -94,6 +95,7 @@ export class Application {
      */
     private config() {
         // Middlewares configuration
+        this.app.use(httpLogger("dev"));
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(express.static(path.join(__dirname, "../static")));
