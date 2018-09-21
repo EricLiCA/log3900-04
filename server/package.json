@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently --kill-others \"tsc -w\" \"nodemon dist/www.js\"",
     "production": "tsc; node dist/www.js",
-    "test": "mocha -r ts-node/register 'src/**/*.spec.ts'"
+    "test": "mocha -r ts-node/register src/**/*.spec.ts src/*.spec.ts"
   },
   "contributors": [
     {
