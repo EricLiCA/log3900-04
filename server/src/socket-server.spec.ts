@@ -8,7 +8,7 @@ const TEST_PORT = 3001;
 let app: express.Application;
 let server: http.Server;
 
-describe('#SocketServer', () => {
+describe('SocketServer', () => {
     before(() => {
         app = express();
         server = http.createServer(app);
