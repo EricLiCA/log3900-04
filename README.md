@@ -1,5 +1,7 @@
 # PolyPaint
 
+Master build status: [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04)
+
 PolyPaint is the third year Bachelor's of Engineering (Software Engineering) project at Polytechnique Montréal done during the Fall semester of 2018. The goal of the project is to build a multi-platform application that enables users to collaboratively create, edit, and save images via a desktop client for Windows 10, an iPad application, and a website.
 
 # Getting Started
@@ -64,4 +66,22 @@ The `hotfix branches` branch off `master`, and are for fixing critical bugs foun
 
 ### Merging
 
-Only use GitHub's pull request system to merge a branch, and each pull request must be reviewed by another team member.
+We use GitHub's pull request system to merge a branch.
+
+# Deployment
+
+## Server
+
+To deploy on AWS, make sure the awscli is configured, then run the following commands:
+
+```
+cd server
+$(aws ecr get-login --no-include-email --region us-east-1)
+docker build -t log3900-server .
+docker tag log3900-server:latest 042607413139.dkr.ecr.us-east-1.amazonaws.com/log3900-server:latest
+docker push 042607413139.dkr.ecr.us-east-1.amazonaws.com/log3900-server:latest
+```
+
+Then navigate to AWS ECS -> Clusters -> <cluster-to-deploy-on> -> Tasks and stop the previous task, and start a new one with the latest image
+
+![aws-ecs-tasks](docs/images/aws-ecs-tasks.png)
