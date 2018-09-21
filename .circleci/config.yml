@@ -19,5 +19,5 @@ jobs:
     steps:
       - checkout
       - run: ls -la
-      - run: yarn install
+      - run: cd server; yarn install
       - run: yarn test
