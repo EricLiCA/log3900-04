@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46EE21569CFB0056135A /* AppDelegate.swift */; };
-		A77C46F121569CFB0056135A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F021569CFB0056135A /* ViewController.swift */; };
+		A77C46F121569CFB0056135A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F021569CFB0056135A /* LoginViewController.swift */; };
 		A77C46F421569CFB0056135A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A77C46F221569CFB0056135A /* Main.storyboard */; };
 		A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */; };
 		A77C46F921569CFB0056135A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A77C46F821569CFB0056135A /* Assets.xcassets */; };
@@ -37,7 +37,7 @@
 /* Begin PBXFileReference section */
 		A77C46EB21569CFB0056135A /* poly-paint-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "poly-paint-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77C46EE21569CFB0056135A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A77C46F021569CFB0056135A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A77C46F021569CFB0056135A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A77C46F321569CFB0056135A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A77C46F621569CFB0056135A /* poly_paint_ios.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = poly_paint_ios.xcdatamodel; sourceTree = "<group>"; };
 		A77C46F821569CFB0056135A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
-				A77C46F021569CFB0056135A /* ViewController.swift */,
+				A77C46F021569CFB0056135A /* LoginViewController.swift */,
 				A77C46F221569CFB0056135A /* Main.storyboard */,
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
@@ -260,7 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
-				A77C46F121569CFB0056135A /* ViewController.swift in Sources */,
+				A77C46F121569CFB0056135A /* LoginViewController.swift in Sources */,
 				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
