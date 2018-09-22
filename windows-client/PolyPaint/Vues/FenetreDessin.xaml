@@ -14,7 +14,7 @@
         <convertisseurs:ConvertisseurModeEdition x:Key="convertisseurModeEdition" />
     </Window.Resources>
     <DockPanel>        
-        <Border DockPanel.Dock="Right" BorderThickness="0.5,0,0,0" BorderBrush="#77000000" MaxWidth="300" MinWidth="200" Background="AliceBlue">
+        <Border DockPanel.Dock="Right" BorderThickness="0.5,0,0,0" BorderBrush="#77000000" Width="250" Background="AliceBlue">
             <Frame x:Name="ChatFrame" VerticalContentAlignment="Stretch" Source="Chat.xaml"></Frame>
         </Border>
         

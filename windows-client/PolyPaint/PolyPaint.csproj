@@ -81,6 +81,7 @@
     </ApplicationDefinition>
     <Compile Include="Convertisseurs\Convertisseurs.cs" />
     <Compile Include="Modeles\Editeur.cs" />
+    <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Utilitaires\RelayCommand.cs" />
     <Compile Include="VueModeles\VueModele.cs" />
     <Page Include="Vues\Chat.xaml">
