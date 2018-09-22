@@ -1,0 +1,606 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46EE21569CFB0056135A /* AppDelegate.swift */; };
+		A77C46F121569CFB0056135A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F021569CFB0056135A /* ViewController.swift */; };
+		A77C46F421569CFB0056135A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A77C46F221569CFB0056135A /* Main.storyboard */; };
+		A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */; };
+		A77C46F921569CFB0056135A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A77C46F821569CFB0056135A /* Assets.xcassets */; };
+		A77C46FC21569CFB0056135A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */; };
+		A77C470721569CFB0056135A /* poly_paint_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C470621569CFB0056135A /* poly_paint_iosTests.swift */; };
+		A77C471221569CFC0056135A /* poly_paint_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C471121569CFC0056135A /* poly_paint_iosUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A77C470321569CFB0056135A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A77C46E321569CFB0056135A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A77C46EA21569CFB0056135A;
+			remoteInfo = "poly-paint-ios";
+		};
+		A77C470E21569CFC0056135A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A77C46E321569CFB0056135A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A77C46EA21569CFB0056135A;
+			remoteInfo = "poly-paint-ios";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A77C46EB21569CFB0056135A /* poly-paint-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "poly-paint-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A77C46EE21569CFB0056135A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A77C46F021569CFB0056135A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A77C46F321569CFB0056135A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A77C46F621569CFB0056135A /* poly_paint_ios.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = poly_paint_ios.xcdatamodel; sourceTree = "<group>"; };
+		A77C46F821569CFB0056135A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A77C46FB21569CFB0056135A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A77C46FD21569CFB0056135A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A77C470221569CFB0056135A /* poly-paint-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "poly-paint-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A77C470621569CFB0056135A /* poly_paint_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = poly_paint_iosTests.swift; sourceTree = "<group>"; };
+		A77C470821569CFB0056135A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A77C470D21569CFC0056135A /* poly-paint-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "poly-paint-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A77C471121569CFC0056135A /* poly_paint_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = poly_paint_iosUITests.swift; sourceTree = "<group>"; };
+		A77C471321569CFC0056135A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A77C46E821569CFB0056135A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A77C46FF21569CFB0056135A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A77C470A21569CFC0056135A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A77C46E221569CFB0056135A = {
+			isa = PBXGroup;
+			children = (
+				A77C46ED21569CFB0056135A /* poly-paint-ios */,
+				A77C470521569CFB0056135A /* poly-paint-iosTests */,
+				A77C471021569CFC0056135A /* poly-paint-iosUITests */,
+				A77C46EC21569CFB0056135A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A77C46EC21569CFB0056135A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A77C46EB21569CFB0056135A /* poly-paint-ios.app */,
+				A77C470221569CFB0056135A /* poly-paint-iosTests.xctest */,
+				A77C470D21569CFC0056135A /* poly-paint-iosUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A77C46ED21569CFB0056135A /* poly-paint-ios */ = {
+			isa = PBXGroup;
+			children = (
+				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
+				A77C46F021569CFB0056135A /* ViewController.swift */,
+				A77C46F221569CFB0056135A /* Main.storyboard */,
+				A77C46F821569CFB0056135A /* Assets.xcassets */,
+				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
+				A77C46FD21569CFB0056135A /* Info.plist */,
+				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
+			);
+			path = "poly-paint-ios";
+			sourceTree = "<group>";
+		};
+		A77C470521569CFB0056135A /* poly-paint-iosTests */ = {
+			isa = PBXGroup;
+			children = (
+				A77C470621569CFB0056135A /* poly_paint_iosTests.swift */,
+				A77C470821569CFB0056135A /* Info.plist */,
+			);
+			path = "poly-paint-iosTests";
+			sourceTree = "<group>";
+		};
+		A77C471021569CFC0056135A /* poly-paint-iosUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A77C471121569CFC0056135A /* poly_paint_iosUITests.swift */,
+				A77C471321569CFC0056135A /* Info.plist */,
+			);
+			path = "poly-paint-iosUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A77C46EA21569CFB0056135A /* poly-paint-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A77C471621569CFC0056135A /* Build configuration list for PBXNativeTarget "poly-paint-ios" */;
+			buildPhases = (
+				A77C46E721569CFB0056135A /* Sources */,
+				A77C46E821569CFB0056135A /* Frameworks */,
+				A77C46E921569CFB0056135A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "poly-paint-ios";
+			productName = "poly-paint-ios";
+			productReference = A77C46EB21569CFB0056135A /* poly-paint-ios.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A77C470121569CFB0056135A /* poly-paint-iosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A77C471921569CFC0056135A /* Build configuration list for PBXNativeTarget "poly-paint-iosTests" */;
+			buildPhases = (
+				A77C46FE21569CFB0056135A /* Sources */,
+				A77C46FF21569CFB0056135A /* Frameworks */,
+				A77C470021569CFB0056135A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A77C470421569CFB0056135A /* PBXTargetDependency */,
+			);
+			name = "poly-paint-iosTests";
+			productName = "poly-paint-iosTests";
+			productReference = A77C470221569CFB0056135A /* poly-paint-iosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A77C470C21569CFC0056135A /* poly-paint-iosUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A77C471C21569CFC0056135A /* Build configuration list for PBXNativeTarget "poly-paint-iosUITests" */;
+			buildPhases = (
+				A77C470921569CFC0056135A /* Sources */,
+				A77C470A21569CFC0056135A /* Frameworks */,
+				A77C470B21569CFC0056135A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A77C470F21569CFC0056135A /* PBXTargetDependency */,
+			);
+			name = "poly-paint-iosUITests";
+			productName = "poly-paint-iosUITests";
+			productReference = A77C470D21569CFC0056135A /* poly-paint-iosUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A77C46E321569CFB0056135A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0940;
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = PolyAcme;
+				TargetAttributes = {
+					A77C46EA21569CFB0056135A = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
+					A77C470121569CFB0056135A = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = A77C46EA21569CFB0056135A;
+					};
+					A77C470C21569CFC0056135A = {
+						CreatedOnToolsVersion = 9.4.1;
+						TestTargetID = A77C46EA21569CFB0056135A;
+					};
+				};
+			};
+			buildConfigurationList = A77C46E621569CFB0056135A /* Build configuration list for PBXProject "poly-paint-ios" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A77C46E221569CFB0056135A;
+			productRefGroup = A77C46EC21569CFB0056135A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A77C46EA21569CFB0056135A /* poly-paint-ios */,
+				A77C470121569CFB0056135A /* poly-paint-iosTests */,
+				A77C470C21569CFC0056135A /* poly-paint-iosUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A77C46E921569CFB0056135A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A77C46FC21569CFB0056135A /* LaunchScreen.storyboard in Resources */,
+				A77C46F921569CFB0056135A /* Assets.xcassets in Resources */,
+				A77C46F421569CFB0056135A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A77C470021569CFB0056135A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A77C470B21569CFC0056135A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A77C46E721569CFB0056135A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
+				A77C46F121569CFB0056135A /* ViewController.swift in Sources */,
+				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A77C46FE21569CFB0056135A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A77C470721569CFB0056135A /* poly_paint_iosTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A77C470921569CFC0056135A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A77C471221569CFC0056135A /* poly_paint_iosUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A77C470421569CFB0056135A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A77C46EA21569CFB0056135A /* poly-paint-ios */;
+			targetProxy = A77C470321569CFB0056135A /* PBXContainerItemProxy */;
+		};
+		A77C470F21569CFC0056135A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A77C46EA21569CFB0056135A /* poly-paint-ios */;
+			targetProxy = A77C470E21569CFC0056135A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A77C46F221569CFB0056135A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A77C46F321569CFB0056135A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A77C46FB21569CFB0056135A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A77C471421569CFC0056135A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A77C471521569CFC0056135A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A77C471721569CFC0056135A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BD9BVH6D7D;
+				INFOPLIST_FILE = "poly-paint-ios/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "polymtl.polyacme.poly-paint-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A77C471821569CFC0056135A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BD9BVH6D7D;
+				INFOPLIST_FILE = "poly-paint-ios/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "polymtl.polyacme.poly-paint-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A77C471A21569CFC0056135A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BD9BVH6D7D;
+				INFOPLIST_FILE = "poly-paint-iosTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "polymtl.polyacme.poly-paint-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/poly-paint-ios.app/poly-paint-ios";
+			};
+			name = Debug;
+		};
+		A77C471B21569CFC0056135A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BD9BVH6D7D;
+				INFOPLIST_FILE = "poly-paint-iosTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "polymtl.polyacme.poly-paint-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/poly-paint-ios.app/poly-paint-ios";
+			};
+			name = Release;
+		};
+		A77C471D21569CFC0056135A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BD9BVH6D7D;
+				INFOPLIST_FILE = "poly-paint-iosUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "polymtl.polyacme.poly-paint-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "poly-paint-ios";
+			};
+			name = Debug;
+		};
+		A77C471E21569CFC0056135A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BD9BVH6D7D;
+				INFOPLIST_FILE = "poly-paint-iosUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "polymtl.polyacme.poly-paint-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "poly-paint-ios";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A77C46E621569CFB0056135A /* Build configuration list for PBXProject "poly-paint-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A77C471421569CFC0056135A /* Debug */,
+				A77C471521569CFC0056135A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A77C471621569CFC0056135A /* Build configuration list for PBXNativeTarget "poly-paint-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A77C471721569CFC0056135A /* Debug */,
+				A77C471821569CFC0056135A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A77C471921569CFC0056135A /* Build configuration list for PBXNativeTarget "poly-paint-iosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A77C471A21569CFC0056135A /* Debug */,
+				A77C471B21569CFC0056135A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A77C471C21569CFC0056135A /* Build configuration list for PBXNativeTarget "poly-paint-iosUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A77C471D21569CFC0056135A /* Debug */,
+				A77C471E21569CFC0056135A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A77C46F621569CFB0056135A /* poly_paint_ios.xcdatamodel */,
+			);
+			currentVersion = A77C46F621569CFB0056135A /* poly_paint_ios.xcdatamodel */;
+			path = poly_paint_ios.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = A77C46E321569CFB0056135A /* Project object */;
+}
