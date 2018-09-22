@@ -110,6 +110,38 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="t3r-oI-YhT">
                                         <rect key="frame" x="8" y="8" width="707" height="835"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="80" id="0K5-k6-bI7">
+                                                <rect key="frame" x="0.0" y="28" width="707" height="80"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0K5-k6-bI7" id="tzG-Ml-hFT">
+                                                    <rect key="frame" x="0.0" y="0.0" width="707" height="79.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="DateTime" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dgt-5m-NwB">
+                                                            <rect key="frame" x="15" y="11" width="200" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PfP-jo-cao">
+                                                            <rect key="frame" x="15" y="36" width="677" height="34"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="PfP-jo-cao" firstAttribute="leading" secondItem="tzG-Ml-hFT" secondAttribute="leading" constant="15" id="W4A-Dc-diq"/>
+                                                        <constraint firstAttribute="trailing" secondItem="PfP-jo-cao" secondAttribute="trailing" constant="15" id="WW2-M6-ToY"/>
+                                                        <constraint firstItem="PfP-jo-cao" firstAttribute="firstBaseline" secondItem="Dgt-5m-NwB" secondAttribute="baseline" constant="24" symbolType="layoutAnchor" id="XLj-LS-hBP"/>
+                                                        <constraint firstItem="Dgt-5m-NwB" firstAttribute="top" secondItem="tzG-Ml-hFT" secondAttribute="top" constant="11" id="Ya3-j6-hSy"/>
+                                                        <constraint firstAttribute="bottom" secondItem="PfP-jo-cao" secondAttribute="bottom" constant="23" id="cop-q2-hsP"/>
+                                                        <constraint firstItem="Dgt-5m-NwB" firstAttribute="leading" secondItem="tzG-Ml-hFT" secondAttribute="leading" constant="15" id="eKt-Wt-OnV"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                        </prototypes>
                                     </tableView>
                                 </subviews>
                                 <constraints>
