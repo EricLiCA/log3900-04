@@ -1,4 +1,4 @@
-using PolyPaint.Modeles;
+﻿using PolyPaint.Modeles;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,6 +40,17 @@ namespace PolyPaint.Vues
             });
 
             ChatWindow.ItemsSource = Messages;
+        }
+
+        private void New_Message(object sender, RoutedEventArgs e)
+        {
+            Random r = new Random();
+            Messages.Add(new ChatMessage()
+            {
+                Sender = "Bot #" + r.Next(),
+                Timestamp = DateTime.Now,
+                Message = "EXTERMINATE!"
+            });
         }
     }
 }
