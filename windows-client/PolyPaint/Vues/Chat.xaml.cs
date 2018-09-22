@@ -51,6 +51,8 @@ namespace PolyPaint.Vues
                 Timestamp = DateTime.Now,
                 Message = "EXTERMINATE!"
             });
+
+            ScrollWindow.ScrollToBottom();
         }
     }
 }
