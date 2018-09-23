@@ -2,7 +2,6 @@ import { SocketServer } from '../socket-server';
 import { ChatRoom } from './chat-room';
 import { Connection } from './connection';
 import { AuthenticationService } from '../user-service/authentication-service';
-import { rejects } from 'assert';
 
 export class ChatService {
     private static chatService: ChatService;
