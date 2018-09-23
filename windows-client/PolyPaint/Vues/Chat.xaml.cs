@@ -1,4 +1,4 @@
-﻿using PolyPaint.Modeles;
+using PolyPaint.Modeles;
 using Quobject.SocketIoClientDotNet.Client;
 using System;
 using System.Collections.ObjectModel;
@@ -68,6 +68,38 @@ namespace PolyPaint.Vues
             {
                 Console.WriteLine(dlg.Email + " " + dlg.Password);
             };
+        }
+    }
+
+    public class CustomListener : IListener
+    {
+        private static int id_counter = 0;
+        private int Id;
+        private readonly Action<object[]> fn;
+
+        public CustomListener(Action<object[]> fn)
+        {
+
+            this.fn = fn;
+            this.Id = id_counter++;
+        }
+
+
+
+        public void Call(params object[] args)
+        {
+            fn(args);
+        }
+
+
+        public int CompareTo(IListener other)
+        {
+            return this.GetId().CompareTo(other.GetId());
+        }
+
+        public int GetId()
+        {
+            return Id;
         }
     }
 }
