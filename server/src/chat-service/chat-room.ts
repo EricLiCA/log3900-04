@@ -24,8 +24,7 @@ export class ChatRoom {
         connection.socket.to(this.id).emit('message', `${connection.user.name} has joined the chat room`)
         connection.socket.emit('message', 'You have joined the Chat Room!');
 
-        connection.socket.on('chat', (...args: any[]) => {connection.socket.to(this.id).emit('chat', connection.user.name, args[0]);
-        console.log('chat', connection.user.name, args[0]);});
+        connection.socket.on('chat', (...args: any[]) => SocketServer.instance.to(this.id).emit('chat', connection.user.name, args[0]));
         connection.socket.on('disconnect', () => {
             delete this.participants.splice(this.participants.indexOf(connection), 1)[0];
             SocketServer.instance.to(this.id).emit('message', `${connection.user.name} has left the chat room`);

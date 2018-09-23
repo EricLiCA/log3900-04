@@ -41,14 +41,16 @@ export class ChatService {
 
         AuthenticationService.instance.validateCredentials(args[0], args[1]).then(valid => {
             if (!valid) {
-                throw new Error('User or Password is not valid');
+                connection.socket.emit('err', 'User or Password is not valid');
+                return;
             }
 
             connection.connect(args[0]);
+            connection.socket.emit('logged-in', AuthenticationService.instance.generateJsonwebtoken(args[0]));
         }, rejectReason => {
             throw new Error(rejectReason);
         }).catch((error: Error) => {
-            connection.socket.emit('error', error.message);
+            connection.socket.emit('err', error.message);
         })
     }
 
