@@ -3,6 +3,7 @@ import { SERVER_PORT } from './configs/http';
 import { SocketServer } from './socket-server';
 
 import * as http from 'http';
+import { ChatService } from './chat-service/chat-service';
 
 const application: Application = Application.bootstrap();
 
@@ -21,6 +22,7 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 SocketServer.setServer(server);
+ChatService.getInstance().startChatService();
 
 /**
  * Normalize the port number from string to number
