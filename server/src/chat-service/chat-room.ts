@@ -1,21 +1,25 @@
 export class ChatRoom {
     
-    private participants: SocketIO.Socket[];
+    private _participants: SocketIO.Socket[];
 
     constructor(private _id: String) {
-        this.participants = [];
+        this._participants = [];
     }
 
     public get id(): String {
         return this._id;
     };
 
+    public get participants(): SocketIO.Socket[] {
+        return this._participants;
+    };
+
     public add(socket: SocketIO.Socket): void {
-        this.participants.forEach((participant: SocketIO.Socket) => {
+        this._participants.forEach((participant: SocketIO.Socket) => {
             participant.emit('message', `${socket.handshake.address} has joined the chat room`);
         });
 
-        this.participants.push(socket);
+        this._participants.push(socket);
         socket.emit('message', 'You have joined the Chat Room!');
 
         socket.on('chat', (args: any[]) => this.onChat(socket, String(args[0])));
@@ -23,7 +27,7 @@ export class ChatRoom {
     }
 
     private onChat(socket: SocketIO.Socket, message: String) {
-        this.participants.forEach((participant: SocketIO.Socket) => {
+        this._participants.forEach((participant: SocketIO.Socket) => {
             if (participant !== socket) {
                 participant.emit('chat', message);
             }
