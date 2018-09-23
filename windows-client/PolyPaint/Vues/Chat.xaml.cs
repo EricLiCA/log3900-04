@@ -1,19 +1,9 @@
 ﻿using PolyPaint.Modeles;
+using Quobject.SocketIoClientDotNet.Client;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PolyPaint.Vues
 {
@@ -40,6 +30,22 @@ namespace PolyPaint.Vues
             });
 
             ChatWindow.ItemsSource = Messages;
+
+            Console.WriteLine("Before");
+            var socket = IO.Socket("http://localhost:3000");
+            socket.On(Socket.EVENT_CONNECT, (IListener) =>
+            {
+                socket.Emit("joinRoom", "1", "edit");
+            });
+            socket.On("message", (IListener) =>
+            {
+                Console.WriteLine(IListener);
+                socket.Emit("chat", "Hello!");
+            });
+            socket.On("chat", (IListener) =>
+            {
+                Console.WriteLine("chat: " + IListener);
+            });
         }
 
         private void New_Message(object sender, RoutedEventArgs e)
