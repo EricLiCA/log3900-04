@@ -9,4 +9,4 @@ export let TEST_PORT: number = 3002;
 const app = express();
 export const server = http.createServer(app);
 SocketServer.setServer(server);
-export const socketServer = SocketServer.getInstance();
+export const socketServer = SocketServer.instance;

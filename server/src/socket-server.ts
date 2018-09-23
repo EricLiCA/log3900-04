@@ -7,7 +7,7 @@ export class SocketServer {
         this.httpServer = server;
     }
 
-    public static getInstance(): SocketIO.Server {
+    public static get instance(): SocketIO.Server {
         if (this.httpServer === undefined) {
             console.error("No http server provided!");
             return undefined;

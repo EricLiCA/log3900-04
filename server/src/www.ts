@@ -22,7 +22,7 @@ server.on("error", onError);
 server.on("listening", onListening);
 
 SocketServer.setServer(server);
-ChatService.getInstance().startChatService();
+ChatService.instance.startChatService();
 
 /**
  * Normalize the port number from string to number

@@ -3,16 +3,14 @@ import { ChatRoom } from './chat-room';
 
 export class ChatService {
     private static chatService: ChatService;
-    private io: SocketIO.Server;
 
     private rooms: Map<String, ChatRoom>
 
     private constructor() {
-        this.io = SocketServer.getInstance();
         this.rooms = new Map();
     }
 
-    public static getInstance(): ChatService {
+    public static get instance(): ChatService {
         if (this.chatService === undefined) {
             this.chatService = new ChatService();
         }
@@ -24,7 +22,7 @@ export class ChatService {
     }
 
     private listenForConnections(): void {
-        this.io.on('connection', (socket: SocketIO.Socket) => {
+        SocketServer.instance.on('connection', (socket: SocketIO.Socket) => {
             socket.on('joinRoom', args => this.joinRoom(socket, args));
             console.log(`New socket connection from ${socket.handshake.address}`);
         });

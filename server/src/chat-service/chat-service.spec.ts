@@ -32,8 +32,8 @@ describe("ChatService", () => {
 
     describe("getInstance()", () => {
         it("should return a singleton", () => {
-            expect(ChatService.getInstance())
-                .to.equal(ChatService.getInstance());
+            expect(ChatService.instance)
+                .to.equal(ChatService.instance);
         });
     });
 
