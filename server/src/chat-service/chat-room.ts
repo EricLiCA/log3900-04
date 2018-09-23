@@ -25,12 +25,10 @@ export class ChatRoom {
         socket.to(this.id).emit('message', `${connection.user.name} has joined the chat room`)
         socket.emit('message', 'You have joined the Chat Room!');
 
-        socket.on('chat', (args: any[]) => socket.to(this.id).emit('chat', args[0]));
-        socket.on('disconnect', () => this.onDisconnect(socket));
-    }
-
-    private onDisconnect(socket: SocketIO.Socket) {
-        delete this.participants.splice(this.participants.findIndex(participant => participant.socket === socket), 1)[0];
-        SocketServer.instance.to(this.id).emit('message', `${socket.handshake.address} has left the chat room`)
+        socket.on('chat', (args: any[]) => socket.to(this.id).emit('chat', args));
+        socket.on('disconnect', () => {
+            delete this.participants.splice(this.participants.indexOf(connection), 1)[0];
+            SocketServer.instance.to(this.id).emit('message', `${connection.user.name} has left the chat room`);
+        });
     }
 }
