@@ -35,21 +35,17 @@ export class ChatService {
     }
 
     private login(connection: Connection, args: any[]): void {
-        console.log(args);
         if (args.length < 2) {
             connection.socket.emit('error', 'Your request must contain the email and the password');
             return;
         }
 
-        let email = args[0];
-        let password = args[1];
-
-        AuthenticationService.instance.validateCredentials(email, password).then(valid => {
+        AuthenticationService.instance.validateCredentials(args[0], args[1]).then(valid => {
             if (!valid) {
                 throw new Error('User or Password is not valid');
             }
 
-            connection.connect(email);
+            connection.connect(args[0]);
         }, rejectReason => {
             throw new Error(rejectReason);
         }).catch((error: Error) => {
