@@ -13,7 +13,13 @@
         <Border BorderBrush="SlateGray" BorderThickness="0,0,0,1" DockPanel.Dock="Top">
             <TextBlock TextWrapping="Wrap" Margin="0,10,0,10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15">Chat</TextBlock>
         </Border>
-        <Button DockPanel.Dock="Bottom" BorderBrush="SlateGray" BorderThickness="0,1,0,0" Background="FloralWhite" Click="New_Message" Padding="10" Content="New Message"/>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Background="WhiteSmoke">
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Background="WhiteSmoke">
+                <Button Name="ConnectButton" BorderBrush="SlateGray" BorderThickness="0.5" Background="FloralWhite" Click="Connect_Button" Padding="10" Margin="8,0" Content="Authenticate"/>
+                <Button Name="SendButton" BorderBrush="SlateGray" BorderThickness="0.5" Background="FloralWhite" Click="New_Message" Padding="10" Margin="8,0" Content="New Message"/>
+            </StackPanel>
+        </StackPanel>
+        <TextBox DockPanel.Dock="Bottom" TextWrapping="WrapWithOverflow" BorderBrush="SlateGray" BorderThickness="0,1,0,0" Background="White" Padding="10"/>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Name="ScrollWindow">
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Vertical">
                 <ItemsControl Name="ChatWindow" VerticalAlignment="Stretch" BorderThickness="0">

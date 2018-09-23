@@ -60,5 +60,14 @@ namespace PolyPaint.Vues
 
             ScrollWindow.ScrollToBottom();
         }
+
+        private void Connect_Button(object sender, RoutedEventArgs e)
+        {
+            LoginDialogBox dlg = new LoginDialogBox();
+            if (dlg.ShowDialog() == true)
+            {
+                Console.WriteLine(dlg.Email + " " + dlg.Password);
+            };
+        }
     }
 }
