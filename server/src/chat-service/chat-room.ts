@@ -1,14 +1,15 @@
 import { Connection } from "./connection";
+import { SocketServer } from "../socket-server";
 
 export class ChatRoom {
     
     private _participants: Connection[];
 
-    constructor(private _id: String) {
+    constructor(private _id: string) {
         this._participants = [];
     }
 
-    public get id(): String {
+    public get id(): string {
         return this._id;
     };
 
@@ -17,30 +18,19 @@ export class ChatRoom {
     };
 
     public add(socket: SocketIO.Socket): void {
-        this._participants.forEach((participant: Connection) => {
-            participant.socket.emit('message', `${socket.handshake.address} has joined the chat room`);
-        });
+        let connection = new Connection(socket);
+        this._participants.push(connection);
+        socket.join(this.id);
 
-        this._participants.push(new Connection(socket));
+        socket.to(this.id).emit('message', `${connection.user.name} has joined the chat room`)
         socket.emit('message', 'You have joined the Chat Room!');
 
-        socket.on('chat', (args: any[]) => this.onChat(socket, String(args[0])));
+        socket.on('chat', (args: any[]) => socket.to(this.id).emit('chat', args[0]));
         socket.on('disconnect', () => this.onDisconnect(socket));
-    }
-
-    private onChat(socket: SocketIO.Socket, message: String) {
-        this._participants.forEach((participant: Connection) => {
-            if (participant.socket !== socket) {
-                participant.socket.emit('chat', message);
-            }
-        });
     }
 
     private onDisconnect(socket: SocketIO.Socket) {
         delete this.participants.splice(this.participants.findIndex(participant => participant.socket === socket), 1)[0];
-        
-        this.participants.forEach((participant: Connection) => {
-            participant.socket.emit('message', `${socket.handshake.address} has left the chat room`)
-        });
+        SocketServer.instance.to(this.id).emit('message', `${socket.handshake.address} has left the chat room`)
     }
 }
