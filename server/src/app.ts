@@ -1,14 +1,12 @@
-import * as express from 'express';
-import * as path from 'path';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
+import * as bodyParser from "body-parser";
+import * as cors from "cors";
+import * as express from "express";
+import * as httpLogger from "morgan";
+import * as path from "path";
 
-import * as helloWorldRoute from './routes/hello-world';
+import { HelloWorld } from "./routes/hello-world";
 
 export class Application {
-
-    public app: express.Application;
-
     /**
      * Bootstrap the application.
      *
@@ -20,6 +18,8 @@ export class Application {
     public static bootstrap(): Application {
         return new Application();
     }
+
+    public app: express.Application;
 
     /**
      * Constructor.
@@ -40,20 +40,6 @@ export class Application {
     }
 
     /**
-     * The config function.
-     *
-     * @class Server
-     * @method config
-     */
-    private config() {
-        // Middlewares configuration
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: true }));
-        this.app.use(express.static(path.join(__dirname, '../static')));
-        this.app.use(cors());
-    }
-
-    /**
      * The routes function.
      *
      * @class Server
@@ -64,28 +50,28 @@ export class Application {
         router = express.Router();
 
         // create routes
-        const helloWorld: helloWorldRoute.HelloWorld = new helloWorldRoute.HelloWorld();
+        const helloWorld: HelloWorld = new HelloWorld();
 
         // hello world path
-        router.get('/hello/', helloWorld.hello.bind(helloWorld.hello));
+        router.get("/hello/", helloWorld.hello.bind(helloWorld.hello));
 
         // use router middleware
-        this.app.use('/api', router);
+        this.app.use("/api", router);
 
         // error management
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-            const err = new Error('Not Found');
+            const err = new Error("Not Found");
             next(err);
         });
 
         // development error handler
         // will print stacktrace
-        if (this.app.get('env') === 'development') {
+        if (this.app.get("env") === "development") {
             this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
                 res.status(err.status || 500);
                 res.send({
+                    error: err,
                     message: err.message,
-                    error: err
                 });
             });
         }
@@ -95,9 +81,24 @@ export class Application {
         this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
             res.status(err.status || 500);
             res.send({
+                error: {},
                 message: err.message,
-                error: {}
             });
         });
+    }
+
+    /**
+     * The config function.
+     *
+     * @class Server
+     * @method config
+     */
+    private config() {
+        // Middlewares configuration
+        this.app.use(httpLogger("dev"));
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({ extended: true }));
+        this.app.use(express.static(path.join(__dirname, "../static")));
+        this.app.use(cors());
     }
 }
