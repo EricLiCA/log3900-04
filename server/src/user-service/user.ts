@@ -22,9 +22,9 @@ export class User {
                 throw new Error('Missing email adress for an authenticated account');
             }
 
-            this._email = email;
-            this._name = /* FETCH FROM DATABASE */ email; 
             this._id = /* FETCH FROM DATABASE */ Math.ceil(Math.random() * 10000); 
+            this._email = email;
+            this._name = /* FETCH FROM DATABASE */ `Anonymous #${this._id}`; 
 
         } else {
             this._name = `Anonymous #${Math.ceil(Math.random() * 10000)}`;

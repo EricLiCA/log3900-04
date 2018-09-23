@@ -34,7 +34,7 @@ export class AuthenticationService {
                     return;
                 }
 
-                hash(password, salt, (err: Error, hash: string) => {
+                hash(password, salt, null, (err: Error, hash: string) => {
                     if (err) {
                         reject(err);
                         return;
@@ -47,7 +47,7 @@ export class AuthenticationService {
     }
 
     public validateCredentials(email: string, password: string) : Promise<boolean> {
-        const hash = /* MUST FETCH FROM THE DATABASE */ "";
+        const hash = /* MUST FETCH FROM THE DATABASE */ '$2a$10$Pveiz7gSBa0HrTdkRRWcw.AuLy7985VIF2Lgmo1TjFes7lZt2TT1W';
         
         return new Promise<boolean> ((resolve, reject) => {
             compare(password, hash, (error: Error, result: boolean) => {
