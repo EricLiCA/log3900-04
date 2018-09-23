@@ -16,13 +16,13 @@ describe("User", () => {
 
     describe("if the user is authenticated", () => {
         
-        it("should not instanciate if email is not specified", () => {
+        it("should not instantiate if email is not specified", () => {
             expect( () => {
                 new User(true);
             }).to.throw( Error );
         });
         
-        it("should instanciate correctly if email is not specified", () => {
+        it("should instantiate correctly", () => {
             
             let user = new User(true, 'email@email.com');
             expect(user.email).to.equal('email@email.com');
@@ -33,7 +33,7 @@ describe("User", () => {
     
     describe("if the user is not authenticated", () => {
 
-        it("should instanciate correctly", () => {
+        it("should instantiate correctly", () => {
             let user = new User(false);
             let randomNumber = randomStub.firstCall.returnValue;
             expect(user.name).to.equal(`Anonymous #${Math.ceil(randomNumber * 10000)}`);

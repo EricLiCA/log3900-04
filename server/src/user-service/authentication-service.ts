@@ -1,13 +1,16 @@
 import { compare, hash, genSalt } from 'bcrypt-nodejs';
 import { sign, verify, JsonWebTokenError, NotBeforeError, TokenExpiredError } from 'jsonwebtoken';
+import { Utils } from '../utils/Utils';
+
+export const secretLength = 32;
 
 export class AuthenticationService {
 
     private static _instance: AuthenticationService;
     private secret: string;
 
-    constructor() {
-        this.secret = this.generateRandomSecret(32);
+    private constructor() {
+        this.secret = Utils.generateRandomSecret(secretLength);
     }
 
     public static get instance(): AuthenticationService {
@@ -16,14 +19,6 @@ export class AuthenticationService {
         }
 
         return AuthenticationService._instance;
-    }
-
-    private generateRandomSecret(length: number): string {
-        let secret = '';
-        for (let i = 0; i < length; i++) {
-            secret += String.fromCharCode(48 + Math.floor(Math.random() * 77));
-        }
-        return secret;
     }
 
     public hashPassword(password: string) : Promise<string> {
@@ -61,19 +56,28 @@ export class AuthenticationService {
         });
     }
 
-    public generateJsonwebtoken(email: string): string {
-        return sign( { email }, this.secret, { expiresIn: '6h' } );
+    public generateJsonwebtoken(email: string): Promise<string> {
+        return new Promise<string> ((resolve, reject) => {
+            sign( { email }, this.secret, { expiresIn: '6h' }, (error: Error, encoded: string) => {
+                if (error) {
+                    reject(error.message);
+                    return;
+                }
+
+                resolve(encoded);
+            });
+        });
     }
 
     public validateJsonwebtoken(token: string) : Promise<string> {
         return new Promise<string> ((resolve, reject) => {
             verify(token, this.secret, (error: JsonWebTokenError | NotBeforeError | TokenExpiredError, decoded: object | string) => {
                 if (error) {
-                    reject(error);
+                    reject(error.message);
                     return;
                 }
 
-                resolve(decoded['user']);
+                resolve(decoded['email']);
             });
         });
     }
