@@ -17,16 +17,15 @@ export class ChatRoom {
         return this._participants;
     };
 
-    public add(socket: SocketIO.Socket): void {
-        let connection = new Connection(socket);
+    public add(connection: Connection): void {
         this._participants.push(connection);
-        socket.join(this.id);
+        connection.socket.join(this.id);
 
-        socket.to(this.id).emit('message', `${connection.user.name} has joined the chat room`)
-        socket.emit('message', 'You have joined the Chat Room!');
+        connection.socket.to(this.id).emit('message', `${connection.user.name} has joined the chat room`)
+        connection.socket.emit('message', 'You have joined the Chat Room!');
 
-        socket.on('chat', (args: any[]) => socket.to(this.id).emit('chat', args));
-        socket.on('disconnect', () => {
+        connection.socket.on('chat', (args: any[]) => connection.socket.to(this.id).emit('chat', args));
+        connection.socket.on('disconnect', () => {
             delete this.participants.splice(this.participants.indexOf(connection), 1)[0];
             SocketServer.instance.to(this.id).emit('message', `${connection.user.name} has left the chat room`);
         });

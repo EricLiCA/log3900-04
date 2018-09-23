@@ -1,5 +1,6 @@
 import { SocketServer } from '../socket-server';
 import { ChatRoom } from './chat-room';
+import { Connection } from './connection';
 
 export class ChatService {
     private static chatService: ChatService;
@@ -23,15 +24,16 @@ export class ChatService {
 
     private listenForConnections(): void {
         SocketServer.instance.on('connection', (socket: SocketIO.Socket) => {
-            socket.on('joinRoom', args => this.joinRoom(socket, args));
+            let connection = new Connection(socket);
+            socket.on('joinRoom', args => this.joinRoom(connection, args));
             console.log(`New socket connection from ${socket.handshake.address}`);
         });
         
     }
 
-    private joinRoom(socket: SocketIO.Socket, args: any[]): void {
+    private joinRoom(connection: Connection, args: any[]): void {
         if (args.length === 0) {
-            socket.emit('error', 'Your request must contain at least two parameters to connect to a room');
+            connection.socket.emit('error', 'Your request must contain at least two parameters to connect to a room');
             return;
         }
 
@@ -41,7 +43,7 @@ export class ChatService {
             this.rooms.set(args[0], room);
         }
         
-        socket.removeAllListeners('joinRoom');
-        room.add(socket);
+        connection.socket.removeAllListeners('joinRoom');
+        room.add(connection);
     }
 }
