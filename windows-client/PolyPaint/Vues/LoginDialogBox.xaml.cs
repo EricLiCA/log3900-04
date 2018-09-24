@@ -38,5 +38,23 @@ namespace PolyPaint.Vues
         {
             get { return password.Password; }
         }
+
+        private void anonymous_Click(object sender, RoutedEventArgs e)
+        {
+            if (anonymous.IsChecked == true)
+            {
+                email.Visibility = Visibility.Collapsed;
+                password.Visibility = Visibility.Collapsed;
+                emailLabel.Visibility = Visibility.Collapsed;
+                passwordLabel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                email.Visibility = Visibility.Visible;
+                password.Visibility = Visibility.Visible;
+                emailLabel.Visibility = Visibility.Visible;
+                passwordLabel.Visibility = Visibility.Visible;
+            }
+        }
     }
 }
