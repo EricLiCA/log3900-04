@@ -2,8 +2,8 @@ import { Application } from "./app";
 import { SERVER_PORT } from "./configs/http";
 import { SocketServer } from "./socket-server";
 
-import * as http from 'http';
-import { ChatService } from './chat-service/chat-service';
+import * as http from "http";
+import { ChatService } from "./chat-service/chat-service";
 
 const application: Application = Application.bootstrap();
 

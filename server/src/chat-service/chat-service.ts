@@ -1,12 +1,12 @@
-import { SocketServer } from '../socket-server';
-import { ChatRoom } from './chat-room';
-import { Connection } from './connection';
-import { AuthenticationService } from '../user-service/authentication-service';
+import { SocketServer } from "../socket-server";
+import { AuthenticationService } from "../user-service/authentication-service";
+import { ChatRoom } from "./chat-room";
+import { Connection } from "./connection";
 
 export class ChatService {
     private static chatService: ChatService;
 
-    private rooms: Map<String, ChatRoom>
+    private rooms: Map<string, ChatRoom>;
 
     private constructor() {
         this.rooms = new Map();
@@ -24,39 +24,39 @@ export class ChatService {
     }
 
     private listenForConnections(): void {
-        SocketServer.instance.on('connection', (socket: SocketIO.Socket) => {
-            let connection = new Connection(socket);
-            socket.on('login', (...args: any[]) => this.login(connection, args));
-            socket.on('joinRoom', (...args: any[]) => this.joinRoom(connection, args));
+        SocketServer.instance.on("connection", (socket: SocketIO.Socket) => {
+            const connection = new Connection(socket);
+            socket.on("login", (...args: any[]) => this.login(connection, args));
+            socket.on("joinRoom", (...args: any[]) => this.joinRoom(connection, args));
             console.log(`New socket connection from ${socket.handshake.address}`);
         });
-        
+
     }
 
     private login(connection: Connection, args: any[]): void {
         if (args.length < 2) {
-            connection.socket.emit('error', 'Your request must contain the email and the password');
+            connection.socket.emit("error", "Your request must contain the email and the password");
             return;
         }
 
-        AuthenticationService.instance.validateCredentials(args[0], args[1]).then(valid => {
+        AuthenticationService.instance.validateCredentials(args[0], args[1]).then((valid) => {
             if (!valid) {
-                connection.socket.emit('err', 'User or Password is not valid');
+                connection.socket.emit("err", "User or Password is not valid");
                 return;
             }
 
             connection.connect(args[0]);
-            connection.socket.emit('logged-in', AuthenticationService.instance.generateJsonwebtoken(args[0]));
-        }, rejectReason => {
+            connection.socket.emit("logged-in", AuthenticationService.instance.generateJsonwebtoken(args[0]));
+        }, (rejectReason) => {
             throw new Error(rejectReason);
         }).catch((error: Error) => {
-            connection.socket.emit('err', error.message);
-        })
+            connection.socket.emit("err", error.message);
+        });
     }
 
     private joinRoom(connection: Connection, args: any[]): void {
         if (args.length === 0) {
-            connection.socket.emit('error', 'Your request must contain at least two parameters to connect to a room');
+            connection.socket.emit("error", "Your request must contain at least two parameters to connect to a room");
             return;
         }
 
@@ -65,8 +65,8 @@ export class ChatService {
             room = new ChatRoom(args[0]);
             this.rooms.set(args[0], room);
         }
-        
-        connection.socket.removeAllListeners('joinRoom');
+
+        connection.socket.removeAllListeners("joinRoom");
         room.add(connection);
     }
 }
