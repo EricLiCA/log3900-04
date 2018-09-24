@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A0815B34FF7B9EEEA4C20F2 /* Pods_poly_paint_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */; };
 		A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46EE21569CFB0056135A /* AppDelegate.swift */; };
 		A77C46F121569CFB0056135A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F021569CFB0056135A /* LoginViewController.swift */; };
 		A77C46F421569CFB0056135A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A77C46F221569CFB0056135A /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		142B8D5CF9AB57002345952A /* Pods-poly-paint-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.release.xcconfig"; sourceTree = "<group>"; };
 		A77C46EB21569CFB0056135A /* poly-paint-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "poly-paint-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77C46EE21569CFB0056135A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A77C46F021569CFB0056135A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -49,6 +51,8 @@
 		A77C470D21569CFC0056135A /* poly-paint-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "poly-paint-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77C471121569CFC0056135A /* poly_paint_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = poly_paint_iosUITests.swift; sourceTree = "<group>"; };
 		A77C471321569CFC0056135A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_poly_paint_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C83DCF8B210537D23F9A45E1 /* Pods-poly-paint-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A0815B34FF7B9EEEA4C20F2 /* Pods_poly_paint_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +81,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A3E758073883F6A8C3A7375 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A77C46E221569CFB0056135A = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +96,8 @@
 				A77C470521569CFB0056135A /* poly-paint-iosTests */,
 				A77C471021569CFC0056135A /* poly-paint-iosUITests */,
 				A77C46EC21569CFB0056135A /* Products */,
+				C5A1E53E2867D25EE2393BFD /* Pods */,
+				9A3E758073883F6A8C3A7375 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +143,15 @@
 			path = "poly-paint-iosUITests";
 			sourceTree = "<group>";
 		};
+		C5A1E53E2867D25EE2393BFD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C83DCF8B210537D23F9A45E1 /* Pods-poly-paint-ios.debug.xcconfig */,
+				142B8D5CF9AB57002345952A /* Pods-poly-paint-ios.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +159,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A77C471621569CFC0056135A /* Build configuration list for PBXNativeTarget "poly-paint-ios" */;
 			buildPhases = (
+				3E7ACB7DAB42F36C3A4643DC /* [CP] Check Pods Manifest.lock */,
 				A77C46E721569CFB0056135A /* Sources */,
 				A77C46E821569CFB0056135A /* Frameworks */,
 				A77C46E921569CFB0056135A /* Resources */,
+				B5BFAFC999471639AE0597B7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -253,6 +279,55 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3E7ACB7DAB42F36C3A4643DC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-poly-paint-ios-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5BFAFC999471639AE0597B7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A77C46E721569CFB0056135A /* Sources */ = {
@@ -432,6 +507,7 @@
 		};
 		A77C471721569CFC0056135A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C83DCF8B210537D23F9A45E1 /* Pods-poly-paint-ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -450,6 +526,7 @@
 		};
 		A77C471821569CFC0056135A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 142B8D5CF9AB57002345952A /* Pods-poly-paint-ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

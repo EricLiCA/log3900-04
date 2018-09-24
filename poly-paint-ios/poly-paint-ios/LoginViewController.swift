@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SocketIO
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var messageTableView: UITableView!
@@ -28,6 +29,25 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         messagesArray.append("Test 1")
         messagesArray.append("Test 2")
         messagesArray.append("Test 3")
+        
+        let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
+        let socket = manager.defaultSocket
+        
+        socket.on(clientEvent: .connect) {data, ack in
+            print("socket connected")
+        }
+        
+        socket.on("currentAmount") {data, ack in
+            guard let cur = data[0] as? Double else { return }
+            
+            socket.emitWithAck("canUpdate", cur).timingOut(after: 0) {data in
+                socket.emit("update", ["amount": cur + 2.50])
+            }
+            
+            ack.with("Got your currentAmount", "dude")
+        }
+        
+        socket.connect()
     }
 
     override func didReceiveMemoryWarning() {
