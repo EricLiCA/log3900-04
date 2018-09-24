@@ -19,25 +19,25 @@ export class User {
     constructor(authenticated: boolean, email?: string) {
         if (authenticated) {
             if (!email) {
-                throw new Error('Missing email adress for an authenticated account');
+                throw new Error("Missing email adress for an authenticated account");
             }
 
-            this._id = /* FETCH FROM DATABASE */ Math.ceil(Math.random() * 10000); 
+            this._id = /* FETCH FROM DATABASE */ Math.ceil(Math.random() * 10000);
             this._email = email;
-            this._name = /* FETCH FROM DATABASE */ email; 
+            this._name = /* FETCH FROM DATABASE */ email;
 
         } else {
             this._name = `Anonymous #${Math.ceil(Math.random() * 10000)}`;
         }
     }
-    
+
     public connect(email: string): void {
         if (!email) {
-            throw new Error('Missing email adress for an authenticated account');
+            throw new Error("Missing email adress for an authenticated account");
         }
 
-        this._id = /* FETCH FROM DATABASE */ Math.ceil(Math.random() * 10000); 
+        this._id = /* FETCH FROM DATABASE */ Math.ceil(Math.random() * 10000);
         this._email = email;
-        this._name = /* FETCH FROM DATABASE */ email; 
+        this._name = /* FETCH FROM DATABASE */ email;
     }
 }
