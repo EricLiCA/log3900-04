@@ -21,6 +21,6 @@ describe("SocketServer", () => {
     });
 
     it("should return an instance of SocketServer", () => {
-        expect(SocketServer.getInstance()).to.equal(SocketServer.getInstance());
+        expect(SocketServer.instance).to.equal(SocketServer.instance);
     });
 });
