@@ -39,11 +39,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         socketIOClient.on("message") { (data: [Any], ack) in
-            print("received message")
             let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
-            self.messagesArray.append(data[1] as! String)
+            guard let username = data[0] as? String else { return }
+            guard let message = data[1] as? String else { return }
+            let formattedMessage = "[\(self.currentTime())] \(username): \(message)"
+            self.messagesArray.append(formattedMessage)
             self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
-            print(data)
         }
         
         socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, ack) in
@@ -52,6 +53,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         socketIOClient.connect()
+    }
+    
+    func currentTime() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = String(format: "%02d", calendar.component(.hour, from: date))
+        let minutes = String(format: "%02d", calendar.component(.minute, from: date))
+        let seconds = String(format: "%02d", calendar.component(.second, from: date))
+        return "\(hour):\(minutes):\(seconds)"
     }
     
     override func viewDidLoad() {

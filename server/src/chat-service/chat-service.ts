@@ -65,9 +65,8 @@ export class ChatService {
             socket.on("message", (message: string) => {
                 console.log(`Received: ${message}`);
                 socket.emit("message", "You", message);
-                if (this.usernames.has(socket.id)) {
-                    socket.broadcast.emit("message", this.usernames.get(socket.id), message);
-                }
+                let username = this.usernames.has(socket.id) ? this.usernames.get(socket.id) : socket.id;
+                socket.broadcast.emit("message", username, message);
             });
         });
 
