@@ -16,6 +16,38 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var dockViewHeightConstraint: NSLayoutConstraint!
     
+    var manager:SocketManager!
+    
+    var socketIOClient: SocketIOClient!
+    
+    func ConnectToSocket() {
+        
+        manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
+        socketIOClient = manager.defaultSocket
+        
+        socketIOClient.on(clientEvent: .connect) {data, ack in
+            print(data)
+            print("socket connected")
+        }
+        
+        socketIOClient.on(clientEvent: .error) { (data, eck) in
+            print(data)
+            print("socket error")
+        }
+        
+        socketIOClient.on(clientEvent: .disconnect) { (data, eck) in
+            print(data)
+            print("socket disconnect")
+        }
+        
+        socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, eck) in
+            print(data)
+            print("socket reconnect")
+        }
+        
+        socketIOClient.connect()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -29,25 +61,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         messagesArray.append("Test 1")
         messagesArray.append("Test 2")
         messagesArray.append("Test 3")
-        
-        let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
-        let socket = manager.defaultSocket
-        
-        socket.on(clientEvent: .connect) {data, ack in
-            print("socket connected")
-        }
-        
-        socket.on("currentAmount") {data, ack in
-            guard let cur = data[0] as? Double else { return }
-            
-            socket.emitWithAck("canUpdate", cur).timingOut(after: 0) {data in
-                socket.emit("update", ["amount": cur + 2.50])
-            }
-            
-            ack.with("Got your currentAmount", "dude")
-        }
-        
-        socket.connect()
+        ConnectToSocket()
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,6 +83,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     @IBAction func sendButtonTap(_ sender: UIButton) {
+        socketIOClient.emit("message", messageTextField.text!)
         hideKeyboard()
     }
     

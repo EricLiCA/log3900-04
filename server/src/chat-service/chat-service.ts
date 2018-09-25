@@ -26,6 +26,7 @@ export class ChatService {
     private listenForConnections(): void {
         SocketServer.instance.on("connection", (socket: SocketIO.Socket) => {
             const connection = new Connection(socket);
+            socket.on("message", (message: string) => console.log(message));
             socket.on("login", (...args: any[]) => this.login(connection, args));
             socket.on("joinRoom", (...args: any[]) => this.joinRoom(connection, args));
             console.log(`New socket connection from ${socket.handshake.address}`);
