@@ -13,7 +13,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var messageTableView: UITableView!
     var messagesArray = [String]()
     @IBOutlet weak var messageTextField: UITextField!
-    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var dockViewHeightConstraint: NSLayoutConstraint!
     
     var manager:SocketManager!
@@ -30,22 +29,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             print("socket connected")
         }
         
-        socketIOClient.on(clientEvent: .error) { (data, eck) in
+        socketIOClient.on(clientEvent: .error) { (data, ack) in
             print(data)
             print("socket error")
         }
         
-        socketIOClient.on(clientEvent: .disconnect) { (data, eck) in
+        socketIOClient.on(clientEvent: .disconnect) { (data, ack) in
             print(data)
             print("socket disconnect")
         }
         
-        socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, eck) in
+        socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, ack) in
             print(data)
             print("socket reconnect")
         }
         
         socketIOClient.connect()
+        
     }
     
     override func viewDidLoad() {
@@ -56,12 +56,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // Set as delegate for the textfield
         self.messageTextField.delegate = self
+        self.messageTextField.clearsOnBeginEditing = true
         
         // Add some sample data so that we can see something
         messagesArray.append("Test 1")
         messagesArray.append("Test 2")
         messagesArray.append("Test 3")
         ConnectToSocket()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            moveTextDock(to: keyboardHeight)
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            moveTextDock(to: keyboardHeight)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,40 +88,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Dispose of any resources that can be recreated.
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        hideKeyboard()
-    }
-    
-    func hideKeyboard() {
-        self.view.endEditing(true)
+    func moveTextDock(to keyboardHeight: CGFloat) {
+        let textBoxHeight: CGFloat = 46.0
         view.layoutIfNeeded()
-        UIView.animate(withDuration: 0.1, animations: {
-            self.dockViewHeightConstraint.constant = 60
+        UIView.animate(withDuration: 0.15, animations: {
+            self.dockViewHeightConstraint.constant = keyboardHeight + textBoxHeight
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
-
-    @IBAction func sendButtonTap(_ sender: UIButton) {
+    
+    func sendMessage() {
         socketIOClient.emit("message", messageTextField.text!)
-        hideKeyboard()
+        messageTextField.text = ""
     }
     
     // MARK: TextField Delegate Methods
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        hideKeyboard()
+        sendMessage()
         return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        view.layoutIfNeeded()
-        UIView.animate(withDuration: 0.1, animations: {
-            self.dockViewHeightConstraint.constant = 400
-            self.view.layoutIfNeeded()
-        }, completion: nil)
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        hideKeyboard()
+        
     }
     
     // MARK: TableView Delegate Methods
