@@ -14,6 +14,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var messagesArray = [String]()
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var dockViewHeightConstraint: NSLayoutConstraint!
+    var serverAddress: String = "http://localhost:3000"
+    var username: String = ""
     
     var manager:SocketManager!
     
@@ -21,11 +23,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func ConnectToSocket() {
         
-        manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
+        manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(true), .compress])
         socketIOClient = manager.defaultSocket
         
         socketIOClient.on(clientEvent: .connect) {data, ack in
-            print("socket connected")
+            self.socketIOClient.emit("setUsername", self.username)
         }
         
         socketIOClient.on(clientEvent: .error) { (data, ack) in
