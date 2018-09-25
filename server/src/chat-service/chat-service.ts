@@ -1,15 +1,24 @@
 import { SocketServer } from "../socket-server";
-import { AuthenticationService } from "../user-service/authentication-service";
-import { ChatRoom } from "./chat-room";
-import { Connection } from "./connection";
+// import { AuthenticationService } from "../user-service/authentication-service";
+// import { ChatRoom } from "./chat-room";
+// import { Connection } from "./connection";
 
 export class ChatService {
     private static chatService: ChatService;
+    private usernames: Map<string, string>;
+    private connectedUsers: Set<string>;
 
+    /* Keep it simple (not this release)
     private rooms: Map<string, ChatRoom>;
+    */
 
     private constructor() {
-        this.rooms = new Map();
+        // this.rooms = new Map();
+        // Reserve key usernames
+        this.usernames = new Map();
+        this.connectedUsers = new Set();
+        this.connectedUsers.add("You");
+        this.connectedUsers.add("you");
     }
 
     public static get instance(): ChatService {
@@ -25,15 +34,46 @@ export class ChatService {
 
     private listenForConnections(): void {
         SocketServer.instance.on("connection", (socket: SocketIO.Socket) => {
+            /* scope creep
             const connection = new Connection(socket);
-            socket.on("message", (message: string) => console.log(message));
+            */
+            /* Not for this release: scope creep (Keep it simple; KISS principle)
             socket.on("login", (...args: any[]) => this.login(connection, args));
+            */
+            /* No rooms for this release neither, just main room required (Keep it simple)
             socket.on("joinRoom", (...args: any[]) => this.joinRoom(connection, args));
-            console.log(`New socket connection from ${socket.handshake.address}`);
+            */
+            console.log(`New socket connection from ${socket.id}`);
+            socket.on("setUsername", (username: string) => {
+                console.log(`${socket.id} wants to set username as ${username}`);
+                if (this.connectedUsers.has(username)) {
+                    socket.emit("setUsernameStatus", "Username already taken!");
+                } else {
+                    this.connectedUsers.add(username);
+                    this.usernames.set(socket.id, username);
+                }
+            });
+
+            socket.on("disconnect", () => {
+                console.log(`${socket.id} has disconnected`);
+                if (this.usernames.has(socket.id)) {
+                    // Username is now unused
+                    this.connectedUsers.delete(this.usernames.get(socket.id));
+                }
+            });
+
+            socket.on("message", (message: string) => {
+                console.log(`Received: ${message}`);
+                socket.emit("message", "You", message);
+                if (this.usernames.has(socket.id)) {
+                    socket.broadcast.emit("message", this.usernames.get(socket.id), message);
+                }
+            });
         });
 
     }
 
+    /* scope creep
     private login(connection: Connection, args: any[]): void {
         if (args.length < 2) {
             connection.socket.emit("error", "Your request must contain the email and the password");
@@ -69,5 +109,5 @@ export class ChatService {
 
         connection.socket.removeAllListeners("joinRoom");
         room.add(connection);
-    }
+    }*/
 }

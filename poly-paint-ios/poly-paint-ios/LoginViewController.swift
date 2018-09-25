@@ -25,7 +25,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         socketIOClient = manager.defaultSocket
         
         socketIOClient.on(clientEvent: .connect) {data, ack in
-            print(data)
             print("socket connected")
         }
         
@@ -39,13 +38,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             print("socket disconnect")
         }
         
+        socketIOClient.on("message") { (data: [Any], ack) in
+            print("received message")
+            let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
+            self.messagesArray.append(data[1] as! String)
+            self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
+            print(data)
+        }
+        
         socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, ack) in
             print(data)
             print("socket reconnect")
         }
         
         socketIOClient.connect()
-        
     }
     
     override func viewDidLoad() {
@@ -59,9 +65,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.messageTextField.clearsOnBeginEditing = true
         
         // Add some sample data so that we can see something
-        messagesArray.append("Test 1")
-        messagesArray.append("Test 2")
-        messagesArray.append("Test 3")
         ConnectToSocket()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
@@ -105,7 +108,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: TextField Delegate Methods
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         sendMessage()
-        return true
+        return false
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
