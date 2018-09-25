@@ -3,22 +3,24 @@ import { Connection } from "./connection";
 
 export class ChatRoom {
 
-    private _participants: Connection[];
+    private _id: string
+    private _participants: Set<Connection>;
 
-    constructor(private _id: string) {
-        this._participants = [];
+    constructor(_id: string) {
+        this._participants = new Set<Connection>();
+        this._id = _id;
     }
 
     public get id(): string {
         return this._id;
     }
 
-    public get participants(): Connection[] {
+    public get participants(): Set<Connection> {
         return this._participants;
     }
 
     public add(connection: Connection): void {
-        this._participants.push(connection);
+        this._participants.add(connection);
         connection.socket.join(this.id);
 
         connection.socket.to(this.id).emit("message", `${connection.user.name} has joined the chat room`);
@@ -28,7 +30,10 @@ export class ChatRoom {
              SocketServer.instance.to(this.id).emit("chat", connection.user.name, args[0]);
         });
         connection.socket.on("disconnect", () => {
-            delete this.participants.splice(this.participants.indexOf(connection), 1)[0];
+            if (this.participants.has(connection)) {
+                this.participants.delete(connection);
+            }
+
             SocketServer.instance.to(this.id).emit("message", `${connection.user.name} has left the chat room`);
         });
     }
