@@ -1,4 +1,5 @@
 ﻿using PolyPaint.Modeles;
+using Quobject.EngineIoClientDotNet.ComponentEmitter;
 using Quobject.SocketIoClientDotNet.Client;
 using System;
 using System.Collections.ObjectModel;
@@ -13,52 +14,46 @@ namespace PolyPaint.Vues
     public partial class Chat : Page
     {
         private ObservableCollection<ChatMessage> Messages;
+        private Socket Socket;
 
         public Chat()
         {
             InitializeComponent();
+
             Messages = new ObservableCollection<ChatMessage>();
-            Messages.Add(new ChatMessage() {
-                Sender = "Jean",
-                Timestamp = new DateTime(2018, 9, 22, 14, 30, 45),
-                Message = "Bienvenue dans le canal!"
-            });
-            Messages.Add(new ChatMessage() {
-                Sender = "Luc",
-                Timestamp = new DateTime(2018, 9, 22, 14, 30, 58),
-                Message = "Merci Beaucoup! J'ai hâte de travailler avec vous dans le cadre de ce projet!"
-            });
-
             ChatWindow.ItemsSource = Messages;
-
-            Console.WriteLine("Before");
-            var socket = IO.Socket("http://localhost:3000");
-            socket.On(Socket.EVENT_CONNECT, (IListener) =>
+            
+            Socket = IO.Socket("http://localhost:3000");
+            Socket.On(Socket.EVENT_CONNECT, (IListener) =>
             {
-                socket.Emit("joinRoom", "1", "edit");
+                Socket.Emit("joinRoom", "1", "edit");
             });
-            socket.On("message", (IListener) =>
+            Socket.On("message", (data) =>
             {
-                Console.WriteLine(IListener);
-                socket.Emit("chat", "Hello!");
+                Console.WriteLine(data);
             });
-            socket.On("chat", (IListener) =>
+            Socket.On("chat", new CustomListener((object[] server_params) =>
             {
-                Console.WriteLine("chat: " + IListener);
-            });
+                this.Dispatcher.Invoke(() =>
+                {
+                    Messages.Add(new ChatMessage()
+                    {
+                        Sender = (String) server_params[0],
+                        Timestamp = DateTime.Now,
+                        Message = (String)server_params[1]
+                    });
+                    ScrollWindow.ScrollToBottom();
+                });
+            }));
         }
 
-        private void New_Message(object sender, RoutedEventArgs e)
+        private void Send_Message(object sender, RoutedEventArgs e)
         {
-            Random r = new Random();
-            Messages.Add(new ChatMessage()
+            if (TextInput.Text != "")
             {
-                Sender = "Bot #" + r.Next(),
-                Timestamp = DateTime.Now,
-                Message = "EXTERMINATE!"
-            });
-
-            ScrollWindow.ScrollToBottom();
+                Socket.Emit("chat", TextInput.Text);
+                TextInput.Text = "";
+            }
         }
 
         private void Connect_Button(object sender, RoutedEventArgs e)
@@ -66,8 +61,48 @@ namespace PolyPaint.Vues
             LoginDialogBox dlg = new LoginDialogBox();
             if (dlg.ShowDialog() == true)
             {
-                Console.WriteLine(dlg.Email + " " + dlg.Password);
+                Socket.Emit("login", dlg.Email, dlg.Password);
+                Socket.On("logged-in", new CustomListener((object[] server_params) =>
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        ConnectButton.Visibility = Visibility.Collapsed;
+                    });
+                    Console.WriteLine(server_params[0]);
+                }));
             };
+        }
+    }
+
+    public class CustomListener : IListener
+    {
+        private static int id_counter = 0;
+        private int Id;
+        private readonly Action<object[]> fn;
+
+        public CustomListener(Action<object[]> fn)
+        {
+
+            this.fn = fn;
+            this.Id = id_counter++;
+        }
+
+
+
+        public void Call(params object[] args)
+        {
+            fn(args);
+        }
+
+
+        public int CompareTo(IListener other)
+        {
+            return this.GetId().CompareTo(other.GetId());
+        }
+
+        public int GetId()
+        {
+            return Id;
         }
     }
 }
