@@ -43,11 +43,12 @@ export class ChatService {
             /* No rooms for this release neither, just main room required (Keep it simple)
             socket.on("joinRoom", (...args: any[]) => this.joinRoom(connection, args));
             */
-            console.log(`New socket connection from ${socket.id}`);
+            console.log(`New socket connection with id ${socket.id}`);
             socket.on("setUsername", (username: string) => {
                 console.log(`${socket.id} wants to set username as ${username}`);
                 if (this.connectedUsers.has(username)) {
                     socket.emit("setUsernameStatus", "Username already taken!");
+                    socket.disconnect();
                 } else {
                     this.connectedUsers.add(username);
                     this.usernames.set(socket.id, username);
@@ -65,8 +66,11 @@ export class ChatService {
             socket.on("message", (message: string) => {
                 console.log(`Received: ${message}`);
                 socket.emit("message", "You", message);
-                let username = this.usernames.has(socket.id) ? this.usernames.get(socket.id) : socket.id;
-                socket.broadcast.emit("message", username, message);
+                if (this.usernames.has(socket.id)) {
+                    socket.broadcast.emit("message", this.usernames.get(socket.id), message);
+                } else {
+                    socket.emit("setUsernameStatus", "No username set!");
+                }
             });
         });
 
