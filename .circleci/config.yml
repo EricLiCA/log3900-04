@@ -29,4 +29,5 @@ jobs:
             - ~/.cache/yarn
           key: yarn-packages-v1-{{ .Branch }}-{{ checksum "server/yarn.lock" }}
       - run: cd server; yarn test
+      - setup_remote_docker
       - run: cd server; make deploy
