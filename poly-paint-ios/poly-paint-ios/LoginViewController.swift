@@ -13,8 +13,58 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var messageTableView: UITableView!
     var messagesArray = [String]()
     @IBOutlet weak var messageTextField: UITextField!
-    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var dockViewHeightConstraint: NSLayoutConstraint!
+    var serverAddress: String = "http://localhost:3000"
+    var username: String = ""
+    
+    var manager:SocketManager!
+    
+    var socketIOClient: SocketIOClient!
+    
+    func ConnectToSocket() {
+        
+        manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(true), .compress])
+        socketIOClient = manager.defaultSocket
+        
+        socketIOClient.on(clientEvent: .connect) {data, ack in
+            self.socketIOClient.emit("setUsername", self.username)
+        }
+        
+        socketIOClient.on(clientEvent: .error) { (data, ack) in
+            print(data)
+            print("socket error")
+        }
+        
+        socketIOClient.on(clientEvent: .disconnect) { (data, ack) in
+            print(data)
+            print("socket disconnect")
+        }
+        
+        socketIOClient.on("message") { (data: [Any], ack) in
+            let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
+            guard let username = data[0] as? String else { return }
+            guard let message = data[1] as? String else { return }
+            let formattedMessage = "[\(self.currentTime())] \(username): \(message)"
+            self.messagesArray.append(formattedMessage)
+            self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
+        
+        socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, ack) in
+            print(data)
+            print("socket reconnect")
+        }
+        
+        socketIOClient.connect()
+    }
+    
+    func currentTime() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = String(format: "%02d", calendar.component(.hour, from: date))
+        let minutes = String(format: "%02d", calendar.component(.minute, from: date))
+        let seconds = String(format: "%02d", calendar.component(.second, from: date))
+        return "\(hour):\(minutes):\(seconds)"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,30 +74,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         // Set as delegate for the textfield
         self.messageTextField.delegate = self
+        self.messageTextField.clearsOnBeginEditing = true
         
         // Add some sample data so that we can see something
-        messagesArray.append("Test 1")
-        messagesArray.append("Test 2")
-        messagesArray.append("Test 3")
+        ConnectToSocket()
         
-        let manager = SocketManager(socketURL: URL(string: "http://localhost:3000")!, config: [.log(true), .compress])
-        let socket = manager.defaultSocket
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         
-        socket.on(clientEvent: .connect) {data, ack in
-            print("socket connected")
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            moveTextDock(to: keyboardHeight)
         }
-        
-        socket.on("currentAmount") {data, ack in
-            guard let cur = data[0] as? Double else { return }
-            
-            socket.emitWithAck("canUpdate", cur).timingOut(after: 0) {data in
-                socket.emit("update", ["amount": cur + 2.50])
-            }
-            
-            ack.with("Got your currentAmount", "dude")
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            moveTextDock(to: keyboardHeight)
         }
-        
-        socket.connect()
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,39 +103,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Dispose of any resources that can be recreated.
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        hideKeyboard()
-    }
-    
-    func hideKeyboard() {
-        self.view.endEditing(true)
+    func moveTextDock(to keyboardHeight: CGFloat) {
+        let textBoxHeight: CGFloat = 46.0
         view.layoutIfNeeded()
-        UIView.animate(withDuration: 0.1, animations: {
-            self.dockViewHeightConstraint.constant = 60
+        UIView.animate(withDuration: 0.15, animations: {
+            self.dockViewHeightConstraint.constant = keyboardHeight + textBoxHeight
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
-
-    @IBAction func sendButtonTap(_ sender: UIButton) {
-        hideKeyboard()
+    
+    func sendMessage() {
+        socketIOClient.emit("message", messageTextField.text!)
+        messageTextField.text = ""
     }
     
     // MARK: TextField Delegate Methods
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        hideKeyboard()
-        return true
+        sendMessage()
+        return false
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        view.layoutIfNeeded()
-        UIView.animate(withDuration: 0.1, animations: {
-            self.dockViewHeightConstraint.constant = 400
-            self.view.layoutIfNeeded()
-        }, completion: nil)
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        hideKeyboard()
+        
     }
     
     // MARK: TableView Delegate Methods

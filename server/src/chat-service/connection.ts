@@ -2,9 +2,11 @@ import { User } from "../user-service/user";
 
 export class Connection {
     private _user: User;
-    
-    constructor(private _socket: SocketIO.Socket) {
+    private _socket: SocketIO.Socket
+
+    constructor(socket: SocketIO.Socket) {
         this._user = new User(false);
+        this._socket = socket;
     }
 
     public get user(): User {
