@@ -50,6 +50,7 @@ export class ChatService {
                     socket.emit("setUsernameStatus", "Username already taken!");
                     socket.disconnect();
                 } else {
+                    socket.emit("setUsernameStatus", "OK");
                     this.connectedUsers.add(username);
                     this.usernames.set(socket.id, username);
                 }

@@ -17,6 +17,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var dockViewHeightConstraint: NSLayoutConstraint!
     var serverAddress: String = "http://localhost:3000"
     var username: String = ""
+    var invalidUsername: Bool = false
     
     var manager: SocketManager!
     
@@ -28,8 +29,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(true), .compress])
         socketIOClient = manager.defaultSocket
         
+        socketIOClient.on("setUsernameStatus") { (data, ack) in
+            if (data[0] as! String == "Username already taken!") {
+                self.invalidUsername = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.socketIOClient.disconnect()
+                    _ = self.navigationController?.popViewController(animated: true)
+                }
+            } else {
+                self.setConnectionStatus(as: "connected")
+            }
+        }
+        
         socketIOClient.on(clientEvent: .connect) {data, ack in
-            self.setConnectionStatus(as: "connected")
             self.socketIOClient.emit("setUsername", self.username)
         }
         
@@ -63,7 +75,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         case "connecting":
             self.connectionStatus.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05428617295)
             self.connectionStatus.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-            self.connectionStatus.text = "Connecting..."
+            self.connectionStatus.text = self.invalidUsername ? "Invalid username! Disconnecting..." : "Connecting..."
         case "connected":
             self.connectionStatus.backgroundColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
             self.connectionStatus.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -142,7 +154,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func sendMessage() {
-        socketIOClient.emit("message", messageTextField.text!)
+        let trimmedMessage = messageTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        if (!trimmedMessage.isEmpty) {
+            socketIOClient.emit("message", messageTextField.text!)
+        }
         messageTextField.text = ""
     }
     
