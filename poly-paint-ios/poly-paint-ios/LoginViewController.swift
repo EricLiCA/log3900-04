@@ -11,33 +11,34 @@ import SocketIO
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var messageTableView: UITableView!
+    @IBOutlet weak var connectionStatus: UILabel!
     var messagesArray = [String]()
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var dockViewHeightConstraint: NSLayoutConstraint!
     var serverAddress: String = "http://localhost:3000"
     var username: String = ""
     
-    var manager:SocketManager!
+    var manager: SocketManager!
     
     var socketIOClient: SocketIOClient!
     
     func ConnectToSocket() {
+        self.setConnectionStatus(as: "connecting")
         
         manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(true), .compress])
         socketIOClient = manager.defaultSocket
         
         socketIOClient.on(clientEvent: .connect) {data, ack in
+            self.setConnectionStatus(as: "connected")
             self.socketIOClient.emit("setUsername", self.username)
         }
         
         socketIOClient.on(clientEvent: .error) { (data, ack) in
-            print(data)
-            print("socket error")
+            self.setConnectionStatus(as: "connecting")
         }
         
         socketIOClient.on(clientEvent: .disconnect) { (data, ack) in
-            print(data)
-            print("socket disconnect")
+            self.setConnectionStatus(as: "connecting")
         }
         
         socketIOClient.on("message") { (data: [Any], ack) in
@@ -50,11 +51,31 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, ack) in
-            print(data)
-            print("socket reconnect")
+            self.setConnectionStatus(as: "connecting")
         }
         
         socketIOClient.connect()
+    }
+    
+    func setConnectionStatus(as status: String) {
+        self.connectionStatus.isHidden = false
+        switch status {
+        case "connecting":
+            self.connectionStatus.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05428617295)
+            self.connectionStatus.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.connectionStatus.text = "Connecting..."
+        case "connected":
+            self.connectionStatus.backgroundColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
+            self.connectionStatus.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            self.connectionStatus.text = "Connected"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                if self.socketIOClient.status == .connected {
+                    self.connectionStatus.isHidden = true
+                }
+            }
+        default:
+            return
+        }
     }
     
     func currentTime() -> String {
@@ -69,6 +90,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        setConnectionStatus(as: "connecting")
         self.messageTableView.delegate = self
         self.messageTableView.dataSource = self
         
@@ -82,6 +104,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        
+        messageTextField.resignFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        messageTextField.resignFirstResponder()
+        socketIOClient.disconnect()
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -97,7 +126,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             moveTextDock(to: keyboardHeight)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

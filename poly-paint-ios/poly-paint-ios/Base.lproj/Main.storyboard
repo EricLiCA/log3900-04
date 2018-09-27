@@ -98,7 +98,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ml-0N-ERc" userLabel="DockView">
                                 <rect key="frame" x="0.0" y="978" width="768" height="46"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K9w-fb-oRX">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Send message" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="K9w-fb-oRX">
                                         <rect key="frame" x="8" y="8" width="752" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -113,20 +113,34 @@
                                     <constraint firstAttribute="trailing" secondItem="K9w-fb-oRX" secondAttribute="trailing" constant="8" id="uOV-jd-lBu"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5NO-JK-7AR">
+                                <rect key="frame" x="0.0" y="64" width="768" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.051022046232876712" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="t5n-sY-XbW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eoP-gJ-ha8" secondAttribute="trailing" id="1bV-UN-2M1"/>
+                            <constraint firstItem="5NO-JK-7AR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2N6-RF-HkA"/>
+                            <constraint firstItem="5NO-JK-7AR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="CJJ-V3-4FQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="6Ml-0N-ERc" secondAttribute="bottom" id="HMY-54-ACq"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6Ml-0N-ERc" secondAttribute="trailing" id="YAH-Aw-Qi7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5NO-JK-7AR" secondAttribute="trailing" id="dqy-2F-afm"/>
                             <constraint firstItem="6Ml-0N-ERc" firstAttribute="top" secondItem="eoP-gJ-ha8" secondAttribute="bottom" id="kak-du-fNF"/>
-                            <constraint firstItem="eoP-gJ-ha8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="n39-OX-1Mj"/>
+                            <constraint firstItem="eoP-gJ-ha8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="s7I-Hm-GJL"/>
                             <constraint firstItem="6Ml-0N-ERc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vUU-Xc-eJm"/>
                             <constraint firstItem="eoP-gJ-ha8" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xPi-kQ-HFP"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="connectionStatus" destination="5NO-JK-7AR" id="Ze5-yg-IyF"/>
                         <outlet property="dockViewHeightConstraint" destination="FDJ-i4-cCc" id="095-ah-mNM"/>
                         <outlet property="messageTableView" destination="eoP-gJ-ha8" id="3R1-SK-dew"/>
                         <outlet property="messageTextField" destination="K9w-fb-oRX" id="fzM-Vc-ChF"/>
@@ -145,21 +159,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UrE-C2-vBY">
-                                <rect key="frame" x="269" y="378.5" width="230" height="288"/>
+                                <rect key="frame" x="269" y="353" width="230" height="338"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="tOM-FH-CKM">
-                                        <rect key="frame" x="0.0" y="0.0" width="230" height="250"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Paint" translatesAutoresizingMaskIntoConstraints="NO" id="tOM-FH-CKM">
+                                        <rect key="frame" x="0.0" y="0.0" width="230" height="300"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ucJ-xW-9PU">
-                                        <rect key="frame" x="0.0" y="258" width="230" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xWi-GF-gOh">
+                                        <rect key="frame" x="0.0" y="308" width="230" height="30"/>
+                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="230" id="1xS-ow-tyo"/>
+                                            <constraint firstAttribute="width" constant="230" id="Eug-xk-Z7J"/>
                                         </constraints>
                                         <state key="normal" title="Start">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="n3z-e6-srZ" kind="show" id="TMj-GD-l73"/>
+                                            <segue destination="n3z-e6-srZ" kind="show" id="LzX-8K-Tmy"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -173,7 +188,7 @@
                         <viewLayoutGuide key="safeArea" id="1Dw-Q4-j4D"/>
                     </view>
                     <connections>
-                        <outlet property="startButton" destination="ucJ-xW-9PU" id="fy3-Bd-O5F"/>
+                        <outlet property="startButton" destination="xWi-GF-gOh" id="ZEu-K7-eAP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qsR-jg-kXw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -200,6 +215,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo" width="300" height="250"/>
+        <image name="Paint" width="400" height="300"/>
     </resources>
 </document>
