@@ -61,7 +61,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: TextField Delegate Methods
+    // MARK: - MessageTextField
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         sendMessage()
         return false
@@ -71,7 +71,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         textField.becomeFirstResponder()
     }
     
-    // MARK: TableView Delegate Methods
+    // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messagesArray.count
     }
@@ -87,7 +87,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    // MARK: Socket functions
+    private func addToMessageTableView(message: String, sentBy username: String) {
+        let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
+        let formattedMessage = "[\(self.currentTime())] \(username): \(message)"
+        self.messagesArray.append(formattedMessage)
+        self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
+        self.messageTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
+    }
+    
+    // MARK: - Server communication
     private func connectToSocket() {
         self.setConnectionStatus(as: "connecting")
         
@@ -131,21 +139,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         socketIOClient.connect()
     }
     
-    // MARK: Keyboard event callbacks
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let keyboardHeight = keyboardSize.height
-            moveTextDock(to: keyboardHeight)
-        }
-    }
-    
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let keyboardHeight = keyboardSize.height
-            moveTextDock(to: keyboardHeight)
-        }
-    }
-    
     private func setConnectionStatus(as status: String) {
         self.connectionStatus.isHidden = false
         switch status {
@@ -167,13 +160,27 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    private func currentTime() -> String {
-        let date = Date()
-        let calendar = Calendar.current
-        let hour = String(format: "%02d", calendar.component(.hour, from: date))
-        let minutes = String(format: "%02d", calendar.component(.minute, from: date))
-        let seconds = String(format: "%02d", calendar.component(.second, from: date))
-        return "\(hour):\(minutes):\(seconds)"
+    private func sendMessage() {
+        let trimmedMessage = messageTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        if (!trimmedMessage.isEmpty) {
+            socketIOClient.emit("message", messageTextField.text!)
+        }
+        messageTextField.text = ""
+    }
+    
+    // MARK: - Keyboard
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            moveTextDock(to: keyboardHeight)
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            moveTextDock(to: keyboardHeight)
+        }
     }
     
     private func moveTextDock(to keyboardHeight: CGFloat) {
@@ -185,20 +192,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }, completion: nil)
     }
     
-    private func sendMessage() {
-        let trimmedMessage = messageTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        if (!trimmedMessage.isEmpty) {
-            socketIOClient.emit("message", messageTextField.text!)
-        }
-        messageTextField.text = ""
-    }
-    
-    private func addToMessageTableView(message: String, sentBy username: String) {
-        let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
-        let formattedMessage = "[\(self.currentTime())] \(username): \(message)"
-        self.messagesArray.append(formattedMessage)
-        self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
-        self.messageTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
+    // MARK: - Other
+    private func currentTime() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = String(format: "%02d", calendar.component(.hour, from: date))
+        let minutes = String(format: "%02d", calendar.component(.minute, from: date))
+        let seconds = String(format: "%02d", calendar.component(.second, from: date))
+        return "\(hour):\(minutes):\(seconds)"
     }
 }
 
