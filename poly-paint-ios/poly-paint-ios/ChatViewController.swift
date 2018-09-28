@@ -28,6 +28,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - Initialization and Cleanup
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Add listeners for keyboard events
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
         
         setConnectionStatus(as: "connecting")
         
@@ -42,12 +45,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Initialize socket connection
         connectToSocket()
         
-        // Add listeners for keyboard events
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
-        
-        // Hide keyboard
-        messageTextField.resignFirstResponder()
+        // Focus on message text field + show keyboard
+        messageTextField.becomeFirstResponder()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
