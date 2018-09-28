@@ -78,9 +78,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Create a table cell
-        guard let cell = messageTableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? UITableViewCell else {
-            fatalError("Could not dequeue UITableViewCell")
-        }
+        let cell = messageTableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath)
         
         // Customize the cell
         cell.textLabel?.text = messagesArray[indexPath.row]
@@ -195,7 +193,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messageTextField.text = ""
     }
     
-    private func addToMessageTableView(message message: String, sentBy username: String) {
+    private func addToMessageTableView(message: String, sentBy username: String) {
         let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
         let formattedMessage = "[\(self.currentTime())] \(username): \(message)"
         self.messagesArray.append(formattedMessage)
