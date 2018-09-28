@@ -158,7 +158,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         case "connecting":
             self.connectionStatus.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05428617295)
             self.connectionStatus.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-            self.connectionStatus.text = self.invalidUsername ? "Invalid username! Disconnecting..." : "Connecting..."
+            self.connectionStatus.text = self.invalidUsername ? "Username already taken! Disconnecting..." : "Connecting..."
         case "connected":
             self.connectionStatus.backgroundColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
             self.connectionStatus.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
