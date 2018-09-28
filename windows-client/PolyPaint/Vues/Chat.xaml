@@ -15,11 +15,10 @@
         </Border>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Background="WhiteSmoke">
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Background="WhiteSmoke">
-                <Button Name="ConnectButton" BorderBrush="SlateGray" BorderThickness="0.5" Background="FloralWhite" Click="Connect_Button" Padding="10" Margin="8,0" Content="Authenticate"/>
                 <Button Name="SendButton" BorderBrush="SlateGray" BorderThickness="0.5" Background="FloralWhite" Click="Send_Message" Padding="10" Margin="8,0" Content="Send Message"/>
             </StackPanel>
         </StackPanel>
-        <TextBox Name="TextInput" DockPanel.Dock="Bottom" TextWrapping="WrapWithOverflow" BorderBrush="SlateGray" BorderThickness="0,1,0,0" Background="White" Padding="10"/>
+        <TextBox Name="TextInput" DockPanel.Dock="Bottom" TextWrapping="WrapWithOverflow" BorderBrush="SlateGray" BorderThickness="0,1,0,0" Background="White" Padding="10" KeyDown="TextInput_KeyDown"/>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" Name="ScrollWindow" Background="#dfe9ee">
             <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Vertical">
                 <ItemsControl Name="ChatWindow" VerticalAlignment="Stretch" BorderThickness="0">

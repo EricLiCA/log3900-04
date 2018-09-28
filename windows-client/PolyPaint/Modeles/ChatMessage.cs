@@ -10,7 +10,7 @@ namespace PolyPaint.Modeles
     {
         public string Sender { get; set; }
 
-        public DateTime Timestamp { get; set; }
+        public string Timestamp { get; set; }
 
         public string Message { get; set; }
     }

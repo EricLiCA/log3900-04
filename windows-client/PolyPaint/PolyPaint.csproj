@@ -52,18 +52,6 @@
   <PropertyGroup>
     <ApplicationIcon>palette.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>50E3F0815E941EBF9C32681AC88E8B697EC4BF64</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>PolyPaint_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EngineIoClientDotNet, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EngineIoClientDotNet.1.0.7\lib\net45\EngineIoClientDotNet.dll</HintPath>
@@ -168,6 +156,7 @@
     <Compile Include="Convertisseurs\Convertisseurs.cs" />
     <Compile Include="Modeles\Editeur.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
+    <Compile Include="Services\ServerService.cs" />
     <Compile Include="Utilitaires\RelayCommand.cs" />
     <Compile Include="VueModeles\VueModele.cs" />
     <Compile Include="Vues\LoginDialogBox.xaml.cs">

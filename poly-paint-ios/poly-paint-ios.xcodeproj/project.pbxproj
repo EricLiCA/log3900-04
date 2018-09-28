@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4A0815B34FF7B9EEEA4C20F2 /* Pods_poly_paint_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */; };
 		A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46EE21569CFB0056135A /* AppDelegate.swift */; };
-		A77C46F121569CFB0056135A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F021569CFB0056135A /* LoginViewController.swift */; };
+		A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F021569CFB0056135A /* ChatViewController.swift */; };
 		A77C46F421569CFB0056135A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A77C46F221569CFB0056135A /* Main.storyboard */; };
 		A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */; };
 		A77C46F921569CFB0056135A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A77C46F821569CFB0056135A /* Assets.xcassets */; };
@@ -18,6 +18,7 @@
 		A77C471221569CFC0056135A /* poly_paint_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C471121569CFC0056135A /* poly_paint_iosUITests.swift */; };
 		A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7335215ADDEF007A854F /* FrontPageViewController.swift */; };
 		A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7337215AE75D007A854F /* ConnectionViewController.swift */; };
+		A78A733A215ED91C007A854F /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7339215ED91C007A854F /* DateTime.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +42,7 @@
 		142B8D5CF9AB57002345952A /* Pods-poly-paint-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.release.xcconfig"; sourceTree = "<group>"; };
 		A77C46EB21569CFB0056135A /* poly-paint-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "poly-paint-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77C46EE21569CFB0056135A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A77C46F021569CFB0056135A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A77C46F021569CFB0056135A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		A77C46F321569CFB0056135A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A77C46F621569CFB0056135A /* poly_paint_ios.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = poly_paint_ios.xcdatamodel; sourceTree = "<group>"; };
 		A77C46F821569CFB0056135A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -55,6 +56,7 @@
 		A77C471321569CFC0056135A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A78A7335215ADDEF007A854F /* FrontPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontPageViewController.swift; sourceTree = "<group>"; };
 		A78A7337215AE75D007A854F /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
+		A78A7339215ED91C007A854F /* DateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTime.swift; sourceTree = "<group>"; };
 		BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_poly_paint_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83DCF8B210537D23F9A45E1 /* Pods-poly-paint-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,15 +120,16 @@
 		A77C46ED21569CFB0056135A /* poly-paint-ios */ = {
 			isa = PBXGroup;
 			children = (
+				A77C46FD21569CFB0056135A /* Info.plist */,
 				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
-				A77C46F021569CFB0056135A /* LoginViewController.swift */,
+				A77C46F021569CFB0056135A /* ChatViewController.swift */,
 				A78A7337215AE75D007A854F /* ConnectionViewController.swift */,
-				A77C46F221569CFB0056135A /* Main.storyboard */,
+				A78A7339215ED91C007A854F /* DateTime.swift */,
+				A78A7335215ADDEF007A854F /* FrontPageViewController.swift */,
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
-				A77C46FD21569CFB0056135A /* Info.plist */,
+				A77C46F221569CFB0056135A /* Main.storyboard */,
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
-				A78A7335215ADDEF007A854F /* FrontPageViewController.swift */,
 			);
 			path = "poly-paint-ios";
 			sourceTree = "<group>";
@@ -335,7 +338,8 @@
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
 				A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */,
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,
-				A77C46F121569CFB0056135A /* LoginViewController.swift in Sources */,
+				A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */,
+				A78A733A215ED91C007A854F /* DateTime.swift in Sources */,
 				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

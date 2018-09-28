@@ -3,8 +3,12 @@ using Quobject.EngineIoClientDotNet.ComponentEmitter;
 using Quobject.SocketIoClientDotNet.Client;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PolyPaint.Vues
 {
@@ -13,64 +17,80 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class Chat : Page
     {
+        private FenetreDessin MainWindow;
         private ObservableCollection<ChatMessage> Messages;
         private Socket Socket;
+        private Regex regex = new Regex("^ {0,}$");
 
-        public Chat()
+        public Chat(FenetreDessin mainWindow, String url, String username)
         {
             InitializeComponent();
 
+            this.MainWindow = mainWindow;
             Messages = new ObservableCollection<ChatMessage>();
             ChatWindow.ItemsSource = Messages;
-            
-            Socket = IO.Socket("http://localhost:3000");
-            Socket.On(Socket.EVENT_CONNECT, (IListener) =>
+
+            this.Connect(url, username);
+        }
+
+        private void Send_Message(object sender, RoutedEventArgs e)
+        {
+            if (regex.Matches(TextInput.Text).Count == 0)
             {
-                Socket.Emit("joinRoom", "1", "edit");
-            });
-            Socket.On("message", (data) =>
+                this.Socket.Emit("message", TextInput.Text);
+            }
+
+            TextInput.Text = "";
+            TextInput.Focus();
+        }
+
+        internal void Connect(String url, String username)
+        {
+            this.Socket = IO.Socket(url);
+            this.Socket.On(Socket.EVENT_CONNECT, (IListener) =>
             {
-                Console.WriteLine(data);
+                Socket.Emit("setUsername", username);
             });
-            Socket.On("chat", new CustomListener((object[] server_params) =>
+            this.Socket.On("message", new CustomListener((object[] server_params) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     Messages.Add(new ChatMessage()
                     {
-                        Sender = (String) server_params[0],
-                        Timestamp = DateTime.Now,
+                        Sender = (String)server_params[0],
+                        Timestamp = DateTime.Now.ToString("HH:mm:ss"),
                         Message = (String)server_params[1]
                     });
-                    ScrollWindow.ScrollToBottom();
+                    this.ScrollWindow.PageDown();
                 });
+            }));
+            this.Socket.On("setUsernameStatus", new CustomListener((object[] server_params) =>
+            {
+                if ((String)server_params[0] != "OK")
+                {
+                    MessageBox.Show((String)server_params[0], "Error connecting", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        this.Disconnect();
+                        MainWindow.Menu_Disconnect_Click(this, null);
+                    });
+                }
             }));
         }
 
-        private void Send_Message(object sender, RoutedEventArgs e)
+        internal void Disconnect()
         {
-            if (TextInput.Text != "")
-            {
-                Socket.Emit("chat", TextInput.Text);
-                TextInput.Text = "";
-            }
+            this.Socket.Disconnect();
+            this.Messages.Clear();
         }
 
-        private void Connect_Button(object sender, RoutedEventArgs e)
+        private void TextInput_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            LoginDialogBox dlg = new LoginDialogBox();
-            if (dlg.ShowDialog() == true)
+            if (e.Key == Key.Enter && !e.IsRepeat)
             {
-                Socket.Emit("login", dlg.Email, dlg.Password);
-                Socket.On("logged-in", new CustomListener((object[] server_params) =>
-                {
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        ConnectButton.Visibility = Visibility.Collapsed;
-                    });
-                    Console.WriteLine(server_params[0]);
-                }));
-            };
+                this.Send_Message(sender, e);
+            }
         }
     }
 

@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login Page-->
+        <!--Connection-->
         <scene sceneID="tHc-Ub-Evw">
             <objects>
                 <viewController id="dn9-Mw-ZOm" customClass="ConnectionViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
@@ -21,7 +21,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="55T-va-sHI">
                                 <rect key="frame" x="269" y="491" width="230" height="106"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://ec2-18-214-40-211.compute-1.amazonaws.com/" borderStyle="roundedRect" placeholder="Server address" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tzt-tL-Elm">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://ec2-18-214-40-211.compute-1.amazonaws.com" borderStyle="roundedRect" placeholder="Server address" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Tzt-tL-Elm">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="230" id="b5M-UV-he1"/>
@@ -31,7 +31,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BZQ-zd-Hqs">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BZQ-zd-Hqs">
                                         <rect key="frame" x="0.0" y="38" width="230" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="230" id="6hI-m1-R9A"/>
@@ -60,7 +60,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EvK-LE-BAc"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Login Page" id="SWa-re-cG4">
+                    <navigationItem key="navigationItem" title="Connection" id="SWa-re-cG4">
                         <barButtonItem key="backBarButtonItem" title="Disconnect" id="dej-uR-9dK"/>
                     </navigationItem>
                     <connections>
@@ -76,7 +76,7 @@
         <!--Chat-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="Chat" id="BYZ-38-t0r" customClass="ViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Chat" id="BYZ-38-t0r" customClass="ChatViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

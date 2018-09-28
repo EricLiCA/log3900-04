@@ -29,14 +29,14 @@ namespace PolyPaint.Vues
             this.DialogResult = true;
         }
 
-        public string Email
+        public string IP
         {
-            get { return email.Text; }
+            get { return ip.Text; }
         }
 
-        public string Password
+        public string Username
         {
-            get { return password.Password; }
+            get { return username.Text; }
         }
     }
 }
