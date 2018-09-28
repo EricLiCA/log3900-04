@@ -4,6 +4,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 using PolyPaint.VueModeles;
+using PolyPaint.Vues;
+using System.Net;
+using System.IO;
 
 namespace PolyPaint
 {
@@ -12,6 +15,9 @@ namespace PolyPaint
     /// </summary>
     public partial class FenetreDessin : Window
     {
+
+        private Chat ChatView;
+
         public FenetreDessin()
         {
             InitializeComponent();
@@ -43,5 +49,46 @@ namespace PolyPaint
         }
 
         private void SupprimerSelection(object sender, RoutedEventArgs e) => surfaceDessin.CutSelection();
+
+        private void Menu_Connect_Click(object sender, RoutedEventArgs e)
+        {
+            LoginDialogBox dlg = new LoginDialogBox();
+            if (dlg.ShowDialog() == true)
+            {
+                var protocolProvided = dlg.IP.StartsWith("http");
+                var url = string.Format(protocolProvided ? "{0}/api/status/" : "http://{0}/api/status/", dlg.IP);
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                httpWebRequest.ContentType = "text/html";
+                httpWebRequest.Method = "GET";
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var result = streamReader.ReadToEnd();
+                    if (result != "log3900-server")
+                    {
+                        return;
+                    }
+                }
+
+                this.ChatView = new Chat(url, dlg.Username);
+                this.Chat_Reserved_Zone.Visibility = Visibility.Visible;
+                Chat_Docker.Content = this.ChatView;
+
+                Console.WriteLine("ok");
+
+                this.Menu_Disconnect.Visibility = Visibility.Visible;
+                this.Menu_Connect.Visibility = Visibility.Collapsed;
+            };
+        }
+
+        private void Menu_Disconnect_Click(object sender, RoutedEventArgs e)
+        {
+            this.ChatView.Disconnect();
+
+            this.Chat_Reserved_Zone.Visibility = Visibility.Collapsed;
+            this.Menu_Disconnect.Visibility = Visibility.Collapsed;
+            this.Menu_Connect.Visibility = Visibility.Visible;
+        }
     }
 }
