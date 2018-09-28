@@ -3,6 +3,9 @@ using Quobject.EngineIoClientDotNet.ComponentEmitter;
 using Quobject.SocketIoClientDotNet.Client;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Net;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,62 +18,52 @@ namespace PolyPaint.Vues
     {
         private ObservableCollection<ChatMessage> Messages;
         private Socket Socket;
+        private Regex regex = new Regex("^ {0,}$");
 
-        public Chat()
+        public Chat(String url, String username)
         {
             InitializeComponent();
 
             Messages = new ObservableCollection<ChatMessage>();
             ChatWindow.ItemsSource = Messages;
-            
-            Socket = IO.Socket("http://localhost:3000");
-            Socket.On(Socket.EVENT_CONNECT, (IListener) =>
-            {
-                Socket.Emit("joinRoom", "1", "edit");
-            });
-            Socket.On("message", (data) =>
-            {
-                Console.WriteLine(data);
-            });
-            Socket.On("chat", new CustomListener((object[] server_params) =>
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    Messages.Add(new ChatMessage()
-                    {
-                        Sender = (String) server_params[0],
-                        Timestamp = DateTime.Now,
-                        Message = (String)server_params[1]
-                    });
-                    ScrollWindow.ScrollToBottom();
-                });
-            }));
+
+            this.Connect(url, username);
         }
 
         private void Send_Message(object sender, RoutedEventArgs e)
         {
-            if (TextInput.Text != "")
+            if (regex.Matches(TextInput.Text).Count == 0)
             {
-                Socket.Emit("chat", TextInput.Text);
+                Socket.Emit("message", TextInput.Text);
                 TextInput.Text = "";
             }
         }
 
-        private void Connect_Button(object sender, RoutedEventArgs e)
+        private void Connect(String url, String username)
         {
-            LoginDialogBox dlg = new LoginDialogBox();
-            if (dlg.ShowDialog() == true)
-            {
-                Socket.Emit("login", dlg.Email, dlg.Password);
-                Socket.On("logged-in", new CustomListener((object[] server_params) =>
+                Socket = IO.Socket(url);
+                Socket.On(Socket.EVENT_CONNECT, (IListener) =>
+                {
+                    Console.WriteLine(username);
+                    Socket.Emit("setUsername", username);
+                });
+                Socket.On("message", new CustomListener((object[] server_params) =>
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        ConnectButton.Visibility = Visibility.Collapsed;
+                        Messages.Add(new ChatMessage()
+                        {
+                            Sender = (String)server_params[0],
+                            Timestamp = DateTime.Now,
+                            Message = (String)server_params[1]
+                        });
                     });
-                    Console.WriteLine(server_params[0]);
                 }));
-            };
+        }
+
+        internal void Disconnect()
+        {
+            this.Socket.Disconnect();
         }
     }
 
