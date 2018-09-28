@@ -4,7 +4,7 @@ import * as express from "express";
 import * as httpLogger from "morgan";
 import * as path from "path";
 
-import { HelloWorld } from "./routes/hello-world";
+import { ServerStatus } from "./routes/server-status";
 
 export class Application {
     /**
@@ -50,10 +50,10 @@ export class Application {
         router = express.Router();
 
         // create routes
-        const helloWorld: HelloWorld = new HelloWorld();
+        const serverStatus: ServerStatus = new ServerStatus();
 
         // hello world path
-        router.get("/hello/", helloWorld.hello.bind(helloWorld.hello));
+        router.get("/status/", serverStatus.status.bind(serverStatus.status));
 
         // use router middleware
         this.app.use("/api", router);

@@ -15,10 +15,6 @@ class FrontPageViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        startButton.backgroundColor = .clear
-        startButton.layer.cornerRadius = 5
-        startButton.layer.borderWidth = 1
-        startButton.layer.borderColor = UIColor.black.cgColor
     }
 
     override func didReceiveMemoryWarning() {
