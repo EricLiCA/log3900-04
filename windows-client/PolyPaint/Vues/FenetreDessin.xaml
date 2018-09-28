@@ -13,9 +13,25 @@
         <convertisseurs:ConvertisseurCouleurFond x:Key="convertisseurCouleurFond" />
         <convertisseurs:ConvertisseurModeEdition x:Key="convertisseurModeEdition" />
     </Window.Resources>
-    <DockPanel>        
-        <Border DockPanel.Dock="Right" BorderThickness="0.5,0,0,0" BorderBrush="#77000000" Width="250" Background="AliceBlue">
-            <Frame x:Name="ChatFrame" VerticalContentAlignment="Stretch" Source="Chat.xaml"></Frame>
+    <DockPanel>
+
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File" IsEnabled="False">
+                <MenuItem Header="_New" />
+                <MenuItem Header="_Open" />
+                <MenuItem Header="New _Version" />
+                <Separator />
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Chat">
+                <MenuItem Name="Menu_Connect" Header="_Connect" Click="Menu_Connect_Click" />
+                <MenuItem Name="Menu_Disconnect" Visibility="Collapsed" Header="_Disconnect" Click="Menu_Disconnect_Click" />
+            </MenuItem>
+        </Menu>
+
+
+        <Border Name="Chat_Reserved_Zone" DockPanel.Dock="Right" BorderThickness="0.5,0,0,0" BorderBrush="#77000000" Width="250" Background="AliceBlue" Visibility="Collapsed">
+            <Frame Name="Chat_Docker" />
         </Border>
         
         <Border DockPanel.Dock="Top" BorderThickness="0,0,0,0.5" BorderBrush="#77000000">

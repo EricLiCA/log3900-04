@@ -29,32 +29,14 @@ namespace PolyPaint.Vues
             this.DialogResult = true;
         }
 
-        public string Email
+        public string IP
         {
-            get { return email.Text; }
+            get { return ip.Text; }
         }
 
-        public string Password
+        public string Username
         {
-            get { return password.Password; }
-        }
-
-        private void anonymous_Click(object sender, RoutedEventArgs e)
-        {
-            if (anonymous.IsChecked == true)
-            {
-                email.Visibility = Visibility.Collapsed;
-                password.Visibility = Visibility.Collapsed;
-                emailLabel.Visibility = Visibility.Collapsed;
-                passwordLabel.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                email.Visibility = Visibility.Visible;
-                password.Visibility = Visibility.Visible;
-                emailLabel.Visibility = Visibility.Visible;
-                passwordLabel.Visibility = Visibility.Visible;
-            }
+            get { return username.Text; }
         }
     }
 }

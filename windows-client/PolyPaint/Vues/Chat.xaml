@@ -15,7 +15,6 @@
         </Border>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Background="WhiteSmoke">
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Background="WhiteSmoke">
-                <Button Name="ConnectButton" BorderBrush="SlateGray" BorderThickness="0.5" Background="FloralWhite" Click="Connect_Button" Padding="10" Margin="8,0" Content="Authenticate"/>
                 <Button Name="SendButton" BorderBrush="SlateGray" BorderThickness="0.5" Background="FloralWhite" Click="Send_Message" Padding="10" Margin="8,0" Content="Send Message"/>
             </StackPanel>
         </StackPanel>
