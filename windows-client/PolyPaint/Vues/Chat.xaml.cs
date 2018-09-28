@@ -8,6 +8,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PolyPaint.Vues
 {
@@ -40,6 +41,7 @@ namespace PolyPaint.Vues
             }
 
             TextInput.Text = "";
+            TextInput.Focus();
         }
 
         internal void Connect(String url, String username)
@@ -56,20 +58,21 @@ namespace PolyPaint.Vues
                     Messages.Add(new ChatMessage()
                     {
                         Sender = (String)server_params[0],
-                        Timestamp = DateTime.Now,
+                        Timestamp = DateTime.Now.ToString("HH:mm:ss"),
                         Message = (String)server_params[1]
                     });
+                    this.ScrollWindow.PageDown();
                 });
             }));
             this.Socket.On("setUsernameStatus", new CustomListener((object[] server_params) =>
             {
                 if ((String)server_params[0] != "OK")
                 {
-                    this.Disconnect();
                     MessageBox.Show((String)server_params[0], "Error connecting", MessageBoxButton.OK, MessageBoxImage.Error);
 
                     this.Dispatcher.Invoke(() =>
                     {
+                        this.Disconnect();
                         MainWindow.Menu_Disconnect_Click(this, null);
                     });
                 }
@@ -80,6 +83,14 @@ namespace PolyPaint.Vues
         {
             this.Socket.Disconnect();
             this.Messages.Clear();
+        }
+
+        private void TextInput_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && !e.IsRepeat)
+            {
+                this.Send_Message(sender, e);
+            }
         }
     }
 
