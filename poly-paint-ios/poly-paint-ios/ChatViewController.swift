@@ -89,7 +89,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private func addToMessageTableView(message: String, sentBy username: String) {
         let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
-        let formattedMessage = "[\(self.currentTime())] \(username): \(message)"
+        let formattedMessage = "[\(currentTime())] \(username): \(message)"
         self.messagesArray.append(formattedMessage)
         self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
         self.messageTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
@@ -190,16 +190,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.dockViewHeightConstraint.constant = keyboardHeight + textBoxHeight
             self.view.layoutIfNeeded()
         }, completion: nil)
-    }
-    
-    // MARK: - Other
-    private func currentTime() -> String {
-        let date = Date()
-        let calendar = Calendar.current
-        let hour = String(format: "%02d", calendar.component(.hour, from: date))
-        let minutes = String(format: "%02d", calendar.component(.minute, from: date))
-        let seconds = String(format: "%02d", calendar.component(.second, from: date))
-        return "\(hour):\(minutes):\(seconds)"
     }
 }
 
