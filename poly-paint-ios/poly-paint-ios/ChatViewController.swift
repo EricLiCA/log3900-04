@@ -121,13 +121,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         socketIOClient.on("message") { (data: [Any], ack) in
-            let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
             guard let username = data[0] as? String else { return }
             guard let message = data[1] as? String else { return }
-            let formattedMessage = "[\(self.currentTime())] \(username): \(message)"
-            self.messagesArray.append(formattedMessage)
-            self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
-            self.messageTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
+            self.addToMessageTableView(message: message, sentBy: username)
         }
         
         socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, ack) in
@@ -197,6 +193,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             socketIOClient.emit("message", messageTextField.text!)
         }
         messageTextField.text = ""
+    }
+    
+    private func addToMessageTableView(message message: String, sentBy username: String) {
+        let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
+        let formattedMessage = "[\(self.currentTime())] \(username): \(message)"
+        self.messagesArray.append(formattedMessage)
+        self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
+        self.messageTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
     }
 }
 
