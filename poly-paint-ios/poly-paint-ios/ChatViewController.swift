@@ -9,7 +9,7 @@
 import UIKit
 import SocketIO
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     @IBOutlet weak var messageTableView: UITableView!
     @IBOutlet weak var connectionStatus: UILabel!
     var messagesArray = [String]()
@@ -60,6 +60,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let formattedMessage = "[\(self.currentTime())] \(username): \(message)"
             self.messagesArray.append(formattedMessage)
             self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
+            self.messageTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
         }
         
         socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, ack) in
