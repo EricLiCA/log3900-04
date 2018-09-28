@@ -9,7 +9,7 @@
 import UIKit
 
 class ConnectionViewController: UIViewController {
-    // MARK: - UI Fields
+    // MARK: - View Elements
     @IBOutlet weak var serverAddress: UITextField!
     @IBOutlet weak var username: UITextField!
     
@@ -31,7 +31,7 @@ class ConnectionViewController: UIViewController {
         destinationVC.serverAddress = serverAddress.text!
     }
     
-    // MARK: - UI Actions
+    // MARK: - Actions
     @IBAction func joinChatButton(_ sender: UIButton) {
         if serverAddress.text! != "", username.text! != "" {
             performSegue(withIdentifier: "toChat", sender: self)
