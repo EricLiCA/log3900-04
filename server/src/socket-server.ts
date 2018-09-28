@@ -1,17 +1,15 @@
-import * as io from 'socket.io';
-import * as http from 'http';
+import * as http from "http";
+import * as io from "socket.io";
 
 export class SocketServer {
-    private static socketServerInstance: SocketIO.Server;
-    private static httpServer: http.Server;
 
     public static setServer(server: http.Server): void {
         this.httpServer = server;
     }
 
-    public static getInstance(): SocketIO.Server {
+    public static get instance(): SocketIO.Server {
         if (this.httpServer === undefined) {
-            console.error('No http server provided!');
+            console.error("No http server provided!");
             return undefined;
         }
         if (this.socketServerInstance === undefined) {
@@ -19,4 +17,6 @@ export class SocketServer {
         }
         return this.socketServerInstance;
     }
+    private static socketServerInstance: SocketIO.Server;
+    private static httpServer: http.Server;
 }

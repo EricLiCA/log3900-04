@@ -1,10 +1,10 @@
-import { expect } from 'chai';
-import * as io from 'socket.io-client';
+import { expect } from "chai";
+import * as io from "socket.io-client";
 
-import { ChatService } from './chat-service';
-import { TEST_HOST, TEST_PORT, server } from '../mocks/socket-server.mock';
+import { server, TEST_HOST, TEST_PORT } from "../mocks/socket-server.mock";
+import { ChatService } from "./chat-service";
 
-describe('ChatService', () => {
+describe("ChatService", () => {
     let socket: SocketIOClient.Socket;
 
     before(() => {
@@ -15,7 +15,7 @@ describe('ChatService', () => {
 
     beforeEach((done) => {
         socket = io.connect(`${TEST_HOST}:${TEST_PORT}`);
-        socket.on('connect', () => {
+        socket.on("connect", () => {
             done();
         });
     });
@@ -23,17 +23,17 @@ describe('ChatService', () => {
     after(() => {
         server.close();
     });
-    
+
     afterEach(() => {
         if (socket.connected) {
             socket.disconnect();
         }
     });
 
-    describe('getInstance()', () => {
-        it('should return a singleton', () => {
-            expect(ChatService.getInstance())
-                .to.equal(ChatService.getInstance());
+    describe("getInstance()", () => {
+        it("should return a singleton", () => {
+            expect(ChatService.instance)
+                .to.equal(ChatService.instance);
         });
     });
 
