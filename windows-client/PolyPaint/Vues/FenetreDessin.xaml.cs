@@ -56,8 +56,8 @@ namespace PolyPaint
             if (dlg.ShowDialog() == true)
             {
                 var protocolProvided = dlg.IP.StartsWith("http");
-                var url = string.Format(protocolProvided ? "{0}/api/status/" : "http://{0}/api/status/", dlg.IP);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                var url = string.Format(protocolProvided ? "{0}" : "http://{0}", dlg.IP);
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(string.Format("{0}/api/status/", url));
                 httpWebRequest.ContentType = "text/html";
                 httpWebRequest.Method = "GET";
 
@@ -71,18 +71,22 @@ namespace PolyPaint
                     }
                 }
 
-                this.ChatView = new Chat(url, dlg.Username);
+                if (this.ChatView == null)
+                {
+                    this.ChatView = new Chat(this, url, dlg.Username);
+                } else
+                {
+                    this.ChatView.Connect(url, dlg.Username);
+                }
                 this.Chat_Reserved_Zone.Visibility = Visibility.Visible;
                 Chat_Docker.Content = this.ChatView;
-
-                Console.WriteLine("ok");
 
                 this.Menu_Disconnect.Visibility = Visibility.Visible;
                 this.Menu_Connect.Visibility = Visibility.Collapsed;
             };
         }
 
-        private void Menu_Disconnect_Click(object sender, RoutedEventArgs e)
+        internal void Menu_Disconnect_Click(object sender, RoutedEventArgs e)
         {
             this.ChatView.Disconnect();
 

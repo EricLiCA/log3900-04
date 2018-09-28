@@ -16,14 +16,16 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class Chat : Page
     {
+        private FenetreDessin MainWindow;
         private ObservableCollection<ChatMessage> Messages;
         private Socket Socket;
         private Regex regex = new Regex("^ {0,}$");
 
-        public Chat(String url, String username)
+        public Chat(FenetreDessin mainWindow, String url, String username)
         {
             InitializeComponent();
 
+            this.MainWindow = mainWindow;
             Messages = new ObservableCollection<ChatMessage>();
             ChatWindow.ItemsSource = Messages;
 
@@ -34,36 +36,50 @@ namespace PolyPaint.Vues
         {
             if (regex.Matches(TextInput.Text).Count == 0)
             {
-                Socket.Emit("message", TextInput.Text);
-                TextInput.Text = "";
+                this.Socket.Emit("message", TextInput.Text);
             }
+
+            TextInput.Text = "";
         }
 
-        private void Connect(String url, String username)
+        internal void Connect(String url, String username)
         {
-                Socket = IO.Socket(url);
-                Socket.On(Socket.EVENT_CONNECT, (IListener) =>
+            this.Socket = IO.Socket(url);
+            this.Socket.On(Socket.EVENT_CONNECT, (IListener) =>
+            {
+                Socket.Emit("setUsername", username);
+            });
+            this.Socket.On("message", new CustomListener((object[] server_params) =>
+            {
+                this.Dispatcher.Invoke(() =>
                 {
-                    Console.WriteLine(username);
-                    Socket.Emit("setUsername", username);
+                    Messages.Add(new ChatMessage()
+                    {
+                        Sender = (String)server_params[0],
+                        Timestamp = DateTime.Now,
+                        Message = (String)server_params[1]
+                    });
                 });
-                Socket.On("message", new CustomListener((object[] server_params) =>
+            }));
+            this.Socket.On("setUsernameStatus", new CustomListener((object[] server_params) =>
+            {
+                if ((String)server_params[0] != "OK")
                 {
+                    this.Disconnect();
+                    MessageBox.Show((String)server_params[0], "Error connecting", MessageBoxButton.OK, MessageBoxImage.Error);
+
                     this.Dispatcher.Invoke(() =>
                     {
-                        Messages.Add(new ChatMessage()
-                        {
-                            Sender = (String)server_params[0],
-                            Timestamp = DateTime.Now,
-                            Message = (String)server_params[1]
-                        });
+                        MainWindow.Menu_Disconnect_Click(this, null);
                     });
-                }));
+                }
+            }));
         }
 
         internal void Disconnect()
         {
             this.Socket.Disconnect();
+            this.Messages.Clear();
         }
     }
 
