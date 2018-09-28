@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ChatViewController.swift
 //  poly-paint-ios
 //
 //  Created by Eric Sida Li on 2018-09-22.
@@ -10,20 +10,87 @@ import UIKit
 import SocketIO
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+    // MARK: - View Elements
     @IBOutlet weak var messageTableView: UITableView!
     @IBOutlet weak var connectionStatus: UILabel!
-    var messagesArray = [String]()
     @IBOutlet weak var messageTextField: UITextField!
     @IBOutlet weak var dockViewHeightConstraint: NSLayoutConstraint!
-    var serverAddress: String = "http://localhost:3000"
+    
+    // MARK: - Models
+    var messagesArray = [String]()
+    var serverAddress: String = "http://ec2-18-214-40-211.compute-1.amazonaws.com"
     var username: String = ""
     var invalidUsername: Bool = false
-    
+    // MARK: Sockets
     var manager: SocketManager!
-    
     var socketIOClient: SocketIOClient!
     
-    func ConnectToSocket() {
+    // MARK: - Initialization and Cleanup
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setConnectionStatus(as: "connecting")
+        
+        // Set as delegate for the message table
+        self.messageTableView.delegate = self
+        self.messageTableView.dataSource = self
+        
+        // Set as delegate for the textfield
+        self.messageTextField.delegate = self
+        self.messageTextField.clearsOnBeginEditing = true
+        
+        // Initialize socket connection
+        connectToSocket()
+        
+        // Add listeners for keyboard events
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        
+        // Hide keyboard
+        messageTextField.resignFirstResponder()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // Hide keyboard
+        messageTextField.resignFirstResponder()
+        
+        socketIOClient.disconnect()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    // MARK: TextField Delegate Methods
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        sendMessage()
+        return false
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.becomeFirstResponder()
+    }
+    
+    // MARK: TableView Delegate Methods
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messagesArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Create a table cell
+        guard let cell = messageTableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? UITableViewCell else {
+            fatalError("Could not dequeue UITableViewCell")
+        }
+        
+        // Customize the cell
+        cell.textLabel?.text = messagesArray[indexPath.row]
+        
+        // Return the cell
+        return cell
+    }
+    
+    // MARK: Socket functions
+    private func connectToSocket() {
         self.setConnectionStatus(as: "connecting")
         
         manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(true), .compress])
@@ -70,7 +137,22 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         socketIOClient.connect()
     }
     
-    func setConnectionStatus(as status: String) {
+    // MARK: Keyboard event callbacks
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            moveTextDock(to: keyboardHeight)
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            moveTextDock(to: keyboardHeight)
+        }
+    }
+    
+    private func setConnectionStatus(as status: String) {
         self.connectionStatus.isHidden = false
         switch status {
         case "connecting":
@@ -91,7 +173,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func currentTime() -> String {
+    private func currentTime() -> String {
         let date = Date()
         let calendar = Calendar.current
         let hour = String(format: "%02d", calendar.component(.hour, from: date))
@@ -100,52 +182,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         return "\(hour):\(minutes):\(seconds)"
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        setConnectionStatus(as: "connecting")
-        self.messageTableView.delegate = self
-        self.messageTableView.dataSource = self
-        
-        // Set as delegate for the textfield
-        self.messageTextField.delegate = self
-        self.messageTextField.clearsOnBeginEditing = true
-        
-        // Add some sample data so that we can see something
-        ConnectToSocket()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
-        
-        messageTextField.resignFirstResponder()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        messageTextField.resignFirstResponder()
-        socketIOClient.disconnect()
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let keyboardHeight = keyboardSize.height
-            moveTextDock(to: keyboardHeight)
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let keyboardHeight = keyboardSize.height
-            moveTextDock(to: keyboardHeight)
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func moveTextDock(to keyboardHeight: CGFloat) {
+    private func moveTextDock(to keyboardHeight: CGFloat) {
         let textBoxHeight: CGFloat = 46.0
         view.layoutIfNeeded()
         UIView.animate(withDuration: 0.15, animations: {
@@ -154,40 +191,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }, completion: nil)
     }
     
-    func sendMessage() {
+    private func sendMessage() {
         let trimmedMessage = messageTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if (!trimmedMessage.isEmpty) {
             socketIOClient.emit("message", messageTextField.text!)
         }
         messageTextField.text = ""
-    }
-    
-    // MARK: TextField Delegate Methods
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        sendMessage()
-        return false
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-    }
-    
-    // MARK: TableView Delegate Methods
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messagesArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Create a table cell
-        guard let cell = messageTableView.dequeueReusableCell(withIdentifier: "MessageCell", for: indexPath) as? UITableViewCell else {
-            fatalError("Could not dequeue UITableViewCell")
-        }
-        
-        // Customize the cell
-        cell.textLabel?.text = messagesArray[indexPath.row]
-        
-        // Return the cell
-        return cell
     }
 }
 
