@@ -172,7 +172,7 @@
 				A77C46E721569CFB0056135A /* Sources */,
 				A77C46E821569CFB0056135A /* Frameworks */,
 				A77C46E921569CFB0056135A /* Resources */,
-				B5BFAFC999471639AE0597B7 /* [CP] Embed Pods Frameworks */,
+				C55F8A62F93B828723B27BEC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -308,10 +308,12 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B5BFAFC999471639AE0597B7 /* [CP] Embed Pods Frameworks */ = {
+		C55F8A62F93B828723B27BEC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios-frameworks.sh",
@@ -319,6 +321,8 @@
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
