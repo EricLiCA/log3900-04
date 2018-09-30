@@ -122,16 +122,12 @@ We use GitHub's pull request system to merge a branch.
 
 ## Server
 
-To deploy on AWS, make sure the awscli is configured, then run the following commands:
+To deploy on AWS, make sure the awscli is configured, then run the Makefile command:
 
 ```
-cd server
-$(aws ecr get-login --no-include-email --region us-east-1)
-docker build -t log3900-server .
-docker tag log3900-server:latest 042607413139.dkr.ecr.us-east-1.amazonaws.com/log3900-server:latest
-docker push 042607413139.dkr.ecr.us-east-1.amazonaws.com/log3900-server:latest
+make deploy
 ```
 
-Then navigate to AWS ECS -> Clusters -> <cluster-to-deploy-on> -> Tasks and stop the previous task, and start a new one with the latest image
+Then navigate to AWS ECS -> Clusters -> \<cluster-to-deploy-on\> -> Tasks and stop the previous task, and start a new one with the latest image
 
 ![aws-ecs-tasks](docs/images/aws-ecs-tasks.png)
