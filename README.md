@@ -1,14 +1,62 @@
-# PolyPaint
+# PolyPaintPro
+|               | Master        | Develop |
+| ------------- |:-------------:| :-----:|
+| CI Status     | [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04) | [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop) |
+| Code coverage      | N/A      |   N/A |
+| Deployed server | http://ec2-18-214-40-211.compute-1.amazonaws.com/      |    N/A |
+| iOS | [![iOS](https://img.shields.io/badge/version-11.4-blue.svg)](https://shields.io/)      |   [![iOS](https://img.shields.io/badge/version-11.4-blue.svg)](https://shields.io/) |
+| Windows | [![Windows](https://img.shields.io/badge/version-10-green.svg)](https://shields.io/)      |    [![Windows](https://img.shields.io/badge/version-10-green.svg)](https://shields.io/) |
 
-Master build status: [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04)
+## Target devices
+| iOS         | Windows                |
+| :---------: | :--------------------: |
+| iPad Mini 4 | Any PC with Windows 10 |
 
-Develop build status: [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop)
+# Description
 
 PolyPaint is the third year Bachelor's of Engineering (Software Engineering) project at Polytechnique Montréal done during the Fall semester of 2018. The goal of the project is to build a multi-platform application that enables users to collaboratively create, edit, and save images via a desktop client for Windows 10, an iPad application, and a website.
 
 # Getting Started
 
-This section will describe how to run, build, and use the application.
+## Quick start
+
+### iOS Client
+
+Clone the project
+
+```Bash
+git clone https://github.com/EricLiCA/log3900-04.git
+```
+
+Navigate to iOS directory
+
+```Bash
+cd poly-paint-ios
+```
+
+Install CocoaPods if you don't already have it
+
+```Bash
+sudo gem install cocoapods
+```
+
+Get all dependencies with CocoaPods
+
+```Bash
+pod install
+```
+
+Open project in XCode:
+
+[![XCode version](https://img.shields.io/badge/version-9.X-blue.svg)](https://shields.io/)
+
+```Bash
+open poly-paint-ios.xcworkspace/
+```
+
+Select iPad Pro (9.7 inch) as target, and click the play button to run the simulator.
+
+![xcode-run-ipad](docs/images/xcode-run-ipad.png)
 
 # Contributing
 
@@ -74,16 +122,12 @@ We use GitHub's pull request system to merge a branch.
 
 ## Server
 
-To deploy on AWS, make sure the awscli is configured, then run the following commands:
+To deploy on AWS, make sure the awscli is configured, then run the Makefile command:
 
 ```
-cd server
-$(aws ecr get-login --no-include-email --region us-east-1)
-docker build -t log3900-server .
-docker tag log3900-server:latest 042607413139.dkr.ecr.us-east-1.amazonaws.com/log3900-server:latest
-docker push 042607413139.dkr.ecr.us-east-1.amazonaws.com/log3900-server:latest
+make deploy
 ```
 
-Then navigate to AWS ECS -> Clusters -> <cluster-to-deploy-on> -> Tasks and stop the previous task, and start a new one with the latest image
+Then navigate to AWS ECS -> Clusters -> \<cluster-to-deploy-on\> -> Tasks and stop the previous task, and start a new one with the latest image
 
 ![aws-ecs-tasks](docs/images/aws-ecs-tasks.png)
