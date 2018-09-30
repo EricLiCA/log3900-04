@@ -3,7 +3,14 @@
 | ------------- |:-------------:| :-----:|
 | CI Status     | [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04) | [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop) |
 | Code coverage      | N/A      |   N/A |
-| Deployment | http://ec2-18-214-40-211.compute-1.amazonaws.com/      |    N/A |
+| Deployed server | http://ec2-18-214-40-211.compute-1.amazonaws.com/      |    N/A |
+| iOS | [![iOS](https://img.shields.io/badge/version-11.4-blue.svg)](https://shields.io/)      |   [![iOS](https://img.shields.io/badge/version-11.4-blue.svg)](https://shields.io/) |
+| Windows | [![Windows](https://img.shields.io/badge/version-10-green.svg)](https://shields.io/)      |    [![Windows](https://img.shields.io/badge/version-10-green.svg)](https://shields.io/) |
+
+## Target devices
+| iOS         | Windows                |
+| :---------: | :--------------------: |
+| iPad Mini 4 | Any PC with Windows 10 |
 
 # Description
 
@@ -11,7 +18,45 @@ PolyPaint is the third year Bachelor's of Engineering (Software Engineering) pro
 
 # Getting Started
 
-This section will describe how to run, build, and use the application.
+## Quick start
+
+### iOS Client
+
+Clone the project
+
+```Bash
+git clone https://github.com/EricLiCA/log3900-04.git
+```
+
+Navigate to iOS directory
+
+```Bash
+cd poly-paint-ios
+```
+
+Install CocoaPods if you don't already have it
+
+```Bash
+sudo gem install cocoapods
+```
+
+Get all dependencies with CocoaPods
+
+```Bash
+pod install
+```
+
+Open project in XCode:
+
+[![XCode version](https://img.shields.io/badge/version-9.X-blue.svg)](https://shields.io/)
+
+```Bash
+open poly-paint-ios.xcworkspace/
+```
+
+Select iPad Pro (9.7 inch) as target, and click the play button to run the simulator.
+
+![xcode-run-ipad](docs/images/xcode-run-ipad.png)
 
 # Contributing
 
