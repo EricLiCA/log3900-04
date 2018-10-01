@@ -31,7 +31,7 @@ git clone https://github.com/EricLiCA/log3900-04.git
 Navigate to iOS directory
 
 ```Bash
-cd poly-paint-ios
+cd log3900-04/poly-paint-ios
 ```
 
 Install CocoaPods if you don't already have it
@@ -57,6 +57,34 @@ open poly-paint-ios.xcworkspace/
 Select iPad Pro (9.7 inch) as target, and click the play button to run the simulator.
 
 ![xcode-run-ipad](docs/images/xcode-run-ipad.png)
+
+### Windows Client
+
+Clone the project
+
+```Bash
+git clone https://github.com/EricLiCA/log3900-04.git
+```
+
+Navigate to windows directory
+
+```Bash
+cd log3900-04/windows-client
+```
+
+Install Visual Studio if not already installed using the installation wizard that can be downloaded [here](https://visualstudio.microsoft.com/)
+
+Open project in Visual Studio:
+
+[![Visual Studio version](https://img.shields.io/badge/version-15.X-blue.svg](https://shields.io/)
+
+```Bash
+start PolyPaint.sln
+```
+
+Click the play button to run the app.
+
+![visual-studio-run-project](docs/images/visual-studio-run-project.png)
 
 # Contributing
 
