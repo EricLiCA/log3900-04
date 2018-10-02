@@ -4,25 +4,13 @@ import { SocketServer } from "./socket-server";
 
 import * as http from "http";
 import { ChatService } from "./chat-service/chat-service";
-import { Client, ClientConfig } from "pg";
+import { PostgresDatabase } from "./postgres-database";
 
-const clientConfig: ClientConfig = {
-    user: "polypaintadmin",
-    database: "polypaintpro",
-    password: "walleandtomato",
-    port: 5432,
-    host: "polypaintpro.cmshnc94mrtf.us-east-1.rds.amazonaws.com",
-    keepAlive: true,
-    ssl: false
-}
-
-const postgres = new Client(clientConfig);
-postgres.connect();
-postgres.query('SELECT $1::text as message', ['Hello world!'], (err, res) => {
-    console.log(err ? err.stack : res.rows[0].message); // Hello World!
-    postgres.end();
+PostgresDatabase.getInstance().then(onfullfiled => {
+    console.log(`Postgres database connected`);
+}, onRejected => {
+    console.log(`Postgres database connection failed: ${onRejected}`);
 });
-  
 
 const application: Application = Application.bootstrap();
 
