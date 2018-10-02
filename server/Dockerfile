@@ -5,4 +5,5 @@ COPY . .
 RUN yarn install
 EXPOSE 3000
 ENV PORT=3000
+ENV PROD=true
 CMD [ "yarn", "production" ]

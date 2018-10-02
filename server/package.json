@@ -55,6 +55,7 @@
     "sinon": "^6.3.4",
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
+    "superagent": "^4.0.0-beta.5",
     "typescript": "^3.0.3",
     "winston": "^3.1.0"
   },
@@ -71,6 +72,7 @@
     "@types/sinon": "^5.0.2",
     "@types/socket.io": "^1.4.38",
     "@types/socket.io-client": "^1.4.32",
+    "@types/superagent": "^3.8.4",
     "chai": "^4.1.2",
     "mocha": "^5.2.0",
     "ts-node": "^7.0.1",
