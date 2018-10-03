@@ -242,6 +242,9 @@
                                 <state key="normal" title="Sign In">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="signinTapped:" destination="o6s-WD-cRz" eventType="touchUpInside" id="isa-zs-NsG"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bso-W8-UeQ">
                                 <rect key="frame" x="260" y="565" width="249" height="30"/>
@@ -272,7 +275,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="pdy-YN-vTB"/>
                     <connections>
-                        <outlet property="username" destination="k6M-KN-r4Z" id="va4-pJ-WHG"/>
+                        <outlet property="password" destination="g0s-JR-JNI" id="5kE-zo-A4G"/>
+                        <outlet property="username" destination="k6M-KN-r4Z" id="QRi-Gb-SE1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9C8-ck-fpI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -322,11 +326,19 @@
                                 <state key="normal" title="Sign Up">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="signUpTapped:" destination="XJb-1G-aFR" eventType="touchUpInside" id="EEt-Mh-KaX"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Byo-qK-EE2"/>
                     </view>
+                    <connections>
+                        <outlet property="confirmPassword" destination="CW6-Vh-SRu" id="AzD-Lj-Bd1"/>
+                        <outlet property="password" destination="P45-hh-Eg1" id="SNt-lI-C2r"/>
+                        <outlet property="username" destination="soB-Qm-epz" id="dWr-P9-AtH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SWV-bP-qxY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
