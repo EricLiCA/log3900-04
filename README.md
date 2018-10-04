@@ -48,15 +48,33 @@ pod install
 
 Open project in XCode:
 
-[![XCode version](https://img.shields.io/badge/version-9.X-blue.svg)](https://shields.io/)
+[![XCode version](https://img.shields.io/badge/version-9.4+-blue.svg)](https://shields.io/)
 
 ```Bash
 open poly-paint-ios.xcworkspace/
 ```
 
+#### Simulator
 Select iPad Pro (9.7 inch) as target, and click the play button to run the simulator.
 
+![xcode-run-ipad-simulator](docs/images/xcode-run-ipad-simulator.png)
+
+#### iPad Mini 4
+Select your iPad as target (e.g. Eric Sida Li's iPad), and click the play button to install the app on the device.
+
 ![xcode-run-ipad](docs/images/xcode-run-ipad.png)
+
+If this is the first time running the app, you will have to grant it permissions on the iPad. Go to General -> Device Management:
+
+![xcode-run-ipad](docs/images/ipad/general-device-management.jpeg)
+
+Tap on your developer account:
+
+![xcode-run-ipad](docs/images/ipad/device-management-developer.jpeg)
+
+Verify the app:
+
+![xcode-run-ipad](docs/images/ipad/app-permission.jpeg)
 
 ### Windows Client
 
