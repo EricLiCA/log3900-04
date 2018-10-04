@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
+using System.Windows.Forms;
 using PolyPaint.VueModeles;
 using PolyPaint.Vues;
 using System.Net;
@@ -35,8 +36,8 @@ namespace PolyPaint
         }
 
         // Pour la gestion de l'affichage de position du pointeur.
-        private void surfaceDessin_MouseLeave(object sender, MouseEventArgs e) => textBlockPosition.Text = "";
-        private void surfaceDessin_MouseMove(object sender, MouseEventArgs e)
+        private void surfaceDessin_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e) => textBlockPosition.Text = "";
+        private void surfaceDessin_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             Point p = e.GetPosition(surfaceDessin);
             textBlockPosition.Text = Math.Round(p.X) + ", " + Math.Round(p.Y) + "px";
@@ -83,6 +84,7 @@ namespace PolyPaint
 
                 this.Menu_Disconnect.Visibility = Visibility.Visible;
                 this.Menu_Connect.Visibility = Visibility.Collapsed;
+                this.Menu_Change_Avatar.Visibility = Visibility.Visible;
             };
         }
 
@@ -93,6 +95,29 @@ namespace PolyPaint
             this.Chat_Reserved_Zone.Visibility = Visibility.Collapsed;
             this.Menu_Disconnect.Visibility = Visibility.Collapsed;
             this.Menu_Connect.Visibility = Visibility.Visible;
+            this.Menu_Change_Avatar.Visibility = Visibility.Collapsed;
+        }
+        private void Menu_Change_Avatar_Click(object sender, System.EventArgs e)
+        {
+            string fileName = null;
+
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            {
+                openFileDialog1.InitialDirectory = "c:\\";
+                openFileDialog1.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+                openFileDialog1.FilterIndex = 2;
+                openFileDialog1.RestoreDirectory = true;
+
+                if (openFileDialog1.ShowDialog().ToString().Equals("OK"))
+                {
+                    fileName = openFileDialog1.FileName;
+                }
+            }
+
+            if (fileName != null)
+            {
+                string text = File.ReadAllText(fileName);
+            }
         }
     }
 }

@@ -26,6 +26,7 @@
             <MenuItem Header="_Chat">
                 <MenuItem Name="Menu_Connect" Header="_Connect" Click="Menu_Connect_Click" />
                 <MenuItem Name="Menu_Disconnect" Visibility="Collapsed" Header="_Disconnect" Click="Menu_Disconnect_Click" />
+                <MenuItem Name="Menu_Change_Avatar" Visibility="Collapsed" Header="_Avatar" Click="Menu_Change_Avatar_Click" />
             </MenuItem>
         </Menu>
 
