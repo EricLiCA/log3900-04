@@ -6,14 +6,18 @@
 -- To reset the sample schema, replace everything with
 -- two dots ('..' - without quotes).
 
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TYPE ImageProtection AS ENUM ('public', 'protected', 'private');
+
 CREATE TABLE "Image" (
-    "Id" UUID   NOT NULL,
+    "Id" UUID   NOT NULL DEFAULT uuid_generate_v1(),
     "OwnerId" UUID   NOT NULL,
-    "Title" VARCHAR(128)   NOT NULL,
-    "ProtectionType" Enum   NOT NULL,
-    "Password" varchar(32)   NOT NULL,
-    "ThumbnailUrl" VARCHAR(128)   NOT NULL,
-    "FullImageUrl" VARCHAR(128)   NOT NULL,
+    "Title" VARCHAR(128) NOT NULL,
+    "ProtectionType" ImageProtection NOT NULL DEFAULT 'private',
+    "Password" varchar(32),
+    "ThumbnailUrl" VARCHAR(128),
+    "FullImageUrl" VARCHAR(128),
     CONSTRAINT "pk_Image" PRIMARY KEY (
         "Id"
      )
@@ -22,7 +26,7 @@ CREATE TABLE "Image" (
 CREATE TABLE "PendingFriendRequest" (
     "RequesterId" UUID   NOT NULL,
     "ReceiverId" UUID   NOT NULL,
-    "Notified" BOOLEAN   NOT NULL,
+    "Notified" BOOLEAN   NOT NULL DEFAULT FALSE,
     CONSTRAINT "pk_PendingFriendRequest" PRIMARY KEY (
         "RequesterId","ReceiverId"
      )
@@ -36,11 +40,8 @@ CREATE TABLE "Friendship" (
      )
 );
 
--- Table documentation comment 1 (try the PDF/RTF export)
--- Table documentation comment 2
 CREATE TABLE "User" (
-    "Id" UUID   NOT NULL,
-    -- Field documentation comment 3
+    "Id" UUID   NOT NULL DEFAULT uuid_generate_v1(),
     "Username" varchar(32)   NOT NULL,
     "Password" varchar(200)   NOT NULL,
     CONSTRAINT "pk_User" PRIMARY KEY (
@@ -62,7 +63,7 @@ CREATE TABLE "ImageLike" (
 CREATE TABLE "ImageComment" (
     "ImageId" UUID   NOT NULL,
     "UserId" UUID   NOT NULL,
-    "Timestamp" Timestamp   NOT NULL,
+    "Timestamp" Timestamp   NOT NULL DEFAULT NOW(),
     "Comment" VARCHAR(512)   NOT NULL,
     CONSTRAINT "pk_ImageComment" PRIMARY KEY (
         "ImageId","UserId","Timestamp"
