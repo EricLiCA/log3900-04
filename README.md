@@ -48,15 +48,33 @@ pod install
 
 Open project in XCode:
 
-[![XCode version](https://img.shields.io/badge/version-9.X-blue.svg)](https://shields.io/)
+[![XCode version](https://img.shields.io/badge/version-9.4+-blue.svg)](https://shields.io/)
 
 ```Bash
 open poly-paint-ios.xcworkspace/
 ```
 
+#### Simulator
 Select iPad Pro (9.7 inch) as target, and click the play button to run the simulator.
 
-![xcode-run-ipad](docs/images/xcode-run-ipad.png)
+<img src="docs/images/xcode-run-ipad-simulator.png" alt="ipad-simulator" width="300"/>
+
+#### iPad Mini 4
+Select your iPad as target (e.g. Eric Sida Li's iPad), and click the play button to install the app on the device.
+
+<img src="docs/images/xcode-run-ipad.png" alt="ipad" width="300"/>
+
+If this is the first time running the app, you will have to grant it permissions on the iPad. Go to General -> Device Management:
+
+<img src="docs/images/ipad/general-device-management.jpeg" alt="ipad-permissions" width="400"/>
+
+Tap on your developer account:
+
+<img src="docs/images/ipad/device-management-developer.jpeg" alt="ipad-permissions" width="250"/>
+
+Verify the app:
+
+<img src="docs/images/ipad/app-permission.jpeg" alt="ipad-permissions" width="250"/>
 
 ### Windows Client
 
@@ -76,7 +94,7 @@ Install Visual Studio if not already installed using the installation wizard tha
 
 Open project in Visual Studio:
 
-[![Visual Studio version](https://img.shields.io/badge/version-15.X-blue.svg](https://shields.io/)
+![Visual Studio version](https://img.shields.io/badge/version-15.X-blue.svg)
 
 ```Bash
 start PolyPaint.sln
