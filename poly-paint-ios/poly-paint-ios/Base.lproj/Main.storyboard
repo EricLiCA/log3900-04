@@ -312,36 +312,12 @@
                         <outlet property="authenticationFailedNotice" destination="LhW-e8-HO2" id="7rw-8f-Rz3"/>
                         <outlet property="password" destination="g0s-JR-JNI" id="5kE-zo-A4G"/>
                         <outlet property="username" destination="k6M-KN-r4Z" id="QRi-Gb-SE1"/>
-                        <segue destination="UFi-hu-14n" kind="showDetail" identifier="toMainMenu" id="UBW-Z9-PO3"/>
+                        <segue destination="ifB-yb-up4" kind="showDetail" identifier="toMainMenu" id="UBW-Z9-PO3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9C8-ck-fpI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="55.46875" y="131.8359375"/>
-        </scene>
-        <!--Main Menu View Controller-->
-        <scene sceneID="7eB-Fy-qiV">
-            <objects>
-                <viewController id="UFi-hu-14n" customClass="MainMenuViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="nj6-Dj-1Yk">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You are logged in!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SzN-YD-Stb">
-                                <rect key="frame" x="316" y="502" width="137" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="kkW-O4-00f"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jDT-ya-MxP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="812.5" y="131.8359375"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="KdO-gB-JaW">
@@ -424,12 +400,20 @@
                         <outlet property="password" destination="P45-hh-Eg1" id="SNt-lI-C2r"/>
                         <outlet property="signUpFailedNotice" destination="ZDk-C1-dBg" id="tX8-0v-thl"/>
                         <outlet property="username" destination="soB-Qm-epz" id="dWr-P9-AtH"/>
-                        <segue destination="UFi-hu-14n" kind="showDetail" identifier="toMainMenu" id="Tdp-bh-awn"/>
+                        <segue destination="ifB-yb-up4" kind="showDetail" identifier="toMainMenu" id="Tdp-bh-awn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SWV-bP-qxY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="54.6875" y="-596.484375"/>
+        </scene>
+        <!--MainMenu-->
+        <scene sceneID="8gz-tR-qDA">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MainMenu" id="ifB-yb-up4" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x8l-PQ-vAy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="812.5" y="131.8359375"/>
         </scene>
     </scenes>
     <resources>
