@@ -94,7 +94,7 @@ Install Visual Studio if not already installed using the installation wizard tha
 
 Open project in Visual Studio:
 
-[![Visual Studio version](https://img.shields.io/badge/version-15.X-blue.svg](https://shields.io/)
+![Visual Studio version](https://img.shields.io/badge/version-15.X-blue.svg)
 
 ```Bash
 start PolyPaint.sln
