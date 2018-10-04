@@ -57,12 +57,12 @@ open poly-paint-ios.xcworkspace/
 #### Simulator
 Select iPad Pro (9.7 inch) as target, and click the play button to run the simulator.
 
-![xcode-run-ipad-simulator](docs/images/xcode-run-ipad-simulator.png)
+<img src="docs/images/xcode-run-ipad-simulator.png" alt="ipad-simulator" width="300"/>
 
 #### iPad Mini 4
 Select your iPad as target (e.g. Eric Sida Li's iPad), and click the play button to install the app on the device.
 
-![xcode-run-ipad](docs/images/xcode-run-ipad.png)
+<img src="docs/images/xcode-run-ipad.png" alt="ipad" width="300"/>
 
 If this is the first time running the app, you will have to grant it permissions on the iPad. Go to General -> Device Management:
 
