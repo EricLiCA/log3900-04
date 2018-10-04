@@ -13,11 +13,11 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
-    
+    @IBOutlet weak var signUpFailedNotice: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.signUpFailedNotice.text = ""
         // Do any additional setup after loading the view.
     }
 
@@ -27,7 +27,13 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func signUpTapped(_ sender: UIButton) {
-        
+        if username.text == "" || password.text == "" || confirmPassword.text == "" {
+            self.signUpFailedNotice.text = "Please, fill all the fields above."
+        } else if password.text != confirmPassword.text {
+            self.signUpFailedNotice.text = "The username and password don't match."
+        } else {
+             performSegue(withIdentifier: "toMainMenu", sender: self)
+        }
     }
     
     /*
