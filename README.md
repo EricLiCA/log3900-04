@@ -66,15 +66,15 @@ Select your iPad as target (e.g. Eric Sida Li's iPad), and click the play button
 
 If this is the first time running the app, you will have to grant it permissions on the iPad. Go to General -> Device Management:
 
-![xcode-run-ipad](docs/images/ipad/general-device-management.jpeg)
+<img src="docs/images/ipad/general-device-management.jpeg" alt="ipad-permissions" width="400"/>
 
 Tap on your developer account:
 
-![xcode-run-ipad](docs/images/ipad/device-management-developer.jpeg)
+<img src="docs/images/ipad/device-management-developer.jpeg" alt="ipad-permissions" width="250"/>
 
 Verify the app:
 
-![xcode-run-ipad](docs/images/ipad/app-permission.jpeg)
+<img src="docs/images/ipad/app-permission.jpeg" alt="ipad-permissions" width="250"/>
 
 ### Windows Client
 
