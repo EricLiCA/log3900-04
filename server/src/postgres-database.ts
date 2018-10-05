@@ -1,24 +1,22 @@
 import { Client, ClientConfig } from "pg";
-import { POSTGRES_ENDPOINT, POSTGRES_PORT, POSTGRES_PASSWORD, POSTGRES_DATABASE, POSTGRES_USER } from "./configs/http";
+import { Postgres } from "./configs/databases";
 
 const clientConfig: ClientConfig = {
-    user: POSTGRES_USER,
-    database: POSTGRES_DATABASE,
-    password: POSTGRES_PASSWORD,
-    port: POSTGRES_PORT,
-    host: POSTGRES_ENDPOINT,
+    user: Postgres.USER,
+    database: Postgres.DATABASE,
+    password: Postgres.PASSWORD,
+    port: Number(Postgres.PORT),
+    host: Postgres.HOST,
     keepAlive: true,
-    ssl: false
-}
+    ssl: false,
+};
 
 export class PostgresDatabase {
-
-    private static database: Client;
 
     public static getInstance(): Promise<Client> {
 
         return new Promise<Client>((resolve, reject) => {
-            if ( PostgresDatabase.database === undefined ) {
+            if (PostgresDatabase.database === undefined) {
                 PostgresDatabase.database = new Client(clientConfig);
                 PostgresDatabase.database.connect((err: Error) => {
                     if (err) {
@@ -33,5 +31,7 @@ export class PostgresDatabase {
 
         });
     }
-    
+
+    private static database: Client;
+
 }

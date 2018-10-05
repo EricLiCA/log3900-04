@@ -3,9 +3,9 @@ import { SERVER_PORT } from "./configs/http";
 import { SocketServer } from "./socket-server";
 
 import * as http from "http";
+import { post } from "superagent";
 import { ChatService } from "./chat-service/chat-service";
 import { PostgresDatabase } from "./postgres-database";
-import { post } from "superagent";
 
 const application: Application = Application.bootstrap();
 
@@ -16,14 +16,15 @@ application.app.set("port", appPort);
 // Create the HTTP server
 const server = http.createServer(application.app);
 
-startServices().then((map : Map<string, boolean>) => {
-    let statusUpdate = `Server deployement was completed at ${new Date().toLocaleString("en-US")}`;
+// Send deployment status update to team Slack channel
+startServices().then((map: Map<string, boolean>) => {
+    let statusUpdate = `Server deployment was completed at ${new Date().toLocaleString("en-US")}`;
 
     map.forEach((value: boolean, key: string) => {
-        statusUpdate += `\n${key} : ${value ? "ok" : "error"}`
-    })
+        statusUpdate += `\n${key} : ${value ? "ok" : "error"}`;
+    });
 
-    if (process.env.TYPE) {
+    if (process.env.PROD) {
         post("https://hooks.slack.com/services/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")
         .send({text: statusUpdate})
         .end();
@@ -56,12 +57,12 @@ async function startServices(): Promise<Map<string, boolean>> {
 
     const results = new Map<string, boolean>();
 
-    await PostgresDatabase.getInstance().then(onfullfiled => {
+    await PostgresDatabase.getInstance().then((onfullfiled) => {
         results.set("PostgreSQL", true);
-    }, onRejected => {
+    }, (onRejected) => {
         results.set("PostgreSQL", false);
     });
-    
+
     SocketServer.setServer(server);
     ChatService.instance.startChatService();
     results.set("SocketServer", true);

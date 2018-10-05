@@ -164,6 +164,19 @@ The `hotfix branches` branch off `master`, and are for fixing critical bugs foun
 
 We use GitHub's pull request system to merge a branch.
 
+## Server
+
+### Database environment variables
+
+Set the following environment variables for access to the databases:
+
+#### PostgreSQL
+- PG_HOST : e.g. localhost
+- PG_PORT : e.g. 5432
+- PG_USER
+- PG_PASSWORD
+- PG_DB
+
 ## Databases
 
 ### PostgreSQL

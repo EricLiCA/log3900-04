@@ -3,7 +3,7 @@ import { Connection } from "./connection";
 
 export class ChatRoom {
 
-    private _id: string
+    private _id: string;
     private _participants: Set<Connection>;
 
     constructor(_id: string) {
