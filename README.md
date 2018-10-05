@@ -164,6 +164,14 @@ The `hotfix branches` branch off `master`, and are for fixing critical bugs foun
 
 We use GitHub's pull request system to merge a branch.
 
+## Databases
+
+### PostgreSQL
+
+Update the DDL file `databases/postgresql/postgres-ddl.sql` when you want to change the database schema. In DataGrip, you can edit your columns, and then generate the DDL files by right-clicking on `tables`, then selecting `SQL Scripts` -> `Generate DDL to Console`, and then copy-paste it in the DDL file in the repository, and commit your changes.
+
+<img src="docs/images/databases/datagrip-generate-ddl.png" alt="datagrip-ddl" width="500"/>
+
 # Deployment
 
 ## Server
