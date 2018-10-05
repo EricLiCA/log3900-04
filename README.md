@@ -31,7 +31,7 @@ git clone https://github.com/EricLiCA/log3900-04.git
 Navigate to iOS directory
 
 ```Bash
-cd poly-paint-ios
+cd log3900-04/poly-paint-ios
 ```
 
 Install CocoaPods if you don't already have it
@@ -48,15 +48,61 @@ pod install
 
 Open project in XCode:
 
-[![XCode version](https://img.shields.io/badge/version-9.X-blue.svg)](https://shields.io/)
+[![XCode version](https://img.shields.io/badge/version-9.4+-blue.svg)](https://shields.io/)
 
 ```Bash
 open poly-paint-ios.xcworkspace/
 ```
 
+#### Simulator
 Select iPad Pro (9.7 inch) as target, and click the play button to run the simulator.
 
-![xcode-run-ipad](docs/images/xcode-run-ipad.png)
+<img src="docs/images/xcode-run-ipad-simulator.png" alt="ipad-simulator" width="300"/>
+
+#### iPad Mini 4
+Select your iPad as target (e.g. Eric Sida Li's iPad), and click the play button to install the app on the device.
+
+<img src="docs/images/xcode-run-ipad.png" alt="ipad" width="300"/>
+
+If this is the first time running the app, you will have to grant it permissions on the iPad. Go to General -> Device Management:
+
+<img src="docs/images/ipad/general-device-management.jpeg" alt="ipad-permissions" width="400"/>
+
+Tap on your developer account:
+
+<img src="docs/images/ipad/device-management-developer.jpeg" alt="ipad-permissions" width="250"/>
+
+Verify the app:
+
+<img src="docs/images/ipad/app-permission.jpeg" alt="ipad-permissions" width="250"/>
+
+### Windows Client
+
+Clone the project
+
+```Bash
+git clone https://github.com/EricLiCA/log3900-04.git
+```
+
+Navigate to windows directory
+
+```Bash
+cd log3900-04/windows-client
+```
+
+Install Visual Studio if not already installed using the installation wizard that can be downloaded [here](https://visualstudio.microsoft.com/)
+
+Open project in Visual Studio:
+
+![Visual Studio version](https://img.shields.io/badge/version-15.X-blue.svg)
+
+```Bash
+start PolyPaint.sln
+```
+
+Click the play button to run the app.
+
+![visual-studio-run-project](docs/images/visual-studio-run-project.png)
 
 # Contributing
 
@@ -117,6 +163,14 @@ The `hotfix branches` branch off `master`, and are for fixing critical bugs foun
 ### Merging
 
 We use GitHub's pull request system to merge a branch.
+
+## Databases
+
+### PostgreSQL
+
+Update the DDL file `databases/postgresql/postgres-ddl.sql` when you want to change the database schema. In DataGrip, you can edit your columns, and then generate the DDL files by right-clicking on `tables`, then selecting `SQL Scripts` -> `Generate DDL to Console`, and then copy-paste it in the DDL file in the repository, and commit your changes.
+
+<img src="docs/images/databases/datagrip-generate-ddl.png" alt="datagrip-ddl" width="500"/>
 
 # Deployment
 
