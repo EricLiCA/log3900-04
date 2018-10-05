@@ -1,14 +1,108 @@
-# PolyPaint
+# PolyPaintPro
+|               | Master        | Develop |
+| ------------- |:-------------:| :-----:|
+| CI Status     | [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04) | [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop) |
+| Code coverage      | N/A      |   N/A |
+| Deployed server | http://ec2-18-214-40-211.compute-1.amazonaws.com/      |    N/A |
+| iOS | [![iOS](https://img.shields.io/badge/version-11.4-blue.svg)](https://shields.io/)      |   [![iOS](https://img.shields.io/badge/version-11.4-blue.svg)](https://shields.io/) |
+| Windows | [![Windows](https://img.shields.io/badge/version-10-green.svg)](https://shields.io/)      |    [![Windows](https://img.shields.io/badge/version-10-green.svg)](https://shields.io/) |
 
-Master build status: [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04)
+## Target devices
+| iOS         | Windows                |
+| :---------: | :--------------------: |
+| iPad Mini 4 | Any PC with Windows 10 |
 
-Develop build status: [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop)
+# Description
 
 PolyPaint is the third year Bachelor's of Engineering (Software Engineering) project at Polytechnique Montréal done during the Fall semester of 2018. The goal of the project is to build a multi-platform application that enables users to collaboratively create, edit, and save images via a desktop client for Windows 10, an iPad application, and a website.
 
 # Getting Started
 
-This section will describe how to run, build, and use the application.
+## Quick start
+
+### iOS Client
+
+Clone the project
+
+```Bash
+git clone https://github.com/EricLiCA/log3900-04.git
+```
+
+Navigate to iOS directory
+
+```Bash
+cd log3900-04/poly-paint-ios
+```
+
+Install CocoaPods if you don't already have it
+
+```Bash
+sudo gem install cocoapods
+```
+
+Get all dependencies with CocoaPods
+
+```Bash
+pod install
+```
+
+Open project in XCode:
+
+[![XCode version](https://img.shields.io/badge/version-9.4+-blue.svg)](https://shields.io/)
+
+```Bash
+open poly-paint-ios.xcworkspace/
+```
+
+#### Simulator
+Select iPad Pro (9.7 inch) as target, and click the play button to run the simulator.
+
+<img src="docs/images/xcode-run-ipad-simulator.png" alt="ipad-simulator" width="300"/>
+
+#### iPad Mini 4
+Select your iPad as target (e.g. Eric Sida Li's iPad), and click the play button to install the app on the device.
+
+<img src="docs/images/xcode-run-ipad.png" alt="ipad" width="300"/>
+
+If this is the first time running the app, you will have to grant it permissions on the iPad. Go to General -> Device Management:
+
+<img src="docs/images/ipad/general-device-management.jpeg" alt="ipad-permissions" width="400"/>
+
+Tap on your developer account:
+
+<img src="docs/images/ipad/device-management-developer.jpeg" alt="ipad-permissions" width="250"/>
+
+Verify the app:
+
+<img src="docs/images/ipad/app-permission.jpeg" alt="ipad-permissions" width="250"/>
+
+### Windows Client
+
+Clone the project
+
+```Bash
+git clone https://github.com/EricLiCA/log3900-04.git
+```
+
+Navigate to windows directory
+
+```Bash
+cd log3900-04/windows-client
+```
+
+Install Visual Studio if not already installed using the installation wizard that can be downloaded [here](https://visualstudio.microsoft.com/)
+
+Open project in Visual Studio:
+
+![Visual Studio version](https://img.shields.io/badge/version-15.X-blue.svg)
+
+```Bash
+start PolyPaint.sln
+```
+
+Click the play button to run the app.
+
+![visual-studio-run-project](docs/images/visual-studio-run-project.png)
 
 # Contributing
 
@@ -74,16 +168,12 @@ We use GitHub's pull request system to merge a branch.
 
 ## Server
 
-To deploy on AWS, make sure the awscli is configured, then run the following commands:
+To deploy on AWS, make sure the awscli is configured, then run the Makefile command:
 
 ```
-cd server
-$(aws ecr get-login --no-include-email --region us-east-1)
-docker build -t log3900-server .
-docker tag log3900-server:latest 042607413139.dkr.ecr.us-east-1.amazonaws.com/log3900-server:latest
-docker push 042607413139.dkr.ecr.us-east-1.amazonaws.com/log3900-server:latest
+make deploy
 ```
 
-Then navigate to AWS ECS -> Clusters -> <cluster-to-deploy-on> -> Tasks and stop the previous task, and start a new one with the latest image
+Then navigate to AWS ECS -> Clusters -> \<cluster-to-deploy-on\> -> Tasks and stop the previous task, and start a new one with the latest image
 
 ![aws-ecs-tasks](docs/images/aws-ecs-tasks.png)
