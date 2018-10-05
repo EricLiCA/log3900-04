@@ -42,6 +42,9 @@ class LoginViewController: UIViewController {
         
     }
     
+    @IBAction func skipTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "toMainMenu", sender: self)
+    }
     /*
     // MARK: - Navigation
 

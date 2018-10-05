@@ -10,6 +10,9 @@ import UIKit
 
 class MainMenuViewController: UIViewController {
 
+    @IBAction func disconnect(_ sender: UIBarButtonItem) {
+        navigationController?.popViewController(animated: true)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
