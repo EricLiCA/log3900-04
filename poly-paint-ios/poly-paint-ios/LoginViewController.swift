@@ -24,7 +24,10 @@ class LoginViewController: UIViewController {
         if(preferences.object(forKey: "session") != nil) {
             loginDone()
         } else {
-            loginToDo()
+            //loginToDo()
+            _username.isEnabled = false
+            _password.isEnabled = false
+            _loginButton.isEnabled = false
         }
         // Do any additional setup after loading the view.
     }
@@ -52,6 +55,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func skipTapped(_ sender: UIButton) {
+        UserDefaults.standard.set("anonymous", forKey: "username")
         performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     
@@ -84,8 +88,7 @@ class LoginViewController: UIViewController {
             }
             
             if let dataBlock = serverResponse["data"] as? NSDictionary {
-                if let sessionData = dataBlock["session"] as? String
-                {
+                if let sessionData = dataBlock["session"] as? String {
                     let preferences = UserDefaults.standard
                     preferences.set(sessionData, forKey: "session")
                     
