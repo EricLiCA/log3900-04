@@ -135,7 +135,7 @@ class LoginViewController: UIViewController {
             self._signUpFailedNotice.text = "The username and password don't match."
         } else {
             //signUp(username!, password!)
-            
+            performSegue(withIdentifier: "toMainMenu", sender: self)
         }
     }
     
