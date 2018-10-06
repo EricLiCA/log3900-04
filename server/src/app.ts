@@ -55,13 +55,14 @@ export class Application {
         const usersRoute: UsersRoute = new UsersRoute();
 
         // hello world path
-        router.get("/status/", serverStatus.status.bind(serverStatus.status));
+        router.get("/status", serverStatus.status.bind(serverStatus.status));
 
         // Users
+        router.get("/users", usersRoute.getAll.bind(usersRoute.getAll));
         router.get("/users/:id", usersRoute.get.bind(usersRoute.get));
 
         // use router middleware
-        this.app.use("/api", router);
+        this.app.use("/v1", router);
 
         // error management
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
