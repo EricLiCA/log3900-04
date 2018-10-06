@@ -10,11 +10,13 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TYPE ImageProtection AS ENUM ('public', 'protected', 'private');
 
+CREATE TYPE UserPermissionLevel AS ENUM ('admin', 'user');
+
 CREATE TABLE "Image" (
     "Id" UUID   NOT NULL DEFAULT uuid_generate_v1(),
     "OwnerId" UUID   NOT NULL,
     "Title" VARCHAR(128) NOT NULL,
-    "ProtectionType" ImageProtection NOT NULL DEFAULT 'private',
+    "ProtectionLevel" ImageProtection NOT NULL DEFAULT 'private',
     "Password" varchar(32),
     "ThumbnailUrl" VARCHAR(128),
     "FullImageUrl" VARCHAR(128),
@@ -44,6 +46,7 @@ CREATE TABLE "User" (
     "Id" UUID   NOT NULL DEFAULT uuid_generate_v1(),
     "Username" varchar(32)   NOT NULL,
     "Password" varchar(200)   NOT NULL,
+    "UserLevel" UserPermissionLevel NOT NULL DEFAULT 'user',
     CONSTRAINT "pk_User" PRIMARY KEY (
         "Id"
      ),
