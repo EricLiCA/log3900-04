@@ -39,4 +39,27 @@ export class UsersRoute {
                 res.sendStatus(400); // Bad request
             });
     }
+
+    public async post(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        const preparedQuery = {
+            text: 'INSERT INTO Users("Username", "Password") VALUES($1, $2) RETURNING *',
+            values: [req.body.username, req.body.password],
+        };
+        const db = await PostgresDatabase.getInstance();
+        db.query(preparedQuery).then((query) => {
+            if (query.rowCount > 0) {
+                const result = query.rows[0];
+                res.status(201);
+                res.send({
+                    id: result.Id,
+                    username: result.Username,
+                    userLevel: result.UserLevel,
+                });
+            }
+            res.sendStatus(204);
+        })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
+            });
+    }
 }
