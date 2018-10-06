@@ -29,20 +29,23 @@ class LoginViewController: UIViewController {
         // Authentication
         // If success, go to MainMenuViewController
         // If failure set authenticationFailedNotice label
-        if _username.text != "" && _password.text != "" {
-            print("username")
-            performSegue(withIdentifier: "toMainMenu", sender: self)
-        } else if _username.text == "" || _password.text == "" {
+        let username = _username.text
+        let password = _password.text
+        
+        if username != "" && password != "" {
+            doLogin(username!, password!)
+        } else if username == "" || password == "" {
             _authenticationFailedNotice.text = "Please, fill all the fields above."
         } else  {
             _authenticationFailedNotice.text = "Wrong username or password."
         }
-        
-        
-        
     }
     
     @IBAction func skipTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "toMainMenu", sender: self)
+    }
+    
+    func doLogin(_ user: String, _ psw: String) {
         performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     /*
