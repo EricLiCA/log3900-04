@@ -161,7 +161,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func sendMessage() {
-        print(UserDefaults.standard.string(forKey: "username") ?? "no username")
         let trimmedMessage = messageTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if (!trimmedMessage.isEmpty) {
             socketIOClient.emit("message", messageTextField.text!)
