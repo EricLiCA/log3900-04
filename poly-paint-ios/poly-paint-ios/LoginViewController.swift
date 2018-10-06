@@ -21,8 +21,8 @@ class LoginViewController: UIViewController {
         
         let preferences = UserDefaults.standard
         
-        if(preferences.object(forKey: "session") != nil) {
-            loginDone()
+        if(preferences.object(forKey: "username") != nil) {
+            //loginDone()
         } else {
             //loginToDo()
             _username.isEnabled = false
@@ -36,6 +36,7 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
     
     @IBAction func signinTapped(_ sender: UIButton) {
         // Authentication
