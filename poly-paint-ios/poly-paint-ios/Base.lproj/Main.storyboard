@@ -310,6 +310,7 @@
                     <navigationItem key="navigationItem" id="pdy-YN-vTB"/>
                     <connections>
                         <outlet property="_authenticationFailedNotice" destination="LhW-e8-HO2" id="eAe-dF-G8P"/>
+                        <outlet property="_loginButton" destination="EAd-AH-hnL" id="Biq-W2-7r9"/>
                         <outlet property="_password" destination="g0s-JR-JNI" id="CaV-dY-vFf"/>
                         <outlet property="_username" destination="k6M-KN-r4Z" id="wik-OV-8U0"/>
                         <segue destination="fbK-Vc-Znj" kind="show" identifier="toMainMenu" id="hrR-AD-T0j"/>
