@@ -5,6 +5,7 @@ import * as httpLogger from "morgan";
 import * as path from "path";
 
 import { ServerStatus } from "./routes/server-status";
+import { UsersRoute } from "./routes/users";
 
 export class Application {
     /**
@@ -51,9 +52,13 @@ export class Application {
 
         // create routes
         const serverStatus: ServerStatus = new ServerStatus();
+        const usersRoute: UsersRoute = new UsersRoute();
 
         // hello world path
         router.get("/status/", serverStatus.status.bind(serverStatus.status));
+
+        // Users
+        router.get("/users/:id", usersRoute.get.bind(usersRoute.get));
 
         // use router middleware
         this.app.use("/api", router);
