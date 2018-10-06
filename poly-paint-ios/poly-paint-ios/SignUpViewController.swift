@@ -27,13 +27,58 @@ class SignUpViewController: UIViewController {
     }
     
     @IBAction func signUpTapped(_ sender: UIButton) {
-        if _username.text == "" || _password.text == "" || _confirmPassword.text == "" {
+        let username = _username.text
+        let password = _password.text
+        let confirmPassword = _confirmPassword.text
+        
+        if username == "" || password == "" || confirmPassword == "" {
             self._signUpFailedNotice.text = "Please, fill all the fields above."
-        } else if _password.text != _confirmPassword.text {
+        } else if password != confirmPassword {
             self._signUpFailedNotice.text = "The username and password don't match."
         } else {
-             performSegue(withIdentifier: "toMainMenu", sender: self)
+            //signUp(username!, password!)
+            performSegue(withIdentifier: "toMainMenu", sender: self)
         }
+    }
+    
+    func signUp(_ username: String, _ password: String) {
+        let url = URL(string: "http://ec2-18-214-40-211.compute-1.amazonaws.com")
+        let session = URLSession.shared
+        
+        let request = NSMutableURLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let paramToSend = "username" + username + "&password" + password
+        request.httpBody = paramToSend.data(using: String.Encoding.utf8)
+        
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {
+            (data, response, error) in
+            guard let _:Data = data else {
+                return
+            }
+            
+            let json:Any?
+            
+            do {
+                json = try JSONSerialization.jsonObject(with: data!, options: [])
+            }
+            catch {
+                return
+            }
+            guard let serverResponse = json as? NSDictionary else {
+                return
+            }
+            
+            if let dataBlock = serverResponse["data"] as? NSDictionary {
+                if (dataBlock["session"] as? String) != nil {
+                    DispatchQueue.main.async {
+                        // segue successful login
+                    }
+                }
+            }
+        })
+        
+        task.resume()
     }
     
     /*
