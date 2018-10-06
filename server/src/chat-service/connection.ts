@@ -1,4 +1,4 @@
-import { User } from "../user-service/user";
+import { User } from '../user-service/user';
 
 export class Connection {
     private _user: User;

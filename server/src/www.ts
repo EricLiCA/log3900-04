@@ -1,31 +1,31 @@
-import { Application } from "./app";
-import { SERVER_PORT } from "./configs/http";
-import { SocketServer } from "./socket-server";
+import { Application } from './app';
+import { SERVER_PORT } from './configs/http';
+import { SocketServer } from './socket-server';
 
-import * as http from "http";
-import { post } from "superagent";
-import { ChatService } from "./chat-service/chat-service";
-import { PostgresDatabase } from "./postgres-database";
+import * as http from 'http';
+import { post } from 'superagent';
+import { ChatService } from './chat-service/chat-service';
+import { PostgresDatabase } from './postgres-database';
 
 const application: Application = Application.bootstrap();
 
 // Port configuration
 const appPort = normalizePort(process.env.PORT || SERVER_PORT);
-application.app.set("port", appPort);
+application.app.set('port', appPort);
 
 // Create the HTTP server
 const server = http.createServer(application.app);
 
 // Send deployment status update to team Slack channel
 startServices().then((map: Map<string, boolean>) => {
-    let statusUpdate = `Server deployment was completed at ${new Date().toLocaleString("en-US")}`;
+    let statusUpdate = `Server deployment was completed at ${new Date().toLocaleString('en-US')}`;
 
     map.forEach((value: boolean, key: string) => {
-        statusUpdate += `\n${key} : ${value ? "ok" : "error"}`;
+        statusUpdate += `\n${key} : ${value ? 'ok' : 'error'}`;
     });
 
     if (process.env.PROD) {
-        post("https://hooks.slack.com/services/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")
+        post('https://hooks.slack.com/services/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')
         .send({text: statusUpdate})
         .end();
     }
@@ -38,7 +38,7 @@ startServices().then((map: Map<string, boolean>) => {
  * @returns Normalized port value or false if invalid
  */
 function normalizePort(val: number | string): number | string | boolean {
-    const port: number = (typeof val === "string") ? parseInt(val, 10) : val;
+    const port: number = (typeof val === 'string') ? parseInt(val, 10) : val;
     if (isNaN(port)) {
         return val;
     } else if (port >= 0) {
@@ -58,19 +58,19 @@ async function startServices(): Promise<Map<string, boolean>> {
     const results = new Map<string, boolean>();
 
     await PostgresDatabase.getInstance().then((onfullfiled) => {
-        results.set("PostgreSQL", true);
+        results.set('PostgreSQL', true);
     }, (onRejected) => {
-        results.set("PostgreSQL", false);
+        results.set('PostgreSQL', false);
     });
 
     SocketServer.setServer(server);
     ChatService.instance.startChatService();
-    results.set("SocketServer", true);
+    results.set('SocketServer', true);
 
     server.listen(appPort);
-    server.on("error", onError);
-    server.on("listening", onListening);
-    results.set("Application", true);
+    server.on('error', onError);
+    server.on('listening', onListening);
+    results.set('Application', true);
 
     return results;
 }
@@ -81,14 +81,14 @@ async function startServices(): Promise<Map<string, boolean>> {
  * @param error Error message caught by the server
  */
 function onError(error: NodeJS.ErrnoException): void {
-    if (error.syscall !== "listen") { throw error; }
-    const bind = (typeof appPort === "string") ? "Pipe " + appPort : "Port " + appPort;
+    if (error.syscall !== 'listen') { throw error; }
+    const bind = (typeof appPort === 'string') ? 'Pipe ' + appPort : 'Port ' + appPort;
     switch (error.code) {
-        case "EACCES":
+        case 'EACCES':
             console.error(`${bind} requires elevated privileges`);
             process.exit(1);
             break;
-        case "EADDRINUSE":
+        case 'EADDRINUSE':
             console.error(`${bind} is already in use`);
             process.exit(1);
             break;
@@ -102,6 +102,6 @@ function onError(error: NodeJS.ErrnoException): void {
  */
 function onListening(): void {
     const addr = server.address();
-    const bind = (typeof addr === "string") ? `pipe ${addr}` : `port ${addr.port}`;
+    const bind = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
     console.log(`Listening on ${bind}`);
 }

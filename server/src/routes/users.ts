@@ -1,5 +1,5 @@
-import * as express from "express";
-import { PostgresDatabase } from "../postgres-database";
+import * as express from 'express';
+import { PostgresDatabase } from '../postgres-database';
 
 export class UsersRoute {
     public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {

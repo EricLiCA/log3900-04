@@ -1,5 +1,5 @@
-import { Client, ClientConfig } from "pg";
-import { Postgres } from "./configs/databases";
+import { Client, ClientConfig } from 'pg';
+import { Postgres } from './configs/databases';
 
 const clientConfig: ClientConfig = {
     user: Postgres.USER,

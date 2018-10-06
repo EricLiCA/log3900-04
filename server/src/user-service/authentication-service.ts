@@ -1,6 +1,6 @@
-import { compare, genSalt, hash } from "bcrypt-nodejs";
-import { JsonWebTokenError, NotBeforeError, sign, TokenExpiredError, verify } from "jsonwebtoken";
-import { Utils } from "../utils/Utils";
+import { compare, genSalt, hash } from 'bcrypt-nodejs';
+import { JsonWebTokenError, NotBeforeError, sign, TokenExpiredError, verify } from 'jsonwebtoken';
+import { Utils } from '../utils/Utils';
 
 export const secretLength = 32;
 
@@ -43,7 +43,7 @@ export class AuthenticationService {
 
     public validateCredentials(email: string, password: string): Promise<boolean> {
         /* MUST FETCH FROM THE DATABASE */
-        const hashedPassword = "$2a$10$Pveiz7gSBa0HrTdkRRWcw.AuLy7985VIF2Lgmo1TjFes7lZt2TT1W";
+        const hashedPassword = '$2a$10$Pveiz7gSBa0HrTdkRRWcw.AuLy7985VIF2Lgmo1TjFes7lZt2TT1W';
 
         return new Promise<boolean> ((resolve, reject) => {
             compare(password, hashedPassword, (error: Error, result: boolean) => {
@@ -59,7 +59,7 @@ export class AuthenticationService {
 
     public generateJsonwebtoken(email: string): Promise<string> {
         return new Promise<string> ((resolve, reject) => {
-            sign( { email }, this.secret, { expiresIn: "6h" }, (error: Error, encoded: string) => {
+            sign( { email }, this.secret, { expiresIn: '6h' }, (error: Error, encoded: string) => {
                 if (error) {
                     reject(error.message);
                     return;

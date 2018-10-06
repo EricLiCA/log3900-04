@@ -19,7 +19,7 @@ export class User {
     constructor(authenticated: boolean, email?: string) {
         if (authenticated) {
             if (!email) {
-                throw new Error("Missing email adress for an authenticated account");
+                throw new Error('Missing email adress for an authenticated account');
             }
 
             this._id = /* FETCH FROM DATABASE */ Math.ceil(Math.random() * 10000);
@@ -33,7 +33,7 @@ export class User {
 
     public connect(email: string): void {
         if (!email) {
-            throw new Error("Missing email adress for an authenticated account");
+            throw new Error('Missing email adress for an authenticated account');
         }
 
         this._id = /* FETCH FROM DATABASE */ Math.ceil(Math.random() * 10000);

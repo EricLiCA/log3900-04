@@ -1,4 +1,4 @@
-import { SocketServer } from "../socket-server";
+import { SocketServer } from '../socket-server';
 // import { AuthenticationService } from "../user-service/authentication-service";
 // import { ChatRoom } from "./chat-room";
 // import { Connection } from "./connection";
@@ -17,8 +17,8 @@ export class ChatService {
         // Reserve key usernames
         this.usernames = new Map();
         this.connectedUsers = new Set();
-        this.connectedUsers.add("You");
-        this.connectedUsers.add("you");
+        this.connectedUsers.add('You');
+        this.connectedUsers.add('you');
     }
 
     public static get instance(): ChatService {
@@ -33,7 +33,7 @@ export class ChatService {
     }
 
     private listenForConnections(): void {
-        SocketServer.instance.on("connection", (socket: SocketIO.Socket) => {
+        SocketServer.instance.on('connection', (socket: SocketIO.Socket) => {
             /* scope creep
             const connection = new Connection(socket);
             */
@@ -44,19 +44,19 @@ export class ChatService {
             socket.on("joinRoom", (...args: any[]) => this.joinRoom(connection, args));
             */
             console.log(`New socket connection with id ${socket.id}`);
-            socket.on("setUsername", (username: string) => {
+            socket.on('setUsername', (username: string) => {
                 console.log(`${socket.id} wants to set username as ${username}`);
                 if (this.connectedUsers.has(username)) {
-                    socket.emit("setUsernameStatus", "Username already taken!");
+                    socket.emit('setUsernameStatus', 'Username already taken!');
                     socket.disconnect();
                 } else {
-                    socket.emit("setUsernameStatus", "OK");
+                    socket.emit('setUsernameStatus', 'OK');
                     this.connectedUsers.add(username);
                     this.usernames.set(socket.id, username);
                 }
             });
 
-            socket.on("disconnect", () => {
+            socket.on('disconnect', () => {
                 console.log(`${socket.id} has disconnected`);
                 if (this.usernames.has(socket.id)) {
                     // Username is now unused
@@ -64,13 +64,13 @@ export class ChatService {
                 }
             });
 
-            socket.on("message", (message: string) => {
+            socket.on('message', (message: string) => {
                 console.log(`Received: ${message}`);
-                socket.emit("message", "You", message);
+                socket.emit('message', 'You', message);
                 if (this.usernames.has(socket.id)) {
-                    socket.broadcast.emit("message", this.usernames.get(socket.id), message);
+                    socket.broadcast.emit('message', this.usernames.get(socket.id), message);
                 } else {
-                    socket.emit("setUsernameStatus", "No username set!");
+                    socket.emit('setUsernameStatus', 'No username set!');
                 }
             });
         });
