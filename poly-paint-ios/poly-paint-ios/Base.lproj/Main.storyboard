@@ -224,18 +224,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="G4H-xb-y1d">
                                 <rect key="frame" x="269" y="491" width="230" height="106"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g0s-JR-JNI">
-                                        <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="230" id="POG-L7-dot"/>
-                                            <constraint firstAttribute="height" constant="30" id="vfi-C6-3Qe"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                    </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k6M-KN-r4Z">
-                                        <rect key="frame" x="0.0" y="38" width="230" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="340-Eh-l7C"/>
                                             <constraint firstAttribute="width" constant="230" id="ykd-cZ-AoE"/>
@@ -243,6 +233,16 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g0s-JR-JNI">
+                                        <rect key="frame" x="0.0" y="38" width="230" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="230" id="POG-L7-dot"/>
+                                            <constraint firstAttribute="height" constant="30" id="vfi-C6-3Qe"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EAd-AH-hnL">
                                         <rect key="frame" x="0.0" y="76" width="230" height="30"/>
@@ -309,9 +309,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="pdy-YN-vTB"/>
                     <connections>
-                        <outlet property="authenticationFailedNotice" destination="LhW-e8-HO2" id="7rw-8f-Rz3"/>
-                        <outlet property="password" destination="g0s-JR-JNI" id="5kE-zo-A4G"/>
-                        <outlet property="username" destination="k6M-KN-r4Z" id="QRi-Gb-SE1"/>
+                        <outlet property="_authenticationFailedNotice" destination="LhW-e8-HO2" id="eAe-dF-G8P"/>
+                        <outlet property="_password" destination="g0s-JR-JNI" id="CaV-dY-vFf"/>
+                        <outlet property="_username" destination="k6M-KN-r4Z" id="wik-OV-8U0"/>
                         <segue destination="fbK-Vc-Znj" kind="show" identifier="toMainMenu" id="hrR-AD-T0j"/>
                     </connections>
                 </viewController>

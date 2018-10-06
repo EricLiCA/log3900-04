@@ -10,13 +10,13 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var username: UITextField!
-    @IBOutlet weak var password: UITextField!
-    @IBOutlet weak var authenticationFailedNotice: UILabel!
+    @IBOutlet weak var _username: UITextField!
+    @IBOutlet weak var _password: UITextField!
+    @IBOutlet weak var _authenticationFailedNotice: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.authenticationFailedNotice.text = ""
+        _authenticationFailedNotice.text = ""
         // Do any additional setup after loading the view.
     }
 
@@ -29,13 +29,13 @@ class LoginViewController: UIViewController {
         // Authentication
         // If success, go to MainMenuViewController
         // If failure set authenticationFailedNotice label
-        if username.text != "" && password.text != "" {
+        if _username.text != "" && _password.text != "" {
             print("username")
             performSegue(withIdentifier: "toMainMenu", sender: self)
-        } else if username.text == "" || password.text == "" {
-            self.authenticationFailedNotice.text = "Please, fill all the fields above."
+        } else if _username.text == "" || _password.text == "" {
+            _authenticationFailedNotice.text = "Please, fill all the fields above."
         } else  {
-            self.authenticationFailedNotice.text = "Wrong username or password."
+            _authenticationFailedNotice.text = "Wrong username or password."
         }
         
         
