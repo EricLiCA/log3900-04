@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="55T-va-sHI">
-                                <rect key="frame" x="269" y="491" width="230" height="106"/>
+                                <rect key="frame" x="269" y="469" width="230" height="106"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://ec2-18-214-40-211.compute-1.amazonaws.com" borderStyle="roundedRect" placeholder="Server address" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Tzt-tL-Elm">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
@@ -82,7 +82,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eoP-gJ-ha8">
-                                <rect key="frame" x="0.0" y="64" width="768" height="914"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="958"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" id="DVL-uI-Epi">
@@ -114,7 +114,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5NO-JK-7AR">
-                                <rect key="frame" x="0.0" y="64" width="768" height="30"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.051022046232876712" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="t5n-sY-XbW"/>
@@ -328,10 +328,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Paint" translatesAutoresizingMaskIntoConstraints="NO" id="17Y-KH-9rq">
-                                <rect key="frame" x="184" y="64" width="400" height="300"/>
+                                <rect key="frame" x="184" y="20" width="400" height="300"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RTE-Dt-BDa">
-                                <rect key="frame" x="269.5" y="469" width="230" height="150"/>
+                                <rect key="frame" x="269.5" y="447" width="230" height="150"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hBy-br-W1z">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
@@ -465,10 +465,10 @@
                         <viewLayoutGuide key="safeArea" id="Byo-qK-EE2"/>
                     </view>
                     <connections>
-                        <outlet property="confirmPassword" destination="CW6-Vh-SRu" id="AzD-Lj-Bd1"/>
-                        <outlet property="password" destination="P45-hh-Eg1" id="SNt-lI-C2r"/>
-                        <outlet property="signUpFailedNotice" destination="ZDk-C1-dBg" id="tX8-0v-thl"/>
-                        <outlet property="username" destination="soB-Qm-epz" id="dWr-P9-AtH"/>
+                        <outlet property="_confirmPassword" destination="CW6-Vh-SRu" id="5BS-89-koM"/>
+                        <outlet property="_password" destination="P45-hh-Eg1" id="3sN-AR-bZ2"/>
+                        <outlet property="_signUpFailedNotice" destination="ZDk-C1-dBg" id="xzx-wI-dYq"/>
+                        <outlet property="_username" destination="soB-Qm-epz" id="Iia-kn-BwV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SWV-bP-qxY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -480,6 +480,6 @@
         <image name="Paint" width="400" height="300"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hrR-AD-T0j"/>
+        <segue reference="7FM-TY-CQv"/>
     </inferredMetricsTieBreakers>
 </document>
