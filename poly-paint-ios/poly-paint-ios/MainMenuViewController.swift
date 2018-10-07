@@ -10,12 +10,6 @@ import UIKit
 
 class MainMenuViewController: UIViewController {
     
-    // TODO: Clear userDefaults when login implemented
-    @IBAction func disconnect(_ sender: UIBarButtonItem) {
-        
-        navigationController?.popViewController(animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
