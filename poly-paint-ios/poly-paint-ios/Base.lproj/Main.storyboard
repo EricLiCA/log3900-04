@@ -399,9 +399,6 @@
                     <tabBarItem key="tabBarItem" title="Login" image="Login" landscapeImage="Login" id="gUs-pW-Jno">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
-                    <navigationItem key="navigationItem" title="Home" id="xic-pH-ooC">
-                        <barButtonItem key="backBarButtonItem" title="Logout" id="QGD-8q-mth"/>
-                    </navigationItem>
                     <connections>
                         <outlet property="authenticationFailedLabel" destination="Puh-Hd-Lg8" id="0BA-I5-LJZ"/>
                         <outlet property="loginButton" destination="ZnL-a7-3af" id="UqL-uJ-T9y"/>
@@ -418,7 +415,9 @@
         <scene sceneID="pJf-Kx-dYa">
             <objects>
                 <tabBarController id="55N-jH-ipb" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="pff-l8-GbE"/>
+                    <navigationItem key="navigationItem" id="pff-l8-GbE">
+                        <barButtonItem key="backBarButtonItem" title="Logout" id="e66-Om-1fd"/>
+                    </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7mu-a6-qkO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
