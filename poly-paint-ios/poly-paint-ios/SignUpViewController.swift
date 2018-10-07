@@ -9,18 +9,16 @@
 import UIKit
 
 class SignUpViewController: UIViewController {
-    
-    @IBOutlet weak var _confirmPassword: UITextField!
-        @IBOutlet weak var _password: UITextField!
-    @IBOutlet weak var _username: UITextField!
-    
-    @IBOutlet weak var _signUpSuccessNotice: UILabel!
-    @IBOutlet weak var _signUpFailedNotice: UILabel!
+    @IBOutlet weak var confirmPasswordTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var signUpSuccessLabel: UILabel!
+    @IBOutlet weak var signUpFailedLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        _signUpFailedNotice.isHidden = true
-        _signUpSuccessNotice.isHidden = true
+        signUpFailedLabel.isHidden = true
+        signUpSuccessLabel.isHidden = true
         // Do any additional setup after loading the view.
     }
 
@@ -29,23 +27,28 @@ class SignUpViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // TODO: Modify function when API ready
     @IBAction func signUp(_ sender: UIButton) {
-        let username = _username.text
-        let password = _password.text
-        let confirmPassword = _confirmPassword.text
+        let username = usernameTextField.text
+        let password = passwordTextField.text
+        let confirmPassword = confirmPasswordTextField.text
         
-        if username == "" || password == "" || confirmPassword == "" {
-            self._signUpFailedNotice.isHidden = false
-        } else if password != confirmPassword {
-            self._signUpFailedNotice.isHidden = false
+        if username == "" || password == "" || confirmPassword == "" || password != confirmPassword {
+            self.signUpFailedLabel.isHidden = false
         } else {
-            //signUp(username!, password!)
-            _signUpSuccessNotice.isHidden = false
-            UIView.animate( withDuration: 5, animations: { () -> Void in self._signUpSuccessNotice.alpha = 0})
+            // TODO: signUp(username!, password!)
+            signUpSuccessLabel.isHidden = false
+            UIView.animate( withDuration: 3, animations: { () -> Void in self.signUpFailedLabel.alpha = 0})
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                self.signUpSuccessLabel.isHidden = true
+                self.signUpSuccessLabel.alpha = 1
+            })
+            
             self.resetFieldsAndLabels()
         }
     }
     
+    // TODO: Modify function when API ready
     func signUp(_ username: String, _ password: String) {
         let url = URL(string: "http://ec2-18-214-40-211.compute-1.amazonaws.com")
         let session = URLSession.shared
@@ -87,10 +90,10 @@ class SignUpViewController: UIViewController {
     }
     
     func resetFieldsAndLabels() {
-        _username.text = ""
-        _password.text = ""
-        _confirmPassword.text = ""
-        _signUpFailedNotice.isHidden = true
+        usernameTextField.text = ""
+        passwordTextField.text = ""
+        confirmPasswordTextField.text = ""
+        signUpFailedLabel.isHidden = true
     }
     
     /*

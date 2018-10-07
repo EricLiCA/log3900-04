@@ -306,11 +306,11 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Sign Up" image="SignUp" id="kW0-qo-iu9"/>
                     <connections>
-                        <outlet property="_confirmPassword" destination="NoH-Zs-isN" id="A2K-TY-N6w"/>
-                        <outlet property="_password" destination="AEr-Ee-YpH" id="YAk-Qb-7PT"/>
-                        <outlet property="_signUpFailedNotice" destination="67P-Qw-dxr" id="cyY-61-YZt"/>
-                        <outlet property="_signUpSuccessNotice" destination="jbV-JD-H2Q" id="rfj-iF-O7e"/>
-                        <outlet property="_username" destination="97H-GI-wsb" id="G0n-PZ-EOV"/>
+                        <outlet property="confirmPasswordTextField" destination="NoH-Zs-isN" id="YRd-TX-CFR"/>
+                        <outlet property="passwordTextField" destination="AEr-Ee-YpH" id="m5r-NB-ATw"/>
+                        <outlet property="signUpFailedLabel" destination="67P-Qw-dxr" id="EYL-s2-Akw"/>
+                        <outlet property="signUpSuccessLabel" destination="jbV-JD-H2Q" id="Rf4-dg-RcL"/>
+                        <outlet property="usernameTextField" destination="97H-GI-wsb" id="tL3-lQ-cXG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GcN-G4-lI2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -403,10 +403,10 @@
                         <barButtonItem key="backBarButtonItem" title="Sign out" id="Vms-xE-dbg"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="_authenticationFailedNotice" destination="Puh-Hd-Lg8" id="trm-az-StN"/>
-                        <outlet property="_loginButton" destination="ZnL-a7-3af" id="rns-an-wRz"/>
-                        <outlet property="_password" destination="AKD-8H-mqh" id="AmZ-ih-Tkd"/>
-                        <outlet property="_username" destination="7WF-aM-uJ0" id="Cye-sR-n0A"/>
+                        <outlet property="authenticationFailedLabel" destination="Puh-Hd-Lg8" id="0BA-I5-LJZ"/>
+                        <outlet property="loginButton" destination="ZnL-a7-3af" id="UqL-uJ-T9y"/>
+                        <outlet property="passwordTextField" destination="AKD-8H-mqh" id="Euq-Zl-o1v"/>
+                        <outlet property="usernameTextField" destination="7WF-aM-uJ0" id="yyz-eT-PQZ"/>
                         <segue destination="fbK-Vc-Znj" kind="show" identifier="toMainMenu" id="nQf-tk-MSg"/>
                     </connections>
                 </viewController>

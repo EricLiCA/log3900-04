@@ -10,24 +10,15 @@ import UIKit
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var _username: UITextField!
-    @IBOutlet weak var _password: UITextField!
-    @IBOutlet weak var _loginButton: UIButton!
-    @IBOutlet weak var _authenticationFailedNotice: UILabel!
-
+    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var authenticationFailedLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        _authenticationFailedNotice.isHidden = true
-        let preferences = UserDefaults.standard
+        authenticationFailedLabel.isHidden = true
         
-        if(preferences.object(forKey: "username") != nil) {
-            //loginDone()
-        } else {
-            //loginToDo()
-            _username.isEnabled = false
-            _password.isEnabled = false
-            _loginButton.isEnabled = false
-        }
         // Do any additional setup after loading the view.
     }
 
@@ -36,15 +27,15 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // TODO: Call login() when API ready
     @IBAction func loginTapped(_ sender: UIButton) {
-        let username = _username.text
-        let password = _password.text
+        let username = usernameTextField.text
+        let password = passwordTextField.text
         if username != "" && password != "" {
             performSegue(withIdentifier: "toMainMenu", sender: self)
-            //doLogin(username!, password!)
+            //TODO: Call login(username!, password!)
         } else  {
-            print("else")
-            _authenticationFailedNotice.isHidden = false
+            authenticationFailedLabel.isHidden = false
         }
     }
     
@@ -53,12 +44,8 @@ class LoginViewController: UIViewController {
         performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     
-    @IBAction func skipTapped(_ sender: UIButton) {
-        UserDefaults.standard.set("anonymous", forKey: "username")
-        performSegue(withIdentifier: "toMainMenu", sender: self)
-    }
-    
-    func doLogin(_ user: String, _ psw: String) {
+    // TODO: Modify function when api ready
+    func login(_ user: String, _ psw: String) {
         let url = URL(string: "http://ec2-18-214-40-211.compute-1.amazonaws.com")
         let session = URLSession.shared
         
@@ -92,74 +79,24 @@ class LoginViewController: UIViewController {
                     preferences.set(sessionData, forKey: "session")
                     
                     DispatchQueue.main.async {
-                       _ = self.loginDone
+                        self.loginDone()
                     }
                 }
             }
         })
         
         task.resume()
-        //performSegue(withIdentifier: "toMainMenu", sender: self)
-    }
-    
-    func loginToDo() {
-        _username.isEnabled = true
-        _password.isEnabled = true
-        _loginButton.setTitle("Login", for: .normal)
     }
     
     func loginDone() {
-        _username.isEnabled = false
-        _password.isEnabled = false
-        _loginButton.setTitle("Logout", for: .normal)
-        _authenticationFailedNotice.text = ""
+        self.resetFieldsAndLabels()
         performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     
-    func signUp(_ username: String, _ password: String) {
-        let url = URL(string: "http://ec2-18-214-40-211.compute-1.amazonaws.com")
-        let session = URLSession.shared
-        
-        let request = NSMutableURLRequest(url: url!)
-        request.httpMethod = "POST"
-        
-        let paramToSend = "username" + username + "&password" + password
-        request.httpBody = paramToSend.data(using: String.Encoding.utf8)
-        
-        let task = session.dataTask(with: request as URLRequest, completionHandler: {
-            (data, response, error) in
-            guard let _:Data = data else {
-                return
-            }
-            
-            let json:Any?
-            
-            do {
-                json = try JSONSerialization.jsonObject(with: data!, options: [])
-            }
-            catch {
-                return
-            }
-            guard let serverResponse = json as? NSDictionary else {
-                return
-            }
-            
-            if let dataBlock = serverResponse["data"] as? NSDictionary {
-                if (dataBlock["session"] as? String) != nil {
-                    DispatchQueue.main.async {
-                        // segue successful login
-                    }
-                }
-            }
-        })
-        
-        task.resume()
-    }
-    
     func resetFieldsAndLabels() {
-        _username.text = ""
-        _password.text = ""
-        _authenticationFailedNotice.text = ""
+        usernameTextField.text = ""
+        passwordTextField.text = ""
+        authenticationFailedLabel.isHidden = true
     }
     
     /*
