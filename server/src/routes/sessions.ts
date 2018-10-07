@@ -99,7 +99,6 @@ export class SessionsRoute {
                     `SELECT token FROM Sessions WHERE "userid" = $1`,
                     [req.params.id],
                 ).then((queryResult) => {
-                    console.log(queryResult);
                     if (queryResult.rowCount > 0) {
                         const result = queryResult.rows[0];
                         if (result.token === req.body.token) {
