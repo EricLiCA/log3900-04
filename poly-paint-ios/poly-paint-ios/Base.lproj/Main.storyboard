@@ -317,10 +317,10 @@
             </objects>
             <point key="canvasLocation" x="-109" y="-585"/>
         </scene>
-        <!--Login-->
+        <!--Login Scene-->
         <scene sceneID="maM-Fp-ADF">
             <objects>
-                <viewController id="vSt-a2-nNf" customClass="LoginViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Login Scene" id="vSt-a2-nNf" customClass="LoginViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C5B-ZU-vTO">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -399,8 +399,8 @@
                     <tabBarItem key="tabBarItem" title="Login" image="Login" landscapeImage="Login" id="gUs-pW-Jno">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
-                    <navigationItem key="navigationItem" title="Login" id="5qW-P7-Gzh">
-                        <barButtonItem key="backBarButtonItem" title="Sign out" id="Vms-xE-dbg"/>
+                    <navigationItem key="navigationItem" title="Home" id="xic-pH-ooC">
+                        <barButtonItem key="backBarButtonItem" title="Logout" id="QGD-8q-mth"/>
                     </navigationItem>
                     <connections>
                         <outlet property="authenticationFailedLabel" destination="Puh-Hd-Lg8" id="0BA-I5-LJZ"/>
@@ -494,7 +494,7 @@
                         <viewLayoutGuide key="safeArea" id="rmb-tG-Dbt"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="FB7-Y4-F71">
-                        <barButtonItem key="backBarButtonItem" title="Home" id="H7u-uc-2qm"/>
+                        <barButtonItem key="backBarButtonItem" title="Home" id="UVc-yL-7CS"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEf-0y-fS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
