@@ -32,8 +32,9 @@ class LoginViewController: UIViewController {
         let username = usernameTextField.text
         let password = passwordTextField.text
         if username != "" && password != "" {
-            performSegue(withIdentifier: "toMainMenu", sender: self)
+            //performSegue(withIdentifier: "toMainMenu", sender: self)
             //TODO: Call login(username!, password!)
+            login(username!, password!)
         } else  {
             authenticationFailedLabel.isHidden = false
         }
@@ -46,44 +47,27 @@ class LoginViewController: UIViewController {
     
     // TODO: Modify function when api ready
     func login(_ user: String, _ psw: String) {
-        let url = URL(string: "http://ec2-18-214-40-211.compute-1.amazonaws.com")
+        let url = URL(string: "http://localhost:3000/v1/sessions")
         let session = URLSession.shared
         
-        let request = NSMutableURLRequest(url: url!)
+        var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
-        let paramToSend = "username" + user + "&password" + psw
-        request.httpBody = paramToSend.data(using: String.Encoding.utf8)
+        let paramToSend: [String: Any] = ["username": user, "password": psw]
+        let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
-        let task = session.dataTask(with: request as URLRequest, completionHandler: {
-            (data, response, error) in
-            guard let _:Data = data else {
+        let task = session.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
                 return
             }
-            
-            let json:Any?
-            
-            do {
-               json = try JSONSerialization.jsonObject(with: data!, options: [])
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                print(responseJSON)
             }
-            catch {
-                return
-            }
-            guard let serverResponse = json as? NSDictionary else {
-                return
-            }
-            
-            if let dataBlock = serverResponse["data"] as? NSDictionary {
-                if let sessionData = dataBlock["session"] as? String {
-                    let preferences = UserDefaults.standard
-                    preferences.set(sessionData, forKey: "session")
-                    
-                    DispatchQueue.main.async {
-                        self.loginDone()
-                    }
-                }
-            }
-        })
+        }
         
         task.resume()
     }

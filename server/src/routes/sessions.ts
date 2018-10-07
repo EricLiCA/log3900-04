@@ -29,7 +29,7 @@ export class SessionsRoute {
                 if (req.body.password === result.Password) {
                     const redisClient = RedisService.getInstance();
                     redisClient.hget('authTokens', result.Id, (redisErr, cachedToken) => {
-                        if (cachedToken !== undefined) {
+                        if (cachedToken !== null) {
                             res.send({
                                 id: result.Id,
                                 token: cachedToken,
