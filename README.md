@@ -138,11 +138,21 @@ Set the following environment variables for access to the databases:
 
 #### PostgreSQL
 ```Bash
-PG_HOST # localhost
-PG_PORT # 5432
+PG_HOST # example: localhost
+PG_PORT # example: 5432
 PG_USER
 PG_PASSWORD
 PG_DB
+```
+
+### Redis Local Instance
+
+Make sure a Redis instance is running on `localhost:6739` when developing. To get one running quickly:
+
+#### macOS
+```Bash
+brew install redis
+redis-server
 ```
 
 ## Databases
@@ -152,16 +162,6 @@ PG_DB
 Update the DDL file `databases/postgresql/postgres-ddl.sql` when you want to change the database schema. In DataGrip, you can edit your columns, and then generate the DDL files by right-clicking on `tables`, then selecting `SQL Scripts` -> `Generate DDL to Console`, and then copy-paste it in the DDL file in the repository, and commit your changes.
 
 <img src="docs/images/databases/datagrip-generate-ddl.png" alt="datagrip-ddl" width="500"/>
-
-### Redis
-
-Make sure a Redis instance is running on `localhost:6739` when developing. To get one running quickly:
-
-#### macOS
-```Bash
-brew install redis
-redis-server
-```
 
 # Deployment
 
