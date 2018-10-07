@@ -12,19 +12,23 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var _username: UITextField!
     @IBOutlet weak var _password: UITextField!
-    @IBOutlet weak var _authenticationFailedNotice: UILabel!
+    @IBOutlet weak var _authenticationFailedNoticeo: UILabel!
+    @IBOutlet weak var _loginButtono: UIButton!
     @IBOutlet weak var _loginButton: UIButton!
     
-    @IBOutlet weak var _usernameSignUp: UITextField!
-    @IBOutlet weak var _passwordSignUp: UITextField!
-     @IBOutlet weak var _confirmPasswordSignUp: UITextField!
-    @IBOutlet weak var _signUpFailedNotice: UILabel!
-    
+    @IBOutlet weak var _authenticationFailedNotice: UILabel!
+    /*@IBOutlet weak var _usernameSignUpo: UITextField!
+    @IBOutlet weak var _passwordSignUpo: UITextField!
+     @IBOutlet weak var _confirmPasswordSignUpo: UITextField!
+    @IBOutlet weak var _signUpFailedNoticeo: UILabel!
+    @IBOutlet weak var _signUpSuccessNoticeo: UILabel!
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
-        _authenticationFailedNotice.text = ""
-        _signUpFailedNotice.text = ""
-        
+        //_authenticationFailedNotice.text = ""
+        //_signUpFailedNotice.text = ""
+        //_signUpSuccessNotice.isHidden = true
+        _authenticationFailedNotice.isHidden = true
         let preferences = UserDefaults.standard
         
         if(preferences.object(forKey: "username") != nil) {
@@ -43,22 +47,21 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    
-    @IBAction func signinTapped(_ sender: UIButton) {
-        // Authentication
-        // If success, go to MainMenuViewController
-        // If failure set authenticationFailedNotice label
+    @IBAction func loginTapped(_ sender: UIButton) {
         let username = _username.text
         let password = _password.text
-        
         if username != "" && password != "" {
             performSegue(withIdentifier: "toMainMenu", sender: self)
             //doLogin(username!, password!)
-        } else if username == "" || password == "" {
-            _authenticationFailedNotice.text = "Please, fill all the fields above."
         } else  {
-            _authenticationFailedNotice.text = "Wrong username or password."
+            print("else")
+            _authenticationFailedNotice.isHidden = false
         }
+    }
+    
+    @IBAction func anonymousLogin(_ sender: UIButton) {
+        UserDefaults.standard.set("anonymous", forKey: "username")
+        performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     
     @IBAction func skipTapped(_ sender: UIButton) {
@@ -124,7 +127,7 @@ class LoginViewController: UIViewController {
         performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     
-    @IBAction func signUp(_ sender: UIButton) {
+    /*@IBAction func signUp(_ sender: UIButton) {
         let username = _usernameSignUp.text
         let password = _passwordSignUp.text
         let confirmPassword = _confirmPasswordSignUp.text
@@ -135,9 +138,12 @@ class LoginViewController: UIViewController {
             self._signUpFailedNotice.text = "The username and password don't match."
         } else {
             //signUp(username!, password!)
-            performSegue(withIdentifier: "toMainMenu", sender: self)
+            _signUpSuccessNotice.isHidden = false
+            UIView.animate( withDuration: 3, animations: { () -> Void in self._signUpSuccessNotice.alpha = 0})
+            self.resetFieldsAndLabels()
+            //performSegue(withIdentifier: "toMainMenu", sender: self)
         }
-    }
+    }*/
     
     func signUp(_ username: String, _ password: String) {
         let url = URL(string: "http://ec2-18-214-40-211.compute-1.amazonaws.com")
@@ -177,6 +183,17 @@ class LoginViewController: UIViewController {
         })
         
         task.resume()
+    }
+    
+    func resetFieldsAndLabels() {
+        _username.text = ""
+        _password.text = ""
+        _authenticationFailedNotice.text = ""
+       /* _usernameSignUp.text = ""
+        _passwordSignUp.text = ""
+        _confirmPasswordSignUp.text = ""
+        _signUpFailedNotice.text = ""
+*/
     }
     
     /*
