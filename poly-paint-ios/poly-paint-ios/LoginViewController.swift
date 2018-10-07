@@ -36,8 +36,12 @@ class LoginViewController: UIViewController {
             //TODO: Call login(username!, password!)
             login(username!, password!)
         } else  {
-            authenticationFailedLabel.isHidden = false
+            self.authenticationFailed()
         }
+    }
+    
+    func authenticationFailed() {
+        authenticationFailedLabel.isHidden = false
     }
     
     @IBAction func anonymousLogin(_ sender: UIButton) {
@@ -65,7 +69,15 @@ class LoginViewController: UIViewController {
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
-                print(responseJSON)
+                // TODO: set userdefaults
+                DispatchQueue.main.async {
+                    self.loginDone()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.authenticationFailed()
+                }
+                
             }
         }
         
@@ -73,7 +85,7 @@ class LoginViewController: UIViewController {
     }
     
     func loginDone() {
-        self.resetFieldsAndLabels()
+        //self.resetFieldsAndLabels()
         performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     
