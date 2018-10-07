@@ -499,6 +499,21 @@
             </objects>
             <point key="canvasLocation" x="813" y="120"/>
         </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="5Ad-dn-gBR">
+            <objects>
+                <viewController id="r8R-KD-eft" customClass="ProfileViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hVD-DC-fey">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="vss-gF-j5X"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XTL-g6-1OE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1488" y="71"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Login" width="22" height="22"/>

@@ -22,6 +22,7 @@
 		CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099D82165066700E2D27E /* LoginViewController.swift */; };
 		CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099DC216571B800E2D27E /* MainMenuViewController.swift */; };
 		CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F1E1C216980FF0023663E /* SignUpViewController.swift */; };
+		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		CF0099D82165066700E2D27E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CF0099DC216571B800E2D27E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		CF1F1E1C216980FF0023663E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
 				A77C46F221569CFB0056135A /* Main.storyboard */,
+				CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */,
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
 			);
 			path = "poly-paint-ios";
@@ -346,6 +349,7 @@
 			files = (
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
+				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
 				A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */,
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,
