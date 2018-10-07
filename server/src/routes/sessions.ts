@@ -1,5 +1,6 @@
 import * as express from 'express';
 import { PostgresDatabase } from '../postgres-database';
+import { RedisService } from '../redis.service';
 
 export class SessionsRoute {
 
@@ -26,28 +27,37 @@ export class SessionsRoute {
             if (query.rowCount > 0) {
                 const result = query.rows[0];
                 if (req.body.password === result.Password) {
-                    db.query(
-                        `INSERT INTO Sessions("userid")
-                        VALUES($1)
-                        ON CONFLICT ("userid")
-                        DO UPDATE SET "userid" = excluded.userid
-                        RETURNING *`,
-                        [result.Id],
-                    )
-                        .then((queryResponse) => {
-                            console.log(queryResponse);
-                            if (queryResponse.rowCount > 0) {
-                                const sessionResult = queryResponse.rows[0];
-                                res.send({
-                                    id: sessionResult.userid,
-                                    token: sessionResult.token,
+                    const redisClient = RedisService.getInstance();
+                    redisClient.hget('authTokens', result.Id, (redisErr, cachedToken) => {
+                        if (cachedToken !== undefined) {
+                            res.send({
+                                id: result.Id,
+                                token: cachedToken,
+                            });
+                        } else {
+                            db.query(
+                                `INSERT INTO Sessions("userid")
+                                VALUES($1)
+                                ON CONFLICT ("userid")
+                                DO UPDATE SET "userid" = excluded.userid
+                                RETURNING *`,
+                                [result.Id],
+                            )
+                                .then((queryResponse) => {
+                                    if (queryResponse.rowCount > 0) {
+                                        const sessionResult = queryResponse.rows[0];
+
+                                        res.send({
+                                            id: sessionResult.userid,
+                                            token: sessionResult.token,
+                                        });
+                                    }
+                                })
+                                .catch((err) => {
+                                    res.sendStatus(400);
                                 });
-                            }
-                        })
-                        .catch((err) => {
-                            res.send(err);
-                            // res.sendStatus(400);
-                        });
+                        }
+                    });
                 } else {
                     res.sendStatus(403);
                 }

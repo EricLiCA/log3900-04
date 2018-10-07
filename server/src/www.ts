@@ -3,9 +3,11 @@ import { SERVER_PORT } from './configs/http';
 import { SocketServer } from './socket-server';
 
 import * as http from 'http';
+import * as _ from 'lodash';
 import { post } from 'superagent';
 import { ChatService } from './chat-service/chat-service';
 import { PostgresDatabase } from './postgres-database';
+import { RedisService } from './redis.service';
 
 const application: Application = Application.bootstrap();
 
@@ -26,8 +28,8 @@ startServices().then((map: Map<string, boolean>) => {
 
     if (process.env.PROD) {
         post('https://hooks.slack.com/services/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')
-        .send({text: statusUpdate})
-        .end();
+            .send({ text: statusUpdate })
+            .end();
     }
 });
 
@@ -71,6 +73,23 @@ async function startServices(): Promise<Map<string, boolean>> {
     server.on('error', onError);
     server.on('listening', onListening);
     results.set('Application', true);
+
+    // Clear Redis
+    const redisClient = RedisService.getInstance();
+    redisClient.flushall();
+
+    const db = await PostgresDatabase.getInstance();
+    db.query('SELECT * FROM Sessions').then((queryResult) => {
+        if (queryResult.rowCount > 0) {
+            const tokens = _.flatMap(queryResult.rows, (session): string[] => {
+                return [session.userid, session.token];
+            });
+            redisClient.hmset('authTokens', tokens);
+        }
+    })
+        .catch((err) => {
+            console.log(err);
+        });
 
     return results;
 }
