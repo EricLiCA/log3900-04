@@ -13,9 +13,18 @@ class ConnectionViewController: UIViewController {
     @IBOutlet weak var serverAddress: UITextField!
     @IBOutlet weak var username: UITextField!
     
+    var pseudonym: String = ""
+    
     // MARK: - Initialization and Cleanup
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // set username
+        self.pseudonym = UserDefaults.standard.string(forKey: "username") ?? ""
+        if (self.pseudonym != "anonymous") {
+            self.username.text = self.pseudonym
+            self.username.isEnabled = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,9 +34,13 @@ class ConnectionViewController: UIViewController {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Send username and server address to ChatViewController
+        if (self.pseudonym == "anonymous") {
+            UserDefaults.standard.set("anonymous " + self.username.text!, forKey: "username")
+        }
+        
         guard segue.destination is ChatViewController else { return }
         let destinationVC = segue.destination as! ChatViewController
-        destinationVC.username = username.text!
+        destinationVC.username = UserDefaults.standard.string(forKey: "username")!
         destinationVC.serverAddress = serverAddress.text!
     }
     
