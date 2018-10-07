@@ -46,7 +46,7 @@ export class SessionsRoute {
                                 .then((queryResponse) => {
                                     if (queryResponse.rowCount > 0) {
                                         const sessionResult = queryResponse.rows[0];
-
+                                        redisClient.hset('authTokens', sessionResult.userid, sessionResult.token);
                                         res.send({
                                             id: sessionResult.userid,
                                             token: sessionResult.token,
