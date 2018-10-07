@@ -34,57 +34,40 @@ class SignUpViewController: UIViewController {
         let confirmPassword = confirmPasswordTextField.text
         
         if username == "" || password == "" || confirmPassword == "" || password != confirmPassword {
-            self.signUpFailedLabel.isHidden = false
+            self.signUpFailed()
         } else {
-            // TODO: signUp(username!, password!)
-            signUpSuccessLabel.isHidden = false
-            UIView.animate( withDuration: 3, animations: { () -> Void in self.signUpFailedLabel.alpha = 0})
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-                self.signUpSuccessLabel.isHidden = true
-                self.signUpSuccessLabel.alpha = 1
-            })
-            
-            self.resetFieldsAndLabels()
+            self.signUp(username!, password!)
         }
     }
     
     // TODO: Modify function when API ready
     func signUp(_ username: String, _ password: String) {
-        let url = URL(string: "http://ec2-18-214-40-211.compute-1.amazonaws.com")
+        let url = URL(string: "http://localhost:3000/v1/users")
         let session = URLSession.shared
-        
-        let request = NSMutableURLRequest(url: url!)
+        var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
-        let paramToSend = "username" + username + "&password" + password
-        request.httpBody = paramToSend.data(using: String.Encoding.utf8)
+        // Setting data to send
+        let paramToSend: [String: Any] = ["username": username, "password": password]
+        let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
         
-        let task = session.dataTask(with: request as URLRequest, completionHandler: {
-            (data, response, error) in
-            guard let _:Data = data else {
+        let task = session.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
                 return
             }
-            
-            let json:Any?
-            
-            do {
-                json = try JSONSerialization.jsonObject(with: data!, options: [])
-            }
-            catch {
-                return
-            }
-            guard let serverResponse = json as? NSDictionary else {
-                return
-            }
-            
-            if let dataBlock = serverResponse["data"] as? NSDictionary {
-                if (dataBlock["session"] as? String) != nil {
-                    DispatchQueue.main.async {
-                        // segue successful login
-                    }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if (responseJSON as? [String: Any]) != nil {
+                DispatchQueue.main.async {
+                    self.signUpDone()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.signUpFailed()
                 }
             }
-        })
+        }
         
         task.resume()
     }
@@ -94,6 +77,22 @@ class SignUpViewController: UIViewController {
         passwordTextField.text = ""
         confirmPasswordTextField.text = ""
         signUpFailedLabel.isHidden = true
+    }
+    
+    func signUpFailed() {
+        self.signUpFailedLabel.isHidden = false
+    }
+    
+    func signUpDone() {
+        signUpSuccessLabel.isHidden = false
+        UIView.animate( withDuration: 3, animations: { () -> Void in self.signUpFailedLabel.alpha = 0})
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+            self.signUpSuccessLabel.isHidden = true
+            self.signUpSuccessLabel.alpha = 1
+        })
+        
+        self.resetFieldsAndLabels()
     }
     
     /*
