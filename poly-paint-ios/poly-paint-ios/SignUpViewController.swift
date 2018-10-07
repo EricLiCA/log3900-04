@@ -27,7 +27,6 @@ class SignUpViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // TODO: Modify function when API ready
     @IBAction func signUp(_ sender: UIButton) {
         let username = usernameTextField.text
         let password = passwordTextField.text
@@ -40,7 +39,6 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    // TODO: Modify function when API ready
     func signUp(_ username: String, _ password: String) {
         let url = URL(string: "http://localhost:3000/v1/users")
         let session = URLSession.shared
