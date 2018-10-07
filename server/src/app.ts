@@ -62,6 +62,7 @@ export class Application {
         router.get('/users/:id', usersRoute.get.bind(usersRoute.get));
         router.post('/users', usersRoute.post.bind(usersRoute.post));
         router.put('/users/:id', usersRoute.update.bind(usersRoute.update));
+        router.delete('/users/:id', usersRoute.delete.bind(usersRoute.delete));
 
         // use router middleware
         this.app.use('/v1', router);

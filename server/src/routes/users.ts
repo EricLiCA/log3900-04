@@ -23,9 +23,8 @@ export class UsersRoute {
     }
 
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        const userId = req.params.id;
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM Users WHERE "Id" = $1', [userId]).then((query) => {
+        db.query('SELECT * FROM Users WHERE "Id" = $1', [req.params.id]).then((query) => {
             if (query.rowCount > 0) {
                 const result = query.rows[0];
                 res.send({
@@ -95,7 +94,7 @@ export class UsersRoute {
         db.query(preparedQuery).then((query) => {
             if (query.rowCount > 0) {
                 const result = query.rows[0];
-                res.status(201);
+                res.status(200);
                 res.send({
                     id: result.Id,
                     username: result.Username,
@@ -106,6 +105,24 @@ export class UsersRoute {
         })
             .catch((err) => {
                 res.sendStatus(404); // Bad request
+            });
+    }
+
+    public async delete(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        const db = await PostgresDatabase.getInstance();
+        db.query('DELETE FROM Users WHERE "Id" = $1 RETURNING *', [req.params.id]).then((query) => {
+            if (query.rowCount > 0) {
+                const result = query.rows[0];
+                res.send({
+                    id: result.Id,
+                    username: result.Username,
+                    userLevel: result.UserLevel,
+                });
+            }
+            res.sendStatus(404);
+        })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
             });
     }
 }
