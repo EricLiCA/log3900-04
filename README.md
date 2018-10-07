@@ -160,7 +160,7 @@ Make sure a Redis instance is running on `localhost:6739` when developing. To ge
 #### macOS
 ```Bash
 brew install redis
-redis-server # once the installation is done
+redis-server
 ```
 
 # Deployment
