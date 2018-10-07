@@ -56,36 +56,97 @@ function normalizePort(val: number | string): number | string | boolean {
  * @returns A map with all the service and their startup success value
  */
 async function startServices(): Promise<Map<string, boolean>> {
+    if (process.env.PROD) {
+        post('https://hooks.slack.com/services/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')
+            .send({ text: 'Starting Deployment Services' })
+            .end();
+    }
 
     const results = new Map<string, boolean>();
 
+    if (process.env.PROD) {
+        post('https://hooks.slack.com/services/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')
+            .send({ text: 'Connecting to PostgreSQL' })
+            .end();
+    }
+
     await PostgresDatabase.getInstance().then((onfullfiled) => {
         results.set('PostgreSQL', true);
+        if (process.env.PROD) {
+            post('https://hooks.slack.com/services/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')
+                .send({ text: 'Connected to PostgreSQL' })
+                .end();
+        }
     }, (onRejected) => {
         results.set('PostgreSQL', false);
+        if (process.env.PROD) {
+            post('https://hooks.slack.com/services/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')
+                .send({ text: 'Error connecting to PostgreSQL' })
+                .end();
+        }
     });
 
+    if (process.env.PROD) {
+        post('https://hooks.slack.com/services/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')
+            .send({ text: 'Starting Socket Server' })
+            .end();
+    }
     SocketServer.setServer(server);
     ChatService.instance.startChatService();
     results.set('SocketServer', true);
+    if (process.env.PROD) {
+        post('https://hooks.slack.com/services/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')
+            .send({ text: 'Socket Server started' })
+            .end();
+    }
 
+    if (process.env.PROD) {
+        post('https://hooks.slack.com/services/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')
+            .send({ text: 'Starting server application' })
+            .end();
+    }
     server.listen(appPort);
     server.on('error', onError);
     server.on('listening', onListening);
     results.set('Application', true);
+    if (process.env.PROD) {
+        post('https://hooks.slack.com/services/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')
+            .send({ text: 'Application started' })
+            .end();
+    }
 
+    if (process.env.PROD) {
+        post('https://hooks.slack.com/services/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')
+            .send({ text: 'Connecting to Redis' })
+            .end();
+    }
     // Clear Redis
     const redisClient = RedisService.getInstance();
     redisClient.on('error', (err) => {
         results.set('Redis', false);
         console.log('Redis connection could not be established');
+        if (process.env.PROD) {
+            post('https://hooks.slack.com/services/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')
+                .send({ text: 'Could not connect to Redis\n' + err })
+                .end();
+        }
     });
     redisClient.on('connect', (err) => {
         results.set('Redis', true);
         console.log('Redis successfully connected');
+        if (process.env.PROD) {
+            post('https://hooks.slack.com/services/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')
+                .send({ text: 'Redis connected' })
+                .end();
+        }
     });
     redisClient.flushall();
 
+    if (process.env.PROD) {
+        post('https://hooks.slack.com/services/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')
+            .send({ text: 'Querying for Sessions' })
+            .end();
+    }
     const db = await PostgresDatabase.getInstance();
     await db.query('SELECT * FROM Sessions').then((queryResult) => {
         if (queryResult.rowCount > 0) {
@@ -97,6 +158,11 @@ async function startServices(): Promise<Map<string, boolean>> {
     })
         .catch((err) => {
             console.log(err);
+            if (process.env.PROD) {
+                post('https://hooks.slack.com/services/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')
+                    .send({ text: 'Error querying sessions' })
+                    .end();
+            }
         });
 
     return results;
