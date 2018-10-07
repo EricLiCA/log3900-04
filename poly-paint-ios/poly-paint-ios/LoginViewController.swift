@@ -18,7 +18,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         authenticationFailedLabel.isHidden = true
-        
         // Do any additional setup after loading the view.
     }
 
@@ -27,36 +26,30 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    // TODO: Call login() when API ready
     @IBAction func loginTapped(_ sender: UIButton) {
         let username = usernameTextField.text
         let password = passwordTextField.text
         if username != "" && password != "" {
-            //performSegue(withIdentifier: "toMainMenu", sender: self)
-            //TODO: Call login(username!, password!)
             login(username!, password!)
         } else  {
             self.authenticationFailed()
         }
     }
     
-    func authenticationFailed() {
-        authenticationFailedLabel.isHidden = false
-    }
-    
     @IBAction func anonymousLogin(_ sender: UIButton) {
         UserDefaults.standard.set("anonymous", forKey: "username")
+        UserDefaults.standard.set(nil, forKey: "id")
+        UserDefaults.standard.set(nil, forKey: "token")
         performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     
-    // TODO: Modify function when api ready
     func login(_ user: String, _ psw: String) {
         let url = URL(string: "http://localhost:3000/v1/sessions")
         let session = URLSession.shared
-        
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
+        // Setting data to send
         let paramToSend: [String: Any] = ["username": user, "password": psw]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -69,15 +62,16 @@ class LoginViewController: UIViewController {
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
-                // TODO: set userdefaults
                 DispatchQueue.main.async {
+                    UserDefaults.standard.set(user, forKey: "username")
+                    UserDefaults.standard.set(responseJSON["id"], forKey: "id")
+                    UserDefaults.standard.set(responseJSON["token"], forKey: "token")
                     self.loginDone()
                 }
             } else {
                 DispatchQueue.main.async {
                     self.authenticationFailed()
                 }
-                
             }
         }
         
@@ -85,7 +79,7 @@ class LoginViewController: UIViewController {
     }
     
     func loginDone() {
-        //self.resetFieldsAndLabels()
+        self.resetFieldsAndLabels()
         performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     
@@ -93,6 +87,11 @@ class LoginViewController: UIViewController {
         usernameTextField.text = ""
         passwordTextField.text = ""
         authenticationFailedLabel.isHidden = true
+    }
+    
+    func authenticationFailed() {
+        passwordTextField.text = ""
+        authenticationFailedLabel.isHidden = false
     }
     
     /*
