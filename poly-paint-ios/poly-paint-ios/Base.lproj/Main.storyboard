@@ -461,6 +461,9 @@
                                         <state key="normal" title="Profile">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="r8R-KD-eft" kind="show" id="qaV-19-8m4"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="khw-eQ-Wnu">
                                         <rect key="frame" x="0.0" y="80" width="230" height="30"/>
@@ -499,7 +502,7 @@
             </objects>
             <point key="canvasLocation" x="813" y="120"/>
         </scene>
-        <!--Profile View Controller-->
+        <!--Profile-->
         <scene sceneID="5Ad-dn-gBR">
             <objects>
                 <viewController id="r8R-KD-eft" customClass="ProfileViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
@@ -509,10 +512,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="vss-gF-j5X"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Profile" id="ikr-8p-MXX">
+                        <barButtonItem key="backBarButtonItem" title="Profile" id="mcd-ge-R6A"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XTL-g6-1OE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1488" y="71"/>
+            <point key="canvasLocation" x="1588" y="120"/>
         </scene>
     </scenes>
     <resources>
