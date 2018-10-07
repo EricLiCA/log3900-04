@@ -87,7 +87,7 @@ async function startServices(): Promise<Map<string, boolean>> {
     redisClient.flushall();
 
     const db = await PostgresDatabase.getInstance();
-    db.query('SELECT * FROM Sessions').then((queryResult) => {
+    await db.query('SELECT * FROM Sessions').then((queryResult) => {
         if (queryResult.rowCount > 0) {
             const tokens = _.flatMap(queryResult.rows, (session): string[] => {
                 return [session.userid, session.token];
