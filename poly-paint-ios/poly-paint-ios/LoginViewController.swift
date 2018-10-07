@@ -12,22 +12,11 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var _username: UITextField!
     @IBOutlet weak var _password: UITextField!
-    @IBOutlet weak var _authenticationFailedNoticeo: UILabel!
-    @IBOutlet weak var _loginButtono: UIButton!
     @IBOutlet weak var _loginButton: UIButton!
-    
     @IBOutlet weak var _authenticationFailedNotice: UILabel!
-    /*@IBOutlet weak var _usernameSignUpo: UITextField!
-    @IBOutlet weak var _passwordSignUpo: UITextField!
-     @IBOutlet weak var _confirmPasswordSignUpo: UITextField!
-    @IBOutlet weak var _signUpFailedNoticeo: UILabel!
-    @IBOutlet weak var _signUpSuccessNoticeo: UILabel!
-    */
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        //_authenticationFailedNotice.text = ""
-        //_signUpFailedNotice.text = ""
-        //_signUpSuccessNotice.isHidden = true
         _authenticationFailedNotice.isHidden = true
         let preferences = UserDefaults.standard
         
@@ -127,24 +116,6 @@ class LoginViewController: UIViewController {
         performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     
-    /*@IBAction func signUp(_ sender: UIButton) {
-        let username = _usernameSignUp.text
-        let password = _passwordSignUp.text
-        let confirmPassword = _confirmPasswordSignUp.text
-        
-        if username == "" || password == "" || confirmPassword == "" {
-            self._signUpFailedNotice.text = "Please, fill all the fields above."
-        } else if password != confirmPassword {
-            self._signUpFailedNotice.text = "The username and password don't match."
-        } else {
-            //signUp(username!, password!)
-            _signUpSuccessNotice.isHidden = false
-            UIView.animate( withDuration: 3, animations: { () -> Void in self._signUpSuccessNotice.alpha = 0})
-            self.resetFieldsAndLabels()
-            //performSegue(withIdentifier: "toMainMenu", sender: self)
-        }
-    }*/
-    
     func signUp(_ username: String, _ password: String) {
         let url = URL(string: "http://ec2-18-214-40-211.compute-1.amazonaws.com")
         let session = URLSession.shared
@@ -189,11 +160,6 @@ class LoginViewController: UIViewController {
         _username.text = ""
         _password.text = ""
         _authenticationFailedNotice.text = ""
-       /* _usernameSignUp.text = ""
-        _passwordSignUp.text = ""
-        _confirmPasswordSignUp.text = ""
-        _signUpFailedNotice.text = ""
-*/
     }
     
     /*

@@ -41,10 +41,49 @@ class SignUpViewController: UIViewController {
         } else {
             //signUp(username!, password!)
             _signUpSuccessNotice.isHidden = false
-            UIView.animate( withDuration: 3, animations: { () -> Void in self._signUpSuccessNotice.alpha = 0})
+            UIView.animate( withDuration: 5, animations: { () -> Void in self._signUpSuccessNotice.alpha = 0})
             self.resetFieldsAndLabels()
-            //performSegue(withIdentifier: "toMainMenu", sender: self)
         }
+    }
+    
+    func signUp(_ username: String, _ password: String) {
+        let url = URL(string: "http://ec2-18-214-40-211.compute-1.amazonaws.com")
+        let session = URLSession.shared
+        
+        let request = NSMutableURLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        let paramToSend = "username" + username + "&password" + password
+        request.httpBody = paramToSend.data(using: String.Encoding.utf8)
+        
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {
+            (data, response, error) in
+            guard let _:Data = data else {
+                return
+            }
+            
+            let json:Any?
+            
+            do {
+                json = try JSONSerialization.jsonObject(with: data!, options: [])
+            }
+            catch {
+                return
+            }
+            guard let serverResponse = json as? NSDictionary else {
+                return
+            }
+            
+            if let dataBlock = serverResponse["data"] as? NSDictionary {
+                if (dataBlock["session"] as? String) != nil {
+                    DispatchQueue.main.async {
+                        // segue successful login
+                    }
+                }
+            }
+        })
+        
+        task.resume()
     }
     
     func resetFieldsAndLabels() {
