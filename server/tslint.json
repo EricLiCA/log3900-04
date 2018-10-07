@@ -5,7 +5,11 @@
     ],
     "jsRules": {},
     "rules": {
-        "no-namespace": false
+        "no-namespace": false,
+        "object-literal-sort-keys": false,
+        "no-console": false,
+        "no-unused-expression": false,
+        "quotemark": [true, "single"]
     },
     "rulesDirectory": []
 }
