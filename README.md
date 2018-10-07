@@ -1,57 +1,53 @@
-# PolyPaintPro
+![aws-ecs-tasks](docs/images/polypaint.png)
+
+PolyPaintPro is a multi-platform application that enables users to collaboratively create, edit, and save images via a desktop client for Windows 10, an iPad application, and a web browser.
+
+----
+
 |               | Master        | Develop |
 | ------------- |:-------------:| :-----:|
 | CI Status     | [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04) | [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop) |
 | Code coverage      | N/A      |   N/A |
 | Deployed server | http://ec2-18-214-40-211.compute-1.amazonaws.com/      |    N/A |
-| iOS | [![iOS](https://img.shields.io/badge/version-11.4-blue.svg)](https://shields.io/)      |   [![iOS](https://img.shields.io/badge/version-11.4-blue.svg)](https://shields.io/) |
-| Windows | [![Windows](https://img.shields.io/badge/version-10-green.svg)](https://shields.io/)      |    [![Windows](https://img.shields.io/badge/version-10-green.svg)](https://shields.io/) |
+| iOS | ![iOS](https://img.shields.io/badge/version-11.4-blue.svg)      |   ![iOS](https://img.shields.io/badge/version-11.4-blue.svg) |
+| Windows | ![Windows](https://img.shields.io/badge/version-10-blue.svg)      |    ![Windows](https://img.shields.io/badge/version-10-blue.svg) |
 
-## Target devices
+## Target Devices
 | iOS         | Windows                |
-| :---------: | :--------------------: |
+|:-----------:|:----------------------:|
 | iPad Mini 4 | Any PC with Windows 10 |
 
-# Description
 
-PolyPaint is the third year Bachelor's of Engineering (Software Engineering) project at Polytechnique Montréal done during the Fall semester of 2018. The goal of the project is to build a multi-platform application that enables users to collaboratively create, edit, and save images via a desktop client for Windows 10, an iPad application, and a website.
+## Technology Stack
+| | |
+| :-------------------- | :--|
+| ![Swift](/docs/images/ipad/swift.png) Swift | ![Swift](https://img.shields.io/badge/version-4.1.2-blue.svg)|
+| ![CSharp](/docs/images/csharp.png) C# | ![CSharp](https://img.shields.io/badge/version-7.3-blue.svg)|
+| ![Angular](/docs/images/angular.png) Angular | ![Angular](https://img.shields.io/badge/version-6.1.7-blue.svg)|
+| ![NodeJS](/docs/images/nodejs.png) NodeJS | ![NodeJS](https://img.shields.io/badge/version-10.11.0-blue.svg)|
+| ![PostgreSQL](/docs/images/databases/postgres.png) PostgreSQL | ![PostgreSQL](https://img.shields.io/badge/version-10.4-blue.svg)|
+| ![Redis](/docs/images/databases/redis.png) Redis | ![Redis](https://img.shields.io/badge/version-4.0.10-blue.svg)|
+| ![Docker](/docs/images/docker.png) Docker | ![Docker](https://img.shields.io/badge/version-18.06.1-blue.svg)|
+| ![AWS](/docs/images/aws.png) Amazon Web Services
+
+----
 
 # Getting Started
 
-## Quick start
+## Quick Start
 
 ### iOS Client
 
-Clone the project
-
-```Bash
-git clone https://github.com/EricLiCA/log3900-04.git
-```
-
-Navigate to iOS directory
-
-```Bash
-cd log3900-04/poly-paint-ios
-```
-
-Install CocoaPods if you don't already have it
-
-```Bash
-sudo gem install cocoapods
-```
-
-Get all dependencies with CocoaPods
-
-```Bash
-pod install
-```
-
-Open project in XCode:
+Requires XCode:
 
 [![XCode version](https://img.shields.io/badge/version-9.4+-blue.svg)](https://shields.io/)
 
 ```Bash
-open poly-paint-ios.xcworkspace/
+git clone https://github.com/EricLiCA/log3900-04.git
+cd log3900-04/poly-paint-ios # iOS directory
+sudo gem install cocoapods # if you already have cocoapods skip
+pod install # install dependencies
+open poly-paint-ios.xcworkspace/ # opens project in XCode
 ```
 
 #### Simulator
@@ -78,26 +74,14 @@ Verify the app:
 
 ### Windows Client
 
-Clone the project
-
-```Bash
-git clone https://github.com/EricLiCA/log3900-04.git
-```
-
-Navigate to windows directory
-
-```Bash
-cd log3900-04/windows-client
-```
-
-Install Visual Studio if not already installed using the installation wizard that can be downloaded [here](https://visualstudio.microsoft.com/)
-
-Open project in Visual Studio:
+Requires Visual Studio ([install here](https://visualstudio.microsoft.com/)):
 
 ![Visual Studio version](https://img.shields.io/badge/version-15.X-blue.svg)
 
 ```Bash
-start PolyPaint.sln
+git clone https://github.com/EricLiCA/log3900-04.git
+cd log3900-04/windows-client # windows client directory
+start PolyPaint.sln # open project in Visual Studio
 ```
 
 Click the play button to run the app.
@@ -112,31 +96,13 @@ Click the play button to run the app.
 
 We use GitHub as the main remote git server for development, taking advantage of the pull request UI. We use the school's git server to submit our work for grading.
 
-To set this up, clone the repository offered by the school:
+To set this up:
 
 ```Bash
 git clone https://githost.gi.polymtl.ca/git/log3900-04
-```
-
-Then go into the cloned directory:
-
-```Bash
-cd log3990-04/
-```
-
-Then add GitHub as a remote repository:
-
-```Bash
-git remote add github https://github.com/EricLiCA/log3900-04.git
-```
-
-You now have the option to push to `origin` or `github`:
-
-```Bash
-git push origin
-```
-
-```Bash
+cd log3990-04/ # go into cloned repository
+git remote add github https://github.com/EricLiCA/log3900-04.git # add GitHub as a remote repository
+git push origin # you now have the option to push to origin or github
 git push github
 ```
 
@@ -166,16 +132,18 @@ We use GitHub's pull request system to merge a branch.
 
 ## Server
 
-### Database environment variables
+### Database Environment Variables
 
 Set the following environment variables for access to the databases:
 
 #### PostgreSQL
-- PG_HOST : e.g. localhost
-- PG_PORT : e.g. 5432
-- PG_USER
-- PG_PASSWORD
-- PG_DB
+```Bash
+PG_HOST # localhost
+PG_PORT # 5432
+PG_USER
+PG_PASSWORD
+PG_DB
+```
 
 ## Databases
 
@@ -184,6 +152,16 @@ Set the following environment variables for access to the databases:
 Update the DDL file `databases/postgresql/postgres-ddl.sql` when you want to change the database schema. In DataGrip, you can edit your columns, and then generate the DDL files by right-clicking on `tables`, then selecting `SQL Scripts` -> `Generate DDL to Console`, and then copy-paste it in the DDL file in the repository, and commit your changes.
 
 <img src="docs/images/databases/datagrip-generate-ddl.png" alt="datagrip-ddl" width="500"/>
+
+### Redis
+
+Make sure a Redis instance is running on `localhost:6739` when developing. To get one running quickly:
+
+#### macOS
+```Bash
+brew install redis
+redis-server # once the installation is done
+```
 
 # Deployment
 
@@ -195,6 +173,6 @@ To deploy on AWS, make sure the awscli is configured, then run the Makefile comm
 make deploy
 ```
 
-Then navigate to AWS ECS -> Clusters -> \<cluster-to-deploy-on\> -> Tasks and stop the previous task, and start a new one with the latest image
+Then go to `(AWS Elastic Container Service)/Clusters/<cluster-to-deploy-on>/Tasks` on your browser and stop the previous task. Then start a new one with the latest Docker image.
 
 ![aws-ecs-tasks](docs/images/aws-ecs-tasks.png)
