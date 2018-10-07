@@ -76,6 +76,14 @@ async function startServices(): Promise<Map<string, boolean>> {
 
     // Clear Redis
     const redisClient = RedisService.getInstance();
+    redisClient.on('error', (err) => {
+        results.set('Redis', false);
+        console.log('Redis connection could not be established');
+    });
+    redisClient.on('connect', (err) => {
+        results.set('Redis', true);
+        console.log('Redis successfully connected');
+    });
     redisClient.flushall();
 
     const db = await PostgresDatabase.getInstance();
