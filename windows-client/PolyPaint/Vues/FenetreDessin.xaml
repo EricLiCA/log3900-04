@@ -67,16 +67,12 @@
                             Click="SupprimerSelection">
                         <materialDesign:PackIcon Kind="ContentCut" />
                     </Button>
-                    <Button Name="lasso"
-                            Command="{Binding Path=ChoisirOutil}"
-                            CommandParameter="lasso"
-                            ToolTip="This is a lonley toggle with TextBlock instead of icon">
-                        <materialDesign:PackIcon Kind="PencilLock" />
-                    </Button>
                     <Separator />
 
-
-                    <ListBox SelectedIndex="0">
+                    <ListBox SelectedIndex="1" SelectionChanged="ChoisirOutil" Name="ToolSelection">
+                        <ListBoxItem Name="lasso" ToolTip="Lasso">
+                            <materialDesign:PackIcon Kind="PencilLock" />
+                        </ListBoxItem>
                         <ListBoxItem Name="crayon" ToolTip="Pencil">
                             <materialDesign:PackIcon Kind="LeadPencil" />
                         </ListBoxItem>
@@ -94,17 +90,19 @@
                             <Button Name="PointeRonde" Width="24" Height="24" Margin="0" Padding="0"
                                 HorizontalContentAlignment="Center"              
                                 BorderBrush="Transparent" 
-                                Background="Transparent"                         
+                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=ronde, UpdateSourceTrigger=PropertyChanged}"
                                 Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="ronde">
+                                CommandParameter="ronde"
+                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
                                 <Ellipse Width="10" Height="10" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
                             </Button>
                             <Button Name="PointeCarree" Width="24" Height="24" Margin="0" Padding="0"
                                 HorizontalContentAlignment="Center"
                                 BorderBrush="Transparent" 
-                                Background="Transparent"                                
+                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=carree, UpdateSourceTrigger=PropertyChanged}"
                                 Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="carree">
+                                CommandParameter="carree"
+                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
                                 <Rectangle Width="10" Height="10" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
                             </Button>
                         </StackPanel>
@@ -112,17 +110,19 @@
                             <Button Name="Verticale" Width="20" Height="20" Margin="2" Padding="0"
                                 HorizontalContentAlignment="Center"
                                 BorderBrush="Transparent" 
-                                Background="Transparent"
+                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=verticale, UpdateSourceTrigger=PropertyChanged}"
                                 Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="verticale">
+                                CommandParameter="verticale"
+                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
                                 <Rectangle Width="2" Height="10" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
                             </Button>
                             <Button Name="Horizontale" Width="24" Height="24" Margin="0" Padding="0"
                                 HorizontalContentAlignment="Center"
-                                BorderBrush="Transparent" 
-                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=horizontale, UpdateSourceTrigger=PropertyChanged}"
                                 Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="horizontale">
+                                CommandParameter="horizontale"
+                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
                                 <Rectangle Width="10" Height="2" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
                             </Button>
                         </StackPanel>
@@ -143,8 +143,7 @@
                       AdvancedButtonHeader="Personnalisé" />
                     <Slider Width="100" Height="26" Minimum="1" Maximum="50"
                             Value="{Binding Path=TailleTrait, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                            Margin="12"
-                            Foreground="Gray"                        
+                            Margin="12" Foreground="Gray"                        
                             TickFrequency="10" TickPlacement="BottomRight" IsSnapToTickEnabled="False">
                     </Slider>
                 </ToolBar>

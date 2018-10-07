@@ -8,6 +8,7 @@ using PolyPaint.VueModeles;
 using PolyPaint.Vues;
 using System.Net;
 using System.IO;
+using System.Windows.Controls;
 
 namespace PolyPaint
 {
@@ -118,6 +119,17 @@ namespace PolyPaint
             {
                 string text = File.ReadAllText(fileName);
             }
+        }
+
+        private void ChoisirOutil(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.DataContext == null)
+            {
+                return;
+            }
+
+            Console.WriteLine(((ListBoxItem)this.ToolSelection.SelectedItem).Name);
+            ((VueModele)this.DataContext).ChoisirOutil.Execute(((ListBoxItem)this.ToolSelection.SelectedItem).Name);
         }
     }
 }
