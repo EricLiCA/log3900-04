@@ -69,6 +69,7 @@ export class Application {
         // Sessions
         router.get('/sessions', sessionsRoute.getAll.bind(sessionsRoute.getAll));
         router.post('/sessions', sessionsRoute.login.bind(sessionsRoute.login));
+        router.delete('/sessions/:id', sessionsRoute.logout.bind(sessionsRoute.logout));
 
         // use router middleware
         this.app.use('/v1', router);
