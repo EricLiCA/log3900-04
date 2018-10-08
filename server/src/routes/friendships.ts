@@ -18,6 +18,20 @@ export class FriendshipsRoute {
             });
     }
 
+    public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        const db = await PostgresDatabase.getInstance();
+        db.query('SELECT * FROM friendships WHERE "UserId" = $1', [req.params.id]).then((query) => {
+            if (query.rowCount > 0) {
+                res.send(query.rows);
+            } else {
+                res.sendStatus(404); // Not found
+            }
+        })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
+            });
+    }
+
     public async login(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
         db.query('SELECT * FROM Users WHERE "Username" = $1', [req.body.username]).then((query) => {

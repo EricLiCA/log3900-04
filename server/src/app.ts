@@ -75,6 +75,7 @@ export class Application {
 
         // Friendships
         router.get('/friendships', friendshipsRoute.getAll.bind(friendshipsRoute.getAll));
+        router.get('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.get));
 
         // use router middleware
         this.app.use('/v1', router);
