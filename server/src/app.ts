@@ -7,6 +7,7 @@ import * as path from 'path';
 import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
+import { ImagesRoute } from './routes/images';
 
 export class Application {
     /**
@@ -55,6 +56,7 @@ export class Application {
         const serverStatus: ServerStatus = new ServerStatus();
         const usersRoute: UsersRoute = new UsersRoute();
         const sessionsRoute: SessionsRoute = new SessionsRoute();
+        const imagesRoute: ImagesRoute = new ImagesRoute();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));
@@ -71,6 +73,13 @@ export class Application {
         router.post('/sessions', sessionsRoute.login.bind(sessionsRoute.login));
         router.delete('/sessions/:id', sessionsRoute.logout.bind(sessionsRoute.logout));
 
+        // Users
+        router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
+        router.get('/images/:id', imagesRoute.get.bind(imagesRoute.get));
+        router.post('/images', imagesRoute.post.bind(imagesRoute.post));
+        router.put('/images/:id', imagesRoute.update.bind(imagesRoute.update));
+        router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
+        
         // use router middleware
         this.app.use('/v1', router);
 
