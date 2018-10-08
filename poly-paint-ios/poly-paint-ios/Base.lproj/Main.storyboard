@@ -511,10 +511,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Hx-Vt-OUc">
-                                <rect key="frame" x="20" y="64" width="728" height="330"/>
+                                <rect key="frame" x="0.0" y="64" width="768" height="330"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="PFL-vS-NxL">
-                                        <rect key="frame" x="164" y="109" width="400" height="112"/>
+                                        <rect key="frame" x="184" y="109" width="400" height="112"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlankProfile" translatesAutoresizingMaskIntoConstraints="NO" id="rXh-13-40s">
                                                 <rect key="frame" x="0.0" y="0.0" width="175.5" height="112"/>
@@ -561,14 +561,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8Hx-Vt-OUc" firstAttribute="top" secondItem="vss-gF-j5X" secondAttribute="top" id="DZv-8s-ZDb"/>
-                            <constraint firstItem="vss-gF-j5X" firstAttribute="trailing" secondItem="8Hx-Vt-OUc" secondAttribute="trailing" constant="20" id="Ela-jY-ckd"/>
-                            <constraint firstItem="8Hx-Vt-OUc" firstAttribute="leading" secondItem="vss-gF-j5X" secondAttribute="leading" constant="20" id="fwN-fD-vp1"/>
+                            <constraint firstItem="8Hx-Vt-OUc" firstAttribute="leading" secondItem="vss-gF-j5X" secondAttribute="leading" id="SB7-zv-lek"/>
+                            <constraint firstItem="vss-gF-j5X" firstAttribute="trailing" secondItem="8Hx-Vt-OUc" secondAttribute="trailing" id="X5P-vq-G6s"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vss-gF-j5X"/>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="ikr-8p-MXX">
                         <barButtonItem key="backBarButtonItem" title="Profile" id="mcd-ge-R6A"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="profileView" destination="8Hx-Vt-OUc" id="g2n-8Q-GWZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XTL-g6-1OE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
