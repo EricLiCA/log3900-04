@@ -4,6 +4,7 @@ import * as express from 'express';
 import * as httpLogger from 'morgan';
 import * as path from 'path';
 
+import { FriendshipsRoute } from './routes/friendships';
 import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
@@ -55,6 +56,7 @@ export class Application {
         const serverStatus: ServerStatus = new ServerStatus();
         const usersRoute: UsersRoute = new UsersRoute();
         const sessionsRoute: SessionsRoute = new SessionsRoute();
+        const friendshipsRoute: FriendshipsRoute = new FriendshipsRoute();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));
@@ -70,6 +72,9 @@ export class Application {
         router.get('/sessions', sessionsRoute.getAll.bind(sessionsRoute.getAll));
         router.post('/sessions', sessionsRoute.login.bind(sessionsRoute.login));
         router.delete('/sessions/:id', sessionsRoute.logout.bind(sessionsRoute.logout));
+
+        // Friendships
+        router.get('/friendships', friendshipsRoute.getAll.bind(friendshipsRoute.getAll));
 
         // use router middleware
         this.app.use('/v1', router);
