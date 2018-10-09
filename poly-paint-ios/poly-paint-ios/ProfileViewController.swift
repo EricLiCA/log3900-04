@@ -28,7 +28,7 @@ class ProfileViewController: UIViewController {
     
     func colorBorder() {
         self.profileView.layer.borderWidth = 1
-        self.profileView.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
+        self.profileView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     }
     
     func setUsernameLabel() {

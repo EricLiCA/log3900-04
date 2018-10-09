@@ -71,10 +71,6 @@ class AccountSettingsViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.changePasswordDone()
                 }
-            } else {
-                DispatchQueue.main.async {
-                    self.passwordsDontMatchLabel.isHidden = false
-                }
             }
         }
         
