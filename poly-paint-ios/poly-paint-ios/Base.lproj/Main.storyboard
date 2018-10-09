@@ -600,7 +600,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="ynd-EU-U5n">
-                                <rect key="frame" x="45" y="60" width="230" height="361.5"/>
+                                <rect key="frame" x="45" y="29" width="230" height="422.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dvi-m5-ppJ">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
@@ -609,10 +609,20 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="y79-GI-Mp5">
-                                        <rect key="frame" x="0.0" y="70.5" width="230" height="100.5"/>
+                                        <rect key="frame" x="0.0" y="70.5" width="230" height="131"/>
                                         <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username changed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AhO-lW-apI">
+                                                <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="230" id="YDR-dn-6vv"/>
+                                                    <constraint firstAttribute="height" constant="20.5" id="cmM-5w-tr1"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bMH-dc-bps">
-                                                <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
+                                                <rect key="frame" x="0.0" y="30.5" width="230" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="230" id="YNB-7d-sb8"/>
                                                     <constraint firstAttribute="height" constant="30" id="cNn-dk-cNB"/>
@@ -622,7 +632,7 @@
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jtl-WN-oXh">
-                                                <rect key="frame" x="0.0" y="40" width="230" height="30"/>
+                                                <rect key="frame" x="0.0" y="70.5" width="230" height="30"/>
                                                 <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="3tI-9t-4Mj"/>
@@ -636,7 +646,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This username already exists" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcA-k4-CKG">
-                                                <rect key="frame" x="0.0" y="80" width="230" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="110.5" width="230" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -644,10 +654,20 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Mfj-8g-Hpg">
-                                        <rect key="frame" x="0.0" y="221" width="230" height="140.5"/>
+                                        <rect key="frame" x="0.0" y="251.5" width="230" height="171"/>
                                         <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password changed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HE5-qK-Gi4">
+                                                <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="230" id="3qX-RM-sh7"/>
+                                                    <constraint firstAttribute="height" constant="20.5" id="ybr-Hv-tIO"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rgW-tJ-rRZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
+                                                <rect key="frame" x="0.0" y="30.5" width="230" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="oNZ-dE-EAn"/>
                                                     <constraint firstAttribute="width" constant="230" id="zsS-qS-HEv"/>
@@ -657,7 +677,7 @@
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm new password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OMp-qb-DE0">
-                                                <rect key="frame" x="0.0" y="40" width="230" height="30"/>
+                                                <rect key="frame" x="0.0" y="70.5" width="230" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="230" id="Xgv-Xh-Zbr"/>
                                                     <constraint firstAttribute="height" constant="30" id="tWe-sK-igD"/>
@@ -667,7 +687,7 @@
                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2HE-fJ-LZ0">
-                                                <rect key="frame" x="0.0" y="80" width="230" height="30"/>
+                                                <rect key="frame" x="0.0" y="110.5" width="230" height="30"/>
                                                 <color key="backgroundColor" red="0.2156862745" green="0.80392156859999997" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="Dfv-d4-cYh"/>
@@ -681,7 +701,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The passwords don't match" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="of4-z9-T8N">
-                                                <rect key="frame" x="0.0" y="120" width="230" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="150.5" width="230" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -703,8 +723,10 @@
                         <outlet property="confirmNewPasswordTextField" destination="OMp-qb-DE0" id="7zp-18-Kbd"/>
                         <outlet property="newPasswordTextField" destination="rgW-tJ-rRZ" id="KW8-95-gkV"/>
                         <outlet property="newUsernameTextField" destination="bMH-dc-bps" id="5Do-46-ZH7"/>
+                        <outlet property="passwordChangedLabel" destination="HE5-qK-Gi4" id="sQZ-wV-Bin"/>
                         <outlet property="passwordsDontMatchLAbel" destination="of4-z9-T8N" id="vpP-IB-IpN"/>
                         <outlet property="usernameAlreadyExistsLabel" destination="lcA-k4-CKG" id="IXe-Zz-xkf"/>
+                        <outlet property="usernameChangedLabel" destination="AhO-lW-apI" id="cNu-ua-DsS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gfd-E1-FAo" userLabel="First Responder" sceneMemberID="firstResponder"/>

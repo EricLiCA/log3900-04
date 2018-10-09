@@ -15,12 +15,16 @@ class AccountSettingsViewController: UIViewController {
     @IBOutlet weak var confirmNewPasswordTextField: UITextField!
     @IBOutlet weak var usernameAlreadyExistsLabel: UILabel!
     @IBOutlet weak var passwordsDontMatchLAbel: UILabel!
+    @IBOutlet weak var usernameChangedLabel: UILabel!
+    @IBOutlet weak var passwordChangedLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usernameAlreadyExistsLabel.isHidden = true
         self.passwordsDontMatchLAbel.isHidden = true
-        
+        self.usernameChangedLabel.isHidden = true
+        self.passwordChangedLabel.isHidden = true
         // Do any additional setup after loading the view.
     }
 
@@ -119,6 +123,13 @@ class AccountSettingsViewController: UIViewController {
         UserDefaults.standard.set(username, forKey: "username")
         self.usernameAlreadyExistsLabel.isHidden = true
         self.newUsernameTextField.text = ""
+        self.usernameChangedLabel.isHidden = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+            self.usernameChangedLabel.isHidden = true
+            self.usernameChangedLabel.alpha = 1
+        })
+        
         // Send notification to update username label in ProfileViewController
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateUsernameAlert"), object: nil)
     }
@@ -127,6 +138,13 @@ class AccountSettingsViewController: UIViewController {
         self.passwordsDontMatchLAbel.isHidden = true
         self.newPasswordTextField.text = ""
         self.confirmNewPasswordTextField.text = ""
+        
+        self.passwordChangedLabel.isHidden = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+            self.passwordChangedLabel.isHidden = true
+            self.passwordChangedLabel.alpha = 1
+        })
     }
     
     /*
