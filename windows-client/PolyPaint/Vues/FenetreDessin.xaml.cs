@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
@@ -9,6 +8,7 @@ using PolyPaint.Vues;
 using System.Net;
 using System.IO;
 using System.Windows.Controls;
+using RestSharp;
 
 namespace PolyPaint
 {
@@ -57,21 +57,13 @@ namespace PolyPaint
             LoginDialogBox dlg = new LoginDialogBox();
             if (dlg.ShowDialog() == true)
             {
-                var protocolProvided = dlg.IP.StartsWith("http");
-                var url = string.Format(protocolProvided ? "{0}" : "http://{0}", dlg.IP);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(string.Format("{0}/api/status/", url));
-                httpWebRequest.ContentType = "text/html";
-                httpWebRequest.Method = "GET";
+                var url = string.Format(dlg.IP.StartsWith("http") ? "{0}" : "http://{0}", dlg.IP);
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(string.Format("{0}/v1/status/", url));
 
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var result = streamReader.ReadToEnd();
-                    if (result != "log3900-server")
-                    {
-                        return;
-                    }
-                }
+                var client = new RestClient(url);
+                var request = new RestRequest("v1/status", Method.GET);
+                IRestResponse response = client.Execute(request);
+                if (response.Content != "log3900-server") return;
 
                 if (this.ChatView == null)
                 {
@@ -80,6 +72,7 @@ namespace PolyPaint
                 {
                     this.ChatView.Connect(url, dlg.Username);
                 }
+
                 this.Chat_Reserved_Zone.Visibility = Visibility.Visible;
                 Chat_Docker.Content = this.ChatView;
 
@@ -123,12 +116,11 @@ namespace PolyPaint
 
         private void ChoisirOutil(object sender, SelectionChangedEventArgs e)
         {
-            if (this.DataContext == null)
+            if (this.DataContext == null || this.ToolSelection.SelectedIndex == -1)
             {
                 return;
             }
 
-            Console.WriteLine(((ListBoxItem)this.ToolSelection.SelectedItem).Name);
             ((VueModele)this.DataContext).ChoisirOutil.Execute(((ListBoxItem)this.ToolSelection.SelectedItem).Name);
         }
     }
