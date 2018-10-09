@@ -15,10 +15,8 @@ namespace PolyPaint
     /// <summary>
     /// Logique d'interaction pour FenetreDessin.xaml
     /// </summary>
-    public partial class FenetreDessin : Window
+    public partial class FenetreDessin : Page
     {
-
-        private Chat ChatView;
 
         public FenetreDessin()
         {
@@ -52,45 +50,7 @@ namespace PolyPaint
 
         private void SupprimerSelection(object sender, RoutedEventArgs e) => surfaceDessin.CutSelection();
 
-        private void Menu_Connect_Click(object sender, RoutedEventArgs e)
-        {
-            LoginDialogBox dlg = new LoginDialogBox();
-            if (dlg.ShowDialog() == true)
-            {
-                var url = string.Format(dlg.IP.StartsWith("http") ? "{0}" : "http://{0}", dlg.IP);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(string.Format("{0}/v1/status/", url));
-
-                var client = new RestClient(url);
-                var request = new RestRequest("v1/status", Method.GET);
-                IRestResponse response = client.Execute(request);
-                if (response.Content != "log3900-server") return;
-
-                if (this.ChatView == null)
-                {
-                    this.ChatView = new Chat(this, url, dlg.Username);
-                } else
-                {
-                    this.ChatView.Connect(url, dlg.Username);
-                }
-
-                this.Chat_Reserved_Zone.Visibility = Visibility.Visible;
-                Chat_Docker.Content = this.ChatView;
-
-                this.Menu_Disconnect.Visibility = Visibility.Visible;
-                this.Menu_Connect.Visibility = Visibility.Collapsed;
-                this.Menu_Change_Avatar.Visibility = Visibility.Visible;
-            };
-        }
-
-        internal void Menu_Disconnect_Click(object sender, RoutedEventArgs e)
-        {
-            this.ChatView.Disconnect();
-
-            this.Chat_Reserved_Zone.Visibility = Visibility.Collapsed;
-            this.Menu_Disconnect.Visibility = Visibility.Collapsed;
-            this.Menu_Connect.Visibility = Visibility.Visible;
-            this.Menu_Change_Avatar.Visibility = Visibility.Collapsed;
-        }
+        
         private void Menu_Change_Avatar_Click(object sender, System.EventArgs e)
         {
             string fileName = null;

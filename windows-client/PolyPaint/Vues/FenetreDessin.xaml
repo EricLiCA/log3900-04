@@ -1,4 +1,4 @@
-<Window
+<Page
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,29 +9,13 @@
         x:Class="PolyPaint.FenetreDessin"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Poly Paint" Height="700" Width="900" Background="#CBD4E4" MinWidth="627" MinHeight="200">
-    <Window.Resources>
+        Title="Poly Paint" Background="#CBD4E4" MinWidth="627" MinHeight="200">
+    <Page.Resources>
         <convertisseurs:ConvertisseurBordure x:Key="convertisseurBordure" />
         <convertisseurs:ConvertisseurCouleurFond x:Key="convertisseurCouleurFond" />
         <convertisseurs:ConvertisseurModeEdition x:Key="convertisseurModeEdition" />
-    </Window.Resources>
+    </Page.Resources>
     <DockPanel>
-
-        <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File" IsEnabled="False">
-                <MenuItem Header="_New" />
-                <MenuItem Header="_Open" />
-                <MenuItem Header="New _Version" />
-                <Separator />
-                <MenuItem Header="_Exit" />
-            </MenuItem>
-            <MenuItem Header="_Chat">
-                <MenuItem Name="Menu_Connect" Header="_Connect" Click="Menu_Connect_Click" />
-                <MenuItem Name="Menu_Disconnect" Visibility="Collapsed" Header="_Disconnect" Click="Menu_Disconnect_Click" />
-                <MenuItem Name="Menu_Change_Avatar" Visibility="Collapsed" Header="_Avatar" Click="Menu_Change_Avatar_Click" />
-            </MenuItem>
-        </Menu>
-
 
         <Border Name="Chat_Reserved_Zone" DockPanel.Dock="Right" BorderThickness="0.5,0,0,0" BorderBrush="#77000000" Width="250" Background="AliceBlue" Visibility="Collapsed">
             <Frame Name="Chat_Docker" />
@@ -190,4 +174,4 @@
             </Border>
         </Grid>
     </DockPanel>
-</Window>
+</Page>

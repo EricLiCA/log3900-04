@@ -73,7 +73,6 @@ namespace PolyPaint.Vues
                     this.Dispatcher.Invoke(() =>
                     {
                         this.Disconnect();
-                        MainWindow.Menu_Disconnect_Click(this, null);
                     });
                 }
             }));
