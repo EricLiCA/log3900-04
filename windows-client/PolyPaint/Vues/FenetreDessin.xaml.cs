@@ -1,6 +1,5 @@
 using System;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
@@ -123,12 +122,11 @@ namespace PolyPaint
 
         private void ChoisirOutil(object sender, SelectionChangedEventArgs e)
         {
-            if (this.DataContext == null)
+            if (this.DataContext == null || this.ToolSelection.SelectedIndex == -1)
             {
                 return;
             }
 
-            Console.WriteLine(((ListBoxItem)this.ToolSelection.SelectedItem).Name);
             ((VueModele)this.DataContext).ChoisirOutil.Execute(((ListBoxItem)this.ToolSelection.SelectedItem).Name);
         }
     }
