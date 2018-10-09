@@ -1,12 +1,12 @@
 import { Client, ClientConfig } from 'pg';
-import { Postgres } from './configs/databases';
+import { PostgresConfig } from './configs/databases';
 
 const clientConfig: ClientConfig = {
-    user: Postgres.USER,
-    database: Postgres.DATABASE,
-    password: Postgres.PASSWORD,
-    port: Number(Postgres.PORT),
-    host: Postgres.HOST,
+    user: PostgresConfig.USER,
+    database: PostgresConfig.DATABASE,
+    password: PostgresConfig.PASSWORD,
+    port: Number(PostgresConfig.PORT),
+    host: PostgresConfig.HOST,
     keepAlive: true,
     ssl: false,
 };

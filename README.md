@@ -8,7 +8,7 @@ PolyPaintPro is a multi-platform application that enables users to collaborative
 | ------------- |:-------------:| :-----:|
 | CI Status     | [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04) | [![CircleCI](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop.svg?style=svg&circle-token=2548b4817066d1880e903d328a76b09fd5191bd6)](https://circleci.com/gh/EricLiCA/log3900-04/tree/develop) |
 | Code coverage      | N/A      |   N/A |
-| Deployed server | http://ec2-18-214-40-211.compute-1.amazonaws.com/      |    N/A |
+| Deployed server | http://ec2-34-200-247-233.compute-1.amazonaws.com/      |    N/A |
 | iOS | ![iOS](https://img.shields.io/badge/version-11.4-blue.svg)      |   ![iOS](https://img.shields.io/badge/version-11.4-blue.svg) |
 | Windows | ![Windows](https://img.shields.io/badge/version-10-blue.svg)      |    ![Windows](https://img.shields.io/badge/version-10-blue.svg) |
 
