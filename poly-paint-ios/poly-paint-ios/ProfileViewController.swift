@@ -15,12 +15,9 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
-        self.profileView.layer.borderWidth = 1
-        self.profileView.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
-        
-        // Observer for username update
-        NotificationCenter.default.addObserver(self, selector: #selector(updateUsernameAlert), name: NSNotification.Name(rawValue: "updateUsernameAlert"), object: nil)
+        self.setUsernameLabel()
+        self.colorBorder()
+        self.setUpNotifications()
         // Do any additional setup after loading the view.
     }
     
@@ -29,9 +26,23 @@ class ProfileViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func colorBorder() {
+        self.profileView.layer.borderWidth = 1
+        self.profileView.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
+    }
+    
+    func setUsernameLabel() {
+        self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
+    }
+    
+    func setUpNotifications() {
+        // Observer for username update
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUsernameAlert), name: NSNotification.Name(rawValue: "updateUsernameAlert"), object: nil)
+    }
     @objc func updateUsernameAlert(sender: AnyObject) {
         self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
     }
+    
     /*
     // MARK: - Navigation
 

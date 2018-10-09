@@ -18,7 +18,6 @@ class AccountSettingsViewController: UIViewController {
     @IBOutlet weak var usernameChangedLabel: UILabel!
     @IBOutlet weak var passwordChangedLabel: UILabel!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usernameAlreadyExistsLabel.isHidden = true

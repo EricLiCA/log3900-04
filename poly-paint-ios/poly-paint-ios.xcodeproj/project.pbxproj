@@ -140,10 +140,10 @@
 				A78A7337215AE75D007A854F /* ConnectionViewController.swift */,
 				A78A7339215ED91C007A854F /* DateTime.swift */,
 				A78A7335215ADDEF007A854F /* FrontPageViewController.swift */,
+				CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */,
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
 				A77C46F221569CFB0056135A /* Main.storyboard */,
-				CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */,
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
 			);
 			path = "poly-paint-ios";
