@@ -44,43 +44,43 @@
                     <Button x:Name="reinitialiser"
                             ToolTip="Erase canvas"
                             Command="{Binding Reinitialiser}">
-                        <materialDesign:PackIcon Kind="Recycle" />
+                        <materialDesign:PackIcon Kind="Autorenew" Width="22" />
                     </Button>
                     <Button x:Name="empiler"
                             ToolTip="Undo"
                             Command="{Binding Empiler}">
-                        <materialDesign:PackIcon Kind="Undo" />
+                        <materialDesign:PackIcon Kind="Undo" Width="22" />
                     </Button>
                     <Button x:Name="depiler"
                             ToolTip="Redo"
                             Command="{Binding Depiler}">
-                        <materialDesign:PackIcon Kind="Redo" />
+                        <materialDesign:PackIcon Kind="Redo" Width="22" />
                     </Button>
                     <Separator />
                     <Button x:Name="Copier"
                             ToolTip="Copy"
                             Click="DupliquerSelection">
-                        <materialDesign:PackIcon Kind="ContentCopy" />
+                        <materialDesign:PackIcon Kind="ContentCopy" Width="22" />
                     </Button>
                     <Button x:Name="Couper"
                             ToolTip="Cut"
                             Click="SupprimerSelection">
-                        <materialDesign:PackIcon Kind="ContentCut" />
+                        <materialDesign:PackIcon Kind="ContentCut" Width="22" />
                     </Button>
                     <Separator />
 
                     <ListBox SelectedIndex="1" SelectionChanged="ChoisirOutil" Name="ToolSelection">
                         <ListBoxItem Name="lasso" ToolTip="Lasso">
-                            <materialDesign:PackIcon Kind="PencilLock" />
+                            <Image Source="/Resources/lasso-tool.png" Width="22" />
                         </ListBoxItem>
                         <ListBoxItem Name="crayon" ToolTip="Pencil">
-                            <materialDesign:PackIcon Kind="LeadPencil" />
+                            <materialDesign:PackIcon Kind="LeadPencil" Width="22" />
                         </ListBoxItem>
                         <ListBoxItem Name="efface_segment" ToolTip="Erase segment">
-                            <materialDesign:PackIcon Kind="Eraser" />
+                            <materialDesign:PackIcon Kind="Eraser" Width="22" />
                         </ListBoxItem>
                         <ListBoxItem Name="efface_trait" ToolTip="Erase trait">
-                            <materialDesign:PackIcon Kind="EraserVariant" />
+                            <materialDesign:PackIcon Kind="EraserVariant" Width="22" />
                         </ListBoxItem>
                     </ListBox>
                     <Separator />
