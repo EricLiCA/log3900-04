@@ -11,9 +11,11 @@ import UIKit
 class ProfileViewController: UIViewController {
 
     @IBOutlet weak var profileView: UIView!
+    @IBOutlet weak var usernameLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
         self.profileView.layer.borderWidth = 1
         self.profileView.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
         // Do any additional setup after loading the view.
