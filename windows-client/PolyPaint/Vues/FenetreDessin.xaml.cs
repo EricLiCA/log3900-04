@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -57,9 +57,9 @@ namespace PolyPaint
             LoginDialogBox dlg = new LoginDialogBox();
             if (dlg.ShowDialog() == true)
             {
-                var protocolProvided = dlg.IP.StartsWith("http");
-                var url = string.Format(protocolProvided ? "{0}" : "http://{0}", dlg.IP);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(string.Format("{0}/api/status/", url));
+                var url = string.Format(dlg.IP.StartsWith("http") ? "{0}" : "http://{0}", dlg.IP);
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(string.Format("{0}/v1/status/", url));
+
                 httpWebRequest.ContentType = "text/html";
                 httpWebRequest.Method = "GET";
 
