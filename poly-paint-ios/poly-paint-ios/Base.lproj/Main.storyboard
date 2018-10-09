@@ -591,7 +591,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="ynd-EU-U5n">
-                                <rect key="frame" x="45" y="70" width="230" height="340.5"/>
+                                <rect key="frame" x="45" y="55" width="230" height="371"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dvi-m5-ppJ">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
@@ -600,7 +600,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="y79-GI-Mp5">
-                                        <rect key="frame" x="0.0" y="70.5" width="230" height="70"/>
+                                        <rect key="frame" x="0.0" y="70.5" width="230" height="100.5"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bMH-dc-bps">
                                                 <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
@@ -622,11 +622,20 @@
                                                 <state key="normal" title="Change username">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="changeUsernameTapped:" destination="KrC-7h-VNC" eventType="touchUpInside" id="zqE-oz-eb8"/>
+                                                </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This username already exists" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcA-k4-CKG">
+                                                <rect key="frame" x="0.0" y="80" width="230" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Mfj-8g-Hpg">
-                                        <rect key="frame" x="0.0" y="190.5" width="230" height="150"/>
+                                        <rect key="frame" x="0.0" y="221" width="230" height="150"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Old password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7ZS-CI-W16">
                                                 <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
@@ -668,6 +677,9 @@
                                                 <state key="normal" title="Change password">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="changePasswordTapped:" destination="KrC-7h-VNC" eventType="touchUpInside" id="MWw-JL-h9p"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -682,6 +694,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oTP-zP-arZ"/>
                     </view>
+                    <connections>
+                        <outlet property="confirmNewPasswordTextField" destination="OMp-qb-DE0" id="7zp-18-Kbd"/>
+                        <outlet property="newPasswordTextField" destination="rgW-tJ-rRZ" id="KW8-95-gkV"/>
+                        <outlet property="newUsernameTextField" destination="bMH-dc-bps" id="5Do-46-ZH7"/>
+                        <outlet property="oldPasswordTextField" destination="7ZS-CI-W16" id="QCo-QS-6Aa"/>
+                        <outlet property="usernameAlreadyExistsLabel" destination="lcA-k4-CKG" id="IXe-Zz-xkf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gfd-E1-FAo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
