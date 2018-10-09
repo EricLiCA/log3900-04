@@ -73,7 +73,7 @@ export class Application {
         router.post('/sessions', sessionsRoute.login.bind(sessionsRoute.login));
         router.delete('/sessions/:id', sessionsRoute.logout.bind(sessionsRoute.logout));
 
-        // Users
+        // Images
         router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
         router.get('/images/:id', imagesRoute.get.bind(imagesRoute.get));
         router.post('/images', imagesRoute.post.bind(imagesRoute.post));

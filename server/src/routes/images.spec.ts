@@ -16,9 +16,9 @@ describe("ImagesRoute", () => {
             fullImageUrl: TEST,
         }
         // tslint:disable-next-line:no-any
-        chai.request(IMAGES_URL).post().send({ newImage }).end((err: boolean, res: any) => {
-            const result: string = JSON.parse(res.text);
-            chai.expect(result).to.equal();
+        chai.request(IMAGES_URL).post("post").send({ newImage }).end((err: boolean, res: any) => {
+            console.log(res);
+            chai.expect(res).to.equal("");
         });
         // tslint:disable-next-line:no-magic-numbers
     }).timeout(15000);
