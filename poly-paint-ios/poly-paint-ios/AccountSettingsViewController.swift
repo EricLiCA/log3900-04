@@ -19,6 +19,8 @@ class AccountSettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usernameAlreadyExistsLabel.isHidden = true
+        
+        
         // Do any additional setup after loading the view.
     }
 
@@ -36,6 +38,7 @@ class AccountSettingsViewController: UIViewController {
     }
     
     @IBAction func changePasswordTapped(_ sender: UIButton) {
+        
     }
     
     func changeUsername(username: String) {
@@ -53,7 +56,6 @@ class AccountSettingsViewController: UIViewController {
         
         let task = session.dataTask(with: request) { data, response, error in
             let httpResponse = response as? HTTPURLResponse
-            print(httpResponse?.statusCode as Any)
             guard let data = data, error == nil else {
                 return
             }
@@ -76,6 +78,8 @@ class AccountSettingsViewController: UIViewController {
         UserDefaults.standard.set(username, forKey: "username")
         self.usernameAlreadyExistsLabel.isHidden = true
         self.newUsernameTextField.text = ""
+        // Send notification to update username label in ProfileViewController
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateUsernameAlert"), object: nil)
     }
     
     /*

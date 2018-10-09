@@ -18,15 +18,20 @@ class ProfileViewController: UIViewController {
         self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
         self.profileView.layer.borderWidth = 1
         self.profileView.layer.borderColor = UIColor(red:222/255, green:225/255, blue:227/255, alpha: 1).cgColor
+        
+        // Observer for username update
+        NotificationCenter.default.addObserver(self, selector: #selector(updateUsernameAlert), name: NSNotification.Name(rawValue: "updateUsernameAlert"), object: nil)
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    @objc func updateUsernameAlert(sender: AnyObject) {
+        self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
+    }
     /*
     // MARK: - Navigation
 
