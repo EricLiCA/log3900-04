@@ -724,7 +724,7 @@
                         <outlet property="newPasswordTextField" destination="rgW-tJ-rRZ" id="KW8-95-gkV"/>
                         <outlet property="newUsernameTextField" destination="bMH-dc-bps" id="5Do-46-ZH7"/>
                         <outlet property="passwordChangedLabel" destination="HE5-qK-Gi4" id="sQZ-wV-Bin"/>
-                        <outlet property="passwordsDontMatchLAbel" destination="of4-z9-T8N" id="vpP-IB-IpN"/>
+                        <outlet property="passwordsDontMatchLabel" destination="of4-z9-T8N" id="vpP-IB-IpN"/>
                         <outlet property="usernameAlreadyExistsLabel" destination="lcA-k4-CKG" id="IXe-Zz-xkf"/>
                         <outlet property="usernameChangedLabel" destination="AhO-lW-apI" id="cNu-ua-DsS"/>
                     </connections>

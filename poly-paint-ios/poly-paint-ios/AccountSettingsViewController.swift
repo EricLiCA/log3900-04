@@ -14,16 +14,13 @@ class AccountSettingsViewController: UIViewController {
     @IBOutlet weak var newPasswordTextField: UITextField!
     @IBOutlet weak var confirmNewPasswordTextField: UITextField!
     @IBOutlet weak var usernameAlreadyExistsLabel: UILabel!
-    @IBOutlet weak var passwordsDontMatchLAbel: UILabel!
+    @IBOutlet weak var passwordsDontMatchLabel: UILabel!
     @IBOutlet weak var usernameChangedLabel: UILabel!
     @IBOutlet weak var passwordChangedLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.usernameAlreadyExistsLabel.isHidden = true
-        self.passwordsDontMatchLAbel.isHidden = true
-        self.usernameChangedLabel.isHidden = true
-        self.passwordChangedLabel.isHidden = true
+        self.hideLabels()
         // Do any additional setup after loading the view.
     }
 
@@ -31,7 +28,7 @@ class AccountSettingsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     @IBAction func changeUsernameTapped(_ sender: UIButton) {
         let username = self.newUsernameTextField.text
         
@@ -45,13 +42,12 @@ class AccountSettingsViewController: UIViewController {
         let confirmPassword = confirmNewPasswordTextField.text
         
         if password != "" && password == confirmPassword {
-            // change password
             self.changePassword(password: password!)
         } else if password != confirmPassword {
-            self.passwordsDontMatchLAbel.isHidden = false
+            self.passwordsDontMatchLabel.isHidden = false
         }
     }
-    
+
     func changePassword(password: String) {
         let urlString = "http://localhost:3000/v1/users/" + UserDefaults.standard.string(forKey: "id")!
         let url = URL(string: urlString)
@@ -77,7 +73,7 @@ class AccountSettingsViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.passwordsDontMatchLAbel.isHidden = false
+                    self.passwordsDontMatchLabel.isHidden = false
                 }
             }
         }
@@ -120,30 +116,55 @@ class AccountSettingsViewController: UIViewController {
     
     func changeUsernameDone(username: String) {
         UserDefaults.standard.set(username, forKey: "username")
-        self.usernameAlreadyExistsLabel.isHidden = true
-        self.newUsernameTextField.text = ""
-        self.usernameChangedLabel.isHidden = false
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-            self.usernameChangedLabel.isHidden = true
-            self.usernameChangedLabel.alpha = 1
-        })
-        
-        // Send notification to update username label in ProfileViewController
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateUsernameAlert"), object: nil)
+        self.resetUsernameLabelAndTextFields()
+        self.showUsernameChangedLabel()
+        self.sendUpdateUsernameNotification()
     }
     
     func changePasswordDone() {
-        self.passwordsDontMatchLAbel.isHidden = true
-        self.newPasswordTextField.text = ""
-        self.confirmNewPasswordTextField.text = ""
-        
+        self.resetPasswordLabelAndTextFields()
+        self.showPasswordChangedLabel()
+    }
+    
+    func showPasswordChangedLabel() {
         self.passwordChangedLabel.isHidden = false
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
             self.passwordChangedLabel.isHidden = true
             self.passwordChangedLabel.alpha = 1
         })
+    }
+    
+    func showUsernameChangedLabel() {
+        self.usernameChangedLabel.isHidden = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+            self.usernameChangedLabel.isHidden = true
+            self.usernameChangedLabel.alpha = 1
+        })
+    }
+    
+    func hideLabels(){
+        self.usernameAlreadyExistsLabel.isHidden = true
+        self.passwordsDontMatchLabel.isHidden = true
+        self.usernameChangedLabel.isHidden = true
+        self.passwordChangedLabel.isHidden = true
+    }
+    
+    func sendUpdateUsernameNotification() {
+        // Send notification to update username label in ProfileViewController
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateUsernameAlert"), object: nil)
+    }
+    
+    func resetPasswordLabelAndTextFields() {
+        self.passwordsDontMatchLabel.isHidden = true
+        self.newPasswordTextField.text = ""
+        self.confirmNewPasswordTextField.text = ""
+    }
+    
+    func resetUsernameLabelAndTextFields() {
+        self.usernameAlreadyExistsLabel.isHidden = true
+        self.newUsernameTextField.text = ""
     }
     
     /*
