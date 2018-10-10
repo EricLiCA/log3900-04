@@ -570,12 +570,26 @@
                                     <constraint firstAttribute="height" constant="330" id="X6W-Wa-tdy"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CpM-LF-M37">
+                                <rect key="frame" x="20" y="508" width="728" height="496"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sr3-Zm-pMy">
+                                <rect key="frame" x="20" y="418" width="57" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8Hx-Vt-OUc" firstAttribute="top" secondItem="vss-gF-j5X" secondAttribute="top" id="DZv-8s-ZDb"/>
+                            <constraint firstItem="CpM-LF-M37" firstAttribute="centerX" secondItem="vss-gF-j5X" secondAttribute="centerX" id="MJU-rB-8yg"/>
                             <constraint firstItem="8Hx-Vt-OUc" firstAttribute="leading" secondItem="vss-gF-j5X" secondAttribute="leading" id="SB7-zv-lek"/>
                             <constraint firstItem="vss-gF-j5X" firstAttribute="trailing" secondItem="8Hx-Vt-OUc" secondAttribute="trailing" id="X5P-vq-G6s"/>
+                            <constraint firstItem="sr3-Zm-pMy" firstAttribute="top" secondItem="8Hx-Vt-OUc" secondAttribute="bottom" constant="24" id="iwF-Dy-rNE"/>
+                            <constraint firstItem="sr3-Zm-pMy" firstAttribute="leading" secondItem="vss-gF-j5X" secondAttribute="leading" constant="20" id="nVG-Jz-8we"/>
+                            <constraint firstItem="CpM-LF-M37" firstAttribute="top" secondItem="8Hx-Vt-OUc" secondAttribute="bottom" constant="114" id="qbw-8Y-NMZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vss-gF-j5X"/>
                     </view>
