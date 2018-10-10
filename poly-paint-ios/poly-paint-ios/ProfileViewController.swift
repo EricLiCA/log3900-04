@@ -12,12 +12,17 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var friendsTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUsernameLabel()
         self.colorBorder()
         self.setUpNotifications()
+        
+        // Set as delegate for the message table
+        self.friendsTableView.delegate = self
+        self.friendsTableView.dataSource = self
         // Do any additional setup after loading the view.
     }
     

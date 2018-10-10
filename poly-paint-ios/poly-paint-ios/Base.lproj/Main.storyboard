@@ -575,8 +575,8 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sr3-Zm-pMy">
-                                <rect key="frame" x="20" y="418" width="57" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="20" y="418" width="96" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -597,6 +597,7 @@
                         <barButtonItem key="backBarButtonItem" title="Profile" id="mcd-ge-R6A"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="friendsTableView" destination="CpM-LF-M37" id="DCt-Lj-9uk"/>
                         <outlet property="profileView" destination="8Hx-Vt-OUc" id="g2n-8Q-GWZ"/>
                         <outlet property="usernameLabel" destination="sJf-wR-RSO" id="WHE-mI-Zpp"/>
                     </connections>
