@@ -32,16 +32,10 @@ namespace PolyPaint.Vues
         private void Server_Connect()
         {
             LoginDialogBox dlg = new LoginDialogBox();
-            if (dlg.ShowDialog() == true)
+            if (dlg.ShowDialog() == false)
             {
-                var url = string.Format(dlg.IP.StartsWith("http") ? "{0}" : "http://{0}", dlg.IP);
-                var httpWebRequest = (HttpWebRequest)WebRequest.Create(string.Format("{0}/v1/status/", url));
-
-                var client = new RestClient(url);
-                var request = new RestRequest("v1/status", Method.GET);
-                IRestResponse response = client.Execute(request);
-                if (response.Content != "log3900-server") return;
-            };
+                System.Environment.Exit(0);
+            }  
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -21,6 +21,11 @@ namespace PolyPaint.Services
             }
         }
 
+        public ServerService()
+        {
+
+        }
+
         private String ip { get; set; }
         private UInt16 port { get; set; }
         private String email { get; set; }
