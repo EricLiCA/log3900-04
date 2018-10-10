@@ -19,6 +19,7 @@ namespace PolyPaint.Vues
     {
         private FenetreDessin MainWindow;
         private ObservableCollection<ChatMessage> Messages;
+        private String ImagePath;
         private Socket Socket;
         private Regex regex = new Regex("^ {0,}$");
 
