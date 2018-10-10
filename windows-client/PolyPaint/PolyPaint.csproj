@@ -168,6 +168,7 @@
     <Compile Include="Modeles\Editeur.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Services\ServerService.cs" />
+    <Compile Include="Utilitaires\Settings.cs" />
     <Compile Include="Utilitaires\RelayCommand.cs" />
     <Compile Include="VueModeles\VueModele.cs" />
     <Compile Include="Vues\Gallery.xaml.cs">
