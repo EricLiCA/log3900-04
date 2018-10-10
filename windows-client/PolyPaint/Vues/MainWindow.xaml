@@ -1,0 +1,29 @@
+﻿<Window x:Class="PolyPaint.Vues.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PolyPaint.Vues"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="447" Width="729">
+    <DockPanel Background="WhiteSmoke" LastChildFill="True">
+        <Grid Height="50" DockPanel.Dock="Top">
+            <DockPanel LastChildFill="True">
+                <Border CornerRadius="20" DockPanel.Dock="Right" Width="40" Height="40" Background="Black" Margin="15 5">
+                    <!-- Profile Picture -->
+                </Border>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
+                    <Button Name="ButtonGallery" Uid="0" Width="150" Content="GALLERY" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+                    <Button Name="ButtonUsers" Uid="1" Width="150" Content="USERS" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+                    <Button Name="ButtonChat" Uid="2" Width="150" Content="CHAT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+                    <Button Name="ButtonEdit" Uid="3" Width="150" Content="EDIT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+                </StackPanel>
+            </DockPanel>
+            <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="10 0" VerticalAlignment="Bottom"/>
+        </Grid>
+        <Frame Name="GridMain" NavigationUIVisibility="Hidden" />
+    </DockPanel>
+
+
+</Window>

@@ -35,13 +35,13 @@ namespace PolyPaint.Vues
 
         private void Send_Message(object sender, RoutedEventArgs e)
         {
-            if (regex.Matches(TextInput.Text).Count == 0)
+            if (regex.Matches(MessageToSend.Text).Count == 0)
             {
-                this.Socket.Emit("message", TextInput.Text);
+                this.Socket.Emit("message", MessageToSend.Text);
             }
 
-            TextInput.Text = "";
-            TextInput.Focus();
+            MessageToSend.Text = "";
+            MessageToSend.Focus();
         }
 
         internal void Connect(String url, String username)
@@ -73,7 +73,6 @@ namespace PolyPaint.Vues
                     this.Dispatcher.Invoke(() =>
                     {
                         this.Disconnect();
-                        MainWindow.Menu_Disconnect_Click(this, null);
                     });
                 }
             }));
