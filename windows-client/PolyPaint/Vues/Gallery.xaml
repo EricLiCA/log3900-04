@@ -150,5 +150,6 @@
                 </materialDesign:Card>
             </WrapPanel>
         </ScrollViewer>
+        <TextBox x:Name="user" Height="49.5" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="27"/>
     </DockPanel>
 </Page>

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,11 +23,22 @@ namespace PolyPaint.Vues
     {
 
         private Gallery gallery;
+        private FenetreDessin FenetreDessin;
+
         public MainWindow()
         {
-            InitializeComponent();
+            this.FenetreDessin = new FenetreDessin();
             this.gallery = new Gallery();
-
+            this.Server_Connect();
+            InitializeComponent();
+        }
+        private void Server_Connect()
+        {
+            LoginDialogBox dlg = new LoginDialogBox();
+            if (dlg.ShowDialog() == false)
+            {
+                System.Environment.Exit(0);
+            }  
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -38,18 +51,18 @@ namespace PolyPaint.Vues
             {
                 case 0:
                     {
-                        GridMain.Background = Brushes.Aquamarine;
-                        this.Docker.Content = this.gallery;
+                        this.gallery.init();
+                        GridMain.Content = this.gallery;
                     }
                     break;
                 case 1:
-                    GridMain.Background = Brushes.Beige;
+                    GridMain.Content = "Users";
                     break;
                 case 2:
-                    GridMain.Background = Brushes.CadetBlue;
+                    GridMain.Content = "Chat";
                     break;
                 case 3:
-                    GridMain.Background = Brushes.DarkBlue;
+                    GridMain.Content = this.FenetreDessin;
                     break;
             }
         }

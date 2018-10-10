@@ -1,4 +1,4 @@
-<Window
+<Page
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,29 +9,13 @@
         x:Class="PolyPaint.FenetreDessin"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Poly Paint" Height="700" Width="900" Background="#CBD4E4" MinWidth="627" MinHeight="200">
-    <Window.Resources>
+        Title="Poly Paint" Background="#CBD4E4" MinWidth="627" MinHeight="200">
+    <Page.Resources>
         <convertisseurs:ConvertisseurBordure x:Key="convertisseurBordure" />
         <convertisseurs:ConvertisseurCouleurFond x:Key="convertisseurCouleurFond" />
         <convertisseurs:ConvertisseurModeEdition x:Key="convertisseurModeEdition" />
-    </Window.Resources>
+    </Page.Resources>
     <DockPanel>
-
-        <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File" IsEnabled="False">
-                <MenuItem Header="_New" />
-                <MenuItem Header="_Open" />
-                <MenuItem Header="New _Version" />
-                <Separator />
-                <MenuItem Header="_Exit" />
-            </MenuItem>
-            <MenuItem Header="_Chat">
-                <MenuItem Name="Menu_Connect" Header="_Connect" Click="Menu_Connect_Click" />
-                <MenuItem Name="Menu_Disconnect" Visibility="Collapsed" Header="_Disconnect" Click="Menu_Disconnect_Click" />
-                <MenuItem Name="Menu_Change_Avatar" Visibility="Collapsed" Header="_Avatar" Click="Menu_Change_Avatar_Click" />
-            </MenuItem>
-        </Menu>
-
 
         <Border Name="Chat_Reserved_Zone" DockPanel.Dock="Right" BorderThickness="0.5,0,0,0" BorderBrush="#77000000" Width="250" Background="AliceBlue" Visibility="Collapsed">
             <Frame Name="Chat_Docker" />
@@ -44,43 +28,43 @@
                     <Button x:Name="reinitialiser"
                             ToolTip="Erase canvas"
                             Command="{Binding Reinitialiser}">
-                        <materialDesign:PackIcon Kind="Recycle" />
+                        <materialDesign:PackIcon Kind="Autorenew" Width="22" />
                     </Button>
                     <Button x:Name="empiler"
                             ToolTip="Undo"
                             Command="{Binding Empiler}">
-                        <materialDesign:PackIcon Kind="Undo" />
+                        <materialDesign:PackIcon Kind="Undo" Width="22" />
                     </Button>
                     <Button x:Name="depiler"
                             ToolTip="Redo"
                             Command="{Binding Depiler}">
-                        <materialDesign:PackIcon Kind="Redo" />
+                        <materialDesign:PackIcon Kind="Redo" Width="22" />
                     </Button>
                     <Separator />
                     <Button x:Name="Copier"
                             ToolTip="Copy"
                             Click="DupliquerSelection">
-                        <materialDesign:PackIcon Kind="ContentCopy" />
+                        <materialDesign:PackIcon Kind="ContentCopy" Width="22" />
                     </Button>
                     <Button x:Name="Couper"
                             ToolTip="Cut"
                             Click="SupprimerSelection">
-                        <materialDesign:PackIcon Kind="ContentCut" />
+                        <materialDesign:PackIcon Kind="ContentCut" Width="22" />
                     </Button>
                     <Separator />
 
                     <ListBox SelectedIndex="1" SelectionChanged="ChoisirOutil" Name="ToolSelection">
                         <ListBoxItem Name="lasso" ToolTip="Lasso">
-                            <materialDesign:PackIcon Kind="PencilLock" />
+                            <Image Source="/Resources/lasso-tool.png" Width="22" />
                         </ListBoxItem>
                         <ListBoxItem Name="crayon" ToolTip="Pencil">
-                            <materialDesign:PackIcon Kind="LeadPencil" />
+                            <materialDesign:PackIcon Kind="LeadPencil" Width="22" />
                         </ListBoxItem>
                         <ListBoxItem Name="efface_segment" ToolTip="Erase segment">
-                            <materialDesign:PackIcon Kind="Eraser" />
+                            <materialDesign:PackIcon Kind="Eraser" Width="22" />
                         </ListBoxItem>
                         <ListBoxItem Name="efface_trait" ToolTip="Erase trait">
-                            <materialDesign:PackIcon Kind="EraserVariant" />
+                            <materialDesign:PackIcon Kind="EraserVariant" Width="22" />
                         </ListBoxItem>
                     </ListBox>
                     <Separator />
@@ -190,4 +174,4 @@
             </Border>
         </Grid>
     </DockPanel>
-</Window>
+</Page>

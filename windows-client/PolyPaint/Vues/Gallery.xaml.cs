@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PolyPaint.DataAccessObject;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,10 +22,13 @@ namespace PolyPaint.Vues
     public partial class Gallery : Page
     {
         private List<Image> images;
+        private ImageDao imageDao;
 
         public Gallery()
         {
             InitializeComponent();
+            this.imageDao = new ImageDao();
+            this.user.Text = "abcd";
         }
 
         public void Visualize()
@@ -45,6 +49,14 @@ namespace PolyPaint.Vues
         public void LikeImage()
         {
 
+        }
+
+        public void init()
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                this.imageDao.GetAll(user);
+            });
         }
     }
 }
