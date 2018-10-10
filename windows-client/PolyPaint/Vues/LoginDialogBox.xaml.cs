@@ -1,4 +1,7 @@
-﻿using RestSharp;
+﻿using PolyPaint.Services;
+using PolyPaint.Utilitaires;
+using Quobject.SocketIoClientDotNet.Client;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,26 +35,6 @@ namespace PolyPaint.Vues
             Verify_Server();
         }
 
-        public string IP
-        {
-            get { return ip.Text; }
-        }
-
-        public bool Anonymous
-        {
-            get { return (bool)anonymous.IsChecked; }
-        }
-
-        public string Password
-        {
-            get { return password.Password; }
-        }
-
-        public string Username
-        {
-            get { return username.Text; }
-        }
-
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             password.IsEnabled = !(bool)anonymous.IsChecked;
@@ -59,26 +42,69 @@ namespace PolyPaint.Vues
 
         private void Verify_Server()
         {
-            var url = string.Format(IP.StartsWith("http") ? "{0}" : "http://{0}", IP);
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(string.Format("{0}/v1/status/", url));
-
+            var url = string.Format(ip.Text.StartsWith("http") ? "{0}" : "http://{0}", ip.Text);
             var client = new RestClient(url);
-            var request = new RestRequest("v1/status", Method.GET);
+            var request = new RestRequest(Settings.API_VERSION + "/status", Method.GET);
             client.ExecuteAsync(request, response =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     if (response.Content == "log3900-server")
                     {
+                        ServerService.instance.server = client;
+                        Verify_Credentials();
+                    }
+                    else
+                    {
+                        progress.Visibility = Visibility.Collapsed;
+                        MessageBox.Show("Could not connect to server", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                });
+            });
+        }
+
+        private void Verify_Credentials()
+        {
+            Credentials credentials = new Credentials(username.Text, password.Password);
+            var request = new RestRequest(Settings.API_VERSION + "/sessions", Method.POST);
+            request.AddJsonBody(credentials);
+            ServerService.instance.server.ExecuteAsync<LoginResponse>(request, response =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        ServerService.instance.username = username.Text;
+                        ServerService.instance.password = password.Password;
+                        ServerService.instance.id = response.Data.id;
+                        ServerService.instance.token = response.Data.token;
                         DialogResult = true;
                     }
                     else
                     {
                         progress.Visibility = Visibility.Collapsed;
-                        MessageBox.Show("Wrong credentials", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("Wrong Credentials", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 });
             });
+        }
+
+        private class Credentials
+        {
+            public string username;
+            public string password;
+
+            public Credentials(string username, string password)
+            {
+                this.username = username;
+                this.password = password;
+            }
+        }
+
+        private class LoginResponse
+        {
+            public string id { get; }
+            public string token { get; }
         }
     }
 }
