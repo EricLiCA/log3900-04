@@ -1,12 +1,10 @@
 using System;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using PolyPaint.VueModeles;
 using PolyPaint.Vues;
-using PolyPaint.Modeles;
 using System.Net;
 using System.IO;
 using System.Windows.Controls;
@@ -21,7 +19,7 @@ namespace PolyPaint
     {
 
         private Chat ChatView;
-        private User currentUser;
+
         public FenetreDessin()
         {
             InitializeComponent();
@@ -29,8 +27,8 @@ namespace PolyPaint
         }
         
         // Pour gérer les points de contrôles.
-        private void GlisserCommence(object sender, DragStartedEventArgs e) => (sender as Thumb).Background = System.Windows.Media.Brushes.Black;
-        private void GlisserTermine(object sender, DragCompletedEventArgs e) => (sender as Thumb).Background = System.Windows.Media.Brushes.White;
+        private void GlisserCommence(object sender, DragStartedEventArgs e) => (sender as Thumb).Background = Brushes.Black;
+        private void GlisserTermine(object sender, DragCompletedEventArgs e) => (sender as Thumb).Background = Brushes.White;
         private void GlisserMouvementRecu(object sender, DragDeltaEventArgs e)
         {
             String nom = (sender as Thumb).Name;
@@ -42,7 +40,7 @@ namespace PolyPaint
         private void surfaceDessin_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e) => textBlockPosition.Text = "";
         private void surfaceDessin_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            System.Windows.Point p = e.GetPosition(surfaceDessin);
+            Point p = e.GetPosition(surfaceDessin);
             textBlockPosition.Text = Math.Round(p.X) + ", " + Math.Round(p.Y) + "px";
         }
 
@@ -97,25 +95,22 @@ namespace PolyPaint
         {
             string fileName = null;
 
-            using (OpenFileDialog windowsBrowser = new OpenFileDialog())
+            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
             {
-                windowsBrowser.InitialDirectory = "c:\\";
-                windowsBrowser.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
-                windowsBrowser.FilterIndex = 2;
-                windowsBrowser.RestoreDirectory = true;
+                openFileDialog1.InitialDirectory = "c:\\";
+                openFileDialog1.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+                openFileDialog1.FilterIndex = 2;
+                openFileDialog1.RestoreDirectory = true;
 
-                if (windowsBrowser.ShowDialog().ToString().Equals("OK"))
+                if (openFileDialog1.ShowDialog().ToString().Equals("OK"))
                 {
-                    fileName = windowsBrowser.FileName;
+                    fileName = openFileDialog1.FileName;
                 }
             }
 
             if (fileName != null)
             {
-                string imagePath = File.ReadAllText(fileName);
-
-                //Bitmap imageThumbnail = new Bitmap(imagePath);
-                this.currentUser.thumbnailPath = imagePath;
+                string text = File.ReadAllText(fileName);
             }
         }
 
