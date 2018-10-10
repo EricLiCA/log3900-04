@@ -15,16 +15,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var friendsTableView: UITableView!
     
     var friendsArray = [String]()
+    var mockFriends = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUsernameLabel()
         self.colorBorder()
         self.setUpNotifications()
-        
+        self.mockFriends = ["John", "Becky", "Joe", "Paul"]
         // Set as delegate for the message table
         self.friendsTableView.delegate = self
         self.friendsTableView.dataSource = self
+        self.getFriends()
         // Do any additional setup after loading the view.
     }
     
@@ -46,6 +48,19 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Return the cell
         return cell
+    }
+    
+    private func getFriends() {
+        for friend in mockFriends {
+            self.addFriendsToFriendsTableView(friendUsername: friend)
+        }
+    }
+    
+    private func addFriendsToFriendsTableView(friendUsername: String) {
+        let newIndexPath = IndexPath(row: self.friendsArray.count, section: 0)
+        self.friendsArray.append(friendUsername)
+        self.friendsTableView.insertRows(at: [newIndexPath], with: .automatic)
+        //self.friendsTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
     }
     
     func colorBorder() {
