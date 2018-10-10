@@ -8,11 +8,13 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var friendsTableView: UITableView!
+    
+    var friendsArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,21 @@ class ProfileViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return friendsArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Create a table cell
+        let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath)
+        
+        // Customize the cell
+        cell.textLabel?.text = friendsArray[indexPath.row]
+        
+        // Return the cell
+        return cell
     }
     
     func colorBorder() {
