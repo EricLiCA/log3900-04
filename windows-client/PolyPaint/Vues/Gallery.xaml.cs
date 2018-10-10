@@ -20,9 +20,31 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class Gallery : Page
     {
+        private List<Image> images;
+
         public Gallery()
         {
             InitializeComponent();
+        }
+
+        public void Visualize()
+        {
+
+        }
+
+        public void ChangeImageProtectionLevel(string protectionLevel)
+        {
+
+        }
+
+        public void CommentImage()
+        {
+
+        }
+
+        public void LikeImage()
+        {
+
         }
     }
 }

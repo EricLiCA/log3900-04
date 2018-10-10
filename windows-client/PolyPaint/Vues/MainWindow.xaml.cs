@@ -19,9 +19,13 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        private Gallery gallery;
         public MainWindow()
         {
             InitializeComponent();
+            this.gallery = new Gallery();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,7 +37,10 @@ namespace PolyPaint.Vues
             switch (index)
             {
                 case 0:
-                    GridMain.Background = Brushes.Aquamarine;
+                    {
+                        GridMain.Background = Brushes.Aquamarine;
+                        this.Docker.Content = this.gallery;
+                    }
                     break;
                 case 1:
                     GridMain.Background = Brushes.Beige;

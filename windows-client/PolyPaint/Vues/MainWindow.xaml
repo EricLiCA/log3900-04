@@ -18,9 +18,7 @@
             <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="10 0" VerticalAlignment="Bottom"/>
         </Grid>
         <Grid x:Name="GridMain" Background="Aquamarine">
-
+            <Frame Name="Docker" />
         </Grid>
     </DockPanel>
-
-
 </Window>
