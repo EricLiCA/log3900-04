@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,14 +22,11 @@ namespace PolyPaint.Services
             }
         }
 
-        public ServerService()
-        {
+        public RestClient server { get; set; }
+        public string username { get; set; }
+        public string password { get; set; }
+        public string id { get; set; }
+        public string token { get; set; }
 
-        }
-
-        private String ip { get; set; }
-        private UInt16 port { get; set; }
-        private String email { get; set; }
-        private String password { get; set; }
     }
 }
