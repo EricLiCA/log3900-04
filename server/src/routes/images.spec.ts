@@ -7,8 +7,4 @@ describe("ImagesRoute", () => {
     const chai = require('chai');
     const chaiHttp = require('chai-http');
     chai.use(chaiHttp);
-
-    it("should add a new image", (done: MochaDone) => {
-        
-    }).timeout(15000);
 });
