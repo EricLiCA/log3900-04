@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Image = PolyPaint.Modeles.Image;
 
 
@@ -57,6 +59,9 @@ namespace PolyPaint.Vues
             ImageView.Visibility = Visibility.Visible;
             ImageView.IsExpanded = true;
             ImageViewTitle.Text = CurrentImage.Title;
+            Uri imageUri = new Uri(CurrentImage.FullImageUrl);
+            BitmapImage imageBitmap = new BitmapImage(imageUri);
+            ImageViewPicture.Source = imageBitmap;
         }
 
         private void OnImagesContainerUpdated(object sender, EventArgs e)

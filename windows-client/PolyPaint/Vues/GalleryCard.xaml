@@ -13,7 +13,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Image Source="/PolyPaint;component/Resources/efface.png" Height="140" Width="196" Stretch="UniformToFill" />
+        <Image Source="{Binding Path=Image.FullImageUrl}" Height="140" Width="196" Stretch="UniformToFill" />
             <StackPanel Grid.Row="1" Margin="8 24 8 0" >
             <TextBlock FontWeight="Bold" Text="{Binding Path=Image.Title}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </StackPanel>

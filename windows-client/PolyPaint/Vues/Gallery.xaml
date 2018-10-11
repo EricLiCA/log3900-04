@@ -20,11 +20,11 @@
             </Expander.Header>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="140" />
+                    <RowDefinition Height="300" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Image Source="/PolyPaint;component/Resources/efface.png" Height="140" Width="196" Stretch="UniformToFill" />
+                <Image  Name="ImageViewPicture" Height="400" Width="400" Stretch="UniformToFill" />
                 <StackPanel Grid.Row="1" Margin="8 24 8 0" >
                     <TextBlock Name="ImageViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
