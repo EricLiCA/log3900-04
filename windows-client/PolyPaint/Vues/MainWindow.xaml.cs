@@ -53,7 +53,10 @@ namespace PolyPaint.Vues
             switch (index)
             {
                 case 0:
-                    GridMain.Content = "Gallery";
+                    {
+                        Gallery.Init();
+                        GridMain.Content = Gallery;
+                    }
                     break;
                 case 1:
                     GridMain.Content = "Users";
