@@ -27,6 +27,7 @@ namespace PolyPaint.Vues
         public LoginDialogBox()
         {
             InitializeComponent();
+            //this.ip.Text = "http://localhost:3000/";
         }
 
         private void Connect_Click(object sender, RoutedEventArgs e)

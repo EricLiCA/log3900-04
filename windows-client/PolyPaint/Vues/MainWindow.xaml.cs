@@ -22,13 +22,13 @@ namespace PolyPaint.Vues
     public partial class MainWindow : Window
     {
 
-        private Gallery gallery;
+        private Gallery Gallery;
         private FenetreDessin FenetreDessin;
 
         public MainWindow()
         {
             this.FenetreDessin = new FenetreDessin();
-            this.gallery = new Gallery();
+            this.Gallery = new Gallery();
             this.Server_Connect();
             InitializeComponent();
         }
@@ -51,8 +51,8 @@ namespace PolyPaint.Vues
             {
                 case 0:
                     {
-                        this.gallery.init();
-                        GridMain.Content = this.gallery;
+                        this.Gallery.Init();
+                        GridMain.Content = this.Gallery;
                     }
                     break;
                 case 1:
