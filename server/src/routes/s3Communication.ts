@@ -3,15 +3,15 @@ var AWS = require('aws-sdk');
 
 export class s3Communcation {
 
-    private albumBucketName = 'polypaintpro/profile-pictures/';    
-    private s3 = new AWS.S3({
-        apiVersion: '2006-03-01',
-        params: {Bucket: this.albumBucketName}
-    });
+    private albumBucketName = 'polypaintpro/profile-pictures';    
+    private s3: AWS.S3;
 
-    constructor(){
+    constructor(){              
         AWS.config.update({ accessKeyId: S3Config.ACCESS_KEY, secretAccessKey: S3Config.SECRET_KEY});
-              
+        s3 = new AWS.S3({
+            apiVersion: '2006-03-01',
+            params: {Bucket: this.albumBucketName}
+        });
     }
     
     public postToS3(imageName: String, image: MimeType): void {
