@@ -1,14 +1,14 @@
 import { S3Config } from '../configs/databases'
-var AWS = require('aws-sdk');
+import { S3, config } from 'aws-sdk';
 
 export class s3Communcation {
 
     private albumBucketName = 'polypaintpro/profile-pictures';    
-    private s3: AWS.S3;
+    private s3: S3;
 
     constructor(){              
-        AWS.config.update({ accessKeyId: S3Config.ACCESS_KEY, secretAccessKey: S3Config.SECRET_KEY});
-        s3 = new AWS.S3({
+        config.update({ accessKeyId: S3Config.ACCESS_KEY, secretAccessKey: S3Config.SECRET_KEY});
+        this.s3 = new S3({
             apiVersion: '2006-03-01',
             params: {Bucket: this.albumBucketName}
         });
@@ -25,11 +25,14 @@ export class s3Communcation {
         this.s3.upload({
           Key: photoKey,
           Body: image,
-          ACL: 'public-read'
-        }).catch((e: Error) => {
-            if (e) {
-                return alert('There was an error uploading your photo: ' + e.message);
-              }
+          ACL: 'public-read',
+          Bucket: this.albumBucketName
+        }, (err: Error, data: S3.ManagedUpload.SendData) => {
+            if (err){
+                return alert('There was an error uploading your photo: ' + err.message);
+            }
+            
+            console.log(data);
             alert('Successfully uploaded photo.');
         });
     }
