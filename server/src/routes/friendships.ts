@@ -31,4 +31,13 @@ export class FriendshipsRoute {
                 res.sendStatus(400); // Bad request
             });
     }
+
+    public async post(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        const redisClient = RedisService.getInstance();
+        redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
+            if (token !== null && token === req.body.token) {
+                console.log('ok');
+            }
+        });
+    }
 }

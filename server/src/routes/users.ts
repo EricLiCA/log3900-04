@@ -70,7 +70,7 @@ export class UsersRoute {
     public update(req: express.Request, res: express.Response, next: express.NextFunction): void {
         const redisClient = RedisService.getInstance();
         redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
-            if (token !== undefined && token === req.body.token) {
+            if (token !== null && token === req.body.token) {
                 let updates = [
                     ['Username', req.body.username],
                     ['Password', req.body.password],
@@ -122,7 +122,7 @@ export class UsersRoute {
     public async delete(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const redisClient = RedisService.getInstance();
         redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
-            if (token !== undefined && token === req.body.token) {
+            if (token !== null && token === req.body.token) {
                 redisClient.hdel('authTokens', req.params.id);
                 const db = await PostgresDatabase.getInstance();
                 db.query('DELETE FROM Users WHERE "Id" = $1 RETURNING *', [req.params.id]).then((query) => {
