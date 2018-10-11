@@ -46,6 +46,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         self.addUsersTableView.dataSource = self
         self.setUpNotifications()
         self.showUsers()
+        self.getAllUsers()
         // Do any additional setup after loading the view.
     }
 
@@ -90,7 +91,41 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     @objc func friendRequestAlert(_ notification: Notification) {
         let username = notification.userInfo!["username"]!
+        self.sendFriendRequest(username: username as! String)
+    }
+    
+    func sendFriendRequest(username: String) {
         print(username)
+    }
+    
+    func getAllUsers() {
+        let urlString = "http://localhost:3000/v1/users/"
+        let url = URL(string: urlString)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let task = session.dataTask(with: request) { data, response, error in
+            let httpResponse = response as? HTTPURLResponse
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            print(responseJSON)
+            if (responseJSON as? [String: Any]) != nil {
+                DispatchQueue.main.async {
+                    
+                }
+            } else {
+                DispatchQueue.main.async {
+                    
+                }
+            }
+        }
+        
+        task.resume()
     }
     
     /*
