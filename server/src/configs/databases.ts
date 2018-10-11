@@ -10,3 +10,8 @@ export namespace RedisConfig {
     export const HOST = process.env.REDIS_HOST;
     export const PORT = process.env.REDIS_PORT;
 }
+
+export namespace S3Config {
+    export const ACCESS_KEY = process.env.S3_ACCESS_KEY;
+    export const SECRET_KEY = process.env.S3_SECRET_KEY;
+}
