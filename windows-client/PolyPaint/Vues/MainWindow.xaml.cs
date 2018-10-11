@@ -53,14 +53,7 @@ namespace PolyPaint.Vues
             switch (index)
             {
                 case 0:
-<<<<<<<<< Temporary merge branch 1
-                    {
-                        GridMain.Background = Brushes.Aquamarine;
-                        this.Docker.Content = this.gallery;
-                    }
-=========
                     GridMain.Content = "Gallery";
->>>>>>>>> Temporary merge branch 2
                     break;
                 case 1:
                     GridMain.Content = "Users";
@@ -96,6 +89,8 @@ namespace PolyPaint.Vues
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.UriSource = new Uri(this.AvatarLocation);
+                bitmap.DecodePixelHeight = 40;
+                bitmap.DecodePixelWidth = 40;
                 bitmap.EndInit();
                 AvatarImage.Source = bitmap;
             }
