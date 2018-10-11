@@ -28,7 +28,6 @@ namespace PolyPaint.Vues
         {
             InitializeComponent();
             this.ChatRooms = new ObservableCollection<ChatRoom>();
-            RoomsList.ItemsSource = this.ChatRooms;
             Listsecond.ItemsSource = this.ChatRooms;
             this.ChatRooms.Add(new ChatRoom("Fun Times"));
             this.ChatRooms.Add(new ChatRoom("Happy Meal"));
