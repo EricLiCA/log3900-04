@@ -22,12 +22,15 @@ namespace PolyPaint.Vues
     public partial class MainWindow : Window
     {
         private FenetreDessin FenetreDessin;
+        private MessagingWindow MessagingWindow;
 
         public MainWindow()
         {
             this.FenetreDessin = new FenetreDessin();
+            this.MessagingWindow = new MessagingWindow();
             this.Server_Connect();
             InitializeComponent();
+            GridMain.Content = "Gallery";
         }
         private void Server_Connect()
         {
@@ -53,7 +56,7 @@ namespace PolyPaint.Vues
                     GridMain.Content = "Users";
                     break;
                 case 2:
-                    GridMain.Content = "Chat";
+                    GridMain.Content = this.MessagingWindow;
                     break;
                 case 3:
                     GridMain.Content = this.FenetreDessin;
