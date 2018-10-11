@@ -23,17 +23,17 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Gallery gallery;
+
+        private Gallery Gallery;
         private FenetreDessin FenetreDessin;
         private string AvatarLocation;
 
         public MainWindow()
         {
             this.FenetreDessin = new FenetreDessin();
+            this.Gallery = new Gallery();
             this.Server_Connect();
             InitializeComponent();
-            this.gallery = new Gallery();
-
         }
         private void Server_Connect()
         {
@@ -53,7 +53,14 @@ namespace PolyPaint.Vues
             switch (index)
             {
                 case 0:
+<<<<<<<<< Temporary merge branch 1
+                    {
+                        GridMain.Background = Brushes.Aquamarine;
+                        this.Docker.Content = this.gallery;
+                    }
+=========
                     GridMain.Content = "Gallery";
+>>>>>>>>> Temporary merge branch 2
                     break;
                 case 1:
                     GridMain.Content = "Users";
