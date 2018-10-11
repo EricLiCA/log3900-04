@@ -18,10 +18,15 @@ class HeadlineTableViewCell: UITableViewCell {
     @IBOutlet weak var addAsFriendButton: UIButton!
     
     @IBAction func addAsFriendTapped(_ sender: UIButton) {
-        print("ADD user: " + usernameLabel.text!)
         addAsFriendButton.isEnabled = false
         addAsFriendButton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.098/255, alpha: 0.22)
+        self.sendUpdateUsernameNotification()
+    }
     
+    func sendUpdateUsernameNotification() {
+        // Send notification to update username label in ProfileViewController
+        let userInfo = [ "username" : usernameLabel.text! ]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "friendRequestAlert"), object: nil, userInfo: userInfo)
     }
 }
 
@@ -39,7 +44,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         // Set as delegate for the message table
         self.addUsersTableView.delegate = self
         self.addUsersTableView.dataSource = self
-        
+        self.setUpNotifications()
         self.showUsers()
         // Do any additional setup after loading the view.
     }
@@ -77,6 +82,15 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         for user in mockUsers {
             self.addUserToAddFriendsTableView(username: user)
         }
+    }
+    
+    func setUpNotifications() {
+        // Observer for username update
+        NotificationCenter.default.addObserver(self, selector: #selector(friendRequestAlert), name: NSNotification.Name(rawValue: "friendRequestAlert"), object: nil)
+    }
+    @objc func friendRequestAlert(_ notification: Notification) {
+        let username = notification.userInfo!["username"]!
+        print(username)
     }
     
     /*
