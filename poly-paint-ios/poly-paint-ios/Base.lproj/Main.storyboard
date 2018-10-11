@@ -594,13 +594,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1X-zL-YQV">
+                                <rect key="frame" x="131" y="424" width="36" height="25"/>
+                                <state key="normal" title="Button" image="AddFriend"/>
+                                <connections>
+                                    <segue destination="7fN-kl-JlN" kind="popoverPresentation" identifier="toAddFriends" popoverAnchorView="f1X-zL-YQV" id="Xc6-SB-7EF">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8Hx-Vt-OUc" firstAttribute="top" secondItem="vss-gF-j5X" secondAttribute="top" id="DZv-8s-ZDb"/>
                             <constraint firstItem="CpM-LF-M37" firstAttribute="centerX" secondItem="vss-gF-j5X" secondAttribute="centerX" id="MJU-rB-8yg"/>
                             <constraint firstItem="8Hx-Vt-OUc" firstAttribute="leading" secondItem="vss-gF-j5X" secondAttribute="leading" id="SB7-zv-lek"/>
+                            <constraint firstItem="f1X-zL-YQV" firstAttribute="top" secondItem="8Hx-Vt-OUc" secondAttribute="bottom" constant="30" id="Tfk-fT-HRT"/>
                             <constraint firstItem="vss-gF-j5X" firstAttribute="trailing" secondItem="8Hx-Vt-OUc" secondAttribute="trailing" id="X5P-vq-G6s"/>
+                            <constraint firstItem="f1X-zL-YQV" firstAttribute="leading" secondItem="sr3-Zm-pMy" secondAttribute="trailing" constant="15" id="cgV-S1-5kt"/>
                             <constraint firstItem="sr3-Zm-pMy" firstAttribute="top" secondItem="8Hx-Vt-OUc" secondAttribute="bottom" constant="24" id="iwF-Dy-rNE"/>
                             <constraint firstItem="sr3-Zm-pMy" firstAttribute="leading" secondItem="vss-gF-j5X" secondAttribute="leading" constant="20" id="nVG-Jz-8we"/>
                             <constraint firstItem="CpM-LF-M37" firstAttribute="top" secondItem="8Hx-Vt-OUc" secondAttribute="bottom" constant="114" id="qbw-8Y-NMZ"/>
@@ -762,8 +773,59 @@
             </objects>
             <point key="canvasLocation" x="2492.96875" y="130.6640625"/>
         </scene>
+        <!--Friends Management View Controller-->
+        <scene sceneID="rUF-ZB-zkJ">
+            <objects>
+                <viewController id="7fN-kl-JlN" customClass="FriendsManagementViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GSK-9M-MQ1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="F8e-3i-a74" userLabel="Add Friends Table View">
+                                <rect key="frame" x="16" y="108" width="288" height="352"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="Gtn-Zm-A17"/>
+                                    <constraint firstAttribute="height" constant="352" id="l8C-ya-L7P"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddFriendsCell" id="kbi-UF-h2o" userLabel="AddFriendsCell">
+                                        <rect key="frame" x="0.0" y="28" width="288" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kbi-UF-h2o" id="EHg-ke-082">
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJR-SU-d8M">
+                                <rect key="frame" x="114" y="48" width="92" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="bJR-SU-d8M" firstAttribute="top" secondItem="TiV-Iz-eO4" secondAttribute="top" constant="48" id="4ic-lk-gdt"/>
+                            <constraint firstItem="bJR-SU-d8M" firstAttribute="centerX" secondItem="TiV-Iz-eO4" secondAttribute="centerX" id="9ij-21-xpJ"/>
+                            <constraint firstItem="F8e-3i-a74" firstAttribute="centerX" secondItem="TiV-Iz-eO4" secondAttribute="centerX" id="Xan-H0-UH0"/>
+                            <constraint firstItem="F8e-3i-a74" firstAttribute="top" secondItem="TiV-Iz-eO4" secondAttribute="top" constant="108" id="ieZ-Qb-ILi"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="TiV-Iz-eO4"/>
+                    </view>
+                    <connections>
+                        <outlet property="addUsersTableView" destination="F8e-3i-a74" id="S4v-7R-bfz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="39M-r5-Ago" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2492.96875" y="778.7109375"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="AddFriend" width="25" height="25"/>
         <image name="BlankProfile" width="50" height="50"/>
         <image name="Login" width="22" height="22"/>
         <image name="Paint" width="400" height="300"/>
