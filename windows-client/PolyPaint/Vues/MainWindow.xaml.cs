@@ -38,7 +38,7 @@ namespace PolyPaint.Vues
             if (dlg.ShowDialog() == false)
             {
                 System.Environment.Exit(0);
-            }  
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

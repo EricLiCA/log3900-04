@@ -1,4 +1,5 @@
 ﻿using PolyPaint.Modeles;
+using PolyPaint.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,14 +32,17 @@ namespace PolyPaint.Vues
             Listsecond.ItemsSource = this.ChatRooms;
             this.ChatRooms.Add(new ChatRoom("Fun Times"));
             this.ChatRooms.Add(new ChatRoom("Happy Meal"));
-            this.ChatRooms.Add(new ChatRoom("Fun Times"));
-            this.ChatRooms.Add(new ChatRoom("Happy Meal"));
-            this.ChatRooms.Add(new ChatRoom("Fun Times"));
-            this.ChatRooms.Add(new ChatRoom("Happy Meal"));
-            this.ChatRooms.Add(new ChatRoom("Fun Times"));
-            this.ChatRooms.Add(new ChatRoom("Happy Meal"));
-            this.ChatRooms.Add(new ChatRoom("Fun Times"));
-            this.ChatRooms.Add(new ChatRoom("Happy Meal"));
+        }
+
+        private void Listsecond_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ServerService.instance.server == null)
+            {
+                ChatDock.Content = "Not Connected to Database";
+                return;
+            }
+            ChatDock.Content = new Chat();
+            Console.WriteLine(this.ChatRooms[Listsecond.SelectedIndex].Name);
         }
     }
 }

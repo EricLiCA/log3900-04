@@ -10,15 +10,21 @@
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       Title="MessagingWindow">
 
-    <DockPanel LastChildFill="True">
+    <Grid>
 
-        <ListBox DockPanel.Dock="Left" Name="Listsecond" SelectedItem="{Binding Path=SelectedCustomer}"
-                 ScrollViewer.CanContentScroll="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ListBox Grid.Column="0" Name="Listsecond" SelectedItem="{Binding Path=SelectedCustomer}"
+                 ScrollViewer.CanContentScroll="False" SelectedIndex="0"
+                 SelectionChanged="Listsecond_SelectionChanged" Background="#10FFFFFF">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <materialDesign:Card Background="White"
-                                                 Margin="5 0" Padding="20 15"
-                                                 Width="300">
+                    <materialDesign:Card Background="White" Width="300"
+                                         Margin="5 0" Padding="20 15">
                         <StackPanel>
                             <TextBlock FontSize="18" Text="{Binding Name}" />
                             <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
@@ -41,7 +47,9 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Frame Name="ChatDock"/>
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" IsEnabled="False" />
         
-    </DockPanel>
+        <Frame Grid.Column="2" Name="ChatDock"/>
+        
+    </Grid>
 </Page>

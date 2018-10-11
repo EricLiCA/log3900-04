@@ -1,4 +1,5 @@
 ﻿using PolyPaint.Modeles;
+using PolyPaint.Services;
 using Quobject.EngineIoClientDotNet.ComponentEmitter;
 using Quobject.SocketIoClientDotNet.Client;
 using System;
@@ -17,20 +18,18 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class Chat : Page
     {
-        private FenetreDessin MainWindow;
         private ObservableCollection<ChatMessage> Messages;
         private Socket Socket;
         private Regex regex = new Regex("^ {0,}$");
 
-        public Chat(FenetreDessin mainWindow, String url, String username)
+        public Chat()
         {
             InitializeComponent();
-
-            this.MainWindow = mainWindow;
+            
             Messages = new ObservableCollection<ChatMessage>();
             ChatWindow.ItemsSource = Messages;
 
-            this.Connect(url, username);
+            this.Connect(ServerService.instance.server.BaseUrl.ToString(), ServerService.instance.username);
         }
 
         private void Send_Message(object sender, RoutedEventArgs e)
