@@ -8,6 +8,17 @@
 
 import UIKit
 
+struct Headline {
+    
+}
+
+class HeadlineTableViewCell: UITableViewCell {
+    @IBOutlet weak var usernameLabel: UILabel!
+    
+    @IBOutlet weak var addAsFriendButton: UIButton!
+}
+
+
 class FriendsManagementViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var addUsersTableView: UITableView!
@@ -37,10 +48,12 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // create a table cell
-        let cell = addUsersTableView.dequeueReusableCell(withIdentifier: "AddFriendsCell", for: indexPath)
+        let cell = addUsersTableView.dequeueReusableCell(withIdentifier: "AddFriendsCell", for: indexPath) as! HeadlineTableViewCell
         
         // Customize the cell
-        cell.textLabel?.text = usersArray[indexPath.row]
+        let username = usersArray[indexPath.row]
+        cell.usernameLabel?.text = username
+        //cell.textLabel?.text = usersArray[indexPath.row]
         
         // Return the cell
         return cell
