@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using PolyPaint.DAO;
 
 namespace PolyPaint.Vues
 {
@@ -26,7 +27,7 @@ namespace PolyPaint.Vues
 
         private Gallery Gallery;
         private FenetreDessin FenetreDessin;
-        private string AvatarLocation;
+        private ImageDao ImageDao;
 
         public MainWindow()
         {
@@ -88,10 +89,10 @@ namespace PolyPaint.Vues
 
             if (fileName != null)
             {
-                this.AvatarLocation = fileName;
+                String avatarLocation = fileName;
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
-                bitmap.UriSource = new Uri(this.AvatarLocation);
+                bitmap.UriSource = new Uri(avatarLocation);
                 bitmap.DecodePixelHeight = 40;
                 bitmap.DecodePixelWidth = 40;
                 bitmap.EndInit();

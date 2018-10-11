@@ -68,6 +68,26 @@ namespace PolyPaint.DAO
                 });
             });
         }
+
+        public void PostImage(Image imageToPost)
+        {
+            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH + "/" + imageToPost.Id, Method.POST);
+            request.AddObject(imageToPost);
+            ServerService.instance.server.ExecuteAsync(request, response =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not post the image", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                });
+            });
+        }
     }
 
     
