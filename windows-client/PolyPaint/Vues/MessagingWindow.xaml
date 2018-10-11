@@ -4,16 +4,44 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PolyPaint.Vues"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
       Title="MessagingWindow">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <GridSplitter Grid.Column ="0" Width="5"
-                HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
-    </Grid>
+    <DockPanel LastChildFill="True">
+
+        <ListBox DockPanel.Dock="Left" Name="Listsecond" SelectedItem="{Binding Path=SelectedCustomer}"
+                 ScrollViewer.CanContentScroll="False">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <materialDesign:Card Background="White"
+                                                 Margin="5 0" Padding="20 15"
+                                                 Width="300">
+                        <StackPanel>
+                            <TextBlock FontSize="18" Text="{Binding Name}" />
+                            <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Width="30" Height="30" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="3 0">
+                                            <Image Source="{Binding ProfileImage}" />
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Frame Name="ChatDock"/>
+        
+    </DockPanel>
 </Page>

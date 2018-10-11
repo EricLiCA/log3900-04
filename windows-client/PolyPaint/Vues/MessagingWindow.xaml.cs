@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PolyPaint.Modeles;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,24 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MessagingWindow : Page
     {
+        private ObservableCollection<ChatRoom> ChatRooms;
+
         public MessagingWindow()
         {
             InitializeComponent();
+            this.ChatRooms = new ObservableCollection<ChatRoom>();
+            RoomsList.ItemsSource = this.ChatRooms;
+            Listsecond.ItemsSource = this.ChatRooms;
+            this.ChatRooms.Add(new ChatRoom("Fun Times"));
+            this.ChatRooms.Add(new ChatRoom("Happy Meal"));
+            this.ChatRooms.Add(new ChatRoom("Fun Times"));
+            this.ChatRooms.Add(new ChatRoom("Happy Meal"));
+            this.ChatRooms.Add(new ChatRoom("Fun Times"));
+            this.ChatRooms.Add(new ChatRoom("Happy Meal"));
+            this.ChatRooms.Add(new ChatRoom("Fun Times"));
+            this.ChatRooms.Add(new ChatRoom("Happy Meal"));
+            this.ChatRooms.Add(new ChatRoom("Fun Times"));
+            this.ChatRooms.Add(new ChatRoom("Happy Meal"));
         }
     }
 }
