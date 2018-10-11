@@ -10,9 +10,9 @@
     <DockPanel Background="WhiteSmoke" LastChildFill="True">
         <Grid Height="50" DockPanel.Dock="Top">
             <DockPanel LastChildFill="True">
-                <Border CornerRadius="20" DockPanel.Dock="Right" Width="40" Height="40" Background="Black" Margin="15 5">
-                    <!-- Profile Picture -->
-                </Border>
+                <Button Name="AvatarButton" DockPanel.Dock="Right" Width="40" Height="40" Background="White" Margin="15 5" Click="Menu_Change_Avatar_Click">
+                    <Image Name="AvatarImage" Stretch="Fill"/>
+                </Button>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
                     <Button Name="ButtonGallery" Uid="0" Width="150" Content="GALLERY" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
                     <Button Name="ButtonUsers" Uid="1" Width="150" Content="USERS" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
