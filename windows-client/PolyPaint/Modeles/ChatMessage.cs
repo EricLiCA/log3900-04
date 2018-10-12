@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PolyPaint.Modeles
 {
-    class ChatMessage
+    public class ChatMessage
     {
-        public string Sender { get; set; }
+        public User Sender { get; set; }
 
         public string Timestamp { get; set; }
 

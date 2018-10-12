@@ -24,18 +24,18 @@
                 <ItemsControl Name="ChatWindow" VerticalAlignment="Stretch" BorderThickness="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <GroupBox Width="220" Margin="5">
-                                <GroupBox.Header>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Ellipse Margin="0,0,6,0" Fill="Green" Width="15" Height="15" />
-                                        <TextBlock Text="{Binding Sender}" />
-                                    </StackPanel>
-                                </GroupBox.Header>
-                                <StackPanel Margin="6,6,6,0">
-                                    <TextBlock Text="{Binding Message}" FontSize="12" TextWrapping="WrapWithOverflow"/>
-                                    <TextBlock Text="{Binding Timestamp}" FontSize="10" FontWeight="Light" HorizontalAlignment="Right" />
+                            <DockPanel Margin="5">
+                                <Border DockPanel.Dock="Left" Margin="0,0,6,16" Width="20" Height="20" VerticalAlignment="Bottom">
+                                    <Image Source="{Binding Sender.ProfileImage}" />
+                                </Border>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Sender.Username}" />
+                                    <Border CornerRadius="10" Background="#FF2196F3" Padding="10 5" HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding Message}" FontSize="12" TextWrapping="Wrap"/>
+                                    </Border>
+                                    <TextBlock Text="{Binding Timestamp}" FontSize="10" FontWeight="Light" />
                                 </StackPanel>
-                            </GroupBox>
+                            </DockPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

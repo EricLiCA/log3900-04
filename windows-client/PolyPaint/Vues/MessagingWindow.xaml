@@ -5,8 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PolyPaint.Vues"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      mc:Ignorable="d"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
       Title="MessagingWindow">
 
@@ -20,7 +19,7 @@
 
         <ScrollViewer HorizontalScrollBarVisibility="Disabled">
             <StackPanel Grid.Column="0">
-                <TextBlock Text="Joined Chanels" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" />
+                <TextBlock Text="Joined Chanels" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" Margin="5" />
                 <ListView Name="Listfirst" ScrollViewer.CanContentScroll="False" SelectedIndex="0" SelectionChanged="Listfirst_SelectionChanged" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -48,7 +47,8 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <TextBlock Text="Other Chanels" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" Margin="0 20 0 0" />
+                <Separator Margin="0 30 0 0"  />
+                <TextBlock Text="Other Chanels" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" Margin="5 15 5 5" />
                 <ItemsControl Name="Listsecond" VerticalAlignment="Stretch" BorderThickness="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>

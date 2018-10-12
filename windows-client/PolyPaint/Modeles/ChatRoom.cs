@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PolyPaint.Modeles
 {
-    class ChatRoom
+    public class ChatRoom
     {
         public string Name { get; set; }
         public ObservableCollection<User> Users { get; set; }
@@ -18,7 +18,7 @@ namespace PolyPaint.Modeles
             {
                 if (_Page == null)
                 {
-                    this._Page = new Chat(Name);
+                    this._Page = new Chat(this.Name, this.Users);
                 }
                 return _Page;
             }}

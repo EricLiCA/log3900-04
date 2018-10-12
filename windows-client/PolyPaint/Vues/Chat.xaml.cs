@@ -5,6 +5,7 @@ using Quobject.SocketIoClientDotNet.Client;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -21,14 +22,17 @@ namespace PolyPaint.Vues
         private ObservableCollection<ChatMessage> Messages;
         private Regex regex = new Regex("^ {0,}$");
 
-        public string ThreadName { get; set; }
+        public string ThreadName { get; }
+        public ObservableCollection<User> Users { get; }
 
-        public Chat(string name)
+        public Chat(string name, ObservableCollection<User> users)
         {
             this.ThreadName = name;
+            this.Users = users;
 
             InitializeComponent();
-            
+
+            this.Users.Add(new User(ServerService.instance.username, "", true));
             Messages = new ObservableCollection<ChatMessage>();
             ChatWindow.ItemsSource = Messages;
 
@@ -52,9 +56,12 @@ namespace PolyPaint.Vues
             {
                 this.Dispatcher.Invoke(() =>
                 {
+                    Console.WriteLine(server_params[0].ToString());
+                    string sender = server_params[0].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString();
+                    Console.WriteLine(sender);
                     Messages.Add(new ChatMessage()
                     {
-                        Sender = (String)server_params[0],
+                        Sender = this.Users.First(user => user.Username == sender),
                         Timestamp = DateTime.Now.ToString("HH:mm:ss"),
                         Message = (String)server_params[1]
                     });
