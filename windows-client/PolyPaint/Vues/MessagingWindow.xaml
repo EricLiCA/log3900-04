@@ -23,26 +23,28 @@
                 <ListView Name="Listfirst" ScrollViewer.CanContentScroll="False" SelectedIndex="0" SelectionChanged="Listfirst_SelectionChanged" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <materialDesign:Card Background="White" Width="300"
+                            <materialDesign:Badged>
+                                <materialDesign:Card Background="White" Width="300"
                                                      Margin="5 0" Padding="20 15">
-                                <StackPanel>
-                                    <TextBlock FontSize="18" Text="{Binding Name}" />
-                                    <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border Width="30" Height="30" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="3 0">
-                                                    <Image Source="{Binding ProfileImage}" />
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                    </ItemsControl>
-                                </StackPanel>
-                            </materialDesign:Card>
+                                    <StackPanel>
+                                        <TextBlock FontSize="18" Text="{Binding Name}" />
+                                        <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Width="30" Height="30" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="3 0">
+                                                        <Image Source="{Binding ProfileImage}" />
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </materialDesign:Card>
+                            </materialDesign:Badged>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

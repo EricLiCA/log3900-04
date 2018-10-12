@@ -44,6 +44,8 @@ namespace PolyPaint.Vues
         private void Listfirst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ChatDock.Content = this.SubscribedChatRooms[Listfirst.SelectedIndex].Page;
+            Console.WriteLine(((ListView)sender).SelectedItem);
+            Console.WriteLine(((ListView)sender).Template);
         }
         
 
@@ -63,7 +65,7 @@ namespace PolyPaint.Vues
             this.NotSubscribedChatRooms.Remove(room);
             this.SubscribedChatRooms.Add(room);
 
-            Task.Run(async () => //Task.Run automatically unwraps nested Task types!
+            Task.Run(async () =>
             {
                 await Task.Delay(10);
                 this.Dispatcher.Invoke(() =>
