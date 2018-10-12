@@ -1,4 +1,4 @@
-using PolyPaint.Modeles;
+﻿using PolyPaint.Modeles;
 using PolyPaint.Services;
 using Quobject.EngineIoClientDotNet.ComponentEmitter;
 using Quobject.SocketIoClientDotNet.Client;
@@ -19,7 +19,6 @@ namespace PolyPaint.Vues
     public partial class Chat : Page
     {
         private ObservableCollection<ChatMessage> Messages;
-        private Socket Socket;
         private Regex regex = new Regex("^ {0,}$");
 
         public Chat()
@@ -36,7 +35,7 @@ namespace PolyPaint.Vues
         {
             if (regex.Matches(MessageToSend.Text).Count == 0)
             {
-                this.Socket.Emit("message", MessageToSend.Text);
+                ServerService.instance.Socket.Emit("message", MessageToSend.Text);
             }
 
             MessageToSend.Text = "";
@@ -45,12 +44,7 @@ namespace PolyPaint.Vues
 
         internal void Connect(String url, String username)
         {
-            this.Socket = IO.Socket(url);
-            this.Socket.On(Socket.EVENT_CONNECT, (IListener) =>
-            {
-                Socket.Emit("setUsername", username);
-            });
-            this.Socket.On("message", new CustomListener((object[] server_params) =>
+            ServerService.instance.Socket.On("message", new CustomListener((object[] server_params) =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -63,23 +57,11 @@ namespace PolyPaint.Vues
                     this.ScrollWindow.PageDown();
                 });
             }));
-            this.Socket.On("setUsernameStatus", new CustomListener((object[] server_params) =>
-            {
-                if ((String)server_params[0] != "OK")
-                {
-                    MessageBox.Show((String)server_params[0], "Error connecting", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        this.Disconnect();
-                    });
-                }
-            }));
         }
 
         internal void Disconnect()
         {
-            this.Socket.Disconnect();
+            ServerService.instance.Socket.Disconnect();
             this.Messages.Clear();
         }
 
