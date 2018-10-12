@@ -13,9 +13,9 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-        <Image Source="{Binding Path=Image.FullImageUrl}" Height="140" Width="196" Stretch="UniformToFill" />
+        <Image Source="{Binding Path=Image.fullImageUrl}" Height="140" Width="196" Stretch="UniformToFill" />
             <StackPanel Grid.Row="1" Margin="8 24 8 0" >
-            <TextBlock FontWeight="Bold" Text="{Binding Path=Image.Title}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <TextBlock FontWeight="Bold" Text="{Binding Path=Image.title}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </StackPanel>
             <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="8">
                 <Button Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"

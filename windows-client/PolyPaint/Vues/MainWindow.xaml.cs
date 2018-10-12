@@ -34,6 +34,7 @@ namespace PolyPaint.Vues
             this.Gallery = new Gallery();
             this.Server_Connect();
             InitializeComponent();
+            GridMain.Content = Gallery;
         }
         private void Server_Connect()
         {
@@ -56,8 +57,8 @@ namespace PolyPaint.Vues
                     {
                         Gallery.Init();
                         GridMain.Content = Gallery;
+                        break;
                     }
-                    break;
                 case 1:
                     GridMain.Content = "Users";
                     break;

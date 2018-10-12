@@ -9,60 +9,65 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Gallery">
-    <DockPanel Margin="0">
-        <Expander Name="ImageView" ExpandDirection="Left" DockPanel.Dock="Right" HorizontalAlignment="Right">
-            <Expander.Header>
-                <TextBlock Text="Expander Example 3c" RenderTransformOrigin=".5,.5">
-                    <TextBlock.LayoutTransform>
-                        <RotateTransform Angle="90" />
-                    </TextBlock.LayoutTransform>
-                </TextBlock>
-            </Expander.Header>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="300" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Image  Name="ImageViewPicture" Height="400" Width="400" Stretch="UniformToFill" />
-                <StackPanel Grid.Row="1" Margin="8 24 8 0" >
-                    <TextBlock Name="ImageViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+    <materialDesign:DialogHost Name="zeb" Canvas.Left="50" Canvas.Top="50" Margin="0">
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel Margin="16">
+                <TextBlock>Add a password to the selected image</TextBlock>
+                <PasswordBox Margin="0 8 0 0" HorizontalAlignment="Stretch" x:Name="CurrentImagePassword" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="AddPassword_Button">
+                        ACCEPT
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                        CANCEL
+                    </Button>
                 </StackPanel>
-                <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="8">
-                    <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" Width="40" Height="40">
-                        <materialDesign:PackIcon Kind="KeyMinus">
-                        </materialDesign:PackIcon>
-                        <materialDesign:ToggleButtonAssist.OnContent>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <DockPanel Margin="0" Height="{Binding ActualHeight, ElementName=canvas}" Width="{Binding ActualWidth, ElementName=canvas}">
+            <Expander x:Name="ImageView" ExpandDirection="Left" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                <Expander.Header>
+                    <TextBlock Text="Expander Example 3c" RenderTransformOrigin=".5,.5">
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="90" />
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                </Expander.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Image  x:Name="ImageViewPicture" Height="400" Width="400" Stretch="UniformToFill" />
+                    <StackPanel Grid.Row="1" Margin="8 24 8 0" >
+                        <TextBlock x:Name="ImageViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="8">
+                        <ToggleButton x:Name="PasswordButton" Style="{StaticResource MaterialDesignActionToggleButton}" Width="40" Height="40" Margin="0,0,10,0" Click="PasswordButton_Click" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" IsEnabled="True">
+
+                            <materialDesign:ToggleButtonAssist.OnContent>
+                                <materialDesign:PackIcon Kind="KeyRemove"/>
+                            </materialDesign:ToggleButtonAssist.OnContent>
                             <materialDesign:PackIcon Kind="KeyPlus" />
-                        </materialDesign:ToggleButtonAssist.OnContent>
-                    </ToggleButton>
-                    
-                    <ToggleButton
-                      Style="{StaticResource MaterialDesignActionToggleButton}"
-                      ToolTip="MaterialDesignActionLightToggleButton">
-                        <ToggleButton.Content>
+                        </ToggleButton>
+
+                        <ToggleButton x:Name="LockButton" Style="{StaticResource MaterialDesignActionToggleButton}" Width="40" Height="40" Margin="0,0,10,0" Click="LockButton_Click">
+                            <materialDesign:ToggleButtonAssist.OnContent>
+                                <materialDesign:PackIcon Kind="Lock" />
+                            </materialDesign:ToggleButtonAssist.OnContent>
                             <materialDesign:PackIcon
-                                            Kind="LockOpen" />
-                        </ToggleButton.Content>
-                        <materialDesign:ToggleButtonAssist.OnContent>
-                            <materialDesign:PackIcon Kind="Lock" />
-                        </materialDesign:ToggleButtonAssist.OnContent>
-                    </ToggleButton>
-                    <ToggleButton
-                      Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
-                      ToolTip="MaterialDesignFlatPrimaryToggleButton"
-                      IsChecked="True" Width="32" Height="32">
-                        <materialDesign:PackIcon
-                        Kind="Heart"
-                        Height="21"
-                        Width="21" />
-                    </ToggleButton>
-                </StackPanel>
-            </Grid>
-        </Expander>
-        <ScrollViewer>
-            <WrapPanel Name="ImagesContainer" Height="{Binding ActualHeight, ElementName=scrollViewer}" Width="{Binding ActualWidth, ElementName=scrollViewer}" Margin="10">
-            </WrapPanel>
-        </ScrollViewer>
-    </DockPanel>
+                                Kind="LockOpen" />
+                        </ToggleButton>
+                        <ToggleButton x:Name="LikeButton" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Width="40" Height="40" Margin="0,0,10,0" Click="LikeButton_Click">
+                            <materialDesign:PackIcon Kind="Heart" Height="21"  Width="21" />
+                        </ToggleButton>
+                    </StackPanel>
+                </Grid>
+            </Expander>
+            <ScrollViewer>
+                <WrapPanel x:Name="ImagesContainer" Height="{Binding ActualHeight, ElementName=scrollViewer}" Width="{Binding ActualWidth, ElementName=scrollViewer}" Margin="10"/>
+            </ScrollViewer>
+        </DockPanel>
+    </materialDesign:DialogHost>
 </Page>

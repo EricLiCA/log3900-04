@@ -10,10 +10,10 @@ using System.Windows.Controls;
 
 namespace PolyPaint.DAO
 {
-    public class ImageDao
+    public static class ImageDao
     {
 
-        public void GetAll(WrapPanel imagesContainer)
+        public static void GetAll(WrapPanel imagesContainer)
         {
             var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH, Method.GET);
             ServerService.instance.server.ExecuteAsync(request, response =>
@@ -29,13 +29,13 @@ namespace PolyPaint.DAO
                             dynamic data = JObject.Parse(responseImages[i].ToString());
                             Image image = new Image
                             {
-                                Id = data["id"],
-                                OwnerId = data["ownerId"],
-                                Title = data["title"],
-                                ProtectionLevel = data["protectionLevel"],
-                                Password = data["password"],
-                                ThumbnailUrl = data["thumbnailUrl"],
-                                FullImageUrl = data["fullImageUrl"]
+                                id = data["id"],
+                                ownerId = data["ownerId"],
+                                title = data["title"],
+                                protectionLevel = data["protectionLevel"],
+                                password = data["password"],
+                                thumbnailUrl = data["thumbnailUrl"],
+                                fullImageUrl = data["fullImageUrl"]
                             };
                             GalleryCard galleryCard = new GalleryCard(image);
                             imagesContainer.Children.Add(galleryCard);
@@ -49,9 +49,9 @@ namespace PolyPaint.DAO
             });
         }
 
-        public void Update(Image imageToUpdate)
+        public static void Update(Image imageToUpdate)
         {
-            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH + "/" + imageToUpdate.Id, Method.PUT);
+            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH + "/" + imageToUpdate.id, Method.PUT);
             request.AddJsonBody(imageToUpdate);
             ServerService.instance.server.ExecuteAsync(request, response =>
             {

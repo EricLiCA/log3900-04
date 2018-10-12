@@ -8,12 +8,12 @@ namespace PolyPaint.Modeles
 {
     public class Image
     {
-        public string Id { get; set; }
-        public string OwnerId { get; set; }
-        public string Title { get; set; }
-        public string ProtectionLevel { get; set; }
-        public string Password { get; set; }
-        public string ThumbnailUrl { get; set; }
-        public string FullImageUrl { get; set; }
+        public string id { get; set; }
+        public string ownerId { get; set; }
+        public string title { get; set; }
+        public string protectionLevel { get; set; }
+        public string password { get; set; }
+        public string thumbnailUrl { get; set; }
+        public string fullImageUrl { get; set; }
     }
 }
