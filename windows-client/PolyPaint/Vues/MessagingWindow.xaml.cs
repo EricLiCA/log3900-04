@@ -24,34 +24,43 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MessagingWindow : Page
     {
-        private ObservableCollection<ChatRoom> ChatRooms;
-
+        private ObservableCollection<ChatRoom> NotSubscribedChatRooms { get; set; }
+        private ObservableCollection<ChatRoom> SubscribedChatRooms { get; set; }
+        
         public MessagingWindow()
         {
             InitializeComponent();
-            this.ChatRooms = new ObservableCollection<ChatRoom>();
-            Listsecond.ItemsSource = this.ChatRooms;
-            this.ChatRooms.Add(new ChatRoom("Fun Times"));
-            this.ChatRooms.Add(new ChatRoom("Happy Meal"));
+            this.NotSubscribedChatRooms = new ObservableCollection<ChatRoom>();
+            this.SubscribedChatRooms = new ObservableCollection<ChatRoom>();
+            Listfirst.ItemsSource = this.SubscribedChatRooms;
+            Listsecond.ItemsSource = this.NotSubscribedChatRooms;
+            this.NotSubscribedChatRooms.Add(new ChatRoom("Fun Times"));
+            this.NotSubscribedChatRooms.Add(new ChatRoom("Happy Meal"));
+            this.NotSubscribedChatRooms.Add(new ChatRoom("Feelin' Good"));
         }
 
-        private void Listsecond_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Listfirst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ServerService.instance.server == null)
-            {
-                ChatDock.Content = "Not Connected to Database";
-                return;
-            }
             ChatDock.Content = new Chat();
-            Console.WriteLine(this.ChatRooms[Listsecond.SelectedIndex].Name);
+            Console.WriteLine(this.SubscribedChatRooms[Listfirst.SelectedIndex].Name);
         }
+        
 
         internal void Initialize(Badged countingBadge)
         {
             if (countingBadge.Badge == null || Equals(countingBadge.Badge, ""))
                 countingBadge.Badge = 1;
             else
-                countingBadge.Badge = (int)countingBadge.Badge + 1;
+                countingBadge.Badge = int.Parse(countingBadge.Badge.ToString()) + 1;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            string toJoin = ((Button)sender).Tag.ToString();
+
+            ChatRoom room = this.NotSubscribedChatRooms.First<ChatRoom>(ChatRoom => ChatRoom.Name == toJoin);
+            this.NotSubscribedChatRooms.Remove(room);
+            this.SubscribedChatRooms.Add(room);
         }
     }
 }

@@ -18,34 +18,68 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Column="0" Name="Listsecond" SelectedItem="{Binding Path=SelectedCustomer}"
-                 ScrollViewer.CanContentScroll="False" SelectedIndex="0"
-                 SelectionChanged="Listsecond_SelectionChanged" Background="#10FFFFFF">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <materialDesign:Card Background="White" Width="300"
-                                         Margin="5 0" Padding="20 15">
-                        <StackPanel>
-                            <TextBlock FontSize="18" Text="{Binding Name}" />
-                            <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Width="30" Height="30" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="3 0">
-                                            <Image Source="{Binding ProfileImage}" />
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                        </StackPanel>
-                    </materialDesign:Card>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Joined Chanels" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" />
+                <ListView Name="Listfirst" ScrollViewer.CanContentScroll="False" SelectedIndex="0" SelectionChanged="Listfirst_SelectionChanged">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:Card Background="White" Width="300"
+                                                     Margin="5 0" Padding="20 15">
+                                <StackPanel>
+                                    <TextBlock FontSize="18" Text="{Binding Name}" />
+                                    <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Width="30" Height="30" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="3 0">
+                                                    <Image Source="{Binding ProfileImage}" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <TextBlock Text="Other Chanels" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" Margin="0 20 0 0" />
+                <ItemsControl Name="Listsecond" VerticalAlignment="Stretch" BorderThickness="0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:Card Background="White" Width="300" Margin="5" Padding="20 15">
+                                <StackPanel>
+                                    <DockPanel LastChildFill="True">
+                                        <Button DockPanel.Dock="Right" Tag="{Binding Name}" Content="Join"
+                                                HorizontalAlignment="Center" Click="Button_Click" Margin="0 0 0 8" />
+                                        <TextBlock FontSize="18" Text="{Binding Name}" />
+                                    </DockPanel>
+                                    <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Width="30" Height="30" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="3 0">
+                                                    <Image Source="{Binding ProfileImage}" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
 
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" IsEnabled="False" />
         

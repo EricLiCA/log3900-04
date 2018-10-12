@@ -31,9 +31,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Column="0" Grid.Row="0" Margin="4" >Username</Label>
-        <TextBox Name="username" Grid.Column="1" Grid.Row="0" Margin="4" Text="BoJack Horseman" />
+        <TextBox Name="username" Grid.Column="1" Grid.Row="0" Margin="4" Text="seb" />
         <Label Grid.Column="0" Grid.Row="1" Margin="4" >Password</Label>
-        <PasswordBox Name="password" Grid.Column="1" Grid.Row="1" Margin="4" />
+        <PasswordBox Name="password" Grid.Column="1" Grid.Row="1" Margin="4" Password="seb" />
         <CheckBox Name="anonymous" Grid.Column="1" Grid.Row="2"
                       Style="{StaticResource MaterialDesignCheckBox}"
                       Margin="0 10" Click="CheckBox_Checked">
