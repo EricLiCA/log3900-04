@@ -41,8 +41,7 @@ namespace PolyPaint.Vues
 
         private void Listfirst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ChatDock.Content = new Chat();
-            Console.WriteLine(this.SubscribedChatRooms[Listfirst.SelectedIndex].Name);
+            ChatDock.Content = this.SubscribedChatRooms[Listfirst.SelectedIndex].Page;
         }
         
 
@@ -61,6 +60,15 @@ namespace PolyPaint.Vues
             ChatRoom room = this.NotSubscribedChatRooms.First<ChatRoom>(ChatRoom => ChatRoom.Name == toJoin);
             this.NotSubscribedChatRooms.Remove(room);
             this.SubscribedChatRooms.Add(room);
+
+            Task.Run(async () => //Task.Run automatically unwraps nested Task types!
+            {
+                await Task.Delay(10);
+                this.Dispatcher.Invoke(() =>
+                {
+                    Listfirst.SelectedIndex = this.SubscribedChatRooms.Count - 1;
+                });
+            });
         }
     }
 }

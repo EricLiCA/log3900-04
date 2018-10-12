@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PolyPaint.Vues;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,6 +12,16 @@ namespace PolyPaint.Modeles
     {
         public string Name { get; set; }
         public ObservableCollection<User> Users { get; set; }
+
+        private Chat _Page;
+        public Chat Page { get
+            {
+                if (_Page == null)
+                {
+                    this._Page = new Chat(Name);
+                }
+                return _Page;
+            }}
 
         public ChatRoom(string name)
         {

@@ -21,8 +21,12 @@ namespace PolyPaint.Vues
         private ObservableCollection<ChatMessage> Messages;
         private Regex regex = new Regex("^ {0,}$");
 
-        public Chat()
+        public string ThreadName { get; set; }
+
+        public Chat(string name)
         {
+            this.ThreadName = name;
+
             InitializeComponent();
             
             Messages = new ObservableCollection<ChatMessage>();
