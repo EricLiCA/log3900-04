@@ -1,4 +1,5 @@
-﻿using PolyPaint.Modeles;
+﻿using MaterialDesignThemes.Wpf;
+using PolyPaint.Modeles;
 using PolyPaint.Services;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,14 @@ namespace PolyPaint.Vues
             }
             ChatDock.Content = new Chat();
             Console.WriteLine(this.ChatRooms[Listsecond.SelectedIndex].Name);
+        }
+
+        internal void Initialize(Badged countingBadge)
+        {
+            if (countingBadge.Badge == null || Equals(countingBadge.Badge, ""))
+                countingBadge.Badge = 1;
+            else
+                countingBadge.Badge = (int)countingBadge.Badge + 1;
         }
     }
 }

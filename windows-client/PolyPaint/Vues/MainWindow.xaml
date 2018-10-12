@@ -16,7 +16,11 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
                     <Button Name="ButtonGallery" Uid="0" Width="150" Content="GALLERY" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
                     <Button Name="ButtonUsers" Uid="1" Width="150" Content="USERS" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
-                    <Button Name="ButtonChat" Uid="2" Width="150" Content="CHAT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+                    <Button Name="ButtonChat" Uid="2" Width="150" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" >
+                        <materialDesign:Badged x:Name="CountingBadge" BadgeColorZoneMode="PrimaryDark">
+                            <TextBlock Text="CHAT" Margin="15 5" />
+                        </materialDesign:Badged>
+                    </Button>
                     <Button Name="ButtonEdit" Uid="3" Width="150" Content="EDIT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
                 </StackPanel>
             </DockPanel>
