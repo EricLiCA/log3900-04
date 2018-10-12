@@ -13,38 +13,15 @@ namespace PolyPaint.DAO
     public static class ImageDao
     {
 
-        public static void GetAll(WrapPanel imagesContainer)
+        public static void GetAll()
         {
             var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH, Method.GET);
             ServerService.instance.server.ExecuteAsync(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        imagesContainer.Children.Clear();
-                        JArray responseImages = JArray.Parse(response.Content);
-                        for (int i = 0; i < responseImages.Count; i++)
-                        {
-                            dynamic data = JObject.Parse(responseImages[i].ToString());
-                            Image image = new Image
-                            {
-                                id = data["id"],
-                                ownerId = data["ownerId"],
-                                title = data["title"],
-                                protectionLevel = data["protectionLevel"],
-                                password = data["password"],
-                                thumbnailUrl = data["thumbnailUrl"],
-                                fullImageUrl = data["fullImageUrl"]
-                            };
-                            GalleryCard galleryCard = new GalleryCard(image);
-                            imagesContainer.Children.Add(galleryCard);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Could not load the images", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
+                    currentGallery.FillWithImages(response);
                 });
             });
         }
@@ -70,5 +47,5 @@ namespace PolyPaint.DAO
         }
     }
 
-    
+
 }

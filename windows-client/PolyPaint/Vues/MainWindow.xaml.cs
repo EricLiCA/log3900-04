@@ -24,7 +24,7 @@ namespace PolyPaint.Vues
     public partial class MainWindow : Window
     {
 
-        private Gallery Gallery;
+        public Gallery Gallery;
         private FenetreDessin FenetreDessin;
         private string AvatarLocation;
 
