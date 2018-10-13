@@ -1,6 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
 using PolyPaint.Modeles;
 using PolyPaint.Services;
+using PolyPaint.VueModeles;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,55 +25,24 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MessagingWindow : Page
     {
-        private ObservableCollection<ChatRoom> NotSubscribedChatRooms { get; set; }
-        private ObservableCollection<ChatRoom> SubscribedChatRooms { get; set; }
         
         public MessagingWindow()
         {
+            DataContext = new MessagingViewModel();
             InitializeComponent();
-            this.NotSubscribedChatRooms = new ObservableCollection<ChatRoom>();
-            this.SubscribedChatRooms = new ObservableCollection<ChatRoom>();
-
-            Listfirst.ItemsSource = this.SubscribedChatRooms;
-            Listsecond.ItemsSource = this.NotSubscribedChatRooms;
-
-            this.NotSubscribedChatRooms.Add(new ChatRoom("Fun Times"));
-            this.NotSubscribedChatRooms.Add(new ChatRoom("Happy Meal"));
-            this.NotSubscribedChatRooms.Add(new ChatRoom("Feelin' Good"));
         }
 
-        private void Listfirst_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ChatDock.Content = this.SubscribedChatRooms[Listfirst.SelectedIndex].Page;
-            Console.WriteLine(((ListView)sender).SelectedItem);
-            Console.WriteLine(((ListView)sender).Template);
+            ((MessagingViewModel)this.DataContext).OpenChat.Execute(Listfirst.SelectedIndex);
         }
         
-
         internal void Initialize(Badged countingBadge)
         {
             if (countingBadge.Badge == null || Equals(countingBadge.Badge, ""))
                 countingBadge.Badge = 1;
             else
                 countingBadge.Badge = int.Parse(countingBadge.Badge.ToString()) + 1;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string toJoin = ((Button)sender).Tag.ToString();
-
-            ChatRoom room = this.NotSubscribedChatRooms.First<ChatRoom>(ChatRoom => ChatRoom.Name == toJoin);
-            this.NotSubscribedChatRooms.Remove(room);
-            this.SubscribedChatRooms.Add(room);
-
-            Task.Run(async () =>
-            {
-                await Task.Delay(10);
-                this.Dispatcher.Invoke(() =>
-                {
-                    Listfirst.SelectedIndex = this.SubscribedChatRooms.Count - 1;
-                });
-            });
         }
     }
 }
