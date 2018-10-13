@@ -1,5 +1,6 @@
 ﻿using PolyPaint.Modeles;
 using PolyPaint.Utilitaires;
+using PolyPaint.Vues;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -25,12 +26,20 @@ namespace PolyPaint.VueModeles
             set { PropertyModified(); }
         }
 
+        private List<Chat> chatPages = new List<Chat>();
         public Page ChatWindow
         {
             get
             {
                 if (Messaging.SelectedIndex == -1) return null;
-                return Messaging.SubscribedChatRooms[Messaging.SelectedIndex].Page;
+                if (Messaging.SelectedIndex == chatPages.Count)
+                {
+                    ChatViewModel viewModel = new ChatViewModel(SubscribedChatRooms[Messaging.SelectedIndex]);
+                    Chat chatPage = new Chat(viewModel);
+                    this.chatPages.Add(chatPage);
+                    return chatPage;
+                }
+                return this.chatPages[Messaging.SelectedIndex];
             }
             set { PropertyModified(); }
         }
@@ -61,10 +70,18 @@ namespace PolyPaint.VueModeles
         {
             if (e.PropertyName == "SelectedIndex")
             {
-                ChatWindow = Messaging.SubscribedChatRooms[Messaging.SelectedIndex].Page;
+                ChatWindow = null;
             } else if (e.PropertyName == "Notifications")
             {
                 this.Notifications = Messaging.Notifications;
+            }
+            else if (e.PropertyName == "SubscribedChatRooms")
+            {
+                this.SubscribedChatRooms = Messaging.SubscribedChatRooms;
+            }
+            else if (e.PropertyName == "NotSubscribedChatRooms")
+            {
+                this.NotSubscribedChatRooms = Messaging.NotSubscribedChatRooms;
             }
         }
     }

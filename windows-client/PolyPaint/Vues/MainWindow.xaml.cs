@@ -56,7 +56,6 @@ namespace PolyPaint.Vues
                     GridMain.Content = "Users";
                     break;
                 case 2:
-                    this.MessagingWindow.Initialize(CountingBadge);
                     GridMain.Content = this.MessagingWindow;
                     break;
                 case 3:

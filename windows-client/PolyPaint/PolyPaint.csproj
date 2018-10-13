@@ -165,6 +165,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Convertisseurs\Convertisseurs.cs" />
+    <Compile Include="Modeles\ChatModel.cs" />
     <Compile Include="Modeles\ChatRoom.cs" />
     <Compile Include="Modeles\CustomListener.cs" />
     <Compile Include="Modeles\Editeur.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Services\ServerService.cs" />
     <Compile Include="Utilitaires\Settings.cs" />
     <Compile Include="Utilitaires\RelayCommand.cs" />
+    <Compile Include="VueModeles\ChatViewModel.cs" />
     <Compile Include="VueModeles\MessagingViewModel.cs" />
     <Compile Include="VueModeles\VueModele.cs" />
     <Compile Include="Vues\LoginDialogBox.xaml.cs">

@@ -1,10 +1,10 @@
-﻿using System;
+﻿using PolyPaint.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Controls;
 
 namespace PolyPaint.Modeles
 {
@@ -69,6 +69,8 @@ namespace PolyPaint.Modeles
             this.NotSubscribedChatRooms.Remove(room);
             this.SubscribedChatRooms.Add(room);
             this.OpenChat(this.SubscribedChatRooms.Count - 1);
+            room.Register();
+            room.Users.Add(new User(ServerService.instance.username, "", true));
         }
     }
 }
