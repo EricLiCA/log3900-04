@@ -8,6 +8,8 @@ import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
 import { ImagesRoute } from './routes/images';
+import { ImageLikesRoute } from './routes/image-likes';
+import { ImageCommentsRoute } from './routes/image-comments';
 
 export class Application {
     /**
@@ -57,6 +59,8 @@ export class Application {
         const usersRoute: UsersRoute = new UsersRoute();
         const sessionsRoute: SessionsRoute = new SessionsRoute();
         const imagesRoute: ImagesRoute = new ImagesRoute();
+        const imageLikes : ImageLikesRoute = new ImageLikesRoute();
+        const imageComments : ImageCommentsRoute = new ImageCommentsRoute();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));
@@ -80,6 +84,16 @@ export class Application {
         router.put('/images/:id', imagesRoute.update.bind(imagesRoute.update));
         router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
         
+        // ImageLikes
+        router.get('/imageLikes/:imageId', imageLikes.get.bind(imageLikes.get));
+        router.post('/imageLikes', imageLikes.post.bind(imageLikes.post));
+        router.delete('/imageLikes/:imageId/:userId', imageLikes.delete.bind(imageLikes.delete));
+
+        // ImageComments
+        router.get('/imageComments/:imageId', imageComments.get.bind(imageComments.get));
+        router.post('/imageComments', imageComments.post.bind(imageComments.post));
+        router.delete('/imageComments/:imageId/:userId', imageComments.delete.bind(imageComments.delete));
+
         // use router middleware
         this.app.use('/v1', router);
 
