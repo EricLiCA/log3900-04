@@ -65,7 +65,7 @@ export class ChatService {
 
             socket.on('message', (room: string, message: string) => {
                 console.log(`Received: ${message}`);
-                socket.emit('message', 'You', message);
+                socket.emit('message', room, 'You', message);
                 if (this.usernames.has(socket.id)) {
                     socket.broadcast.to(room).emit('message', room, this.usernames.get(socket.id), message);
                 } else {
