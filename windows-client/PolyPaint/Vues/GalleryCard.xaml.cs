@@ -13,6 +13,7 @@ namespace PolyPaint.Vues
     public partial class GalleryCard : Card
     {
         public Image Image { get; set; }
+
         public GalleryCard(Image image)
         {
             InitializeComponent();

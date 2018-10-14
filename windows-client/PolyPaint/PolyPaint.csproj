@@ -165,9 +165,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Convertisseurs\Convertisseurs.cs" />
+    <Compile Include="DAO\ImageCommentDao.cs" />
     <Compile Include="DAO\ImageDao.cs" />
+    <Compile Include="DAO\ImageLikeDao.cs" />
     <Compile Include="Modeles\Editeur.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
+    <Compile Include="Modeles\ImageComment.cs" />
+    <Compile Include="Modeles\ImageLike.cs" />
     <Compile Include="Modeles\Image.cs" />
     <Compile Include="Services\ServerService.cs" />
     <Compile Include="Utilitaires\Settings.cs" />

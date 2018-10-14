@@ -10,6 +10,8 @@ namespace PolyPaint.Utilitaires
     {
         public const string API_VERSION = "v1";
         public const string IMAGES_PATH = "/images";
+        public const string IMAGE_LIKES_PATH = "/imageLikes";
+        public const string IMAGE_COMMENTS_PATH = "/imageComments";
 
         //Tooltips text
         public const string PASSWORD_BUTTON_CHECKED_TOOLTIP = "Remove the password";
