@@ -95,7 +95,7 @@ export class Application {
         router.delete('/imageComments/:imageId/:userId', imageComments.delete.bind(imageComments.delete));
 
         // use router middleware
-        this.app.use('/v1', router);
+        this.app.use('/v2', router);
 
         // error management
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
