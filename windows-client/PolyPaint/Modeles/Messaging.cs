@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace PolyPaint.Modeles
 {
@@ -32,13 +33,28 @@ namespace PolyPaint.Modeles
             get => this.notifications;
         }
 
-        public void newMessage(string room, string from, string message, string timestamp)
+        public void NewMessage(ChatRoom room, string sender, string message)
         {
-            ChatRoom destinationRoom = this.SubscribedChatRooms.First<ChatRoom>(r => room == r.Name);
-            if (this.SubscribedChatRooms.IndexOf(destinationRoom) != selectedIndex)
+            Console.WriteLine(sender);
+            Console.WriteLine(room.Users);
+            Application.Current.Dispatcher.Invoke(() => {
+                room.Messages.Add(new ChatMessage()
+                {
+                    Sender = room.Users.First(user => user.Username == sender),
+                    Timestamp = DateTime.Now.ToString("HH:mm:ss"),
+                    Message = message
+                });
+            });
+
+            if (this.SubscribedChatRooms.IndexOf(room) != this.selectedIndex)
             {
-                int previousAmount = this.notifications.ContainsKey(room) ? this.notifications[room] : 0;
-                this.notifications.Add(room, previousAmount + 1);
+                if (this.notifications.ContainsKey(room.Name))
+                {
+                    this.notifications[room.Name] = this.notifications[room.Name] + 1;
+                } else
+                {
+                    this.notifications.Add(room.Name, 1);
+                }
                 ProprieteModifiee("Notifications");
             }
         }
@@ -69,8 +85,22 @@ namespace PolyPaint.Modeles
             this.NotSubscribedChatRooms.Remove(room);
             this.SubscribedChatRooms.Add(room);
             this.OpenChat(this.SubscribedChatRooms.Count - 1);
-            room.Register();
             room.Users.Add(new User(ServerService.instance.username, "", true));
+
+            ServerService.instance.Socket.Emit("joinRoom", room.Name);
+            ServerService.instance.Socket.On("message", new CustomListener((object[] server_params) =>
+            {
+                if (room.Name != server_params[0].ToString())
+                {
+                    return;
+                }
+
+                this.NewMessage(
+                    room,
+                    server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString(),
+                    server_params[2].ToString()
+                );
+            }));
         }
     }
 }

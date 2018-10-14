@@ -88,6 +88,7 @@ namespace PolyPaint.Vues
             socket.On(Socket.EVENT_CONNECT, (IListener) =>
             {
                 socket.Emit("setUsername", ServerService.instance.username);
+                socket.Off(Socket.EVENT_CONNECT);
             });
 
             socket.On("setUsernameStatus", new CustomListener((object[] server_params) =>

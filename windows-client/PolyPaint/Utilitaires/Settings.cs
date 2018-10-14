@@ -8,6 +8,6 @@ namespace PolyPaint.Utilitaires
 {
     class Settings
     {
-        public const string API_VERSION = "v1";
+        public const string API_VERSION = "v2";
     }
 }

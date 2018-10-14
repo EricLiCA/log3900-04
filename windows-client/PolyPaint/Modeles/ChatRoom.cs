@@ -30,27 +30,11 @@ namespace PolyPaint.Modeles
             this.Users.Add(new User("Hana", "anything", true));
         }
 
-        public void Register()
-        {
-            ServerService.instance.Socket.On("message", new CustomListener((object[] server_params) =>
-            {
-                string sender = server_params[0].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString();
-                Application.Current.Dispatcher.Invoke(() => {
-                    Messages.Add(new ChatMessage()
-                    {
-                        Sender = this.Users.First(user => user.Username == sender),
-                        Timestamp = DateTime.Now.ToString("HH:mm:ss"),
-                        Message = (string)server_params[1]
-                    });
-                });
-            }));
-        }
-
         public void SendMessage(string message)
         {
             if (regex.Matches(message).Count == 0)
             {
-                ServerService.instance.Socket.Emit("message", message);
+                ServerService.instance.Socket.Emit("message", this.Name, message);
             }
         }
 
