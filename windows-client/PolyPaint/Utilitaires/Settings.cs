@@ -8,7 +8,10 @@ namespace PolyPaint.Utilitaires
 {
     class Settings
     {
-        public const string API_VERSION = "v1";
+        public const string SERVER_IP = "http://localhost:3000/";
+        //public const string SERVER_IP = "http://ec2-34-200-247-233.compute-1.amazonaws.com
+
+        public const string API_VERSION = "v2";
         public const string IMAGES_PATH = "/images";
         public const string IMAGE_LIKES_PATH = "/imageLikes";
         public const string IMAGE_COMMENTS_PATH = "/imageComments";

@@ -14,7 +14,7 @@
         <Image Source="https://picsum.photos/32/32/?image=474"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="48" Height="60.22" />
         <StackPanel Margin="9,0,0,0" Grid.Column="1">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBlock Text="{Binding UserName}" FontWeight="Bold" FontSize="18" />
+                <TextBlock Text="{Binding ImageComment.userName}" FontWeight="Bold" FontSize="18" />
                 <TextBlock Text="{Binding ImageComment.timestamp}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontFamily="MS Gothic" Margin="14,0,0,0" />
             </StackPanel>
             <TextBlock TextWrapping="Wrap" Text="{Binding ImageComment.comment}" FontSize="16" Margin="0,0,0,10" />

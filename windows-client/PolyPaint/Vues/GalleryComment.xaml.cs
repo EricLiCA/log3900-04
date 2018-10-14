@@ -23,11 +23,10 @@ namespace PolyPaint.Vues
     {
         public ImageComment ImageComment { get; set; }
         public string UserName { get; set; }
-        public GalleryComment(ImageComment imageComment, string userName)
+        public GalleryComment(ImageComment imageComment)
         {
             InitializeComponent();
             ImageComment = imageComment;
-            UserName = userName;
             DataContext = this;
         }
     }

@@ -12,5 +12,6 @@ namespace PolyPaint.Modeles
         public string userId { get; set; }
         public DateTime timestamp { get; set; }
         public string comment { get; set; }
+        public string userName { get; set; }
     }
 }

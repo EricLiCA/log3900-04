@@ -115,9 +115,10 @@ namespace PolyPaint.Vues
                         imageId = data["imageId"],
                         userId = data["userId"],
                         comment = data["comment"],
-                        timestamp = data["timestamp"]
+                        timestamp = data["timestamp"],
+                        userName = data["userName"]
                     };
-                    GalleryComment galleryComment = new GalleryComment(imageComment, "abc");
+                    GalleryComment galleryComment = new GalleryComment(imageComment);
                     CommentsContainer.Children.Add(galleryComment);
                 }
             }
@@ -247,10 +248,11 @@ namespace PolyPaint.Vues
             {
                 userId = ServerService.instance.id,
                 imageId = CurrentGalleryCard.Image.id,
-                comment = CurrentComment.Text
+                comment = CurrentComment.Text,
+                userName = ServerService.instance.username
             };
             ImageCommentDao.Post(imageComment);
-            GalleryComment galleryComment = new GalleryComment(imageComment, ServerService.instance.username);
+            GalleryComment galleryComment = new GalleryComment(imageComment);
             CommentsContainer.Children.Add(galleryComment);
         }
 
