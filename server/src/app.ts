@@ -81,7 +81,7 @@ export class Application {
         router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
         
         // use router middleware
-        this.app.use('/v1', router);
+        this.app.use('/v2', router);
 
         // error management
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
