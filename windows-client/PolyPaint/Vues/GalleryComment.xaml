@@ -4,21 +4,20 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PolyPaint.Vues"
-      mc:Ignorable="d"
-      Width="273.4" Height="48.067">
+      mc:Ignorable="d" Background="#FFF9F9F9" Margin="0,0,0,20" Width="625">
 
-    <Grid RenderTransformOrigin="0.441,0.499">
+    <Grid RenderTransformOrigin="0.441,0.499" Background="White" Margin="0,0,0,-11.333">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition  SharedSizeGroup="Checkerz" />
-            <ColumnDefinition Width="6*" />
+            <ColumnDefinition  SharedSizeGroup="Checkerz" Width="67*" />
+            <ColumnDefinition Width="558*" />
         </Grid.ColumnDefinitions>
-        <Image Source="https://picsum.photos/32/32/?image=474"  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0" Width="24.057" Height="33.067" />
-        <StackPanel Margin="18.667,0,0,0" Grid.Column="1">
-            <StackPanel>
-                <TextBlock Text="{Binding UserName, Mode = OneWay}" FontWeight="Bold" />
-                <TextBlock Text="{Binding ImageComment.timestamp, Mode = OneWay}" FontWeight="Bold" />
+        <Image Source="https://picsum.photos/32/32/?image=474"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="48" Height="60.22" />
+        <StackPanel Margin="9,0,0,0" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="{Binding UserName}" FontWeight="Bold" FontSize="18" />
+                <TextBlock Text="{Binding ImageComment.timestamp}" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontFamily="MS Gothic" Margin="14,0,0,0" />
             </StackPanel>
-            <TextBlock Text="{Binding ImageComment.comment, Mode = OneWay}" />
+            <TextBlock TextWrapping="Wrap" Text="{Binding ImageComment.comment}" FontSize="16" Margin="0,0,0,10" />
         </StackPanel>
     </Grid>
 </ContentControl>

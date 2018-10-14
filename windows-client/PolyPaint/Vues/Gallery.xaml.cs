@@ -103,6 +103,7 @@ namespace PolyPaint.Vues
 
         public void LoadCurrentImageComments(IRestResponse response)
         {
+            CommentsContainer.Children.Clear();
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 JArray responseImageComments = JArray.Parse(response.Content);

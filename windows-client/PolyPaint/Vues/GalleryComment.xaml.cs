@@ -21,8 +21,8 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class GalleryComment : ContentControl
     {
-        ImageComment ImageComment;
-        string UserName;
+        public ImageComment ImageComment { get; set; }
+        public string UserName { get; set; }
         public GalleryComment(ImageComment imageComment, string userName)
         {
             InitializeComponent();
