@@ -101,6 +101,27 @@ namespace PolyPaint.Vues
             SetToggleButtonTooltip(LikeButton, Settings.LIKE_BUTTON_CHECKED_TOOLTIP, Settings.LIKE_BUTTON_UNCHECKED_TOOLTIP);
         }
 
+        public void LoadCurrentImageComments(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                JArray responseImageComments = JArray.Parse(response.Content);
+                for (int i = 0; i < responseImageComments.Count; i++)
+                {
+                    dynamic data = JObject.Parse(responseImageComments[i].ToString());
+                    ImageComment imageComment = new ImageComment
+                    {
+                        imageId = data["imageId"],
+                        userId = data["userId"],
+                        comment = data["comment"],
+                        timestamp = data["timestamp"]
+                    };
+                    GalleryComment galleryComment = new GalleryComment(imageComment, "abc");
+                    CommentsContainer.Children.Add(galleryComment);
+                }
+            }
+        }
+
 
         private void ViewButton_Click(object sender, EventArgs e)
         {
@@ -114,6 +135,7 @@ namespace PolyPaint.Vues
             BitmapImage imageBitmap = new BitmapImage(imageUri);
             ImageViewPicture.Source = imageBitmap;
             ImageLikeDao.Get(CurrentGalleryCard.Image.id);
+            ImageCommentDao.Get(CurrentGalleryCard.Image.id);
 
             if (CurrentGalleryCard.Image.ownerId == ServerService.instance.id)
             {
@@ -220,7 +242,15 @@ namespace PolyPaint.Vues
 
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ImageComment imageComment = new ImageComment
+            {
+                userId = ServerService.instance.id,
+                imageId = CurrentGalleryCard.Image.id,
+                comment = CurrentComment.Text
+            };
+            ImageCommentDao.Post(imageComment);
+            GalleryComment galleryComment = new GalleryComment(imageComment, ServerService.instance.username);
+            CommentsContainer.Children.Add(galleryComment);
         }
 
         #region AddPassword/RemovePassword Dialog

@@ -13,28 +13,28 @@ namespace PolyPaint.DAO
 
         public static void Get(string imageId)
         {
-            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGE_LIKES_PATH + "/" + imageId, Method.GET);
+            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGE_COMMENTS_PATH + "/" + imageId, Method.GET);
             ServerService.instance.server.ExecuteAsync(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
-                    currentGallery.LoadCurrentImageLikes(response);
+                    currentGallery.LoadCurrentImageComments(response);
                 });
             });
         }
 
-        public static void Post(ImageLike imageLike)
+        public static void Post(ImageComment imageComment)
         {
-            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGE_LIKES_PATH, Method.POST);
-            request.AddJsonBody(imageLike);
+            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGE_COMMENTS_PATH, Method.POST);
+            request.AddJsonBody(imageComment);
             ServerService.instance.server.ExecuteAsync(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     if (response.StatusCode != HttpStatusCode.Created)
                     {
-                        MessageBox.Show("Could not add a like", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Could not add a comment", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 });
             });

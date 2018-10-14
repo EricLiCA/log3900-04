@@ -46,7 +46,7 @@
                     <StackPanel Grid.Row="1" Margin="8 24 8 0" >
                         <TextBlock x:Name="ImageViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel>
-                    <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="0,8,8,110">
+                    <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="0,8,8,140.96">
                         <Button x:Name="PasswordButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Manage image password" Margin="0,0,10,0" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
                             <materialDesign:PackIcon  Kind="Key" Height="24" Width="24" />
                         </Button>
@@ -64,13 +64,13 @@
                         <TextBlock Name="ImageViewLikes"/>
                     </StackPanel>
                     <ScrollViewer Grid.Row="3" Margin="10,68,-29,-50">
-                        <GroupBox x:Name="groupBox" Header="Comments" Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0" Width="400" Height="160">
+                        <GroupBox x:Name="groupBox" Header="Comments" Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0" Width="400" Height="183">
                             <StackPanel>
-                                <TextBox Style="{StaticResource MaterialDesignTextAreaTextBox}" Margin="0,0,0,5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Write something about this image..."  VerticalAlignment="Top" Height="61.96"/>
+                                <TextBox Name="CurrentComment" Style="{StaticResource MaterialDesignTextAreaTextBox}" Margin="0,0,0,5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Write something about this image..."  VerticalAlignment="Top" Height="61.96"/>
                                 <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="86" materialDesign:RippleAssist.Feedback="#DD000000" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" FontSize="12" Background="#FF7E52AC" BorderThickness="0" SnapsToDevicePixels="True" Click="AddCommentButton_Click">
                                     Comment
                                 </Button>
-                                <StackPanel Name="CommentsContainer" Margin="0,9,0,0"/>
+                                <WrapPanel Name="CommentsContainer" Height="36" Orientation="Vertical"/>
                             </StackPanel>
                         </GroupBox>
                     </ScrollViewer>
