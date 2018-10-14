@@ -1,13 +1,10 @@
-﻿using MaterialDesignThemes.Wpf;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using PolyPaint.DAO;
 using PolyPaint.Modeles;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
