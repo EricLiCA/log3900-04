@@ -30,6 +30,8 @@ namespace PolyPaint.VueModeles
         }
 
         public RelayCommand<string> SendMessage { get; set; }
+        public RelayCommand<string> AddPerson { get; set; }
+        public RelayCommand<string> LeaveRoom { get; set; }
 
         public ChatViewModel(ChatRoom chatRoom)
         {
@@ -37,6 +39,7 @@ namespace PolyPaint.VueModeles
             ChatRoom.PropertyChanged += new PropertyChangedEventHandler(ChatPropertyChanged);
 
             SendMessage = new RelayCommand<string>(ChatRoom.SendMessage);
+            AddPerson = new RelayCommand<string>(ChatRoom.AddPerson);
         }
 
         protected virtual void PropertyModified([CallerMemberName] string propertyName = null)

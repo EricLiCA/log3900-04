@@ -88,19 +88,35 @@ namespace PolyPaint.Modeles
             room.Users.Add(new User(ServerService.instance.username, "", true));
 
             ServerService.instance.Socket.Emit("joinRoom", room.Name);
-            ServerService.instance.Socket.On("message", new CustomListener((object[] server_params) =>
+            
+            if (room.ConnectionStatus == ConnectionStatus.NOT_CONNECTED)
             {
-                if (room.Name != server_params[0].ToString())
+                ServerService.instance.Socket.On("message", new CustomListener((object[] server_params) =>
                 {
-                    return;
-                }
+                    if (room.Name != server_params[0].ToString() || room.ConnectionStatus != ConnectionStatus.JOINED)
+                    {
+                        return;
+                    }
 
-                this.NewMessage(
-                    room,
-                    server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString(),
-                    server_params[2].ToString()
-                );
-            }));
+                    this.NewMessage(
+                        room,
+                        server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString(),
+                        server_params[2].ToString()
+                    );
+                }));
+            }
+
+
+            room.ConnectionStatus = ConnectionStatus.JOINED;
+        }
+
+        internal void LeaveChat(string chatName)
+        {
+            ChatRoom room = this.SubscribedChatRooms.First<ChatRoom>(ChatRoom => ChatRoom.Name == chatName);
+            this.SubscribedChatRooms.Remove(room);
+            this.NotSubscribedChatRooms.Add(room);
+            this.OpenChat(this.SubscribedChatRooms.Count == 0 ? -1 : 0);
+            room.ConnectionStatus = ConnectionStatus.LEFT;
         }
     }
 }

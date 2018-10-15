@@ -1,4 +1,5 @@
 ﻿using PolyPaint.Services;
+using PolyPaint.Utilitaires;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace PolyPaint.Modeles
         public string Name { get; set; }
         public ObservableCollection<User> Users { get; }
         public ObservableCollection<ChatMessage> Messages { get; }
+        public ConnectionStatus ConnectionStatus = ConnectionStatus.NOT_CONNECTED;
 
         private Regex regex = new Regex("^ {0,}$");
 
@@ -38,9 +40,19 @@ namespace PolyPaint.Modeles
             }
         }
 
+        public void AddPerson(string person)
+        {
+            throw new NotImplementedException();
+        }
+
         protected void ProprieteModifiee([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    public enum ConnectionStatus
+    {
+        NOT_CONNECTED, JOINED, LEFT 
     }
 }

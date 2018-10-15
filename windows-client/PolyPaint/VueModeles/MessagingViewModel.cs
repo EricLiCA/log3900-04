@@ -4,12 +4,13 @@ using PolyPaint.Vues;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 
 namespace PolyPaint.VueModeles
 {
-    class MessagingViewModel : INotifyPropertyChanged
+    public class MessagingViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private Messaging Messaging = new Messaging();
@@ -31,15 +32,19 @@ namespace PolyPaint.VueModeles
         {
             get
             {
-                if (Messaging.SelectedIndex == -1) return null;
-                if (Messaging.SelectedIndex == chatPages.Count)
+                if (Messaging.SelectedIndex == -1)
+                    return null;
+
+                int index = this.chatPages.FindIndex(Page => Page.ThreadName == Messaging.SubscribedChatRooms[Messaging.SelectedIndex].Name);
+                if (index == -1)
                 {
                     ChatViewModel viewModel = new ChatViewModel(SubscribedChatRooms[Messaging.SelectedIndex]);
+                    viewModel.LeaveRoom = new RelayCommand<string>(Messaging.LeaveChat);
                     Chat chatPage = new Chat(viewModel);
                     this.chatPages.Add(chatPage);
                     return chatPage;
                 }
-                return this.chatPages[Messaging.SelectedIndex];
+                return this.chatPages[index];
             }
             set { PropertyModified(); }
         }
@@ -70,7 +75,7 @@ namespace PolyPaint.VueModeles
         {
             if (e.PropertyName == "SelectedIndex")
             {
-                ChatWindow = null;
+                this.ChatWindow = null;
             } else if (e.PropertyName == "Notifications")
             {
                 this.Notifications = Messaging.Notifications;
