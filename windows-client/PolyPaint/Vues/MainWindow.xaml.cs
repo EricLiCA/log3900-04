@@ -27,7 +27,6 @@ namespace PolyPaint.Vues
 
         public Gallery Gallery;
         private FenetreDessin FenetreDessin;
-        private ImageDao ImageDao;
 
         public MainWindow()
         {
