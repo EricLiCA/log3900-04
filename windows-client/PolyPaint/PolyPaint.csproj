@@ -165,12 +165,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Convertisseurs\Convertisseurs.cs" />
+    <Compile Include="DAO\ImageCommentDao.cs" />
     <Compile Include="DAO\ImageDao.cs" />
+    <Compile Include="DAO\ImageLikeDao.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Modeles\ChatModel.cs" />
     <Compile Include="Modeles\ChatRoom.cs" />
     <Compile Include="Modeles\CustomListener.cs" />
     <Compile Include="Modeles\Editeur.cs" />
+    <Compile Include="Modeles\ImageComment.cs" />
+    <Compile Include="Modeles\ImageLike.cs" />
     <Compile Include="Modeles\Image.cs" />
     <Compile Include="Modeles\Messaging.cs" />
     <Compile Include="Modeles\User.cs" />
@@ -186,6 +190,9 @@
     </Compile>
     <Compile Include="Vues\GalleryCard.xaml.cs">
       <DependentUpon>GalleryCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\GalleryComment.xaml.cs">
+      <DependentUpon>GalleryComment.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vues\LoginDialogBox.xaml.cs">
       <DependentUpon>LoginDialogBox.xaml</DependentUpon>
@@ -219,6 +226,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\GalleryCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\GalleryComment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,8 +1,5 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Image = PolyPaint.Modeles.Image;
 
 namespace PolyPaint.Vues
@@ -13,6 +10,7 @@ namespace PolyPaint.Vues
     public partial class GalleryCard : Card
     {
         public Image Image { get; set; }
+
         public GalleryCard(Image image)
         {
             InitializeComponent();
