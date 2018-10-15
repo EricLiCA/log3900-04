@@ -1,4 +1,5 @@
-﻿using PolyPaint.Services;
+using Newtonsoft.Json.Linq;
+using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using Quobject.SocketIoClientDotNet.Client;
 using RestSharp;
@@ -27,7 +28,7 @@ namespace PolyPaint.Vues
         public LoginDialogBox()
         {
             InitializeComponent();
-            //this.ip.Text = "http://localhost:3000/";
+            this.ip.Text = Settings.SERVER_IP;
         }
 
         private void Connect_Click(object sender, RoutedEventArgs e)
@@ -77,8 +78,11 @@ namespace PolyPaint.Vues
                     {
                         ServerService.instance.username = username.Text;
                         ServerService.instance.password = password.Password;
-                        ServerService.instance.id = response.Data.id;
-                        ServerService.instance.token = response.Data.token;
+                        dynamic data = JObject.Parse(response.Content);
+                        ServerService.instance.id = data["id"];
+                        ServerService.instance.token = data["token"];
+                        /*ServerService.instance.id = response.Data.id;
+                        ServerService.instance.token = response.Data.token;*/
                         DialogResult = true;
                     }
                     else

@@ -25,7 +25,7 @@ namespace PolyPaint.Vues
     public partial class MainWindow : Window
     {
 
-        private Gallery Gallery;
+        public Gallery Gallery;
         private FenetreDessin FenetreDessin;
         private ImageDao ImageDao;
 
@@ -35,6 +35,7 @@ namespace PolyPaint.Vues
             this.Gallery = new Gallery();
             this.Server_Connect();
             InitializeComponent();
+            GridMain.Content = Gallery;
         }
         private void Server_Connect()
         {
@@ -57,8 +58,8 @@ namespace PolyPaint.Vues
                     {
                         Gallery.Init();
                         GridMain.Content = Gallery;
+                        break;
                     }
-                    break;
                 case 1:
                     GridMain.Content = "Users";
                     break;
