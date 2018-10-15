@@ -41,9 +41,11 @@
                                         <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border Width="30" Height="30" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="3 0">
-                                                        <Image Source="{Binding ProfileImage}" />
-                                                    </Border>
+                                                    <Ellipse Width="30" Height="30" Margin="3 0">
+                                                        <Ellipse.Fill>
+                                                            <ImageBrush ImageSource="{Binding ProfileImage}" />
+                                                        </Ellipse.Fill>
+                                                    </Ellipse>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                             <ItemsControl.ItemsPanel>
@@ -76,9 +78,11 @@
                                     <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Width="30" Height="30" BorderBrush="Black" BorderThickness="1" CornerRadius="20" Margin="3 0">
-                                                    <Image Source="{Binding ProfileImage}" />
-                                                </Border>
+                                                <Ellipse Width="30" Height="30" Margin="2 0">
+                                                    <Ellipse.Fill>
+                                                        <ImageBrush ImageSource="{Binding ProfileImage}" />
+                                                    </Ellipse.Fill>
+                                                </Ellipse>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                         <ItemsControl.ItemsPanel>

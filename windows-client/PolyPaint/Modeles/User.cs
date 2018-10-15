@@ -12,7 +12,7 @@ namespace PolyPaint.Modeles
         {
             this.Username = name;
             this.Friend = friend;
-            this.ProfileImage = new BitmapImage(new System.Uri("https://firebase.google.com/_static/images/firebase/touchicon-180.png"));
+            this.ProfileImage = new BitmapImage(new System.Uri("https://mts.intechopen.com/storage/users/528/images/system/528.jpg"));
         }
     }
 }

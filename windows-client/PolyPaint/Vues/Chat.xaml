@@ -11,10 +11,10 @@
     <DockPanel LastChildFill="true">
         <Border BorderBrush="SlateGray" BorderThickness="0,0,0,1" DockPanel.Dock="Top">
             <DockPanel LastChildFill="True">
-                <Button DockPanel.Dock="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Padding="0" ToolTip="LeaveRoom" Command="{Binding LeaveRoom}" CommandParameter="{Binding Path=ThreadName}">
+                <Button DockPanel.Dock="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Margin="5 0" Padding="0" ToolTip="LeaveRoom" Command="{Binding LeaveRoom}" CommandParameter="{Binding Path=ThreadName}">
                     <Image Width="25" Height="25" Source="/Resources/leave.png" />
                 </Button>
-                <Button Width="25" Height="25" DockPanel.Dock="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Padding="0" ToolTip="Add person" Command="{Binding AddPerson}">
+                <Button DockPanel.Dock="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Margin="5 0" Padding="0" ToolTip="Add person" Command="{Binding AddPerson}">
                     <Image Width="25" Height="25" Source="/Resources/person_add.png" />
                 </Button>
                 <TextBlock TextWrapping="Wrap" Margin="0,10,0,10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15" Text="{Binding Path=ThreadName}" />
