@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using PolyPaint.Services;
 
 namespace PolyPaint.Vues
 {
@@ -26,13 +27,11 @@ namespace PolyPaint.Vues
 
         public Gallery Gallery;
         private FenetreDessin FenetreDessin;
-        private MessagingWindow MessagingWindow;
         private string AvatarLocation;
 
         public MainWindow()
         {
             this.FenetreDessin = new FenetreDessin();
-            this.MessagingWindow = new MessagingWindow();
             this.Gallery = new Gallery();
             this.Server_Connect();
             InitializeComponent();
@@ -65,7 +64,7 @@ namespace PolyPaint.Vues
                     GridMain.Content = "Users";
                     break;
                 case 2:
-                    GridMain.Content = this.MessagingWindow;
+                    GridMain.Content = MessagingViewManager.instance.LargeMessagingView;
                     break;
                 case 3:
                     GridMain.Content = this.FenetreDessin;

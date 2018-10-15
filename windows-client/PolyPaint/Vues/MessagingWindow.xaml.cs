@@ -9,9 +9,9 @@ namespace PolyPaint.Vues
     public partial class MessagingWindow : Page
     {
         
-        public MessagingWindow()
+        public MessagingWindow(MessagingViewModel viewModel)
         {
-            DataContext = new MessagingViewModel();
+            DataContext = viewModel;
             InitializeComponent();
         }
 
