@@ -18,14 +18,13 @@ class FriendHeadlineTableViewCell: UITableViewCell {
     @IBOutlet weak var removeAsFriendButton: UIButton!
     
     @IBAction func removeAsFriendTapped(_ sender: UIButton) {
-        print("REMOVE FRIEND")
         removeAsFriendButton.isEnabled = false
         removeAsFriendButton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.098/255, alpha: 0.22)
         self.sendRemoveAsFriend()
     }
     
     func sendRemoveAsFriend() {
-        let userInfo = ["username": friendUsernameLabel.text!]
+        let userInfo = ["friendUsername": friendUsernameLabel.text!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeAsFriendAlert"), object: nil, userInfo: userInfo)
     }
     
@@ -103,9 +102,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func setUpNotifications() {
         // Observer for username update
         NotificationCenter.default.addObserver(self, selector: #selector(updateUsernameAlert), name: NSNotification.Name(rawValue: "updateUsernameAlert"), object: nil)
+        // Observer for remove as friend
+        NotificationCenter.default.addObserver(self, selector: #selector(removeAsFriendAlert), name: NSNotification.Name(rawValue: "removeAsFriendAlert"), object: nil)
     }
+    
     @objc func updateUsernameAlert(sender: AnyObject) {
         self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
+    }
+    
+    @objc func removeAsFriendAlert(_ notification: Notification) {
+        // call api to remove friend
+        let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
+        // refresh friends list?
     }
     
     /*
