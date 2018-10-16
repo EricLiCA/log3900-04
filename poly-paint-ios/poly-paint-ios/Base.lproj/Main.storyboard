@@ -616,10 +616,16 @@
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cu6-QQ-hfX">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                             <state key="normal" image="Gallery"/>
+                                                            <connections>
+                                                                <action selector="friendGalleryTapped:" destination="Hjb-Hq-Eta" eventType="touchUpInside" id="MNZ-22-IkS"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fb8-Md-X2z">
                                                             <rect key="frame" x="65" y="0.0" width="50" height="50"/>
                                                             <state key="normal" image="Chat"/>
+                                                            <connections>
+                                                                <action selector="startChatTapped:" destination="Hjb-Hq-Eta" eventType="touchUpInside" id="W4m-4C-VUV"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFG-wV-Cx0">
                                                             <rect key="frame" x="130" y="0.0" width="50" height="50"/>
@@ -641,8 +647,10 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="friendGallery" destination="cu6-QQ-hfX" id="UR1-RE-U3g"/>
                                             <outlet property="friendUsernameLabel" destination="3A3-UI-iFf" id="Gkn-s2-hrU"/>
                                             <outlet property="removeAsFriendButton" destination="wFG-wV-Cx0" id="WhX-VP-rM1"/>
+                                            <outlet property="startChatButton" destination="Fb8-Md-X2z" id="Fxn-oy-J9o"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

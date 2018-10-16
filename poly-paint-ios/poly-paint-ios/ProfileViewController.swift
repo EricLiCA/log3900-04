@@ -16,6 +16,8 @@ class FriendHeadlineTableViewCell: UITableViewCell {
     
     @IBOutlet weak var friendUsernameLabel: UILabel!
     @IBOutlet weak var removeAsFriendButton: UIButton!
+    @IBOutlet weak var startChatButton: UIButton!
+    @IBOutlet weak var friendGallery: UIButton!
     
     @IBAction func removeAsFriendTapped(_ sender: UIButton) {
         removeAsFriendButton.isEnabled = false
@@ -26,6 +28,16 @@ class FriendHeadlineTableViewCell: UITableViewCell {
     func sendRemoveAsFriend() {
         let userInfo = ["friendUsername": friendUsernameLabel.text!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeAsFriendAlert"), object: nil, userInfo: userInfo)
+    }
+    
+    // TODO: determine what this functionnality does
+    @IBAction func startChatTapped(_ sender: UIButton) {
+        // TODO: determine what this functionnality does
+    }
+    
+    // TODO: When API ready, go to friends public gallery
+    @IBAction func friendGalleryTapped(_ sender: UIButton) {
+        // TODO: When API ready, go to friends public gallery
     }
     
 }
