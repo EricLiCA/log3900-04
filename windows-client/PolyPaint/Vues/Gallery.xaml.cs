@@ -57,7 +57,7 @@ namespace PolyPaint.Vues
                     GalleryCard galleryCard = new GalleryCard(image);
                     galleryCard.ViewButtonClicked += ViewButton_Click;
 
-                    if (image.ownerId == ServerService.instance.id && image.protectionLevel == "private")
+                    if (image.ownerId == ServerService.instance.user.id && image.protectionLevel == "private")
                     {   
                         PrivateImagesContainer.Children.Add(galleryCard);
                     }
@@ -83,7 +83,7 @@ namespace PolyPaint.Vues
                 for (int i = 0; i < responseImageLikes.Count; i++)
                 {
                     dynamic data = JObject.Parse(responseImageLikes[i].ToString());
-                    if (data["userId"] == ServerService.instance.id)
+                    if (data["userId"] == ServerService.instance.user.id)
                     {
                         LikeButton.IsChecked = true;
                     }
@@ -135,7 +135,7 @@ namespace PolyPaint.Vues
             ImageLikeDao.Get(CurrentGalleryCard.Image.id);
             ImageCommentDao.Get(CurrentGalleryCard.Image.id);
 
-            if (CurrentGalleryCard.Image.ownerId == ServerService.instance.id)
+            if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
             {
                 LikeButton.IsEnabled = false;
                 PasswordButton.Visibility = Visibility.Visible;
@@ -200,7 +200,7 @@ namespace PolyPaint.Vues
             ImageLike imageLike = new ImageLike
             {
                 imageId = CurrentGalleryCard.Image.id,
-                userId = ServerService.instance.id
+                userId = ServerService.instance.user.id
             };
             if ((bool)LikeButton.IsChecked)
             {
@@ -242,10 +242,10 @@ namespace PolyPaint.Vues
         {
             ImageComment imageComment = new ImageComment
             {
-                userId = ServerService.instance.id,
+                userId = ServerService.instance.user.id,
                 imageId = CurrentGalleryCard.Image.id,
                 comment = CurrentComment.Text,
-                userName = ServerService.instance.username,
+                userName = ServerService.instance.user.username,
                 timestamp = DateTime.Now
             };
             ImageCommentDao.Post(imageComment);

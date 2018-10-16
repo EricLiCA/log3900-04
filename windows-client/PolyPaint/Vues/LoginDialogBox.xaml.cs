@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using PolyPaint.Modeles;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using Quobject.SocketIoClientDotNet.Client;
@@ -76,10 +77,13 @@ namespace PolyPaint.Vues
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        ServerService.instance.username = username.Text;
-                        ServerService.instance.password = password.Password;
                         dynamic data = JObject.Parse(response.Content);
-                        ServerService.instance.id = data["id"];
+                        ServerService.instance.user = new User
+                        {
+                            username = username.Text,
+                            password = password.Password,
+                            id = data["id"]
+                        };
                         ServerService.instance.token = data["token"];
                         /*ServerService.instance.id = response.Data.id;
                         ServerService.instance.token = response.Data.token;*/

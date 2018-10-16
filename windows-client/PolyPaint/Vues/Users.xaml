@@ -15,9 +15,9 @@
             </StackPanel>
         </materialDesign:DialogHost.DialogContent>
         <DockPanel Margin="0" Height="{Binding ActualHeight, ElementName=canvas}" Width="{Binding ActualWidth, ElementName=canvas}">
-            <Expander x:Name="ImageView" ExpandDirection="Left" DockPanel.Dock="Right" HorizontalAlignment="Right">
+            <Expander x:Name="ProfileView" ExpandDirection="Left" DockPanel.Dock="Right" HorizontalAlignment="Right">
                 <Expander.Header>
-                    <TextBlock Text="Expander Example 3c" RenderTransformOrigin=".5,.5">
+                    <TextBlock Text="Your profile" RenderTransformOrigin=".5,.5">
                         <TextBlock.LayoutTransform>
                             <RotateTransform Angle="90" />
                         </TextBlock.LayoutTransform>

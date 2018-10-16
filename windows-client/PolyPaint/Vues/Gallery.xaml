@@ -9,7 +9,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="597" d:DesignWidth="983"
       Title="Gallery">
-    <materialDesign:DialogHost Name="zeb" Canvas.Left="50" Canvas.Top="50" Margin="0">
+    <materialDesign:DialogHost Canvas.Left="50" Canvas.Top="50" Margin="0">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="16">
                 <TextBlock>Add a password to the selected image</TextBlock>

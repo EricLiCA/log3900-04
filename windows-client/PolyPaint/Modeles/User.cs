@@ -11,5 +11,6 @@ namespace PolyPaint.Modeles
         public string id { get; set; }
         public string username { get; set; }
         public string profileImage { get; set; }
+        public string password { get; set; }
     }
 }

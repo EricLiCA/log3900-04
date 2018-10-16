@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 using PolyPaint.DAO;
+using PolyPaint.Services;
+using PolyPaint.Modeles;
 
 namespace PolyPaint.Vues
 {
@@ -38,8 +40,9 @@ namespace PolyPaint.Vues
             Gallery = new Gallery();
             Users = new Users();
             GridMain.Content = Gallery;
-
+            InitDialogBox();
         }
+
         private void Server_Connect()
         {
             LoginDialogBox dlg = new LoginDialogBox();
@@ -104,6 +107,42 @@ namespace PolyPaint.Vues
                 bitmap.DecodePixelWidth = 40;
                 bitmap.EndInit();
                 AvatarImage.Source = bitmap;
+            }
+        }
+
+        private void InitDialogBox()
+        {
+            CurrentProfileName.Text = ServerService.instance.user.username;
+            CurrentProfilePassword.Password = ServerService.instance.user.password;
+        }
+
+        private void ChangeProfileInformationsButton_Click(object sender, System.EventArgs e)
+        {
+            ServerService.instance.user.username = CurrentProfileName.Text;
+            ServerService.instance.user.password = CurrentProfilePassword.Password;
+            UserDao.Put(ServerService.instance.user);
+            ChangeProfileInformationsButton.IsEnabled = false;
+        }
+
+        private void CloseDialogButton_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentProfileName.Text = ServerService.instance.user.username;
+            CurrentProfilePassword.Password = ServerService.instance.user.password;
+            ChangeProfileInformationsButton.IsEnabled = false;
+        }
+
+        private void CurrentProfileInformations_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            Boolean invalideUserName = CurrentProfileName.Text.Length == 0 || CurrentProfileName.Text.Contains(" ");
+            Boolean invalidPassword = CurrentProfilePassword.Password.Length == 0 || CurrentProfilePassword.Password.Contains(" ");
+
+            if (invalideUserName || invalidPassword)
+            {
+                ChangeProfileInformationsButton.IsEnabled = false;
+            }
+            else
+            {
+                ChangeProfileInformationsButton.IsEnabled = true;
             }
         }
     }

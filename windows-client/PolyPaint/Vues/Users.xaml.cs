@@ -57,5 +57,10 @@ namespace PolyPaint.Vues
                 MessageBox.Show("Could not load the images", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        public void LoadProfile()
+        {
+
+        }
     }
 }
