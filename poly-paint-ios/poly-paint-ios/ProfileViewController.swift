@@ -19,7 +19,7 @@ class FriendHeadlineTableViewCell: UITableViewCell {
     
     @IBAction func removeAsFriendTapped(_ sender: UIButton) {
         removeAsFriendButton.isEnabled = false
-        removeAsFriendButton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.098/255, alpha: 0.22)
+        removeAsFriendButton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
         self.sendRemoveAsFriend()
     }
     

@@ -610,44 +610,23 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="iM0-GA-V6t">
-                                                    <rect key="frame" x="568" y="16" width="145" height="110"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="sor-Uu-gaO">
+                                                    <rect key="frame" x="533" y="46" width="180" height="50"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yH4-ka-g8o">
-                                                            <rect key="frame" x="0.0" y="0.0" width="145" height="30"/>
-                                                            <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="145" id="dCU-DP-aQA"/>
-                                                                <constraint firstAttribute="height" constant="30" id="u24-4i-aYv"/>
-                                                            </constraints>
-                                                            <state key="normal" title="Check Gallery">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </state>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cu6-QQ-hfX">
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                            <state key="normal" image="Gallery"/>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wn-I9-8yU">
-                                                            <rect key="frame" x="0.0" y="40" width="145" height="30"/>
-                                                            <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="g30-a0-Z7d"/>
-                                                                <constraint firstAttribute="width" constant="145" id="uzd-KG-ZcT"/>
-                                                            </constraints>
-                                                            <state key="normal" title="Remove as Friend">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </state>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fb8-Md-X2z">
+                                                            <rect key="frame" x="65" y="0.0" width="50" height="50"/>
+                                                            <state key="normal" image="Chat"/>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wFG-wV-Cx0">
+                                                            <rect key="frame" x="130" y="0.0" width="50" height="50"/>
+                                                            <state key="normal" image="Unfriend"/>
                                                             <connections>
-                                                                <action selector="removeAsFriendTapped:" destination="Hjb-Hq-Eta" eventType="touchUpInside" id="wPt-7D-zWv"/>
+                                                                <action selector="removeAsFriendTapped:" destination="Hjb-Hq-Eta" eventType="touchUpInside" id="wYk-Mu-dUk"/>
                                                             </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cau-Zz-X5u">
-                                                            <rect key="frame" x="0.0" y="80" width="145" height="30"/>
-                                                            <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="3X4-9g-lWI"/>
-                                                                <constraint firstAttribute="width" constant="145" id="7Vv-Ub-ROk"/>
-                                                            </constraints>
-                                                            <state key="normal" title="Invite to channel">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </state>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
@@ -656,14 +635,14 @@
                                                 <constraint firstItem="3A3-UI-iFf" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="Dqk-hi-hRZ"/>
                                                 <constraint firstItem="bYy-tH-VjF" firstAttribute="leading" secondItem="f3W-mb-UaN" secondAttribute="leading" constant="15" id="Gyy-Fb-djy"/>
                                                 <constraint firstItem="bYy-tH-VjF" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="RXM-bG-IoA"/>
-                                                <constraint firstAttribute="trailing" secondItem="iM0-GA-V6t" secondAttribute="trailing" constant="15" id="XAn-bK-VTl"/>
-                                                <constraint firstItem="iM0-GA-V6t" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="bVN-0U-2k9"/>
+                                                <constraint firstAttribute="trailing" secondItem="sor-Uu-gaO" secondAttribute="trailing" constant="15" id="SZN-lO-2a6"/>
+                                                <constraint firstItem="sor-Uu-gaO" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="ViT-SM-sqJ"/>
                                                 <constraint firstItem="3A3-UI-iFf" firstAttribute="centerX" secondItem="f3W-mb-UaN" secondAttribute="centerX" id="sVC-TW-DQj"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="friendUsernameLabel" destination="3A3-UI-iFf" id="Gkn-s2-hrU"/>
-                                            <outlet property="removeAsFriendButton" destination="5wn-I9-8yU" id="VGo-S3-tL9"/>
+                                            <outlet property="removeAsFriendButton" destination="wFG-wV-Cx0" id="WhX-VP-rM1"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -944,8 +923,11 @@
     <resources>
         <image name="AddFriend" width="25" height="25"/>
         <image name="BlankProfile" width="50" height="50"/>
+        <image name="Chat" width="50" height="50"/>
+        <image name="Gallery" width="50" height="50"/>
         <image name="Login" width="22" height="22"/>
         <image name="Paint" width="400" height="300"/>
         <image name="SignUp" width="22" height="22"/>
+        <image name="Unfriend" width="50" height="50"/>
     </resources>
 </document>
