@@ -19,7 +19,7 @@ class HeadlineTableViewCell: UITableViewCell {
     
     @IBAction func addAsFriendTapped(_ sender: UIButton) {
         addAsFriendButton.isEnabled = false
-        addAsFriendButton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.098/255, alpha: 0.22)
+        addAsFriendButton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
         self.sendUpdateUsernameNotification()
     }
     
