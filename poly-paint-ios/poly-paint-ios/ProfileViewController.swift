@@ -32,14 +32,26 @@ class FriendHeadlineTableViewCell: UITableViewCell {
     
     // TODO: determine what this functionnality does
     @IBAction func startChatTapped(_ sender: UIButton) {
-        // TODO: determine what this functionnality does
+        self.startChat()
     }
     
+    // TODO: determine what this functionnality does
+    func startChat() {
+        // TODO: determine what this functionnality does
+        let userInfo = ["friendUsername": friendUsernameLabel.text!]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startChatAlert"), object: nil, userInfo: userInfo)
+    }
+
     // TODO: When API ready, go to friends public gallery
     @IBAction func friendGalleryTapped(_ sender: UIButton) {
         // TODO: When API ready, go to friends public gallery
+        self.goToFriendsGallery()
     }
     
+    func goToFriendsGallery() {
+        let userInfo = ["friendUsername": friendUsernameLabel.text!]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "goToFriendsGalleryAlert"), object: nil, userInfo: userInfo)
+    }
 }
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -111,16 +123,33 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         NotificationCenter.default.addObserver(self, selector: #selector(updateUsernameAlert), name: NSNotification.Name(rawValue: "updateUsernameAlert"), object: nil)
         // Observer for remove as friend
         NotificationCenter.default.addObserver(self, selector: #selector(removeAsFriendAlert), name: NSNotification.Name(rawValue: "removeAsFriendAlert"), object: nil)
+        // Observer for go to friends gallery
+        NotificationCenter.default.addObserver(self, selector: #selector(goToFriendsGalleryAlert), name: NSNotification.Name(rawValue: "goToFriendsGalleryAlert"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(startChatAlert), name: NSNotification.Name(rawValue: "startChatAlert"), object: nil)
+        
     }
     
     @objc func updateUsernameAlert(sender: AnyObject) {
         self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
     }
     
+    // TODO: When API ready, remove from friends list and update interface
     @objc func removeAsFriendAlert(_ notification: Notification) {
-        // call api to remove friend
+        // TODO: call api to remove friend
         let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
-        // refresh friends list?
+        // TODO: refresh friends list
+    }
+    
+    // TODO: When API ready, go to friends public gallery
+    @objc func goToFriendsGalleryAlert(_ notification: Notification) {
+        // TODO: call api to go to friends gallery
+        let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
+    }
+    
+    // TODO: When API ready, start chat with friend
+    @objc func startChatAlert(_ notification: Notification) {
+        // TODO: call api to start chat with friend
+        let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
     }
     
     /*
