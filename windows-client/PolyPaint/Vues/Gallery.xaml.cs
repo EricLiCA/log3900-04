@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using PolyPaint.DAO;
 using PolyPaint.Modeles;
 using PolyPaint.Services;
@@ -30,10 +30,6 @@ namespace PolyPaint.Vues
             InitializeComponent();
             ImageView.Visibility = Visibility.Hidden;
             CurrentGalleryCard = new GalleryCard(null);
-        }
-
-        public void Init()
-        {
             ImageDao.GetAll();
         }
 

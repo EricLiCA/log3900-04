@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using PolyPaint.DAO;
 
 namespace PolyPaint.Vues
 {
@@ -25,16 +26,19 @@ namespace PolyPaint.Vues
     {
 
         public Gallery Gallery;
+        public Users Users;
         private FenetreDessin FenetreDessin;
         private string AvatarLocation;
 
         public MainWindow()
         {
-            this.FenetreDessin = new FenetreDessin();
-            this.Gallery = new Gallery();
-            this.Server_Connect();
+            FenetreDessin = new FenetreDessin();
+            Server_Connect();
             InitializeComponent();
+            Gallery = new Gallery();
+            Users = new Users();
             GridMain.Content = Gallery;
+
         }
         private void Server_Connect()
         {
@@ -55,13 +59,16 @@ namespace PolyPaint.Vues
             {
                 case 0:
                     {
-                        Gallery.Init();
+                        ImageDao.GetAll();
                         GridMain.Content = Gallery;
                         break;
                     }
                 case 1:
-                    GridMain.Content = "Users";
-                    break;
+                    {
+                        UserDao.GetAll();
+                        GridMain.Content = Users;
+                        break;
+                    }
                 case 2:
                     GridMain.Content = "Chat";
                     break;
