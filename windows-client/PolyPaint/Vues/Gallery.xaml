@@ -1,0 +1,111 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PolyPaint.Vues"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:PolyPaint="clr-namespace:PolyPaint" x:Class="PolyPaint.Vues.Gallery"
+      mc:Ignorable="d" 
+      d:DesignHeight="597" d:DesignWidth="983"
+      Title="Gallery">
+    <materialDesign:DialogHost Name="zeb" Canvas.Left="50" Canvas.Top="50" Margin="0">
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel Margin="16">
+                <TextBlock>Add a password to the selected image</TextBlock>
+                <TextBox Margin="0 8 0 0" HorizontalAlignment="Stretch" x:Name="CurrentImagePassword" materialDesign:HintAssist.Hint="Password" KeyUp="CurrentImagePassword_KeyUp"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Name="AddPasswordButton" IsEnabled="False" Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="AddPasswordButton_Click" ToolTip="Apply new password">
+                        Accept
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="RemovePasswordButton_Click" ToolTip="Remove existing password">
+                        Remove
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="CloseDialogButton_Click">
+                        Cancel
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <DockPanel Margin="0" Height="{Binding ActualHeight, ElementName=canvas}" Width="{Binding ActualWidth, ElementName=canvas}">
+            <Expander x:Name="ImageView" ExpandDirection="Left" DockPanel.Dock="Right" HorizontalAlignment="Right">
+                <Expander.Header>
+                    <TextBlock Text="Expander Example 3c" RenderTransformOrigin=".5,.5">
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="90" />
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                </Expander.Header>
+                <DockPanel Width="676">
+                    <Grid DockPanel.Dock="Top" Height="438">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="269" />
+                            <RowDefinition Height="0*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image  x:Name="ImageViewPicture" Stretch="UniformToFill" Margin="1,0,0,286.92" Grid.RowSpan="3" />
+                        <StackPanel Grid.Row="2" Margin="8,114,167,241.92" >
+                            <TextBlock x:Name="ImageViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="0,114,8,241.92">
+                            <Button x:Name="PasswordButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Manage image password" Margin="0,0,10,0" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                <materialDesign:PackIcon  Kind="Key" Height="24" Width="24" />
+                            </Button>
+
+                            <ToggleButton x:Name="LockButton" Style="{StaticResource MaterialDesignActionToggleButton}" Width="40" Height="40" Margin="0,0,10,0" Click="LockButton_Click">
+                                <materialDesign:ToggleButtonAssist.OnContent>
+                                    <materialDesign:PackIcon Kind="LockOpen" />
+                                </materialDesign:ToggleButtonAssist.OnContent>
+                                <materialDesign:PackIcon
+                                    Kind="Lock" />
+                            </ToggleButton>
+                            <ToggleButton x:Name="LikeButton" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Width="40" Height="40" Margin="0,0,10,0" Click="LikeButton_Click">
+                                <materialDesign:PackIcon Kind="Heart" Height="21"  Width="21" />
+                            </ToggleButton>
+                            <TextBlock x:Name="ImageViewLikes"/>
+                        </StackPanel>
+                    </Grid>
+                    <ScrollViewer Grid.Row="3" Margin="0" DockPanel.Dock="Top">
+                        <GroupBox x:Name="groupBox" Header="Comments" Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0" Margin="16,0,0,0">
+                            <StackPanel>
+                                <TextBox Name="CurrentComment" Style="{StaticResource MaterialDesignTextAreaTextBox}" Margin="0,0,0,5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Write something about this image..."  VerticalAlignment="Top" Height="61.96"/>
+                                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="87" materialDesign:RippleAssist.Feedback="#DD000000" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" FontSize="12" Background="#FF7E52AC" BorderThickness="0" SnapsToDevicePixels="True" Click="AddCommentButton_Click" Margin="0,0,0,10">
+                                    Comment
+                                </Button>
+                                <WrapPanel Name="CommentsContainer" Orientation="Vertical"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </ScrollViewer>
+                </DockPanel>
+
+            </Expander>
+            <ScrollViewer>
+                <StackPanel>
+                    <GroupBox Header="Private Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon  Kind="EyeOff" Height="32" Width="32" VerticalAlignment="Center" />
+                                    <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <WrapPanel x:Name="PrivateImagesContainer" Margin="10"/>
+                    </GroupBox>
+                    <GroupBox Header="Public Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+                        <GroupBox.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon  Kind="Eye" Height="32" Width="32" VerticalAlignment="Center" />
+                                    <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupBox.HeaderTemplate>
+                        <WrapPanel x:Name="PublicImagesContainer" Margin="10"/>
+                    </GroupBox>
+                </StackPanel>
+
+            </ScrollViewer>
+        </DockPanel>
+    </materialDesign:DialogHost>
+</Page>

@@ -7,8 +7,8 @@ export class ChatService {
 
     private constructor() {
         // Reserve key usernames
-        this.usernames = new Map();
-        this.connectedUsers = new Set();
+        this.usernames = new Map<string, string>();
+        this.connectedUsers = new Set<string>();
         this.connectedUsers.add('You');
         this.connectedUsers.add('you');
     }
@@ -42,16 +42,32 @@ export class ChatService {
             socket.on('disconnect', () => {
                 console.log(`${socket.id} has disconnected`);
                 if (this.usernames.has(socket.id)) {
-                    // Username is now unused
+                    for (let room in socket.rooms) {
+                        console.log(`${socket.id} has left the room ${room}`);
+                        socket.leave(room);
+                        socket.broadcast.to(room).emit('chatInfo', room, `${this.usernames.get(socket.id)} has left the room`);
+                    }
                     this.connectedUsers.delete(this.usernames.get(socket.id));
                 }
             });
 
-            socket.on('message', (message: string) => {
+            socket.on('joinRoom', (room: string) => {
+                console.log(`${socket.id} has joined the room ${room}`);
+                socket.join(room);
+                socket.broadcast.to(room).emit('chatInfo', room, `${this.usernames.get(socket.id)} has joined the room`);
+            });
+
+            socket.on('leaveRoom', (room: string) => {
+                console.log(`${socket.id} has left the room ${room}`);
+                socket.leave(room);
+                socket.broadcast.to(room).emit('chatInfo', room, `${this.usernames.get(socket.id)} has left the room`);
+            });
+
+            socket.on('message', (room: string, message: string) => {
                 console.log(`Received: ${message}`);
-                socket.emit('message', 'You', message);
+                socket.emit('message', room, 'You', message);
                 if (this.usernames.has(socket.id)) {
-                    socket.broadcast.emit('message', this.usernames.get(socket.id), message);
+                    socket.broadcast.to(room).emit('message', room, this.usernames.get(socket.id), message);
                 } else {
                     socket.emit('setUsernameStatus', 'No username set!');
                 }
