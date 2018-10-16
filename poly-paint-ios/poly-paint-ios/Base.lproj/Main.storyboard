@@ -497,6 +497,12 @@
                     <navigationItem key="navigationItem" title="Home" id="FB7-Y4-F71">
                         <barButtonItem key="backBarButtonItem" title="Home" id="UVc-yL-7CS"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="chatButton" destination="hBy-br-W1z" id="GF7-rc-J89"/>
+                        <outlet property="galleryButton" destination="khw-eQ-Wnu" id="a96-II-vLY"/>
+                        <outlet property="newImageButton" destination="VfY-2l-VR3" id="n8X-fH-cAj"/>
+                        <outlet property="profileButton" destination="Yid-28-lYT" id="Fgf-9d-9iX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEf-0y-fS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -578,13 +584,49 @@
                                     <constraint firstAttribute="width" constant="728" id="zs3-H4-hGv"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendCell" id="Hjb-Hq-Eta">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendCell" id="Hjb-Hq-Eta" userLabel="FriendCell" customClass="FriendHeadlineTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="728" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hjb-Hq-Eta" id="f3W-mb-UaN">
                                             <rect key="frame" x="0.0" y="0.0" width="728" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3A3-UI-iFf">
+                                                    <rect key="frame" x="15" y="11" width="200" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="3l7-Zb-Lzr"/>
+                                                        <constraint firstAttribute="width" constant="200" id="LYP-N1-ych"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wn-I9-8yU">
+                                                    <rect key="frame" x="568" y="7" width="145" height="30"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="g30-a0-Z7d"/>
+                                                        <constraint firstAttribute="width" constant="145" id="uzd-KG-ZcT"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Remove as Friend">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="removeAsFriendTapped:" destination="Hjb-Hq-Eta" eventType="touchUpInside" id="wPt-7D-zWv"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="3A3-UI-iFf" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="Dqk-hi-hRZ"/>
+                                                <constraint firstItem="3A3-UI-iFf" firstAttribute="leading" secondItem="f3W-mb-UaN" secondAttribute="leading" constant="15" id="rAt-HQ-GEK"/>
+                                                <constraint firstItem="5wn-I9-8yU" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="sDL-qf-xzH"/>
+                                                <constraint firstAttribute="trailing" secondItem="5wn-I9-8yU" secondAttribute="trailing" constant="15" id="xLv-8X-m9V"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="friendUsernameLabel" destination="3A3-UI-iFf" id="Gkn-s2-hrU"/>
+                                            <outlet property="removeAsFriendButton" destination="5wn-I9-8yU" id="VGo-S3-tL9"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>

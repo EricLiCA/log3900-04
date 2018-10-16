@@ -10,12 +10,17 @@ import UIKit
 
 class MainMenuViewController: UIViewController {
     
+    @IBOutlet weak var chatButton: UIButton!
+    @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var galleryButton: UIButton!
+    @IBOutlet weak var newImageButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainMenuViewController.back(sender:)))
         self.navigationItem.leftBarButtonItem = newBackButton
-
+        
         // Do any additional setup after loading the view.
     }
 
@@ -37,7 +42,8 @@ class MainMenuViewController: UIViewController {
             defaults.removeObject(forKey: key)
         }
     }
-
+    
+    
     /*
     // MARK: - Navigation
 

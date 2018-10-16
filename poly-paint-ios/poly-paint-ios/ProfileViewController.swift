@@ -8,6 +8,29 @@
 
 import UIKit
 
+struct FriendHeadline {
+    
+}
+
+class FriendHeadlineTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var friendUsernameLabel: UILabel!
+    @IBOutlet weak var removeAsFriendButton: UIButton!
+    
+    @IBAction func removeAsFriendTapped(_ sender: UIButton) {
+        print("REMOVE FRIEND")
+        removeAsFriendButton.isEnabled = false
+        removeAsFriendButton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.098/255, alpha: 0.22)
+        self.sendRemoveAsFriend()
+    }
+    
+    func sendRemoveAsFriend() {
+        let userInfo = ["username": friendUsernameLabel.text!]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeAsFriendAlert"), object: nil, userInfo: userInfo)
+    }
+    
+}
+
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var profileView: UIView!
@@ -41,10 +64,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Create a table cell
-        let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath)
+        //let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath)
         
         // Customize the cell
-        cell.textLabel?.text = friendsArray[indexPath.row]
+        //cell.textLabel?.text = friendsArray[indexPath.row]
+        
+        let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendHeadlineTableViewCell
+        
+        // Customize the cell
+        cell.friendUsernameLabel?.text = friendsArray[indexPath.row]
         
         // Return the cell
         return cell
