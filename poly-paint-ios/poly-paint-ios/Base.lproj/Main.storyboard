@@ -601,12 +601,12 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3A3-UI-iFf">
-                                                    <rect key="frame" x="264" y="61" width="200" height="21"/>
+                                                    <rect key="frame" x="263" y="61" width="262" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="3l7-Zb-Lzr"/>
-                                                        <constraint firstAttribute="width" constant="200" id="LYP-N1-ych"/>
+                                                        <constraint firstAttribute="width" constant="262" id="8OP-ih-ZbY"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -632,12 +632,12 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="3A3-UI-iFf" firstAttribute="leading" secondItem="bYy-tH-VjF" secondAttribute="trailing" constant="8" id="AQS-kC-JOB"/>
                                                 <constraint firstItem="3A3-UI-iFf" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="Dqk-hi-hRZ"/>
                                                 <constraint firstItem="bYy-tH-VjF" firstAttribute="leading" secondItem="f3W-mb-UaN" secondAttribute="leading" constant="15" id="Gyy-Fb-djy"/>
                                                 <constraint firstItem="bYy-tH-VjF" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="RXM-bG-IoA"/>
                                                 <constraint firstAttribute="trailing" secondItem="sor-Uu-gaO" secondAttribute="trailing" constant="15" id="SZN-lO-2a6"/>
                                                 <constraint firstItem="sor-Uu-gaO" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="ViT-SM-sqJ"/>
-                                                <constraint firstItem="3A3-UI-iFf" firstAttribute="centerX" secondItem="f3W-mb-UaN" secondAttribute="centerX" id="sVC-TW-DQj"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
