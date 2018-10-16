@@ -59,6 +59,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var friendsTableView: UITableView!
+    @IBOutlet weak var pendingFriendRequestsButton: UIButton!
     
     var friendsArray = [String]()
     var mockFriends = [String]()
@@ -74,6 +75,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.friendsTableView.delegate = self
         self.friendsTableView.dataSource = self
         self.getFriends()
+        self.loadPendingFriendRequests()
         // Do any additional setup after loading the view.
     }
     
@@ -100,6 +102,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         for friend in mockFriends {
             self.addFriendsToFriendsTableView(friendUsername: friend)
         }
+    }
+    
+    // TODO: Pending Freind request interface
+    @IBAction func pendingFriendRequestsTapped(_ sender: UIButton) {
+        // TODO: Goto pending friend requests interface
+    }
+    
+    // TODO: Call api to get pending friend requests
+    private func loadPendingFriendRequests() {
+        // TODO: Call api to get pending friend requests
     }
     
     private func addFriendsToFriendsTableView(friendUsername: String) {

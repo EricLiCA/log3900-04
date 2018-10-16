@@ -580,7 +580,7 @@
                                 <rect key="frame" x="20" y="508" width="728" height="496"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendCell" rowHeight="143" id="Hjb-Hq-Eta" userLabel="FriendCell" customClass="FriendHeadlineTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendCell" rowHeight="143" id="Hjb-Hq-Eta" userLabel="FriendCell" customClass="FriendHeadlineTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="728" height="143"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hjb-Hq-Eta" id="f3W-mb-UaN">
@@ -664,11 +664,26 @@
                                     </segue>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uZa-Z1-8Sj">
+                                <rect key="frame" x="532" y="424" width="198" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="GOB-J3-xX5"/>
+                                    <constraint firstAttribute="width" constant="198" id="qHZ-40-HMJ"/>
+                                </constraints>
+                                <state key="normal" title="Pending Friend Requests">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="pendingFriendRequestsTapped:" destination="r8R-KD-eft" eventType="touchUpInside" id="eus-gp-Hxb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8Hx-Vt-OUc" firstAttribute="top" secondItem="vss-gF-j5X" secondAttribute="top" id="DZv-8s-ZDb"/>
                             <constraint firstItem="vss-gF-j5X" firstAttribute="bottom" secondItem="CpM-LF-M37" secondAttribute="bottom" constant="20" id="EGg-Zh-Uu1"/>
+                            <constraint firstItem="vss-gF-j5X" firstAttribute="trailing" secondItem="uZa-Z1-8Sj" secondAttribute="trailing" constant="38" id="LZi-G5-pqa"/>
                             <constraint firstItem="CpM-LF-M37" firstAttribute="centerX" secondItem="vss-gF-j5X" secondAttribute="centerX" id="MJU-rB-8yg"/>
                             <constraint firstItem="8Hx-Vt-OUc" firstAttribute="leading" secondItem="vss-gF-j5X" secondAttribute="leading" id="SB7-zv-lek"/>
                             <constraint firstItem="f1X-zL-YQV" firstAttribute="top" secondItem="8Hx-Vt-OUc" secondAttribute="bottom" constant="30" id="Tfk-fT-HRT"/>
@@ -679,6 +694,7 @@
                             <constraint firstItem="vss-gF-j5X" firstAttribute="trailing" secondItem="CpM-LF-M37" secondAttribute="trailing" constant="20" id="nak-Nz-h9s"/>
                             <constraint firstItem="CpM-LF-M37" firstAttribute="leading" secondItem="vss-gF-j5X" secondAttribute="leading" constant="20" id="oG3-t2-afn"/>
                             <constraint firstItem="CpM-LF-M37" firstAttribute="top" secondItem="8Hx-Vt-OUc" secondAttribute="bottom" constant="114" id="qbw-8Y-NMZ"/>
+                            <constraint firstItem="uZa-Z1-8Sj" firstAttribute="top" secondItem="8Hx-Vt-OUc" secondAttribute="bottom" constant="30" id="rxE-qB-4Oz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vss-gF-j5X"/>
                     </view>
@@ -687,13 +703,14 @@
                     </navigationItem>
                     <connections>
                         <outlet property="friendsTableView" destination="CpM-LF-M37" id="DCt-Lj-9uk"/>
+                        <outlet property="pendingFriendRequestsButton" destination="uZa-Z1-8Sj" id="CmT-Qc-86h"/>
                         <outlet property="profileView" destination="8Hx-Vt-OUc" id="g2n-8Q-GWZ"/>
                         <outlet property="usernameLabel" destination="sJf-wR-RSO" id="WHE-mI-Zpp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XTL-g6-1OE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1587.3046875" y="119.53125"/>
+            <point key="canvasLocation" x="1586.71875" y="119.53124999999999"/>
         </scene>
         <!--Account Settings View Controller-->
         <scene sceneID="NMK-hB-sAV">
