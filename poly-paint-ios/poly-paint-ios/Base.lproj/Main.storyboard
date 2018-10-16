@@ -581,18 +581,27 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="496" id="QFO-ZJ-2js"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="496" id="WFt-hO-s67"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="728" id="ocF-GK-vtT"/>
                                     <constraint firstAttribute="width" constant="728" id="zs3-H4-hGv"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendCell" id="Hjb-Hq-Eta" userLabel="FriendCell" customClass="FriendHeadlineTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="728" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendCell" rowHeight="143" id="Hjb-Hq-Eta" userLabel="FriendCell" customClass="FriendHeadlineTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="728" height="143"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hjb-Hq-Eta" id="f3W-mb-UaN">
-                                            <rect key="frame" x="0.0" y="0.0" width="728" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="728" height="142.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlankProfile" translatesAutoresizingMaskIntoConstraints="NO" id="bYy-tH-VjF">
+                                                    <rect key="frame" x="15" y="7" width="240" height="128"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="240" id="g3x-e7-olh"/>
+                                                        <constraint firstAttribute="height" constant="128" id="moc-6y-Zm6"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3A3-UI-iFf">
-                                                    <rect key="frame" x="15" y="11" width="200" height="21"/>
+                                                    <rect key="frame" x="264" y="61" width="200" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="3l7-Zb-Lzr"/>
                                                         <constraint firstAttribute="width" constant="200" id="LYP-N1-ych"/>
@@ -601,26 +610,55 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wn-I9-8yU">
-                                                    <rect key="frame" x="568" y="7" width="145" height="30"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="g30-a0-Z7d"/>
-                                                        <constraint firstAttribute="width" constant="145" id="uzd-KG-ZcT"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Remove as Friend">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="removeAsFriendTapped:" destination="Hjb-Hq-Eta" eventType="touchUpInside" id="wPt-7D-zWv"/>
-                                                    </connections>
-                                                </button>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="iM0-GA-V6t">
+                                                    <rect key="frame" x="568" y="16" width="145" height="110"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yH4-ka-g8o">
+                                                            <rect key="frame" x="0.0" y="0.0" width="145" height="30"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="145" id="dCU-DP-aQA"/>
+                                                                <constraint firstAttribute="height" constant="30" id="u24-4i-aYv"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Check Gallery">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wn-I9-8yU">
+                                                            <rect key="frame" x="0.0" y="40" width="145" height="30"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="g30-a0-Z7d"/>
+                                                                <constraint firstAttribute="width" constant="145" id="uzd-KG-ZcT"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Remove as Friend">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="removeAsFriendTapped:" destination="Hjb-Hq-Eta" eventType="touchUpInside" id="wPt-7D-zWv"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cau-Zz-X5u">
+                                                            <rect key="frame" x="0.0" y="80" width="145" height="30"/>
+                                                            <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="3X4-9g-lWI"/>
+                                                                <constraint firstAttribute="width" constant="145" id="7Vv-Ub-ROk"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Invite to channel">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="3A3-UI-iFf" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="Dqk-hi-hRZ"/>
-                                                <constraint firstItem="3A3-UI-iFf" firstAttribute="leading" secondItem="f3W-mb-UaN" secondAttribute="leading" constant="15" id="rAt-HQ-GEK"/>
-                                                <constraint firstItem="5wn-I9-8yU" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="sDL-qf-xzH"/>
-                                                <constraint firstAttribute="trailing" secondItem="5wn-I9-8yU" secondAttribute="trailing" constant="15" id="xLv-8X-m9V"/>
+                                                <constraint firstItem="bYy-tH-VjF" firstAttribute="leading" secondItem="f3W-mb-UaN" secondAttribute="leading" constant="15" id="Gyy-Fb-djy"/>
+                                                <constraint firstItem="bYy-tH-VjF" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="RXM-bG-IoA"/>
+                                                <constraint firstAttribute="trailing" secondItem="iM0-GA-V6t" secondAttribute="trailing" constant="15" id="XAn-bK-VTl"/>
+                                                <constraint firstItem="iM0-GA-V6t" firstAttribute="centerY" secondItem="f3W-mb-UaN" secondAttribute="centerY" id="bVN-0U-2k9"/>
+                                                <constraint firstItem="3A3-UI-iFf" firstAttribute="centerX" secondItem="f3W-mb-UaN" secondAttribute="centerX" id="sVC-TW-DQj"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

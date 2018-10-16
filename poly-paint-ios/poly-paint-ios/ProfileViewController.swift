@@ -41,6 +41,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.friendsTableView.rowHeight = 150.0
         self.setUsernameLabel()
         self.colorBorder()
         self.setUpNotifications()
@@ -62,12 +63,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Create a table cell
-        //let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath)
-        
-        // Customize the cell
-        //cell.textLabel?.text = friendsArray[indexPath.row]
-        
         let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendHeadlineTableViewCell
         
         // Customize the cell
