@@ -165,12 +165,27 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Convertisseurs\Convertisseurs.cs" />
+    <Compile Include="DAO\ImageCommentDao.cs" />
+    <Compile Include="DAO\ImageDao.cs" />
+    <Compile Include="DAO\ImageLikeDao.cs" />
     <Compile Include="Modeles\Editeur.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
+    <Compile Include="Modeles\ImageComment.cs" />
+    <Compile Include="Modeles\ImageLike.cs" />
+    <Compile Include="Modeles\Image.cs" />
     <Compile Include="Services\ServerService.cs" />
     <Compile Include="Utilitaires\Settings.cs" />
     <Compile Include="Utilitaires\RelayCommand.cs" />
     <Compile Include="VueModeles\VueModele.cs" />
+    <Compile Include="Vues\Gallery.xaml.cs">
+      <DependentUpon>Gallery.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\GalleryCard.xaml.cs">
+      <DependentUpon>GalleryCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\GalleryComment.xaml.cs">
+      <DependentUpon>GalleryComment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\LoginDialogBox.xaml.cs">
       <DependentUpon>LoginDialogBox.xaml</DependentUpon>
     </Compile>
@@ -195,6 +210,18 @@
     <Compile Include="Vues\FenetreDessin.xaml.cs">
       <DependentUpon>FenetreDessin.xaml</DependentUpon>
     </Compile>
+    <Page Include="Vues\Gallery.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\GalleryCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\GalleryComment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vues\LoginDialogBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -264,6 +291,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\defaultImage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
