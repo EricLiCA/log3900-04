@@ -102,6 +102,30 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         for friend in mockFriends {
             self.addFriendsToFriendsTableView(friendUsername: friend)
         }
+        
+        /*let url = URL(string: "http://localhost:3000/v1/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                DispatchQueue.main.async {
+                    // fill friend list
+                }
+            } else {
+                DispatchQueue.main.async {
+                    // show error loading friends
+                }
+            }
+        }
+        
+        task.resume()*/
     }
     
     // TODO: Pending Freind request interface
