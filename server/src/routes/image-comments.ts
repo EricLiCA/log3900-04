@@ -5,7 +5,7 @@ export class ImageCommentsRoute {
 
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        
+
         db.query('SELECT * FROM ImageComments INNER JOIN Users ON "UserId" = "Id" WHERE "ImageId" = $1', [req.params.imageId]).then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows.map((row) => {
