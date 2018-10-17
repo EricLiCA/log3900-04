@@ -7,6 +7,4 @@ export interface DAO {
     update(req: express.Request, res: express.Response, next: express.NextFunction): void;
     delete(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void>;
 
-
-
 }

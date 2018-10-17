@@ -15,8 +15,9 @@ export class UsersRoute {
                         userLevel: row.UserLevel,
                     };
                 }));
+            } else {
+                res.sendStatus(404); // Not found
             }
-            res.sendStatus(404); // Not found
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
@@ -33,8 +34,9 @@ export class UsersRoute {
                     username: result.Username,
                     userLevel: result.UserLevel,
                 });
+            } else {
+                res.sendStatus(404);
             }
-            res.sendStatus(404);
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
@@ -56,8 +58,9 @@ export class UsersRoute {
                     username: result.Username,
                     userLevel: result.UserLevel,
                 });
+            } else {
+                res.sendStatus(204);
             }
-            res.sendStatus(204);
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
@@ -67,7 +70,7 @@ export class UsersRoute {
     public update(req: express.Request, res: express.Response, next: express.NextFunction): void {
         const redisClient = RedisService.getInstance();
         redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
-            if (token !== undefined && token === req.body.token) {
+            if (token !== null && token === req.body.token) {
                 let updates = [
                     ['Username', req.body.username],
                     ['Password', req.body.password],
@@ -76,40 +79,40 @@ export class UsersRoute {
                 updates = updates.filter((update) => update[1] !== undefined);
                 if (updates.length === 0) {
                     res.sendStatus(400);
-                }
-
-                // Build the query : UPDATE Users SET col1 = val1, col2 = val2, ... WHERE Id = <id>;
-                let queryText = 'UPDATE Users SET ';
-                updates.forEach((update, i) => {
-                    queryText += `"${update[0]}" = $${i + 1}`;
-                    if (i !== updates.length - 1) {
-                        queryText += ',';
-                    }
-                });
-                queryText += ` WHERE "Id" = $${updates.length + 1} RETURNING *`;
-
-                const preparedQuery = {
-                    text: queryText,
-                    values: updates.map((update) => update[1]).concat([req.params.id]),
-                };
-
-                // Query the database
-                const db = await PostgresDatabase.getInstance();
-                db.query(preparedQuery).then((query) => {
-                    if (query.rowCount > 0) {
-                        const result = query.rows[0];
-                        res.status(200);
-                        res.send({
-                            id: result.Id,
-                            username: result.Username,
-                            userLevel: result.UserLevel,
-                        });
-                    }
-                    res.sendStatus(204);
-                })
-                    .catch((err) => {
-                        res.sendStatus(400); // Bad request
+                } else {
+                    // Build the query : UPDATE Users SET col1 = val1, col2 = val2, ... WHERE Id = <id>;
+                    let queryText = 'UPDATE Users SET ';
+                    updates.forEach((update, i) => {
+                        queryText += `"${update[0]}" = $${i + 1}`;
+                        if (i !== updates.length - 1) {
+                            queryText += ',';
+                        }
                     });
+                    queryText += ` WHERE "Id" = $${updates.length + 1} RETURNING *`;
+
+                    const preparedQuery = {
+                        text: queryText,
+                        values: updates.map((update) => update[1]).concat([req.params.id]),
+                    };
+
+                    // Query the database
+                    const db = await PostgresDatabase.getInstance();
+                    db.query(preparedQuery).then((query) => {
+                        if (query.rowCount > 0) {
+                            const result = query.rows[0];
+                            res.status(200);
+                            res.send({
+                                id: result.Id,
+                                username: result.Username,
+                                userLevel: result.UserLevel,
+                            });
+                        }
+                        res.sendStatus(204);
+                    })
+                        .catch((err) => {
+                            res.sendStatus(400); // Bad request
+                        });
+                }
             } else {
                 res.sendStatus(403);
             }
@@ -119,7 +122,8 @@ export class UsersRoute {
     public async delete(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const redisClient = RedisService.getInstance();
         redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
-            if (token !== undefined && token === req.body.token) {
+            if (token !== null && token === req.body.token) {
+                redisClient.hdel('authTokens', req.params.id);
                 const db = await PostgresDatabase.getInstance();
                 db.query('DELETE FROM Users WHERE "Id" = $1 RETURNING *', [req.params.id]).then((query) => {
                     if (query.rowCount > 0) {

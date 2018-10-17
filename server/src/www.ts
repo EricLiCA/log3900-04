@@ -1,5 +1,5 @@
 import { Application } from './app';
-import { SERVER_PORT } from './configs/http';
+import { SERVER_PORT, SLACK_API } from './configs/http';
 import { SocketServer } from './socket-server';
 
 import * as http from 'http';
@@ -27,7 +27,7 @@ startServices().then((map: Map<string, boolean>) => {
     });
 
     if (process.env.PROD) {
-        post('https://hooks.slack.com/services/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')
+        post(SLACK_API)
             .send({ text: statusUpdate })
             .end();
     }
@@ -57,7 +57,7 @@ function normalizePort(val: number | string): number | string | boolean {
  */
 async function startServices(): Promise<Map<string, boolean>> {
     if (process.env.PROD) {
-        post('https://hooks.slack.com/services/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')
+        post(SLACK_API)
             .send({ text: 'Starting Deployment Services' })
             .end();
     }
@@ -65,7 +65,7 @@ async function startServices(): Promise<Map<string, boolean>> {
     const results = new Map<string, boolean>();
 
     if (process.env.PROD) {
-        post('https://hooks.slack.com/services/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')
+        post(SLACK_API)
             .send({ text: 'Connecting to PostgreSQL' })
             .end();
     }
@@ -73,21 +73,21 @@ async function startServices(): Promise<Map<string, boolean>> {
     await PostgresDatabase.getInstance().then((onfullfiled) => {
         results.set('PostgreSQL', true);
         if (process.env.PROD) {
-            post('https://hooks.slack.com/services/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')
+            post(SLACK_API)
                 .send({ text: 'Connected to PostgreSQL' })
                 .end();
         }
     }, (onRejected) => {
         results.set('PostgreSQL', false);
         if (process.env.PROD) {
-            post('https://hooks.slack.com/services/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')
+            post(SLACK_API)
                 .send({ text: 'Error connecting to PostgreSQL' })
                 .end();
         }
     });
 
     if (process.env.PROD) {
-        post('https://hooks.slack.com/services/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')
+        post(SLACK_API)
             .send({ text: 'Starting Socket Server' })
             .end();
     }
@@ -95,13 +95,13 @@ async function startServices(): Promise<Map<string, boolean>> {
     ChatService.instance.startChatService();
     results.set('SocketServer', true);
     if (process.env.PROD) {
-        post('https://hooks.slack.com/services/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')
+        post(SLACK_API)
             .send({ text: 'Socket Server started' })
             .end();
     }
 
     if (process.env.PROD) {
-        post('https://hooks.slack.com/services/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')
+        post(SLACK_API)
             .send({ text: 'Starting server application' })
             .end();
     }
@@ -110,13 +110,13 @@ async function startServices(): Promise<Map<string, boolean>> {
     server.on('listening', onListening);
     results.set('Application', true);
     if (process.env.PROD) {
-        post('https://hooks.slack.com/services/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')
+        post(SLACK_API)
             .send({ text: 'Application started' })
             .end();
     }
 
     if (process.env.PROD) {
-        post('https://hooks.slack.com/services/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')
+        post(SLACK_API)
             .send({ text: 'Connecting to Redis' })
             .end();
     }
@@ -126,7 +126,7 @@ async function startServices(): Promise<Map<string, boolean>> {
         results.set('Redis', false);
         console.log('Redis connection could not be established');
         if (process.env.PROD) {
-            post('https://hooks.slack.com/services/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')
+            post(SLACK_API)
                 .send({ text: 'Could not connect to Redis\n' + err })
                 .end();
         }
@@ -135,7 +135,7 @@ async function startServices(): Promise<Map<string, boolean>> {
         results.set('Redis', true);
         console.log('Redis successfully connected');
         if (process.env.PROD) {
-            post('https://hooks.slack.com/services/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')
+            post(SLACK_API)
                 .send({ text: 'Redis connected' })
                 .end();
         }
@@ -143,7 +143,7 @@ async function startServices(): Promise<Map<string, boolean>> {
     redisClient.flushall();
 
     if (process.env.PROD) {
-        post('https://hooks.slack.com/services/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')
+        post(SLACK_API)
             .send({ text: 'Querying for Sessions' })
             .end();
     }
@@ -159,7 +159,7 @@ async function startServices(): Promise<Map<string, boolean>> {
         .catch((err) => {
             console.log(err);
             if (process.env.PROD) {
-                post('https://hooks.slack.com/services/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')
+                post(SLACK_API)
                     .send({ text: 'Error querying sessions' })
                     .end();
             }
