@@ -2,14 +2,11 @@ using Newtonsoft.Json.Linq;
 using PolyPaint.DAO;
 using PolyPaint.Modeles;
 using PolyPaint.Services;
-using PolyPaint.Utilitaires;
 using RestSharp;
 using System;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Image = PolyPaint.Modeles.Image;
 
