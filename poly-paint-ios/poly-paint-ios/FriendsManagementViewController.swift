@@ -39,14 +39,14 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     var usersArray = [String]()
     
     override func viewDidLoad() {
+        self.getAllUsers()
         super.viewDidLoad()
-        self.mockUsers = ["John", "Betty", "Bob", "Bobette", "Emy", "Emma", "Paul", "Bobo", "Hello", "Evil", "Evil666"]
+        //self.mockUsers = ["John", "Betty", "Bob", "Bobette", "Emy", "Emma", "Paul", "Bobo", "Hello", "Evil", "Evil666"]
         // Set as delegate for the message table
         self.addUsersTableView.delegate = self
         self.addUsersTableView.dataSource = self
         self.setUpNotifications()
-        self.showUsers()
-        self.getAllUsers()
+        
         // Do any additional setup after loading the view.
     }
 
@@ -99,7 +99,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func getAllUsers() {
-        let urlString = "http://localhost:3000/v1/users/"
+        let urlString = "http://localhost:3000/v2/users/"
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
@@ -112,11 +112,14 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             guard let data = data, error == nil else {
                 return
             }
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            print(responseJSON)
-            if (responseJSON as? [String: Any]) != nil {
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, AnyObject>]
+            
+            if (responseJSON as? [Dictionary<String, AnyObject>]) != nil {
+                for user in responseJSON! {
+                    self.mockUsers.append(user["username"] as! String)
+                }
                 DispatchQueue.main.async {
-                    
+                    self.showUsers()
                 }
             } else {
                 DispatchQueue.main.async {
