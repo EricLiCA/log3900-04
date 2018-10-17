@@ -94,7 +94,6 @@ namespace PolyPaint.Vues
             {
                 ImageViewLikes.Text = "0";
             }
-            SetToggleButtonTooltip(LikeButton, Settings.LIKE_BUTTON_CHECKED_TOOLTIP, Settings.LIKE_BUTTON_UNCHECKED_TOOLTIP);
         }
 
         public void LoadCurrentImageComments(IRestResponse response)
@@ -173,8 +172,6 @@ namespace PolyPaint.Vues
                         break;
                     }
             }
-            SetToggleButtonTooltip(LockButton, Settings.LOCK_BUTTON_CHECKED_TOOLTIP, Settings.LOCK_BUTTON_UNCHECKED_TOOLTIP);
-
         }
 
         private void LockButton_Click(object sender, RoutedEventArgs e)
@@ -226,16 +223,6 @@ namespace PolyPaint.Vues
                     Console.WriteLine("Cannot convert string to int");
                 }
             }
-            SetToggleButtonTooltip(LikeButton, Settings.LIKE_BUTTON_CHECKED_TOOLTIP, Settings.LIKE_BUTTON_UNCHECKED_TOOLTIP);
-        }
-
-        private void SetToggleButtonTooltip(ToggleButton toggleButton, string checkedMessage, string uncheckedMessage)
-        {
-            ToolTip toolTip = new ToolTip
-            {
-                Content = ((bool)toggleButton.IsChecked) ? checkedMessage : uncheckedMessage
-            };
-            toggleButton.ToolTip = toolTip;
         }
 
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)

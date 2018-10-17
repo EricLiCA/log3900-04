@@ -12,6 +12,12 @@
     <materialDesign:DialogHost Canvas.Left="50" Canvas.Top="50" Margin="0">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="16">
+                <TextBlock>Manage your friend requests</TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                        Cancel
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </materialDesign:DialogHost.DialogContent>
         <DockPanel Margin="0" Height="{Binding ActualHeight, ElementName=canvas}" Width="{Binding ActualWidth, ElementName=canvas}">
@@ -35,6 +41,29 @@
                             <TextBlock x:Name="ProfileViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="0,114,8,241.92">
+                            <Button x:Name="ViewImagesButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="View profile images" Margin="0,0,10,0" Click="ViewImagesButton_Click" >
+                                <materialDesign:PackIcon  Kind="Image" Height="24" Width="24" />
+                            </Button>
+                            <Button x:Name="AddToChannelButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Add to channel" Margin="0,0,10,0"  Click="AddToChannelButton_Click">
+                                <materialDesign:PackIcon  Kind="Allo" Height="24" Width="24" />
+                            </Button>
+                            <ToggleButton x:Name="FriendButton" Width="40" Height="40" Margin="0,0,10,0" Checked="FriendButton_Checked" Unchecked="FriendButton_Unchecked">
+                                <ToggleButton.Style >
+                                    <Style BasedOn="{StaticResource MaterialDesignActionToggleButton}" TargetType="ToggleButton">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="ToolTip" Value="Remove this user from my friend list"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                        <Setter Property="ToolTip" Value="Add this user to my friend list"></Setter>
+                                    </Style>
+                                </ToggleButton.Style>
+                                <materialDesign:ToggleButtonAssist.OnContent>
+                                    <materialDesign:PackIcon Kind="AccountMinus" />
+                                </materialDesign:ToggleButtonAssist.OnContent>
+                                <materialDesign:PackIcon
+                                    Kind="AccountPlus" />
+                            </ToggleButton>
                         </StackPanel>
                     </Grid>
                 </DockPanel>
@@ -42,6 +71,9 @@
             </Expander>
             <ScrollViewer>
                 <StackPanel>
+                    <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,10,10,10" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" >
+                        Friend requests
+                    </Button>
                     <GroupBox Header="Friends"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>

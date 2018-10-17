@@ -126,8 +126,7 @@ namespace PolyPaint.Vues
 
         private void CloseDialogButton_Click(object sender, RoutedEventArgs e)
         {
-            CurrentProfileName.Text = ServerService.instance.user.username;
-            CurrentProfilePassword.Password = ServerService.instance.user.password;
+            InitDialogBox();
             ChangeProfileInformationsButton.IsEnabled = false;
         }
 

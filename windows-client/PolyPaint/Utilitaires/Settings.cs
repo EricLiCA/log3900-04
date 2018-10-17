@@ -16,13 +16,6 @@ namespace PolyPaint.Utilitaires
         public const string IMAGE_LIKES_PATH = "/imageLikes";
         public const string IMAGE_COMMENTS_PATH = "/imageComments";
         public const string USERS_PATH = "/users";
-
-        //Tooltips text
-        public const string PASSWORD_BUTTON_CHECKED_TOOLTIP = "Remove the password";
-        public const string PASSWORD_BUTTON_UNCHECKED_TOOLTIP = "Protect the image with a password";
-        public const string LOCK_BUTTON_CHECKED_TOOLTIP = "Make the image public. A public image can be seen by anyone";
-        public const string LOCK_BUTTON_UNCHECKED_TOOLTIP = "Make the image private. A private image can be seen only by you";
-        public const string LIKE_BUTTON_CHECKED_TOOLTIP = "Dislike this image";
-        public const string LIKE_BUTTON_UNCHECKED_TOOLTIP = "Like this image";
+        public const string SESSION_PATH = "/sessions";
     }
 }

@@ -2,20 +2,10 @@
 using PolyPaint.Modeles;
 using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PolyPaint.Vues
 {
@@ -24,6 +14,8 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class Users : Page
     {
+        public UsersCard CurrentUserCard { get; set; }
+
         public Users()
         {
             InitializeComponent();
@@ -45,22 +37,48 @@ namespace PolyPaint.Vues
                         username = data["username"],
                         profileImage = data["profileImage"],
                     };
-
-                    UsersCard galleryCard = new UsersCard(user);
-
-                    // TODO: add condition to check if friend or not
-
+                    UsersCard userCard = new UsersCard(user);
+                    userCard.ViewButtonClicked += ViewButton_Click;
+                    ConnectedUsersContainer.Children.Add(userCard);
                 }
             }
             else
             {
-                MessageBox.Show("Could not load the images", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Could not load the profile", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        public void LoadProfile()
+        private void ViewButton_Click(object sender, EventArgs e)
         {
+            UsersCard userCard = (UsersCard)sender;
+            CurrentUserCard = userCard;
+            ProfileView.Visibility = Visibility.Visible;
+            ProfileView.IsExpanded = true;
+            ProfileViewTitle.Text = CurrentUserCard.User.username;
+            Uri imageUri = new Uri(CurrentUserCard.User.profileImage);
+            BitmapImage imageBitmap = new BitmapImage(imageUri);
+            ProfileViewPicture.Source = imageBitmap;
+        }
 
+        private void FriendButton_Checked(object sender, RoutedEventArgs e)
+        {
+            // TODO: Sent a friend request to the currentProfile
+
+        }
+
+        private void FriendButton_Unchecked(object sender, RoutedEventArgs e)
+        {
+            // TODO: Delete a friend from the friend list
+        }
+
+        private void AddToChannelButton_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Add to channel
+        }
+
+        private void ViewImagesButton_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Go to gallery and filter image in order to show currentProfile images
         }
     }
 }

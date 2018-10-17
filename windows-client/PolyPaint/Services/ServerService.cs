@@ -25,7 +25,6 @@ namespace PolyPaint.Services
 
         public RestClient server { get; set; }
         public User user { get; set; }
-        public string token { get; set; }
 
     }
 }

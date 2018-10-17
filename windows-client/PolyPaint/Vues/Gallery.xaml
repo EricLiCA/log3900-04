@@ -52,14 +52,34 @@
                                 <materialDesign:PackIcon  Kind="Key" Height="24" Width="24" />
                             </Button>
 
-                            <ToggleButton x:Name="LockButton" Style="{StaticResource MaterialDesignActionToggleButton}" Width="40" Height="40" Margin="0,0,10,0" Click="LockButton_Click">
+                            <ToggleButton x:Name="LockButton" Width="40" Height="40" Margin="0,0,10,0" Click="LockButton_Click">
+                                <ToggleButton.Style >
+                                    <Style BasedOn="{StaticResource MaterialDesignActionToggleButton}" TargetType="ToggleButton">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="ToolTip" Value="Make the image public. A public image can be seen by anyone"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                        <Setter Property="ToolTip" Value="Make the image private. A private image can be seen only by you"></Setter>
+                                    </Style>
+                                </ToggleButton.Style>
                                 <materialDesign:ToggleButtonAssist.OnContent>
                                     <materialDesign:PackIcon Kind="LockOpen" />
                                 </materialDesign:ToggleButtonAssist.OnContent>
                                 <materialDesign:PackIcon
                                     Kind="Lock" />
                             </ToggleButton>
-                            <ToggleButton x:Name="LikeButton" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Width="40" Height="40" Margin="0,0,10,0" Click="LikeButton_Click">
+                            <ToggleButton x:Name="LikeButton" Width="40" Height="40" Margin="0,0,10,0" Click="LikeButton_Click">
+                                <ToggleButton.Style >
+                                    <Style BasedOn="{StaticResource MaterialDesignFlatPrimaryToggleButton}" TargetType="ToggleButton">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="ToolTip" Value="Dislike this image"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                        <Setter Property="ToolTip" Value="Like this image"></Setter>
+                                    </Style>
+                                </ToggleButton.Style>
                                 <materialDesign:PackIcon Kind="Heart" Height="21"  Width="21" />
                             </ToggleButton>
                             <TextBlock x:Name="ImageViewLikes"/>
