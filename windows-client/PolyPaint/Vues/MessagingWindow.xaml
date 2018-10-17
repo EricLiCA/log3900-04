@@ -43,7 +43,7 @@
                                                 <DataTemplate>
                                                     <Ellipse Width="30" Height="30" Margin="3 0">
                                                         <Ellipse.Fill>
-                                                            <ImageBrush ImageSource="{Binding ProfileImage}" />
+                                                            <ImageBrush ImageSource="{Binding profileImage}" />
                                                         </Ellipse.Fill>
                                                     </Ellipse>
                                                 </DataTemplate>
@@ -80,7 +80,7 @@
                                             <DataTemplate>
                                                 <Ellipse Width="30" Height="30" Margin="2 0">
                                                     <Ellipse.Fill>
-                                                        <ImageBrush ImageSource="{Binding ProfileImage}" />
+                                                        <ImageBrush ImageSource="{Binding profileImage}" />
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                             </DataTemplate>

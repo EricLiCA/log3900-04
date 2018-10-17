@@ -40,7 +40,7 @@ namespace PolyPaint.Modeles
             Application.Current.Dispatcher.Invoke(() => {
                 room.Messages.Add(new ChatMessage()
                 {
-                    Sender = room.Users.First(user => user.Username == sender),
+                    Sender = room.Users.First(user => user.username == sender),
                     Timestamp = DateTime.Now.ToString("HH:mm:ss"),
                     Message = message
                 });
@@ -85,7 +85,7 @@ namespace PolyPaint.Modeles
             this.NotSubscribedChatRooms.Remove(room);
             this.SubscribedChatRooms.Add(room);
             this.OpenChat(this.SubscribedChatRooms.Count - 1);
-            room.Users.Add(new User(ServerService.instance.username, "", true));
+            room.Users.Add(new User("qweqwegrnewdqwefdno;iewh", ServerService.instance.username, ""));
 
             ServerService.instance.Socket.Emit("joinRoom", room.Name);
             

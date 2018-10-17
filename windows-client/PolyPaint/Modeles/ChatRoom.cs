@@ -27,9 +27,9 @@ namespace PolyPaint.Modeles
             this.Name = name;
             this.Users = new ObservableCollection<User>();
             this.Messages = new ObservableCollection<ChatMessage>();
-            this.Users.Add(new User("Francis", "anything", true));
-            this.Users.Add(new User("Joshua", "anything", false));
-            this.Users.Add(new User("Hana", "anything", true));
+            this.Users.Add(new User("id", "Francis", null));
+            this.Users.Add(new User("wewewe", "Joshua", null));
+            this.Users.Add(new User("wewid", "Amy", null));
         }
 
         public void SendMessage(string message)

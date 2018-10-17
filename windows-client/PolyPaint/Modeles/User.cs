@@ -4,15 +4,15 @@ namespace PolyPaint.Modeles
 {
     public class User
     {
-        public string Username { get; set; }
-        public BitmapImage ProfileImage { get; set; }
-        public bool Friend;
+        private string id { get; set; }
+        public string username { get; set; }
+        public BitmapImage profileImage { get; set; }
 
-        public User(string name, string profileImageUrl, bool friend)
+        public User(string id, string username, string profileImageUrl)
         {
-            this.Username = name;
-            this.Friend = friend;
-            this.ProfileImage = new BitmapImage(new System.Uri("https://mts.intechopen.com/storage/users/528/images/system/528.jpg"));
+            this.id = id;
+            this.username = username;
+            this.profileImage = new BitmapImage(new System.Uri("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjqmTWoUhezVh6rd7F0DYqkpqDGAwbYoC_hEfi0nphYL1h08gCkA"));
         }
     }
 }

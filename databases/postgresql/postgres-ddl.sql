@@ -47,6 +47,7 @@ CREATE TABLE "User" (
     "Username" varchar(32)   NOT NULL,
     "Password" varchar(200)   NOT NULL,
     "UserLevel" UserPermissionLevel NOT NULL DEFAULT 'user',
+    "ProfileImage" VARCHAR,
     CONSTRAINT "pk_User" PRIMARY KEY (
         "Id"
      ),

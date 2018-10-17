@@ -33,7 +33,10 @@ namespace PolyPaint.Vues
         {
             this.FenetreDessin = new FenetreDessin();
             this.Gallery = new Gallery();
+
             this.Server_Connect();
+            UsersManager.instance.fetchAll();
+
             InitializeComponent();
             GridMain.Content = Gallery;
         }

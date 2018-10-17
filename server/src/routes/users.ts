@@ -13,6 +13,7 @@ export class UsersRoute {
                         id: row.Id,
                         username: row.Username,
                         userLevel: row.UserLevel,
+                        profileImage: row.ProfileImage,
                     };
                 }));
             }
@@ -32,6 +33,7 @@ export class UsersRoute {
                     id: result.Id,
                     username: result.Username,
                     userLevel: result.UserLevel,
+                    profileImage: result.ProfileImage,
                 });
             }
             res.sendStatus(404);
