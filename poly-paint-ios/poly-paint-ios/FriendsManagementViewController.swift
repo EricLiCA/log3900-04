@@ -304,7 +304,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             
             if (responseJSON as? [Dictionary<String, String>]) != nil {
                 for user in responseJSON! {
-                    let userNotFriend = User(id: user["id"]!, username: user["userName"]!, profilePictureUrl: user["profileImage"]!)
+                    let userNotFriend = User(id: user["id"]!, username: user["username"]!, profilePictureUrl: user["profileImage"]!)
                     self.usersNotInFriends.append(userNotFriend)
                 }
                 DispatchQueue.main.async {

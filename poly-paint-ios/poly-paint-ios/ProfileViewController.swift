@@ -111,7 +111,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 DispatchQueue.main.async {
                     // fill friend list
                     for friendship in responseJSON! {
-                        let friend = User(id: friendship["id"]!, username: friendship["userName"]!, profilePictureUrl: friendship["profileImage"]!)
+                        let friend = User(id: friendship["id"]!, username: friendship["username"]!, profilePictureUrl: friendship["profileImage"]!)
                         self.friends.append(friend)
                         self.addFriendsToFriendsTableView(friend: friend)
                     }
