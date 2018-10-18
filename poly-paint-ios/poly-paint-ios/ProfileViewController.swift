@@ -76,6 +76,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Set as delegate for the message table
         self.friendsTableView.delegate = self
         self.friendsTableView.dataSource = self
+        self.imagePicker.delegate = self
         self.getFriends()
         self.loadPendingFriendRequests()
         self.loadProfilePicture()
@@ -212,7 +213,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func changeProfilePictureTapped(_ sender: UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            print("Button capture")
             
             imagePicker.delegate = self
             imagePicker.sourceType = .savedPhotosAlbum;
@@ -222,12 +222,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
-        self.dismiss(animated: true, completion: { () -> Void in
-            
-        })
-        
-        self.profilePicture.image = image
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        self.profilePicture.image = chosenImage
+        dismiss(animated: true, completion: nil)
     }
     
     /*
