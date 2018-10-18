@@ -1,15 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using PolyPaint.DAO;
 using PolyPaint.Modeles;
 using PolyPaint.Services;
-using PolyPaint.Utilitaires;
 using RestSharp;
 using System;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Image = PolyPaint.Modeles.Image;
 
@@ -30,10 +27,6 @@ namespace PolyPaint.Vues
             InitializeComponent();
             ImageView.Visibility = Visibility.Hidden;
             CurrentGalleryCard = new GalleryCard(null);
-        }
-
-        public void Init()
-        {
             ImageDao.GetAll();
         }
 
@@ -61,7 +54,7 @@ namespace PolyPaint.Vues
                     GalleryCard galleryCard = new GalleryCard(image);
                     galleryCard.ViewButtonClicked += ViewButton_Click;
 
-                    if (image.ownerId == ServerService.instance.id && image.protectionLevel == "private")
+                    if (image.ownerId == ServerService.instance.user.id && image.protectionLevel == "private")
                     {   
                         PrivateImagesContainer.Children.Add(galleryCard);
                     }
@@ -87,7 +80,7 @@ namespace PolyPaint.Vues
                 for (int i = 0; i < responseImageLikes.Count; i++)
                 {
                     dynamic data = JObject.Parse(responseImageLikes[i].ToString());
-                    if (data["userId"] == ServerService.instance.id)
+                    if (data["userId"] == ServerService.instance.user.id)
                     {
                         LikeButton.IsChecked = true;
                     }
@@ -98,7 +91,6 @@ namespace PolyPaint.Vues
             {
                 ImageViewLikes.Text = "0";
             }
-            SetToggleButtonTooltip(LikeButton, Settings.LIKE_BUTTON_CHECKED_TOOLTIP, Settings.LIKE_BUTTON_UNCHECKED_TOOLTIP);
         }
 
         public void LoadCurrentImageComments(IRestResponse response)
@@ -139,7 +131,7 @@ namespace PolyPaint.Vues
             ImageLikeDao.Get(CurrentGalleryCard.Image.id);
             ImageCommentDao.Get(CurrentGalleryCard.Image.id);
 
-            if (CurrentGalleryCard.Image.ownerId == ServerService.instance.id)
+            if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
             {
                 LikeButton.IsEnabled = false;
                 PasswordButton.Visibility = Visibility.Visible;
@@ -177,8 +169,6 @@ namespace PolyPaint.Vues
                         break;
                     }
             }
-            SetToggleButtonTooltip(LockButton, Settings.LOCK_BUTTON_CHECKED_TOOLTIP, Settings.LOCK_BUTTON_UNCHECKED_TOOLTIP);
-
         }
 
         private void LockButton_Click(object sender, RoutedEventArgs e)
@@ -204,7 +194,7 @@ namespace PolyPaint.Vues
             ImageLike imageLike = new ImageLike
             {
                 imageId = CurrentGalleryCard.Image.id,
-                userId = ServerService.instance.id
+                userId = ServerService.instance.user.id
             };
             if ((bool)LikeButton.IsChecked)
             {
@@ -230,26 +220,16 @@ namespace PolyPaint.Vues
                     Console.WriteLine("Cannot convert string to int");
                 }
             }
-            SetToggleButtonTooltip(LikeButton, Settings.LIKE_BUTTON_CHECKED_TOOLTIP, Settings.LIKE_BUTTON_UNCHECKED_TOOLTIP);
-        }
-
-        private void SetToggleButtonTooltip(ToggleButton toggleButton, string checkedMessage, string uncheckedMessage)
-        {
-            ToolTip toolTip = new ToolTip
-            {
-                Content = ((bool)toggleButton.IsChecked) ? checkedMessage : uncheckedMessage
-            };
-            toggleButton.ToolTip = toolTip;
         }
 
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
         {
             ImageComment imageComment = new ImageComment
             {
-                userId = ServerService.instance.id,
+                userId = ServerService.instance.user.id,
                 imageId = CurrentGalleryCard.Image.id,
                 comment = CurrentComment.Text,
-                userName = ServerService.instance.username,
+                userName = ServerService.instance.user.username,
                 timestamp = DateTime.Now
             };
             ImageCommentDao.Post(imageComment);

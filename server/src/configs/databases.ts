@@ -1,9 +1,9 @@
 export namespace PostgresConfig {
-    export const HOST = process.env.PROD ? process.env.PG_HOST : 'localhost';
-    export const PORT = process.env.PROD ? process.env.PG_PORT : '5432';
-    export const USER = process.env.PROD ? process.env.PG_USER : '';
-    export const PASSWORD = process.env.PROD ? process.env.PG_PASSWORD : '';
-    export const DATABASE = process.env.PROD ? process.env.PG_DB : 'postgres';
+    export const HOST = process.env.PG_HOST;
+    export const PORT = process.env.PG_PORT;
+    export const USER = process.env.PG_USER;
+    export const PASSWORD = process.env.PG_PASSWORD;
+    export const DATABASE = process.env.PG_DB;
 }
 
 export namespace RedisConfig {

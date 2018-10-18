@@ -1,6 +1,6 @@
 import * as express from 'express';
-import {PostgresDatabase} from '../postgres-database';
-import {RedisService} from '../redis.service';
+import { PostgresDatabase } from '../postgres-database';
+import { RedisService } from '../redis.service';
 
 export class FriendshipsRoute {
 
@@ -59,7 +59,7 @@ export class FriendshipsRoute {
                     .then((queryResult) => {
                         if (queryResult.rowCount > 0) { // already requested
                             db.query(
-                                    `DELETE
+                                `DELETE
                                      from pending_friend_requests
                                      WHERE "RequesterId" = $1
                                        AND "ReceiverId" = $2;
@@ -81,7 +81,7 @@ export class FriendshipsRoute {
                                 'INSERT INTO pending_friend_requests("RequesterId", "ReceiverId") VALUES($1, $2)',
                                 [req.params.id, req.body.friendId],
                             )
-                                .then()
+                                .then();
                         }
                     })
                     .catch((err) => {
@@ -113,14 +113,14 @@ export class FriendshipsRoute {
             if (token !== null && token === req.body.token) {
                 const db = await PostgresDatabase.getInstance();
                 db.query(
-                        `DELETE
+                    `DELETE
                          FROM friendships
                          WHERE "UserId" = $1
                            AND "FriendId" = $2;
                     DELETE
                     FROM friendships
-                    WHERE "UserId" = $1
-                      AND "FriendId" = $2
+                    WHERE "UserId" = $2
+                      AND "FriendId" = $1
                     `,
                     [req.params.id, req.body.friendId])
                     .then((queryResult) => {

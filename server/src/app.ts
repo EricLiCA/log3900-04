@@ -8,10 +8,10 @@ import { FriendshipsRoute } from './routes/friendships';
 import { ImageCommentsRoute } from './routes/image-comments';
 import { ImageLikesRoute } from './routes/image-likes';
 import { ImagesRoute } from './routes/images';
+import { PendingFriendRequestRoute } from './routes/pending-friend-request';
 import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
-import { PendingFriendRequestRoute } from './routes/pending-friend-request';
 
 export class Application {
     /**
@@ -87,7 +87,7 @@ export class Application {
         router.post('/friendships/:id', friendshipsRoute.post.bind(friendshipsRoute.post));
         router.delete('/friendships/:id', friendshipsRoute.delete.bind(friendshipsRoute.delete));
 
-        //PendingFriendRequest
+        // PendingFriendRequest
         router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
 
         // Images

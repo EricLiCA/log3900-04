@@ -42,6 +42,7 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
+    "@types/supertest": "^2.0.6",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.3",
     "chai-http": "^4.2.0",
@@ -58,6 +59,7 @@
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "superagent": "^4.0.0-beta.5",
+    "supertest": "^3.3.0",
     "typescript": "^3.0.3",
     "winston": "^3.1.0"
   },
