@@ -6,6 +6,7 @@ describe('User', () => {
     describe('getAll()', () => {
         it('should return all users', (done) => {
             User.getAll().then((results) => {
+                console.log(results);
                 expect(results).length.to.be.greaterThan(0);
                 expect(results[0].Id).to.not.be.empty;
                 expect(results[0].Password).to.not.be.empty;
