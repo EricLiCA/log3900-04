@@ -90,10 +90,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendHeadlineTableViewCell
-        
         // Customize the cell
         cell.friendUsernameLabel?.text = friendsArray[indexPath.row]
-        
         // Return the cell
         return cell
     }
@@ -110,20 +108,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String,String>]
-            print(responseJSON)
-            if (responseJSON as? [Dictionary<String,String>]) != nil {
-                
+            if (responseJSON) != nil {
                 DispatchQueue.main.async {
                     // fill friend list
                     for friendship in responseJSON! {
-                        self.friends.append(friendship["FriendId"] as! String)
+                        self.friends.append(friendship["FriendId"]!)
                         self.addFriendsToFriendsTableView(friendUsername: friendship["FriendId"] as! String)
                     }
                     UserDefaults.standard.set(self.friends, forKey: "friends")
-                }
-            } else {
-                DispatchQueue.main.async {
-                    // No friends
                 }
             }
         }
@@ -192,6 +184,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // send segue identifier so FriendsManagement VC knows which popover to show
         let destinationViewController: FriendsManagementViewController  = segue.destination as! FriendsManagementViewController
         destinationViewController.segueName = segue.identifier!
     }
