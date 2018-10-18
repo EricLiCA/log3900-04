@@ -2,7 +2,7 @@ import * as express from 'express';
 import { PostgresDatabase } from '../postgres-database';
 import { DAO } from './dao';
 
-const RANDOM_IMAGE: string = "https://picsum.photos/300/400/?random";
+const RANDOM_IMAGE: string = 'https://picsum.photos/300/400/?random';
 
 export class ImagesRoute implements DAO {
 
@@ -79,7 +79,7 @@ export class ImagesRoute implements DAO {
     }
 
     public async update(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        let updates = [
+        const updates = [
             ['OwnerId', req.body.ownerId],
             ['Title', req.body.title],
             ['ProtectionLevel', req.body.protectionLevel],
