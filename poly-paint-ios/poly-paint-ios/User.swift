@@ -14,4 +14,10 @@ class User {
     var username: String = ""
     var profilePictureUrl: String = ""
     
+    init(id: String, username: String, profilePictureUrl: String) {
+        self.id = id
+        self.username = username
+        self.profilePictureUrl = profilePictureUrl
+    }
+    
 }

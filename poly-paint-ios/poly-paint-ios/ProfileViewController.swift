@@ -64,6 +64,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var friendsArray = [String]()
     var friends = [String]()
     
+    var friendsArrayObject = [User]()
+    var friendsObject = [User]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,10 +115,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 DispatchQueue.main.async {
                     // fill friend list
                     for friendship in responseJSON! {
-                        self.friends.append(friendship["FriendId"]!)
-                    self.addFriendsToFriendsTableView(friendUsername: friendship["FriendId"]!)
+                        self.friendsObject.append(User(id: friendship["id"]!, username: friendship["userName"]!, profilePictureUrl: friendship["profileImage"]!))
+                        self.friends.append(friendship["id"]!)
+                    self.addFriendsToFriendsTableView(friendUsername: friendship["id"]!)
                     }
                     UserDefaults.standard.set(self.friends, forKey: "friends")
+                   
                 }
             }
         }
