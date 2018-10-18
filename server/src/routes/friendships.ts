@@ -20,19 +20,22 @@ export class FriendshipsRoute {
 
     public async getUsersExceptFriends(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM users WHERE "Id" != $1 AND "Id" NOT IN (select "FriendId" from friendships where "UserId" = $1)', [req.params.id]).then((query) => {
-            if (query.rowCount > 0) {
-                res.send(query.rows.map((row) => {
-                    return {
-                        id: row.Id,
-                        userName: row.Username,
-                        profileImage: row.ProfileImage,
-                    };
-                }));
-            } else {
-                res.sendStatus(404); // Not found
-            }
-        })
+        db.query(
+            `SELECT * FROM users
+            WHERE "Id" != $1 AND "Id" NOT IN (select "FriendId" from friendships where "UserId" = $1);
+        `, [req.params.id]).then((query) => {
+                if (query.rowCount > 0) {
+                    res.send(query.rows.map((row) => {
+                        return {
+                            id: row.Id,
+                            userName: row.Username,
+                            profileImage: row.ProfileImage,
+                        };
+                    }));
+                } else {
+                    res.sendStatus(404); // Not found
+                }
+            })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
             });
