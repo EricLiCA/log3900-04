@@ -54,7 +54,7 @@ class FriendHeadlineTableViewCell: UITableViewCell {
     }
 }
 
-class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -64,6 +64,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var friendsArray = [String]()
     var friends = [String]()
+    var imagePicker = UIImagePickerController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,6 +208,26 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         })
         
         task.resume()
+    }
+    
+    @IBAction func changeProfilePictureTapped(_ sender: UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
+            print("Button capture")
+            
+            imagePicker.delegate = self
+            imagePicker.sourceType = .savedPhotosAlbum;
+            imagePicker.allowsEditing = false
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
+        self.dismiss(animated: true, completion: { () -> Void in
+            
+        })
+        
+        self.profilePicture.image = image
     }
     
     /*
