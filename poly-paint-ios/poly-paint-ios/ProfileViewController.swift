@@ -168,6 +168,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @objc func removeAsFriendAlert(_ notification: Notification) {
         // TODO: call api to remove friend
         let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
+        self.removeFriendship(friendId: friendUsername)
         // TODO: refresh friends list
     }
     
@@ -181,6 +182,39 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @objc func startChatAlert(_ notification: Notification) {
         // TODO: call api to start chat with friend
         let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
+    }
+    
+    func removeFriendship(friendId: String) {
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "DELETE"
+        
+        // Setting data to send
+        let paramToSend: [String: Any] = ["friendId": friendId]
+        let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            print(responseJSON)
+            if let responseJSON = responseJSON as? [String: Any] {
+                print(responseJSON)
+                DispatchQueue.main.async {
+                    
+                }
+            } else {
+                DispatchQueue.main.async {
+                    
+                }
+            }
+        }
+        
+        task.resume()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

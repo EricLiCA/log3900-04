@@ -119,8 +119,8 @@ export class FriendshipsRoute {
                            AND "FriendId" = $2;
                     DELETE
                     FROM friendships
-                    WHERE "UserId" = $1
-                      AND "FriendId" = $2
+                    WHERE "UserId" = $2
+                      AND "FriendId" = $1;
                     `,
                     [req.params.id, req.body.friendId])
                     .then((queryResult) => {

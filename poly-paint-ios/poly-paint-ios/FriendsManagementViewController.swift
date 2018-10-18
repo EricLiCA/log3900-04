@@ -193,6 +193,11 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     // TODO: When API ready, send friend request
     func sendFriendRequest(username: String) {
         print(username)
+        
+        
+        
+        
+        
     }
     
     // TODO: When API ready, accept friendship
@@ -239,6 +244,43 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     // TODO: When API ready, get pending friendships
     func loadPendingFrienships() {
         showPendingFriendships()
+        /*print("CALLING LOAD PENDING ")
+        let urlString = "http://localhost:3000/v2/pendingFriendRequest/"
+        let url = URL(string: urlString)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        
+        // Setting data to send
+        let paramToSend: [String: Any] = ["id": UserDefaults.standard.string(forKey: "id")!]
+        print(paramToSend)
+        let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            let httpResponse = response as? HTTPURLResponse
+            print(httpResponse)
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, String>]
+            print(responseJSON)
+            if (responseJSON as? [Dictionary<String, String>]) != nil {
+                
+                /*for user in responseJSON! {
+                    if(user["id"] != UserDefaults.standard.string(forKey: "id") && !self.currentFriends.contains(user["id"]!)) {
+                        self.usersNotInFriends.append(user["username"]!)
+                    }
+                }*/
+                DispatchQueue.main.async {
+                    //self.showUsers()
+                    
+                }
+            }
+        }
+        
+        task.resume()*/
     }
     
     /*
