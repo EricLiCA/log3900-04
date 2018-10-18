@@ -219,8 +219,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // send segue identifier so FriendsManagement VC knows which popover to show
-        let destinationViewController: FriendsManagementViewController  = segue.destination as! FriendsManagementViewController
-        destinationViewController.segueName = segue.identifier!
+        if(segue.identifier != "toAccountSettings") {
+            let destinationViewController: FriendsManagementViewController  = segue.destination as! FriendsManagementViewController
+            destinationViewController.segueName = segue.identifier!
+        }
     }
     
     /*

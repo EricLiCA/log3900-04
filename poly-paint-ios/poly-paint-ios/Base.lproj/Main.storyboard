@@ -545,7 +545,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <segue destination="KrC-7h-VNC" kind="popoverPresentation" popoverAnchorView="0qr-yN-DBE" id="OcH-fk-DgL">
+                                                            <segue destination="KrC-7h-VNC" kind="popoverPresentation" identifier="toAccountSettings" popoverAnchorView="0qr-yN-DBE" id="OcH-fk-DgL">
                                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                                             </segue>
                                                         </connections>

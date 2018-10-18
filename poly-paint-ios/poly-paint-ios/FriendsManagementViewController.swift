@@ -194,7 +194,35 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     func sendFriendRequest(username: String) {
         print(username)
         
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
         
+        // Setting data to send
+        let paramToSend: [String: Any] = ["friendId": username]
+        let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                print(responseJSON)
+                DispatchQueue.main.async {
+                    
+                }
+            } else {
+                DispatchQueue.main.async {
+                    
+                }
+            }
+        }
+        
+        task.resume()
         
         
         
