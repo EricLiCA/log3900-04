@@ -659,7 +659,7 @@
                                 <rect key="frame" x="131" y="424" width="36" height="25"/>
                                 <state key="normal" title="Button" image="AddFriend"/>
                                 <connections>
-                                    <segue destination="7fN-kl-JlN" kind="popoverPresentation" identifier="toAddFriends" popoverAnchorView="f1X-zL-YQV" id="Xc6-SB-7EF">
+                                    <segue destination="7fN-kl-JlN" kind="popoverPresentation" identifier="toAddFriends" popoverAnchorView="f1X-zL-YQV" id="07z-Nf-c3i">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>

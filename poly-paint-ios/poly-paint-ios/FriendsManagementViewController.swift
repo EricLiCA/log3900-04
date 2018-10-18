@@ -35,8 +35,9 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
 
     @IBOutlet weak var addUsersTableView: UITableView!
     
-    var mockUsers = [String]()
+    var users = [String]()
     var usersArray = [String]()
+    var currentFriends = [String]()
     
     override func viewDidLoad() {
         self.getAllUsers()
@@ -44,6 +45,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         // Set as delegate for the message table
         self.addUsersTableView.delegate = self
         self.addUsersTableView.dataSource = self
+        self.currentFriends = UserDefaults.standard.array(forKey: "friends") as! [String]
         self.setUpNotifications()
         
         // Do any additional setup after loading the view.
@@ -78,7 +80,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func showUsers() {
-        for user in mockUsers {
+        for user in users {
             self.addUserToAddFriendsTableView(username: user)
         }
     }
@@ -110,11 +112,13 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             guard let data = data, error == nil else {
                 return
             }
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, AnyObject>]
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, String>]
             
-            if (responseJSON as? [Dictionary<String, AnyObject>]) != nil {
+            if (responseJSON as? [Dictionary<String, String>]) != nil {
                 for user in responseJSON! {
-                    self.mockUsers.append(user["username"] as! String)
+                    if(user["id"] != UserDefaults.standard.string(forKey: "id") && !self.currentFriends.contains(user["id"]!)) {
+                        self.users.append(user["username"] as! String)
+                    }
                 }
                 DispatchQueue.main.async {
                     self.showUsers()

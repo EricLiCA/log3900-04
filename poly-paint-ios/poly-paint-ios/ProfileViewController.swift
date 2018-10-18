@@ -99,11 +99,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     private func getFriends() {
-        print("CALLED GET FRIENDS")
-        /*for friend in friends {
-            self.addFriendsToFriendsTableView(friendUsername: friend)
-        }*/
-        
         let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
@@ -124,10 +119,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                         self.friends.append(friendship["FriendId"] as! String)
                         self.addFriendsToFriendsTableView(friendUsername: friendship["FriendId"] as! String)
                     }
+                    UserDefaults.standard.set(self.friends, forKey: "friends")
                 }
             } else {
                 DispatchQueue.main.async {
-                    // show error loading friends
+                    // No friends
                 }
             }
         }
