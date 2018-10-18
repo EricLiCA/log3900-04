@@ -6,7 +6,7 @@ export class FriendshipsRoute {
 
     public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM friendships INNER JOIN Users ON ("UserId" = "Id" or "FriendId" = "Id"').then((query) => {
+        db.query('SELECT * FROM friendships').then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows);
             } else {

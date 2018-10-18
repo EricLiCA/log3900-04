@@ -84,8 +84,8 @@ export class Application {
         // Friendships
         router.get('/friendships', friendshipsRoute.getAll.bind(friendshipsRoute.getAll));
         router.get('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.get));
-        router.post('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.post));
-        router.delete('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.delete));
+        router.post('/friendships/:id', friendshipsRoute.post.bind(friendshipsRoute.post));
+        router.delete('/friendships/:id', friendshipsRoute.delete.bind(friendshipsRoute.delete));
 
         //PendingFriendRequest
         router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
