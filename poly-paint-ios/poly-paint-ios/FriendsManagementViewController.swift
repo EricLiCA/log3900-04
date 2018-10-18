@@ -188,8 +188,16 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     @objc func acceptFriendshipAlert(_ notification: Notification) {
-        let username = notification.userInfo!["username"]!
-        self.sendAcceptFriendship(username: username as! String)
+        let username: String = notification.userInfo!["username"]! as! String
+        
+        for users in pendingFriendships {
+            if users.username == username {
+                self.sendAcceptFriendship(userId: users.id)
+                // add friends to friend list
+            }
+        }
+        
+        
     }
     
     @objc func refuseFriendshipAlert(_ notification: Notification) {
@@ -237,8 +245,36 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     // TODO: When API ready, accept friendship
-    func sendAcceptFriendship(username: String) {
-        print(username)
+    func sendAcceptFriendship(userId: String) {
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "POST"
+        
+        // Setting data to send
+        let paramToSend: [String: Any] = ["friendId": userId, "token": UserDefaults.standard.string(forKey: "token")!]
+        let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                print("response ACCEPT friendship")
+                print(responseJSON)
+                DispatchQueue.main.async {
+                }
+            } else {
+                DispatchQueue.main.async {
+                    
+                }
+            }
+        }
+        
+        task.resume()
     }
     
     // TODO: When API ready, refuse friendship
@@ -255,12 +291,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
-        
-        // Setting data to send
-        //let paramToSend: [String: Any] = ["id": UserDefaults.standard.string(forKey: "id")!, "token": UserDefaults.standard.string(forKey: "token")!]
-        //let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        //request.httpBody = jsonData
         
         let task = session.dataTask(with: request) { data, response, error in
             let httpResponse = response as? HTTPURLResponse
