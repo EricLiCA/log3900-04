@@ -64,6 +64,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var friendsArray = [String]()
     var friends = [String]()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.friendsTableView.rowHeight = 150.0
