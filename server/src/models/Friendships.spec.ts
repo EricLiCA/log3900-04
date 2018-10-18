@@ -21,6 +21,11 @@ describe('Friendships', () => {
         expect(response).to.equal(FriendshipStatus.REQUESTED);
     });
 
+    it('should return the pending friend request', async () => {
+        const response = await Friendships.getPending(user2.Id);
+        expect(response[0].Id).to.equal(user1.Id);
+    });
+
     it('should accept a friend request', async () => {
         const response = await Friendships.create(user2.Id, user1.Id);
         expect(response).to.equal(FriendshipStatus.ACCEPTED);

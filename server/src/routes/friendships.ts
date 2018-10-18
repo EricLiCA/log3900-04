@@ -5,9 +5,13 @@ import { RedisService } from '../redis.service';
 import { Friendships, FriendshipStatus } from '../models/Friendships';
 
 export class FriendshipsRoute {
+    /**
+     * @param req : /:id => userId, &pending=true to get pending
+     */
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        Friendships.get(req.params.id).then((friendships) => {
-            res.send(friendships.friends.map((friend) => {
+        if (req.query.pending) {
+            const pendingFriends = await Friendships.getPending(req.params.id);
+            res.send(pendingFriends.map((friend) => {
                 return {
                     id: friend.Id,
                     username: friend.Username,
@@ -15,7 +19,18 @@ export class FriendshipsRoute {
                     profileImage: friend.ProfileImage,
                 };
             }));
-        });
+        } else {
+            Friendships.get(req.params.id).then((friendships) => {
+                res.send(friendships.friends.map((friend) => {
+                    return {
+                        id: friend.Id,
+                        username: friend.Username,
+                        userLevel: friend.UserLevel,
+                        profileImage: friend.ProfileImage,
+                    };
+                }));
+            });
+        }
     }
 
     public async getUsersExceptFriends(
