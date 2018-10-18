@@ -192,6 +192,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Setting data to send
         let paramToSend: [String: Any] = ["friendId": friendId, "token": UserDefaults.standard.string(forKey: "token")!]
+        print("PARAMS")
+        print(paramToSend)
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData

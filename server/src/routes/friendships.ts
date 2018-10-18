@@ -19,6 +19,7 @@ export class FriendshipsRoute {
     }
 
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        console.log("FRIENDSHIP")
         const db = await PostgresDatabase.getInstance();
         db.query('SELECT * FROM friendships WHERE "UserId" = $1', [req.params.id]).then((query) => {
             if (query.rowCount > 0) {
@@ -108,6 +109,8 @@ export class FriendshipsRoute {
      * Status 404: Not found (didn't find friendId and/or :id)
      */
     public async delete(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        console.log(req.body)
+        console.log(req.params.id)
         const redisClient = RedisService.getInstance();
         redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
             if (token !== null && token === req.body.token) {
@@ -120,7 +123,7 @@ export class FriendshipsRoute {
                     DELETE
                     FROM friendships
                     WHERE "UserId" = $2
-                      AND "FriendId" = $1;
+                      AND "FriendId" = $1
                     `,
                     [req.params.id, req.body.friendId])
                     .then((queryResult) => {
