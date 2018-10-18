@@ -82,7 +82,6 @@ export class Application {
         router.delete('/sessions/:id', sessionsRoute.logout.bind(sessionsRoute.logout));
 
         // Friendships
-        router.get('/friendships', friendshipsRoute.getAll.bind(friendshipsRoute.getAll));
         router.get('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.get));
         router.get('/usersExceptFriends/:id', friendshipsRoute.getUsersExceptFriends.bind(friendshipsRoute.getUsersExceptFriends));
         router.post('/friendships/:id', friendshipsRoute.post.bind(friendshipsRoute.post));
@@ -92,7 +91,7 @@ export class Application {
         router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
 
         // Images
-        //router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
+        // router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
         router.get('/images/:id', imagesRoute.get.bind(imagesRoute.get));
         router.get('/imagesByOwnerId/:id', imagesRoute.getByOwnerId.bind(imagesRoute.getByOwnerId));
         router.get('/imagesPublicExceptMine/:id', imagesRoute.getPublicExceptMine.bind(imagesRoute.getPublicExceptMine));
