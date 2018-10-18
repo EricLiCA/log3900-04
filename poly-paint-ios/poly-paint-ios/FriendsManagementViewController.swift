@@ -250,7 +250,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     func loadPendingFrienships() {
         //showPendingFriendships()
         print("CALLING LOAD PENDING ")
-        let urlString = "http://localhost:3000/v2/pendingFriendRequest/" + UserDefaults.standard.string(forKey: "id")!
+        let urlString = "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")! + "?pending=true"
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
@@ -269,15 +269,12 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, String>]
             if (responseJSON as? [Dictionary<String, String>]) != nil {
-                
-                /*for user in responseJSON! {
-                    if(user["id"] != UserDefaults.standard.string(forKey: "id") && !self.currentFriends.contains(user["id"]!)) {
-                        self.usersNotInFriends.append(user["username"]!)
-                    }
-                }*/
+                for user in responseJSON! {
+                    let pendingFriend = User(id: user["id"]!, username: user["username"]!, profilePictureUrl: user["profileImage"]!)
+                    self.pendingFriendships.append(pendingFriend)
+                }
                 DispatchQueue.main.async {
-                    //self.showUsers()
-                    
+                    self.showPendingFriendships()
                 }
             }
         }
