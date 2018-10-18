@@ -24,6 +24,7 @@
 		CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F1E1C216980FF0023663E /* SignUpViewController.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
+		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		CF1F1E1C216980FF0023663E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
+		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
 				A77C46F221569CFB0056135A /* Main.storyboard */,
+				CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */,
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
 			);
 			path = "poly-paint-ios";
@@ -357,6 +360,7 @@
 				CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */,
 				A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */,
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,
+				CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */,
 				A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */,
 				CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */,
 				A78A733A215ED91C007A854F /* DateTime.swift in Sources */,
@@ -535,7 +539,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BD9BVH6D7D;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "poly-paint-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -554,7 +558,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = BD9BVH6D7D;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "poly-paint-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
