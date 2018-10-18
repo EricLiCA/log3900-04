@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently --kill-others \"tsc -w\" \"nodemon dist/www.js\"",
     "production": "tsc; node dist/www.js",
-    "test": "mocha -r ts-node/register src/**/*.spec.ts src/*.spec.ts",
+    "test": "mocha -r ts-node/register src/**/*.spec.ts src/*.spec.ts --exit",
     "lint": "tslint -c tslint.json src/**/*.ts src/*.ts",
     "lint-fix": "tslint --fix -c tslint.json src/**/*.ts src/*.ts"
   },
