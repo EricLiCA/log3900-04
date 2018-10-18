@@ -1,20 +1,20 @@
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
+using PolyPaint.Modeles;
 using System;
-using Image = PolyPaint.Modeles.Image;
+using System.Windows.Controls;
 
 namespace PolyPaint.Vues
 {
     /// <summary>
-    /// Interaction logic for GalleryCard.xaml
+    /// Interaction logic for UsersCard.xaml
     /// </summary>
-    public partial class GalleryCard : Card
+    public partial class UsersCard : Card
     {
-        public Image Image { get; set; }
-
-        public GalleryCard(Image image)
+        public User User { get; set; }
+        public UsersCard(User user)
         {
             InitializeComponent();
-            Image = image;
+            User = user;
             DataContext = this;
         }
 

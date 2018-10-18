@@ -13,6 +13,7 @@ export class UsersRoute {
                         id: row.Id,
                         username: row.Username,
                         userLevel: row.UserLevel,
+                        profileImage: row.ProfileImage,
                     };
                 }));
             } else {
