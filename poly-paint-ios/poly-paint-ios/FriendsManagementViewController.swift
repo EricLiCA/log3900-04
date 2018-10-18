@@ -81,6 +81,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     var segueName: String = "";
     var usersNotInFriends = [String]()
     var usersNotInFriendsCells = [String]()
+    var usersNotInFriendsObject = [User]()
     var currentFriends = [String]()
     var pendingFriendships = [String]()
     var pendingFriendshipsCells = [String]()
@@ -101,10 +102,11 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     
     func actionsForSegue() {
         if self.segueName == "toAddFriends" {
-            self.currentFriends = UserDefaults.standard.array(forKey: "friends") as! [String]
+            //self.currentFriends = UserDefaults.standard.array(forKey: "friends") as! [String]
             self.setupAddFriendsNotifications()
             popoverTitleLabel.text = "Send Friend Requests"
-            self.getAllUsers()
+            //self.getAllUsers()
+            self.getUsersNotInFriends()
         } else {
             self.pendingFriendships = ["Anna"]
             self.setupPendingFriendshipNotifications()
@@ -139,15 +141,15 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         }
     }
     
-    func addUserToAddFriendsTableView(username: String) {
+    func addUserToAddFriendsTableView(user: User) {
         let newIndexPath = IndexPath(row: self.usersNotInFriendsCells.count, section: 0)
-        self.usersNotInFriendsCells.append(username)
+        self.usersNotInFriendsCells.append(user.username)
         self.friendManagementTableView.insertRows(at: [newIndexPath], with: .automatic)
     }
     
     func showUsers() {
-        for user in usersNotInFriends {
-            self.addUserToAddFriendsTableView(username: user)
+        for user in usersNotInFriendsObject {
+            self.addUserToAddFriendsTableView(user: user)
         }
     }
     
@@ -302,6 +304,37 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
                 DispatchQueue.main.async {
                     //self.showUsers()
                     
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func getUsersNotInFriends() {
+        // usersExceptFriends
+        let urlString = "http://localhost:3000/v2/usersExceptFriends/" + UserDefaults.standard.string(forKey: "id")!
+        let url = URL(string: urlString)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            let httpResponse = response as? HTTPURLResponse
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, String>]
+            
+            if (responseJSON as? [Dictionary<String, String>]) != nil {
+                for user in responseJSON! {
+                    let userNotFriend = User(id: user["id"]!, username: user["userName"]!, profilePictureUrl: user["profileImage"]!)
+                    self.usersNotInFriendsObject.append(userNotFriend)
+                }
+                DispatchQueue.main.async {
+                    self.showUsers()
                 }
             }
         }
