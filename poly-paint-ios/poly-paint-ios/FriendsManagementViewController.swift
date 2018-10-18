@@ -200,7 +200,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         request.httpMethod = "POST"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["friendId": username]
+        let paramToSend: [String: Any] = ["friendId": username, "token": UserDefaults.standard.string(forKey: "token")!]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -271,16 +271,16 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     
     // TODO: When API ready, get pending friendships
     func loadPendingFrienships() {
-        showPendingFriendships()
-        /*print("CALLING LOAD PENDING ")
-        let urlString = "http://localhost:3000/v2/pendingFriendRequest/"
+        //showPendingFriendships()
+        print("CALLING LOAD PENDING ")
+        let urlString = "http://localhost:3000/v2/pendingFriendRequest"
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["id": UserDefaults.standard.string(forKey: "id")!]
+        let paramToSend: [String: Any] = ["id": UserDefaults.standard.string(forKey: "id")!, "token": UserDefaults.standard.string(forKey: "token")!]
         print(paramToSend)
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -308,7 +308,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             }
         }
         
-        task.resume()*/
+        task.resume()
     }
     
     /*

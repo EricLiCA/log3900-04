@@ -191,7 +191,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         request.httpMethod = "DELETE"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["friendId": friendId]
+        let paramToSend: [String: Any] = ["friendId": friendId, "token": UserDefaults.standard.string(forKey: "token")!]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
