@@ -2,57 +2,58 @@ import * as express from 'express';
 import { PostgresDatabase } from '../postgres-database';
 import { RedisService } from '../redis.service';
 
+import { Friendships, FriendshipStatus } from '../models/Friendships';
+
 export class FriendshipsRoute {
-
-    public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM friendships').then((query) => {
-            if (query.rowCount > 0) {
-                res.send(query.rows);
-            } else {
-                res.sendStatus(404); // Not found
-            }
-        })
-            .catch((err) => {
-                res.sendStatus(400); // Bad request
-            });
-    }
-
+    /**
+     * @param req : /:id => userId, &pending=true to get pending
+     */
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM users WHERE "Id" IN (select "FriendId" from friendships where "UserId" = $1)', [req.params.id]).then((query) => {
-            if (query.rowCount > 0) {
-                res.send(query.rows.map((row) => {
+        if (req.query.pending === 'true') {
+            const pendingFriends = await Friendships.getPending(req.params.id);
+            res.send(pendingFriends.map((friend) => {
+                return {
+                    id: friend.Id,
+                    username: friend.Username,
+                    userLevel: friend.UserLevel,
+                    profileImage: friend.ProfileImage,
+                };
+            }));
+        } else {
+            Friendships.get(req.params.id).then((friendships) => {
+                res.send(friendships.friends.map((friend) => {
                     return {
-                        id: row.Id,
-                        userName: row.Username,
-                        profileImage: row.ProfileImage,
+                        id: friend.Id,
+                        username: friend.Username,
+                        userLevel: friend.UserLevel,
+                        profileImage: friend.ProfileImage,
                     };
                 }));
-            } else {
-                res.sendStatus(404); // Not found
-            }
-        })
-            .catch((err) => {
-                res.sendStatus(400); // Bad request
             });
+        }
     }
 
-    public async getUsersExceptFriends(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+    public async getUsersExceptFriends(
+        req: express.Request, res: express.Response, next: express.NextFunction,
+    ): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM users WHERE "Id" != $1 AND "Id" NOT IN (select "FriendId" from friendships where "UserId" = $1)', [req.params.id]).then((query) => {
-            if (query.rowCount > 0) {
-                res.send(query.rows.map((row) => {
-                    return {
-                        id: row.Id,
-                        userName: row.Username,
-                        profileImage: row.ProfileImage,
-                    };
-                }));
-            } else {
-                res.sendStatus(404); // Not found
-            }
-        })
+        db.query(
+            `SELECT * FROM users
+            WHERE "Id" != $1 AND "Id" NOT IN (select "FriendId" from friendships where "UserId" = $1);
+        `, [req.params.id]).then((query) => {
+                if (query.rowCount > 0) {
+                    res.send(query.rows.map((friend) => {
+                        return {
+                            id: friend.Id,
+                            username: friend.Username,
+                            userLevel: friend.UserLevel,
+                            profileImage: friend.ProfileImage,
+                        };
+                    }));
+                } else {
+                    res.sendStatus(404); // Not found
+                }
+            })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
             });
@@ -76,43 +77,18 @@ export class FriendshipsRoute {
         const redisClient = RedisService.getInstance();
         redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
             if (token !== null && token === req.body.token) {
-                const db = await PostgresDatabase.getInstance();
-                // Check if friend already added you
-                db.query(
-                    'SELECT * FROM pending_friend_requests WHERE "RequesterId" = $1 AND "ReceiverId" = $2',
-                    [req.body.friendId, req.params.id],
-                )
-                    .then((queryResult) => {
-                        if (queryResult.rowCount > 0) { // already requested
-                            db.query(
-                                `DELETE
-                                     from pending_friend_requests
-                                     WHERE "RequesterId" = $1
-                                       AND "ReceiverId" = $2;
-                                INSERT INTO friendships ("UserId", "FriendId")
-                                VALUES ($1, $2);
-                                INSERT INTO friendships ("UserId", "FriendId")
-                                VALUES ($2, $1);
-                                `,
-                                [req.body.friendId, req.params.id],
-                            )
-                                .then((newFriendResult) => {
-                                    res.sendStatus(200);
-                                })
-                                .catch((err) => {
-                                    res.sendStatus(400);
-                                });
-                        } else {
-                            db.query(
-                                'INSERT INTO pending_friend_requests("RequesterId", "ReceiverId") VALUES($1, $2)',
-                                [req.params.id, req.body.friendId],
-                            )
-                                .then();
-                        }
-                    })
-                    .catch((err) => {
-                        res.send(400); // bad request
+                const friendshipStatus = await Friendships.create(req.params.id, req.body.friendId);
+                if (friendshipStatus === FriendshipStatus.REQUESTED) {
+                    res.send({
+                        status: FriendshipStatus.REQUESTED,
                     });
+                } else if (friendshipStatus === FriendshipStatus.ACCEPTED) {
+                    res.send({
+                        status: FriendshipStatus.ACCEPTED,
+                    });
+                } else {
+                    res.sendStatus(400);
+                }
             } else {
                 res.sendStatus(403); // forbidden
             }
@@ -137,28 +113,18 @@ export class FriendshipsRoute {
         const redisClient = RedisService.getInstance();
         redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
             if (token !== null && token === req.body.token) {
-                const db = await PostgresDatabase.getInstance();
-                db.query(
-                    `DELETE
-                         FROM friendships
-                         WHERE "UserId" = $1
-                           AND "FriendId" = $2;
-                    DELETE
-                    FROM friendships
-                    WHERE "UserId" = $2
-                      AND "FriendId" = $1
-                    `,
-                    [req.params.id, req.body.friendId])
-                    .then((queryResult) => {
-                        if (queryResult.rowCount > 0) {
-                            res.sendStatus(200);
-                        } else {
-                            res.sendStatus(404);
-                        }
-                    })
-                    .catch((err) => {
-                        res.sendStatus(400);
+                const friendshipStatus = await Friendships.delete(req.params.id, req.body.friendId);
+                if (friendshipStatus === FriendshipStatus.REFUSED) {
+                    res.send({
+                        status: FriendshipStatus.REFUSED,
                     });
+                } else if (friendshipStatus === FriendshipStatus.DELETED) {
+                    res.send({
+                        status: FriendshipStatus.DELETED,
+                    });
+                } else {
+                    res.sendStatus(400);
+                }
             } else {
                 res.sendStatus(403); // forbidden
             }
