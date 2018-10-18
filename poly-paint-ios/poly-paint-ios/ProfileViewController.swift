@@ -157,7 +157,19 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @objc func removeAsFriendAlert(_ notification: Notification) {
         // TODO: call api to remove friend
         let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
-        self.removeFriendship(friendId: friendUsername)
+        // find friend id
+        var friendNumber = 0
+        for friend in friends {
+            if(friend.username == friendUsername) {
+                self.removeFriendship(friendId: friend.id)
+                self.friends.remove(at: friendNumber)
+                self.friendsCellsContent.remove(at: friendNumber)
+                self.friendsTableView.reloadData()
+            }
+            friendNumber = friendNumber + 1
+        }
+        
+        
         // TODO: refresh friends list
     }
     
