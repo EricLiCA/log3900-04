@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using PolyPaint.Modeles;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using Quobject.SocketIoClientDotNet.Client;
@@ -67,22 +68,29 @@ namespace PolyPaint.Vues
 
         private void Verify_Credentials()
         {
-            Credentials credentials = new Credentials(username.Text, password.Password);
-            var request = new RestRequest(Settings.API_VERSION + "/sessions", Method.POST);
-            request.AddJsonBody(credentials);
-            ServerService.instance.server.ExecuteAsync<LoginResponse>(request, response =>
+            User user = new User
+            {
+                username = username.Text,
+                password = password.Password
+            };
+            var request = new RestRequest(Settings.API_VERSION + Settings.SESSION_PATH, Method.POST);
+            request.AddJsonBody(user);
+            ServerService.instance.server.ExecuteAsync(request, response =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        ServerService.instance.username = username.Text;
-                        ServerService.instance.password = password.Password;
                         dynamic data = JObject.Parse(response.Content);
-                        ServerService.instance.id = data["id"];
-                        ServerService.instance.token = data["token"];
-                        /*ServerService.instance.id = response.Data.id;
-                        ServerService.instance.token = response.Data.token;*/
+                        ServerService.instance.user = new User
+                        {
+                            username = username.Text,
+                            password = password.Password,
+                            id = data["id"],
+                            profileImage = data["profileImage"],
+                            userLevel = data["userLevel"],
+                            token = data["token"]
+                    };
                         DialogResult = true;
                     }
                     else
@@ -92,24 +100,6 @@ namespace PolyPaint.Vues
                     }
                 });
             });
-        }
-
-        private class Credentials
-        {
-            public string username;
-            public string password;
-
-            public Credentials(string username, string password)
-            {
-                this.username = username;
-                this.password = password;
-            }
-        }
-
-        private class LoginResponse
-        {
-            public string id { get; }
-            public string token { get; }
         }
     }
 }

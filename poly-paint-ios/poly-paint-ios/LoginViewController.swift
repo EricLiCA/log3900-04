@@ -61,6 +61,7 @@ class LoginViewController: UIViewController {
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
+                print(responseJSON)
                 DispatchQueue.main.async {
                     UserDefaults.standard.set(user, forKey: "username")
                     UserDefaults.standard.set(responseJSON["id"], forKey: "id")
