@@ -8,82 +8,58 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+var images: [Image]?
 
-class PublicPhotosViewController: UICollectionViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+final class PublicPhotosViewController: UICollectionViewController {
     
-        // Configure the cell
+    // MARK: - Properties
+    fileprivate let reuseIdentifier = "PublicImageCell"
+    fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0);
+    fileprivate var searches = [ImageSearchResults]();
     
-        return cell
-    }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
+    var images:[Image]?
     
+    func fetchPublicImages() {
+    guard let url = URL(string: "http://localhost:3000/images") else { return }
+    URLSession.shared.dataTask(with: url) { (data, response, error) in
+    
+    if error != nil {
+    print(error ?? "")
+    return
     }
-    */
+    
+    do {
+    let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
+    
+    self.images = [Image]()
+    
+    for dictionary in json as! [[String: AnyObject]] {
+    
+    let image = Image()
+        image.id = dictionary["id"] as? String
+        image.ownerId = dictionary["ownerId"] as? String
+        image.title = dictionary["title"] as? String
+        image.protectionLevel = dictionary["protectionLevel"] as? String
+        image.password = dictionary["password"] as? String
+        image.thumbnailUrl = dictionary["thumbnailUrl"] as? String
+        image.fullImageUrl = dictionary["fullImageUrl"] as? String
+    
+    self.images?.append(image)
+    }
+    
+    DispatchQueue.main.async {
+    self.collectionView?.reloadData()
+    }
+    
+    
+    } catch let jsonError {
+    print(jsonError)
+    }
+    
+    
+    
+    }.resume()
+    }
+
 
 }
