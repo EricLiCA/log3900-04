@@ -19,16 +19,16 @@ class PendingFriendRequestTableViewCell: UITableViewCell {
     @IBOutlet weak var refuseButton: UIButton!
     
     @IBAction func acceptTapped(_ sender: UIButton) {
-        self.desableButtons()
+        self.disableButtons()
         self.sendAcceptFriendshipNotification()
     }
     
     @IBAction func refuseTapped(_ sender: UIButton) {
-        self.desableButtons()
+        self.disableButtons()
         self.sendAcceptFriendshipNotification()
     }
     
-    func desableButtons() {
+    func disableButtons() {
         acceptButton.isEnabled = false
         acceptButton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
         refuseButton.isEnabled = false
@@ -49,15 +49,14 @@ class PendingFriendRequestTableViewCell: UITableViewCell {
     
 }
 
-class HeadlineTableViewCell: UITableViewCell {
+class UsersNotInFriendsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var addAsFriendButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
     
     @IBAction func addAsFriendTapped(_ sender: UIButton) {
-        addAsFriendButton.isEnabled = false
-        addAsFriendButton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        self.disableButton()
         self.sendUpdateUsernameNotification()
     }
     
@@ -66,8 +65,13 @@ class HeadlineTableViewCell: UITableViewCell {
         let userInfo = [ "username" : usernameLabel.text! ]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "friendRequestAlert"), object: nil, userInfo: userInfo)
     }
+    
+    func disableButton() {
+        addAsFriendButton.isEnabled = false
+        addAsFriendButton.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+    }
+    
 }
-
 
 class FriendsManagementViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -120,7 +124,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if segueName == "toAddFriends" {
             // create a table cell
-            let cell = friendManagementTableView.dequeueReusableCell(withIdentifier: "AddFriendsCell", for: indexPath) as! HeadlineTableViewCell
+            let cell = friendManagementTableView.dequeueReusableCell(withIdentifier: "AddFriendsCell", for: indexPath) as! UsersNotInFriendsTableViewCell
             // Customize the cell
             let username = usersNotInFriendsCells[indexPath.row]
             cell.usernameLabel?.text = username
@@ -220,15 +224,11 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             if (responseJSON as? [Dictionary<String, String>]) != nil {
                 for user in responseJSON! {
                     if(user["id"] != UserDefaults.standard.string(forKey: "id") && !self.currentFriends.contains(user["id"]!)) {
-                        self.usersNotInFriends.append(user["username"] as! String)
+                        self.usersNotInFriends.append(user["username"]!)
                     }
                 }
                 DispatchQueue.main.async {
                     self.showUsers()
-                }
-            } else {
-                DispatchQueue.main.async {
-                    
                 }
             }
         }
