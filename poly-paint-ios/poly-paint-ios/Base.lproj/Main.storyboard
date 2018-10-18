@@ -1012,7 +1012,7 @@
                         <viewLayoutGuide key="safeArea" id="TiV-Iz-eO4"/>
                     </view>
                     <connections>
-                        <outlet property="addUsersTableView" destination="F8e-3i-a74" id="S4v-7R-bfz"/>
+                        <outlet property="friendManagementTableView" destination="F8e-3i-a74" id="S4v-7R-bfz"/>
                         <outlet property="popoverTitleLabel" destination="bJR-SU-d8M" id="Fwg-6h-JoF"/>
                     </connections>
                 </viewController>
