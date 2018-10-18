@@ -615,6 +615,7 @@
                         <barButtonItem key="backBarButtonItem" title="Profile" id="mcd-ge-R6A"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="profilePicture" destination="rXh-13-40s" id="nwt-aM-kP5"/>
                         <outlet property="profileView" destination="8Hx-Vt-OUc" id="g2n-8Q-GWZ"/>
                         <outlet property="usernameLabel" destination="sJf-wR-RSO" id="WHE-mI-Zpp"/>
                     </connections>

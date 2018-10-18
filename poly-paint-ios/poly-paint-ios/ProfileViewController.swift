@@ -12,12 +12,14 @@ class ProfileViewController: UIViewController {
 
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var profilePicture: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setUsernameLabel()
         self.colorBorder()
         self.setUpNotifications()
+        self.loadProfilePicture()
         // Do any additional setup after loading the view.
     }
     
@@ -41,6 +43,26 @@ class ProfileViewController: UIViewController {
     }
     @objc func updateUsernameAlert(sender: AnyObject) {
         self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
+    }
+    
+    func loadProfilePicture() {
+        /*let url:URL = URL(string: UserDefaults.standard.string(forKey: "profileImage")!)!
+        let session = URLSession.shared
+        let task = session.dataTask(with: url, completionHandler: {
+            (data, response, error) in
+            if data != nil {
+                let image = UIImage(data: data!)
+                if(image != nil) {
+                    DispatchQueue.main.async(execute: {
+                        self.profilePicture.image = image
+                    })
+                }
+            }
+        })
+        
+        task.resume()*/
+        print("PROFILE PICTURE")
+        //print(UserDefaults.standard.string(forKey: "profileImage")!)
     }
     
     /*

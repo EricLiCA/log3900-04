@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
     }
     
     func login(_ user: String, _ psw: String) {
-        let url = URL(string: "http://localhost:3000/v1/sessions")
+        let url = URL(string: "http://localhost:3000/v2/sessions")
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
@@ -65,6 +65,9 @@ class LoginViewController: UIViewController {
                     UserDefaults.standard.set(user, forKey: "username")
                     UserDefaults.standard.set(responseJSON["id"], forKey: "id")
                     UserDefaults.standard.set(responseJSON["token"], forKey: "token")
+                    UserDefaults.standard.set(responseJSON["profileImage"], forKey: "profileImage")
+                    print("PICTURE!")
+                    print(UserDefaults.standard.string(forKey: "profileImage"))
                     self.loginDone()
                 }
             } else {
