@@ -117,6 +117,7 @@ namespace PolyPaint.Modeles
             this.NotSubscribedChatRooms.Add(room);
             this.OpenChat(this.SubscribedChatRooms.Count == 0 ? -1 : 0);
             room.ConnectionStatus = ConnectionStatus.LEFT;
+            ServerService.instance.Socket.Emit("leaveRoom", room.Name);
         }
     }
 }

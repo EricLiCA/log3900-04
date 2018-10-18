@@ -92,7 +92,6 @@ async function startServices(): Promise<Map<string, boolean>> {
             .end();
     }
     SocketServer.setServer(server);
-    ChatService.instance.startChatService();
     results.set('SocketServer', true);
     if (process.env.PROD) {
         post('https://hooks.slack.com/services/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')
