@@ -62,7 +62,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var pendingFriendRequestsButton: UIButton!
     
     var friendsArray = [String]()
-    var mockFriends = [String]()
+    var friends = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,7 +70,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.setUsernameLabel()
         self.colorBorder()
         self.setUpNotifications()
-        self.mockFriends = ["John", "Becky", "Joe", "Paul"]
+        self.friends = []
         // Set as delegate for the message table
         self.friendsTableView.delegate = self
         self.friendsTableView.dataSource = self
@@ -99,11 +99,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     private func getFriends() {
-        for friend in mockFriends {
+        print("CALLED GET FRIENDS")
+        /*for friend in friends {
             self.addFriendsToFriendsTableView(friendUsername: friend)
-        }
+        }*/
         
-        /*let url = URL(string: "http://localhost:3000/v1/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
@@ -113,10 +114,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             guard let data = data, error == nil else {
                 return
             }
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            if let responseJSON = responseJSON as? [String: Any] {
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String,String>]
+            print(responseJSON)
+            if (responseJSON as? [Dictionary<String,String>]) != nil {
+                
                 DispatchQueue.main.async {
                     // fill friend list
+                    for friendship in responseJSON! {
+                        self.friends.append(friendship["FriendId"] as! String)
+                        self.addFriendsToFriendsTableView(friendUsername: friendship["FriendId"] as! String)
+                    }
                 }
             } else {
                 DispatchQueue.main.async {
@@ -125,7 +132,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
         
-        task.resume()*/
+        task.resume()
     }
     
     // TODO: Pending Freind request interface

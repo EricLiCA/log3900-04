@@ -41,7 +41,6 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     override func viewDidLoad() {
         self.getAllUsers()
         super.viewDidLoad()
-        //self.mockUsers = ["John", "Betty", "Bob", "Bobette", "Emy", "Emma", "Paul", "Bobo", "Hello", "Evil", "Evil666"]
         // Set as delegate for the message table
         self.addUsersTableView.delegate = self
         self.addUsersTableView.dataSource = self
@@ -76,7 +75,6 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         let newIndexPath = IndexPath(row: self.usersArray.count, section: 0)
         self.usersArray.append(username)
         self.addUsersTableView.insertRows(at: [newIndexPath], with: .automatic)
-        //self.addUsersTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
     }
     
     func showUsers() {
