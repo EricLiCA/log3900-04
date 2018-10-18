@@ -32,6 +32,30 @@ export class Friendships {
         }
     }
 
+    public static async getPending(id: string): Promise<User[]> {
+        const db = await PostgresDatabase.getInstance();
+        const queryResponse = await db.query(
+            `SELECT *
+            FROM users
+            WHERE "Id" IN (select "RequesterId" from pending_friend_requests where "ReceiverId" = $1)
+            `,
+            [id],
+        );
+        if (queryResponse.rowCount > 0) {
+            return Promise.resolve(queryResponse.rows.map((row) => {
+                return new User(
+                    row.Id,
+                    row.Username,
+                    row.Password,
+                    row.UserLevel,
+                    row.ProfileImage,
+                );
+            }));
+        } else {
+            return Promise.resolve([]);
+        }
+    }
+
     public static async create(id: string, friendId: string): Promise<FriendshipStatus> {
         const db = await PostgresDatabase.getInstance();
         try {
@@ -124,7 +148,6 @@ export class Friendships {
                 }
             }
         } catch (err) {
-            console.log(err);
             return Promise.resolve(FriendshipStatus.ERROR);
         }
     }
