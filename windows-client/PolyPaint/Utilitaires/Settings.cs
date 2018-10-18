@@ -17,5 +17,7 @@ namespace PolyPaint.Utilitaires
         public const string IMAGE_COMMENTS_PATH = "/imageComments";
         public const string USERS_PATH = "/users";
         public const string SESSION_PATH = "/sessions";
+        public const string FRIENDS_PATH = "/friendships";
+        public const string PENDING_FRIEND_REQUEST_PATH = "/pendingFriendRequest";
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PolyPaint.Modeles
 {
-    class PendingFriendRequest
+    public class PendingFriendRequest
     {
         public string requesterId { get; set; }
         public string receiverId { get; set; }
