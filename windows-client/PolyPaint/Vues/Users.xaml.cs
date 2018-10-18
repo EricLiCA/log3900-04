@@ -117,13 +117,7 @@ namespace PolyPaint.Vues
         {
             if ((bool)FriendButton.IsChecked)
             {
-                PendingFriendRequest friendRequest = new PendingFriendRequest
-                {
-                    notified = false,
-                    receiverId = CurrentUserCard.User.id,
-                    requesterId = ServerService.instance.user.id
-                };
-                PendingFriendRequestDao.Send(friendRequest);
+                PendingFriendRequestDao.Send(CurrentUserCard.User.id);
             } else
             {
                 Friend friend = new Friend

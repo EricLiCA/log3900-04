@@ -10,12 +10,12 @@ namespace PolyPaint.DAO
 {
     public static class PendingFriendRequestDao
     {
-        public static void Send(PendingFriendRequest friendRequest)
+        public static void Send(string friendId)
         {
-            var request = new RestRequest(Settings.API_VERSION + Settings.PENDING_FRIEND_REQUEST_PATH + "/" 
+            var request = new RestRequest(Settings.API_VERSION + Settings.FRIENDS_PATH + "/" 
                 + ServerService.instance.user.id, Method.POST);
-            request.AddJsonBody(friendRequest);
-            request.AddJsonBody(ServerService.instance.user);
+            var body = new { token = ServerService.instance.user.token, friendId = friendId };
+            request.AddJsonBody(body);
             ServerService.instance.server.ExecuteAsync(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
