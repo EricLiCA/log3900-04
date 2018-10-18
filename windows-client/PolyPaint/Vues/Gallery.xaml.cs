@@ -62,7 +62,7 @@ namespace PolyPaint.Vues
                     galleryCard.ViewButtonClicked += ViewButton_Click;
 
                     if (image.ownerId == ServerService.instance.id && image.protectionLevel == "private")
-                    {
+                    {   
                         PrivateImagesContainer.Children.Add(galleryCard);
                     }
                     else if (image.protectionLevel != "private")
@@ -249,11 +249,12 @@ namespace PolyPaint.Vues
                 userId = ServerService.instance.id,
                 imageId = CurrentGalleryCard.Image.id,
                 comment = CurrentComment.Text,
-                userName = ServerService.instance.username
+                userName = ServerService.instance.username,
+                timestamp = DateTime.Now
             };
             ImageCommentDao.Post(imageComment);
             GalleryComment galleryComment = new GalleryComment(imageComment);
-            CommentsContainer.Children.Add(galleryComment);
+            CommentsContainer.Children.Insert(0, galleryComment);
         }
 
         #region AddPassword/RemovePassword Dialog
