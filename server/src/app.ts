@@ -84,6 +84,7 @@ export class Application {
         // Friendships
         router.get('/friendships', friendshipsRoute.getAll.bind(friendshipsRoute.getAll));
         router.get('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.get));
+        router.get('/usersExceptFriends/:id', friendshipsRoute.getUsersExceptFriends.bind(friendshipsRoute.getUsersExceptFriends));
         router.post('/friendships/:id', friendshipsRoute.post.bind(friendshipsRoute.post));
         router.delete('/friendships/:id', friendshipsRoute.delete.bind(friendshipsRoute.delete));
 
