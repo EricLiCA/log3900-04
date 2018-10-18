@@ -35,18 +35,30 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
 
     @IBOutlet weak var addUsersTableView: UITableView!
     
+    var segueName: String = "";
     var users = [String]()
     var usersArray = [String]()
     var currentFriends = [String]()
     
+    @IBOutlet weak var popoverTitleLabel: UILabel!
+    
     override func viewDidLoad() {
-        self.getAllUsers()
+        
         super.viewDidLoad()
+        print(self.segueName)
         // Set as delegate for the message table
         self.addUsersTableView.delegate = self
         self.addUsersTableView.dataSource = self
         self.currentFriends = UserDefaults.standard.array(forKey: "friends") as! [String]
         self.setUpNotifications()
+        
+        if self.segueName == "toAddFriends" {
+            popoverTitleLabel.text = "Send Friend Requests"
+            self.getAllUsers()
+        } else {
+            // so pending friend requests
+            popoverTitleLabel.text = "Pending Friend Requests"
+        }
         
         // Do any additional setup after loading the view.
     }

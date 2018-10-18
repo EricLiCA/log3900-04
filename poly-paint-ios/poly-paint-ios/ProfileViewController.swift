@@ -191,6 +191,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationViewController: FriendsManagementViewController  = segue.destination as! FriendsManagementViewController
+        destinationViewController.segueName = segue.identifier!
+    }
+    
     /*
     // MARK: - Navigation
 

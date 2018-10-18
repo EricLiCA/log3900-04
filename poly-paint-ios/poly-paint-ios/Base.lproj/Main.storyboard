@@ -676,6 +676,9 @@
                                 </state>
                                 <connections>
                                     <action selector="pendingFriendRequestsTapped:" destination="r8R-KD-eft" eventType="touchUpInside" id="eus-gp-Hxb"/>
+                                    <segue destination="7fN-kl-JlN" kind="popoverPresentation" identifier="toPendingFriendRequests" popoverAnchorView="uZa-Z1-8Sj" id="IDQ-Qb-zNY">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
                                 </connections>
                             </button>
                         </subviews>
@@ -941,11 +944,12 @@
                     </view>
                     <connections>
                         <outlet property="addUsersTableView" destination="F8e-3i-a74" id="S4v-7R-bfz"/>
+                        <outlet property="popoverTitleLabel" destination="bJR-SU-d8M" id="Fwg-6h-JoF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="39M-r5-Ago" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2492.96875" y="778.7109375"/>
+            <point key="canvasLocation" x="2459" y="885"/>
         </scene>
     </scenes>
     <resources>
@@ -958,4 +962,7 @@
         <image name="SignUp" width="22" height="22"/>
         <image name="Unfriend" width="50" height="50"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="IDQ-Qb-zNY"/>
+    </inferredMetricsTieBreakers>
 </document>
