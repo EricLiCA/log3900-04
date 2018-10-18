@@ -2,11 +2,11 @@ import { PostgresDatabase } from '../postgres-database';
 import { User } from './User';
 
 export enum FriendshipStatus {
-    REQUESTED,
-    ACCEPTED,
-    REFUSED,
-    DELETED,
-    ERROR,
+    REQUESTED = 'requested',
+    ACCEPTED = 'accepted',
+    REFUSED = 'refused',
+    DELETED = 'deleted',
+    ERROR = 'error',
 }
 
 export class Friendships {
