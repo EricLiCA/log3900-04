@@ -106,7 +106,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             self.setupAddFriendsNotifications()
             popoverTitleLabel.text = "Send Friend Requests"
             //self.getAllUsers()
-            self.getUsersNotInFriends()
+            self.loadUsersNotInFriends()
         } else {
             self.pendingFriendships = ["Anna"]
             self.setupPendingFriendshipNotifications()
@@ -171,8 +171,15 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     @objc func friendRequestAlert(_ notification: Notification) {
-        let username = notification.userInfo!["username"]!
-        self.sendFriendRequest(username: username as! String)
+        let username: String = notification.userInfo!["username"]! as! String
+        // GET USER OBJECT
+        for user in usersNotInFriendsObject {
+            if user.username == username {
+                self.sendFriendRequest(user: user)
+            }
+        }
+        
+        
     }
     
     func setupPendingFriendshipNotifications() {
@@ -189,12 +196,13 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     
     @objc func refuseFriendshipAlert(_ notification: Notification) {
         let username = notification.userInfo!["username"]!
+        
+        //get user object
         self.sendRefuseFriendship(username: username as! String)
     }
     
     // TODO: When API ready, send friend request
-    func sendFriendRequest(username: String) {
-        print(username)
+    func sendFriendRequest(user: User) {
         
         let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
@@ -202,7 +210,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         request.httpMethod = "POST"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["friendId": username, "token": UserDefaults.standard.string(forKey: "token")!]
+        let paramToSend: [String: Any] = ["friendId": user.id, "token": UserDefaults.standard.string(forKey: "token")!]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -311,7 +319,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         task.resume()
     }
     
-    func getUsersNotInFriends() {
+    func loadUsersNotInFriends() {
         // usersExceptFriends
         let urlString = "http://localhost:3000/v2/usersExceptFriends/" + UserDefaults.standard.string(forKey: "id")!
         let url = URL(string: urlString)
