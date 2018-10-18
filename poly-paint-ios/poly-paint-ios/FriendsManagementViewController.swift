@@ -79,12 +79,10 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var popoverTitleLabel: UILabel!
     
     var segueName: String = "";
-    var usersNotInFriends = [String]()
-    var usersNotInFriendsCells = [String]()
-    var usersNotInFriendsObject = [User]()
-    var currentFriends = [String]()
-    var pendingFriendships = [String]()
-    var pendingFriendshipsCells = [String]()
+    var usersNotInFriendsCells = [User]()
+    var usersNotInFriends = [User]()
+    var pendingFriendships = [User]()
+    var pendingFriendshipsCells = [User]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,7 +106,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             //self.getAllUsers()
             self.loadUsersNotInFriends()
         } else {
-            self.pendingFriendships = ["Anna"]
+            //self.pendingFriendships = ["Anna"]
             self.setupPendingFriendshipNotifications()
             popoverTitleLabel.text = "Pending Friend Requests"
             self.loadPendingFrienships()
@@ -128,14 +126,14 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             // create a table cell
             let cell = friendManagementTableView.dequeueReusableCell(withIdentifier: "AddFriendsCell", for: indexPath) as! UsersNotInFriendsTableViewCell
             // Customize the cell
-            let username = usersNotInFriendsCells[indexPath.row]
+            let username = usersNotInFriendsCells[indexPath.row].username
             cell.usernameLabel?.text = username
             return cell
         } else {
             // create a table cell
             let cell = friendManagementTableView.dequeueReusableCell(withIdentifier: "pendingFriendRequestCell", for: indexPath) as! PendingFriendRequestTableViewCell
             // Customize the cell
-            let username = pendingFriendshipsCells[indexPath.row]
+            let username = pendingFriendshipsCells[indexPath.row].username
             cell.usernameLabel?.text = username
             return cell
         }
@@ -143,25 +141,25 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     
     func addUserToAddFriendsTableView(user: User) {
         let newIndexPath = IndexPath(row: self.usersNotInFriendsCells.count, section: 0)
-        self.usersNotInFriendsCells.append(user.username)
+        self.usersNotInFriendsCells.append(user)
         self.friendManagementTableView.insertRows(at: [newIndexPath], with: .automatic)
     }
     
     func showUsers() {
-        for user in usersNotInFriendsObject {
+        for user in usersNotInFriends {
             self.addUserToAddFriendsTableView(user: user)
         }
     }
     
-    func addPendingFriendshipsToAddFriendsTableView(username: String) {
+    func addPendingFriendshipsToAddFriendsTableView(user: User) {
         let newIndexPath = IndexPath(row: self.usersNotInFriendsCells.count, section: 0)
-        self.pendingFriendshipsCells.append(username)
+        self.pendingFriendshipsCells.append(user)
         self.friendManagementTableView.insertRows(at: [newIndexPath], with: .automatic)
     }
     
     func showPendingFriendships() {
         for user in pendingFriendships {
-            self.addPendingFriendshipsToAddFriendsTableView(username: user)
+            self.addPendingFriendshipsToAddFriendsTableView(user: user)
         }
     }
     
@@ -173,7 +171,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     @objc func friendRequestAlert(_ notification: Notification) {
         let username: String = notification.userInfo!["username"]! as! String
         // GET USER OBJECT
-        for user in usersNotInFriendsObject {
+        for user in usersNotInFriends {
             if user.username == username {
                 self.sendFriendRequest(user: user)
             }
@@ -248,38 +246,6 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         print(username)
     }
     
-    func getAllUsers() {
-        let urlString = "http://localhost:3000/v2/users/"
-        let url = URL(string: urlString)
-        let session = URLSession.shared
-        var request = URLRequest(url: url!)
-        request.httpMethod = "GET"
-
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let task = session.dataTask(with: request) { data, response, error in
-            let httpResponse = response as? HTTPURLResponse
-            guard let data = data, error == nil else {
-                return
-            }
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, String>]
-            
-            if (responseJSON as? [Dictionary<String, String>]) != nil {
-                for user in responseJSON! {
-                    print(user)
-                    if(user["id"] != UserDefaults.standard.string(forKey: "id") && !self.currentFriends.contains(user["id"]!)) {
-                        self.usersNotInFriends.append(user["id"]!)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.showUsers()
-                }
-            }
-        }
-        
-        task.resume()
-    }
-    
     // TODO: When API ready, get pending friendships
     func loadPendingFrienships() {
         //showPendingFriendships()
@@ -339,7 +305,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             if (responseJSON as? [Dictionary<String, String>]) != nil {
                 for user in responseJSON! {
                     let userNotFriend = User(id: user["id"]!, username: user["userName"]!, profilePictureUrl: user["profileImage"]!)
-                    self.usersNotInFriendsObject.append(userNotFriend)
+                    self.usersNotInFriends.append(userNotFriend)
                 }
                 DispatchQueue.main.async {
                     self.showUsers()
