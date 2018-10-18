@@ -1,12 +1,12 @@
 import * as express from 'express';
-import {PostgresDatabase} from '../postgres-database';
-import {RedisService} from '../redis.service';
+import { PostgresDatabase } from '../postgres-database';
+import { RedisService } from '../redis.service';
 
 export class FriendshipsRoute {
 
     public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM friendships INNER JOIN Users ON ("UserId" = "Id" or "FriendId" = "Id"').then((query) => {
+        db.query('SELECT * FROM friendships').then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows);
             } else {
@@ -20,9 +20,35 @@ export class FriendshipsRoute {
 
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM friendships WHERE "UserId" = $1', [req.params.id]).then((query) => {
+        db.query('SELECT * FROM users WHERE "Id" IN (select "FriendId" from friendships where "UserId" = $1)', [req.params.id]).then((query) => {
             if (query.rowCount > 0) {
-                res.send(query.rows);
+                res.send(query.rows.map((row) => {
+                    return {
+                        id: row.Id,
+                        userName: row.Username,
+                        profileImage: row.ProfileImage,
+                    };
+                }));
+            } else {
+                res.sendStatus(404); // Not found
+            }
+        })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
+            });
+    }
+
+    public async getUsersExceptFriends(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        const db = await PostgresDatabase.getInstance();
+        db.query('SELECT * FROM users WHERE "Id" != $1 AND "Id" NOT IN (select "FriendId" from friendships where "UserId" = $1)', [req.params.id]).then((query) => {
+            if (query.rowCount > 0) {
+                res.send(query.rows.map((row) => {
+                    return {
+                        id: row.Id,
+                        userName: row.Username,
+                        profileImage: row.ProfileImage,
+                    };
+                }));
             } else {
                 res.sendStatus(404); // Not found
             }
@@ -60,7 +86,7 @@ export class FriendshipsRoute {
                     .then((queryResult) => {
                         if (queryResult.rowCount > 0) { // already requested
                             db.query(
-                                    `DELETE
+                                `DELETE
                                      from pending_friend_requests
                                      WHERE "RequesterId" = $1
                                        AND "ReceiverId" = $2;
@@ -82,7 +108,7 @@ export class FriendshipsRoute {
                                 'INSERT INTO pending_friend_requests("RequesterId", "ReceiverId") VALUES($1, $2)',
                                 [req.params.id, req.body.friendId],
                             )
-                                .then()
+                                .then();
                         }
                     })
                     .catch((err) => {
@@ -114,7 +140,7 @@ export class FriendshipsRoute {
             if (token !== null && token === req.body.token) {
                 const db = await PostgresDatabase.getInstance();
                 db.query(
-                        `DELETE
+                    `DELETE
                          FROM friendships
                          WHERE "UserId" = $1
                            AND "FriendId" = $2;

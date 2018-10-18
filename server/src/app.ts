@@ -8,10 +8,10 @@ import { FriendshipsRoute } from './routes/friendships';
 import { ImageCommentsRoute } from './routes/image-comments';
 import { ImageLikesRoute } from './routes/image-likes';
 import { ImagesRoute } from './routes/images';
+import { PendingFriendRequestRoute } from './routes/pending-friend-request';
 import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
-import { PendingFriendRequestRoute } from './routes/pending-friend-request';
 
 export class Application {
     /**
@@ -84,15 +84,20 @@ export class Application {
         // Friendships
         router.get('/friendships', friendshipsRoute.getAll.bind(friendshipsRoute.getAll));
         router.get('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.get));
+        router.get('/usersExceptFriends/:id', friendshipsRoute.getUsersExceptFriends.bind(friendshipsRoute.getUsersExceptFriends));
         router.post('/friendships/:id', friendshipsRoute.post.bind(friendshipsRoute.post));
         router.delete('/friendships/:id', friendshipsRoute.delete.bind(friendshipsRoute.delete));
 
-        //PendingFriendRequest
-        router.get('/pendingFriendRequest/:id', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
+        // PendingFriendRequest
+        router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
+        router.get('/pendingFriendRequest/:id', pendingFriendRequestRoute.get.bind(pendingFriendRequestRoute.get));
+        router.delete('/pendingFriendRequest/:id', pendingFriendRequestRoute.delete.bind(pendingFriendRequestRoute.delete));
 
         // Images
         router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
         router.get('/images/:id', imagesRoute.get.bind(imagesRoute.get));
+        router.get('/imagesByOwnerId/:id', imagesRoute.getByOwnerId.bind(imagesRoute.getByOwnerId));
+        router.get('/imagesPublicExceptMine/:id', imagesRoute.getPublicExceptMine.bind(imagesRoute.getPublicExceptMine));
         router.post('/images', imagesRoute.post.bind(imagesRoute.post));
         router.put('/images/:id', imagesRoute.update.bind(imagesRoute.update));
         router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
