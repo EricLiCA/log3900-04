@@ -8,14 +8,14 @@
 
 import UIKit
 
-var images: [Image]?
 
 final class PublicPhotosViewController: UICollectionViewController {
     
     // MARK: - Properties
     fileprivate let reuseIdentifier = "PublicImageCell"
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0);
-    fileprivate var searches = [ImageSearchResults]();
+    fileprivate var searches = [Image]();
+    fileprivate let itemsPerRow: CGFLoat = 3 ;
     
     var images:[Image]?
     
@@ -61,5 +61,16 @@ final class PublicPhotosViewController: UICollectionViewController {
     }.resume()
     }
 
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return images?.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! ImageCell
+        
+        cell.image = image?[indexPath.item]
+        
+        return cell
+    }
 
 }
