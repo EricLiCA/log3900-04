@@ -9,7 +9,7 @@ export class FriendshipsRoute {
      * @param req : /:id => userId, &pending=true to get pending
      */
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        if (req.query.pending) {
+        if (req.query.pending === 'true') {
             const pendingFriends = await Friendships.getPending(req.params.id);
             res.send(pendingFriends.map((friend) => {
                 return {
