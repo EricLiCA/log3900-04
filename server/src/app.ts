@@ -11,6 +11,7 @@ import { ImagesRoute } from './routes/images';
 import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
+import { PendingFriendRequestRoute } from './routes/pending-friend-request';
 
 export class Application {
     /**
@@ -60,6 +61,7 @@ export class Application {
         const usersRoute: UsersRoute = new UsersRoute();
         const sessionsRoute: SessionsRoute = new SessionsRoute();
         const friendshipsRoute: FriendshipsRoute = new FriendshipsRoute();
+        const pendingFriendRequestRoute: PendingFriendRequestRoute = new PendingFriendRequestRoute();
         const imagesRoute: ImagesRoute = new ImagesRoute();
         const imageLikes: ImageLikesRoute = new ImageLikesRoute();
         const imageComments: ImageCommentsRoute = new ImageCommentsRoute();
@@ -82,6 +84,11 @@ export class Application {
         // Friendships
         router.get('/friendships', friendshipsRoute.getAll.bind(friendshipsRoute.getAll));
         router.get('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.get));
+        router.post('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.post));
+        router.delete('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.delete));
+
+        //PendingFriendRequest
+        router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
 
         // Images
         router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
