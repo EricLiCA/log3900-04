@@ -6,7 +6,7 @@ import { Friendships, FriendshipStatus } from '../models/Friendships';
 
 export class FriendshipsRoute {
     /**
-     * @param req : /:id => userId, &pending=true to get pending
+     * @param req : /:id => userId, /:id?pending=true to get pending
      */
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         if (req.query.pending === 'true') {
