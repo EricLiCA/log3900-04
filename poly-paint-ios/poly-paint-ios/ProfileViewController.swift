@@ -88,13 +88,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friendsArray.count
+        return friendsArrayObject.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendHeadlineTableViewCell
         // Customize the cell
-        cell.friendUsernameLabel?.text = friendsArray[indexPath.row]
+        cell.friendUsernameLabel?.text = friendsArrayObject[indexPath.row].username
         // Return the cell
         return cell
     }
@@ -115,11 +115,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 DispatchQueue.main.async {
                     // fill friend list
                     for friendship in responseJSON! {
-                        self.friendsObject.append(User(id: friendship["id"]!, username: friendship["userName"]!, profilePictureUrl: friendship["profileImage"]!))
-                        self.friends.append(friendship["id"]!)
-                    self.addFriendsToFriendsTableView(friendUsername: friendship["id"]!)
+                        let friend = User(id: friendship["id"]!, username: friendship["userName"]!, profilePictureUrl: friendship["profileImage"]!)
+                        self.friendsObject.append(friend)
+                        //self.friends.append(friendship["id"]!)
+                    //self.addFriendsToFriendsTableView(friendUsername: friendship["id"]!)
+                        self.addFriendsToFriendsTableView(friend: friend)
                     }
-                    UserDefaults.standard.set(self.friends, forKey: "friends")
+                    //UserDefaults.standard.set(self.friendsObject, forKey: "friends")
                    
                 }
             }
@@ -128,9 +130,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         task.resume()
     }
     
-    private func addFriendsToFriendsTableView(friendUsername: String) {
-        let newIndexPath = IndexPath(row: self.friendsArray.count, section: 0)
-        self.friendsArray.append(friendUsername)
+    private func addFriendsToFriendsTableView(friend: User) {
+        let newIndexPath = IndexPath(row: self.friendsArrayObject.count, section: 0)
+        //self.friendsArray.append(friendUsername)
+        self.friendsArrayObject.append(friend)
         self.friendsTableView.insertRows(at: [newIndexPath], with: .automatic)
     }
     
