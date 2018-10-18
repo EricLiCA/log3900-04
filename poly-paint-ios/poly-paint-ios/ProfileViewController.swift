@@ -60,12 +60,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var pendingFriendRequestsButton: UIButton!
-    
-    var friendsArray = [String]()
-    var friends = [String]()
-    
-    var friendsArrayObject = [User]()
-    var friendsObject = [User]()
+
+    var friendsCellsContent = [User]()
+    var friends = [User]()
     
     
     override func viewDidLoad() {
@@ -74,7 +71,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.setUsernameLabel()
         self.colorBorder()
         self.setUpNotifications()
-        self.friends = []
         // Set as delegate for the message table
         self.friendsTableView.delegate = self
         self.friendsTableView.dataSource = self
@@ -88,13 +84,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friendsArrayObject.count
+        return friendsCellsContent.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendHeadlineTableViewCell
         // Customize the cell
-        cell.friendUsernameLabel?.text = friendsArrayObject[indexPath.row].username
+        cell.friendUsernameLabel?.text = friendsCellsContent[indexPath.row].username
         // Return the cell
         return cell
     }
@@ -116,13 +112,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                     // fill friend list
                     for friendship in responseJSON! {
                         let friend = User(id: friendship["id"]!, username: friendship["userName"]!, profilePictureUrl: friendship["profileImage"]!)
-                        self.friendsObject.append(friend)
-                        //self.friends.append(friendship["id"]!)
-                    //self.addFriendsToFriendsTableView(friendUsername: friendship["id"]!)
+                        self.friends.append(friend)
                         self.addFriendsToFriendsTableView(friend: friend)
                     }
-                    //UserDefaults.standard.set(self.friendsObject, forKey: "friends")
-                   
                 }
             }
         }
@@ -131,9 +123,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     private func addFriendsToFriendsTableView(friend: User) {
-        let newIndexPath = IndexPath(row: self.friendsArrayObject.count, section: 0)
+        let newIndexPath = IndexPath(row: self.friendsCellsContent.count, section: 0)
         //self.friendsArray.append(friendUsername)
-        self.friendsArrayObject.append(friend)
+        self.friendsCellsContent.append(friend)
         self.friendsTableView.insertRows(at: [newIndexPath], with: .automatic)
     }
     
@@ -200,11 +192,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            print(responseJSON)
             if let responseJSON = responseJSON as? [String: Any] {
-                print(responseJSON)
                 DispatchQueue.main.async {
-                    
                 }
             } else {
                 DispatchQueue.main.async {
