@@ -89,18 +89,22 @@ export class User {
             };
 
             // Query the database
-            const db = await PostgresDatabase.getInstance();
-            const queryResponse = await db.query(preparedQuery);
-            if (queryResponse.rowCount > 0) {
-                const row = queryResponse.rows[0];
-                return Promise.resolve(new User(
-                    row.Id,
-                    row.Username,
-                    row.Password,
-                    row.UserLevel,
-                    row.ProfileImage,
-                ));
-            } else {
+            try {
+                const db = await PostgresDatabase.getInstance();
+                const queryResponse = await db.query(preparedQuery);
+                if (queryResponse.rowCount > 0) {
+                    const row = queryResponse.rows[0];
+                    return Promise.resolve(new User(
+                        row.Id,
+                        row.Username,
+                        row.Password,
+                        row.UserLevel,
+                        row.ProfileImage,
+                    ));
+                } else {
+                    return Promise.resolve(undefined);
+                }
+            } catch {
                 return Promise.resolve(undefined);
             }
         }
