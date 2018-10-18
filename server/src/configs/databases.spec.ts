@@ -4,10 +4,6 @@ import { PostgresConfig } from './databases';
 describe('Postgres config', () => {
     describe('HOST', () => {
         it('should not be empty', () => {
-            console.log(PostgresConfig.DATABASE);
-            console.log(PostgresConfig.HOST);
-            console.log(PostgresConfig.PORT);
-            console.log(PostgresConfig.USER);
             expect(PostgresConfig.HOST).to.not.be.undefined;
             expect(PostgresConfig.HOST).to.not.be.empty;
         });
