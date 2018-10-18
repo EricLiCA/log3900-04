@@ -78,8 +78,10 @@ export class Application {
         router.delete('/sessions/:id', sessionsRoute.logout.bind(sessionsRoute.logout));
 
         // Images
-        router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
+        //router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
         router.get('/images/:id', imagesRoute.get.bind(imagesRoute.get));
+        router.get('/imagesByOwnerId/:id', imagesRoute.getByOwnerId.bind(imagesRoute.getByOwnerId));
+        router.get('/imagesPublicExceptMine/:id', imagesRoute.getPublicExceptMine.bind(imagesRoute.getPublicExceptMine));
         router.post('/images', imagesRoute.post.bind(imagesRoute.post));
         router.put('/images/:id', imagesRoute.update.bind(imagesRoute.update));
         router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
