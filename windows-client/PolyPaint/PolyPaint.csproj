@@ -165,14 +165,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Convertisseurs\Convertisseurs.cs" />
+    <Compile Include="DAO\PendingFriendRequestDao.cs" />
     <Compile Include="DAO\ImageCommentDao.cs" />
     <Compile Include="DAO\ImageDao.cs" />
     <Compile Include="DAO\ImageLikeDao.cs" />
+    <Compile Include="DAO\UserDao.cs" />
     <Compile Include="Modeles\Editeur.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Modeles\ImageComment.cs" />
     <Compile Include="Modeles\ImageLike.cs" />
     <Compile Include="Modeles\Image.cs" />
+    <Compile Include="Modeles\PendingFriendRequest.cs" />
+    <Compile Include="Modeles\User.cs" />
     <Compile Include="Services\ServerService.cs" />
     <Compile Include="Utilitaires\Settings.cs" />
     <Compile Include="Utilitaires\RelayCommand.cs" />
@@ -191,6 +195,12 @@
     </Compile>
     <Compile Include="Vues\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\Users.xaml.cs">
+      <DependentUpon>Users.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\UsersCard.xaml.cs">
+      <DependentUpon>UsersCard.xaml</DependentUpon>
     </Compile>
     <Page Include="Vues\Chat.xaml">
       <SubType>Designer</SubType>
@@ -227,6 +237,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\Users.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\UsersCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
