@@ -11,7 +11,7 @@ namespace PolyPaint.VueModeles
         public event PropertyChangedEventHandler PropertyChanged;
         private ChatRoom ChatRoom;
 
-        public ObservableCollection<User> Users
+        public ObservableCollection<ChatUser> Users
         {
             get => ChatRoom.Users;
             set { PropertyModified(); }

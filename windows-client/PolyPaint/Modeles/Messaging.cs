@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace PolyPaint.Modeles
 {
@@ -35,15 +36,25 @@ namespace PolyPaint.Modeles
 
         public void NewMessage(ChatRoom room, string sender, string message)
         {
-            Console.WriteLine(sender);
-            Console.WriteLine(room.Users);
+            bool isAnonymous = !UsersManager.instance.Users.Any(user => user.username == sender);
             Application.Current.Dispatcher.Invoke(() => {
-                room.Messages.Add(new ChatMessage()
+                if (isAnonymous)
                 {
-                    Sender = room.Users.First(user => user.username == sender),
-                    Timestamp = DateTime.Now.ToString("HH:mm:ss"),
-                    Message = message
-                });
+                    room.Messages.Add(new ChatMessage(
+                        "Anonymous_" + sender,
+                        DateTime.Now.ToString("HH:mm:ss"),
+                        message
+                    )
+                );
+                } else
+                {
+                    room.Messages.Add(new ChatMessage(
+                        sender,
+                        new BitmapImage(UsersManager.instance.Users.First(user => user.username == sender).profileImage),
+                        DateTime.Now.ToString("HH:mm:ss"),
+                        message
+                    ));
+                }
             });
 
             if (this.SubscribedChatRooms.IndexOf(room) != this.selectedIndex)
@@ -85,7 +96,7 @@ namespace PolyPaint.Modeles
             this.NotSubscribedChatRooms.Remove(room);
             this.SubscribedChatRooms.Add(room);
             this.OpenChat(this.SubscribedChatRooms.Count - 1);
-            room.Users.Add(new User("qweqwegrnewdqwefdno;iewh", ServerService.instance.username, ""));
+            room.Users.Add(new ChatUser(chatName));
 
             ServerService.instance.Socket.Emit("joinRoom", room.Name);
             
@@ -98,11 +109,13 @@ namespace PolyPaint.Modeles
                         return;
                     }
 
-                    this.NewMessage(
-                        room,
-                        server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString(),
-                        server_params[2].ToString()
-                    );
+                    Application.Current.Dispatcher.Invoke(() => { 
+                        this.NewMessage(
+                            room,
+                            server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString(),
+                            server_params[2].ToString()
+                        );
+                    });
                 }));
             }
 

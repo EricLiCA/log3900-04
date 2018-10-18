@@ -4,9 +4,9 @@ using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using Quobject.SocketIoClientDotNet.Client;
 using RestSharp;
-using System;
 using System.Net;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace PolyPaint.Vues
 {
@@ -59,21 +59,32 @@ namespace PolyPaint.Vues
 
         private void Verify_Credentials()
         {
-            Credentials credentials = new Credentials(username.Text, password.Password);
-            var request = new RestRequest(Settings.API_VERSION + "/sessions", Method.POST);
-            request.AddJsonBody(credentials);
-            ServerService.instance.server.ExecuteAsync<LoginResponse>(request, response =>
+            User user = new User {
+                username = username.Text,
+                password = password.Password
+            };
+            var request = new RestRequest(Settings.API_VERSION + Settings.SESSION_PATH, Method.POST);
+            request.AddJsonBody(user);
+            ServerService.instance.server.ExecuteAsync(request, response =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        ServerService.instance.username = username.Text;
-                        ServerService.instance.password = password.Password;
                         dynamic data = JObject.Parse(response.Content);
                         ServerService.instance.id = data["id"];
                         ServerService.instance.token = data["token"];
+                        ServerService.instance.username = username.Text;
                         Connect_Socket();
+                        
+                        ServerService.instance.user = new User(
+                            username.Text,
+                            (string)data["id"],
+                            (string)data["profileImage"],
+                            (string)data["token"],
+                            (string)data["userLevel"],
+                            password.Password
+						);
                     }
                     else
                     {

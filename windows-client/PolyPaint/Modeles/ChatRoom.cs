@@ -16,7 +16,7 @@ namespace PolyPaint.Modeles
         public event PropertyChangedEventHandler PropertyChanged;
 
         public string Name { get; set; }
-        public ObservableCollection<User> Users { get; }
+        public ObservableCollection<ChatUser> Users { get; }
         public ObservableCollection<ChatMessage> Messages { get; }
         public ConnectionStatus ConnectionStatus = ConnectionStatus.NOT_CONNECTED;
 
@@ -25,11 +25,10 @@ namespace PolyPaint.Modeles
         public ChatRoom(string name)
         {
             this.Name = name;
-            this.Users = new ObservableCollection<User>();
+            this.Users = new ObservableCollection<ChatUser>();
             this.Messages = new ObservableCollection<ChatMessage>();
-            this.Users.Add(new User("id", "Francis", null));
-            this.Users.Add(new User("wewewe", "Joshua", null));
-            this.Users.Add(new User("wewid", "Amy", null));
+            this.Users.Add(new ChatUser("Caroline"));
+            this.Users.Add(new ChatUser("Joshua"));
         }
 
         public void SendMessage(string message)
