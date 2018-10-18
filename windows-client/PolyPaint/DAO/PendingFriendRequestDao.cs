@@ -1,6 +1,7 @@
 ﻿using PolyPaint.Modeles;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
+using PolyPaint.Vues;
 using RestSharp;
 using System.Net;
 using System.Windows;
@@ -59,6 +60,19 @@ namespace PolyPaint.DAO
                     {
                         MessageBox.Show("Could not refuse this friend request", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                });
+            });
+        }
+
+        public static void GetAll()
+        {
+            var request = new RestRequest(Settings.API_VERSION + Settings.PENDING_FRIEND_REQUEST_PATH, Method.GET);
+            ServerService.instance.server.ExecuteAsync<Image>(request, response =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Users currentUsers = ((MainWindow)Application.Current.MainWindow).Users;
+                    currentUsers.LoadPendingFriendRequests(response);
                 });
             });
         }

@@ -28,6 +28,19 @@ namespace PolyPaint.DAO
                 });
             });
         }
+
+        public static void GetAll()
+        {
+            var request = new RestRequest(Settings.API_VERSION + Settings.FRIENDS_PATH, Method.GET);
+            ServerService.instance.server.ExecuteAsync<Image>(request, response =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    /*Users currentUsers = ((MainWindow)Application.Current.MainWindow).Users;
+                    currentUsers.LoadUsers(response);*/
+                });
+            });
+        }
     }
 
 
