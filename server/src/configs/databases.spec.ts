@@ -34,14 +34,18 @@ describe('Postgres config', () => {
     describe('USER', () => {
         it('should not be empty', () => {
             expect(PostgresConfig.USER).to.not.be.undefined;
-            expect(PostgresConfig.USER).to.not.be.empty;
+            if (process.env.PROD) {
+                expect(PostgresConfig.USER).to.not.be.empty;
+            }
         });
     });
 
     describe('PASSWORD', () => {
         it('should not be empty', () => {
             expect(PostgresConfig.PASSWORD).to.not.be.undefined;
-            expect(PostgresConfig.PASSWORD).to.not.be.empty;
+            if (process.env.PROD) {
+                expect(PostgresConfig.PASSWORD).to.not.be.empty;
+            }
         });
     });
 

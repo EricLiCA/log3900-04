@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
     }
     
     func login(_ user: String, _ psw: String) {
-        let url = URL(string: "http://localhost:3000/v1/sessions")
+        let url = URL(string: "http://localhost:3000/v2/sessions")
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
@@ -61,6 +61,7 @@ class LoginViewController: UIViewController {
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
+                print(responseJSON)
                 DispatchQueue.main.async {
                     UserDefaults.standard.set(user, forKey: "username")
                     UserDefaults.standard.set(responseJSON["id"], forKey: "id")

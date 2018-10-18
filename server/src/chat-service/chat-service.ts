@@ -42,7 +42,7 @@ export class ChatService {
             socket.on('disconnect', () => {
                 console.log(`${socket.id} has disconnected`);
                 if (this.usernames.has(socket.id)) {
-                    for (let room in socket.rooms) {
+                    for (const room in socket.rooms) {
                         console.log(`${socket.id} has left the room ${room}`);
                         socket.leave(room);
                         socket.broadcast.to(room).emit('chatInfo', room, `${this.usernames.get(socket.id)} has left the room`);

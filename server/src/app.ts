@@ -4,12 +4,14 @@ import * as express from 'express';
 import * as httpLogger from 'morgan';
 import * as path from 'path';
 
+import { FriendshipsRoute } from './routes/friendships';
+import { ImageCommentsRoute } from './routes/image-comments';
+import { ImageLikesRoute } from './routes/image-likes';
+import { ImagesRoute } from './routes/images';
+import { PendingFriendRequestRoute } from './routes/pending-friend-request';
 import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
-import { ImagesRoute } from './routes/images';
-import { ImageLikesRoute } from './routes/image-likes';
-import { ImageCommentsRoute } from './routes/image-comments';
 
 export class Application {
     /**
@@ -58,9 +60,11 @@ export class Application {
         const serverStatus: ServerStatus = new ServerStatus();
         const usersRoute: UsersRoute = new UsersRoute();
         const sessionsRoute: SessionsRoute = new SessionsRoute();
+        const friendshipsRoute: FriendshipsRoute = new FriendshipsRoute();
+        const pendingFriendRequestRoute: PendingFriendRequestRoute = new PendingFriendRequestRoute();
         const imagesRoute: ImagesRoute = new ImagesRoute();
-        const imageLikes : ImageLikesRoute = new ImageLikesRoute();
-        const imageComments : ImageCommentsRoute = new ImageCommentsRoute();
+        const imageLikes: ImageLikesRoute = new ImageLikesRoute();
+        const imageComments: ImageCommentsRoute = new ImageCommentsRoute();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));
@@ -77,6 +81,15 @@ export class Application {
         router.post('/sessions', sessionsRoute.login.bind(sessionsRoute.login));
         router.delete('/sessions/:id', sessionsRoute.logout.bind(sessionsRoute.logout));
 
+        // Friendships
+        router.get('/friendships', friendshipsRoute.getAll.bind(friendshipsRoute.getAll));
+        router.get('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.get));
+        router.post('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.post));
+        router.delete('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.delete));
+
+        // PendingFriendRequest
+        router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
+
         // Images
         //router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
         router.get('/images/:id', imagesRoute.get.bind(imagesRoute.get));
@@ -85,7 +98,7 @@ export class Application {
         router.post('/images', imagesRoute.post.bind(imagesRoute.post));
         router.put('/images/:id', imagesRoute.update.bind(imagesRoute.update));
         router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
-        
+
         // ImageLikes
         router.get('/imageLikes/:imageId', imageLikes.get.bind(imageLikes.get));
         router.post('/imageLikes', imageLikes.post.bind(imageLikes.post));
