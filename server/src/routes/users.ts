@@ -16,6 +16,7 @@ export class UsersRoute {
                         profileImage: row.ProfileImage,
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -35,6 +36,7 @@ export class UsersRoute {
                     userLevel: result.UserLevel,
                     profileImage: result.ProfileImage,
                 });
+                return;
             }
             res.sendStatus(404);
         })
@@ -58,6 +60,7 @@ export class UsersRoute {
                     username: result.Username,
                     userLevel: result.UserLevel,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -106,6 +109,7 @@ export class UsersRoute {
                             username: result.Username,
                             userLevel: result.UserLevel,
                         });
+                        return;
                     }
                     res.sendStatus(204);
                 })
@@ -131,6 +135,7 @@ export class UsersRoute {
                             username: result.Username,
                             userLevel: result.UserLevel,
                         });
+                        return;
                     }
                     res.sendStatus(404);
                 })
