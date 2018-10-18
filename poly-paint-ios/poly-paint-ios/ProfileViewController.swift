@@ -75,7 +75,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.friendsTableView.delegate = self
         self.friendsTableView.dataSource = self
         self.getFriends()
-        self.loadPendingFriendRequests()
         // Do any additional setup after loading the view.
     }
     
@@ -113,7 +112,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                     // fill friend list
                     for friendship in responseJSON! {
                         self.friends.append(friendship["FriendId"]!)
-                        self.addFriendsToFriendsTableView(friendUsername: friendship["FriendId"] as! String)
+                    self.addFriendsToFriendsTableView(friendUsername: friendship["FriendId"]!)
                     }
                     UserDefaults.standard.set(self.friends, forKey: "friends")
                 }
@@ -123,21 +122,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         task.resume()
     }
     
-    // TODO: Pending Freind request interface
-    @IBAction func pendingFriendRequestsTapped(_ sender: UIButton) {
-        // TODO: Goto pending friend requests interface
-    }
-    
-    // TODO: Call api to get pending friend requests
-    private func loadPendingFriendRequests() {
-        // TODO: Call api to get pending friend requests
-    }
-    
     private func addFriendsToFriendsTableView(friendUsername: String) {
         let newIndexPath = IndexPath(row: self.friendsArray.count, section: 0)
         self.friendsArray.append(friendUsername)
         self.friendsTableView.insertRows(at: [newIndexPath], with: .automatic)
-        //self.friendsTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
     }
     
     func colorBorder() {

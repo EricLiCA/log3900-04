@@ -19,7 +19,6 @@ export class FriendshipsRoute {
     }
 
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        console.log("FRIENDSHIP")
         const db = await PostgresDatabase.getInstance();
         db.query('SELECT * FROM friendships WHERE "UserId" = $1', [req.params.id]).then((query) => {
             if (query.rowCount > 0) {
@@ -51,10 +50,11 @@ export class FriendshipsRoute {
         const redisClient = RedisService.getInstance();
         redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
             if (token !== null && token === req.body.token) {
+                
                 const db = await PostgresDatabase.getInstance();
                 // Check if friend already added you
                 db.query(
-                    'SELECT * FROM pending_friend_requests WHERE "RequesterId" = $1 AND "ReceiverId" = $2',
+                    'SELECT * FROM pending_friend_requests WHERE "RequesterId" = $2 AND "ReceiverId" = $1',
                     [req.body.friendId, req.params.id],
                 )
                     .then((queryResult) => {
@@ -109,8 +109,6 @@ export class FriendshipsRoute {
      * Status 404: Not found (didn't find friendId and/or :id)
      */
     public async delete(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        console.log(req.body)
-        console.log(req.params.id)
         const redisClient = RedisService.getInstance();
         redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
             if (token !== null && token === req.body.token) {
@@ -134,6 +132,7 @@ export class FriendshipsRoute {
                         }
                     })
                     .catch((err) => {
+                        console.log(err)
                         res.sendStatus(400);
                     });
             } else {

@@ -256,8 +256,9 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             
             if (responseJSON as? [Dictionary<String, String>]) != nil {
                 for user in responseJSON! {
+                    print(user)
                     if(user["id"] != UserDefaults.standard.string(forKey: "id") && !self.currentFriends.contains(user["id"]!)) {
-                        self.usersNotInFriends.append(user["username"]!)
+                        self.usersNotInFriends.append(user["id"]!)
                     }
                 }
                 DispatchQueue.main.async {
@@ -273,27 +274,24 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     func loadPendingFrienships() {
         //showPendingFriendships()
         print("CALLING LOAD PENDING ")
-        let urlString = "http://localhost:3000/v2/pendingFriendRequest"
+        let urlString = "http://localhost:3000/v2/pendingFriendRequest/" + UserDefaults.standard.string(forKey: "id")!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["id": UserDefaults.standard.string(forKey: "id")!, "token": UserDefaults.standard.string(forKey: "token")!]
-        print(paramToSend)
-        let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
+        //let paramToSend: [String: Any] = ["id": UserDefaults.standard.string(forKey: "id")!, "token": UserDefaults.standard.string(forKey: "token")!]
+        //let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
+        //request.httpBody = jsonData
         
         let task = session.dataTask(with: request) { data, response, error in
             let httpResponse = response as? HTTPURLResponse
-            print(httpResponse)
             guard let data = data, error == nil else {
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, String>]
-            print(responseJSON)
             if (responseJSON as? [Dictionary<String, String>]) != nil {
                 
                 /*for user in responseJSON! {

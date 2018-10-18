@@ -88,7 +88,7 @@ export class Application {
         router.delete('/friendships/:id', friendshipsRoute.delete.bind(friendshipsRoute.delete));
 
         //PendingFriendRequest
-        router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
+        router.get('/pendingFriendRequest/:id', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
 
         // Images
         router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));

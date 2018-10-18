@@ -675,7 +675,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="pendingFriendRequestsTapped:" destination="r8R-KD-eft" eventType="touchUpInside" id="eus-gp-Hxb"/>
                                     <segue destination="7fN-kl-JlN" kind="popoverPresentation" identifier="toPendingFriendRequests" popoverAnchorView="uZa-Z1-8Sj" id="IDQ-Qb-zNY">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
