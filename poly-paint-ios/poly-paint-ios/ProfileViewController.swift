@@ -192,7 +192,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func loadProfilePicture() {
-        /*let url:URL = URL(string: UserDefaults.standard.string(forKey: "profileImage")!)!
+        let url:URL = URL(string: UserDefaults.standard.string(forKey: "profileImage")!)!
         let session = URLSession.shared
         let task = session.dataTask(with: url, completionHandler: {
             (data, response, error) in
@@ -206,9 +206,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         })
         
-        task.resume()*/
-        print("PROFILE PICTURE")
-        //print(UserDefaults.standard.string(forKey: "profileImage")!)
+        task.resume()
     }
     
     /*

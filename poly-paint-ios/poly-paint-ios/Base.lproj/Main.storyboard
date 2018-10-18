@@ -551,6 +551,10 @@
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlankProfile" translatesAutoresizingMaskIntoConstraints="NO" id="rXh-13-40s">
                                                 <rect key="frame" x="0.0" y="0.0" width="175.5" height="112"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="112" id="SQO-ZL-6rj"/>
+                                                    <constraint firstAttribute="width" constant="175.5" id="zBh-9b-nXi"/>
+                                                </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="v0s-E1-jGH">
                                                 <rect key="frame" x="225.5" y="0.0" width="174.5" height="112"/>
