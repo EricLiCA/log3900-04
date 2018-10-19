@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Connect" Height="300" Width="450"
+        Title="Authentification" Width="367"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner"
@@ -16,57 +16,60 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
-    <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Label Grid.Column="0" Grid.Row="0" Margin="4" >Username</Label>
-        <TextBox Name="username" Grid.Column="1" Grid.Row="0" Margin="4" Text="seb" />
-        <Label Grid.Column="0" Grid.Row="1" Margin="4" >Password</Label>
-        <PasswordBox Name="password" Grid.Column="1" Grid.Row="1" Margin="4" Password="seb" />
-        <CheckBox Name="anonymous" Grid.Column="1" Grid.Row="2"
-                      Style="{StaticResource MaterialDesignCheckBox}"
-                      Margin="0 10" Click="CheckBox_Checked">
-            I don't have an account
-        </CheckBox>
-        <Button Name="connect"
-                Grid.Column="1" Grid.Row="4"
-                Margin="8" Height="30" Width="125"
-                HorizontalAlignment="Right"
-                IsDefault="True" Click="Connect_Click"
-                Style="{StaticResource MaterialDesignFlatButton}">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Connect" />
-                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
-                             Value="0" IsIndeterminate="True" Margin="10 0 0 0"
-                             Name="progress" Visibility="Collapsed"/>
+        FontFamily="{DynamicResource MaterialDesignFont}" Height="227.5">
+    <StackPanel>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" SharedSizeGroup="Label" MinWidth="129"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Margin="4,10,4,4" Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Account" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
+                <TextBox x:Name="UserName" materialDesign:HintAssist.Hint="User Name" Width="300" KeyUp="UserNameOrPassword_KeyUp"/>
             </StackPanel>
-        </Button>
-
-            <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" >
-            <Expander HorizontalAlignment="Stretch"  >
-                <Expander.Header>
-                    <TextBlock Text="Advanced Options" />
-                </Expander.Header>
-                <Grid TextBlock.Foreground="{DynamicResource MaterialDesignBody}" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0" Margin="4,10,4,4">IP</Label>
-                    <TextBox Name="ip" Grid.Column="1" Grid.Row="0" Margin="4,10,4,4" Text="http://ec2-34-200-247-233.compute-1.amazonaws.com" />
-                </Grid>
-            </Expander>
+            <StackPanel Grid.Row="1" Margin="4,10,4,4" Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Key" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
+                <PasswordBox x:Name="Password" materialDesign:HintAssist.Hint="Password" Width="300" KeyUp="UserNameOrPassword_KeyUp"/>
+            </StackPanel>
+            <CheckBox Name="GuestConnection" Grid.Column="0" Grid.Row="2"
+                      Style="{StaticResource MaterialDesignCheckBox}"
+                      Margin="25,10,0,10" Click="GuestConnection_Checked">
+                Connect as guest
+            </CheckBox>
+        </Grid>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,5">
+            <Button Name="CreateButton"
+                Margin="0,8,8,8" Height="35" Width="Auto"
+                HorizontalAlignment="Right"
+                IsDefault="True" Click="CreateButton_Click" IsEnabled="False"
+                    Style="{StaticResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Create new account" Height="20" />
+                    <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             Value="0" IsIndeterminate="True" Margin="10 0 0 0"
+                             Name="CreationProgress" Visibility="Collapsed"/>
+                </StackPanel>
+            </Button>
+            <Button Name="ConnectButton"
+                Margin="0,8,8,8" Height="Auto" Width="Auto"
+                HorizontalAlignment="Right"
+                IsDefault="True" Click="ConnectButton_Click"
+                Style="{StaticResource MaterialDesignFlatButton}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Connect" />
+                    <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             Value="0" IsIndeterminate="True" Margin="10 0 0 0"
+                             Name="ConnectionProgress" Visibility="Collapsed"/>
+                </StackPanel>
+            </Button>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Window>
