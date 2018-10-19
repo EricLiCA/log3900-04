@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FriendHeadlineTableViewCell: UITableViewCell {
+class FriendTableViewCell: UITableViewCell {
     
     @IBOutlet weak var friendUsernameLabel: UILabel!
     @IBOutlet weak var removeAsFriendButton: UIButton!
@@ -18,30 +18,25 @@ class FriendHeadlineTableViewCell: UITableViewCell {
     @IBAction func removeAsFriendTapped(_ sender: UIButton) {
         self.sendRemoveAsFriend()
     }
+
+    @IBAction func startChatTapped(_ sender: UIButton) {
+        self.startChat()
+    }
+    
+    @IBAction func friendGalleryTapped(_ sender: UIButton) {
+        self.goToFriendsGallery()
+    }
     
     func sendRemoveAsFriend() {
         let userInfo = ["friendUsername": friendUsernameLabel.text!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "removeAsFriendAlert"), object: nil, userInfo: userInfo)
     }
     
-    // TODO: determine what this functionnality does
-    @IBAction func startChatTapped(_ sender: UIButton) {
-        self.startChat()
-    }
-    
-    // TODO: determine what this functionnality does
     func startChat() {
-        // TODO: determine what this functionnality does
         let userInfo = ["friendUsername": friendUsernameLabel.text!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "startChatAlert"), object: nil, userInfo: userInfo)
     }
 
-    // TODO: When API ready, go to friends public gallery
-    @IBAction func friendGalleryTapped(_ sender: UIButton) {
-        // TODO: When API ready, go to friends public gallery
-        self.goToFriendsGallery()
-    }
-    
     func goToFriendsGallery() {
         let userInfo = ["friendUsername": friendUsernameLabel.text!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "goToFriendsGalleryAlert"), object: nil, userInfo: userInfo)
@@ -82,7 +77,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendHeadlineTableViewCell
+        let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendTableViewCell
         // Customize the cell
         cell.friendUsernameLabel?.text = friendsCellsContent[indexPath.row].username
         // Return the cell
