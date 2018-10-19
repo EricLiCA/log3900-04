@@ -58,14 +58,14 @@ describe('ImagesModel', () => {
         expect(images).to.eql([]);
     });
 
+    it('should get all the images', async () => {
+        const images = await ImagesModel.getAll();
+        expect(images).length.to.be.greaterThan(0);
+    });
+
     it('should delete the image', async () => {
         const deletedImage = await ImagesModel.delete(image.id);
         expect(deletedImage.id).to.equal(image.id);
         expect(deletedImage.ownerId).to.equal(user2.Id);
-    });
-
-    it('get all the images', async () => {
-        const images = await ImagesModel.getAll();
-        expect(images).length.to.be.greaterThan(0);
     });
 });
