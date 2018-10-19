@@ -20,15 +20,18 @@ namespace PolyPaint.Vues
     {
         public UsersCard CurrentUserCard { get; set; }
         ObservableCollection<PendingFriendRequest> PendingFriendRequestsList;
+        List<string> SentRequests;
 
 
         public Users()
         {
             InitializeComponent();
             PendingFriendRequestsList = new ObservableCollection<PendingFriendRequest>();
+            SentRequests = new List<string>();
             FriendDao.Get();
             FriendDao.GetUsersExceptFriends();
             PendingFriendRequestDao.Get();
+            PendingFriendRequestDao.GetByRequesterId();
         }
 
         public void LoadUsersExceptFriends(IRestResponse response)
@@ -97,6 +100,20 @@ namespace PolyPaint.Vues
             }
         }
 
+        public void LoadSentRequests(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                SentRequests.Clear();
+                JArray responseRequests = JArray.Parse(response.Content);
+                for (int i = 0; i < responseRequests.Count; i++)
+                {
+                    dynamic data = JObject.Parse(responseRequests[i].ToString());
+                    SentRequests.Add((string)data["receiverId"]);
+                }
+            }
+        }
+
         private void ViewButton_Click(object sender, EventArgs e)
         {
             UsersCard userCard = (UsersCard)sender;
@@ -107,12 +124,19 @@ namespace PolyPaint.Vues
             Uri imageUri = new Uri(CurrentUserCard.User.profileImage);
             BitmapImage imageBitmap = new BitmapImage(imageUri);
             ProfileViewPicture.Source = imageBitmap;
-            if (FriendsContainer.Children.Contains(userCard))
+            if (SentRequests.Contains(userCard.User.id))
+            {
+                FriendButton.IsEnabled = false;
+            }
+            else if (FriendsContainer.Children.Contains(userCard))
             {
                 FriendButton.IsChecked = true;
-            } else
+                FriendButton.IsEnabled = true;
+            }
+            else
             {
                 FriendButton.IsChecked = false;
+                FriendButton.IsEnabled = true;
             }
         }
 
@@ -137,7 +161,9 @@ namespace PolyPaint.Vues
             if ((bool)FriendButton.IsChecked)
             {
                 PendingFriendRequestDao.Send(CurrentUserCard.User.id);
-            } else
+                FriendButton.IsEnabled = false;
+            }
+            else
             {
                 FriendDao.Delete(CurrentUserCard.User.id);
                 FriendsContainer.Children.Remove(CurrentUserCard);

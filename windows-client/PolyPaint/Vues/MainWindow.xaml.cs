@@ -57,6 +57,7 @@ namespace PolyPaint.Vues
                         FriendDao.Get();
                         FriendDao.GetUsersExceptFriends();
                         PendingFriendRequestDao.Get();
+                        PendingFriendRequestDao.GetByRequesterId();
                         GridMain.Content = Users;
                         break;
                     }

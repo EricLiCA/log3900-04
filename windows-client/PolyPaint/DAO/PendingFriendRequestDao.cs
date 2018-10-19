@@ -76,5 +76,19 @@ namespace PolyPaint.DAO
                 });
             });
         }
+
+        public static void GetByRequesterId()
+        {
+            var request = new RestRequest(Settings.API_VERSION + Settings.PENDING_FRIEND_REQUEST_BY_REQUESTER_ID_PATH + "/"
+                + ServerService.instance.user.id, Method.GET);
+            ServerService.instance.server.ExecuteAsync<Image>(request, response =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Users currentUsers = ((MainWindow)Application.Current.MainWindow).Users;
+                    currentUsers.LoadSentRequests(response);
+                });
+            });
+        }
     }
 }

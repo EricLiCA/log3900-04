@@ -20,5 +20,6 @@ namespace PolyPaint.Utilitaires
         public const string FRIENDS_PATH = "/friendships";
         public const string USERS_EXCEPT_FRIENDS_PATH = "/usersExceptFriends";
         public const string PENDING_FRIEND_REQUEST_PATH = "/pendingFriendRequest";
+        public const string PENDING_FRIEND_REQUEST_BY_REQUESTER_ID_PATH = "/pendingFriendRequestByRequesterId";
     }
 }

@@ -3,12 +3,7 @@ using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using PolyPaint.Vues;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace PolyPaint.DAO
