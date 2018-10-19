@@ -8,8 +8,9 @@ namespace PolyPaint.Modeles
 {
     public class PendingFriendRequest
     {
-        public string requesterId { get; set; }
-        public string receiverId { get; set; }
+        public string id { get; set; }
+        public string userName { get; set; }
+        public string profileImage { get; set; }
         public Boolean notified { get; set; }
     }
 }

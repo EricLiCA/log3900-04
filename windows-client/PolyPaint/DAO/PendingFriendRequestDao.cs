@@ -20,7 +20,7 @@ namespace PolyPaint.DAO
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    if (response.StatusCode != HttpStatusCode.Created)
+                    if (response.StatusCode != HttpStatusCode.OK)
                     {
                         MessageBox.Show("Could not send a friend request to this user", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -28,17 +28,17 @@ namespace PolyPaint.DAO
             });
         }
 
-        public static void Accept(PendingFriendRequest friendRequest)
+        public static void Accept(string friendId)
         {
-            var request = new RestRequest(Settings.API_VERSION + Settings.PENDING_FRIEND_REQUEST_PATH + "/"
+            var request = new RestRequest(Settings.API_VERSION + Settings.FRIENDS_PATH + "/"
                 + ServerService.instance.user.id, Method.POST);
-            request.AddJsonBody(friendRequest);
-            request.AddJsonBody(ServerService.instance.user);
+            var body = new { token = ServerService.instance.user.token, friendId = friendId };
+            request.AddJsonBody(body);
             ServerService.instance.server.ExecuteAsync(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    if (response.StatusCode != HttpStatusCode.Created)
+                    if (response.StatusCode != HttpStatusCode.OK)
                     {
                         MessageBox.Show("Could not accept this friend request", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -46,12 +46,11 @@ namespace PolyPaint.DAO
             });
         }
 
-        public static void Refuse(PendingFriendRequest friendRequest)
+        public static void Refuse(string friendId)
         {
             var request = new RestRequest(Settings.API_VERSION + Settings.PENDING_FRIEND_REQUEST_PATH + "/"
                 + ServerService.instance.user.id, Method.DELETE);
-            request.AddJsonBody(friendRequest);
-            request.AddJsonBody(ServerService.instance.user);
+            request.AddJsonBody(new { friendId = friendId });
             ServerService.instance.server.ExecuteAsync(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -64,9 +63,10 @@ namespace PolyPaint.DAO
             });
         }
 
-        public static void GetAll()
+        public static void Get()
         {
-            var request = new RestRequest(Settings.API_VERSION + Settings.PENDING_FRIEND_REQUEST_PATH, Method.GET);
+            var request = new RestRequest(Settings.API_VERSION + Settings.PENDING_FRIEND_REQUEST_PATH + "/"
+                + ServerService.instance.user.id, Method.GET);
             ServerService.instance.server.ExecuteAsync<Image>(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>

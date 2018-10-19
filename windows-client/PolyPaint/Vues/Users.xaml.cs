@@ -5,6 +5,7 @@ using PolyPaint.Services;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,19 +19,22 @@ namespace PolyPaint.Vues
     public partial class Users : Page
     {
         public UsersCard CurrentUserCard { get; set; }
+        ObservableCollection<PendingFriendRequest> PendingFriendRequestsList;
+
 
         public Users()
         {
             InitializeComponent();
-            UserDao.GetAll();
-            PendingFriendRequestDao.GetAll();
+            PendingFriendRequestsList = new ObservableCollection<PendingFriendRequest>();
+            FriendDao.Get();
+            FriendDao.GetUsersExceptFriends();
+            PendingFriendRequestDao.Get();
         }
 
-        public void LoadUsers(IRestResponse response)
+        public void LoadUsersExceptFriends(IRestResponse response)
         {
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                FriendsContainer.Children.Clear();
                 ConnectedUsersContainer.Children.Clear();
                 JArray responseUsers= JArray.Parse(response.Content);
                 for (int i = 0; i < responseUsers.Count; i++)
@@ -46,11 +50,28 @@ namespace PolyPaint.Vues
                     userCard.ViewButtonClicked += ViewButton_Click;
                     ConnectedUsersContainer.Children.Add(userCard);
                 }
-                // TODO: get friends and fill containers
             }
-            else
+        }
+
+        public void LoadFriends(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                MessageBox.Show("Could not load the profile", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                FriendsContainer.Children.Clear();
+                JArray responseUsers = JArray.Parse(response.Content);
+                for (int i = 0; i < responseUsers.Count; i++)
+                {
+                    dynamic data = JObject.Parse(responseUsers[i].ToString());
+                    User user = new User
+                    {
+                        id = data["id"],
+                        username = data["username"],
+                        profileImage = data["profileImage"],
+                    };
+                    UsersCard userCard = new UsersCard(user);
+                    userCard.ViewButtonClicked += ViewButton_Click;
+                    FriendsContainer.Children.Add(userCard);
+                }
             }
         }
 
@@ -58,7 +79,7 @@ namespace PolyPaint.Vues
         {
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                List<PendingFriendRequest> friendRequestList = new List<PendingFriendRequest>();
+                PendingFriendRequestsList.Clear();
                 JArray responseRequests = JArray.Parse(response.Content);
                 for (int i = 0; i < responseRequests.Count; i++)
                 {
@@ -66,16 +87,13 @@ namespace PolyPaint.Vues
                     PendingFriendRequest friendRequest = new PendingFriendRequest
                     {
                         notified = data["notified"],
-                        receiverId = data["receiverId"],
-                        requesterId = data["requesterId"],
+                        id = data["id"],
+                        userName = data["userName"],
+                        profileImage = data["profileImage"],
                     };
-                    friendRequestList.Add(friendRequest);
+                    PendingFriendRequestsList.Add(friendRequest);
                 }
-                FriendList.ItemsSource = friendRequestList;
-            }
-            else
-            {
-                MessageBox.Show("Could not load the pending friend requests", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                PendingFriendRequestsContainer.ItemsSource = PendingFriendRequestsList;
             }
         }
 
@@ -89,28 +107,29 @@ namespace PolyPaint.Vues
             Uri imageUri = new Uri(CurrentUserCard.User.profileImage);
             BitmapImage imageBitmap = new BitmapImage(imageUri);
             ProfileViewPicture.Source = imageBitmap;
+            if (FriendsContainer.Children.Contains(userCard))
+            {
+                FriendButton.IsChecked = true;
+            } else
+            {
+                FriendButton.IsChecked = false;
+            }
         }
 
         private void AcceptFriendButton_Click(object sender, EventArgs e)
         {
-            User user = (User)((Button)sender).DataContext;
-            PendingFriendRequest friendRequest = new PendingFriendRequest
-            {
-                receiverId = user.id,
-                requesterId = ServerService.instance.user.id
-            };
-            PendingFriendRequestDao.Accept(friendRequest);
+            PendingFriendRequest friendRequest = (PendingFriendRequest)((Button)sender).DataContext;
+            PendingFriendRequestDao.Accept(friendRequest.id);
+            PendingFriendRequestsList.Remove(friendRequest);
+            FriendDao.Get();
+            FriendDao.GetUsersExceptFriends();
         }
 
         private void RefuseFriendButton_Click(object sender, EventArgs e)
         {
-            User user = (User)((Button)sender).DataContext;
-            PendingFriendRequest friendRequest = new PendingFriendRequest
-            {
-                receiverId = user.id,
-                requesterId = ServerService.instance.user.id
-            };
-            PendingFriendRequestDao.Refuse(friendRequest);
+            PendingFriendRequest friendRequest = (PendingFriendRequest)((Button)sender).DataContext;
+            PendingFriendRequestDao.Refuse(friendRequest.id);
+            PendingFriendRequestsList.Remove(friendRequest);
         }
 
         private void FriendButton_Click(object sender, RoutedEventArgs e)
@@ -120,12 +139,9 @@ namespace PolyPaint.Vues
                 PendingFriendRequestDao.Send(CurrentUserCard.User.id);
             } else
             {
-                Friend friend = new Friend
-                {
-                    friendId = CurrentUserCard.User.id,
-                    userId = ServerService.instance.user.id
-                };
-                FriendDao.Delete(friend);
+                FriendDao.Delete(CurrentUserCard.User.id);
+                FriendsContainer.Children.Remove(CurrentUserCard);
+                ConnectedUsersContainer.Children.Add(CurrentUserCard);
             }
 
         }
