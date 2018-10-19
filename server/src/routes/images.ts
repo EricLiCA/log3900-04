@@ -8,26 +8,39 @@ const RANDOM_IMAGE: string = 'https://picsum.photos/300/400/?random';
 export class ImagesRoute implements DAO {
 
     public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM Images').then((query) => {
-            if (query.rowCount > 0) {
-                res.send(query.rows.map((row) => {
+        if (req.query.ownerId !== undefined) {
+            const images = await ImagesModel.getByOwnerId(req.query.ownerId);
+            if (images.length > 0) {
+                res.send(images.map((row) => {
                     return {
                         id: row.Id,
                         ownerId: row.OwnerId,
                         title: row.Title,
                         protectionLevel: row.ProtectionLevel,
-                        password: row.Password,
                         thumbnailUrl: row.ThumbnailUrl,
                         fullImageUrl: row.FullImageUrl,
                     };
                 }));
+            } else {
+                res.sendStatus(404);
             }
-            res.sendStatus(404); // Not found
-        })
-            .catch((err) => {
-                res.sendStatus(400); // Bad request
-            });
+        } else {
+            const images = await ImagesModel.getAll();
+            if (images.length > 0) {
+                res.send(images.map((row) => {
+                    return {
+                        id: row.Id,
+                        ownerId: row.OwnerId,
+                        title: row.Title,
+                        protectionLevel: row.ProtectionLevel,
+                        thumbnailUrl: row.ThumbnailUrl,
+                        fullImageUrl: row.FullImageUrl,
+                    };
+                }));
+            } else {
+                res.sendStatus(404);
+            }
+        }
     }
 
     public async getByOwnerId(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
