@@ -10,6 +10,6 @@ namespace PolyPaint.Modeles
     {
         public string requesterId { get; set; }
         public string receiverId { get; set; }
-        public Boolean notified { get; set; }
+        public bool notified { get; set; }
     }
 }

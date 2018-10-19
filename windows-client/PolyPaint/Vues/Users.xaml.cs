@@ -36,12 +36,7 @@ namespace PolyPaint.Vues
                 for (int i = 0; i < responseUsers.Count; i++)
                 {
                     dynamic data = JObject.Parse(responseUsers[i].ToString());
-                    User user = new User
-                    {
-                        id = data["id"],
-                        username = data["username"],
-                        profileImage = data["profileImage"],
-                    };
+                    User user = new User((string)data["username"], (string)data["id"], (string)data["profileImage"]);
                     UsersCard userCard = new UsersCard(user);
                     userCard.ViewButtonClicked += ViewButton_Click;
                     ConnectedUsersContainer.Children.Add(userCard);
@@ -65,7 +60,7 @@ namespace PolyPaint.Vues
                     dynamic data = JObject.Parse(responseRequests[i].ToString());
                     PendingFriendRequest friendRequest = new PendingFriendRequest
                     {
-                        notified = data["notified"],
+                        notified = (string)data["notified"] == "true",
                         receiverId = data["receiverId"],
                         requesterId = data["requesterId"],
                     };
@@ -86,9 +81,7 @@ namespace PolyPaint.Vues
             ProfileView.Visibility = Visibility.Visible;
             ProfileView.IsExpanded = true;
             ProfileViewTitle.Text = CurrentUserCard.User.username;
-            Uri imageUri = new Uri(CurrentUserCard.User.profileImage);
-            BitmapImage imageBitmap = new BitmapImage(imageUri);
-            ProfileViewPicture.Source = imageBitmap;
+            ProfileViewPicture.Source = new BitmapImage(CurrentUserCard.User.profileImage);
         }
 
         private void AcceptFriendButton_Click(object sender, EventArgs e)
