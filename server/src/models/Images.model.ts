@@ -191,12 +191,12 @@ export class ImagesModel {
     }
 
     public constructor(
-        public id: string,
-        public ownerId: string,
-        public title: string,
-        public protectionLevel: string,
-        public password: string,
-        public thumbnailUrl: string,
-        public fullImageUrl: string,
+        public Id: string,
+        public OwnerId: string,
+        public Title: string,
+        public ProtectionLevel: string,
+        public Password: string,
+        public ThumbnailUrl: string,
+        public FullImageUrl: string,
     ) { }
 }

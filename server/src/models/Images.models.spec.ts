@@ -34,18 +34,18 @@ describe('ImagesModel', () => {
             undefined,
             undefined,
         );
-        expect(image.ownerId).to.equal(user.Id);
+        expect(image.OwnerId).to.equal(user.Id);
     });
 
     it('should get images created by the owner', async () => {
         const images = await ImagesModel.getByOwnerId(user.Id);
         expect(images).length.to.be.greaterThan(0);
-        expect(images[0].ownerId).to.equal(user.Id);
+        expect(images[0].OwnerId).to.equal(user.Id);
     });
 
     it('should transfer ownership of the image', async () => {
         const image2 = await ImagesModel.update(
-            image.id,
+            image.Id,
             user2.Id,
             undefined,
             undefined,
@@ -53,7 +53,7 @@ describe('ImagesModel', () => {
             undefined,
             undefined,
         );
-        expect(image2.ownerId).to.equal(user2.Id);
+        expect(image2.OwnerId).to.equal(user2.Id);
         const images = await ImagesModel.getByOwnerId(user.Id);
         expect(images).to.eql([]);
     });
@@ -64,8 +64,8 @@ describe('ImagesModel', () => {
     });
 
     it('should delete the image', async () => {
-        const deletedImage = await ImagesModel.delete(image.id);
-        expect(deletedImage.id).to.equal(image.id);
-        expect(deletedImage.ownerId).to.equal(user2.Id);
+        const deletedImage = await ImagesModel.delete(image.Id);
+        expect(deletedImage.Id).to.equal(image.Id);
+        expect(deletedImage.OwnerId).to.equal(user2.Id);
     });
 });
