@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { ImagesModel } from '../models/Images.model';
 import { PostgresDatabase } from '../postgres-database';
 import { DAO } from './dao';
 
@@ -49,7 +50,7 @@ export class ImagesRoute implements DAO {
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
-        });
+            });
     }
 
     public async getPublicExceptMine(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
@@ -72,7 +73,7 @@ export class ImagesRoute implements DAO {
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
-        });
+            });
     }
 
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
@@ -98,30 +99,28 @@ export class ImagesRoute implements DAO {
     }
 
     public async post(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        const preparedQuery = {
-            text: 'INSERT INTO Images("OwnerId", "Title", "ProtectionLevel", "Password", "ThumbnailUrl", "FullImageUrl") VALUES($1, $2, $3, $4, $5, $6) RETURNING *',
-            values: [req.body.ownerId, req.body.title, req.body.protectionLevel, req.body.password, req.body.thumbnailUrl, RANDOM_IMAGE],
-        };
-        const db = await PostgresDatabase.getInstance();
-        db.query(preparedQuery).then((query) => {
-            if (query.rowCount > 0) {
-                const result = query.rows[0];
-                res.status(201);
-                res.send({
-                    id: result.Id,
-                    ownerId: result.OwnerId,
-                    title: result.Title,
-                    protectionLevel: result.ProtectionLevel,
-                    password: result.Password,
-                    thumbnailUrl: result.ThumbnailUrl,
-                    fullImageUrl: result.FullImageUrl,
-                });
-            }
-            res.sendStatus(204);
-        })
-            .catch((err) => {
-                res.sendStatus(400); // Bad request
+        // TODO: add authentication
+        const result = await ImagesModel.create(
+            req.body.ownerId,
+            req.body.title,
+            req.body.protectionLevel,
+            req.body.password,
+            req.body.thumbnailUrl,
+            req.body.fullImageUrl,
+        );
+        if (result === undefined) {
+            res.sendStatus(400);
+        } else {
+            res.send({
+                id: result.Id,
+                ownerId: result.OwnerId,
+                title: result.Title,
+                protectionLevel: result.ProtectionLevel,
+                password: result.Password,
+                thumbnailUrl: result.ThumbnailUrl,
+                fullImageUrl: result.FullImageUrl,
             });
+        }
     }
 
     public async update(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
