@@ -146,6 +146,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Observer for go to friends gallery
         NotificationCenter.default.addObserver(self, selector: #selector(goToFriendsGalleryAlert), name: NSNotification.Name(rawValue: "goToFriendsGalleryAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(startChatAlert), name: NSNotification.Name(rawValue: "startChatAlert"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(friendshipAcceptedAlert), name: NSNotification.Name(rawValue: "friendshipAcceptedAlert"), object: nil)
+    }
+    
+    @objc func friendshipAcceptedAlert(_ notification: Notification) {
+        print("FRIENDSHIP ACCEPTED ALERT")
+        let newFriend = User(id: notification.userInfo!["id"]! as! String, username: notification.userInfo!["username"] as! String, profilePictureUrl: notification.userInfo!["profilePictureUrl"]! as! String)
+        self.friends.append(newFriend)
+        self.addFriendsToFriendsTableView(friend: newFriend)
         
     }
     

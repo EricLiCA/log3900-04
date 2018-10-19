@@ -194,6 +194,8 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             if user.username == username {
                 self.sendAcceptFriendship(userId: user.id)
                 // add friends to friend list NOTIFICATION
+                let userInfo = ["id": user.id, "username": user.username, "profilePictureUrl": user.profilePictureUrl]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "friendshipAcceptedAlert"), object: nil, userInfo: userInfo)
             }
         }
         
