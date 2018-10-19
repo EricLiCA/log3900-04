@@ -51,25 +51,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var pendingFriendRequestsButton: UIButton!
 
     var friendsCellsContent = [User]()
-    var friends = [User]()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.friendsTableView.rowHeight = 150.0
-        self.setUsernameLabel()
-        self.colorBorder()
+        self.customizeUI()
         self.setUpNotifications()
-        // Set as delegate for the message table
         self.friendsTableView.delegate = self
         self.friendsTableView.dataSource = self
         self.getFriends()
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -78,9 +71,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendTableViewCell
-        // Customize the cell
         cell.friendUsernameLabel?.text = friendsCellsContent[indexPath.row].username
-        // Return the cell
         return cell
     }
     
@@ -98,10 +89,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String,String>]
             if (responseJSON) != nil {
                 DispatchQueue.main.async {
-                    // fill friend list
+                    // fill friendd list
                     for friendship in responseJSON! {
                         let friend = User(id: friendship["id"]!, username: friendship["username"]!, profilePictureUrl: friendship["profileImage"]!)
-                        self.friends.append(friend)
                         self.addFriendsToFriendsTableView(friend: friend)
                     }
                 }
@@ -116,6 +106,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         //self.friendsArray.append(friendUsername)
         self.friendsCellsContent.append(friend)
         self.friendsTableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
+    
+    func customizeUI() {
+        self.colorBorder()
+        self.setUsernameLabel()
+        self.friendsTableView.rowHeight = 150.0
     }
     
     func colorBorder() {
@@ -141,7 +137,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @objc func friendshipAcceptedAlert(_ notification: Notification) {
         print("FRIENDSHIP ACCEPTED ALERT")
         let newFriend = User(id: notification.userInfo!["id"]! as! String, username: notification.userInfo!["username"] as! String, profilePictureUrl: notification.userInfo!["profilePictureUrl"]! as! String)
-        self.friends.append(newFriend)
         self.addFriendsToFriendsTableView(friend: newFriend)
         
     }
@@ -156,10 +151,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
         // find friend id
         var friendNumber = 0
-        for friend in friends {
+        for friend in friendsCellsContent {
             if(friend.username == friendUsername) {
                 self.removeFriendship(friendId: friend.id)
-                self.friends.remove(at: friendNumber)
                 self.friendsCellsContent.remove(at: friendNumber)
                 self.friendsTableView.reloadData()
             }
