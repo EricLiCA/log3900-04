@@ -8,10 +8,6 @@
 
 import UIKit
 
-struct Headline {
-    
-}
-
 class PendingFriendRequestTableViewCell: UITableViewCell {
     
     @IBOutlet weak var usernameLabel: UILabel!
@@ -36,13 +32,11 @@ class PendingFriendRequestTableViewCell: UITableViewCell {
     }
     
     func sendAcceptFriendshipNotification() {
-        // Send notification to accept friendship
         let userInfo = [ "username" : usernameLabel.text! ]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "acceptFriendshipAlert"), object: nil, userInfo: userInfo)
     }
     
     func sendRefuseFriendshipNotification() {
-        // Send notification to accept friendship
         let userInfo = [ "username" : usernameLabel.text! ]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "refuseFriendshipAlert"), object: nil, userInfo: userInfo)
     }
@@ -61,7 +55,6 @@ class UsersNotInFriendsTableViewCell: UITableViewCell {
     }
     
     func sendUpdateUsernameNotification() {
-        // Send notification to update username label in ProfileViewController
         let userInfo = [ "username" : usernameLabel.text! ]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "friendRequestAlert"), object: nil, userInfo: userInfo)
     }
