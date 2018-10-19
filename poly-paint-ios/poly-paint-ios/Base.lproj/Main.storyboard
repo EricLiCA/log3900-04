@@ -87,7 +87,7 @@
                                 <rect key="frame" x="0.0" y="64" width="768" height="914"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" id="DVL-uI-Epi">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" id="DVL-uI-Epi">
                                         <rect key="frame" x="0.0" y="28" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DVL-uI-Epi" id="zyR-AD-ml9">
@@ -545,7 +545,7 @@
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
-                                                            <segue destination="KrC-7h-VNC" kind="popoverPresentation" popoverAnchorView="0qr-yN-DBE" id="OcH-fk-DgL">
+                                                            <segue destination="KrC-7h-VNC" kind="popoverPresentation" identifier="toAccountSettings" popoverAnchorView="0qr-yN-DBE" id="OcH-fk-DgL">
                                                                 <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                                             </segue>
                                                         </connections>
@@ -580,7 +580,7 @@
                                 <rect key="frame" x="20" y="508" width="728" height="496"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendCell" rowHeight="143" id="Hjb-Hq-Eta" userLabel="FriendCell" customClass="FriendHeadlineTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="FriendCell" rowHeight="143" id="Hjb-Hq-Eta" userLabel="FriendCell" customClass="FriendTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="728" height="143"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Hjb-Hq-Eta" id="f3W-mb-UaN">
@@ -675,7 +675,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="pendingFriendRequestsTapped:" destination="r8R-KD-eft" eventType="touchUpInside" id="eus-gp-Hxb"/>
                                     <segue destination="7fN-kl-JlN" kind="popoverPresentation" identifier="toPendingFriendRequests" popoverAnchorView="uZa-Z1-8Sj" id="IDQ-Qb-zNY">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
@@ -869,7 +868,7 @@
                                 <rect key="frame" x="16" y="108" width="288" height="352"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddFriendsCell" rowHeight="60" id="kbi-UF-h2o" userLabel="AddFriendsCell" customClass="UsersNotInFriendsTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddFriendsCell" rowHeight="60" id="kbi-UF-h2o" userLabel="AddFriendsCell" customClass="UsersNotInFriendsTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="288" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kbi-UF-h2o" id="EHg-ke-082">
@@ -923,7 +922,7 @@
                                             <outlet property="usernameLabel" destination="sSG-IJ-gNe" id="ZX8-uf-Doo"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="pendingFriendRequestCell" rowHeight="60" id="QZM-hE-fmK" userLabel="pendingFriendRequestCell" customClass="PendingFriendRequestTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="pendingFriendRequestCell" rowHeight="60" id="QZM-hE-fmK" userLabel="pendingFriendRequestCell" customClass="PendingFriendRequestTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="88" width="288" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QZM-hE-fmK" id="YIR-i4-hgB">
