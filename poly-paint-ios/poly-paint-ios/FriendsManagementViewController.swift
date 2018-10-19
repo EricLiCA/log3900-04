@@ -72,7 +72,6 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     @IBOutlet weak var popoverTitleLabel: UILabel!
     
     var segueName: String = "";
-    var usersNotInFriendsCells = [User]()
     var usersNotInFriends = [User]()
     var pendingFriendships = [User]()
     var pendingFriendshipsCells = [User]()
@@ -108,7 +107,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if segueName == "toAddFriends" {
-            return usersNotInFriendsCells.count
+            return usersNotInFriends.count
         } else {
             return pendingFriendshipsCells.count
         }
@@ -119,7 +118,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             // create a table cell
             let cell = friendManagementTableView.dequeueReusableCell(withIdentifier: "AddFriendsCell", for: indexPath) as! UsersNotInFriendsTableViewCell
             // Customize the cell
-            let username = usersNotInFriendsCells[indexPath.row].username
+            let username = usersNotInFriends[indexPath.row].username
             cell.usernameLabel?.text = username
             return cell
         } else {
@@ -133,8 +132,8 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func addUserToAddFriendsTableView(user: User) {
-        let newIndexPath = IndexPath(row: self.usersNotInFriendsCells.count, section: 0)
-        self.usersNotInFriendsCells.append(user)
+        let newIndexPath = IndexPath(row: self.usersNotInFriends.count, section: 0)
+        self.usersNotInFriends.append(user)
         self.friendManagementTableView.insertRows(at: [newIndexPath], with: .automatic)
     }
     
@@ -145,7 +144,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func addPendingFriendshipsToAddFriendsTableView(user: User) {
-        let newIndexPath = IndexPath(row: self.usersNotInFriendsCells.count, section: 0)
+        let newIndexPath = IndexPath(row: self.usersNotInFriends.count, section: 0)
         self.pendingFriendshipsCells.append(user)
         self.friendManagementTableView.insertRows(at: [newIndexPath], with: .automatic)
     }
@@ -358,12 +357,12 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, String>]
             
             if (responseJSON as? [Dictionary<String, String>]) != nil {
-                for user in responseJSON! {
-                    let userNotFriend = User(id: user["id"]!, username: user["username"]!, profilePictureUrl: user["profileImage"]!)
-                    self.usersNotInFriends.append(userNotFriend)
-                }
+                
                 DispatchQueue.main.async {
-                    self.showUsers()
+                    for user in responseJSON! {
+                        let userNotFriend = User(id: user["id"]!, username: user["username"]!, profilePictureUrl: user["profileImage"]!)
+                        self.addUserToAddFriendsTableView(user: userNotFriend)
+                    }
                 }
             }
         }
