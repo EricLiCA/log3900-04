@@ -5,7 +5,6 @@ import { SocketServer } from './socket-server';
 import * as http from 'http';
 import * as _ from 'lodash';
 import { post } from 'superagent';
-import { ChatService } from './chat-service/chat-service';
 import { PostgresDatabase } from './postgres-database';
 import { RedisService } from './redis.service';
 
@@ -92,7 +91,6 @@ async function startServices(): Promise<Map<string, boolean>> {
             .end();
     }
     SocketServer.setServer(server);
-    ChatService.instance.startChatService();
     results.set('SocketServer', true);
     if (process.env.PROD) {
         post(SLACK_API)

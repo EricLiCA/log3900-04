@@ -15,7 +15,8 @@ create table if not exists users
 		constraint "uc_User_Username"
 			unique,
 	"Password" varchar(200) not null,
-	"UserLevel" userpermissionlevel default 'user'::userpermissionlevel not null
+	"UserLevel" userpermissionlevel default 'user'::userpermissionlevel not null,
+    "ProfileImage" VARCHAR
 )
 ;
 
