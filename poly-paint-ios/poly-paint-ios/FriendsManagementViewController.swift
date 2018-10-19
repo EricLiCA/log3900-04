@@ -74,7 +74,6 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     var segueName: String = "";
     var usersNotInFriends = [User]()
     var pendingFriendships = [User]()
-    var pendingFriendshipsCells = [User]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,87 +88,64 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if segueName == "toAddFriends" {
+            return usersNotInFriends.count
+        } else {
+            return pendingFriendships.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if segueName == "toAddFriends" {
+            let cell = friendManagementTableView.dequeueReusableCell(withIdentifier: "AddFriendsCell", for: indexPath) as! UsersNotInFriendsTableViewCell
+            let username = usersNotInFriends[indexPath.row].username
+            cell.usernameLabel?.text = username
+            return cell
+        } else {
+            let cell = friendManagementTableView.dequeueReusableCell(withIdentifier: "pendingFriendRequestCell", for: indexPath) as! PendingFriendRequestTableViewCell
+            let username = pendingFriendships[indexPath.row].username
+            cell.usernameLabel?.text = username
+            return cell
+        }
+    }
     
     func actionsForSegue() {
         if self.segueName == "toAddFriends" {
-            //self.currentFriends = UserDefaults.standard.array(forKey: "friends") as! [String]
             self.setupAddFriendsNotifications()
             popoverTitleLabel.text = "Send Friend Requests"
-            //self.getAllUsers()
             self.loadUsersNotInFriends()
         } else {
-            //self.pendingFriendships = ["Anna"]
             self.setupPendingFriendshipNotifications()
             popoverTitleLabel.text = "Pending Friend Requests"
             self.loadPendingFrienships()
         }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if segueName == "toAddFriends" {
-            return usersNotInFriends.count
-        } else {
-            return pendingFriendshipsCells.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if segueName == "toAddFriends" {
-            // create a table cell
-            let cell = friendManagementTableView.dequeueReusableCell(withIdentifier: "AddFriendsCell", for: indexPath) as! UsersNotInFriendsTableViewCell
-            // Customize the cell
-            let username = usersNotInFriends[indexPath.row].username
-            cell.usernameLabel?.text = username
-            return cell
-        } else {
-            // create a table cell
-            let cell = friendManagementTableView.dequeueReusableCell(withIdentifier: "pendingFriendRequestCell", for: indexPath) as! PendingFriendRequestTableViewCell
-            // Customize the cell
-            let username = pendingFriendshipsCells[indexPath.row].username
-            cell.usernameLabel?.text = username
-            return cell
-        }
-    }
-    
-    func addUserToAddFriendsTableView(user: User) {
+    func addUserToTableView(user: User) {
         let newIndexPath = IndexPath(row: self.usersNotInFriends.count, section: 0)
         self.usersNotInFriends.append(user)
         self.friendManagementTableView.insertRows(at: [newIndexPath], with: .automatic)
     }
     
-    func showUsers() {
-        for user in usersNotInFriends {
-            self.addUserToAddFriendsTableView(user: user)
-        }
-    }
-    
-    func addPendingFriendshipsToAddFriendsTableView(user: User) {
-        let newIndexPath = IndexPath(row: self.usersNotInFriends.count, section: 0)
-        self.pendingFriendshipsCells.append(user)
+    func addPendingFriendshipsToTableView(user: User) {
+        let newIndexPath = IndexPath(row: self.pendingFriendships.count, section: 0)
+        self.pendingFriendships.append(user)
         self.friendManagementTableView.insertRows(at: [newIndexPath], with: .automatic)
     }
     
-    func showPendingFriendships() {
-        for user in pendingFriendships {
-            self.addPendingFriendshipsToAddFriendsTableView(user: user)
-        }
-    }
-    
     func setupAddFriendsNotifications() {
-        // Observer for username update
         NotificationCenter.default.addObserver(self, selector: #selector(friendRequestAlert), name: NSNotification.Name(rawValue: "friendRequestAlert"), object: nil)
     }
     
     @objc func friendRequestAlert(_ notification: Notification) {
         let username: String = notification.userInfo!["username"]! as! String
-        // GET USER OBJECT
         for user in usersNotInFriends {
             if user.username == username {
                 self.sendFriendRequest(user: user)
             }
         }
-        
-        
     }
     
     func setupPendingFriendshipNotifications() {
@@ -184,14 +160,9 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         
         for user in pendingFriendships {
             if user.username == username {
-                self.sendAcceptFriendship(userId: user.id)
-                // add friends to friend list NOTIFICATION
-                let userInfo = ["id": user.id, "username": user.username, "profilePictureUrl": user.profilePictureUrl]
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "friendshipAcceptedAlert"), object: nil, userInfo: userInfo)
+                self.sendAcceptFriendship(user: user)
             }
         }
-        
-        
     }
     
     @objc func refuseFriendshipAlert(_ notification: Notification) {
@@ -200,16 +171,11 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         for user in pendingFriendships {
             if user.username == username {
                 self.sendRefuseFriendship(userId: user.id)
-                // add friends to friend list NOTIFICATION
             }
         }
-        //get user object
-        
     }
     
-    // TODO: When API ready, send friend request
     func sendFriendRequest(user: User) {
-        
         let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
@@ -227,32 +193,27 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
-                print(responseJSON)
                 DispatchQueue.main.async {
-                    
+                    // TODO: Decide if we disable sending friend requests again
                 }
             } else {
                 DispatchQueue.main.async {
-                    
+                    // TODO: Decide what we do in case of failure
                 }
             }
         }
         
         task.resume()
-        
-        
-        
     }
     
-    // TODO: When API ready, accept friendship
-    func sendAcceptFriendship(userId: String) {
+    func sendAcceptFriendship(user: User) {
         let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["friendId": userId, "token": UserDefaults.standard.string(forKey: "token")!]
+        let paramToSend: [String: Any] = ["friendId": user.id, "token": UserDefaults.standard.string(forKey: "token")!]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -263,13 +224,9 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
-                print("response ACCEPT friendship")
-                print(responseJSON)
                 DispatchQueue.main.async {
-                }
-            } else {
-                DispatchQueue.main.async {
-                    
+                    let userInfo = ["id": user.id, "username": user.username, "profilePictureUrl": user.profilePictureUrl]
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "friendshipAcceptedAlert"), object: nil, userInfo: userInfo)
                 }
             }
         }
@@ -277,7 +234,6 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         task.resume()
     }
     
-    // TODO: When API ready, refuse friendship
     func sendRefuseFriendship(userId: String) {
         let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
@@ -297,10 +253,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
                 DispatchQueue.main.async {
-                }
-            } else {
-                DispatchQueue.main.async {
-                    
+                    // Nothing do to
                 }
             }
         }
@@ -308,10 +261,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
         task.resume()
     }
     
-    // TODO: When API ready, get pending friendships
     func loadPendingFrienships() {
-        //showPendingFriendships()
-        print("CALLING LOAD PENDING ")
         let urlString = "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")! + "?pending=true"
         let url = URL(string: urlString)
         let session = URLSession.shared
@@ -325,13 +275,13 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, String>]
+            
             if (responseJSON as? [Dictionary<String, String>]) != nil {
-                for user in responseJSON! {
-                    let pendingFriend = User(id: user["id"]!, username: user["username"]!, profilePictureUrl: user["profileImage"]!)
-                    self.pendingFriendships.append(pendingFriend)
-                }
                 DispatchQueue.main.async {
-                    self.showPendingFriendships()
+                    for user in responseJSON! {
+                        let pendingFriend = User(id: user["id"]!, username: user["username"]!, profilePictureUrl: user["profileImage"]!)
+                        self.addPendingFriendshipsToTableView(user: pendingFriend)
+                    }
                 }
             }
         }
@@ -340,13 +290,11 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func loadUsersNotInFriends() {
-        // usersExceptFriends
         let urlString = "http://localhost:3000/v2/usersExceptFriends/" + UserDefaults.standard.string(forKey: "id")!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
-        
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let task = session.dataTask(with: request) { data, response, error in
@@ -357,11 +305,10 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String, String>]
             
             if (responseJSON as? [Dictionary<String, String>]) != nil {
-                
                 DispatchQueue.main.async {
                     for user in responseJSON! {
                         let userNotFriend = User(id: user["id"]!, username: user["username"]!, profilePictureUrl: user["profileImage"]!)
-                        self.addUserToAddFriendsTableView(user: userNotFriend)
+                        self.addUserToTableView(user: userNotFriend)
                     }
                 }
             }
