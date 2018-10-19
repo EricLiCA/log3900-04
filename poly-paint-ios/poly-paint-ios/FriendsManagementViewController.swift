@@ -25,7 +25,7 @@ class PendingFriendRequestTableViewCell: UITableViewCell {
     
     @IBAction func refuseTapped(_ sender: UIButton) {
         self.disableButtons()
-        self.sendAcceptFriendshipNotification()
+        self.sendRefuseFriendshipNotification()
     }
     
     func disableButtons() {

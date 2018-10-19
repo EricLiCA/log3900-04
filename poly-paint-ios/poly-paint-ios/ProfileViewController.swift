@@ -8,10 +8,6 @@
 
 import UIKit
 
-struct FriendHeadline {
-    
-}
-
 class FriendHeadlineTableViewCell: UITableViewCell {
     
     @IBOutlet weak var friendUsernameLabel: UILabel!
