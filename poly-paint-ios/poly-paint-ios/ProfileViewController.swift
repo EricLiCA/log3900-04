@@ -50,7 +50,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var pendingFriendRequestsButton: UIButton!
 
-    var friendsCellsContent = [User]()
+    var friends = [User]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,12 +66,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friendsCellsContent.count
+        return friends.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendTableViewCell
-        cell.friendUsernameLabel?.text = friendsCellsContent[indexPath.row].username
+        cell.friendUsernameLabel?.text = friends[indexPath.row].username
         return cell
     }
     
@@ -102,9 +102,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     private func addFriendsToFriendsTableView(friend: User) {
-        let newIndexPath = IndexPath(row: self.friendsCellsContent.count, section: 0)
-        //self.friendsArray.append(friendUsername)
-        self.friendsCellsContent.append(friend)
+        let newIndexPath = IndexPath(row: self.friends.count, section: 0)
+        self.friends.append(friend)
         self.friendsTableView.insertRows(at: [newIndexPath], with: .automatic)
     }
     
@@ -130,53 +129,44 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         NotificationCenter.default.addObserver(self, selector: #selector(removeAsFriendAlert), name: NSNotification.Name(rawValue: "removeAsFriendAlert"), object: nil)
         // Observer for go to friends gallery
         NotificationCenter.default.addObserver(self, selector: #selector(goToFriendsGalleryAlert), name: NSNotification.Name(rawValue: "goToFriendsGalleryAlert"), object: nil)
+        // Observer for start chat with selected friend
         NotificationCenter.default.addObserver(self, selector: #selector(startChatAlert), name: NSNotification.Name(rawValue: "startChatAlert"), object: nil)
+        // Observer for pending friendship (popover) accepted
         NotificationCenter.default.addObserver(self, selector: #selector(friendshipAcceptedAlert), name: NSNotification.Name(rawValue: "friendshipAcceptedAlert"), object: nil)
     }
     
     @objc func friendshipAcceptedAlert(_ notification: Notification) {
-        print("FRIENDSHIP ACCEPTED ALERT")
         let newFriend = User(id: notification.userInfo!["id"]! as! String, username: notification.userInfo!["username"] as! String, profilePictureUrl: notification.userInfo!["profilePictureUrl"]! as! String)
         self.addFriendsToFriendsTableView(friend: newFriend)
-        
     }
     
     @objc func updateUsernameAlert(sender: AnyObject) {
         self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
     }
     
-    // TODO: When API ready, remove from friends list and update interface
     @objc func removeAsFriendAlert(_ notification: Notification) {
-        // TODO: call api to remove friend
         let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
         // find friend id
-        var friendNumber = 0
-        for friend in friendsCellsContent {
+        var friendNumberInArray = 0
+        for friend in friends {
             if(friend.username == friendUsername) {
-                self.removeFriendship(friendId: friend.id)
-                self.friendsCellsContent.remove(at: friendNumber)
-                self.friendsTableView.reloadData()
+                self.removeFriendship(friendId: friend.id, friendNumberInArray: friendNumberInArray)
             }
-            friendNumber = friendNumber + 1
+            friendNumberInArray = friendNumberInArray + 1
         }
-        
-        
-        // TODO: refresh friends list
     }
     
     // TODO: When API ready, go to friends public gallery
     @objc func goToFriendsGalleryAlert(_ notification: Notification) {
-        // TODO: call api to go to friends gallery
         let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
     }
     
     // TODO: When API ready, start chat with friend
     @objc func startChatAlert(_ notification: Notification) {
-        // TODO: call api to start chat with friend
         let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
     }
     
-    func removeFriendship(friendId: String) {
+    func removeFriendship(friendId: String, friendNumberInArray: Int) {
         let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
@@ -184,8 +174,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         // Setting data to send
         let paramToSend: [String: Any] = ["friendId": friendId, "token": UserDefaults.standard.string(forKey: "token")!]
-        print("PARAMS")
-        print(paramToSend)
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -195,12 +183,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            if let responseJSON = responseJSON as? [String: Any] {
+            if (responseJSON as? [String: Any]) != nil {
                 DispatchQueue.main.async {
-                }
-            } else {
-                DispatchQueue.main.async {
-                    
+                    self.friends.remove(at: friendNumberInArray)
+                    self.friendsTableView.reloadData()
                 }
             }
         }
@@ -210,7 +196,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // send segue identifier so FriendsManagement VC knows which popover to show
-        if(segue.identifier != "toAccountSettings") {
+        if(segue.identifier == "toAddFriends" || segue.identifier == "toPendingFriendRequests") {
             let destinationViewController: FriendsManagementViewController  = segue.destination as! FriendsManagementViewController
             destinationViewController.segueName = segue.identifier!
         }
