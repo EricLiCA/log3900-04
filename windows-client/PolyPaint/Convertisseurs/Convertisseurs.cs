@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
 
@@ -51,6 +53,27 @@ namespace PolyPaint.Convertisseurs
                     return InkCanvasEditingMode.Ink;
             }
         }
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => System.Windows.DependencyProperty.UnsetValue;
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => System.Windows.DependencyProperty.UnsetValue;
+    }
+
+    /// <summary>
+    /// </summary>
+    class RoomNotificationsConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            Dictionary<string, int> notifications = (Dictionary<string, int>)values[0];
+            string room = (string)values[1];
+            
+            if (!notifications.ContainsKey(room) || notifications[room] == 0)
+            {
+                return null;
+            } else
+            {
+                return notifications[room];
+            }
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => null;
     }
 }
