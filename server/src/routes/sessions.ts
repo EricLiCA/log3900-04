@@ -34,7 +34,7 @@ export class SessionsRoute {
                                 id: result.Id,
                                 token: cachedToken,
                                 userLevel: result.UserLevel,
-                                profileImage: result.ProfileImage
+                                profileImage: result.ProfileImage,
                             });
                         } else {
                             db.query(

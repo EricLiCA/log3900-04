@@ -17,7 +17,6 @@ PolyPaintPro is a multi-platform application that enables users to collaborative
 |:-----------:|:----------------------:|
 | iPad Mini 4 | Any PC with Windows 10 |
 
-
 ## Technology Stack
 | | |
 | :-------------------- | :--|

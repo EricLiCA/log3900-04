@@ -1,4 +1,6 @@
-﻿using RestSharp;
+﻿using Quobject.SocketIoClientDotNet.Client;
+﻿using PolyPaint.Modeles;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,7 @@ namespace PolyPaint.Services
         public string password { get; set; }
         public string id { get; set; }
         public string token { get; set; }
-
+        public Socket Socket { get; set; }
+        public User user { get; set; }
     }
 }

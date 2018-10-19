@@ -1,22 +1,12 @@
+﻿using PolyPaint.Modeles;
 using Newtonsoft.Json.Linq;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using Quobject.SocketIoClientDotNet.Client;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PolyPaint.Vues
 {
@@ -33,6 +23,7 @@ namespace PolyPaint.Vues
 
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
+            connect.IsEnabled = false;
             progress.Visibility = Visibility.Visible;
             Verify_Server();
         }
@@ -58,6 +49,7 @@ namespace PolyPaint.Vues
                     }
                     else
                     {
+                        connect.IsEnabled = true;
                         progress.Visibility = Visibility.Collapsed;
                         MessageBox.Show("Could not connect to server", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
@@ -67,31 +59,73 @@ namespace PolyPaint.Vues
 
         private void Verify_Credentials()
         {
-            Credentials credentials = new Credentials(username.Text, password.Password);
-            var request = new RestRequest(Settings.API_VERSION + "/sessions", Method.POST);
-            request.AddJsonBody(credentials);
-            ServerService.instance.server.ExecuteAsync<LoginResponse>(request, response =>
+            User user = new User {
+                username = username.Text,
+                password = password.Password
+            };
+            var request = new RestRequest(Settings.API_VERSION + Settings.SESSION_PATH, Method.POST);
+            request.AddJsonBody(user);
+            ServerService.instance.server.ExecuteAsync(request, response =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        ServerService.instance.username = username.Text;
-                        ServerService.instance.password = password.Password;
                         dynamic data = JObject.Parse(response.Content);
                         ServerService.instance.id = data["id"];
                         ServerService.instance.token = data["token"];
-                        /*ServerService.instance.id = response.Data.id;
-                        ServerService.instance.token = response.Data.token;*/
-                        DialogResult = true;
+                        ServerService.instance.username = username.Text;
+                        Connect_Socket();
+                        
+                        ServerService.instance.user = new User(
+                            username.Text,
+                            (string)data["id"],
+                            (string)data["profileImage"],
+                            (string)data["token"],
+                            (string)data["userLevel"],
+                            password.Password
+						);
                     }
                     else
                     {
+                        connect.IsEnabled = true;
                         progress.Visibility = Visibility.Collapsed;
                         MessageBox.Show("Wrong Credentials", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 });
             });
+        }
+
+        private void Connect_Socket()
+        {
+            Socket socket = IO.Socket(ServerService.instance.server.BaseUrl);
+            socket.On(Socket.EVENT_CONNECT, (IListener) =>
+            {
+                socket.Emit("setUsername", ServerService.instance.username);
+                socket.Off(Socket.EVENT_CONNECT);
+            });
+
+            socket.On("setUsernameStatus", new CustomListener((object[] server_params) =>
+            {
+                if ((string)server_params[0] == "OK")
+                {
+                    ServerService.instance.Socket = socket;
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        DialogResult = true;
+                    });
+                } else
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        progress.Visibility = Visibility.Collapsed;
+                        connect.IsEnabled = true;
+                    });
+                    socket.Disconnect();
+                    MessageBox.Show("Can't connect to the socket : " + server_params[0], "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }));
         }
 
         private class Credentials
