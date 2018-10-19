@@ -65,6 +65,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.didReceiveMemoryWarning()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // send segue identifier so FriendsManagement VC knows which popover to show
+        if(segue.identifier == "toAddFriends" || segue.identifier == "toPendingFriendRequests") {
+            let destinationViewController: FriendsManagementViewController  = segue.destination as! FriendsManagementViewController
+            destinationViewController.segueName = segue.identifier!
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return friends.count
     }
@@ -73,53 +81,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendTableViewCell
         cell.friendUsernameLabel?.text = friends[indexPath.row].username
         return cell
-    }
-    
-    private func getFriends() {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
-        let session = URLSession.shared
-        var request = URLRequest(url: url!)
-        request.httpMethod = "GET"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let task = session.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                return
-            }
-            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String,String>]
-            if (responseJSON) != nil {
-                DispatchQueue.main.async {
-                    // fill friendd list
-                    for friendship in responseJSON! {
-                        let friend = User(id: friendship["id"]!, username: friendship["username"]!, profilePictureUrl: friendship["profileImage"]!)
-                        self.addFriendsToFriendsTableView(friend: friend)
-                    }
-                }
-            }
-        }
-        
-        task.resume()
-    }
-    
-    private func addFriendsToFriendsTableView(friend: User) {
-        let newIndexPath = IndexPath(row: self.friends.count, section: 0)
-        self.friends.append(friend)
-        self.friendsTableView.insertRows(at: [newIndexPath], with: .automatic)
-    }
-    
-    func customizeUI() {
-        self.colorBorder()
-        self.setUsernameLabel()
-        self.friendsTableView.rowHeight = 150.0
-    }
-    
-    func colorBorder() {
-        self.profileView.layer.borderWidth = 1
-        self.profileView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-    }
-    
-    func setUsernameLabel() {
-        self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
     }
     
     func setUpNotifications() {
@@ -150,7 +111,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         var friendNumberInArray = 0
         for friend in friends {
             if(friend.username == friendUsername) {
-                self.removeFriendship(friendId: friend.id, friendNumberInArray: friendNumberInArray)
+                self.deleteFriendship(friendId: friend.id, friendNumberInArray: friendNumberInArray)
             }
             friendNumberInArray = friendNumberInArray + 1
         }
@@ -166,7 +127,39 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let friendUsername: String = notification.userInfo!["friendUsername"]! as! String
     }
     
-    func removeFriendship(friendId: String, friendNumberInArray: Int) {
+    func getFriends() {
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [Dictionary<String,String>]
+            if (responseJSON) != nil {
+                DispatchQueue.main.async {
+                    // fill friendd list
+                    for friendship in responseJSON! {
+                        let friend = User(id: friendship["id"]!, username: friendship["username"]!, profilePictureUrl: friendship["profileImage"]!)
+                        self.addFriendsToFriendsTableView(friend: friend)
+                    }
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    
+    func addFriendsToFriendsTableView(friend: User) {
+        let newIndexPath = IndexPath(row: self.friends.count, section: 0)
+        self.friends.append(friend)
+        self.friendsTableView.insertRows(at: [newIndexPath], with: .automatic)
+    }
+    
+    func deleteFriendship(friendId: String, friendNumberInArray: Int) {
         let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
@@ -193,13 +186,20 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         task.resume()
     }
+
+    func customizeUI() {
+        self.colorBorder()
+        self.setUsernameLabel()
+        self.friendsTableView.rowHeight = 150.0
+    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // send segue identifier so FriendsManagement VC knows which popover to show
-        if(segue.identifier == "toAddFriends" || segue.identifier == "toPendingFriendRequests") {
-            let destinationViewController: FriendsManagementViewController  = segue.destination as! FriendsManagementViewController
-            destinationViewController.segueName = segue.identifier!
-        }
+    func colorBorder() {
+        self.profileView.layer.borderWidth = 1
+        self.profileView.layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    }
+    
+    func setUsernameLabel() {
+        self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
     }
     
     /*
