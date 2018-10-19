@@ -90,6 +90,7 @@ export class Application {
         // PendingFriendRequest
         router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
         router.get('/pendingFriendRequest/:id', pendingFriendRequestRoute.get.bind(pendingFriendRequestRoute.get));
+        router.get('/pendingFriendRequestByRequesterId/:id', pendingFriendRequestRoute.getByRequesterId.bind(pendingFriendRequestRoute.getByRequesterId));
         router.delete('/pendingFriendRequest/:id', pendingFriendRequestRoute.delete.bind(pendingFriendRequestRoute.delete));
 
         // Images
