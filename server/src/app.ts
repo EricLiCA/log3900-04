@@ -12,6 +12,7 @@ import { PendingFriendRequestRoute } from './routes/pending-friend-request';
 import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
+import { ChatRooms } from './routes/chat-rooms';
 
 export class Application {
     /**
@@ -63,8 +64,9 @@ export class Application {
         const friendshipsRoute: FriendshipsRoute = new FriendshipsRoute();
         const pendingFriendRequestRoute: PendingFriendRequestRoute = new PendingFriendRequestRoute();
         const imagesRoute: ImagesRoute = new ImagesRoute();
-        const imageLikes: ImageLikesRoute = new ImageLikesRoute();
-        const imageComments: ImageCommentsRoute = new ImageCommentsRoute();
+        const imageLikes : ImageLikesRoute = new ImageLikesRoute();
+        const imageComments : ImageCommentsRoute = new ImageCommentsRoute();
+        const chatRooms : ChatRooms = new ChatRooms();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));
@@ -110,6 +112,9 @@ export class Application {
         router.get('/imageComments/:imageId', imageComments.get.bind(imageComments.get));
         router.post('/imageComments', imageComments.post.bind(imageComments.post));
         router.delete('/imageComments/:imageId/:userId', imageComments.delete.bind(imageComments.delete));
+
+        // Chat Rooms
+        router.get('/chatRooms', chatRooms.get.bind(chatRooms.get));
 
         // use router middleware
         this.app.use('/v2', router);

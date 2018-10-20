@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.IO;
 using PolyPaint.DAO;
 using PolyPaint.Services;
 
@@ -20,8 +22,9 @@ namespace PolyPaint.Vues
 
         public MainWindow()
         {
-            FenetreDessin = new FenetreDessin();
             Server_Connect();
+            UsersManager.instance.fetchAll();
+            FenetreDessin = new FenetreDessin();
             InitializeComponent();
             Gallery = new Gallery();
             Users = new Users();
@@ -35,7 +38,7 @@ namespace PolyPaint.Vues
             if (dlg.ShowDialog() == false)
             {
                 System.Environment.Exit(0);
-            }  
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -59,7 +62,7 @@ namespace PolyPaint.Vues
                         break;
                     }
                 case 2:
-                    GridMain.Content = "Chat";
+                    GridMain.Content = MessagingViewManager.instance.LargeMessagingView;
                     break;
                 case 3:
                     GridMain.Content = this.FenetreDessin;
