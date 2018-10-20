@@ -12,8 +12,10 @@ const password = 'test';
 
 describe('Friendships', () => {
     before(async () => {
-        user1 = await User.create(username1, password);
-        user2 = await User.create(username2, password);
+        const p1 = User.create(username1, password);
+        const p2 = User.create(username2, password);
+        user1 = await p1;
+        user2 = await p2;
     });
 
     it('should create a friend request', async () => {
@@ -52,7 +54,9 @@ describe('Friendships', () => {
     });
 
     after(async () => {
-        await User.delete(user1.Id);
-        await User.delete(user2.Id);
+        const p1 = User.delete(user1.Id);
+        const p2 = User.delete(user2.Id);
+        await p1;
+        await p2;
     });
 });
