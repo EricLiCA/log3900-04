@@ -1,6 +1,7 @@
-using PolyPaint.Modeles;
+﻿using PolyPaint.Modeles;
 using PolyPaint.Utilitaires;
 using PolyPaint.Vues;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -59,26 +60,31 @@ namespace PolyPaint.VueModeles
                 }
                 return this.chatPages[index];
             }
-            set { PropertyModified(); }
         }
 
         public Dictionary<string, int> Notifications
         {
             get => Messaging.Notifications;
-            set { PropertyModified(); }
         }
-
-        public RelayCommand<int> OpenChat { get; set; }
         public RelayCommand<string> JoinChat { get; set; }
 
         public MessagingViewModel()
         {
             Messaging.PropertyChanged += new PropertyChangedEventHandler(MessagingPropertyChanged);
 
-            OpenChat = new RelayCommand<int>(Messaging.OpenChat);
             JoinChat = new RelayCommand<string>(Messaging.JoinChat);
             FilteredNotSubscribedChatRooms = new ObservableCollection<ChatRoom>();
             FilteredSubscribedChatRooms = new ObservableCollection<ChatRoom>();
+        }
+
+        public void OpenChat(int index)
+        {
+            if (index == -1)
+            {
+                return;
+            }
+
+            Messaging.OpenChat(Messaging.SubscribedChatRooms.IndexOf(this.SubscribedChatRooms[index]));
         }
 
         public void FilterChanged(string filter)
@@ -97,18 +103,19 @@ namespace PolyPaint.VueModeles
         {
             if (e.PropertyName == "SelectedIndex")
             {
-                this.ChatWindow = null;
-            } else if (e.PropertyName == "Notifications")
+                PropertyModified("ChatWindow");
+            }
+            else if (e.PropertyName == "Notifications")
             {
-                this.Notifications = Messaging.Notifications;
+                PropertyModified("Notifications");
             }
             else if (e.PropertyName == "SubscribedChatRooms")
             {
-                this.SubscribedChatRooms = Messaging.SubscribedChatRooms;
+                PropertyModified("SubscribedChatRooms");
             }
             else if (e.PropertyName == "NotSubscribedChatRooms")
             {
-                this.NotSubscribedChatRooms = Messaging.NotSubscribedChatRooms;
+                PropertyModified("NotSubscribedChatRooms");
             }
         }
     }

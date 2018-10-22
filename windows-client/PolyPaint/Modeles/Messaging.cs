@@ -13,9 +13,9 @@ namespace PolyPaint.Modeles
     public class Messaging : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public ObservableCollection<ChatRoom> NotSubscribedChatRooms { get; }
-        public ObservableCollection<ChatRoom> SubscribedChatRooms { get; }
+        
+        public List<ChatRoom> NotSubscribedChatRooms { get; }
+        public List<ChatRoom> SubscribedChatRooms { get; }
 
         private int selectedIndex = -1;
         public int SelectedIndex
@@ -28,10 +28,10 @@ namespace PolyPaint.Modeles
             }
         }
 
-        private Dictionary<string, int> notifications = new Dictionary<string, int>();
+        private Dictionary<string, int> _notifications = new Dictionary<string, int>();
         public Dictionary<string, int> Notifications
         {
-            get => this.notifications;
+            get => this._notifications;
         }
 
         public void NewMessage(ChatRoom room, string sender, string message)
@@ -59,12 +59,12 @@ namespace PolyPaint.Modeles
 
             if (this.SubscribedChatRooms.IndexOf(room) != this.selectedIndex)
             {
-                if (this.notifications.ContainsKey(room.Name))
+                if (this._notifications.ContainsKey(room.Name))
                 {
-                    this.notifications[room.Name] = this.notifications[room.Name] + 1;
+                    this._notifications[room.Name] = this._notifications[room.Name] + 1;
                 } else
                 {
-                    this.notifications.Add(room.Name, 1);
+                    this._notifications.Add(room.Name, 1);
                 }
                 ProprieteModifiee("Notifications");
             }
@@ -77,8 +77,8 @@ namespace PolyPaint.Modeles
 
         public Messaging()
         {
-            this.NotSubscribedChatRooms = new ObservableCollection<ChatRoom>();
-            this.SubscribedChatRooms = new ObservableCollection<ChatRoom>();
+            this.NotSubscribedChatRooms = new List<ChatRoom>();
+            this.SubscribedChatRooms = new List<ChatRoom>();
 
             this.NotSubscribedChatRooms.Add(new ChatRoom("Fun Times"));
             this.NotSubscribedChatRooms.Add(new ChatRoom("Happy Meal"));
@@ -97,6 +97,9 @@ namespace PolyPaint.Modeles
             this.SubscribedChatRooms.Add(room);
             this.OpenChat(this.SubscribedChatRooms.Count - 1);
             room.Users.Add(new ChatUser(chatName));
+
+            ProprieteModifiee("SubscribedChatRooms");
+            ProprieteModifiee("NotSubscribedChatRooms");
 
             ServerService.instance.Socket.Emit("joinRoom", room.Name);
             
@@ -131,6 +134,8 @@ namespace PolyPaint.Modeles
             this.OpenChat(this.SubscribedChatRooms.Count == 0 ? -1 : 0);
             room.ConnectionStatus = ConnectionStatus.LEFT;
             ServerService.instance.Socket.Emit("leaveRoom", room.Name);
+            ProprieteModifiee("SubscribedChatRooms");
+            ProprieteModifiee("NotSubscribedChatRooms");
         }
     }
 }
