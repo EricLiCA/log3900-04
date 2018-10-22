@@ -1,4 +1,4 @@
-﻿using PolyPaint.Modeles;
+using PolyPaint.Modeles;
 using PolyPaint.Utilitaires;
 using PolyPaint.Vues;
 using System.Collections.Generic;
@@ -15,19 +15,32 @@ namespace PolyPaint.VueModeles
         public event PropertyChangedEventHandler PropertyChanged;
         private Messaging Messaging = new Messaging();
 
+        private ObservableCollection<ChatRoom> FilteredNotSubscribedChatRooms;
         public ObservableCollection<ChatRoom> NotSubscribedChatRooms
         {
-            get => Messaging.NotSubscribedChatRooms;
-            set { PropertyModified(); }
+            get
+            {
+                FilteredNotSubscribedChatRooms.Clear();
+                Messaging.NotSubscribedChatRooms.Where(room => room.Name.Contains(this.filter)).ToList().ForEach(room => FilteredNotSubscribedChatRooms.Add(room));
+                return FilteredNotSubscribedChatRooms;
+            }
         }
 
+        private ObservableCollection<ChatRoom> FilteredSubscribedChatRooms;
         public ObservableCollection<ChatRoom> SubscribedChatRooms
         {
-            get => Messaging.SubscribedChatRooms;
-            set { PropertyModified(); }
+            get
+            {
+                FilteredSubscribedChatRooms.Clear();
+                Messaging.SubscribedChatRooms.Where(room => room.Name.Contains(this.filter)).ToList().ForEach(room => FilteredSubscribedChatRooms.Add(room));
+                return FilteredSubscribedChatRooms;
+            }
         }
 
         private List<Chat> chatPages = new List<Chat>();
+
+        private string filter = "";
+
         public Page ChatWindow
         {
             get
@@ -64,6 +77,15 @@ namespace PolyPaint.VueModeles
 
             OpenChat = new RelayCommand<int>(Messaging.OpenChat);
             JoinChat = new RelayCommand<string>(Messaging.JoinChat);
+            FilteredNotSubscribedChatRooms = new ObservableCollection<ChatRoom>();
+            FilteredSubscribedChatRooms = new ObservableCollection<ChatRoom>();
+        }
+
+        public void FilterChanged(string filter)
+        {
+            this.filter = filter;
+            PropertyModified("SubscribedChatRooms");
+            PropertyModified("NotSubscribedChatRooms");
         }
 
         protected virtual void PropertyModified([CallerMemberName] string propertyName = null)

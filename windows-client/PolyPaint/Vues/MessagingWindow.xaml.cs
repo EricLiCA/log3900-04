@@ -1,4 +1,4 @@
-﻿using PolyPaint.VueModeles;
+using PolyPaint.VueModeles;
 using System.Windows.Controls;
 
 namespace PolyPaint.Vues
@@ -18,6 +18,10 @@ namespace PolyPaint.Vues
         private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ((MessagingViewModel)this.DataContext).OpenChat.Execute(Listfirst.SelectedIndex);
+
+        private void Filter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ((MessagingViewModel)this.DataContext).FilterChanged(((TextBox)sender).Text);
         }
     }
 }

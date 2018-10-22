@@ -22,6 +22,12 @@
 
         <ScrollViewer HorizontalScrollBarVisibility="Disabled">
             <StackPanel Grid.Column="0">
+                <TextBox Margin="40 10"
+                         materialDesign:HintAssist.Hint="Filter"
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                         TextChanged="Filter_TextChanged"/>
+                <Separator />
+                
                 <TextBlock Text="Joined Chanels" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" Margin="5" />
                 <ListView Name="Listfirst" ScrollViewer.CanContentScroll="False" SelectionChanged="SelectionChanged" ItemsSource="{Binding Path=SubscribedChatRooms}">
                     <ListView.ItemTemplate>
