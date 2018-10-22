@@ -96,7 +96,7 @@ namespace PolyPaint.Modeles
             this.NotSubscribedChatRooms.Remove(room);
             this.SubscribedChatRooms.Add(room);
             this.OpenChat(this.SubscribedChatRooms.Count - 1);
-            room.Users.Add(new ChatUser(chatName));
+            room.Users.Add(new ChatUser(ServerService.instance.username));
 
             ProprieteModifiee("SubscribedChatRooms");
             ProprieteModifiee("NotSubscribedChatRooms");
