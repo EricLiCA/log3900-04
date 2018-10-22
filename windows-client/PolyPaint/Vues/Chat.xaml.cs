@@ -40,5 +40,10 @@ namespace PolyPaint.Vues
             ((ChatViewModel)DataContext).SendMessage.Execute(MessageToSend.Text);
             MessageToSend.Text = "";
         }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            ((ChatViewModel)DataContext).AddPerson.Execute(((Button)sender).Tag);
+        }
     }
 }

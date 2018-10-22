@@ -41,7 +41,8 @@ namespace PolyPaint.Modeles
 
         public void AddPerson(string person)
         {
-            throw new NotImplementedException();
+            this.Users.Add(new ChatUser(person));
+            ProprieteModifiee("Users");
         }
 
         protected void ProprieteModifiee([CallerMemberName] string propertyName = null)

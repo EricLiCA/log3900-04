@@ -132,6 +132,7 @@ namespace PolyPaint.Modeles
             this.SubscribedChatRooms.Remove(room);
             this.NotSubscribedChatRooms.Add(room);
             this.OpenChat(this.SubscribedChatRooms.Count == 0 ? -1 : 0);
+            room.Users.Remove(room.Users.First(user => user.username == ServerService.instance.username));
             room.ConnectionStatus = ConnectionStatus.LEFT;
             ServerService.instance.Socket.Emit("leaveRoom", room.Name);
             ProprieteModifiee("SubscribedChatRooms");
