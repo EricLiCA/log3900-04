@@ -53,7 +53,7 @@ namespace PolyPaint.VueModeles
                 if (index == -1)
                 {
                     ChatViewModel viewModel = new ChatViewModel(SubscribedChatRooms[Messaging.SelectedIndex]);
-                    viewModel.LeaveRoom = new RelayCommand<string>(Messaging.LeaveChat);
+                    viewModel.LeaveRoom = new RelayCommand<string>(Messaging.RequestLeaveChat);
                     Chat chatPage = new Chat(viewModel);
                     this.chatPages.Add(chatPage);
                     return chatPage;

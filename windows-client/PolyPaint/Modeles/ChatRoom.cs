@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace PolyPaint.Modeles
@@ -18,7 +19,6 @@ namespace PolyPaint.Modeles
         public string Name { get; set; }
         public ObservableCollection<ChatUser> Users { get; }
         public ObservableCollection<ChatMessage> Messages { get; }
-        public ConnectionStatus ConnectionStatus = ConnectionStatus.NOT_CONNECTED;
 
         private Regex regex = new Regex("^ {0,}$");
 
@@ -27,13 +27,6 @@ namespace PolyPaint.Modeles
             this.Name = name;
             this.Users = new ObservableCollection<ChatUser>();
             this.Messages = new ObservableCollection<ChatMessage>();
-            Random r = new Random(DateTime.Now.Millisecond + Name.ToCharArray()[0] + Name.ToCharArray()[1]);
-            for (var i = 0; i <= r.Next() % 12; i++)
-            {
-                var n = UsersManager.instance.Users[r.Next(0, UsersManager.instance.Users.Count)].username;
-                if (this.Users.Any(u => u.username == n) || n == ServerService.instance.username) continue;
-                this.Users.Add(new ChatUser(n));
-            }
         }
 
         public void SendMessage(string message)
@@ -47,6 +40,11 @@ namespace PolyPaint.Modeles
         public void RequestAddPerson(string person)
         {
             ServerService.instance.Socket.Emit("addToRoom", Name, person);
+        }
+
+        public void RequestQuit(string person)
+        {
+            ServerService.instance.Socket.Emit("leaveRoom", Name);
         }
 
         public void AddPerson(string person)
@@ -71,14 +69,36 @@ namespace PolyPaint.Modeles
             ProprieteModifiee("Users");
         }
 
+        public void NewMessage(ChatRoom room, string sender, string message)
+        {
+            bool isAnonymous = !UsersManager.instance.Users.Any(user => user.username == sender);
+            Application.Current.Dispatcher.Invoke(() => {
+                if (isAnonymous)
+                {
+                    Messages.Add(new ChatMessage(
+                        "Anonymous_" + sender,
+                        DateTime.Now.ToString("HH:mm:ss"),
+                        message
+                    )
+                );
+                }
+                else
+                {
+                    Messages.Add(new ChatMessage(
+                        sender,
+                        new BitmapImage(UsersManager.instance.Users.First(user => user.username == sender).profileImage),
+                        DateTime.Now.ToString("HH:mm:ss"),
+                        message
+                    ));
+                }
+            });
+
+            ProprieteModifiee("Messages");
+        }
+
         protected void ProprieteModifiee([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
-
-    public enum ConnectionStatus
-    {
-        NOT_CONNECTED, JOINED, LEFT 
     }
 }

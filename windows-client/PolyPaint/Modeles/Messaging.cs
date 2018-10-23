@@ -24,7 +24,14 @@ namespace PolyPaint.Modeles
             private set
             {
                 selectedIndex = value;
+
                 ProprieteModifiee();
+
+                if (value == -1) return;
+                if (this._notifications.ContainsKey(this.SubscribedChatRooms[value].Name))
+                {
+                    this._notifications.Remove(this.SubscribedChatRooms[value].Name);
+                }
             }
         }
 
@@ -32,42 +39,6 @@ namespace PolyPaint.Modeles
         public Dictionary<string, int> Notifications
         {
             get => this._notifications;
-        }
-
-        public void NewMessage(ChatRoom room, string sender, string message)
-        {
-            bool isAnonymous = !UsersManager.instance.Users.Any(user => user.username == sender);
-            Application.Current.Dispatcher.Invoke(() => {
-                if (isAnonymous)
-                {
-                    room.Messages.Add(new ChatMessage(
-                        "Anonymous_" + sender,
-                        DateTime.Now.ToString("HH:mm:ss"),
-                        message
-                    )
-                );
-                } else
-                {
-                    room.Messages.Add(new ChatMessage(
-                        sender,
-                        new BitmapImage(UsersManager.instance.Users.First(user => user.username == sender).profileImage),
-                        DateTime.Now.ToString("HH:mm:ss"),
-                        message
-                    ));
-                }
-            });
-
-            if (this.SubscribedChatRooms.IndexOf(room) != this.selectedIndex)
-            {
-                if (this._notifications.ContainsKey(room.Name))
-                {
-                    this._notifications[room.Name] = this._notifications[room.Name] + 1;
-                } else
-                {
-                    this._notifications.Add(room.Name, 1);
-                }
-                ProprieteModifiee("Notifications");
-            }
         }
 
         protected void ProprieteModifiee([CallerMemberName] string propertyName = null)
@@ -86,27 +57,92 @@ namespace PolyPaint.Modeles
 
             ServerService.instance.Socket.On("joinRoomInfo", new CustomListener((object[] server_params) =>
             {
+                ChatRoom room;
+
+                if (this.SubscribedChatRooms.Any(ChatRoom => ChatRoom.Name == (string)server_params[0]))
+                {
+                    room = this.SubscribedChatRooms.First(ChatRoom => ChatRoom.Name == (string)server_params[0]);
+                }
+                else if (this.NotSubscribedChatRooms.Any(ChatRoom => ChatRoom.Name == (string)server_params[0]))
+                {
+                    room = this.NotSubscribedChatRooms.First(ChatRoom => ChatRoom.Name == (string)server_params[0]);
+                }
+                else
+                {
+                    room = new ChatRoom((string)server_params[0]);
+                    NotSubscribedChatRooms.Add(room);
+                }
+
                 if ((string)server_params[1] == ServerService.instance.username)
                 {
                     JoinChat((string)server_params[0]);
                 }
 
-                if (this.SubscribedChatRooms.Any(ChatRoom => ChatRoom.Name == (string)server_params[0]))
-                {
-                    this.SubscribedChatRooms.First<ChatRoom>(ChatRoom => ChatRoom.Name == (string)server_params[0]).AddPerson((string)server_params[1]);
-                }
-                else if (this.NotSubscribedChatRooms.Any(ChatRoom => ChatRoom.Name == (string)server_params[0]))
-                {
-                    this.NotSubscribedChatRooms.First<ChatRoom>(ChatRoom => ChatRoom.Name == (string)server_params[0]).AddPerson((string)server_params[1]);
-                }
+                room.AddPerson(ServerService.instance.username);
 
-                string userName = (string)server_params[1];
+                ProprieteModifiee("SubscribedChatRooms");
+                ProprieteModifiee("NotSubscribedChatRooms");
             }));
 
             ServerService.instance.Socket.On("leaveRoomInfo", new CustomListener((object[] server_params) =>
             {
+                ChatRoom room;
 
+                if (this.SubscribedChatRooms.Any(ChatRoom => ChatRoom.Name == (string)server_params[0]))
+                {
+                    room = this.SubscribedChatRooms.First(ChatRoom => ChatRoom.Name == (string)server_params[0]);
+                }
+                else if (this.NotSubscribedChatRooms.Any(ChatRoom => ChatRoom.Name == (string)server_params[0]))
+                {
+                    room = this.NotSubscribedChatRooms.First(ChatRoom => ChatRoom.Name == (string)server_params[0]);
+                }
+                else return;
+                
+                if ((string)server_params[1] == ServerService.instance.username)
+                {
+                    LeaveChat((string)server_params[0]);
+                }
+
+                room.RemovePerson(ServerService.instance.username);
+
+                if (room.Users.Count == 0)
+                {
+                    this.NotSubscribedChatRooms.Remove(room);
+                }
+
+                ProprieteModifiee("SubscribedChatRooms");
+                ProprieteModifiee("NotSubscribedChatRooms");
             }));
+
+            ServerService.instance.Socket.On("message", new CustomListener((object[] server_params) =>
+            {
+                if (!this.SubscribedChatRooms.Any(ChatRoom => ChatRoom.Name == (string)server_params[0])) return;
+
+                Application.Current.Dispatcher.Invoke(() => {
+                    this.NewMessage(
+                        this.SubscribedChatRooms.First(ChatRoom => ChatRoom.Name == (string)server_params[0]),
+                        server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString(),
+                        server_params[2].ToString()
+                    );
+                });
+            }));
+        }
+
+        public void NewMessage(ChatRoom room, string sender, string message)
+        {
+            room.NewMessage(room, sender, message);
+
+            if (this.SubscribedChatRooms.IndexOf(room) != this.selectedIndex)
+            {
+                if (this._notifications.ContainsKey(room.Name))
+                {
+                    this._notifications[room.Name] = this._notifications[room.Name] + 1;
+                } else
+                {
+                    this._notifications.Add(room.Name, 1);
+                }
+                ProprieteModifiee("Notifications");
+            }
         }
 
         internal void OpenChat(int index)
@@ -119,50 +155,25 @@ namespace PolyPaint.Modeles
             ServerService.instance.Socket.Emit("joinRoom", chatName);
         }
 
+        internal void RequestLeaveChat(string chatName)
+        {
+            ServerService.instance.Socket.Emit("leaveRoom", chatName);
+        }
+
         internal void JoinChat(string chatName)
         {
             ChatRoom room = this.NotSubscribedChatRooms.First<ChatRoom>(ChatRoom => ChatRoom.Name == chatName);
             this.NotSubscribedChatRooms.Remove(room);
-            this.SubscribedChatRooms.Add(room);
+            this.SubscribedChatRooms.Insert(0, room);
             this.OpenChat(this.SubscribedChatRooms.Count - 1);
-            room.AddPerson(ServerService.instance.username);
-
-            ProprieteModifiee("SubscribedChatRooms");
-            ProprieteModifiee("NotSubscribedChatRooms");
-            
-            if (room.ConnectionStatus == ConnectionStatus.NOT_CONNECTED)
-            {
-                ServerService.instance.Socket.On("message", new CustomListener((object[] server_params) =>
-                {
-                    if (room.Name != server_params[0].ToString() || room.ConnectionStatus != ConnectionStatus.JOINED)
-                    {
-                        return;
-                    }
-
-                    Application.Current.Dispatcher.Invoke(() => { 
-                        this.NewMessage(
-                            room,
-                            server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString(),
-                            server_params[2].ToString()
-                        );
-                    });
-                }));
-            }
-
-            room.ConnectionStatus = ConnectionStatus.JOINED;
         }
 
         internal void LeaveChat(string chatName)
         {
             ChatRoom room = this.SubscribedChatRooms.First<ChatRoom>(ChatRoom => ChatRoom.Name == chatName);
             this.SubscribedChatRooms.Remove(room);
-            this.NotSubscribedChatRooms.Add(room);
+            this.NotSubscribedChatRooms.Insert(0, room);
             this.OpenChat(this.SubscribedChatRooms.Count == 0 ? -1 : 0);
-            room.RemovePerson(ServerService.instance.username);
-            room.ConnectionStatus = ConnectionStatus.LEFT;
-            ServerService.instance.Socket.Emit("leaveRoom", room.Name);
-            ProprieteModifiee("SubscribedChatRooms");
-            ProprieteModifiee("NotSubscribedChatRooms");
         }
     }
 }
