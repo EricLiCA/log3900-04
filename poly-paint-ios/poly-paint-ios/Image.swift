@@ -6,4 +6,30 @@
 //  Copyright © 2018 PolyAcme. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class Image: NSObject {
+    
+    var id: String?
+    var ownerId: String?
+    var title: String?
+    var protectionLevel: String?
+    var password: String?
+    var thumbnailUrl: String?
+    var fullImageUrl: String?
+    
+    func getThumbnailUrl()  -> URL? {
+        if let url = URL(string :thumbnailUrl!){
+            return url
+        }
+        return nil
+    }
+    
+    func getFullImageUrl()  -> URL? {
+        if let url = URL(string :fullImageUrl!){
+            return url
+        }
+        return nil
+    }
+    
+}
