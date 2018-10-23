@@ -17,6 +17,8 @@ class Image: NSObject {
     var password: String?
     var thumbnailUrl: String?
     var fullImageUrl: String?
+    var thumbnail: UIImage?
+    var fullImage: UIImage?
     
     func getThumbnailUrl()  -> URL? {
         if let url = URL(string :thumbnailUrl!){
