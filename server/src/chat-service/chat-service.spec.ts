@@ -26,6 +26,7 @@ describe('ChatService', () => {
             });
             socket = io.connect(`${TEST_HOST}:${TEST_PORT}`);
             socket.emit('joinRoom', 'testRoom');
+            expect(ChatService.instance['rooms'].size).to.be.greaterThan(0);
             // The usernames should be unique
             // Anonymous users are allowed
 

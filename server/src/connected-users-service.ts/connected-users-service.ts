@@ -38,12 +38,20 @@ export class ConnectedUsersService {
         return ConnectedUsersService.instance.users;
     }
 
+    private static connectedUsersService: ConnectedUsersService;
+
     private static findIndexByName(name: string): number {
         return ConnectedUsersService.instance.users.findIndex((user) => user.name === name);
     }
 
     private static findIndexBySocket(id: string): number {
         return ConnectedUsersService.instance.users.findIndex((user) => user.socket.id === id);
+    }
+
+    private users: User[];
+
+    constructor() {
+        this.users = [];
     }
 
 }
