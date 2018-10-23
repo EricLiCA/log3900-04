@@ -101,16 +101,16 @@
             </Expander>
             <ScrollViewer>
                 <StackPanel>
-                    <GroupBox Header="Private Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+                    <GroupBox Header="My Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon  Kind="EyeOff" Height="32" Width="32" VerticalAlignment="Center" />
+                                    <materialDesign:PackIcon  Kind="Image" Height="32" Width="32" VerticalAlignment="Center" />
                                     <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}" />
                                 </StackPanel>
                             </DataTemplate>
                         </GroupBox.HeaderTemplate>
-                        <WrapPanel x:Name="PrivateImagesContainer" Margin="10"/>
+                        <WrapPanel x:Name="MyImagesContainer" Margin="10"/>
                     </GroupBox>
                     <GroupBox Header="Public Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>

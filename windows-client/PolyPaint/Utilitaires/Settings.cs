@@ -13,6 +13,8 @@ namespace PolyPaint.Utilitaires
         public const string SERVER_STATUS_PATH = "/status";
         public const string API_VERSION = "v2";
         public const string IMAGES_PATH = "/images";
+        public const string IMAGES_BY_OWNER_ID_PATH = "/imagesByOwnerId";
+        public const string IMAGES_PUBLIC_EXCEPT_MINE = "/imagesPublicExceptMine";
         public const string IMAGE_LIKES_PATH = "/imageLikes";
         public const string IMAGE_COMMENTS_PATH = "/imageComments";
         public const string USERS_PATH = "/users";
