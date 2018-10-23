@@ -21,8 +21,10 @@ class Image: NSObject {
     var fullImage: UIImage?
     
     func getThumbnailUrl()  -> URL? {
-        if let url = URL(string :thumbnailUrl!){
-            return url
+        if self.thumbnailUrl != nil {
+            if let url = URL(string :thumbnailUrl!){
+                return url
+            }
         }
         return nil
     }
