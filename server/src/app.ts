@@ -4,10 +4,15 @@ import * as express from 'express';
 import * as httpLogger from 'morgan';
 import * as path from 'path';
 
+import { FriendshipsRoute } from './routes/friendships';
+import { ImageCommentsRoute } from './routes/image-comments';
+import { ImageLikesRoute } from './routes/image-likes';
+import { ImagesRoute } from './routes/images';
+import { PendingFriendRequestRoute } from './routes/pending-friend-request';
 import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
-import { ImagesRoute } from './routes/images';
+import { ChatRooms } from './routes/chat-rooms';
 
 export class Application {
     /**
@@ -56,7 +61,12 @@ export class Application {
         const serverStatus: ServerStatus = new ServerStatus();
         const usersRoute: UsersRoute = new UsersRoute();
         const sessionsRoute: SessionsRoute = new SessionsRoute();
+        const friendshipsRoute: FriendshipsRoute = new FriendshipsRoute();
+        const pendingFriendRequestRoute: PendingFriendRequestRoute = new PendingFriendRequestRoute();
         const imagesRoute: ImagesRoute = new ImagesRoute();
+        const imageLikes : ImageLikesRoute = new ImageLikesRoute();
+        const imageComments : ImageCommentsRoute = new ImageCommentsRoute();
+        const chatRooms : ChatRooms = new ChatRooms();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));
@@ -73,15 +83,41 @@ export class Application {
         router.post('/sessions', sessionsRoute.login.bind(sessionsRoute.login));
         router.delete('/sessions/:id', sessionsRoute.logout.bind(sessionsRoute.logout));
 
+        // Friendships
+        router.get('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.get));
+        router.get('/usersExceptFriends/:id', friendshipsRoute.getUsersExceptFriends.bind(friendshipsRoute.getUsersExceptFriends));
+        router.post('/friendships/:id', friendshipsRoute.post.bind(friendshipsRoute.post));
+        router.delete('/friendships/:id', friendshipsRoute.delete.bind(friendshipsRoute.delete));
+
+        // PendingFriendRequest
+        router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
+        router.get('/pendingFriendRequest/:id', pendingFriendRequestRoute.get.bind(pendingFriendRequestRoute.get));
+        router.delete('/pendingFriendRequest/:id', pendingFriendRequestRoute.delete.bind(pendingFriendRequestRoute.delete));
+
         // Images
         router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
         router.get('/images/:id', imagesRoute.get.bind(imagesRoute.get));
+        router.get('/imagesByOwnerId/:id', imagesRoute.getByOwnerId.bind(imagesRoute.getByOwnerId));
+        router.get('/imagesPublicExceptMine/:id', imagesRoute.getPublicExceptMine.bind(imagesRoute.getPublicExceptMine));
         router.post('/images', imagesRoute.post.bind(imagesRoute.post));
         router.put('/images/:id', imagesRoute.update.bind(imagesRoute.update));
         router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
-        
+
+        // ImageLikes
+        router.get('/imageLikes/:imageId', imageLikes.get.bind(imageLikes.get));
+        router.post('/imageLikes', imageLikes.post.bind(imageLikes.post));
+        router.delete('/imageLikes/:imageId/:userId', imageLikes.delete.bind(imageLikes.delete));
+
+        // ImageComments
+        router.get('/imageComments/:imageId', imageComments.get.bind(imageComments.get));
+        router.post('/imageComments', imageComments.post.bind(imageComments.post));
+        router.delete('/imageComments/:imageId/:userId', imageComments.delete.bind(imageComments.delete));
+
+        // Chat Rooms
+        router.get('/chatRooms', chatRooms.get.bind(chatRooms.get));
+
         // use router middleware
-        this.app.use('/v1', router);
+        this.app.use('/v2', router);
 
         // error management
         this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {

@@ -6,26 +6,16 @@
       xmlns:local="clr-namespace:PolyPaint.Vues"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
-      Height="259.958" Width="200" Margin="0,0,20,20" HorizontalAlignment="Left">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="140" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-        <Image Source="{Binding Path=Image.fullImageUrl}" Height="140" Width="196" Stretch="UniformToFill" />
-            <StackPanel Grid.Row="1" Margin="8 24 8 0" >
-            <TextBlock FontWeight="Bold" Text="{Binding Path=Image.title}" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+      Height="259.958" Width="200" Margin="0,0,20,20" HorizontalAlignment="Left" Cursor="Hand" MouseDown="ViewButton_Click">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="230" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image Source="{Binding Image.fullImageUrl, Mode = OneWay}" Stretch="UniformToFill" Margin="2,1" />
+        <StackPanel Grid.Row="1" Margin="0,5,0,0" >
+            <TextBlock Name="ImageTitle" FontWeight="Bold" Text="{Binding Image.title, Mode = OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"></TextBlock>
         </StackPanel>
-            <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="8">
-                <Button Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"
-                            materialDesign:RippleAssist.IsCentered="True" Click="ViewButton_Click">
-                    <materialDesign:PackIcon Kind="Eye" />
-                </Button>
-                <Button Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0"
-                            materialDesign:RippleAssist.IsCentered="True">
-                    <materialDesign:PackIcon Kind="Heart" />
-                </Button>
-            </StackPanel>
-        </Grid>
-    </materialDesign:Card>
+    </Grid>
+</materialDesign:Card>

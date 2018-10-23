@@ -1,0 +1,107 @@
+﻿<Page x:Class="PolyPaint.Vues.MessagingWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PolyPaint.Vues"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:convertisseurs="clr-namespace:PolyPaint.Convertisseurs"
+      mc:Ignorable="d"
+      Title="MessagingWindow">
+    <Page.Resources>
+        <convertisseurs:RoomNotificationsConverter x:Key="roomNotificationConverter" />
+    </Page.Resources>
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Joined Chanels" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" Margin="5" />
+                <ListView Name="Listfirst" ScrollViewer.CanContentScroll="False" SelectionChanged="SelectionChanged" ItemsSource="{Binding Path=SubscribedChatRooms}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:Badged Margin="5 5 5 0">
+                                <materialDesign:Badged.Badge>
+                                    <MultiBinding Converter="{StaticResource roomNotificationConverter}">
+                                        <MultiBinding.Bindings>
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Page}" Path="DataContext.Notifications" />
+                                            <Binding Path="Name" />
+                                        </MultiBinding.Bindings>
+                                    </MultiBinding>
+                                </materialDesign:Badged.Badge>
+                                <materialDesign:Card Background="White" Width="300" Padding="20 15">
+                                    <StackPanel>
+                                        <TextBlock FontSize="18" Text="{Binding Name}" />
+                                        <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Ellipse Width="30" Height="30" Margin="3 0">
+                                                        <Ellipse.Fill>
+                                                            <ImageBrush ImageSource="{Binding profileImage}" />
+                                                        </Ellipse.Fill>
+                                                    </Ellipse>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </materialDesign:Card>
+                            </materialDesign:Badged>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Separator Margin="0 30 0 0"  />
+                <TextBlock Text="Other Chanels" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" Margin="5 15 5 5" />
+                <ItemsControl Name="Listsecond" VerticalAlignment="Stretch" BorderThickness="0" ItemsSource="{Binding Path=NotSubscribedChatRooms}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:Card Background="White" Width="300" Margin="5" Padding="20 15">
+                                <StackPanel>
+                                    <DockPanel LastChildFill="True">
+                                        <Button DockPanel.Dock="Right" Content="Join"
+                                                HorizontalAlignment="Center"
+                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.JoinChat}"
+                                                CommandParameter="{Binding Name}" Margin="0 0 0 8" />
+                                        <TextBlock FontSize="18" Text="{Binding Name}" />
+                                    </DockPanel>
+                                    <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Ellipse Width="30" Height="30" Margin="2 0">
+                                                    <Ellipse.Fill>
+                                                        <ImageBrush ImageSource="{Binding profileImage}" />
+                                                    </Ellipse.Fill>
+                                                </Ellipse>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </materialDesign:Card>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" IsEnabled="False" />
+        
+        <Frame Grid.Column="2" Content="{Binding Path=ChatWindow}"/>
+        
+    </Grid>
+</Page>

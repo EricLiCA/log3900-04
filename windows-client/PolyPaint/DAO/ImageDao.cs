@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using Image = PolyPaint.Modeles.Image;
 using PolyPaint.Vues;
 using System.Windows.Controls;
+using RestSharp.Deserializers;
 
 namespace PolyPaint.DAO
 {
@@ -16,33 +17,26 @@ namespace PolyPaint.DAO
         public static void GetAll()
         {
             var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH, Method.GET);
-            ServerService.instance.server.ExecuteAsync(request, response =>
+            ServerService.instance.server.ExecuteAsync<Image>(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
-                    currentGallery.FillWithImages(response);
+                    currentGallery.LoadImages(response);
                 });
             });
         }
 
-        public static void Update(Image imageToUpdate)
+        public static void Put(Image imageToUpdate)
         {
             var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH + "/" + imageToUpdate.id, Method.PUT);
             request.AddJsonBody(imageToUpdate);
             ServerService.instance.server.ExecuteAsync(request, response =>
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Could not update the image", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                });
+                    MessageBox.Show("Could not update the image", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             });
         }
     }

@@ -1,61 +1,82 @@
 import { SocketServer } from '../socket-server';
+import { User } from '../connected-users-service.ts/user';
 
 export class ChatService {
     private static chatService: ChatService;
-    private usernames: Map<string, string>;
-    private connectedUsers: Set<string>;
+    private rooms: Map<string, Set<string>>;
 
     private constructor() {
         // Reserve key usernames
-        this.usernames = new Map();
-        this.connectedUsers = new Set();
-        this.connectedUsers.add('You');
-        this.connectedUsers.add('you');
+        this.rooms = new Map<string, Set<string>>();
     }
 
     public static get instance(): ChatService {
-        if (this.chatService === undefined) {
-            this.chatService = new ChatService();
+        if (ChatService.chatService === undefined) {
+            ChatService.chatService = new ChatService();
         }
         return this.chatService;
     }
 
-    public startChatService(): void {
-        this.listenForConnections();
+    public getRooms(): Map<string, Set<string>> {
+        return this.rooms;
     }
 
-    private listenForConnections(): void {
-        SocketServer.instance.on('connection', (socket: SocketIO.Socket) => {
-            console.log(`New socket connection with id ${socket.id}`);
-            socket.on('setUsername', (username: string) => {
-                console.log(`${socket.id} wants to set username as ${username}`);
-                if (this.connectedUsers.has(username)) {
-                    socket.emit('setUsernameStatus', 'Username already taken!');
-                    socket.disconnect();
-                } else {
-                    socket.emit('setUsernameStatus', 'OK');
-                    this.connectedUsers.add(username);
-                    this.usernames.set(socket.id, username);
-                }
-            });
+    public newConnection(user: User): void {
 
-            socket.on('disconnect', () => {
-                console.log(`${socket.id} has disconnected`);
-                if (this.usernames.has(socket.id)) {
-                    // Username is now unused
-                    this.connectedUsers.delete(this.usernames.get(socket.id));
-                }
-            });
+        user.socket.on('joinRoom', (room: string) => {
+            this.addToRoom(room, user);
+        });
 
-            socket.on('message', (message: string) => {
-                console.log(`Received: ${message}`);
-                socket.emit('message', 'You', message);
-                if (this.usernames.has(socket.id)) {
-                    socket.broadcast.emit('message', this.usernames.get(socket.id), message);
-                } else {
-                    socket.emit('setUsernameStatus', 'No username set!');
-                }
-            });
+        user.socket.on('leaveRoom', (room: string) => {
+            this.removeFromRoom(room, user);
+            this.checkIfEmpty(room);
+        });
+
+        user.socket.on('message', (room: string, message: string) => {
+            console.log(`Received from ${user.socket.id} to ${room}: ${message}`);
+            user.socket.emit('message', room, 'You', message);
+            user.socket.broadcast.to(room).emit('message', room, user.name, message);
+        });
+    }
+
+    public addToRoom(room: string, user: User) {
+        if (!this.rooms.has(room)) {
+            this.rooms.set(room, new Set<string>());
+        }
+
+        this.rooms.get(room).add(user.socket.id);
+        user.socket.join(room);
+        SocketServer.socketServerInstance.emit('joinRoomInfo', room, user.name);
+        console.log(`${user.socket.id} has joined the room ${room}`);
+    }
+
+    public removeFromRoom(room: string, user: User) {
+        if (!this.rooms.has(room)) return;
+
+        this.rooms.get(room).delete(user.socket.id);
+        user.socket.leave(room);
+        user.socket.broadcast.to(room).emit('leaveRoomInfo', room, user.name);
+        console.log(`${user.socket.id} has left the room ${room}`);
+    }
+
+    public checkIfEmpty(room: string) {
+        if (!this.rooms.has(room)) return;
+
+        if (this.rooms.get(room).size === 0)
+            this.rooms.delete(room);
+    }
+
+    public closeConnection(user: User) {
+        let roomsUserWasIn: string[] = [];
+
+        this.rooms.forEach((users: Set<string>, room: string) => {
+            if (users.has(user.socket.id)) {
+                this.removeFromRoom(room, user);
+            }
+        });
+
+        roomsUserWasIn.forEach(room => {
+            this.checkIfEmpty(room);
         });
     }
 }

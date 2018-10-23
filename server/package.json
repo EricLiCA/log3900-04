@@ -6,7 +6,7 @@
   "scripts": {
     "start": "concurrently --kill-others \"tsc -w\" \"nodemon dist/www.js\"",
     "production": "tsc; node dist/www.js",
-    "test": "mocha -r ts-node/register src/**/*.spec.ts src/*.spec.ts",
+    "test": "mocha -r ts-node/register src/**/*.spec.ts src/*.spec.ts --exit",
     "lint": "tslint -c tslint.json src/**/*.ts src/*.ts",
     "lint-fix": "tslint --fix -c tslint.json src/**/*.ts src/*.ts"
   },
@@ -42,6 +42,8 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
+    "@types/supertest": "^2.0.6",
+    "@types/uuid": "^3.4.4",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.18.3",
     "chai-http": "^4.2.0",
@@ -58,7 +60,9 @@
     "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1",
     "superagent": "^4.0.0-beta.5",
+    "supertest": "^3.3.0",
     "typescript": "^3.0.3",
+    "uuid": "^3.3.2",
     "winston": "^3.1.0"
   },
   "devDependencies": {
