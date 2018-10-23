@@ -12,12 +12,13 @@ class MasterChatTableViewController: UITableViewController {
 
     var detailViewController: DetailChatViewController? = nil
     var objects = [Any]()
+    var channelNames = [String]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        navigationItem.leftBarButtonItem = editButtonItem
+        //navigationItem.leftBarButtonItem = editButtonItem
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
@@ -25,6 +26,8 @@ class MasterChatTableViewController: UITableViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailChatViewController
         }
+        // getAllChannels()
+        getMockChannels()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,6 +91,39 @@ class MasterChatTableViewController: UITableViewController {
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
+    }
+    
+    func getAllChannels() {
+        let url = URL(string: "http://localhost:3000/v2/chatRooms")
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: []) as! [String]
+            if (responseJSON) != nil {
+                DispatchQueue.main.async {
+                    // fill friendd list
+                    for channel in responseJSON! {
+                        self.channelNames.append(channel)
+                    }
+                    print(self.channelNames)
+                }
+            }
+        }
+        
+        task.resume()
+        
+        
+        
+    }
+    
+    func getMockChannels() {
+        self.channelNames = ["Hello", "Cat", "Olive the rat"]
     }
 
     /*
