@@ -22,6 +22,7 @@
 		CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099D82165066700E2D27E /* LoginViewController.swift */; };
 		CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099DC216571B800E2D27E /* MainMenuViewController.swift */; };
 		CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F1E1C216980FF0023663E /* SignUpViewController.swift */; };
+		CF21E280217EA8E400F21F57 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E27F217EA8E400F21F57 /* User.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -69,10 +70,10 @@
 		CF0099D82165066700E2D27E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CF0099DC216571B800E2D27E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		CF1F1E1C216980FF0023663E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		CF21E27F217EA8E400F21F57 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = "/Users/tomato/Documents/log3900/github/log3900-04/poly-paint-ios/poly-paint-ios/User.swift"; sourceTree = "<absolute>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
-		CFEF506721790C89001C93AB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CFEF506521784173001C93AB /* ProfilePictureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,11 +142,11 @@
 				CF0099D82165066700E2D27E /* LoginViewController.swift */,
 				CF1F1E1C216980FF0023663E /* SignUpViewController.swift */,
 				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
+				CF21E27F217EA8E400F21F57 /* User.swift */,
 				CF0099DC216571B800E2D27E /* MainMenuViewController.swift */,
 				A78A7337215AE75D007A854F /* ConnectionViewController.swift */,
 				CFEF506521784173001C93AB /* ProfilePictureViewController.swift */,
 				A78A7339215ED91C007A854F /* DateTime.swift */,
-				CFEF506721790C89001C93AB /* User.swift */,
 				A78A7335215ADDEF007A854F /* FrontPageViewController.swift */,
 				CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */,
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
@@ -358,13 +359,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CFEF506621784173001C93AB /* ProfilePictureViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
 				CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */,
+				CF21E280217EA8E400F21F57 /* User.swift in Sources */,
 				A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */,
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,
 				CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */,

@@ -1,9 +1,8 @@
 //
 //  User.swift
-//  poly-paint-ios
+//  
 //
-//  Created by Tomato on 2018-10-18.
-//  Copyright © 2018 PolyAcme. All rights reserved.
+//  Created by Tomato on 2018-10-22.
 //
 
 import Foundation

@@ -52,9 +52,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var profilePicture: UIImageView!
 
     var friends = [User]()
-    
-    var friendsArray = [String]()
     var imagePicker = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.customizeUI()

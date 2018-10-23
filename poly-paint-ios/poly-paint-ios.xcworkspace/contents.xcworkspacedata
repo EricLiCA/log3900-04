@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/tomato/Documents/log3900/github/log3900-04/poly-paint-ios/poly-paint-ios/User.swift">
+   </FileRef>
+   <FileRef
       location = "group:poly-paint-ios.xcodeproj">
    </FileRef>
    <FileRef
