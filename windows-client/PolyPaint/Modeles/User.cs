@@ -11,6 +11,7 @@ namespace PolyPaint.Modeles
         public System.Uri profileImage { get; set; }
         public string userLevel { get; set; }
         public string password { get; set; }
+        public bool isGuest { get; set; }
 
         public User() {}
 
@@ -18,6 +19,7 @@ namespace PolyPaint.Modeles
         {
             this.username = username;
             this.profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE);
+            this.isGuest = false;
         }
 
         public User(string username, string id, string profileImage, string token, string userLevel, string password)
@@ -28,6 +30,7 @@ namespace PolyPaint.Modeles
             this.token = token;
             this.userLevel = userLevel;
             this.password = password;
+            this.isGuest = false;
         }
 
         public User(string username, string id, string profileImage)
@@ -35,6 +38,7 @@ namespace PolyPaint.Modeles
             this.username = username;
             this.id = id;
             this.profileImage = new System.Uri(profileImage);
+            this.isGuest = false;
         }
     }
 }
