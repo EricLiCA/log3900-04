@@ -174,7 +174,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KuD-qT-kYi"/>
                     </view>
-                    <navigationItem key="navigationItem" id="7zy-FW-HSr"/>
+                    <navigationItem key="navigationItem" id="7zy-FW-HSr">
+                        <barButtonItem key="leftBarButtonItem" title="Home" id="sSD-fb-kxV"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="detailDescriptionLabel" destination="5D8-Fw-db1" id="PmB-Mf-sSv"/>
                     </connections>
