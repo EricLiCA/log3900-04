@@ -8,6 +8,8 @@ import { post } from 'superagent';
 import { PostgresDatabase } from './postgres-database';
 import { RedisService } from './redis.service';
 
+import { ChatLobbyService } from './chat-service/lobby.service';
+
 const application: Application = Application.bootstrap();
 
 // Port configuration
@@ -16,6 +18,9 @@ application.app.set('port', appPort);
 
 // Create the HTTP server
 const server = http.createServer(application.app);
+
+// Create the chat application
+let chatLobbyService: ChatLobbyService;
 
 // Send deployment status update to team Slack channel
 startServices().then((map: Map<string, boolean>) => {
@@ -91,12 +96,16 @@ async function startServices(): Promise<Map<string, boolean>> {
             .end();
     }
     SocketServer.setServer(server);
+    chatLobbyService = new ChatLobbyService(SocketServer.socketServerInstance);
+    chatLobbyService.listenForLobbyRequests();
     results.set('SocketServer', true);
     if (process.env.PROD) {
         post(SLACK_API)
             .send({ text: 'Socket Server started' })
             .end();
     }
+
+
 
     if (process.env.PROD) {
         post(SLACK_API)
