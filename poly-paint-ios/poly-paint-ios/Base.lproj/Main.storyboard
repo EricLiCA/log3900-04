@@ -174,13 +174,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KuD-qT-kYi"/>
                     </view>
+                    <navigationItem key="navigationItem" id="7zy-FW-HSr"/>
                     <connections>
                         <outlet property="detailDescriptionLabel" destination="5D8-Fw-db1" id="PmB-Mf-sSv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXn-Qy-uBn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="556.25" y="2182.6171875"/>
+            <point key="canvasLocation" x="1465" y="2379"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="Ohm-Uv-j6O">
@@ -206,10 +207,29 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="WmS-vI-6TM"/>
+                    <connections>
+                        <segue destination="cOu-y2-VnK" kind="showDetail" identifier="showDetail" id="Epc-Ni-kvB"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KXY-Ea-hCY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1327" y="1540"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="reF-JF-g8t">
+            <objects>
+                <navigationController id="cOu-y2-VnK" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cke-8c-kvf">
+                        <rect key="frame" x="0.0" y="20" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="ypx-7k-8bb" kind="relationship" relationship="rootViewController" id="ax8-pX-6T1"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dUq-1J-bWl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="556" y="2853"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EgQ-X6-xIs">
@@ -232,8 +252,8 @@
             <objects>
                 <splitViewController id="PkZ-hp-O6C" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="bu4-MG-v33" kind="relationship" relationship="masterViewController" id="al4-Nt-5Df"/>
-                        <segue destination="ypx-7k-8bb" kind="relationship" relationship="detailViewController" id="Iyh-ju-IG6"/>
+                        <segue destination="cOu-y2-VnK" kind="relationship" relationship="detailViewController" id="gOM-H0-MNW"/>
+                        <segue destination="bu4-MG-v33" kind="relationship" relationship="masterViewController" id="rBk-u5-71m"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="54K-mx-tyQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -540,7 +560,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="PkZ-hp-O6C" kind="show" id="UL5-yq-9kU"/>
+                                            <segue destination="PkZ-hp-O6C" kind="presentation" id="Vi8-Je-Crg"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yid-28-lYT">
@@ -1122,5 +1142,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="IDQ-Qb-zNY"/>
+        <segue reference="Epc-Ni-kvB"/>
     </inferredMetricsTieBreakers>
 </document>
