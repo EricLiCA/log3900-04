@@ -8,9 +8,9 @@ export class ChatRooms {
     }
 
     public getUsers(req: express.Request, res: express.Response, next: express.NextFunction): void {
-        res.send(Array.from(ChatService.instance.getRooms().get(req.params.room).keys()).map(id => ConnectedUsersService.getBySocket(id).name));
+        res.send(Array.from(ChatService.instance.getRooms().get(req.params.room).keys()).map((id) => ConnectedUsersService.getBySocket(id).name));
     }
-    
+
     public all(req: express.Request, res: express.Response, next: express.NextFunction): void {
         res.send(Array.from(ConnectedUsersService.getAll()));
     }
