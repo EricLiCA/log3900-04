@@ -1,3 +1,4 @@
+import { ConnectedUsersService } from '../connected-users-service.ts/connected-users-service';
 import { User } from '../connected-users-service.ts/user';
 import { SocketServer } from '../socket-server';
 import { User } from '../connected-users-service.ts/user';
@@ -35,7 +36,7 @@ export class ChatService {
         });
 
         user.socket.on('addToRoom', (room: string, username: string) => {
-            if (!ConnectedUsersService.isConnectedByName(username)) return;
+            if (!ConnectedUsersService.isConnectedByName(username)) { return; }
             this.addToRoom(room, ConnectedUsersService.getByName(username));
         });
 
