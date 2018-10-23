@@ -1,6 +1,7 @@
 import * as multer from 'multer';
 import * as multerS3 from 'multer-s3';
 import * as aws from 'aws-sdk';
+import { S3Config } from '../configs/s3';
 
 export class S3ImageUploadService {
     
@@ -8,8 +9,8 @@ export class S3ImageUploadService {
 
     private constructor() {
         aws.config.update({
-            secretAccessKey: "fefe",
-            accessKeyId: "",
+            secretAccessKey: S3Config.SECRET_ACCESS_KEY,
+            accessKeyId: S3Config.ACCESS_KEY_ID,
             region: 'us-east-1'
         })
 
