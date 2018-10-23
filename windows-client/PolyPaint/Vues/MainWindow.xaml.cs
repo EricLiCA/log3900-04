@@ -51,7 +51,7 @@ namespace PolyPaint.Vues
             {
                 case 0:
                     {
-                        ImageDao.GetAll();
+                        Gallery.Load();
                         GridMain.Content = Gallery;
                         break;
                     }
