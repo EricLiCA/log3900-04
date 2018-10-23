@@ -33,12 +33,26 @@ namespace PolyPaint.Vues
         {
             ConnectButton.IsEnabled = false;
             ConnectionProgress.Visibility = Visibility.Visible;
-            ConnectToAccount();
+            if ((bool)GuestConnection.IsChecked)
+            {
+                ServerService.instance.user = new User
+                {
+                    username = UserName.Text,
+                    password = Password.Password,
+                    profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE)
+                };
+                Connect_Socket();
+            } 
+            else
+            {
+                ConnectToAccount();
+            }
         }
 
         private void GuestConnection_Checked(object sender, RoutedEventArgs e)
         {
             Password.IsEnabled = !(bool)GuestConnection.IsChecked;
+            CreateButton.IsEnabled = !(bool)GuestConnection.IsChecked;
         }
 
         private void ConnectToServer()
@@ -66,7 +80,8 @@ namespace PolyPaint.Vues
 
         private void ConnectToAccount()
         {
-            User user = new User {
+            User user = new User
+            {
                 username = UserName.Text,
                 password = Password.Password,
                 profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE)
@@ -89,7 +104,7 @@ namespace PolyPaint.Vues
                             (string)data["token"],
                             (string)data["userLevel"],
                             Password.Password
-						);
+                        );
                     }
                     else
                     {
@@ -120,7 +135,8 @@ namespace PolyPaint.Vues
                     {
                         DialogResult = true;
                     });
-                } else
+                }
+                else
                 {
                     this.Dispatcher.Invoke(() =>
                     {
