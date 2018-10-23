@@ -22,6 +22,8 @@
 		CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099D82165066700E2D27E /* LoginViewController.swift */; };
 		CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099DC216571B800E2D27E /* MainMenuViewController.swift */; };
 		CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F1E1C216980FF0023663E /* SignUpViewController.swift */; };
+		CF21E2C0217F8A8500F21F57 /* MasterChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2BF217F8A8500F21F57 /* MasterChatViewController.swift */; };
+		CF21E2C2217F8B0400F21F57 /* DetailChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2C1217F8B0400F21F57 /* DetailChatViewController.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -69,6 +71,8 @@
 		CF0099D82165066700E2D27E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CF0099DC216571B800E2D27E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		CF1F1E1C216980FF0023663E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		CF21E2BF217F8A8500F21F57 /* MasterChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterChatViewController.swift; sourceTree = "<group>"; };
+		CF21E2C1217F8B0400F21F57 /* DetailChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChatViewController.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +141,8 @@
 				A77C46FD21569CFB0056135A /* Info.plist */,
 				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
 				A77C46F021569CFB0056135A /* ChatViewController.swift */,
+				CF21E2BF217F8A8500F21F57 /* MasterChatViewController.swift */,
+				CF21E2C1217F8B0400F21F57 /* DetailChatViewController.swift */,
 				CF0099D82165066700E2D27E /* LoginViewController.swift */,
 				CF1F1E1C216980FF0023663E /* SignUpViewController.swift */,
 				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
@@ -359,6 +365,8 @@
 				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
+				CF21E2C2217F8B0400F21F57 /* DetailChatViewController.swift in Sources */,
+				CF21E2C0217F8A8500F21F57 /* MasterChatViewController.swift in Sources */,
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
 				CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */,
