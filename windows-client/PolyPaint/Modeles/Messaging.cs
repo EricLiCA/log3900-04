@@ -51,10 +51,6 @@ namespace PolyPaint.Modeles
             this.NotSubscribedChatRooms = new List<ChatRoom>();
             this.SubscribedChatRooms = new List<ChatRoom>();
 
-            this.NotSubscribedChatRooms.Add(new ChatRoom("Fun Times"));
-            this.NotSubscribedChatRooms.Add(new ChatRoom("Happy Meal"));
-            this.NotSubscribedChatRooms.Add(new ChatRoom("Feelin' Good"));
-
             ServerService.instance.Socket.On("joinRoomInfo", new CustomListener((object[] server_params) =>
             {
                 ChatRoom room;
@@ -73,9 +69,11 @@ namespace PolyPaint.Modeles
                     NotSubscribedChatRooms.Add(room);
                 }
 
+                if (room.Users.Any(user => user.username == (string)server_params[1])) return;
+
                 if ((string)server_params[1] == ServerService.instance.username)
                 {
-                    JoinChat((string)server_params[0]);
+                    JoinChat(room);
                 }
 
                 room.AddPerson(ServerService.instance.username);
@@ -100,10 +98,10 @@ namespace PolyPaint.Modeles
                 
                 if ((string)server_params[1] == ServerService.instance.username)
                 {
-                    LeaveChat((string)server_params[0]);
+                    LeaveChat(room);
                 }
 
-                room.RemovePerson(ServerService.instance.username);
+                room.RemovePerson((string)server_params[1]);
 
                 if (room.Users.Count == 0)
                 {
@@ -155,22 +153,32 @@ namespace PolyPaint.Modeles
             ServerService.instance.Socket.Emit("joinRoom", chatName);
         }
 
+        internal void NewRoom(string chatName)
+        {
+            if (this.SubscribedChatRooms.Any(ChatRoom => ChatRoom.Name == chatName))
+            {
+                this.SelectedIndex = this.SubscribedChatRooms.FindIndex(ChatRoom => ChatRoom.Name == chatName);
+            }
+            else
+            {
+                RequestJoinChat(chatName);
+            }
+        }
+
         internal void RequestLeaveChat(string chatName)
         {
             ServerService.instance.Socket.Emit("leaveRoom", chatName);
         }
 
-        internal void JoinChat(string chatName)
+        internal void JoinChat(ChatRoom room)
         {
-            ChatRoom room = this.NotSubscribedChatRooms.First<ChatRoom>(ChatRoom => ChatRoom.Name == chatName);
             this.NotSubscribedChatRooms.Remove(room);
             this.SubscribedChatRooms.Insert(0, room);
             this.OpenChat(this.SubscribedChatRooms.Count - 1);
         }
 
-        internal void LeaveChat(string chatName)
+        internal void LeaveChat(ChatRoom room)
         {
-            ChatRoom room = this.SubscribedChatRooms.First<ChatRoom>(ChatRoom => ChatRoom.Name == chatName);
             this.SubscribedChatRooms.Remove(room);
             this.NotSubscribedChatRooms.Insert(0, room);
             this.OpenChat(this.SubscribedChatRooms.Count == 0 ? -1 : 0);

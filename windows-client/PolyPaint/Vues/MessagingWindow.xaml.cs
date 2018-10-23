@@ -1,4 +1,7 @@
-﻿using PolyPaint.VueModeles;
+﻿using MaterialDesignThemes.Wpf;
+using PolyPaint.VueModeles;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace PolyPaint.Vues
@@ -8,7 +11,8 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MessagingWindow : Page
     {
-        
+        private Regex regex = new Regex("^ {0,}$");
+
         public MessagingWindow(MessagingViewModel viewModel)
         {
             DataContext = viewModel;
@@ -23,6 +27,15 @@ namespace PolyPaint.Vues
         private void Filter_TextChanged(object sender, TextChangedEventArgs e)
         {
             ((MessagingViewModel)this.DataContext).FilterChanged(((TextBox)sender).Text);
+        }
+
+        private void NewRoom_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (regex.IsMatch(newRoomName.Text)) return;
+
+            ((MessagingViewModel)this.DataContext).NewRoom.Execute(newRoomName.Text);
+            DialogHost.CloseDialogCommand.Execute(sender, (IInputElement)sender);
+            newRoomName.Text = "";
         }
     }
 }

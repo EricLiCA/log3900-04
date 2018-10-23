@@ -68,12 +68,14 @@ namespace PolyPaint.VueModeles
         }
 
         public RelayCommand<string> RequestJoinChat { get; set; }
-
+        public RelayCommand<string> NewRoom { get; set; }
+        
         public MessagingViewModel()
         {
             Messaging.PropertyChanged += new PropertyChangedEventHandler(MessagingPropertyChanged);
 
             RequestJoinChat = new RelayCommand<string>(Messaging.RequestJoinChat);
+            NewRoom = new RelayCommand<string>(Messaging.NewRoom);
             FilteredNotSubscribedChatRooms = new ObservableCollection<ChatRoom>();
             FilteredSubscribedChatRooms = new ObservableCollection<ChatRoom>();
         }
