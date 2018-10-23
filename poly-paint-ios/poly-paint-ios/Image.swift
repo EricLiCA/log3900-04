@@ -28,8 +28,10 @@ class Image: NSObject {
     }
     
     func getFullImageUrl()  -> URL? {
-        if let url = URL(string :fullImageUrl!){
-            return url
+        if self.fullImageUrl != nil {
+            if let url = URL(string :fullImageUrl! ){
+                return url
+            }
         }
         return nil
     }
