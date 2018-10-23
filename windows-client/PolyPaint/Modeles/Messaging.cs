@@ -1,4 +1,7 @@
-﻿using PolyPaint.Services;
+﻿using Newtonsoft.Json.Linq;
+using PolyPaint.Services;
+using PolyPaint.Utilitaires;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -50,7 +53,29 @@ namespace PolyPaint.Modeles
         {
             this.NotSubscribedChatRooms = new List<ChatRoom>();
             this.SubscribedChatRooms = new List<ChatRoom>();
-
+            
+            var request = new RestRequest(Settings.API_VERSION + "/chatRooms", Method.GET);
+            ServerService.instance.server.ExecuteAsync(request, response =>
+            {
+                JArray rooms = JArray.Parse(response.Content);
+                for (int i = 0; i < rooms.Count; i++)
+                {
+                    ChatRoom room = new ChatRoom((string)rooms[i]);
+                    
+                    var request2 = new RestRequest(Settings.API_VERSION + "/chatRooms/" + (string)rooms[i], Method.GET);
+                    ServerService.instance.server.ExecuteAsync(request2, response2 =>
+                    {
+                        JArray users = JArray.Parse(response2.Content);
+                        for (int j = 0; j < users.Count; j++)
+                        {
+                            room.AddPerson((string)users[j]);
+                        }
+                        NotSubscribedChatRooms.Add(room);
+                        ProprieteModifiee("NotSubscribedChatRooms");
+                    });
+                }
+            });
+            
             ServerService.instance.Socket.On("joinRoomInfo", new CustomListener((object[] server_params) =>
             {
                 ChatRoom room;
@@ -76,7 +101,7 @@ namespace PolyPaint.Modeles
                     JoinChat(room);
                 }
 
-                room.AddPerson(ServerService.instance.username);
+                room.AddPerson((string)server_params[1]);
 
                 ProprieteModifiee("SubscribedChatRooms");
                 ProprieteModifiee("NotSubscribedChatRooms");
@@ -119,7 +144,7 @@ namespace PolyPaint.Modeles
                 Application.Current.Dispatcher.Invoke(() => {
                     this.NewMessage(
                         this.SubscribedChatRooms.First(ChatRoom => ChatRoom.Name == (string)server_params[0]),
-                        server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString(),
+                        server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[1].ToString(),
                         server_params[2].ToString()
                     );
                 });
@@ -174,7 +199,7 @@ namespace PolyPaint.Modeles
         {
             this.NotSubscribedChatRooms.Remove(room);
             this.SubscribedChatRooms.Insert(0, room);
-            this.OpenChat(this.SubscribedChatRooms.Count - 1);
+            this.OpenChat(0);
         }
 
         internal void LeaveChat(ChatRoom room)

@@ -50,7 +50,7 @@ namespace PolyPaint.VueModeles
             ChatRoom.PropertyChanged += new PropertyChangedEventHandler(ChatPropertyChanged);
 
             SendMessage = new RelayCommand<string>(ChatRoom.SendMessage);
-            AddPerson = new RelayCommand<string>(ChatRoom.AddPerson);
+            AddPerson = new RelayCommand<string>(ChatRoom.RequestAddPerson);
             this._availableUsers = new ObservableCollection<ChatUser>();
         }
 

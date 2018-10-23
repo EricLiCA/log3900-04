@@ -77,6 +77,7 @@ export class ChatService {
 
         this.rooms.forEach((users: Set<string>, room: string) => {
             if (users.has(user.socket.id)) {
+                roomsUserWasIn.push(room);
                 this.removeFromRoom(room, user);
             }
         });
