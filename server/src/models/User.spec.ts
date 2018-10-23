@@ -15,7 +15,7 @@ describe('User', () => {
             expect(result.Password).to.equal(password);
             expect(result.ProfileImage).to.equal(
                 // tslint:disable-next-line:max-line-length
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjqmTWoUhezVh6rd7F0DYqkpqDGAwbYoC_hEfi0nphYL1h08gCkA'
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjqmTWoUhezVh6rd7F0DYqkpqDGAwbYoC_hEfi0nphYL1h08gCkA',
             );
             id = result.Id;
             userLevel = result.UserLevel;

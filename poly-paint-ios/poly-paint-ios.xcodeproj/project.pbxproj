@@ -72,6 +72,7 @@
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
+		CFEF506721790C89001C93AB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CFEF506521784173001C93AB /* ProfilePictureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +145,7 @@
 				A78A7337215AE75D007A854F /* ConnectionViewController.swift */,
 				CFEF506521784173001C93AB /* ProfilePictureViewController.swift */,
 				A78A7339215ED91C007A854F /* DateTime.swift */,
+				CFEF506721790C89001C93AB /* User.swift */,
 				A78A7335215ADDEF007A854F /* FrontPageViewController.swift */,
 				CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */,
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
@@ -356,6 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CFEF506621784173001C93AB /* ProfilePictureViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
