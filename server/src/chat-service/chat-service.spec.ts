@@ -1,14 +1,14 @@
 import { expect } from 'chai';
-// import * as io from 'socket.io-client';
+import * as io from 'socket.io-client';
 
-import { server } from '../mocks/socket-server.mock';
+import { socketServer, TEST_HOST, TEST_PORT } from '../mocks/socket-server.mock';
 import { ChatService } from './chat-service';
 
 describe('ChatService', () => {
-    // let socket: SocketIOClient.Socket;
+    let socket: SocketIOClient.Socket;
 
     before(() => {
-        server;
+        socketServer;
     });
 
     describe('getInstance()', () => {
@@ -19,9 +19,14 @@ describe('ChatService', () => {
     });
 
     describe('chat scenario', () => {
-        it('should connect users', () => {
+        it('should connect users', (done) => {
+            socketServer.on('connect', (client) => {
+                console.log(`Connected ${client.id}`);
+                done();
+            });
+            socket = io.connect(`${TEST_HOST}:${TEST_PORT}`);
+            socket.emit('joinRoom', 'testRoom');
             // The usernames should be unique
-
             // Anonymous users are allowed
 
         });
