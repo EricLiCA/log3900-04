@@ -1,4 +1,4 @@
-using PolyPaint.Services;
+﻿using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using System;
 using System.Collections.ObjectModel;
@@ -27,8 +27,13 @@ namespace PolyPaint.Modeles
             this.Name = name;
             this.Users = new ObservableCollection<ChatUser>();
             this.Messages = new ObservableCollection<ChatMessage>();
-            this.Users.Add(new ChatUser("Caroline"));
-            this.Users.Add(new ChatUser("Joshua"));
+            Random r = new Random(DateTime.Now.Millisecond + Name.ToCharArray()[0] + Name.ToCharArray()[1]);
+            for (var i = 0; i <= r.Next() % 12; i++)
+            {
+                var n = UsersManager.instance.Users[r.Next(0, UsersManager.instance.Users.Count)].username;
+                if (this.Users.Any(u => u.username == n) || n == ServerService.instance.username) continue;
+                this.Users.Add(new ChatUser(n));
+            }
         }
 
         public void SendMessage(string message)
