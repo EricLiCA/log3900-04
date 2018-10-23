@@ -1,4 +1,4 @@
-﻿using PolyPaint.Services;
+using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using System;
 using System.Collections.ObjectModel;
@@ -39,9 +39,30 @@ namespace PolyPaint.Modeles
             }
         }
 
+        public void RequestAddPerson(string person)
+        {
+            ServerService.instance.Socket.Emit("addToRoom", Name, person);
+        }
+
         public void AddPerson(string person)
         {
-            this.Users.Add(new ChatUser(person));
+            if (this.Users.Any(user => user.username == person)) return;
+
+            Application.Current.Dispatcher.Invoke(() => {
+                this.Users.Add(new ChatUser(person));
+            });
+
+            ProprieteModifiee("Users");
+        }
+
+        public void RemovePerson(string person)
+        {
+            if (!this.Users.Any(user => user.username == person)) return;
+
+            Application.Current.Dispatcher.Invoke(() => {
+                this.Users.Remove(this.Users.First(user => user.username == person));
+            });
+
             ProprieteModifiee("Users");
         }
 
