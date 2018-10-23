@@ -38,4 +38,8 @@ class Image: NSObject {
         return nil
     }
     
+    static func == (lhs: Image, rhs: Image) -> Bool{
+        return lhs.id == rhs.id
+    }
+    
 }
