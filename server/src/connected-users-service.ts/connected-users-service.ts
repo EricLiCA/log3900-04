@@ -1,15 +1,7 @@
-import { User } from "./user";
-import { Socket } from "socket.io";
+import { Socket } from 'socket.io';
+import { User } from './user';
 
 export class ConnectedUsersService {
-    
-    private static connectedUsersService: ConnectedUsersService;
-
-    private users: User[];
-
-    constructor() {
-        this.users = [];
-    }
 
     private static get instance(): ConnectedUsersService {
         if (this.connectedUsersService === undefined) {

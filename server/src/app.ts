@@ -4,6 +4,7 @@ import * as express from 'express';
 import * as httpLogger from 'morgan';
 import * as path from 'path';
 
+import { ChatRooms } from './routes/chat-rooms';
 import { FriendshipsRoute } from './routes/friendships';
 import { ImageCommentsRoute } from './routes/image-comments';
 import { ImageLikesRoute } from './routes/image-likes';
@@ -12,7 +13,6 @@ import { PendingFriendRequestRoute } from './routes/pending-friend-request';
 import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
-import { ChatRooms } from './routes/chat-rooms';
 
 export class Application {
     /**
@@ -64,9 +64,9 @@ export class Application {
         const friendshipsRoute: FriendshipsRoute = new FriendshipsRoute();
         const pendingFriendRequestRoute: PendingFriendRequestRoute = new PendingFriendRequestRoute();
         const imagesRoute: ImagesRoute = new ImagesRoute();
-        const imageLikes : ImageLikesRoute = new ImageLikesRoute();
-        const imageComments : ImageCommentsRoute = new ImageCommentsRoute();
-        const chatRooms : ChatRooms = new ChatRooms();
+        const imageLikes: ImageLikesRoute = new ImageLikesRoute();
+        const imageComments: ImageCommentsRoute = new ImageCommentsRoute();
+        const chatRooms: ChatRooms = new ChatRooms();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));

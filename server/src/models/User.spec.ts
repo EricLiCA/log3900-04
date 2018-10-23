@@ -46,6 +46,13 @@ describe('User', () => {
         });
     });
 
+    it('should get the user by username', async () => {
+        const user = await User.getBy(username);
+        expect(user.Id).to.equal(id);
+        expect(user.Username).to.equal(username);
+        expect(user.Password).to.equal(password);
+    });
+
     it('should update the password, userLevel, and profileImage of the user', (done) => {
         password = '654testPassword';
         userLevel = 'admin';

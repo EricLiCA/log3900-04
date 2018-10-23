@@ -114,7 +114,7 @@ export class FriendshipsRoute {
         redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
             if (token !== null && token === req.body.token) {
                 const friendshipStatus = await Friendships.delete(req.params.id, req.body.friendId);
-                console.log(friendshipStatus)
+                console.log(friendshipStatus);
                 if (friendshipStatus === FriendshipStatus.REFUSED) {
                     res.send({
                         status: FriendshipStatus.REFUSED,
