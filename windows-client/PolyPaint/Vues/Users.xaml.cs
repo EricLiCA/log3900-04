@@ -28,10 +28,29 @@ namespace PolyPaint.Vues
             InitializeComponent();
             PendingFriendRequestsList = new ObservableCollection<PendingFriendRequest>();
             SentRequests = new List<string>();
-            FriendDao.Get();
+            Load();
+        }
+
+        public void Load()
+        {
+            if (ServerService.instance.user.isGuest)
+            {
+                RestrictPermissions();
+            }
+            else
+            {
+                FriendDao.Get();
+                PendingFriendRequestDao.Get();
+                PendingFriendRequestDao.GetByRequesterId();
+            }
             FriendDao.GetUsersExceptFriends();
-            PendingFriendRequestDao.Get();
-            PendingFriendRequestDao.GetByRequesterId();
+        }
+
+        private void RestrictPermissions()
+        {
+            FriendsGroupBox.Visibility = Visibility.Collapsed;
+            PendingFriendRequestsButton.Visibility = Visibility.Collapsed;
+            FriendButton.IsEnabled = false;
         }
 
         public void LoadUsersExceptFriends(IRestResponse response)
@@ -39,7 +58,7 @@ namespace PolyPaint.Vues
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 ConnectedUsersContainer.Children.Clear();
-                JArray responseUsers= JArray.Parse(response.Content);
+                JArray responseUsers = JArray.Parse(response.Content);
                 for (int i = 0; i < responseUsers.Count; i++)
                 {
                     dynamic data = JObject.Parse(responseUsers[i].ToString());
@@ -118,19 +137,22 @@ namespace PolyPaint.Vues
             ProfileViewTitle.Text = CurrentUserCard.User.username;
             BitmapImage imageBitmap = new BitmapImage(CurrentUserCard.User.profileImage);
             ProfileViewPicture.Source = imageBitmap;
-            if (SentRequests.Contains(userCard.User.id))
+            if (!ServerService.instance.user.isGuest)
             {
-                FriendButton.IsEnabled = false;
-            }
-            else if (FriendsContainer.Children.Contains(userCard))
-            {
-                FriendButton.IsChecked = true;
-                FriendButton.IsEnabled = true;
-            }
-            else
-            {
-                FriendButton.IsChecked = false;
-                FriendButton.IsEnabled = true;
+                if (SentRequests.Contains(userCard.User.id))
+                {
+                    FriendButton.IsEnabled = false;
+                }
+                else if (FriendsContainer.Children.Contains(userCard))
+                {
+                    FriendButton.IsChecked = true;
+                    FriendButton.IsEnabled = true;
+                }
+                else
+                {
+                    FriendButton.IsChecked = false;
+                    FriendButton.IsEnabled = true;
+                }
             }
         }
 

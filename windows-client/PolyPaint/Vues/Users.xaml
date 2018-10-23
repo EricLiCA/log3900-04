@@ -95,11 +95,11 @@
             </Expander>
             <ScrollViewer>
                 <StackPanel>
-                    <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,10,10,10" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" >
+                    <Button Name="PendingFriendRequestsButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,10,10,10" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" >
                         Friend requests
                     </Button>
 
-                    <GroupBox Header="Friends"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+                    <GroupBox Name="FriendsGroupBox" Header="Friends"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -110,7 +110,7 @@
                         </GroupBox.HeaderTemplate>
                         <WrapPanel x:Name="FriendsContainer" Margin="10"/>
                     </GroupBox>
-                    <GroupBox Header="Connected Users"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+                    <GroupBox Name="ConnectedUsersGroupBox" Header="Connected Users"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

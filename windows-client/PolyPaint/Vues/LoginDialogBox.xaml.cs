@@ -37,9 +37,11 @@ namespace PolyPaint.Vues
             {
                 ServerService.instance.user = new User
                 {
+                    id = Guid.NewGuid().ToString(),
                     username = UserName.Text,
                     password = Password.Password,
-                    profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE)
+                    profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE),
+                    isGuest = true
                 };
                 Connect_Socket();
             } 
@@ -52,7 +54,7 @@ namespace PolyPaint.Vues
         private void GuestConnection_Checked(object sender, RoutedEventArgs e)
         {
             Password.IsEnabled = !(bool)GuestConnection.IsChecked;
-            CreateButton.IsEnabled = !(bool)GuestConnection.IsChecked;
+            EnableOrDisableCreateButton();
         }
 
         private void ConnectToServer()
@@ -103,7 +105,8 @@ namespace PolyPaint.Vues
                             (string)data["profileImage"],
                             (string)data["token"],
                             (string)data["userLevel"],
-                            Password.Password
+                            Password.Password,
+                            false
                         );
                     }
                     else
@@ -151,10 +154,15 @@ namespace PolyPaint.Vues
 
         private void UserNameOrPassword_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            EnableOrDisableCreateButton();
+        }
+
+        private void EnableOrDisableCreateButton()
+        {
             Boolean invalideUserName = UserName.Text.Length == 0 || UserName.Text.Contains(" ");
             Boolean invalidPassword = Password.Password.Length == 0 || Password.Password.Contains(" ");
 
-            if (invalideUserName || invalidPassword)
+            if ((bool)GuestConnection.IsChecked || invalideUserName || invalidPassword)
             {
                 CreateButton.IsEnabled = false;
             }

@@ -61,8 +61,16 @@
             <Button Name="ConnectButton"
                 Margin="0,8,8,8" Height="Auto" Width="Auto"
                 HorizontalAlignment="Right"
-                IsDefault="True" Click="ConnectButton_Click"
-                Style="{StaticResource MaterialDesignFlatButton}">
+                IsDefault="True" Click="ConnectButton_Click">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text.Length, ElementName=UserName, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Connect" />
                     <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"

@@ -22,7 +22,7 @@ namespace PolyPaint.Modeles
             this.isGuest = false;
         }
 
-        public User(string username, string id, string profileImage, string token, string userLevel, string password)
+        public User(string username, string id, string profileImage, string token, string userLevel, string password, bool isGuest)
         {
             this.username = username;
             this.id = id;
@@ -30,7 +30,7 @@ namespace PolyPaint.Modeles
             this.token = token;
             this.userLevel = userLevel;
             this.password = password;
-            this.isGuest = false;
+            this.isGuest = isGuest;
         }
 
         public User(string username, string id, string profileImage)
