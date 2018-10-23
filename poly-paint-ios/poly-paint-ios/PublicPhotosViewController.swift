@@ -19,7 +19,7 @@ final class PublicPhotosViewController: UICollectionViewController {
     var images:[Image]?
     
     func fetchPublicImages() {
-        guard let url = URL(string: "http://localhost:3000/v1/images") else { return }
+        guard let url = URL(string: "http://localhost:3000/v2/images") else { return }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             if error != nil {
