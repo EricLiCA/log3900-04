@@ -39,6 +39,7 @@ class DetailChatViewController: UIViewController {
             configureView()
         }
     }
+    
 
     /*
     // MARK: - Navigation
