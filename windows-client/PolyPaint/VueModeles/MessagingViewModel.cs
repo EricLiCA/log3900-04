@@ -1,6 +1,7 @@
 ﻿using PolyPaint.Modeles;
 using PolyPaint.Utilitaires;
 using PolyPaint.Vues;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -15,19 +16,32 @@ namespace PolyPaint.VueModeles
         public event PropertyChangedEventHandler PropertyChanged;
         private Messaging Messaging = new Messaging();
 
+        private ObservableCollection<ChatRoom> FilteredNotSubscribedChatRooms;
         public ObservableCollection<ChatRoom> NotSubscribedChatRooms
         {
-            get => Messaging.NotSubscribedChatRooms;
-            set { PropertyModified(); }
+            get
+            {
+                FilteredNotSubscribedChatRooms.Clear();
+                Messaging.NotSubscribedChatRooms.Where(room => room.Name.Contains(this.filter)).ToList().ForEach(room => FilteredNotSubscribedChatRooms.Add(room));
+                return FilteredNotSubscribedChatRooms;
+            }
         }
 
+        private ObservableCollection<ChatRoom> FilteredSubscribedChatRooms;
         public ObservableCollection<ChatRoom> SubscribedChatRooms
         {
-            get => Messaging.SubscribedChatRooms;
-            set { PropertyModified(); }
+            get
+            {
+                FilteredSubscribedChatRooms.Clear();
+                Messaging.SubscribedChatRooms.Where(room => room.Name.Contains(this.filter)).ToList().ForEach(room => FilteredSubscribedChatRooms.Add(room));
+                return FilteredSubscribedChatRooms;
+            }
         }
 
         private List<Chat> chatPages = new List<Chat>();
+
+        private string filter = "";
+
         public Page ChatWindow
         {
             get
@@ -39,31 +53,48 @@ namespace PolyPaint.VueModeles
                 if (index == -1)
                 {
                     ChatViewModel viewModel = new ChatViewModel(SubscribedChatRooms[Messaging.SelectedIndex]);
-                    viewModel.LeaveRoom = new RelayCommand<string>(Messaging.LeaveChat);
+                    viewModel.LeaveRoom = new RelayCommand<string>(Messaging.RequestLeaveChat);
                     Chat chatPage = new Chat(viewModel);
                     this.chatPages.Add(chatPage);
                     return chatPage;
                 }
                 return this.chatPages[index];
             }
-            set { PropertyModified(); }
         }
 
         public Dictionary<string, int> Notifications
         {
             get => Messaging.Notifications;
-            set { PropertyModified(); }
         }
 
-        public RelayCommand<int> OpenChat { get; set; }
-        public RelayCommand<string> JoinChat { get; set; }
-
+        public RelayCommand<string> RequestJoinChat { get; set; }
+        public RelayCommand<string> NewRoom { get; set; }
+        
         public MessagingViewModel()
         {
             Messaging.PropertyChanged += new PropertyChangedEventHandler(MessagingPropertyChanged);
 
-            OpenChat = new RelayCommand<int>(Messaging.OpenChat);
-            JoinChat = new RelayCommand<string>(Messaging.JoinChat);
+            RequestJoinChat = new RelayCommand<string>(Messaging.RequestJoinChat);
+            NewRoom = new RelayCommand<string>(Messaging.NewRoom);
+            FilteredNotSubscribedChatRooms = new ObservableCollection<ChatRoom>();
+            FilteredSubscribedChatRooms = new ObservableCollection<ChatRoom>();
+        }
+
+        public void OpenChat(int index)
+        {
+            if (index == -1)
+            {
+                return;
+            }
+
+            Messaging.OpenChat(Messaging.SubscribedChatRooms.IndexOf(this.SubscribedChatRooms[index]));
+        }
+
+        public void FilterChanged(string filter)
+        {
+            this.filter = filter;
+            PropertyModified("SubscribedChatRooms");
+            PropertyModified("NotSubscribedChatRooms");
         }
 
         protected virtual void PropertyModified([CallerMemberName] string propertyName = null)
@@ -75,18 +106,19 @@ namespace PolyPaint.VueModeles
         {
             if (e.PropertyName == "SelectedIndex")
             {
-                this.ChatWindow = null;
-            } else if (e.PropertyName == "Notifications")
+                PropertyModified("ChatWindow");
+            }
+            else if (e.PropertyName == "Notifications")
             {
-                this.Notifications = Messaging.Notifications;
+                PropertyModified("Notifications");
             }
             else if (e.PropertyName == "SubscribedChatRooms")
             {
-                this.SubscribedChatRooms = Messaging.SubscribedChatRooms;
+                PropertyModified("SubscribedChatRooms");
             }
             else if (e.PropertyName == "NotSubscribedChatRooms")
             {
-                this.NotSubscribedChatRooms = Messaging.NotSubscribedChatRooms;
+                PropertyModified("NotSubscribedChatRooms");
             }
         }
     }

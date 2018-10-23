@@ -18,6 +18,18 @@ export class ConnectedUsersService {
         ConnectedUsersService.instance.users.push(user);
     }
 
+    private static findIndexByName(name: string): number {
+        return ConnectedUsersService.instance.users.findIndex(user => user.name === name);
+    }
+
+    private static findIndexBySocket(id: string): number {
+        return ConnectedUsersService.instance.users.findIndex(user => user.socket.id === id);
+    }
+
+    public static getBySocket(id: string): User {
+        return ConnectedUsersService.instance.users[ConnectedUsersService.findIndexBySocket(id)];
+    }
+
     public static getByName(name: string): User {
         return ConnectedUsersService.instance.users[ConnectedUsersService.findIndexByName(name)];
     }
@@ -27,23 +39,12 @@ export class ConnectedUsersService {
     }
 
     public static disconnect(socket: Socket): void {
-        ConnectedUsersService.connectedUsers.splice(this.findIndexBySocket(socket), 1);
+        ConnectedUsersService.connectedUsers.splice(this.findIndexBySocket(socket.id), 1);
     }
 
-    private static connectedUsersService: ConnectedUsersService;
-
-    private static findIndexByName(name: string): number {
-        return ConnectedUsersService.instance.users.findIndex((user) => user.name === name);
+    public static getAll(): User[] {
+        return ConnectedUsersService.instance.users;
     }
 
-    private static findIndexBySocket(socket: Socket): number {
-        return ConnectedUsersService.instance.users.findIndex((user) => user.socket.id === socket.id);
-    }
-
-    private users: User[];
-
-    constructor() {
-        this.users = [];
-    }
 
 }
