@@ -1,5 +1,5 @@
-import { SocketServer } from '../socket-server';
 import { User } from '../connected-users-service.ts/user';
+import { SocketServer } from '../socket-server';
 
 export class ChatService {
     private static chatService: ChatService;
@@ -51,7 +51,7 @@ export class ChatService {
     }
 
     public removeFromRoom(room: string, user: User) {
-        if (!this.rooms.has(room)) return;
+        if (!this.rooms.has(room)) { return; }
 
         this.rooms.get(room).delete(user.socket.id);
         user.socket.leave(room);
@@ -60,14 +60,15 @@ export class ChatService {
     }
 
     public checkIfEmpty(room: string) {
-        if (!this.rooms.has(room)) return;
+        if (!this.rooms.has(room)) { return; }
 
-        if (this.rooms.get(room).size === 0)
+        if (this.rooms.get(room).size === 0) {
             this.rooms.delete(room);
+        }
     }
 
     public closeConnection(user: User) {
-        let roomsUserWasIn: string[] = [];
+        const roomsUserWasIn: string[] = [];
 
         this.rooms.forEach((users: Set<string>, room: string) => {
             if (users.has(user.socket.id)) {
@@ -75,7 +76,7 @@ export class ChatService {
             }
         });
 
-        roomsUserWasIn.forEach(room => {
+        roomsUserWasIn.forEach((room) => {
             this.checkIfEmpty(room);
         });
     }

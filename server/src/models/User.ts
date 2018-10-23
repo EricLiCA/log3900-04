@@ -36,6 +36,23 @@ export class User {
         }
     }
 
+    public static async getBy(username: string): Promise<User> {
+        const db = await PostgresDatabase.getInstance();
+        const queryResponse = await db.query('SELECT * FROM users WHERE "Username" = $1', [username]);
+        if (queryResponse.rowCount > 0) {
+            const row = queryResponse.rows[0];
+            return Promise.resolve(new User(
+                row.Id,
+                row.Username,
+                row.Password,
+                row.UserLevel,
+                row.ProfileImage,
+            ));
+        } else {
+            return Promise.resolve(undefined);
+        }
+    }
+
     public static async create(username: string, password: string): Promise<User> {
         const db = await PostgresDatabase.getInstance();
         const queryResponse = await db.query(

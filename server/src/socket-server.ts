@@ -5,18 +5,18 @@ import { ConnectedUsersService } from './connected-users-service.ts/connected-us
 import { User } from './connected-users-service.ts/user';
 
 export class SocketServer {
-    private static socketServer: SocketIO.Server;
-    private static httpServer: http.Server;
+
+    public static get socketServerInstance(): SocketIO.Server {
+        return SocketServer.socketServer;
+    }
 
     public static setServer(server: http.Server): void {
         this.httpServer = server;
         SocketServer.socketServer = io.listen(SocketServer.httpServer);
         SocketServer.listenForConnections();
     }
-
-    public static get socketServerInstance(): SocketIO.Server {
-        return SocketServer.socketServer;
-    }
+    private static socketServer: SocketIO.Server;
+    private static httpServer: http.Server;
 
     private static listenForConnections(): void {
         SocketServer.socketServer.on('connection', (socket: SocketIO.Socket) => {
@@ -28,7 +28,7 @@ export class SocketServer {
                     socket.disconnect();
                 } else {
                     socket.emit('setUsernameStatus', 'OK');
-                    let user = new User(true, socket, username);
+                    const user = new User(true, socket, username);
                     ConnectedUsersService.connect(user);
                     ChatService.instance.newConnection(user);
 

@@ -4,7 +4,7 @@ import { PostgresDatabase } from '../postgres-database';
 export class PendingFriendRequestRoute {
 
     public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        console.log("GET pending friend requests")
+        console.log('GET pending friend requests');
         const db = await PostgresDatabase.getInstance();
         db.query('SELECT * FROM pending_friend_requests ').then((query) => {
             if (query.rowCount > 0) {
@@ -15,7 +15,7 @@ export class PendingFriendRequestRoute {
             }
         })
             .catch((err) => {
-                console.log(err)
+                console.log(err);
                 res.sendStatus(400);
             });
     }

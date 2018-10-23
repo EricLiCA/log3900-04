@@ -1,15 +1,7 @@
-import { User } from "./user";
-import { Socket } from "socket.io";
+import { Socket } from 'socket.io';
+import { User } from './user';
 
 export class ConnectedUsersService {
-    
-    private static connectedUsersService: ConnectedUsersService;
-
-    private users: User[];
-
-    constructor() {
-        this.users = [];
-    }
 
     private static get instance(): ConnectedUsersService {
         if (this.connectedUsersService === undefined) {
@@ -26,14 +18,6 @@ export class ConnectedUsersService {
         ConnectedUsersService.instance.users.push(user);
     }
 
-    private static findIndexByName(name: string): number {
-        return ConnectedUsersService.instance.users.findIndex(user => user.name === name);
-    }
-
-    private static findIndexBySocket(socket: Socket): number {
-        return ConnectedUsersService.instance.users.findIndex(user => user.socket.id === socket.id);
-    }
-
     public static getByName(name: string): User {
         return ConnectedUsersService.instance.users[ConnectedUsersService.findIndexByName(name)];
     }
@@ -46,5 +30,20 @@ export class ConnectedUsersService {
         ConnectedUsersService.connectedUsers.splice(this.findIndexBySocket(socket), 1);
     }
 
+    private static connectedUsersService: ConnectedUsersService;
+
+    private static findIndexByName(name: string): number {
+        return ConnectedUsersService.instance.users.findIndex((user) => user.name === name);
+    }
+
+    private static findIndexBySocket(socket: Socket): number {
+        return ConnectedUsersService.instance.users.findIndex((user) => user.socket.id === socket.id);
+    }
+
+    private users: User[];
+
+    constructor() {
+        this.users = [];
+    }
 
 }
