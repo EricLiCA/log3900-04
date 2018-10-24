@@ -131,17 +131,13 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     
     @objc func leaveChannelAlert(_ notification: Notification) {
         let channelName: String = notification.userInfo!["channelName"]! as! String
-        print(channelName)
+        var channelIndex = 0
         
-        // if in My channels revome from list
-        if(selectedSegment == 1) { // MyChannels
-            var channelIndex = 0
-            for channel in myChannelsArray {
-                if channel == channelName {
-            self.removeChannelFromMyChannels(channelNumber: channelIndex)
-                }
-                channelIndex += 1
+        for channel in myChannelsArray {
+            if channel == channelName {
+                self.removeChannelFromMyChannels(channelNumber: channelIndex)
             }
+            channelIndex += 1
         }
     }
     
@@ -149,6 +145,7 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         self.myChannelsArray.remove(at: channelNumber)
         self.channelsTableView.reloadData()
     }
+    
     
 
     /*
