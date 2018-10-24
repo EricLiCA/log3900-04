@@ -81,7 +81,16 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("row: \(indexPath.row)")
+        if(selectedSegment == 1) { // My channels
+            displaySelectedChannel(channel: self.myChannelsArray[indexPath.row])
+        } else {
+            displaySelectedChannel(channel: self.allChannelsArray[indexPath.row])
+        }
+    }
+    
+    // TODO: Display chat according to channel in embedded view
+    func displaySelectedChannel(channel: String) {
+        print("channel: \(channel)")
     }
     
 
