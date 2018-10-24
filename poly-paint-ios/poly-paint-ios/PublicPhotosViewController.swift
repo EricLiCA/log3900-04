@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 final class PublicPhotosViewController: UICollectionViewController {
     
     // MARK: - Properties
@@ -18,8 +17,17 @@ final class PublicPhotosViewController: UICollectionViewController {
     fileprivate let itemsPerRow: CGFloat = 3 ;
     var images:[Image]?
     
+    func getPublicImageUrl() -> String{
+        if (UserDefaults.standard.string(forKey: "username") != "anonymous"){
+            return "http://localhost:3000/v2/imagesPublicExceptMine/" + UserDefaults.standard.string(forKey: "id")!
+        }
+        else{
+            return "http://localhost:3000/v2/imagesPublicExceptMine/" + UUID().uuidString
+        }
+        
+    }
     func fetchPublicImages() {
-        guard let url = URL(string: "http://localhost:3000/v2/images") else { return }
+        guard let url = URL(string: getPublicImageUrl()) else { return }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             if error != nil {
