@@ -93,25 +93,57 @@
                                             <segment title="My channels"/>
                                             <segment title="All channels"/>
                                         </segments>
+                                        <connections>
+                                            <action selector="segmentedControle:" destination="aOh-24-mdU" eventType="valueChanged" id="TFO-Gs-t48"/>
+                                        </connections>
                                     </segmentedControl>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="R6t-G9-9Q5">
+                                        <rect key="frame" x="0.0" y="44" width="250" height="896"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="firstCell" id="Gh6-ux-97U">
+                                                <rect key="frame" x="0.0" y="28" width="250" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gh6-ux-97U" id="Hyv-03-akh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="secondCell" id="apg-Sf-abN">
+                                                <rect key="frame" x="0.0" y="72" width="250" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="apg-Sf-abN" id="Q79-Gd-nL7">
+                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </tableViewCellContentView>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="cUE-Ze-n8K" firstAttribute="leading" secondItem="Mdn-pk-6YH" secondAttribute="leading" id="AkR-Yk-n30"/>
                                     <constraint firstAttribute="trailing" secondItem="cUE-Ze-n8K" secondAttribute="trailing" id="LNN-nG-OPH"/>
+                                    <constraint firstItem="R6t-G9-9Q5" firstAttribute="top" secondItem="cUE-Ze-n8K" secondAttribute="bottom" constant="8" id="W6Z-eu-ANF"/>
+                                    <constraint firstItem="R6t-G9-9Q5" firstAttribute="leading" secondItem="Mdn-pk-6YH" secondAttribute="leading" id="aRo-Wp-xeW"/>
                                     <constraint firstItem="cUE-Ze-n8K" firstAttribute="top" secondItem="Mdn-pk-6YH" secondAttribute="top" constant="8" id="enN-oe-9jx"/>
+                                    <constraint firstAttribute="trailing" secondItem="R6t-G9-9Q5" secondAttribute="trailing" id="iaq-84-863"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Mdn-pk-6YH" firstAttribute="top" secondItem="jZ7-vc-aCu" secondAttribute="top" id="I3D-20-ngj"/>
+                            <constraint firstItem="jZ7-vc-aCu" firstAttribute="bottom" secondItem="R6t-G9-9Q5" secondAttribute="bottom" constant="20" id="I7A-9N-x6Y"/>
                             <constraint firstItem="jZ7-vc-aCu" firstAttribute="bottom" secondItem="Mdn-pk-6YH" secondAttribute="bottom" constant="20" id="Yln-go-TVH"/>
                             <constraint firstItem="Mdn-pk-6YH" firstAttribute="leading" secondItem="jZ7-vc-aCu" secondAttribute="leading" constant="20" id="dAn-En-1e5"/>
                             <constraint firstItem="Mdn-pk-6YH" firstAttribute="width" secondItem="b2N-PA-dPu" secondAttribute="height" multiplier="125:512" id="vFk-A1-cp6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jZ7-vc-aCu"/>
                     </view>
+                    <connections>
+                        <outlet property="channelsTableView" destination="R6t-G9-9Q5" id="rOc-sY-pOS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dv7-AL-QN8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
