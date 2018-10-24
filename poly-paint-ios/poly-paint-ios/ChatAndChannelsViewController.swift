@@ -9,7 +9,7 @@
 import UIKit
 
 
-class channelTableViewCell: UITableViewCell {
+class ChannelTableViewCell: UITableViewCell {
     
     @IBOutlet weak var joinChannelButton: UIButton!
     @IBOutlet weak var channelNameLabel: UILabel!
@@ -57,14 +57,14 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell1 = channelsTableView.dequeueReusableCell(withIdentifier: "firstCell")! as UITableViewCell
-        let cell2 = channelsTableView.dequeueReusableCell(withIdentifier: "secondCell")! as UITableViewCell
+        let cell1 = channelsTableView.dequeueReusableCell(withIdentifier: "firstCell")! as! ChannelTableViewCell
+        let cell2 = channelsTableView.dequeueReusableCell(withIdentifier: "secondCell")! as! ChannelTableViewCell
         
         if selectedSegment == 1 {
-            cell1.textLabel?.text = myChannelsArray[indexPath.row]
+            cell1.channelNameLabel.text = myChannelsArray[indexPath.row]
             return cell1
         } else {
-            cell2.textLabel?.text = allChannelsArray[indexPath.row]
+            cell2.channelNameLabel.text = allChannelsArray[indexPath.row]
             return cell2
         }
         
