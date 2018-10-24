@@ -217,6 +217,9 @@
                                                             <state key="normal" title="Leave">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="leaveChannelTapped:" destination="b3e-72-1Wl" eventType="touchUpInside" id="AbH-zr-pZH"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -229,7 +232,6 @@
                                                 <connections>
                                                     <outlet property="channelNameLabel" destination="eTS-I9-F9u" id="xQO-aM-NfT"/>
                                                     <outlet property="leaveChannelButton" destination="C6x-fV-fPG" id="wab-hy-XGm"/>
-                                                    <outlet property="leaveChannelTapped" destination="C6x-fV-fPG" id="Yxb-ON-c0N"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
