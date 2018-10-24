@@ -25,6 +25,7 @@ class ConnectionViewController: UIViewController {
             self.username.text = self.pseudonym
             self.username.isEnabled = false
         }
+        
     }
 
     override func didReceiveMemoryWarning() {
