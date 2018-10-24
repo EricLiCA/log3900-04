@@ -22,7 +22,6 @@ class ChannelTableViewCell: UITableViewCell {
     }
     
     @IBAction func leaveChannelTapped(_ sender: UIButton) {
-        self.disableButtons()
         let userInfo = ["channelName": channelNameLabel.text!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "leaveChannelAlert"), object: nil, userInfo: userInfo)
     }
@@ -41,7 +40,7 @@ class ChannelTableViewCell: UITableViewCell {
 
 class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let myChannelsArray = ["General", "Popo", "Hello you"]
+    var myChannelsArray = ["General", "Popo", "Hello you"]
     let allChannelsArray = ["General", "Bob", "Poly", "Popo", "PolyAcme", "Hello you", "HEYYY"]
     var selectedSegment = 1
     
@@ -133,6 +132,22 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     @objc func leaveChannelAlert(_ notification: Notification) {
         let channelName: String = notification.userInfo!["channelName"]! as! String
         print(channelName)
+        
+        // if in My channels revome from list
+        if(selectedSegment == 1) { // MyChannels
+            var channelIndex = 0
+            for channel in myChannelsArray {
+                if channel == channelName {
+            self.removeChannelFromMyChannels(channelNumber: channelIndex)
+                }
+                channelIndex += 1
+            }
+        }
+    }
+    
+    func removeChannelFromMyChannels(channelNumber: Int) {
+        self.myChannelsArray.remove(at: channelNumber)
+        self.channelsTableView.reloadData()
     }
     
 
