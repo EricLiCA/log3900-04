@@ -156,7 +156,9 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         self.allChannelsArray = ["General", "Bob", "Poly", "Popo", "PolyAcme", "Hello you", "HEYYY"]
     }
     
-
+    
+    
+    
     /*
     // MARK: - Navigation
 
@@ -168,3 +170,4 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     */
 
 }
+
