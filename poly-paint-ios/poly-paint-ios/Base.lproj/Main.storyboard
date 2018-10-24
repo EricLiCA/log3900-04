@@ -88,7 +88,10 @@
                                 <rect key="frame" x="20" y="64" width="250" height="940"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cUE-Ze-n8K">
-                                        <rect key="frame" x="0.0" y="8" width="250" height="29"/>
+                                        <rect key="frame" x="0.0" y="8" width="220" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="220" id="ucR-cf-SbS"/>
+                                        </constraints>
                                         <segments>
                                             <segment title="My channels"/>
                                             <segment title="All channels"/>
@@ -100,6 +103,9 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="R6t-G9-9Q5">
                                         <rect key="frame" x="0.0" y="44" width="250" height="896"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="Pt0-k1-Hy8"/>
+                                        </constraints>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GeneralCell" rowHeight="60" id="Gh6-ux-97U" customClass="ChannelTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="250" height="60"/>
@@ -218,13 +224,18 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfG-5A-8s9">
+                                        <rect key="frame" x="225" y="10" width="25" height="25"/>
+                                        <state key="normal" image="Add"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="cUE-Ze-n8K" firstAttribute="leading" secondItem="Mdn-pk-6YH" secondAttribute="leading" id="AkR-Yk-n30"/>
-                                    <constraint firstAttribute="trailing" secondItem="cUE-Ze-n8K" secondAttribute="trailing" id="LNN-nG-OPH"/>
                                     <constraint firstItem="R6t-G9-9Q5" firstAttribute="top" secondItem="cUE-Ze-n8K" secondAttribute="bottom" constant="8" id="W6Z-eu-ANF"/>
                                     <constraint firstItem="R6t-G9-9Q5" firstAttribute="leading" secondItem="Mdn-pk-6YH" secondAttribute="leading" id="aRo-Wp-xeW"/>
+                                    <constraint firstItem="SfG-5A-8s9" firstAttribute="leading" secondItem="cUE-Ze-n8K" secondAttribute="trailing" constant="5" id="ahh-G5-l3q"/>
+                                    <constraint firstItem="SfG-5A-8s9" firstAttribute="top" secondItem="Mdn-pk-6YH" secondAttribute="top" constant="10" id="egC-S7-m0T"/>
                                     <constraint firstItem="cUE-Ze-n8K" firstAttribute="top" secondItem="Mdn-pk-6YH" secondAttribute="top" constant="8" id="enN-oe-9jx"/>
                                     <constraint firstAttribute="trailing" secondItem="R6t-G9-9Q5" secondAttribute="trailing" id="iaq-84-863"/>
                                 </constraints>
@@ -241,11 +252,13 @@
                             <constraint firstItem="uOJ-lU-u54" firstAttribute="top" secondItem="jZ7-vc-aCu" secondAttribute="top" id="4ae-Au-FkZ"/>
                             <constraint firstItem="Mdn-pk-6YH" firstAttribute="top" secondItem="jZ7-vc-aCu" secondAttribute="top" id="I3D-20-ngj"/>
                             <constraint firstItem="jZ7-vc-aCu" firstAttribute="bottom" secondItem="R6t-G9-9Q5" secondAttribute="bottom" constant="20" id="I7A-9N-x6Y"/>
+                            <constraint firstItem="uOJ-lU-u54" firstAttribute="leading" secondItem="SfG-5A-8s9" secondAttribute="trailing" constant="8" id="POq-Wm-ChS"/>
                             <constraint firstItem="uOJ-lU-u54" firstAttribute="leading" secondItem="R6t-G9-9Q5" secondAttribute="trailing" constant="8" id="Pbd-Qj-eQm"/>
                             <constraint firstItem="jZ7-vc-aCu" firstAttribute="bottom" secondItem="Mdn-pk-6YH" secondAttribute="bottom" constant="20" id="Yln-go-TVH"/>
                             <constraint firstItem="Mdn-pk-6YH" firstAttribute="leading" secondItem="jZ7-vc-aCu" secondAttribute="leading" constant="20" id="dAn-En-1e5"/>
                             <constraint firstItem="jZ7-vc-aCu" firstAttribute="trailing" secondItem="uOJ-lU-u54" secondAttribute="trailing" constant="20" id="vFL-0U-AOH"/>
                             <constraint firstItem="Mdn-pk-6YH" firstAttribute="width" secondItem="b2N-PA-dPu" secondAttribute="height" multiplier="125:512" id="vFk-A1-cp6"/>
+                            <constraint firstItem="uOJ-lU-u54" firstAttribute="leading" secondItem="cUE-Ze-n8K" secondAttribute="trailing" constant="38" id="wNY-sN-QYm"/>
                             <constraint firstItem="jZ7-vc-aCu" firstAttribute="bottom" secondItem="uOJ-lU-u54" secondAttribute="bottom" constant="20" id="xPV-b1-1Ht"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jZ7-vc-aCu"/>
@@ -1205,6 +1218,7 @@
     </scenes>
     <resources>
         <image name="Accept" width="25" height="25"/>
+        <image name="Add" width="25" height="25"/>
         <image name="AddFriend" width="25" height="25"/>
         <image name="BlankProfile" width="50" height="50"/>
         <image name="Chat" width="50" height="50"/>
