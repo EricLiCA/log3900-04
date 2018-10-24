@@ -29,8 +29,9 @@ class ChannelTableViewCell: UITableViewCell {
 
 class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var myChannelsArray = ["General", "Popo", "Hello you"]
-    let allChannelsArray = ["General", "Bob", "Poly", "Popo", "PolyAcme", "Hello you", "HEYYY"]
+    var myChannelsArray = [String]()
+    var allChannelsArray = [String]()
+    
     var selectedSegment = 1
     
     @IBOutlet weak var channelsTableView: UITableView!
@@ -49,6 +50,7 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         channelsTableView.delegate = self
         channelsTableView.dataSource = self
         setUpNotifications()
+        self.getChannels()
         // Do any additional setup after loading the view.
     }
 
@@ -132,16 +134,23 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         }
     }
     
+    // TODO: call api to leave channel
     func removeChannelFromMyChannels(channelNumber: Int) {
         self.myChannelsArray.remove(at: channelNumber)
         self.channelsTableView.reloadData()
     }
     
+    // TODO: call api to join channel
     func addChannelToMyChannels(channelName: String) {
         self.myChannelsArray.append(channelName)
         self.channelsTableView.reloadData()
     }
     
+    // TODO: call api to get channels
+    func getChannels() {
+        self.myChannelsArray = ["General", "Popo", "Hello you"]
+        self.allChannelsArray = ["General", "Bob", "Poly", "Popo", "PolyAcme", "Hello you", "HEYYY"]
+    }
     
 
     /*
