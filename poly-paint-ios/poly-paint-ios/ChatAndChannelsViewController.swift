@@ -80,6 +80,10 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("row: \(indexPath.row)")
+    }
+    
 
     /*
     // MARK: - Navigation
