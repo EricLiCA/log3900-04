@@ -119,10 +119,10 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YN5-8o-E3A">
-                                                            <rect key="frame" x="200" y="14" width="35" height="30"/>
+                                                            <rect key="frame" x="198" y="15" width="45" height="30"/>
                                                             <color key="backgroundColor" red="0.20392156862745098" green="0.7686274509803922" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="35" id="LaT-BX-xz9"/>
+                                                                <constraint firstAttribute="width" constant="45" id="eaC-mt-xCX"/>
                                                                 <constraint firstAttribute="height" constant="30" id="u0q-aC-oxF"/>
                                                             </constraints>
                                                             <state key="normal" title="Join">
@@ -134,10 +134,10 @@
                                                         </button>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="YN5-8o-E3A" firstAttribute="leading" secondItem="cF3-mr-5Uo" secondAttribute="trailing" constant="10" id="GAv-Fu-bfX"/>
                                                         <constraint firstItem="YN5-8o-E3A" firstAttribute="centerY" secondItem="Hyv-03-akh" secondAttribute="centerY" id="hsC-6U-NJK"/>
+                                                        <constraint firstItem="YN5-8o-E3A" firstAttribute="leading" secondItem="cF3-mr-5Uo" secondAttribute="trailing" constant="8" id="l8m-mA-KgI"/>
                                                         <constraint firstItem="cF3-mr-5Uo" firstAttribute="leading" secondItem="Hyv-03-akh" secondAttribute="leading" constant="15" id="mEA-WF-HzK"/>
-                                                        <constraint firstAttribute="trailing" secondItem="YN5-8o-E3A" secondAttribute="trailing" constant="15" id="pxQ-nJ-Yoj"/>
+                                                        <constraint firstAttribute="trailing" secondItem="YN5-8o-E3A" secondAttribute="trailing" constant="7" id="qJe-1p-bZ3"/>
                                                         <constraint firstItem="cF3-mr-5Uo" firstAttribute="centerY" secondItem="Hyv-03-akh" secondAttribute="centerY" id="uXf-hd-vOu"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
@@ -164,10 +164,10 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAM-ZF-vPa">
-                                                            <rect key="frame" x="198" y="15" width="35" height="30"/>
+                                                            <rect key="frame" x="198" y="15" width="45" height="30"/>
                                                             <color key="backgroundColor" red="0.20392156859999999" green="0.76862745099999996" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="35" id="OZw-WJ-L0X"/>
+                                                                <constraint firstAttribute="width" constant="45" id="D3L-WJ-Tu9"/>
                                                                 <constraint firstAttribute="height" constant="30" id="qxI-a4-wZ0"/>
                                                             </constraints>
                                                             <state key="normal" title="Join">
@@ -188,6 +188,48 @@
                                                 <connections>
                                                     <outlet property="channelNameLabel" destination="qEc-lV-a0f" id="TjA-Xl-3ks"/>
                                                     <outlet property="joinChannelButton" destination="gAM-ZF-vPa" id="GUr-uv-tdH"/>
+                                                </connections>
+                                            </tableViewCell>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LeaveChannelCell" rowHeight="60" id="b3e-72-1Wl" customClass="ChannelTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="148" width="250" height="60"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="b3e-72-1Wl" id="lZb-8d-oaU">
+                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="59.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Channel name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eTS-I9-F9u">
+                                                            <rect key="frame" x="15" y="19" width="175" height="21"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="175" id="1P2-Jj-rG9"/>
+                                                                <constraint firstAttribute="height" constant="21" id="kw9-ay-Dr8"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C6x-fV-fPG">
+                                                            <rect key="frame" x="198" y="15" width="45" height="30"/>
+                                                            <color key="backgroundColor" red="0.84196541878172593" green="0.12595028973279115" blue="0.0072743989510578866" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="3g3-t7-pF4"/>
+                                                                <constraint firstAttribute="width" constant="45" id="a3C-2H-Fzi"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Leave">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="C6x-fV-fPG" firstAttribute="centerY" secondItem="lZb-8d-oaU" secondAttribute="centerY" id="DX2-YZ-7b3"/>
+                                                        <constraint firstItem="eTS-I9-F9u" firstAttribute="leading" secondItem="lZb-8d-oaU" secondAttribute="leading" constant="15" id="KDO-Kj-dkH"/>
+                                                        <constraint firstItem="eTS-I9-F9u" firstAttribute="centerY" secondItem="lZb-8d-oaU" secondAttribute="centerY" id="RgQ-SV-8bh"/>
+                                                        <constraint firstItem="C6x-fV-fPG" firstAttribute="leading" secondItem="eTS-I9-F9u" secondAttribute="trailing" constant="8" id="gMp-Vo-xhd"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="channelNameLabel" destination="eTS-I9-F9u" id="xQO-aM-NfT"/>
+                                                    <outlet property="leaveChannelButton" destination="C6x-fV-fPG" id="wab-hy-XGm"/>
+                                                    <outlet property="leaveChannelTapped" destination="C6x-fV-fPG" id="Yxb-ON-c0N"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>

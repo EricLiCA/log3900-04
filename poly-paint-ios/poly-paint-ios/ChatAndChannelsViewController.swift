@@ -14,9 +14,11 @@ class ChannelTableViewCell: UITableViewCell {
     @IBOutlet weak var joinChannelButton: UIButton!
     @IBOutlet weak var channelNameLabel: UILabel!
     
+    @IBOutlet weak var leaveChannelButton: UIButton!
     @IBAction func joinChannelTapped(_ sender: UIButton) {
     }
     
+    @IBOutlet weak var leaveChannelTapped: UIButton!
 }
 
 class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -57,17 +59,25 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell1 = channelsTableView.dequeueReusableCell(withIdentifier: "firstCell")! as! ChannelTableViewCell
-        let cell2 = channelsTableView.dequeueReusableCell(withIdentifier: "secondCell")! as! ChannelTableViewCell
+        
+        
         
         if selectedSegment == 1 {
+            let cell1 = channelsTableView.dequeueReusableCell(withIdentifier: "LeaveChannelCell")! as! ChannelTableViewCell
             cell1.channelNameLabel.text = myChannelsArray[indexPath.row]
             return cell1
         } else {
-            cell2.channelNameLabel.text = allChannelsArray[indexPath.row]
-            return cell2
+            if(myChannelsArray.contains(allChannelsArray[indexPath.row])) {
+                let cell2 = channelsTableView.dequeueReusableCell(withIdentifier: "LeaveChannelCell")! as! ChannelTableViewCell
+                cell2.channelNameLabel.text = allChannelsArray[indexPath.row]
+                return cell2
+            } else {
+                let cell2 = channelsTableView.dequeueReusableCell(withIdentifier: "secondCell")! as! ChannelTableViewCell
+                cell2.channelNameLabel.text = allChannelsArray[indexPath.row]
+                return cell2
+            }
+            
         }
-        
     }
     
 
