@@ -24,6 +24,7 @@
 		CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F1E1C216980FF0023663E /* SignUpViewController.swift */; };
 		CF21E2C0217F8A8500F21F57 /* MasterChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2BF217F8A8500F21F57 /* MasterChatViewController.swift */; };
 		CF21E2C2217F8B0400F21F57 /* DetailChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2C1217F8B0400F21F57 /* DetailChatViewController.swift */; };
+		CF21E2C42180A82000F21F57 /* ChatAndChannelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2C32180A82000F21F57 /* ChatAndChannelsViewController.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -73,6 +74,7 @@
 		CF1F1E1C216980FF0023663E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		CF21E2BF217F8A8500F21F57 /* MasterChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterChatViewController.swift; sourceTree = "<group>"; };
 		CF21E2C1217F8B0400F21F57 /* DetailChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChatViewController.swift; sourceTree = "<group>"; };
+		CF21E2C32180A82000F21F57 /* ChatAndChannelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAndChannelsViewController.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
 				A77C46F221569CFB0056135A /* Main.storyboard */,
+				CF21E2C32180A82000F21F57 /* ChatAndChannelsViewController.swift */,
 				CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */,
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
 			);
@@ -374,6 +377,7 @@
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,
 				CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */,
 				A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */,
+				CF21E2C42180A82000F21F57 /* ChatAndChannelsViewController.swift in Sources */,
 				CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */,
 				A78A733A215ED91C007A854F /* DateTime.swift in Sources */,
 				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,

@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Baseline standard spacing" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="55T-va-sHI">
-                                <rect key="frame" x="269" y="491" width="230" height="106"/>
+                                <rect key="frame" x="269" y="469" width="230" height="106"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://ec2-18-214-40-211.compute-1.amazonaws.com" borderStyle="roundedRect" placeholder="Server address" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Tzt-tL-Elm">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
@@ -75,6 +76,47 @@
             </objects>
             <point key="canvasLocation" x="-13" y="789"/>
         </scene>
+        <!--Chat And Channels View Controller-->
+        <scene sceneID="gEA-7V-2KD">
+            <objects>
+                <viewController id="aOh-24-mdU" customClass="ChatAndChannelsViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="b2N-PA-dPu">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mdn-pk-6YH">
+                                <rect key="frame" x="20" y="64" width="250" height="940"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cUE-Ze-n8K">
+                                        <rect key="frame" x="0.0" y="8" width="250" height="29"/>
+                                        <segments>
+                                            <segment title="My channels"/>
+                                            <segment title="All channels"/>
+                                        </segments>
+                                    </segmentedControl>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="cUE-Ze-n8K" firstAttribute="leading" secondItem="Mdn-pk-6YH" secondAttribute="leading" id="AkR-Yk-n30"/>
+                                    <constraint firstAttribute="trailing" secondItem="cUE-Ze-n8K" secondAttribute="trailing" id="LNN-nG-OPH"/>
+                                    <constraint firstItem="cUE-Ze-n8K" firstAttribute="top" secondItem="Mdn-pk-6YH" secondAttribute="top" constant="8" id="enN-oe-9jx"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Mdn-pk-6YH" firstAttribute="top" secondItem="jZ7-vc-aCu" secondAttribute="top" id="I3D-20-ngj"/>
+                            <constraint firstItem="jZ7-vc-aCu" firstAttribute="bottom" secondItem="Mdn-pk-6YH" secondAttribute="bottom" constant="20" id="Yln-go-TVH"/>
+                            <constraint firstItem="Mdn-pk-6YH" firstAttribute="leading" secondItem="jZ7-vc-aCu" secondAttribute="leading" constant="20" id="dAn-En-1e5"/>
+                            <constraint firstItem="Mdn-pk-6YH" firstAttribute="width" secondItem="b2N-PA-dPu" secondAttribute="height" multiplier="125:512" id="vFk-A1-cp6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="jZ7-vc-aCu"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dv7-AL-QN8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8.59375" y="1555.6640625"/>
+        </scene>
         <!--Chat-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -84,7 +126,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eoP-gJ-ha8">
-                                <rect key="frame" x="0.0" y="64" width="768" height="914"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="958"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" id="DVL-uI-Epi">
@@ -116,7 +158,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5NO-JK-7AR">
-                                <rect key="frame" x="0.0" y="64" width="768" height="30"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.051022046232876712" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="t5n-sY-XbW"/>
@@ -452,7 +494,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <segue destination="dn9-Mw-ZOm" kind="show" id="GUm-y9-ndH"/>
+                                            <segue destination="aOh-24-mdU" kind="show" id="MBO-W4-Uqw"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yid-28-lYT">
