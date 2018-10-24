@@ -45,6 +45,10 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         self.channelsTableView.reloadData()
     }
     
+    
+    @IBAction func addChannelTapped(_ sender: UIButton) {
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         channelsTableView.delegate = self

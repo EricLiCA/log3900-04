@@ -227,6 +227,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SfG-5A-8s9">
                                         <rect key="frame" x="225" y="10" width="25" height="25"/>
                                         <state key="normal" image="Add"/>
+                                        <connections>
+                                            <action selector="addChannelTapped:" destination="aOh-24-mdU" eventType="touchUpInside" id="dLh-0g-RbW"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
