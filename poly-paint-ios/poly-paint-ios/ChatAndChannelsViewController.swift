@@ -8,6 +8,17 @@
 
 import UIKit
 
+
+class channelTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var joinChannelButton: UIButton!
+    @IBOutlet weak var channelNameLabel: UILabel!
+    
+    @IBAction func joinChannelTapped(_ sender: UIButton) {
+    }
+    
+}
+
 class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let myChannelsArray = ["General", "Popo", "Hello you"]
