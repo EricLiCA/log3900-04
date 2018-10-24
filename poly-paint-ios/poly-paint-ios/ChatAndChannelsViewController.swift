@@ -16,7 +16,6 @@ class ChannelTableViewCell: UITableViewCell {
     @IBOutlet weak var leaveChannelButton: UIButton!
     
     @IBAction func joinChannelTapped(_ sender: UIButton) {
-        self.disableButtons()
         let userInfo = ["channelName": channelNameLabel.text!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "joinChannelAlert"), object: nil, userInfo: userInfo)
     }
@@ -24,16 +23,6 @@ class ChannelTableViewCell: UITableViewCell {
     @IBAction func leaveChannelTapped(_ sender: UIButton) {
         let userInfo = ["channelName": channelNameLabel.text!]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "leaveChannelAlert"), object: nil, userInfo: userInfo)
-    }
-    
-    func disableButtons() {
-        if(joinChannelButton != nil) {
-            joinChannelButton.isEnabled = false
-            joinChannelButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        } else {
-            leaveChannelButton.isEnabled = false
-            leaveChannelButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        }
     }
     
 }
@@ -120,14 +109,6 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         print("channel: \(channel)")
     }
     
-    func joinChannel(channelName: String) {
-    
-    }
-    
-    func leaveChannel(channelName: String) {
-        
-    }
-    
     func setUpNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(joinChannelAlert), name: NSNotification.Name(rawValue: "joinChannelAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(leaveChannelAlert), name: NSNotification.Name(rawValue: "leaveChannelAlert"), object: nil)
@@ -136,6 +117,7 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     @objc func joinChannelAlert(_ notification: Notification) {
         let channelName: String = notification.userInfo!["channelName"]! as! String
         print(channelName)
+        self.addChannelToMyChannels(channelName: channelName)
     }
     
     @objc func leaveChannelAlert(_ notification: Notification) {
@@ -152,6 +134,11 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     
     func removeChannelFromMyChannels(channelNumber: Int) {
         self.myChannelsArray.remove(at: channelNumber)
+        self.channelsTableView.reloadData()
+    }
+    
+    func addChannelToMyChannels(channelName: String) {
+        self.myChannelsArray.append(channelName)
         self.channelsTableView.reloadData()
     }
     
