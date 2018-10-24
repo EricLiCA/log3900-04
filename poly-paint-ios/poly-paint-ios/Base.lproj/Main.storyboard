@@ -229,6 +229,9 @@
                                         <state key="normal" image="Add"/>
                                         <connections>
                                             <action selector="addChannelTapped:" destination="aOh-24-mdU" eventType="touchUpInside" id="dLh-0g-RbW"/>
+                                            <segue destination="ob0-pp-c4A" kind="popoverPresentation" popoverAnchorView="SfG-5A-8s9" id="qL3-U6-tW8">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -273,6 +276,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dv7-AL-QN8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="8.59375" y="1555.6640625"/>
+        </scene>
+        <!--Chat Popover View Controller-->
+        <scene sceneID="7Hx-dy-eaY">
+            <objects>
+                <viewController id="ob0-pp-c4A" customClass="ChatPopoverViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ROZ-Ja-NfI" customClass="chatPopover" customModule="poly_paint_ios">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="L1u-ou-cMm">
+                                <rect key="frame" x="45" y="202.5" width="230" height="75"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Channel name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6zz-ej-A4U">
+                                        <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="3PR-SC-6Br"/>
+                                            <constraint firstAttribute="width" constant="230" id="8h2-iJ-YvD"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6vW-c1-kd4">
+                                        <rect key="frame" x="0.0" y="45" width="230" height="30"/>
+                                        <color key="backgroundColor" red="0.16862745100000001" green="0.7725490196" blue="0.99215686270000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="pII-6e-UCU"/>
+                                            <constraint firstAttribute="width" constant="230" id="yX5-dm-UMb"/>
+                                        </constraints>
+                                        <state key="normal" title="Create channel">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="createChannelTapped:" destination="ob0-pp-c4A" eventType="touchUpInside" id="WNS-mZ-f8S"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="L1u-ou-cMm" firstAttribute="centerX" secondItem="jFU-kZ-8SQ" secondAttribute="centerX" id="M1X-GJ-CAn"/>
+                            <constraint firstItem="L1u-ou-cMm" firstAttribute="centerY" secondItem="jFU-kZ-8SQ" secondAttribute="centerY" id="dk8-Ph-6GJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="jFU-kZ-8SQ"/>
+                    </view>
+                    <connections>
+                        <outlet property="newChannelNameLabel" destination="6zz-ej-A4U" id="cfm-xf-fvV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c0v-pQ-9cT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="876.5625" y="1595.5078125"/>
         </scene>
         <!--Chat-->
         <scene sceneID="tne-QT-ifu">
