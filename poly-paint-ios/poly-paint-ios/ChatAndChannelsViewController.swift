@@ -13,12 +13,30 @@ class ChannelTableViewCell: UITableViewCell {
     
     @IBOutlet weak var joinChannelButton: UIButton!
     @IBOutlet weak var channelNameLabel: UILabel!
-    
     @IBOutlet weak var leaveChannelButton: UIButton!
+    
     @IBAction func joinChannelTapped(_ sender: UIButton) {
+        self.disableButtons()
+        let userInfo = ["channelName": channelNameLabel.text!]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "joinChannelAlert"), object: nil, userInfo: userInfo)
     }
     
-    @IBOutlet weak var leaveChannelTapped: UIButton!
+    @IBAction func leaveChannelTapped(_ sender: UIButton) {
+        self.disableButtons()
+        let userInfo = ["channelName": channelNameLabel.text!]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "leaveChannelAlert"), object: nil, userInfo: userInfo)
+    }
+    
+    func disableButtons() {
+        if(joinChannelButton != nil) {
+            joinChannelButton.isEnabled = false
+            joinChannelButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        } else {
+            leaveChannelButton.isEnabled = false
+            leaveChannelButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        }
+    }
+    
 }
 
 class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -42,6 +60,7 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
         channelsTableView.delegate = self
         channelsTableView.dataSource = self
+        setUpNotifications()
         // Do any additional setup after loading the view.
     }
 
@@ -91,6 +110,29 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     // TODO: Display chat according to channel in embedded view
     func displaySelectedChannel(channel: String) {
         print("channel: \(channel)")
+    }
+    
+    func joinChannel(channelName: String) {
+    
+    }
+    
+    func leaveChannel(channelName: String) {
+        
+    }
+    
+    func setUpNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(joinChannelAlert), name: NSNotification.Name(rawValue: "joinChannelAlert"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(leaveChannelAlert), name: NSNotification.Name(rawValue: "leaveChannelAlert"), object: nil)
+    }
+    
+    @objc func joinChannelAlert(_ notification: Notification) {
+        let channelName: String = notification.userInfo!["channelName"]! as! String
+        print(channelName)
+    }
+    
+    @objc func leaveChannelAlert(_ notification: Notification) {
+        let channelName: String = notification.userInfo!["channelName"]! as! String
+        print(channelName)
     }
     
 
