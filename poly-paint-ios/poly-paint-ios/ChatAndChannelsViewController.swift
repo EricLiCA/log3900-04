@@ -78,14 +78,23 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
-        
         if selectedSegment == 1 {
-            let cell1 = channelsTableView.dequeueReusableCell(withIdentifier: "LeaveChannelCell")! as! ChannelTableViewCell
-            cell1.channelNameLabel.text = myChannelsArray[indexPath.row]
-            return cell1
+            if(myChannelsArray[indexPath.row] == "General") {
+                let cell1 = channelsTableView.dequeueReusableCell(withIdentifier: "GeneralCell")! as! ChannelTableViewCell
+                cell1.channelNameLabel.text = myChannelsArray[indexPath.row]
+                return cell1
+            } else {
+                let cell1 = channelsTableView.dequeueReusableCell(withIdentifier: "LeaveChannelCell")! as! ChannelTableViewCell
+                cell1.channelNameLabel.text = myChannelsArray[indexPath.row]
+                return cell1
+            }
+            
         } else {
-            if(myChannelsArray.contains(allChannelsArray[indexPath.row])) {
+            if(allChannelsArray[indexPath.row] == "General") {
+                let cell2 = channelsTableView.dequeueReusableCell(withIdentifier: "GeneralCell")! as! ChannelTableViewCell
+                cell2.channelNameLabel.text = allChannelsArray[indexPath.row]
+                return cell2
+            } else if(myChannelsArray.contains(allChannelsArray[indexPath.row])) {
                 let cell2 = channelsTableView.dequeueReusableCell(withIdentifier: "LeaveChannelCell")! as! ChannelTableViewCell
                 cell2.channelNameLabel.text = allChannelsArray[indexPath.row]
                 return cell2
@@ -134,7 +143,7 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         var channelIndex = 0
         
         for channel in myChannelsArray {
-            if channel == channelName {
+            if (channel == channelName) {
                 self.removeChannelFromMyChannels(channelNumber: channelIndex)
             }
             channelIndex += 1
