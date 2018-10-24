@@ -101,7 +101,7 @@
                                         <rect key="frame" x="0.0" y="44" width="250" height="896"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="firstCell" rowHeight="60" id="Gh6-ux-97U" customClass="channelTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="firstCell" rowHeight="60" id="Gh6-ux-97U" customClass="ChannelTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="250" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gh6-ux-97U" id="Hyv-03-akh">
@@ -146,13 +146,49 @@
                                                     <outlet property="joinChannelButton" destination="YN5-8o-E3A" id="nwM-Ea-8b0"/>
                                                 </connections>
                                             </tableViewCell>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="secondCell" rowHeight="60" id="apg-Sf-abN">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="secondCell" rowHeight="60" id="apg-Sf-abN" customClass="ChannelTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="88" width="250" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="apg-Sf-abN" id="Q79-Gd-nL7">
                                                     <rect key="frame" x="0.0" y="0.0" width="250" height="59.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Channel name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qEc-lV-a0f">
+                                                            <rect key="frame" x="15" y="19" width="175" height="21"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="175" id="cBh-PK-6rv"/>
+                                                                <constraint firstAttribute="height" constant="21" id="eE3-Oa-Bia"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAM-ZF-vPa">
+                                                            <rect key="frame" x="198" y="15" width="35" height="30"/>
+                                                            <color key="backgroundColor" red="0.20392156859999999" green="0.76862745099999996" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="35" id="OZw-WJ-L0X"/>
+                                                                <constraint firstAttribute="height" constant="30" id="qxI-a4-wZ0"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Join">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="joinChannelTapped:" destination="apg-Sf-abN" eventType="touchUpInside" id="RaT-wG-uTi"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="gAM-ZF-vPa" firstAttribute="leading" secondItem="qEc-lV-a0f" secondAttribute="trailing" constant="8" id="B2r-mc-zBG"/>
+                                                        <constraint firstItem="qEc-lV-a0f" firstAttribute="leading" secondItem="Q79-Gd-nL7" secondAttribute="leading" constant="15" id="Dzh-1u-kCR"/>
+                                                        <constraint firstItem="gAM-ZF-vPa" firstAttribute="centerY" secondItem="Q79-Gd-nL7" secondAttribute="centerY" id="lWU-GW-6Ww"/>
+                                                        <constraint firstItem="qEc-lV-a0f" firstAttribute="centerY" secondItem="Q79-Gd-nL7" secondAttribute="centerY" id="sga-bV-tVz"/>
+                                                    </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="channelNameLabel" destination="qEc-lV-a0f" id="TjA-Xl-3ks"/>
+                                                    <outlet property="joinChannelButton" destination="gAM-ZF-vPa" id="GUr-uv-tdH"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
