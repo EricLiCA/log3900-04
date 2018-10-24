@@ -101,19 +101,56 @@
                                         <rect key="frame" x="0.0" y="44" width="250" height="896"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="firstCell" id="Gh6-ux-97U">
-                                                <rect key="frame" x="0.0" y="28" width="250" height="44"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="firstCell" rowHeight="60" id="Gh6-ux-97U" customClass="channelTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="250" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gh6-ux-97U" id="Hyv-03-akh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="43.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="59.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Channel name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cF3-mr-5Uo">
+                                                            <rect key="frame" x="15" y="19" width="175" height="21"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="175" id="VAC-hU-kpW"/>
+                                                                <constraint firstAttribute="height" constant="21" id="Vhh-sM-ftc"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YN5-8o-E3A">
+                                                            <rect key="frame" x="200" y="14" width="35" height="30"/>
+                                                            <color key="backgroundColor" red="0.20392156862745098" green="0.7686274509803922" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="35" id="LaT-BX-xz9"/>
+                                                                <constraint firstAttribute="height" constant="30" id="u0q-aC-oxF"/>
+                                                            </constraints>
+                                                            <state key="normal" title="Join">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="joinChannelTapped:" destination="Gh6-ux-97U" eventType="touchUpInside" id="q6o-dV-AZp"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="YN5-8o-E3A" firstAttribute="leading" secondItem="cF3-mr-5Uo" secondAttribute="trailing" constant="10" id="GAv-Fu-bfX"/>
+                                                        <constraint firstItem="YN5-8o-E3A" firstAttribute="centerY" secondItem="Hyv-03-akh" secondAttribute="centerY" id="hsC-6U-NJK"/>
+                                                        <constraint firstItem="cF3-mr-5Uo" firstAttribute="leading" secondItem="Hyv-03-akh" secondAttribute="leading" constant="15" id="mEA-WF-HzK"/>
+                                                        <constraint firstAttribute="trailing" secondItem="YN5-8o-E3A" secondAttribute="trailing" constant="15" id="pxQ-nJ-Yoj"/>
+                                                        <constraint firstItem="cF3-mr-5Uo" firstAttribute="centerY" secondItem="Hyv-03-akh" secondAttribute="centerY" id="uXf-hd-vOu"/>
+                                                    </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="channelNameLabel" destination="cF3-mr-5Uo" id="tW7-3P-6Ru"/>
+                                                    <outlet property="joinChannelButton" destination="YN5-8o-E3A" id="nwM-Ea-8b0"/>
+                                                </connections>
                                             </tableViewCell>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="secondCell" id="apg-Sf-abN">
-                                                <rect key="frame" x="0.0" y="72" width="250" height="44"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="secondCell" rowHeight="60" id="apg-Sf-abN">
+                                                <rect key="frame" x="0.0" y="88" width="250" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="apg-Sf-abN" id="Q79-Gd-nL7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="43.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="59.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </tableViewCellContentView>
                                             </tableViewCell>
