@@ -19,11 +19,12 @@
 		A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7335215ADDEF007A854F /* FrontPageViewController.swift */; };
 		A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7337215AE75D007A854F /* ConnectionViewController.swift */; };
 		A78A733A215ED91C007A854F /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7339215ED91C007A854F /* DateTime.swift */; };
+		A7AB7B86217FC68C0068BD40 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB7B85217FC68C0068BD40 /* ChatManager.swift */; };
+		A7AB7B89217FC8250068BD40 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB7B88217FC8250068BD40 /* ChatMessage.swift */; };
+		A7AB7B8B217FCACF0068BD40 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AB7B8A217FCACF0068BD40 /* ChatRoom.swift */; };
 		CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099D82165066700E2D27E /* LoginViewController.swift */; };
 		CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099DC216571B800E2D27E /* MainMenuViewController.swift */; };
 		CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F1E1C216980FF0023663E /* SignUpViewController.swift */; };
-		CF21E2C0217F8A8500F21F57 /* MasterChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2BF217F8A8500F21F57 /* MasterChatViewController.swift */; };
-		CF21E2C2217F8B0400F21F57 /* DetailChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2C1217F8B0400F21F57 /* DetailChatViewController.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -66,13 +67,14 @@
 		A78A7335215ADDEF007A854F /* FrontPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontPageViewController.swift; sourceTree = "<group>"; };
 		A78A7337215AE75D007A854F /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		A78A7339215ED91C007A854F /* DateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTime.swift; sourceTree = "<group>"; };
+		A7AB7B85217FC68C0068BD40 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
+		A7AB7B88217FC8250068BD40 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		A7AB7B8A217FCACF0068BD40 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_poly_paint_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83DCF8B210537D23F9A45E1 /* Pods-poly-paint-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		CF0099D82165066700E2D27E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CF0099DC216571B800E2D27E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		CF1F1E1C216980FF0023663E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		CF21E2BF217F8A8500F21F57 /* MasterChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterChatViewController.swift; sourceTree = "<group>"; };
-		CF21E2C1217F8B0400F21F57 /* DetailChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChatViewController.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
@@ -138,11 +140,11 @@
 		A77C46ED21569CFB0056135A /* poly-paint-ios */ = {
 			isa = PBXGroup;
 			children = (
+				A7AB7B87217FC8160068BD40 /* Models */,
+				A7AB7B84217FC66C0068BD40 /* Managers */,
 				A77C46FD21569CFB0056135A /* Info.plist */,
 				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
 				A77C46F021569CFB0056135A /* ChatViewController.swift */,
-				CF21E2BF217F8A8500F21F57 /* MasterChatViewController.swift */,
-				CF21E2C1217F8B0400F21F57 /* DetailChatViewController.swift */,
 				CF0099D82165066700E2D27E /* LoginViewController.swift */,
 				CF1F1E1C216980FF0023663E /* SignUpViewController.swift */,
 				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
@@ -177,6 +179,23 @@
 				A77C471321569CFC0056135A /* Info.plist */,
 			);
 			path = "poly-paint-iosUITests";
+			sourceTree = "<group>";
+		};
+		A7AB7B84217FC66C0068BD40 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A7AB7B85217FC68C0068BD40 /* ChatManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		A7AB7B87217FC8160068BD40 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A7AB7B88217FC8250068BD40 /* ChatMessage.swift */,
+				A7AB7B8A217FCACF0068BD40 /* ChatRoom.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		C5A1E53E2867D25EE2393BFD /* Pods */ = {
@@ -362,13 +381,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7AB7B8B217FCACF0068BD40 /* ChatRoom.swift in Sources */,
+				A7AB7B89217FC8250068BD40 /* ChatMessage.swift in Sources */,
 				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
-				CF21E2C2217F8B0400F21F57 /* DetailChatViewController.swift in Sources */,
-				CF21E2C0217F8A8500F21F57 /* MasterChatViewController.swift in Sources */,
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
+				A7AB7B86217FC68C0068BD40 /* ChatManager.swift in Sources */,
 				CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */,
 				A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */,
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,

@@ -25,7 +25,6 @@ export class ChatLobbyService {
     private listenForConnections(): void {
         this.io.on('connection', (socket) => {
             socket.on('join chat', (username: string) => {
-                console.log('TEST');
                 // allows multiple sockets to join under same username (user on multiple devices)
                 this.users.set(socket.id, username);
                 socket.join(`user:${username}`); // create private chat channel for each username
@@ -42,7 +41,7 @@ export class ChatLobbyService {
     private listenForGetChannels(): void {
         this.io.on('connection', (socket) => {
             socket.on('get channels', () => {
-                socket.emit('sent all channels', this.channels);
+                socket.emit('sent all channels', this.channels.keys);
             });
         });
     }
