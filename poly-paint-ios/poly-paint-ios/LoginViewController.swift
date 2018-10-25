@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
             UserDefaults.standard.set("anonymous " + self.anonymousUsernameTextField.text!, forKey: "username")
             UserDefaults.standard.set(nil, forKey: "id")
             UserDefaults.standard.set(nil, forKey: "token")
-            performSegue(withIdentifier: "toMainMenu", sender: self)
+            self.loginDone()
         } else {
             self.anonymousLoginFailed()
         }
@@ -95,6 +95,8 @@ class LoginViewController: UIViewController {
         usernameTextField.text = ""
         passwordTextField.text = ""
         authenticationFailedLabel.isHidden = true
+        anonymousLoginFailedLabel.isHidden = true
+        anonymousUsernameTextField.text = ""
     }
     
     func authenticationFailed() {

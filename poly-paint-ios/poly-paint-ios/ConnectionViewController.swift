@@ -21,10 +21,8 @@ class ConnectionViewController: UIViewController {
         
         // set username
         self.pseudonym = UserDefaults.standard.string(forKey: "username") ?? ""
-        if (self.pseudonym != "anonymous") {
-            self.username.text = self.pseudonym
-            self.username.isEnabled = false
-        }
+        self.username.text = self.pseudonym
+        self.username.isEnabled = false
     }
 
     override func didReceiveMemoryWarning() {
