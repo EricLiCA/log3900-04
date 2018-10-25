@@ -6,8 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
-        <capability name="Baseline standard spacing" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -324,8 +322,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hW5-R0-fze">
+                                <rect key="frame" x="269" y="565" width="230" height="68"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QBX-WO-BL1">
+                                        <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="230" id="Jal-54-8f2"/>
+                                            <constraint firstAttribute="height" constant="30" id="Nxa-Ft-pr8"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRX-hL-G4h">
+                                        <rect key="frame" x="0.0" y="38" width="230" height="30"/>
+                                        <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="cDI-Sx-8Vh"/>
+                                            <constraint firstAttribute="width" constant="230" id="kKe-so-Sly"/>
+                                        </constraints>
+                                        <state key="normal" title="Login anonymously">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="anonymousLogin:" destination="vSt-a2-nNf" eventType="touchUpInside" id="sGX-5g-QVl"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please choose a username." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TZj-fO-Gx6">
+                                <rect key="frame" x="280" y="641" width="209.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="plh-nT-0ol">
-                                <rect key="frame" x="269" y="466.5" width="230" height="106"/>
+                                <rect key="frame" x="269" y="324" width="230" height="106"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7WF-aM-uJ0">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
@@ -363,19 +396,10 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRX-hL-G4h">
-                                <rect key="frame" x="318" y="605" width="132" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="cDI-Sx-8Vh"/>
-                                </constraints>
-                                <state key="normal" title="Login anonymously"/>
-                                <connections>
-                                    <action selector="anonymousLogin:" destination="vSt-a2-nNf" eventType="touchUpInside" id="sGX-5g-QVl"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The username or password is incorrect." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Puh-Hd-Lg8">
-                                <rect key="frame" x="233" y="580" width="302.5" height="30"/>
+                                <rect key="frame" x="233" y="437" width="302.5" height="30"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="302.5" id="1l2-eJ-HBM"/>
                                     <constraint firstAttribute="height" constant="30" id="Gt2-8g-bxw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -385,13 +409,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="SRX-hL-G4h" firstAttribute="top" secondItem="Puh-Hd-Lg8" secondAttribute="bottom" constant="8" id="DH2-nt-nSH"/>
+                            <constraint firstItem="plh-nT-0ol" firstAttribute="top" secondItem="mzN-gr-Y4C" secondAttribute="top" constant="260" id="3sX-uD-14C"/>
+                            <constraint firstItem="hW5-R0-fze" firstAttribute="centerX" secondItem="mzN-gr-Y4C" secondAttribute="centerX" id="CDW-Fk-9v5"/>
+                            <constraint firstItem="Puh-Hd-Lg8" firstAttribute="top" secondItem="ZnL-a7-3af" secondAttribute="bottom" constant="7" id="Q7C-X2-yxP"/>
                             <constraint firstItem="Puh-Hd-Lg8" firstAttribute="centerX" secondItem="mzN-gr-Y4C" secondAttribute="centerX" id="ULW-pT-67R"/>
-                            <constraint firstItem="Puh-Hd-Lg8" firstAttribute="top" secondItem="ZnL-a7-3af" secondAttribute="bottom" constant="7.5" id="Zj1-9X-Qs7"/>
-                            <constraint firstItem="SRX-hL-G4h" firstAttribute="firstBaseline" secondItem="Puh-Hd-Lg8" secondAttribute="baseline" constant="20" symbolType="layoutAnchor" id="bi0-uH-tGH"/>
-                            <constraint firstItem="SRX-hL-G4h" firstAttribute="centerX" secondItem="mzN-gr-Y4C" secondAttribute="centerX" id="iYt-50-zK3"/>
+                            <constraint firstItem="TZj-fO-Gx6" firstAttribute="top" secondItem="SRX-hL-G4h" secondAttribute="bottom" constant="8" id="cLn-Ki-tEK"/>
                             <constraint firstItem="plh-nT-0ol" firstAttribute="centerX" secondItem="mzN-gr-Y4C" secondAttribute="centerX" id="mpP-86-UGl"/>
-                            <constraint firstItem="plh-nT-0ol" firstAttribute="centerY" secondItem="mzN-gr-Y4C" secondAttribute="centerY" id="yVM-iI-xXo"/>
+                            <constraint firstItem="mzN-gr-Y4C" firstAttribute="bottom" secondItem="hW5-R0-fze" secondAttribute="bottom" constant="342" id="oGu-M1-mmg"/>
+                            <constraint firstItem="TZj-fO-Gx6" firstAttribute="centerX" secondItem="mzN-gr-Y4C" secondAttribute="centerX" id="z1Q-l5-Swb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mzN-gr-Y4C"/>
                     </view>
@@ -399,6 +424,8 @@
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="anonymousLoginFailedLabel" destination="TZj-fO-Gx6" id="1o4-9c-ovb"/>
+                        <outlet property="anonymousUsernameTextField" destination="QBX-WO-BL1" id="9db-2Q-PqG"/>
                         <outlet property="authenticationFailedLabel" destination="Puh-Hd-Lg8" id="0BA-I5-LJZ"/>
                         <outlet property="loginButton" destination="ZnL-a7-3af" id="UqL-uJ-T9y"/>
                         <outlet property="passwordTextField" destination="AKD-8H-mqh" id="Euq-Zl-o1v"/>
@@ -408,7 +435,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KdE-6k-mJy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-108" y="-1263"/>
+            <point key="canvasLocation" x="-108.59375" y="-1263.28125"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="pJf-Kx-dYa">

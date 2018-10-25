@@ -14,10 +14,13 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var authenticationFailedLabel: UILabel!
+    @IBOutlet weak var anonymousUsernameTextField: UITextField!
+    @IBOutlet weak var anonymousLoginFailedLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         authenticationFailedLabel.isHidden = true
+        anonymousLoginFailedLabel.isHidden = true
         // Do any additional setup after loading the view.
     }
 
@@ -37,10 +40,15 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func anonymousLogin(_ sender: UIButton) {
-        UserDefaults.standard.set("anonymous", forKey: "username")
-        UserDefaults.standard.set(nil, forKey: "id")
-        UserDefaults.standard.set(nil, forKey: "token")
-        performSegue(withIdentifier: "toMainMenu", sender: self)
+        if self.anonymousUsernameTextField.text != "" {
+            UserDefaults.standard.set("anonymous " + self.anonymousUsernameTextField.text!, forKey: "username")
+            UserDefaults.standard.set(nil, forKey: "id")
+            UserDefaults.standard.set(nil, forKey: "token")
+            performSegue(withIdentifier: "toMainMenu", sender: self)
+        } else {
+            self.anonymousLoginFailed()
+        }
+        
     }
     
     func login(_ user: String, _ psw: String) {
@@ -92,6 +100,10 @@ class LoginViewController: UIViewController {
     func authenticationFailed() {
         passwordTextField.text = ""
         authenticationFailedLabel.isHidden = false
+    }
+    
+    func anonymousLoginFailed() {
+        anonymousLoginFailedLabel.isHidden = false
     }
     
     /*
