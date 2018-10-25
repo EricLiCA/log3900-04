@@ -323,13 +323,36 @@
                     <view key="view" contentMode="scaleToFill" id="ltt-LG-ycF">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ET8-Iq-7zs">
+                                <rect key="frame" x="264" y="418" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F3E-n5-07m" customClass="DrawView" customModule="poly_paint_ios" customModuleProvider="target">
+                                <rect key="frame" x="20" y="155" width="728" height="849"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yM1-Vp-22n">
+                                <rect key="frame" x="366" y="100" width="36" height="30"/>
+                                <state key="normal" title="Clear"/>
+                                <connections>
+                                    <action selector="clearTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="XVC-NX-0mb"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="yM1-Vp-22n" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="4Cj-FI-cPz"/>
+                            <constraint firstItem="yM1-Vp-22n" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="CtO-06-U1h"/>
+                            <constraint firstItem="F3E-n5-07m" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="srx-k6-Ytq"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="7FJ-AM-LDR"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1506" y="-905"/>
+            <point key="canvasLocation" x="1505.46875" y="-905.27343749999989"/>
         </scene>
         <!--Login Scene-->
         <scene sceneID="maM-Fp-ADF">

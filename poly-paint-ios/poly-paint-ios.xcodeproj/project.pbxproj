@@ -23,6 +23,8 @@
 		CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099DC216571B800E2D27E /* MainMenuViewController.swift */; };
 		CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F1E1C216980FF0023663E /* SignUpViewController.swift */; };
 		CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2D721820DB600F21F57 /* DrawViewController.swift */; };
+		CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2D921820E7200F21F57 /* DrawView.swift */; };
+		CF21E2DC2182143500F21F57 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2DB2182143500F21F57 /* Line.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -71,6 +73,8 @@
 		CF0099DC216571B800E2D27E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		CF1F1E1C216980FF0023663E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		CF21E2D721820DB600F21F57 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
+		CF21E2D921820E7200F21F57 /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
+		CF21E2DB2182143500F21F57 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +147,7 @@
 				CF21E2D721820DB600F21F57 /* DrawViewController.swift */,
 				CF1F1E1C216980FF0023663E /* SignUpViewController.swift */,
 				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
+				CF21E2DB2182143500F21F57 /* Line.swift */,
 				CF0099DC216571B800E2D27E /* MainMenuViewController.swift */,
 				A78A7337215AE75D007A854F /* ConnectionViewController.swift */,
 				A78A7339215ED91C007A854F /* DateTime.swift */,
@@ -152,6 +157,7 @@
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
 				A77C46F221569CFB0056135A /* Main.storyboard */,
+				CF21E2D921820E7200F21F57 /* DrawView.swift */,
 				CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */,
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
 			);
@@ -370,7 +376,9 @@
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,
 				CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */,
 				A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */,
+				CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */,
 				CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */,
+				CF21E2DC2182143500F21F57 /* Line.swift in Sources */,
 				A78A733A215ED91C007A854F /* DateTime.swift in Sources */,
 				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,
 			);
