@@ -316,6 +316,21 @@
             </objects>
             <point key="canvasLocation" x="-109" y="-585"/>
         </scene>
+        <!--Draw View Controller-->
+        <scene sceneID="NqV-OZ-aUY">
+            <objects>
+                <viewController id="nxp-f4-1rm" customClass="DrawViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ltt-LG-ycF">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="7FJ-AM-LDR"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1506" y="-905"/>
+        </scene>
         <!--Login Scene-->
         <scene sceneID="maM-Fp-ADF">
             <objects>
@@ -478,6 +493,9 @@
                                         <state key="normal" title="New Image">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="nxp-f4-1rm" kind="show" id="zvi-wj-yC2"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
