@@ -27,12 +27,16 @@ class DrawView: UIView {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesMoved")
         var newPoint = touches.first?.location(in: self)
         lines.append(Line(start: lastPoint, end: newPoint!))
         lastPoint = newPoint
+        
+        self.setNeedsDisplay()
     }
     
     override func draw(_ rect: CGRect) {
+        print("draw")
         var context = UIGraphicsGetCurrentContext()
         context!.beginPath()
         for line in lines {
@@ -42,5 +46,7 @@ class DrawView: UIView {
             context!.addLine(to: endPoint)
             
         }
+        context!.setStrokeColor(cyan: 0, magenta: 0, yellow: 0, black: 1, alpha: 1)
+        context!.strokePath()
     }
 }

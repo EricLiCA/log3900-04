@@ -329,7 +329,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F3E-n5-07m" customClass="DrawView" customModule="poly_paint_ios" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F3E-n5-07m" customClass="DrawView" customModule="poly_paint_ios" customModuleProvider="target">
                                 <rect key="frame" x="20" y="155" width="728" height="849"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -344,7 +344,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="yM1-Vp-22n" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="4Cj-FI-cPz"/>
+                            <constraint firstItem="F3E-n5-07m" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="20" id="921-gh-GTf"/>
                             <constraint firstItem="yM1-Vp-22n" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="CtO-06-U1h"/>
+                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="F3E-n5-07m" secondAttribute="bottom" constant="20" id="Y7M-GB-jeV"/>
+                            <constraint firstItem="F3E-n5-07m" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="91" id="i4j-0c-wlp"/>
                             <constraint firstItem="F3E-n5-07m" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="srx-k6-Ytq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7FJ-AM-LDR"/>
