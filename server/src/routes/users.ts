@@ -49,6 +49,9 @@ export class UsersRoute {
                         profileImage: user.ProfileImage,
                     });
                 }
+            })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
             });
         }
     }
