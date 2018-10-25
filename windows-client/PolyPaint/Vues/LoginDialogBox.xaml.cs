@@ -6,7 +6,8 @@ using Quobject.SocketIoClientDotNet.Client;
 using RestSharp;
 using System.Net;
 using System.Windows;
-using System.Windows.Media.Imaging;
+using PolyPaint.DAO;
+using System;
 
 namespace PolyPaint.Vues
 {
@@ -15,29 +16,52 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class LoginDialogBox : Window
     {
+
         public LoginDialogBox()
         {
             InitializeComponent();
-            this.ip.Text = Settings.SERVER_IP;
+            ConnectToServer();
         }
 
-        private void Connect_Click(object sender, RoutedEventArgs e)
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            connect.IsEnabled = false;
-            progress.Visibility = Visibility.Visible;
-            Verify_Server();
+            CreateButton.IsEnabled = false;
+            UserDao.Post(new User { username = UserName.Text, password = Password.Password });
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            password.IsEnabled = !(bool)anonymous.IsChecked;
+            ConnectButton.IsEnabled = false;
+            ConnectionProgress.Visibility = Visibility.Visible;
+            if ((bool)GuestConnection.IsChecked)
+            {
+                ServerService.instance.user = new User
+                {
+                    id = Guid.NewGuid().ToString(),
+                    username = UserName.Text,
+                    password = Password.Password,
+                    profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE),
+                    isGuest = true
+                };
+                Connect_Socket();
+            } 
+            else
+            {
+                ConnectToAccount();
+            }
         }
 
-        private void Verify_Server()
+        private void GuestConnection_Checked(object sender, RoutedEventArgs e)
         {
-            var url = string.Format(ip.Text.StartsWith("http") ? "{0}" : "http://{0}", ip.Text);
+            Password.IsEnabled = !(bool)GuestConnection.IsChecked;
+            EnableOrDisableCreateButton();
+        }
+
+        private void ConnectToServer()
+        {
+            var url = string.Format(Settings.SERVER_IP.StartsWith("http") ? "{0}" : "http://{0}", Settings.SERVER_IP);
             var client = new RestClient(url);
-            var request = new RestRequest(Settings.API_VERSION + "/status", Method.GET);
+            var request = new RestRequest(Settings.API_VERSION + Settings.SERVER_STATUS_PATH, Method.GET);
             client.ExecuteAsync(request, response =>
             {
                 this.Dispatcher.Invoke(() =>
@@ -45,23 +69,24 @@ namespace PolyPaint.Vues
                     if (response.Content == "log3900-server")
                     {
                         ServerService.instance.server = client;
-                        Verify_Credentials();
                     }
                     else
                     {
-                        connect.IsEnabled = true;
-                        progress.Visibility = Visibility.Collapsed;
+                        ConnectButton.IsEnabled = true;
+                        ConnectionProgress.Visibility = Visibility.Collapsed;
                         MessageBox.Show("Could not connect to server", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 });
             });
         }
 
-        private void Verify_Credentials()
+        private void ConnectToAccount()
         {
-            User user = new User {
-                username = username.Text,
-                password = password.Password
+            User user = new User
+            {
+                username = UserName.Text,
+                password = Password.Password,
+                profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE)
             };
             var request = new RestRequest(Settings.API_VERSION + Settings.SESSION_PATH, Method.POST);
             request.AddJsonBody(user);
@@ -72,24 +97,22 @@ namespace PolyPaint.Vues
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         dynamic data = JObject.Parse(response.Content);
-                        ServerService.instance.id = data["id"];
-                        ServerService.instance.token = data["token"];
-                        ServerService.instance.username = username.Text;
                         Connect_Socket();
-                        
+
                         ServerService.instance.user = new User(
-                            username.Text,
+                            UserName.Text,
                             (string)data["id"],
                             (string)data["profileImage"],
                             (string)data["token"],
                             (string)data["userLevel"],
-                            password.Password
-						);
+                            Password.Password,
+                            false
+                        );
                     }
                     else
                     {
-                        connect.IsEnabled = true;
-                        progress.Visibility = Visibility.Collapsed;
+                        ConnectButton.IsEnabled = true;
+                        ConnectionProgress.Visibility = Visibility.Collapsed;
                         MessageBox.Show("Wrong Credentials", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 });
@@ -101,7 +124,7 @@ namespace PolyPaint.Vues
             Socket socket = IO.Socket(ServerService.instance.server.BaseUrl);
             socket.On(Socket.EVENT_CONNECT, (IListener) =>
             {
-                socket.Emit("setUsername", ServerService.instance.username);
+                socket.Emit("setUsername", ServerService.instance.user.username);
                 socket.Off(Socket.EVENT_CONNECT);
             });
 
@@ -115,12 +138,13 @@ namespace PolyPaint.Vues
                     {
                         DialogResult = true;
                     });
-                } else
+                }
+                else
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        progress.Visibility = Visibility.Collapsed;
-                        connect.IsEnabled = true;
+                        ConnectionProgress.Visibility = Visibility.Collapsed;
+                        ConnectButton.IsEnabled = true;
                     });
                     socket.Disconnect();
                     MessageBox.Show("Can't connect to the socket : " + server_params[0], "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -128,22 +152,24 @@ namespace PolyPaint.Vues
             }));
         }
 
-        private class Credentials
+        private void UserNameOrPassword_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            public string username;
-            public string password;
-
-            public Credentials(string username, string password)
-            {
-                this.username = username;
-                this.password = password;
-            }
+            EnableOrDisableCreateButton();
         }
 
-        private class LoginResponse
+        private void EnableOrDisableCreateButton()
         {
-            public string id { get; }
-            public string token { get; }
+            Boolean invalideUserName = UserName.Text.Length == 0 || UserName.Text.Contains(" ");
+            Boolean invalidPassword = Password.Password.Length == 0 || Password.Password.Contains(" ");
+
+            if ((bool)GuestConnection.IsChecked || invalideUserName || invalidPassword)
+            {
+                CreateButton.IsEnabled = false;
+            }
+            else
+            {
+                CreateButton.IsEnabled = true;
+            }
         }
     }
 }

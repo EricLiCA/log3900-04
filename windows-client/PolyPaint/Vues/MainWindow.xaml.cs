@@ -30,6 +30,16 @@ namespace PolyPaint.Vues
             Users = new Users();
             GridMain.Content = Gallery;
             InitDialogBox();
+            if (ServerService.instance.user.isGuest)
+            {
+                RestrictPermissions();
+            }
+        }
+
+        private void RestrictPermissions()
+        {
+            ManageProfileButton.Visibility = Visibility.Collapsed;
+            AvatarButton.IsEnabled = false;
         }
 
         private void Server_Connect()
@@ -57,7 +67,7 @@ namespace PolyPaint.Vues
                     }
                 case 1:
                     {
-                        UserDao.GetAll();
+                        Users.Load();
                         GridMain.Content = Users;
                         break;
                     }

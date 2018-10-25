@@ -31,8 +31,25 @@ namespace PolyPaint.Vues
 
         public void Load()
         {
-            ImageDao.GetByOwnerId();
+            if (ServerService.instance.user.isGuest)
+            {
+                RestrictPermissions();
+            }
+            else
+            {
+                ImageDao.GetByOwnerId();
+            }
             ImageDao.GetPublicExceptMine();
+        }
+
+        private void RestrictPermissions()
+        {
+            MyImagesGroupBox.Visibility = Visibility.Collapsed;
+            LikeButton.IsEnabled = false;
+            LockButton.IsEnabled = false;
+            PasswordButton.IsEnabled = false;
+            CurrentComment.IsEnabled = false;
+            AddCommentButton.IsEnabled = false;
         }
 
         public void LoadMyImages(IRestResponse response)
@@ -157,20 +174,22 @@ namespace PolyPaint.Vues
             ImageViewPicture.Source = imageBitmap;
             ImageLikeDao.Get(CurrentGalleryCard.Image.id);
             ImageCommentDao.Get(CurrentGalleryCard.Image.id);
-
-            if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
+            if (!ServerService.instance.user.isGuest)
             {
-                LikeButton.IsEnabled = false;
-                PasswordButton.Visibility = Visibility.Visible;
-                LockButton.Visibility = Visibility.Visible;
+                if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
+                {
+                    LikeButton.IsEnabled = false;
+                    PasswordButton.Visibility = Visibility.Visible;
+                    LockButton.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    LikeButton.IsEnabled = true;
+                    PasswordButton.Visibility = Visibility.Hidden;
+                    LockButton.Visibility = Visibility.Hidden;
+                }
+                ConfigImageViewButtons();
             }
-            else
-            {
-                LikeButton.IsEnabled = true;
-                PasswordButton.Visibility = Visibility.Hidden;
-                LockButton.Visibility = Visibility.Hidden;
-            }
-            ConfigImageViewButtons();
         }
 
         private void ConfigImageViewButtons()

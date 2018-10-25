@@ -112,7 +112,7 @@ namespace PolyPaint.Modeles
                     Application.Current.Dispatcher.Invoke(() => { 
                         this.NewMessage(
                             room,
-                            server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[0].ToString(),
+                            server_params[1].ToString() == "You" ? ServerService.instance.user.username : server_params[0].ToString(),
                             server_params[2].ToString()
                         );
                     });
