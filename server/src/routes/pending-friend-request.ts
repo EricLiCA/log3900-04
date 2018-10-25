@@ -41,9 +41,27 @@ export class PendingFriendRequestRoute {
             });
     }
 
+    public async getByRequesterId(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        const db = await PostgresDatabase.getInstance();
+        db.query('SELECT * FROM pending_friend_requests WHERE "RequesterId" = $1', [req.params.id]).then((query) => {
+            if (query.rowCount > 0) {
+                res.send(query.rows.map((row) => {
+                    return {
+                        receiverId: row.ReceiverId,
+                    };
+                }));
+            } else {
+                res.sendStatus(404); // Not found
+            }
+        })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
+            });
+    }
+
     public async delete(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('DELETE FROM pending_friend_requests WHERE "RequesterId" = $1 RETURNING *', [req.params.id]).then((query) => {
+        db.query('DELETE FROM pending_friend_requests WHERE "RequesterId" = $1 and "ReceiverId" = $2 RETURNING *', [req.body.friendId, req.params.id]).then((query) => {
             if (query.rowCount > 0) {
                 const result = query.rows[0];
                 res.send({

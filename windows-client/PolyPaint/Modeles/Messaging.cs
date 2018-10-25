@@ -96,7 +96,7 @@ namespace PolyPaint.Modeles
 
                 if (room.Users.Any(user => user.username == (string)server_params[1])) return;
 
-                if ((string)server_params[1] == ServerService.instance.username)
+                if ((string)server_params[1] == ServerService.instance.user.username)
                 {
                     JoinChat(room);
                 }
@@ -121,7 +121,7 @@ namespace PolyPaint.Modeles
                 }
                 else return;
                 
-                if ((string)server_params[1] == ServerService.instance.username)
+                if ((string)server_params[1] == ServerService.instance.user.username)
                 {
                     LeaveChat(room);
                 }
@@ -144,7 +144,7 @@ namespace PolyPaint.Modeles
                 Application.Current.Dispatcher.Invoke(() => {
                     this.NewMessage(
                         this.SubscribedChatRooms.First(ChatRoom => ChatRoom.Name == (string)server_params[0]),
-                        server_params[1].ToString() == "You" ? ServerService.instance.username : server_params[1].ToString(),
+                        server_params[1].ToString() == "You" ? ServerService.instance.user.username : server_params[1].ToString(),
                         server_params[2].ToString()
                     );
                 });

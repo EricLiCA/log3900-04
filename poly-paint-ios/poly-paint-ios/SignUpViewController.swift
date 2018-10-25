@@ -62,7 +62,7 @@ class SignUpViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.signUpFailed()
+                    self.usernameAlreadyExists()
                 }
             }
         }
@@ -78,7 +78,13 @@ class SignUpViewController: UIViewController {
     }
     
     func signUpFailed() {
+        self.signUpFailedLabel.text = "Please fill all the fields above and make sure the passwords match."
         self.signUpFailedLabel.isHidden = false
+    }
+    
+    func usernameAlreadyExists() {
+        self.signUpFailedLabel.text = "This username already exists."
+        self.signUpFailedLabel.isHidden = false;
     }
     
     func signUpDone() {
