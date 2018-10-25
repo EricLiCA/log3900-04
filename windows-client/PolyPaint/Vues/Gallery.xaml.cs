@@ -26,15 +26,50 @@ namespace PolyPaint.Vues
         {
             InitializeComponent();
             ImageView.Visibility = Visibility.Hidden;
-            CurrentGalleryCard = new GalleryCard(null);
-            ImageDao.GetAll();
+            Load();
         }
 
-        public void LoadImages(IRestResponse response)
+        public void Load()
+        {
+            ImageDao.GetByOwnerId();
+            ImageDao.GetPublicExceptMine();
+        }
+
+        public void LoadMyImages(IRestResponse response)
         {
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                PrivateImagesContainer.Children.Clear();
+                MyImagesContainer.Children.Clear();
+                JArray responseImages = JArray.Parse(response.Content);
+                for (int i = 0; i < responseImages.Count; i++)
+                {
+                    dynamic data = JObject.Parse(responseImages[i].ToString());
+                    Image image = new Image
+                    {
+                        id = data["id"],
+                        ownerId = data["ownerId"],
+                        title = data["title"],
+                        protectionLevel = data["protectionLevel"],
+                        password = data["password"],
+                        thumbnailUrl = data["thumbnailUrl"],
+                        fullImageUrl = data["fullImageUrl"],
+                    };
+
+                    GalleryCard galleryCard = new GalleryCard(image);
+                    galleryCard.ViewButtonClicked += ViewButton_Click;
+                    MyImagesContainer.Children.Add(galleryCard);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Could not load the images", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void LoadPublicImages(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
                 PublicImagesContainer.Children.Clear();
                 JArray responseImages = JArray.Parse(response.Content);
                 for (int i = 0; i < responseImages.Count; i++)
@@ -53,16 +88,7 @@ namespace PolyPaint.Vues
 
                     GalleryCard galleryCard = new GalleryCard(image);
                     galleryCard.ViewButtonClicked += ViewButton_Click;
-
-                    if (image.ownerId == ServerService.instance.user.id && image.protectionLevel == "private")
-                    {   
-                        PrivateImagesContainer.Children.Add(galleryCard);
-                    }
-                    else if (image.protectionLevel != "private")
-                    {
-                        PublicImagesContainer.Children.Add(galleryCard);
-                    }
-
+                    PublicImagesContainer.Children.Add(galleryCard);
                 }
             }
             else
@@ -70,6 +96,7 @@ namespace PolyPaint.Vues
                 MessageBox.Show("Could not load the images", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         public void LoadCurrentImageLikes(IRestResponse response)
         {
@@ -176,14 +203,12 @@ namespace PolyPaint.Vues
             if ((bool)LockButton.IsChecked)
             {
                 CurrentGalleryCard.Image.protectionLevel = "private";
-                PublicImagesContainer.Children.Remove(CurrentGalleryCard);
-                PrivateImagesContainer.Children.Add(CurrentGalleryCard);
-            } else
+            }
+            else
             {
                 CurrentGalleryCard.Image.protectionLevel = "public";
-                PrivateImagesContainer.Children.Remove(CurrentGalleryCard);
-                PublicImagesContainer.Children.Add(CurrentGalleryCard);
             }
+            CurrentGalleryCard.ConfigIcon();
             ImageDao.Put(CurrentGalleryCard.Image);
             ConfigImageViewButtons();
 
@@ -208,12 +233,13 @@ namespace PolyPaint.Vues
                     Console.WriteLine("Cannot convert string to int");
                 }
 
-            } else
+            }
+            else
             {
                 ImageLikeDao.Delete(imageLike);
                 try
                 {
-                    ImageViewLikes.Text = (System.Convert.ToInt32(ImageViewLikes.Text) -1).ToString();
+                    ImageViewLikes.Text = (System.Convert.ToInt32(ImageViewLikes.Text) - 1).ToString();
                 }
                 catch (FormatException)
                 {
@@ -255,6 +281,7 @@ namespace PolyPaint.Vues
         {
             CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
             CurrentGalleryCard.Image.protectionLevel = "protected";
+            CurrentGalleryCard.ConfigIcon();
             ImageDao.Put(CurrentGalleryCard.Image);
             AddPasswordButton.IsEnabled = false;
         }
@@ -263,6 +290,7 @@ namespace PolyPaint.Vues
         {
             CurrentGalleryCard.Image.password = null;
             CurrentGalleryCard.Image.protectionLevel = "public";
+            CurrentGalleryCard.ConfigIcon();
             CurrentImagePassword.Text = null;
             ImageDao.Put(CurrentGalleryCard.Image);
             AddPasswordButton.IsEnabled = false;
