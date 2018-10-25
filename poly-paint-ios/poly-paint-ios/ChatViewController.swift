@@ -19,7 +19,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - Models
     var messagesArray = [String]()
     var serverAddress: String = "http://ec2-18-214-40-211.compute-1.amazonaws.com"
-    var username: String = ""
+    var username: String = UserDefaults.standard.string(forKey: "username")!
     var invalidUsername: Bool = false
     // MARK: Sockets
     var manager: SocketManager!
