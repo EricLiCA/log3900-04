@@ -4,10 +4,14 @@ import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { GalleryComponent } from '../gallery/gallery.component';
+import { UsersComponent } from '../users/users.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GalleryComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -16,6 +20,8 @@ import { AppComponent } from './app.component';
   providers: [
     MDBSpinningPreloader,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }
