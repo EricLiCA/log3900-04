@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class DrawView: UIView {
 
     /*
@@ -18,6 +19,28 @@ class DrawView: UIView {
     }
     */
     
+    var lines = [Line]()
+    var lastPoint: CGPoint!
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        lastPoint = touches.first?.location(in: self)
+    }
     
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        var newPoint = touches.first?.location(in: self)
+        lines.append(Line(start: lastPoint, end: newPoint!))
+        lastPoint = newPoint
+    }
+    
+    override func draw(_ rect: CGRect) {
+        var context = UIGraphicsGetCurrentContext()
+        context!.beginPath()
+        for line in lines {
+            var startPoint = CGPoint(x: line.start.x, y: line.start.y)
+            context!.move(to: startPoint)
+            var endPoint = CGPoint(x: line.end.x, y: line.end.y)
+            context!.addLine(to: endPoint)
+            
+        }
+    }
 }
