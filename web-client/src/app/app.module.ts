@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { GalleryComponent } from '../gallery/gallery.component';
 import { UsersComponent } from '../users/users.component';
 import { AdminComponent } from '../admin/admin.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AdminComponent } from '../admin/admin.component';
   imports: [
     BrowserModule,
     MDBBootstrapModulesPro.forRoot(),
+    AppRoutingModule
   ],
   providers: [
     MDBSpinningPreloader,
