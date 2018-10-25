@@ -24,5 +24,10 @@ namespace PolyPaint.Utilitaires
         public const string LOCK_BUTTON_UNCHECKED_TOOLTIP = "Make the image private. A private image can be seen only by you";
         public const string LIKE_BUTTON_CHECKED_TOOLTIP = "Dislike this image";
         public const string LIKE_BUTTON_UNCHECKED_TOOLTIP = "Like this image";
+
+        //Credentials
+        public const string aws_access_key_id = "AKIAIZN6KZDRICBY76VA";
+        public const string aws_secret_access_key = "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";
+        
     }
 }

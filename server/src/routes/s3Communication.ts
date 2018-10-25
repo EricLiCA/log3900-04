@@ -10,10 +10,7 @@ export class s3Communcation {
 
     constructor(){              
         config.update({ accessKeyId: S3Config.ACCESS_KEY, secretAccessKey: S3Config.SECRET_KEY});
-        this.s3 = new S3({
-            apiVersion: '2006-03-01',
-            params: {Bucket: this.albumBucketName}
-        });
+        
         console.log(this.s3);
     }
     
@@ -24,14 +21,20 @@ export class s3Communcation {
 
         const albumPhotosKey = encodeURIComponent(this.albumBucketName) + '//';
         const photoKey = albumPhotosKey + req.body;
-        fs.readFile(req.body, function(err, data) {
+        fs.readFile(req.body, function(this: typeof S3, err, data) {
             if (err) { throw err; }
 
-            this.s3.putObject({
+            var albumBucketName = 'polypaintpro/profile-pictures';    
+            var s3 = new S3({
+                apiVersion: '2006-03-01',
+                params: {Bucket: albumBucketName}
+            });
+
+            s3.putObject({
             Key: photoKey,
             Body: data,
             ACL: 'public-read',
-            Bucket: this.albumBucketName
+            Bucket: albumBucketName
             }, (err: Error, data: S3.ManagedUpload.SendData) => {
                 if (err){
                     return alert('There was an error uploading your photo: ' + err.message);
