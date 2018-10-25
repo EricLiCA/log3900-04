@@ -40,7 +40,7 @@ class SignUpViewController: UIViewController {
     }
     
     func signUp(_ username: String, _ password: String) {
-        let url = URL(string: "http://localhost:3000/v1/users")
+        let url = URL(string: "http://localhost:3000/v2/users")
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
@@ -62,7 +62,7 @@ class SignUpViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.signUpFailed()
+                    self.usernameAlreadyExists()
                 }
             }
         }
@@ -78,7 +78,13 @@ class SignUpViewController: UIViewController {
     }
     
     func signUpFailed() {
+        self.signUpFailedLabel.text = "Please fill all the fields above and make sure the passwords match."
         self.signUpFailedLabel.isHidden = false
+    }
+    
+    func usernameAlreadyExists() {
+        self.signUpFailedLabel.text = "This username already exists."
+        self.signUpFailedLabel.isHidden = false;
     }
     
     func signUpDone() {

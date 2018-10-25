@@ -3,29 +3,35 @@ using PolyPaint.Utilitaires;
 using PolyPaint.Services;
 using System.Net;
 using System.Windows;
-using Newtonsoft.Json.Linq;
 using Image = PolyPaint.Modeles.Image;
 using PolyPaint.Vues;
-using System.Windows.Controls;
-using RestSharp.Deserializers;
-using System.Windows.Media.Imaging;
-using System.Drawing;
-using System.Drawing.Imaging;
 
 namespace PolyPaint.DAO
 {
     public static class ImageDao
     {
-
-        public static void GetAll()
+        public static void GetByOwnerId()
         {
-            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH, Method.GET);
+            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_BY_OWNER_ID_PATH + "/" + ServerService.instance.user.id, Method.GET);
             ServerService.instance.server.ExecuteAsync<Image>(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
-                    currentGallery.LoadImages(response);
+                    currentGallery.LoadMyImages(response);
+                });
+            });
+        }
+
+        public static void GetPublicExceptMine()
+        {
+            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PUBLIC_EXCEPT_MINE + "/" + ServerService.instance.user.id, Method.GET);
+            ServerService.instance.server.ExecuteAsync<Image>(request, response =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
+                    currentGallery.LoadPublicImages(response);
                 });
             });
         }
