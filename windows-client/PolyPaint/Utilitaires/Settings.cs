@@ -15,6 +15,7 @@ namespace PolyPaint.Utilitaires
         public const string IMAGES_PATH = "/images";
         public const string IMAGE_LIKES_PATH = "/imageLikes";
         public const string IMAGE_COMMENTS_PATH = "/imageComments";
+        public const string S3_COMMUNICATION_PATH = "/s3Communication";
 
         //Tooltips text
         public const string PASSWORD_BUTTON_CHECKED_TOOLTIP = "Remove the password";

@@ -42,7 +42,7 @@ namespace PolyPaint.DAO
 
         public static void PostImage(Image imageToPost)
         {
-            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH + "/" + imageToPost.id, Method.POST);
+            var request = new RestRequest(Settings.API_VERSION + Settings.S3_COMMUNICATION_PATH + "/" + imageToPost.id, Method.POST);
             request.AddObject(imageToPost);
             ServerService.instance.server.ExecuteAsync(request, response =>
             {

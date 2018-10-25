@@ -1,5 +1,7 @@
 import { S3Config } from '../configs/databases'
 import { S3, config } from 'aws-sdk';
+import express = require('express');
+import * as fs from 'fs';
 
 export class s3Communcation {
 
@@ -12,28 +14,32 @@ export class s3Communcation {
             apiVersion: '2006-03-01',
             params: {Bucket: this.albumBucketName}
         });
+        console.log(this.s3);
     }
     
-    public postToS3(imageName: String, image: MimeType): void {
-        if (!image) {
+    public async putToS3(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        if (!req) {
           return alert('Please choose a file to upload first.');
         }
 
-        var albumPhotosKey = encodeURIComponent(this.albumBucketName) + '//';
-      
-        var photoKey = albumPhotosKey + imageName;
-        this.s3.upload({
-          Key: photoKey,
-          Body: image,
-          ACL: 'public-read',
-          Bucket: this.albumBucketName
-        }, (err: Error, data: S3.ManagedUpload.SendData) => {
-            if (err){
-                return alert('There was an error uploading your photo: ' + err.message);
-            }
-            
-            console.log(data);
-            alert('Successfully uploaded photo.');
+        const albumPhotosKey = encodeURIComponent(this.albumBucketName) + '//';
+        const photoKey = albumPhotosKey + req.body;
+        fs.readFile(req.body, function(err, data) {
+            if (err) { throw err; }
+
+            this.s3.putObject({
+            Key: photoKey,
+            Body: data,
+            ACL: 'public-read',
+            Bucket: this.albumBucketName
+            }, (err: Error, data: S3.ManagedUpload.SendData) => {
+                if (err){
+                    return alert('There was an error uploading your photo: ' + err.message);
+                }
+                
+                console.log(data);
+                alert('Successfully uploaded photo.');
+            });
         });
     }
 }
