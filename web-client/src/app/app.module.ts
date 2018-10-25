@@ -8,6 +8,7 @@ import { GalleryComponent } from '../gallery/gallery.component';
 import { UsersComponent } from '../users/users.component';
 import { AdminComponent } from '../admin/admin.component';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthenticationService } from '../admin/login.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   providers: [
     MDBSpinningPreloader,
+    AuthenticationService,
   ],
   bootstrap: [
     AppComponent

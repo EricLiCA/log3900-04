@@ -9,10 +9,15 @@
             <li class="nav-item" [routerLinkActive]="['active']">
                 <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/users']">Users</a>
             </li>
-            <li class="nav-item" [routerLinkActive]="['active']">
+            <li *ngIf="authenticated" class="nav-item" [routerLinkActive]="['active']">
                 <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/admin']">Administration</a>
             </li>
         </ul>
+
+        <a *ngIf="!authenticated" nav-item class="white-text nav-link waves-light" mdbWavesEffect (click)="authenticate()">
+            Log-in
+        </a>
+        <img *ngIf="authenticated" width="40" height="40" src="https://npengage.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" class="rounded-circle">
     </links>
 </mdb-navbar>
 <div class="container" style="margin-top: 5rem;">
