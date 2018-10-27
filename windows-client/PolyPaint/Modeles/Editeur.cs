@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using PolyPaint.Modeles.Outils;
+using PolyPaint.Modeles.Tools;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Ink;
@@ -16,9 +19,15 @@ namespace PolyPaint.Modeles
         public StrokeCollection traits = new StrokeCollection();
         private StrokeCollection traitsRetires = new StrokeCollection();
 
+        private Lasso Lasso = new Lasso();
+        private Pencil Pencil = new Pencil();
+        private SegmentEraser SegmentEraser = new SegmentEraser();
+        private ObjectEraser ObjectEraser = new ObjectEraser();
+        public List<Tool> Tools;
+
         // Outil actif dans l'éditeur
-        private string outilSelectionne = "crayon";
-        public string OutilSelectionne
+        private Tool outilSelectionne;
+        public Tool OutilSelectionne
         {
             get { return outilSelectionne; }
             set { outilSelectionne = value; ProprieteModifiee(); }
@@ -31,8 +40,8 @@ namespace PolyPaint.Modeles
             get { return pointeSelectionnee; }
             set
             {
-                OutilSelectionne = "crayon";
-                pointeSelectionnee = value;                                
+                OutilSelectionne = Pencil;
+                pointeSelectionnee = value;
                 ProprieteModifiee();
             }
         }
@@ -47,7 +56,7 @@ namespace PolyPaint.Modeles
             set
             {
                 couleurSelectionnee = value;
-                OutilSelectionne = "crayon";
+                OutilSelectionne = Pencil;
                 ProprieteModifiee();
             }
         }
@@ -62,9 +71,20 @@ namespace PolyPaint.Modeles
             set
             {
                 tailleTrait = value;
-                OutilSelectionne = "crayon";
+                OutilSelectionne = Pencil;
                 ProprieteModifiee();
             }
+        }
+
+        public Editeur()
+        {
+            this.outilSelectionne = this.Pencil;
+
+            this.Tools = new List<Tool>();
+            this.Tools.Add(Lasso);
+            this.Tools.Add(Pencil);
+            this.Tools.Add(new SegmentEraser());
+            this.Tools.Add(new ObjectEraser());
         }
 
         /// <summary>
@@ -112,7 +132,7 @@ namespace PolyPaint.Modeles
         public void ChoisirPointe(string pointe) => PointeSelectionnee = pointe;
 
         // L'outil actif devient celui passé en paramètre.
-        public void ChoisirOutil(string outil) => OutilSelectionne = outil;
+        public void ChoisirOutil(Tool tool) => OutilSelectionne = tool;
 
         // On vide la surface de dessin de tous ses traits.
         public void Reinitialiser(object o) => traits.Clear();

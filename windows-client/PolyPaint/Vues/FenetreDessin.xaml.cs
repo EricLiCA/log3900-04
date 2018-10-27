@@ -9,6 +9,7 @@ using System.Net;
 using System.IO;
 using System.Windows.Controls;
 using RestSharp;
+using PolyPaint.Modeles.Outils;
 
 namespace PolyPaint
 {
@@ -80,8 +81,8 @@ namespace PolyPaint
             {
                 return;
             }
-
-            ((VueModele)this.DataContext).ChoisirOutil.Execute(((ListBoxItem)this.ToolSelection.SelectedItem).Name);
+            
+            ((VueModele)this.DataContext).ChoisirOutil.Execute((Tool)this.ToolSelection.SelectedItem);
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Ink;
 using System.Windows.Media;
 using PolyPaint.Modeles;
+using PolyPaint.Modeles.Outils;
 using PolyPaint.Utilitaires;
 
 namespace PolyPaint.VueModeles
@@ -20,12 +22,13 @@ namespace PolyPaint.VueModeles
 
         // Ensemble d'attributs qui définissent l'apparence d'un trait.
         public DrawingAttributes AttributsDessin { get; set; } = new DrawingAttributes();
+        public List<Tool> Tools { get => this.editeur.Tools; }
 
-        public string OutilSelectionne
+        public Tool OutilSelectionne
         {
             get { return editeur.OutilSelectionne; }            
             set { ProprieteModifiee(); }
-        }        
+        }    
         
         public string CouleurSelectionnee
         {
@@ -51,7 +54,7 @@ namespace PolyPaint.VueModeles
         public RelayCommand<object> Empiler { get; set; }
         public RelayCommand<object> Depiler { get; set; }
         public RelayCommand<string> ChoisirPointe { get; set; }
-        public RelayCommand<string> ChoisirOutil { get; set; }
+        public RelayCommand<Tool> ChoisirOutil { get; set; }
         public RelayCommand<object> Reinitialiser { get; set; }        
 
         /// <summary>
@@ -77,7 +80,7 @@ namespace PolyPaint.VueModeles
             // Pour les commandes suivantes, il est toujours possible des les activer.
             // Donc, aucune vérification de type Peut"Action" à faire.
             ChoisirPointe = new RelayCommand<string>(editeur.ChoisirPointe);
-            ChoisirOutil = new RelayCommand<string>(editeur.ChoisirOutil);
+            ChoisirOutil = new RelayCommand<Tool>(editeur.ChoisirOutil);
             Reinitialiser = new RelayCommand<object>(editeur.Reinitialiser);            
         }
 

@@ -14,6 +14,14 @@
         <convertisseurs:ConvertisseurBordure x:Key="convertisseurBordure" />
         <convertisseurs:ConvertisseurCouleurFond x:Key="convertisseurCouleurFond" />
         <convertisseurs:ConvertisseurModeEdition x:Key="convertisseurModeEdition" />
+        <convertisseurs:ToolIndexConverter x:Key="ToolIndexConverter" />
+
+        <x:Array x:Key="ToolOrder" Type="sys:String" xmlns:sys="clr-namespace:System;assembly=mscorlib" >
+            <sys:String>lasso</sys:String>
+            <sys:String>crayon</sys:String>
+            <sys:String>efface_segment</sys:String>
+            <sys:String>efface_trait</sys:String>
+        </x:Array>
     </Page.Resources>
     <DockPanel>
 
@@ -53,19 +61,25 @@
                     </Button>
                     <Separator />
 
-                    <ListBox SelectedIndex="1" SelectionChanged="ChoisirOutil" Name="ToolSelection">
-                        <ListBoxItem Name="lasso" ToolTip="Lasso">
-                            <Image Source="/Resources/lasso-tool.png" Width="22" />
-                        </ListBoxItem>
-                        <ListBoxItem Name="crayon" ToolTip="Pencil">
-                            <materialDesign:PackIcon Kind="LeadPencil" Width="22" />
-                        </ListBoxItem>
-                        <ListBoxItem Name="efface_segment" ToolTip="Erase segment">
-                            <materialDesign:PackIcon Kind="Eraser" Width="22" />
-                        </ListBoxItem>
-                        <ListBoxItem Name="efface_trait" ToolTip="Erase trait">
-                            <materialDesign:PackIcon Kind="EraserVariant" Width="22" />
-                        </ListBoxItem>
+                    <ListBox SelectionChanged="ChoisirOutil"
+                             Name="ToolSelection"
+                             ItemsSource="{Binding Path=Tools, Mode=OneTime}">
+                        <ListBox.SelectedIndex>
+                            <MultiBinding Converter="{StaticResource ToolIndexConverter}" UpdateSourceTrigger="PropertyChanged">
+                                <MultiBinding.Bindings>
+                                    <Binding Path="OutilSelectionne" />
+                                    <Binding Path="Tools" Mode="OneTime" />
+                                </MultiBinding.Bindings>
+                            </MultiBinding>
+                        </ListBox.SelectedIndex>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Image Width="22"
+                                       Source="{Binding Path=ToolImage, Mode=OneWay}"
+                                       Tag="{Binding Path=ToolName, Mode=OneWay}"
+                                       ToolTip="{Binding Path=ToolTooltip, Mode=OneWay}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                     <Separator />
 
@@ -166,7 +180,8 @@
                 <InkCanvas ClipToBounds="True" Grid.Column="0" Grid.Row="0" Name="surfaceDessin" 
                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"                           
                            MouseLeave="surfaceDessin_MouseLeave" MouseMove="surfaceDessin_MouseMove"                                              
-                           Strokes="{Binding Path=Traits, Mode=OneTime}" EditingMode="{Binding Path=OutilSelectionne, Converter={StaticResource convertisseurModeEdition}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                           Strokes="{Binding Path=Traits, Mode=OneTime}"
+                           EditingMode="{Binding Path=OutilSelectionne, Converter={StaticResource convertisseurModeEdition}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                            DefaultDrawingAttributes="{Binding Path=AttributsDessin, Mode=OneTime}"/>
                 <Border.Effect>
                     <DropShadowEffect Opacity="0.3" BlurRadius="10"/>
