@@ -1,4 +1,4 @@
-﻿using PolyPaint.Modeles.Outils;
+using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Tools;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Ink;
+using System.Windows.Media;
 
 namespace PolyPaint.Modeles
 {
@@ -21,10 +22,10 @@ namespace PolyPaint.Modeles
         public StrokeCollection traits = new StrokeCollection();
         private StrokeCollection traitsRetires = new StrokeCollection();
 
-        private Lasso Lasso = new Lasso();
-        private Pencil Pencil = new Pencil();
-        private SegmentEraser SegmentEraser = new SegmentEraser();
-        private ObjectEraser ObjectEraser = new ObjectEraser();
+        private Tool Lasso = new Lasso();
+        private Tool Pencil = new Pencil();
+        private Tool SegmentEraser = new SegmentEraser();
+        private Tool ObjectEraser = new ObjectEraser();
         public List<Tool> Tools;
 
         // Outil actif dans l'éditeur
@@ -58,7 +59,6 @@ namespace PolyPaint.Modeles
             set
             {
                 couleurSelectionnee = value;
-                OutilSelectionne = Pencil;
                 ProprieteModifiee();
             }
         }
@@ -73,7 +73,6 @@ namespace PolyPaint.Modeles
             set
             {
                 tailleTrait = value;
-                OutilSelectionne = Pencil;
                 ProprieteModifiee();
             }
         }
@@ -85,8 +84,8 @@ namespace PolyPaint.Modeles
             this.Tools = new List<Tool>();
             this.Tools.Add(Lasso);
             this.Tools.Add(Pencil);
-            this.Tools.Add(new SegmentEraser());
-            this.Tools.Add(new ObjectEraser());
+            this.Tools.Add(SegmentEraser);
+            this.Tools.Add(ObjectEraser);
         }
 
         /// <summary>
@@ -111,7 +110,7 @@ namespace PolyPaint.Modeles
 
         internal void MouseMove(Point point)
         {
-            this.outilSelectionne.MouseMove(point, traits);
+            this.outilSelectionne.MouseMove(point, traits, (Color)ColorConverter.ConvertFromString(couleurSelectionnee));
         }
 
         internal void MouseDown(Point point)

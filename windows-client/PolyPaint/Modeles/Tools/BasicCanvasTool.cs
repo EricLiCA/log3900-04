@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Ink;
+using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Tools
 {
     abstract class BasicCanvasTool : Tool
     {
-
-        public override void MouseMove(Point point, StrokeCollection strokes)
+        public override void MouseMove(Point point, StrokeCollection strokes, Color selectedColor)
         {
             // Is a base canvas fonctionnality and is treated by the canvas
         }
