@@ -53,14 +53,27 @@ class DrawViewController: UIViewController {
                 self.currentContext?.clear(CGRect(x: 0, y: 0, width: drawingPlace.frame.width, height: drawingPlace.frame.height))
             }
             
-            self.prevImage?.draw(in: self.drawingPlace.bounds)
+            //self.prevImage?.draw(in: self.drawingPlace.bounds)
             
-            let bezier = UIBezierPath()
-            
+            /*let bezier = UIBezierPath()
             bezier.move(to: startTouch!)
-            bezier.addLine(to: secondTouch!)
-            bezier.close()
+            //bezier.addLine(to: secondTouch!)
+            bezier.addLine(to: CGPoint(x: (secondTouch?.x)!, y: (startTouch?.y)!))
+            var currentTouch = CGPoint(x: (secondTouch?.x)!, y: (startTouch?.y)!)
+            bezier.move(to:currentTouch)
+            bezier.addLine(to: CGPoint(x: (secondTouch?.x)!, y: (secondTouch?.y)!))
+            bezier.move(to:secondTouch!)
+            bezier.addLine(to: CGPoint(x: (startTouch?.x)!, y: (secondTouch?.y)!))
+            bezier.move(to:CGPoint(x: (startTouch?.x)!, y: (secondTouch?.y)!))
+            bezier.addLine(to: CGPoint(x: (startTouch?.x)!, y: (startTouch?.y)!))
             
+            // For rectangle
+            
+            
+            bezier.close()*/
+            
+            //let bezier = self.drawRectangle(startPoint: startTouch!, secondPoint: secondTouch!)
+            let bezier = self.drawCircle(startPoint: startTouch!, secondPoint: secondTouch!)
             
             UIColor.blue.set()
             
@@ -85,7 +98,60 @@ class DrawViewController: UIViewController {
         lines.append(Line(start: self.currentLineStartPoint!, end: self.currentLineEndPoint!))
     }
     
+    func drawRectangle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
+        let bezier = UIBezierPath()
+        bezier.move(to: startPoint)
+        //bezier.addLine(to: secondTouch!)
+        bezier.addLine(to: CGPoint(x: (secondPoint.x), y: (startPoint.y)))
+        var currentTouch = CGPoint(x: (secondPoint.x), y: (startPoint.y))
+        bezier.move(to:currentTouch)
+        bezier.addLine(to: CGPoint(x: (secondPoint.x), y: (secondPoint.y)))
+        bezier.move(to:secondTouch!)
+        bezier.addLine(to: CGPoint(x: (startPoint.x), y: (secondPoint.y)))
+        bezier.move(to:CGPoint(x: (startPoint.x), y: (secondPoint.y)))
+        bezier.addLine(to: CGPoint(x: (startPoint.x), y: (startPoint.y)))
+        
+        // For rectangle
+        
+        
+        bezier.close()
+        
+        return bezier
+    }
     
+    func drawEllipse(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
+        //let bezier = UIBezierPath()
+        //bezier.move(to: startPoint)
+        //bezier.addLine(to: secondTouch!)
+        let radius = distance(startPoint, secondPoint)/2
+        let center = CGPoint(x: startPoint.x+secondPoint.x/2, y: startPoint.y+secondPoint.y/2)
+        //bezier.addArc(withCenter: center, radius: radius, startAngle: 0, endAngle: .pi*2, clockwise: true)
+        let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.x - startPoint.x, height: secondPoint.y - startPoint.y))
+        
+        bezier.close()
+        
+        return bezier
+    }
+    
+    func drawCircle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
+        //let bezier = UIBezierPath()
+        //bezier.move(to: startPoint)
+        //bezier.addLine(to: secondTouch!)
+        let radius = distance(startPoint, secondPoint)/2
+        let center = CGPoint(x: startPoint.x+secondPoint.x/2, y: startPoint.y+secondPoint.y/2)
+        //bezier.addArc(withCenter: center, radius: radius, startAngle: 0, endAngle: .pi*2, clockwise: true)
+        let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.x - startPoint.x, height: secondPoint.x - startPoint.x))
+        
+        bezier.close()
+        
+        return bezier
+    }
+    
+    func distance(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
+        let xDist = a.x - b.x
+        let yDist = a.y - b.y
+        return CGFloat(sqrt(xDist * xDist + yDist * yDist))
+    }
 
     
     /*

@@ -334,6 +334,10 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x1J-FI-BAJ">
                                 <rect key="frame" x="20" y="138" width="728" height="866"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOf-Jz-Zu9">
+                                <rect key="frame" x="99" y="100" width="69" height="30"/>
+                                <state key="normal" title="Rectangle"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -342,6 +346,8 @@
                             <constraint firstItem="x1J-FI-BAJ" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="20" id="69E-0M-lIa"/>
                             <constraint firstItem="yM1-Vp-22n" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="CtO-06-U1h"/>
                             <constraint firstItem="x1J-FI-BAJ" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="KcV-Xl-X9m"/>
+                            <constraint firstItem="DOf-Jz-Zu9" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="99" id="LUr-a2-uEd"/>
+                            <constraint firstItem="DOf-Jz-Zu9" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="PAz-GC-7kZ"/>
                             <constraint firstItem="7FJ-AM-LDR" firstAttribute="trailing" secondItem="x1J-FI-BAJ" secondAttribute="trailing" constant="20" id="k3i-dY-91I"/>
                             <constraint firstItem="x1J-FI-BAJ" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="74" id="pyd-sw-6RZ"/>
                         </constraints>
