@@ -178,6 +178,7 @@
     <Compile Include="Modeles\ChatModel.cs" />
     <Compile Include="Modeles\ChatRoom.cs" />
     <Compile Include="Modeles\ChatUser.cs" />
+    <Compile Include="Modeles\S3Communication.cs" />
     <Compile Include="Modeles\CustomListener.cs" />
     <Compile Include="Modeles\Editeur.cs" />
     <Compile Include="Modeles\Friend.cs" />

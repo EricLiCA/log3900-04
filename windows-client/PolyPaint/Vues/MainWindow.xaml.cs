@@ -12,6 +12,7 @@ using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using PolyPaint.Utilitaires;
 using PolyPaint.Modeles;
+using System.Threading.Tasks;
 
 namespace PolyPaint.Vues
 {
@@ -23,7 +24,7 @@ namespace PolyPaint.Vues
         private static IAmazonS3 client;
         private const string bucketName = "polypaintpro/profile-pictures";
         private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
-        private const string keyName1 = "profile-pic";
+        private  Amazon.Runtime.BasicAWSCredentials awsCredentials = new Amazon.Runtime.BasicAWSCredentials(Settings.aws_access_key_id, Settings.aws_secret_access_key);
 
         public Gallery Gallery;
         public Users Users;
@@ -42,6 +43,14 @@ namespace PolyPaint.Vues
             if (ServerService.instance.user.isGuest)
             {
                 RestrictPermissions();
+            }
+            else
+            {
+                Uri profileImage = ServerService.instance.user.profileImage;
+                if(profileImage != null)
+                {
+                    AvatarImage.Source = new BitmapImage(profileImage);
+                }
             }
         }
 
@@ -117,15 +126,11 @@ namespace PolyPaint.Vues
                 bitmap.EndInit();
                 AvatarImage.Source = bitmap;
 
-                var awsCredentials = new Amazon.Runtime.BasicAWSCredentials(Settings.aws_access_key_id, Settings.aws_secret_access_key);
-                client = new AmazonS3Client(awsCredentials, bucketRegion);
-                UploadFileAsync(avatarLocation);
+                S3Communication.UploadFileAsync(avatarLocation);
 
-                Modeles.Image avatarImageToUploadToSQL = new Modeles.Image();
-                avatarImageToUploadToSQL.ownerId = 1;
-                avatarImageToUploadToSQL.title = avatarLocation;
-                avatarImageToUploadToSQL.protectionLevel = "private";
-                avatarImageToUploadToSQL.thumbnailUrl = "https://s3.amazonaws.com/polypaintpro/profile-pictures/" + avatarLocation;
+                Uri avatarImageToUploadToSQL = new Uri("https://s3.amazonaws.com/polypaintpro/profile-pictures/" + ServerService.instance.user.id);
+                ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
+                UserDao.Put(ServerService.instance.user);
             }
         }
 
@@ -162,27 +167,6 @@ namespace PolyPaint.Vues
             {
                 ChangeProfileInformationsButton.IsEnabled = true;
             }
-        }
-
-        static async Task UploadFileAsync(String location)
-        {
-            try
-            {
-                var fileTransferUtility = new TransferUtility(client);
-
-                // Option 1. Upload a file. The file name is used as the object key name.
-                await fileTransferUtility.UploadAsync(location, bucketName);
-
-            }
-            catch (AmazonS3Exception e)
-            {
-                Console.WriteLine("Error encountered on server. Message:'{0}' when writing an object", e.Message);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
-            }
-
         }
 
     }
