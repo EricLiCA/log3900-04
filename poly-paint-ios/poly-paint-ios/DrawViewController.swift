@@ -16,6 +16,9 @@ class DrawViewController: UIViewController {
     var secondTouch : CGPoint?
     var currentContext : CGContext?
     var prevImage : UIImage?
+    var lines = [Line]()
+    var currentLineStartPoint: CGPoint?
+    var currentLineEndPoint: CGPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +37,7 @@ class DrawViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         startTouch = touch?.location(in: drawingPlace)
+        self.currentLineStartPoint = startTouch
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -69,9 +73,16 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first
+        self.currentLineEndPoint = touch?.location(in: drawingPlace)
         
         self.currentContext = nil
         self.prevImage = self.drawingPlace.image
+        self.addToLines()
+    }
+    
+    func addToLines() {
+        lines.append(Line(start: self.currentLineStartPoint!, end: self.currentLineEndPoint!))
     }
     
     

@@ -337,18 +337,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="x1J-FI-BAJ" secondAttribute="bottom" constant="20" id="3Dz-Qx-Wea"/>
                             <constraint firstItem="yM1-Vp-22n" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="4Cj-FI-cPz"/>
-                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="x1J-FI-BAJ" secondAttribute="bottom" constant="20" id="AGY-1q-N9c"/>
+                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="20" id="69E-0M-lIa"/>
                             <constraint firstItem="yM1-Vp-22n" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="CtO-06-U1h"/>
-                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="trailing" secondItem="x1J-FI-BAJ" secondAttribute="trailing" constant="20" id="M55-i2-KlF"/>
-                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="bRY-gD-rst"/>
-                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="20" id="fSl-Va-VfE"/>
-                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="74" id="kRK-SZ-cix"/>
+                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="KcV-Xl-X9m"/>
+                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="trailing" secondItem="x1J-FI-BAJ" secondAttribute="trailing" constant="20" id="k3i-dY-91I"/>
+                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="74" id="pyd-sw-6RZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7FJ-AM-LDR"/>
                     </view>
                     <connections>
-                        <outlet property="drawingPlace" destination="x1J-FI-BAJ" id="fz5-kF-D5o"/>
+                        <outlet property="drawingPlace" destination="x1J-FI-BAJ" id="cV1-eG-vVO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
