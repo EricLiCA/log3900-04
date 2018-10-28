@@ -23,19 +23,36 @@ class DrawView: UIView {
     var lastPoint: CGPoint!
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touch began")
         lastPoint = touches.first?.location(in: self)
+        self.setNeedsDisplay()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        /*let newPoint = touches.first?.location(in: self)
+        lines.append(Line(start: lastPoint, end: newPoint!))
+        lastPoint = newPoint
+        
+        self.setNeedsDisplay()*/
+        
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        /*print("Touch ended!")
         let newPoint = touches.first?.location(in: self)
         lines.append(Line(start: lastPoint, end: newPoint!))
         lastPoint = newPoint
         
-        self.setNeedsDisplay()
+        self.setNeedsDisplay()*/
     }
     
+    
     override func draw(_ rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()
+        print("Draw called")
+        print(rect)
+        
+        // Add the view to the view hierarchy so that it shows up on screen
+        /*let context = UIGraphicsGetCurrentContext()
         context!.beginPath()
         for line in lines {
             let startPoint = CGPoint(x: line.start.x, y: line.start.y)
@@ -47,6 +64,7 @@ class DrawView: UIView {
         context!.setLineCap(CGLineCap.round)
         context!.setStrokeColor(cyan: 0, magenta: 0, yellow: 0, black: 1, alpha: 1)
         context!.setLineWidth(5) // make line thicker
-        context!.strokePath()
+        context!.strokePath()*/
+        
     }
 }

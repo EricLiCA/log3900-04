@@ -324,15 +324,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ET8-Iq-7zs">
-                                <rect key="frame" x="264" y="418" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F3E-n5-07m" customClass="DrawView" customModule="poly_paint_ios" customModuleProvider="target">
-                                <rect key="frame" x="20" y="155" width="728" height="849"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yM1-Vp-22n">
                                 <rect key="frame" x="366" y="100" width="36" height="30"/>
                                 <state key="normal" title="Clear"/>
@@ -340,18 +331,25 @@
                                     <action selector="clearTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="XVC-NX-0mb"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x1J-FI-BAJ">
+                                <rect key="frame" x="20" y="138" width="728" height="866"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="yM1-Vp-22n" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="4Cj-FI-cPz"/>
-                            <constraint firstItem="F3E-n5-07m" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="20" id="921-gh-GTf"/>
+                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="x1J-FI-BAJ" secondAttribute="bottom" constant="20" id="AGY-1q-N9c"/>
                             <constraint firstItem="yM1-Vp-22n" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="CtO-06-U1h"/>
-                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="F3E-n5-07m" secondAttribute="bottom" constant="20" id="Y7M-GB-jeV"/>
-                            <constraint firstItem="F3E-n5-07m" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="91" id="i4j-0c-wlp"/>
-                            <constraint firstItem="F3E-n5-07m" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="srx-k6-Ytq"/>
+                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="trailing" secondItem="x1J-FI-BAJ" secondAttribute="trailing" constant="20" id="M55-i2-KlF"/>
+                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="bRY-gD-rst"/>
+                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="20" id="fSl-Va-VfE"/>
+                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="74" id="kRK-SZ-cix"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7FJ-AM-LDR"/>
                     </view>
+                    <connections>
+                        <outlet property="drawingPlace" destination="x1J-FI-BAJ" id="fz5-kF-D5o"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
