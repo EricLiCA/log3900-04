@@ -1,9 +1,11 @@
 ﻿using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Tools;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Ink;
 
 namespace PolyPaint.Modeles
@@ -100,7 +102,23 @@ namespace PolyPaint.Modeles
         }
 
         // S'il y a au moins 1 trait sur la surface, il est possible d'exécuter Empiler.
-        public bool PeutEmpiler(object o) => (traits.Count > 0); 
+        public bool PeutEmpiler(object o) => (traits.Count > 0);
+
+        internal void MouseUp(Point point)
+        {
+            this.outilSelectionne.MouseUp(point, traits);
+        }
+
+        internal void MouseMove(Point point)
+        {
+            this.outilSelectionne.MouseMove(point, traits);
+        }
+
+        internal void MouseDown(Point point)
+        {
+            this.outilSelectionne.MouseDown(point, traits);
+        }
+
         // On retire le trait le plus récent de la surface de dessin et on le place sur une pile.
         public void Empiler(object o)
         {

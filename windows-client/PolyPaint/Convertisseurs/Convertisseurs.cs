@@ -51,8 +51,10 @@ namespace PolyPaint.Convertisseurs
                     return InkCanvasEditingMode.EraseByPoint;
                 case "object_eraser":
                     return InkCanvasEditingMode.EraseByStroke;
-                default:
+                case "pencil":
                     return InkCanvasEditingMode.Ink;
+                default:
+                    return InkCanvasEditingMode.None;
             }
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => System.Windows.DependencyProperty.UnsetValue;

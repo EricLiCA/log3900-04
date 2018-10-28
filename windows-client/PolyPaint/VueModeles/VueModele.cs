@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Media;
 using PolyPaint.Modeles;
@@ -55,7 +56,10 @@ namespace PolyPaint.VueModeles
         public RelayCommand<object> Depiler { get; set; }
         public RelayCommand<string> ChoisirPointe { get; set; }
         public RelayCommand<Tool> ChoisirOutil { get; set; }
-        public RelayCommand<object> Reinitialiser { get; set; }        
+        public RelayCommand<object> Reinitialiser { get; set; }
+        public RelayCommand<Point> MouseUp { get; set; }
+        public RelayCommand<Point> MouseDown { get; set; }
+        public RelayCommand<Point> MouseMove { get; set; }
 
         /// <summary>
         /// Constructeur de VueModele
@@ -81,7 +85,11 @@ namespace PolyPaint.VueModeles
             // Donc, aucune vérification de type Peut"Action" à faire.
             ChoisirPointe = new RelayCommand<string>(editeur.ChoisirPointe);
             ChoisirOutil = new RelayCommand<Tool>(editeur.ChoisirOutil);
-            Reinitialiser = new RelayCommand<object>(editeur.Reinitialiser);            
+            Reinitialiser = new RelayCommand<object>(editeur.Reinitialiser);
+
+            MouseUp = new RelayCommand<Point>(editeur.MouseUp);
+            MouseDown = new RelayCommand<Point>(editeur.MouseDown);
+            MouseMove = new RelayCommand<Point>(editeur.MouseMove);
         }
 
         /// <summary>

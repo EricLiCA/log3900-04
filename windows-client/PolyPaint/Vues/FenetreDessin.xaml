@@ -177,12 +177,13 @@
                       DragStarted="GlisserCommence" DragCompleted="GlisserTermine"
                       />
             <Border BorderThickness="5,5,0,0">
-                <InkCanvas ClipToBounds="True" Grid.Column="0" Grid.Row="0" Name="surfaceDessin" 
+                <InkCanvas ClipToBounds="True" Grid.Column="0" Grid.Row="0" Name="Canvas" 
                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"                           
-                           MouseLeave="surfaceDessin_MouseLeave" MouseMove="surfaceDessin_MouseMove"                                              
+                           MouseLeave="Canvas_MouseLeave" MouseMove="Canvas_MouseMove"                                              
                            Strokes="{Binding Path=Traits, Mode=OneTime}"
                            EditingMode="{Binding Path=OutilSelectionne, Converter={StaticResource convertisseurModeEdition}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                           DefaultDrawingAttributes="{Binding Path=AttributsDessin, Mode=OneTime}"/>
+                           DefaultDrawingAttributes="{Binding Path=AttributsDessin, Mode=OneTime}"
+                           PreviewMouseMove="Canvas_PreviewMouseMove" PreviewMouseUp="Canvas_PreviewMouseUp" PreviewMouseDown="Canvas_PreviewMouseDown" />
                 <Border.Effect>
                     <DropShadowEffect Opacity="0.3" BlurRadius="10"/>
                 </Border.Effect>
