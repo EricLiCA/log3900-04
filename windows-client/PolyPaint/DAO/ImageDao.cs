@@ -48,7 +48,7 @@ namespace PolyPaint.DAO
                 }
             });
         }
-    }
 
+    }
 
 }
