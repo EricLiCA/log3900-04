@@ -8,10 +8,20 @@
 
 import UIKit
 
+enum Shape {
+    case Circle
+    case Rectangle
+    case Ellipse
+    case None
+}
+
 class DrawViewController: UIViewController {
 
     @IBOutlet weak var drawingPlace: UIImageView!
     
+    @IBOutlet weak var ellipseButton: UIButton!
+    @IBOutlet weak var circleButton: UIButton!
+    @IBOutlet weak var rectangleButton: UIButton!
     var startTouch : CGPoint?
     var secondTouch : CGPoint?
     var currentContext : CGContext?
@@ -19,6 +29,7 @@ class DrawViewController: UIViewController {
     var lines = [Line]()
     var currentLineStartPoint: CGPoint?
     var currentLineEndPoint: CGPoint?
+    var currentShape = Shape.None
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +42,16 @@ class DrawViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func clearTapped(_ sender: UIButton) {
+    @IBAction func rectangleTapped(_ sender: UIButton) {
+        self.currentShape = Shape.Rectangle
+    }
+    
+    @IBAction func ellipseTapped(_ sender: UIButton) {
+        self.currentShape = Shape.Ellipse
+    }
+    
+    @IBAction func circleTapped(_ sender: UIButton) {
+        self.currentShape = Shape.Circle
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -53,27 +73,18 @@ class DrawViewController: UIViewController {
                 self.currentContext?.clear(CGRect(x: 0, y: 0, width: drawingPlace.frame.width, height: drawingPlace.frame.height))
             }
             
-            //self.prevImage?.draw(in: self.drawingPlace.bounds)
-            
-            /*let bezier = UIBezierPath()
-            bezier.move(to: startTouch!)
-            //bezier.addLine(to: secondTouch!)
-            bezier.addLine(to: CGPoint(x: (secondTouch?.x)!, y: (startTouch?.y)!))
-            var currentTouch = CGPoint(x: (secondTouch?.x)!, y: (startTouch?.y)!)
-            bezier.move(to:currentTouch)
-            bezier.addLine(to: CGPoint(x: (secondTouch?.x)!, y: (secondTouch?.y)!))
-            bezier.move(to:secondTouch!)
-            bezier.addLine(to: CGPoint(x: (startTouch?.x)!, y: (secondTouch?.y)!))
-            bezier.move(to:CGPoint(x: (startTouch?.x)!, y: (secondTouch?.y)!))
-            bezier.addLine(to: CGPoint(x: (startTouch?.x)!, y: (startTouch?.y)!))
-            
-            // For rectangle
-            
-            
-            bezier.close()*/
-            
-            //let bezier = self.drawRectangle(startPoint: startTouch!, secondPoint: secondTouch!)
-            let bezier = self.drawCircle(startPoint: startTouch!, secondPoint: secondTouch!)
+            self.prevImage?.draw(in: self.drawingPlace.bounds)
+            var bezier = UIBezierPath()
+            switch self.currentShape {
+            case .Circle:
+                bezier = self.drawCircle(startPoint: startTouch!, secondPoint: secondTouch!)
+            case .Rectangle:
+                bezier = self.drawRectangle(startPoint: startTouch!, secondPoint: secondTouch!)
+            case .Ellipse:
+                bezier = self.drawEllipse(startPoint: startTouch!, secondPoint: secondTouch!)
+            case .None:
+                print("nothing")
+            }
             
             UIColor.blue.set()
             
@@ -101,7 +112,6 @@ class DrawViewController: UIViewController {
     func drawRectangle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
         let bezier = UIBezierPath()
         bezier.move(to: startPoint)
-        //bezier.addLine(to: secondTouch!)
         bezier.addLine(to: CGPoint(x: (secondPoint.x), y: (startPoint.y)))
         var currentTouch = CGPoint(x: (secondPoint.x), y: (startPoint.y))
         bezier.move(to:currentTouch)
@@ -120,12 +130,8 @@ class DrawViewController: UIViewController {
     }
     
     func drawEllipse(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
-        //let bezier = UIBezierPath()
-        //bezier.move(to: startPoint)
-        //bezier.addLine(to: secondTouch!)
         let radius = distance(startPoint, secondPoint)/2
         let center = CGPoint(x: startPoint.x+secondPoint.x/2, y: startPoint.y+secondPoint.y/2)
-        //bezier.addArc(withCenter: center, radius: radius, startAngle: 0, endAngle: .pi*2, clockwise: true)
         let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.x - startPoint.x, height: secondPoint.y - startPoint.y))
         
         bezier.close()
@@ -134,12 +140,8 @@ class DrawViewController: UIViewController {
     }
     
     func drawCircle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
-        //let bezier = UIBezierPath()
-        //bezier.move(to: startPoint)
-        //bezier.addLine(to: secondTouch!)
         let radius = distance(startPoint, secondPoint)/2
         let center = CGPoint(x: startPoint.x+secondPoint.x/2, y: startPoint.y+secondPoint.y/2)
-        //bezier.addArc(withCenter: center, radius: radius, startAngle: 0, endAngle: .pi*2, clockwise: true)
         let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.x - startPoint.x, height: secondPoint.x - startPoint.x))
         
         bezier.close()
