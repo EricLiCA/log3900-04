@@ -1,4 +1,4 @@
-using PolyPaint.Modeles.Outils;
+﻿using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Tools;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,7 @@ namespace PolyPaint.Modeles
         private Tool SegmentEraser = new SegmentEraser();
         private Tool ObjectEraser = new ObjectEraser();
         private Tool Rectangle = new Rectangle();
+        private Tool Elipse = new Elipse();
         public List<Tool> Tools;
 
         // Outil actif dans l'éditeur
@@ -88,6 +89,7 @@ namespace PolyPaint.Modeles
             this.Tools.Add(SegmentEraser);
             this.Tools.Add(ObjectEraser);
             this.Tools.Add(Rectangle);
+            this.Tools.Add(Elipse);
         }
 
         /// <summary>
