@@ -113,7 +113,10 @@ final class PublicPhotosViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        <#code#>
+        let Storyboard = UIStoryboard(name:"Main", bundle: nil)
+        let PublicImageVC = Storyboard.instantiateViewController(withIdentifier: "PublicImageViewController") as! PublicImageViewController
+        PublicImageVC.image = images?[indexPath.item]
+        self.navigationController?.pushViewController(PublicImageVC, animated: true)
     }
     
 }

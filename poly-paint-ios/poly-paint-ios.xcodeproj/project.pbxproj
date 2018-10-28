@@ -24,6 +24,7 @@
 		CCA46DB1217815D500DC32EC /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DB0217815D500DC32EC /* PhotoCell.swift */; };
 		CCD4FA7221801444005E124B /* MyImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD4FA7121801444005E124B /* MyImagesCollectionViewController.swift */; };
 		CCD4FA7421801C98005E124B /* PrivateImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD4FA7321801C98005E124B /* PrivateImageCell.swift */; };
+		CCD4FA762186536B005E124B /* PublicImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD4FA752186536B005E124B /* PublicImageViewController.swift */; };
 		CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099D82165066700E2D27E /* LoginViewController.swift */; };
 		CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099DC216571B800E2D27E /* MainMenuViewController.swift */; };
 		CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F1E1C216980FF0023663E /* SignUpViewController.swift */; };
@@ -76,6 +77,7 @@
 		CCA46DB0217815D500DC32EC /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		CCD4FA7121801444005E124B /* MyImagesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImagesCollectionViewController.swift; sourceTree = "<group>"; };
 		CCD4FA7321801C98005E124B /* PrivateImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateImageCell.swift; sourceTree = "<group>"; };
+		CCD4FA752186536B005E124B /* PublicImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicImageViewController.swift; sourceTree = "<group>"; };
 		CF0099D82165066700E2D27E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CF0099DC216571B800E2D27E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		CF1F1E1C216980FF0023663E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
 				A77C46F221569CFB0056135A /* Main.storyboard */,
+				CCD4FA752186536B005E124B /* PublicImageViewController.swift */,
 				CCD4FA7321801C98005E124B /* PrivateImageCell.swift */,
 				CCD4FA7121801444005E124B /* MyImagesCollectionViewController.swift */,
 				CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */,
@@ -389,6 +392,7 @@
 				CCD4FA7421801C98005E124B /* PrivateImageCell.swift in Sources */,
 				A78A733A215ED91C007A854F /* DateTime.swift in Sources */,
 				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,
+				CCD4FA762186536B005E124B /* PublicImageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
