@@ -97,8 +97,6 @@ namespace PolyPaint.Vues
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         dynamic data = JObject.Parse(response.Content);
-                        Connect_Socket();
-
                         ServerService.instance.user = new User(
                             UserName.Text,
                             (string)data["id"],
@@ -108,6 +106,8 @@ namespace PolyPaint.Vues
                             Password.Password,
                             false
                         );
+
+                        Connect_Socket();
                     }
                     else
                     {
