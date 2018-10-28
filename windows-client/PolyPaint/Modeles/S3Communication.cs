@@ -17,8 +17,8 @@ namespace PolyPaint.Modeles
         private const string profileBucketName = Settings.PROFILE_IMAGE_BUCKET;
         private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
         private static Amazon.Runtime.BasicAWSCredentials awsCredentials = new Amazon.Runtime.BasicAWSCredentials(Settings.aws_access_key_id, Settings.aws_secret_access_key);
-
-        public static async Task UploadFileAsync(String location)
+        public S3Communication() { }
+        public async Task UploadFileAsync(String location)
         {
             try
             {
