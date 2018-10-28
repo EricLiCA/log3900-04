@@ -21,11 +21,6 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static IAmazonS3 client;
-        private const string bucketName = "polypaintpro/profile-pictures";
-        private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
-        private  Amazon.Runtime.BasicAWSCredentials awsCredentials = new Amazon.Runtime.BasicAWSCredentials(Settings.aws_access_key_id, Settings.aws_secret_access_key);
-
         public Gallery Gallery;
         public Users Users;
         private FenetreDessin FenetreDessin;
@@ -128,7 +123,7 @@ namespace PolyPaint.Vues
 
                 S3Communication.UploadFileAsync(avatarLocation);
 
-                Uri avatarImageToUploadToSQL = new Uri("https://s3.amazonaws.com/polypaintpro/profile-pictures/" + ServerService.instance.user.id);
+                Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
                 ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
                 UserDao.Put(ServerService.instance.user);
             }

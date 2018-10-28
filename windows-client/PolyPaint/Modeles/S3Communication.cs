@@ -14,7 +14,7 @@ namespace PolyPaint.Modeles
     class S3Communication
     {
         private static IAmazonS3 client;
-        private const string bucketName = "polypaintpro/profile-pictures";
+        private const string profileBucketName = Settings.PROFILE_IMAGE_BUCKET;
         private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
         private static Amazon.Runtime.BasicAWSCredentials awsCredentials = new Amazon.Runtime.BasicAWSCredentials(Settings.aws_access_key_id, Settings.aws_secret_access_key);
 
@@ -26,7 +26,7 @@ namespace PolyPaint.Modeles
                 var fileTransferUtility = new TransferUtility(client);
 
                 // Option 1. Upload a file. The file name is used as the object key name.
-                await fileTransferUtility.UploadAsync(location, bucketName, ServerService.instance.user.id);
+                await fileTransferUtility.UploadAsync(location, profileBucketName, ServerService.instance.user.id);
 
             }
             catch (AmazonS3Exception e)
