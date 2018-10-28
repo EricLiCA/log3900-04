@@ -1,5 +1,6 @@
 import { SocketServer } from '../socket-server';
 import { User } from '../connected-users-service.ts/user';
+import { ConnectedUsersService } from '../connected-users-service.ts/connected-users-service';
 
 export class ChatService {
     private static chatService: ChatService;
@@ -32,6 +33,11 @@ export class ChatService {
             this.checkIfEmpty(room);
         });
 
+        user.socket.on('addToRoom', (room: string, username: string) => {
+            if (!ConnectedUsersService.isConnectedByName(username)) return;
+            this.addToRoom(room, ConnectedUsersService.getByName(username));
+        });
+
         user.socket.on('message', (room: string, message: string) => {
             console.log(`Received from ${user.socket.id} to ${room}: ${message}`);
             user.socket.emit('message', room, 'You', message);
@@ -55,7 +61,7 @@ export class ChatService {
 
         this.rooms.get(room).delete(user.socket.id);
         user.socket.leave(room);
-        user.socket.broadcast.to(room).emit('leaveRoomInfo', room, user.name);
+        SocketServer.socketServerInstance.emit('leaveRoomInfo', room, user.name);
         console.log(`${user.socket.id} has left the room ${room}`);
     }
 
@@ -71,6 +77,7 @@ export class ChatService {
 
         this.rooms.forEach((users: Set<string>, room: string) => {
             if (users.has(user.socket.id)) {
+                roomsUserWasIn.push(room);
                 this.removeFromRoom(room, user);
             }
         });
