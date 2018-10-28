@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Ink;
 
 namespace PolyPaint.Modeles.Outils
 {
@@ -16,8 +18,8 @@ namespace PolyPaint.Modeles.Outils
         public abstract string GetToolImage();
         public abstract string GetToolTooltip();
 
-        public abstract void OnMouseDown();
-        public abstract void OnDrag();
-        public abstract void OnMouseUp();
+        public abstract void MouseDown(Point point, StrokeCollection strokes);
+        public abstract void MouseMove(Point point, StrokeCollection strokes);
+        public abstract void MouseUp(Point point, StrokeCollection strokes);
     }
 }

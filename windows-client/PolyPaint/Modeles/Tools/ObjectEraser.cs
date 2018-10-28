@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PolyPaint.Modeles.Tools
 {
-    class ObjectEraser : Tool
+    class ObjectEraser : BasicCanvasTool
     {
         public override string GetToolImage()
         {
@@ -22,21 +22,6 @@ namespace PolyPaint.Modeles.Tools
         public override string GetToolTooltip()
         {
             return "Object Eraser";
-        }
-
-        public override void OnDrag()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnMouseDown()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnMouseUp()
-        {
-            throw new NotImplementedException();
         }
     }
 }
