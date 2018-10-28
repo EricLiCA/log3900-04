@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="250"
       Title="Chat">
@@ -14,7 +14,31 @@
                 <Button DockPanel.Dock="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Margin="5 0" Padding="0" ToolTip="LeaveRoom" Command="{Binding LeaveRoom}" CommandParameter="{Binding Path=ThreadName}">
                     <Image Width="25" Height="25" Source="/Resources/leave.png" />
                 </Button>
-                <Button DockPanel.Dock="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Margin="5 0" Padding="0" ToolTip="Add person" Command="{Binding AddPerson}">
+                <Button DockPanel.Dock="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Margin="5 0" Padding="0" ToolTip="Add person" 
+                        Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                    <Button.CommandParameter>
+                        <StackPanel Margin="16" Orientation="Vertical">
+                            <ItemsControl VerticalAlignment="Stretch" BorderThickness="0" ItemsSource="{Binding Path=AvailableUsers}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <DockPanel Margin="5">
+                                            <Border DockPanel.Dock="Left" Margin="0,0,6,16" Width="20" Height="20" VerticalAlignment="Bottom">
+                                                <Image Source="{Binding profileImage}" />
+                                            </Border>
+                                            <Button DockPanel.Dock="Right" Content="ADD" Tag="{Binding username}" Click="Add_Click"/>
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding username}"  Padding="0 0 20 0"/>
+                                        </DockPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                    IsCancel="True"
+                                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                    HorizontalAlignment="Center">
+                                DONE
+                            </Button>
+                        </StackPanel>
+                    </Button.CommandParameter>
                     <Image Width="25" Height="25" Source="/Resources/person_add.png" />
                 </Button>
                 <TextBlock TextWrapping="Wrap" Margin="0,10,0,10" HorizontalAlignment="Center" FontWeight="Bold" FontSize="15" Text="{Binding Path=ThreadName}" />
@@ -26,6 +50,7 @@
         <TextBox Name="MessageToSend"
                  DockPanel.Dock="Bottom"
                  TextWrapping="WrapWithOverflow"
+                 TextAlignment="Left"
                  BorderBrush="SlateGray"
                  BorderThickness="0,1,0,0"
                  Background="White"

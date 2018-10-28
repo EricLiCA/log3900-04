@@ -116,6 +116,8 @@ export class Application {
 
         // Chat Rooms
         router.get('/chatRooms', chatRooms.get.bind(chatRooms.get));
+        router.get('/chatRooms/:room', chatRooms.getUsers.bind(chatRooms.getUsers));
+        router.get('/connectedUsers', chatRooms.all.bind(chatRooms.all));
 
         // use router middleware
         this.app.use('/v2', router);
