@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -188,6 +188,7 @@
     <Compile Include="Modeles\Tools\Lasso.cs" />
     <Compile Include="Modeles\Tools\Pencil.cs" />
     <Compile Include="Modeles\Tools\Tool.cs" />
+    <Compile Include="Modeles\Tools\Rectangle.cs" />
     <Compile Include="Modeles\PendingFriendRequest.cs" />
     <Compile Include="Modeles\User.cs" />
     <Compile Include="Services\MessagingViewManager.cs" />
@@ -318,6 +319,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\eraser-tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\square-outline.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\eraser_variant-tool.png" />

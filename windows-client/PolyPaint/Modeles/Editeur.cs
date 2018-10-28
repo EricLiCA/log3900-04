@@ -26,6 +26,7 @@ namespace PolyPaint.Modeles
         private Tool Pencil = new Pencil();
         private Tool SegmentEraser = new SegmentEraser();
         private Tool ObjectEraser = new ObjectEraser();
+        private Tool Rectangle = new Rectangle();
         public List<Tool> Tools;
 
         // Outil actif dans l'éditeur
@@ -86,6 +87,7 @@ namespace PolyPaint.Modeles
             this.Tools.Add(Pencil);
             this.Tools.Add(SegmentEraser);
             this.Tools.Add(ObjectEraser);
+            this.Tools.Add(Rectangle);
         }
 
         /// <summary>
