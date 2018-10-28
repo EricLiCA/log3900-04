@@ -59,7 +59,7 @@ final class PublicPhotosViewController: UICollectionViewController {
                         self.images?.append(image)
                     }
                 }
-                
+               
                 DispatchQueue.main.async {
                     self.collectionView?.reloadData()
                 }
@@ -74,6 +74,7 @@ final class PublicPhotosViewController: UICollectionViewController {
     
     override func viewDidLoad(){
         fetchPublicImages()
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -110,4 +111,9 @@ final class PublicPhotosViewController: UICollectionViewController {
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        <#code#>
+    }
+    
 }
