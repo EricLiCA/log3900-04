@@ -112,6 +112,20 @@ namespace PolyPaint.Modeles
             this.outilSelectionne.MouseUp(point, traits);
         }
 
+        internal void SelectStrokes(StrokeCollection strokes)
+        {
+            strokes.ToList().ForEach(stroke => {
+                if (((CustomStroke)stroke).isSelected())
+                {
+                    ((CustomStroke)stroke).Unselect(this.traits);
+                }
+                else
+                {
+                    ((CustomStroke)stroke).Select(this.traits);
+                }
+            });
+        }
+
         internal void MouseMove(Point point)
         {
             this.outilSelectionne.MouseMove(point, traits, (Color)ColorConverter.ConvertFromString(couleurSelectionnee));

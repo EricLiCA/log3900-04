@@ -23,17 +23,13 @@ namespace PolyPaint.Modeles.Strokes
             return StrokeType.OBJECT;
         }
 
+        public override bool isSelectable()
+        {
+            return true;
+        }
+
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
-            if (drawingContext == null)
-            {
-                throw new ArgumentNullException("drawingContext");
-            }
-            if (null == drawingAttributes)
-            {
-                throw new ArgumentNullException("drawingAttributes");
-            }
-
             DrawingAttributes originalDa = drawingAttributes.Clone();
             SolidColorBrush fillBrush = new SolidColorBrush(drawingAttributes.Color);
             fillBrush.Freeze();

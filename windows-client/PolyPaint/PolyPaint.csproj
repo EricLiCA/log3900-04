@@ -178,6 +178,11 @@
     <Compile Include="Modeles\ChatModel.cs" />
     <Compile Include="Modeles\ChatRoom.cs" />
     <Compile Include="Modeles\ChatUser.cs" />
+    <Compile Include="Modeles\Strokes\BaseElipseStroke.cs" />
+    <Compile Include="Modeles\Strokes\BaseRectangleStroke.cs" />
+    <Compile Include="Modeles\Strokes\ClassStroke.cs" />
+    <Compile Include="Modeles\Strokes\CustomDrawingAttributes.cs" />
+    <Compile Include="Modeles\Strokes\CustomStroke.cs" />
     <Compile Include="Modeles\S3Communication.cs" />
     <Compile Include="Modeles\CustomListener.cs" />
     <Compile Include="Modeles\Editeur.cs" />
@@ -352,5 +357,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -23,15 +23,26 @@ namespace PolyPaint.Modeles.Strokes
             return StrokeType.OBJECT;
         }
 
+        public override bool isSelectable()
+        {
+            return true;
+        }
+
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
             DrawingAttributes originalDa = drawingAttributes.Clone();
             SolidColorBrush fillBrush = new SolidColorBrush(drawingAttributes.Color);
-            fillBrush.Freeze();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
-            outlinePen.Freeze();
 
             drawingContext.DrawRectangle(fillBrush, outlinePen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
+
+            if (this.isSelected())
+            {
+                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
+                selectedPen.Freeze();
+                drawingContext.DrawRectangle(null, selectedPen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
+                
+            }
         }
     }
 }

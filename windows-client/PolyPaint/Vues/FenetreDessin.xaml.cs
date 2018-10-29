@@ -97,5 +97,11 @@ namespace PolyPaint
         {
             ((VueModele)this.DataContext).MouseMove.Execute(e.GetPosition((IInputElement)sender));
         }
+
+        private void Canvas_SelectionChanged(object sender, EventArgs e)
+        {
+            ((VueModele)this.DataContext).SelectStrokes.Execute(Canvas.GetSelectedStrokes().Clone());
+            Canvas.Select(new System.Windows.Ink.StrokeCollection());
+        }
     }
 }

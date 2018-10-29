@@ -183,7 +183,8 @@
                            Strokes="{Binding Path=Traits, Mode=OneTime}"
                            EditingMode="{Binding Path=OutilSelectionne, Converter={StaticResource convertisseurModeEdition}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
                            DefaultDrawingAttributes="{Binding Path=AttributsDessin, Mode=OneTime}"
-                           PreviewMouseMove="Canvas_PreviewMouseMove" PreviewMouseUp="Canvas_PreviewMouseUp" PreviewMouseDown="Canvas_PreviewMouseDown" />
+                           PreviewMouseMove="Canvas_PreviewMouseMove" PreviewMouseUp="Canvas_PreviewMouseUp" PreviewMouseDown="Canvas_PreviewMouseDown"
+                           SelectionChanged="Canvas_SelectionChanged"/>
                 <Border.Effect>
                     <DropShadowEffect Opacity="0.3" BlurRadius="10"/>
                 </Border.Effect>

@@ -60,6 +60,7 @@ namespace PolyPaint.VueModeles
         public RelayCommand<Point> MouseUp { get; set; }
         public RelayCommand<Point> MouseDown { get; set; }
         public RelayCommand<Point> MouseMove { get; set; }
+        public RelayCommand<StrokeCollection> SelectStrokes { get; set; }
 
         /// <summary>
         /// Constructeur de VueModele
@@ -90,6 +91,7 @@ namespace PolyPaint.VueModeles
             MouseUp = new RelayCommand<Point>(editeur.MouseUp);
             MouseDown = new RelayCommand<Point>(editeur.MouseDown);
             MouseMove = new RelayCommand<Point>(editeur.MouseMove);
+            SelectStrokes = new RelayCommand<StrokeCollection>(editeur.SelectStrokes);
         }
 
         /// <summary>
