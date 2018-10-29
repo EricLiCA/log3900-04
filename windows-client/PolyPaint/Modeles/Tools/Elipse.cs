@@ -1,4 +1,5 @@
 ﻿using PolyPaint.Modeles.Outils;
+using PolyPaint.Modeles.Strokes;
 using System;
 using System.Windows;
 using System.Windows.Ink;
@@ -45,7 +46,7 @@ namespace PolyPaint.Modeles.Tools
             if (ActiveStroke != null)
                 strokes.Remove(ActiveStroke);
 
-            ActiveStroke = new ElipseStroke(pts);
+            ActiveStroke = new BaseElipseStroke(pts);
             ActiveStroke.DrawingAttributes.Color = selectedColor;
             strokes.Add(ActiveStroke);
         }
@@ -58,37 +59,6 @@ namespace PolyPaint.Modeles.Tools
                 strokes.Add(ActiveStroke.Clone());
             }
             IsDrawing = false;
-        }
-    }
-
-    class ElipseStroke : Stroke
-    {
-        public ElipseStroke(StylusPointCollection pts) : base(pts)
-        {
-            this.StylusPoints = pts;
-        }
-
-        protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
-        {
-            if (drawingContext == null)
-            {
-                throw new ArgumentNullException("drawingContext");
-            }
-            if (null == drawingAttributes)
-            {
-                throw new ArgumentNullException("drawingAttributes");
-            }
-
-            DrawingAttributes originalDa = drawingAttributes.Clone();
-            SolidColorBrush fillBrush = new SolidColorBrush(drawingAttributes.Color);
-            fillBrush.Freeze();
-            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
-            outlinePen.Freeze();
-
-            StylusPoint stp = this.StylusPoints[0];
-            StylusPoint sp = this.StylusPoints[1];
-
-            drawingContext.DrawEllipse(fillBrush, outlinePen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
         }
     }
 }
