@@ -10,11 +10,51 @@ namespace PolyPaint.Modeles
 {
     public abstract class CustomStroke : Stroke
     {
+        private bool Selected = true;
+        private bool Locked = false;
+
         public CustomStroke(StylusPointCollection pts) : base(pts)
         {
         }
 
         public abstract StrokeType getType();
+
+        public abstract bool isSelectable();
+
+        public bool isLocked()
+        {
+            return this.Locked;
+        }
+
+        public bool isSelected()
+        {
+            if (!isSelectable()) return false;
+            return Selected;
+        }
+
+        public void Select()
+        {
+            if (!this.Locked && isSelectable())
+            {
+                this.Selected = true;
+            }
+        }
+
+        public void Unselect()
+        {
+            this.Selected = false;
+        }
+
+        public void Lock()
+        {
+            if (this.isSelectable())
+                this.Locked = true;
+        }
+
+        public void Unlock()
+        {
+            this.Locked = false;
+        }
     }
 
     public enum StrokeType
