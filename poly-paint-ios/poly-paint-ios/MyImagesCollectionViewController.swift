@@ -98,5 +98,12 @@ final class MyImagesViewController: UICollectionViewController {
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let Storyboard = UIStoryboard(name:"Main", bundle: nil)
+        let PrivateImageVC = Storyboard.instantiateViewController(withIdentifier: "PrivateImageViewController") as!PrivateImageViewController
+        PrivateImageVC.image = images?[indexPath.item]
+        self.navigationController?.pushViewController(PrivateImageVC, animated: true)
+    }
 }
 
