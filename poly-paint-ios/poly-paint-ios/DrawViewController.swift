@@ -43,15 +43,42 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func rectangleTapped(_ sender: UIButton) {
-        self.currentShape = Shape.Rectangle
+        if(self.currentShape == Shape.Rectangle) {
+            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.currentShape = Shape.None
+        } else {
+            self.currentShape = Shape.Rectangle
+            self.rectangleButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            self.circleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        }
+        
     }
     
     @IBAction func ellipseTapped(_ sender: UIButton) {
-        self.currentShape = Shape.Ellipse
+        if(self.currentShape == Shape.Ellipse) {
+            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.currentShape = Shape.None
+        } else {
+            self.currentShape = Shape.Ellipse
+            self.ellipseButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            self.circleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        }
     }
     
     @IBAction func circleTapped(_ sender: UIButton) {
-        self.currentShape = Shape.Circle
+
+        if(self.currentShape == Shape.Circle) {
+            self.circleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.currentShape = Shape.None
+        } else {
+            self.currentShape = Shape.Circle
+            self.circleButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        }
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -130,8 +157,6 @@ class DrawViewController: UIViewController {
     }
     
     func drawEllipse(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
-        let radius = distance(startPoint, secondPoint)/2
-        let center = CGPoint(x: startPoint.x+secondPoint.x/2, y: startPoint.y+secondPoint.y/2)
         let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.x - startPoint.x, height: secondPoint.y - startPoint.y))
         
         bezier.close()
@@ -140,9 +165,7 @@ class DrawViewController: UIViewController {
     }
     
     func drawCircle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
-        let radius = distance(startPoint, secondPoint)/2
-        let center = CGPoint(x: startPoint.x+secondPoint.x/2, y: startPoint.y+secondPoint.y/2)
-        let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.x - startPoint.x, height: secondPoint.x - startPoint.x))
+        let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.y - startPoint.y, height: secondPoint.y - startPoint.y))
         
         bezier.close()
         
