@@ -12,7 +12,6 @@ namespace PolyPaint.Modeles
     {
         public CustomStroke(StylusPointCollection pts) : base(pts)
         {
-            
         }
 
         public abstract StrokeType getType();
