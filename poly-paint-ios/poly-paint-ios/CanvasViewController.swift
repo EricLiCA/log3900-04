@@ -11,6 +11,7 @@ import UIKit
 enum ShapeType {
     case Square
     case Rectangle
+    case Ellipse
     case None
 }
 
@@ -18,6 +19,7 @@ class CanvasViewController: UIViewController {
 
     @IBOutlet weak var squareButton: UIButton!
     @IBOutlet weak var rectangleButton: UIButton!
+    @IBOutlet weak var ellipseButton: UIButton!
     @IBOutlet weak var canvasView: UIView!
     
     var shapeType = ShapeType.None
@@ -44,6 +46,10 @@ class CanvasViewController: UIViewController {
                 let tapPoint = tapGR.location(in: self.canvasView)
                 let shapeView = RectangleView(origin: tapPoint)
                 self.canvasView.addSubview(shapeView)
+            } else if (self.shapeType == ShapeType.Ellipse) {
+                let tapPoint = tapGR.location(in: self.canvasView)
+                let shapeView = EllipseView(origin: tapPoint)
+                self.canvasView.addSubview(shapeView)
             }
         }
     }
@@ -56,6 +62,7 @@ class CanvasViewController: UIViewController {
             self.shapeType = ShapeType.Square
             self.squareButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
+            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
         }
     }
     
@@ -68,9 +75,21 @@ class CanvasViewController: UIViewController {
             self.shapeType = ShapeType.Rectangle
             self.rectangleButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             self.squareButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
+            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
         }
     }
     
+    @IBAction func ellipseTapped(_ sender: UIButton) {
+        if(self.shapeType == ShapeType.Ellipse) {
+            self.shapeType = ShapeType.None
+            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
+        } else {
+            self.shapeType = ShapeType.Ellipse
+            self.ellipseButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            self.squareButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
+            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
+        }
+    }
     /*
     // MARK: - Navigation
 

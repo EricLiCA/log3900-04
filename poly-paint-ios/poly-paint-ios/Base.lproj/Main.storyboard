@@ -434,6 +434,20 @@
                                     <action selector="rectangleTapped:" destination="0ef-6Q-afh" eventType="touchUpInside" id="ShV-F9-glY"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMi-ax-6Ef">
+                                <rect key="frame" x="286" y="85" width="100" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="0ab-Nv-RSo"/>
+                                    <constraint firstAttribute="width" constant="100" id="5c1-VG-gHZ"/>
+                                </constraints>
+                                <state key="normal" title="Ellipse">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="ellipseTapped:" destination="0ef-6Q-afh" eventType="touchUpInside" id="uso-Si-AVb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -441,6 +455,8 @@
                             <constraint firstItem="9Qz-Ln-HK5" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="21" id="LHB-zJ-9h4"/>
                             <constraint firstItem="eGy-gY-gZG" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="59" id="NuQ-xd-n6Z"/>
                             <constraint firstItem="QgM-s3-xb4" firstAttribute="trailing" secondItem="eGy-gY-gZG" secondAttribute="trailing" constant="20" id="OOP-jc-59r"/>
+                            <constraint firstItem="KMi-ax-6Ef" firstAttribute="leading" secondItem="4A3-IW-Hn6" secondAttribute="trailing" constant="33" id="Vep-Et-vUu"/>
+                            <constraint firstItem="KMi-ax-6Ef" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="21" id="Y65-Lq-vWG"/>
                             <constraint firstItem="eGy-gY-gZG" firstAttribute="leading" secondItem="QgM-s3-xb4" secondAttribute="leading" constant="20" id="kCW-h7-a7y"/>
                             <constraint firstItem="4A3-IW-Hn6" firstAttribute="leading" secondItem="9Qz-Ln-HK5" secondAttribute="trailing" constant="34" id="nPs-QB-zbe"/>
                             <constraint firstItem="QgM-s3-xb4" firstAttribute="bottom" secondItem="eGy-gY-gZG" secondAttribute="bottom" constant="20" id="rbN-dh-hwu"/>
@@ -450,6 +466,7 @@
                     </view>
                     <connections>
                         <outlet property="canvasView" destination="eGy-gY-gZG" id="96a-28-ZZM"/>
+                        <outlet property="ellipseButton" destination="KMi-ax-6Ef" id="ohw-da-n12"/>
                         <outlet property="rectangleButton" destination="4A3-IW-Hn6" id="RnH-Aa-zSD"/>
                         <outlet property="squareButton" destination="9Qz-Ln-HK5" id="hbE-bi-Kf1"/>
                     </connections>
