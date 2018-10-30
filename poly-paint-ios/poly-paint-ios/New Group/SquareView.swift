@@ -68,22 +68,6 @@ class SquareView: UIView {
         rotationGR.rotation = 0.0
     }
     
-    func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
-        let x_1 = p1.x
-        let x_2 = p2.x
-        let y_1 = p1.y
-        let y_2 = p2.y
-        let absolutePoint = CGPoint(x: x_2 - x_1, y: y_2 - y_1)
-        let radians = atan2(Double(absolutePoint.x), Double(absolutePoint.y))
-        let absRad = fabs(radians)
-        
-        if absRad > (.pi / 4) && absRad < 3*(.pi / 4) {
-            return "x"
-        } else {
-            return "y"
-        }
-    }
-    
     
     /*
     // Only override draw() if you perform custom drawing.

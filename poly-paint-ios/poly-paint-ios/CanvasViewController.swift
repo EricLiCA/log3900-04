@@ -10,12 +10,14 @@ import UIKit
 
 enum ShapeType {
     case Square
+    case Rectangle
     case None
 }
 
 class CanvasViewController: UIViewController {
 
     @IBOutlet weak var squareButton: UIButton!
+    @IBOutlet weak var rectangleButton: UIButton!
     @IBOutlet weak var canvasView: UIView!
     
     var shapeType = ShapeType.None
@@ -38,6 +40,10 @@ class CanvasViewController: UIViewController {
                 let tapPoint = tapGR.location(in: self.canvasView)
                 let shapeView = SquareView(origin: tapPoint)
                 self.canvasView.addSubview(shapeView)
+            } else if (self.shapeType == ShapeType.Rectangle) {
+                let tapPoint = tapGR.location(in: self.canvasView)
+                let shapeView = RectangleView(origin: tapPoint)
+                self.canvasView.addSubview(shapeView)
             }
         }
     }
@@ -49,6 +55,19 @@ class CanvasViewController: UIViewController {
         } else {
             self.shapeType = ShapeType.Square
             self.squareButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
+        }
+    }
+    
+    
+    @IBAction func rectangleTapped(_ sender: UIButton) {
+        if(self.shapeType == ShapeType.Rectangle) {
+            self.shapeType = ShapeType.None
+            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
+        } else {
+            self.shapeType = ShapeType.Rectangle
+            self.rectangleButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            self.squareButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
         }
     }
     

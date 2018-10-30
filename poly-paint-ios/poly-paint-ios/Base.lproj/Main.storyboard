@@ -420,6 +420,20 @@
                                 <rect key="frame" x="20" y="123" width="728" height="881"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4A3-IW-Hn6">
+                                <rect key="frame" x="153" y="85" width="100" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="foZ-cL-MWZ"/>
+                                    <constraint firstAttribute="width" constant="100" id="j9s-AN-IfN"/>
+                                </constraints>
+                                <state key="normal" title="Rectangle">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="rectangleTapped:" destination="0ef-6Q-afh" eventType="touchUpInside" id="ShV-F9-glY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -428,12 +442,15 @@
                             <constraint firstItem="eGy-gY-gZG" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="59" id="NuQ-xd-n6Z"/>
                             <constraint firstItem="QgM-s3-xb4" firstAttribute="trailing" secondItem="eGy-gY-gZG" secondAttribute="trailing" constant="20" id="OOP-jc-59r"/>
                             <constraint firstItem="eGy-gY-gZG" firstAttribute="leading" secondItem="QgM-s3-xb4" secondAttribute="leading" constant="20" id="kCW-h7-a7y"/>
+                            <constraint firstItem="4A3-IW-Hn6" firstAttribute="leading" secondItem="9Qz-Ln-HK5" secondAttribute="trailing" constant="34" id="nPs-QB-zbe"/>
                             <constraint firstItem="QgM-s3-xb4" firstAttribute="bottom" secondItem="eGy-gY-gZG" secondAttribute="bottom" constant="20" id="rbN-dh-hwu"/>
+                            <constraint firstItem="4A3-IW-Hn6" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="21" id="yDa-xj-6Nh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QgM-s3-xb4"/>
                     </view>
                     <connections>
                         <outlet property="canvasView" destination="eGy-gY-gZG" id="96a-28-ZZM"/>
+                        <outlet property="rectangleButton" destination="4A3-IW-Hn6" id="RnH-Aa-zSD"/>
                         <outlet property="squareButton" destination="9Qz-Ln-HK5" id="hbE-bi-Kf1"/>
                     </connections>
                 </viewController>
