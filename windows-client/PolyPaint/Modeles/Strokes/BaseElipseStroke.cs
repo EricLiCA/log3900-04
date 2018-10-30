@@ -11,27 +11,10 @@ using System.Windows.Media;
 namespace PolyPaint.Modeles.Strokes
 {
 
-    class BaseElipseStroke : CustomStroke
+    class BaseElipseStroke : ShapeStroke
     {
-        
-
         public BaseElipseStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
-        }
-
-        public override void addDragHandles()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void deleteDragHandles()
-        {
-            
-        }
-
-        public override StrokeType getType()
-        {
-            return StrokeType.OBJECT;
         }
 
         public override bool HitTest(Point point)
@@ -41,11 +24,6 @@ namespace PolyPaint.Modeles.Strokes
             double centerX = (this.StylusPoints[0].X + this.StylusPoints[1].X) / 2;
             double centerY = (this.StylusPoints[0].Y + this.StylusPoints[1].Y) / 2;
             return Math.Pow(point.X - centerX, 2) / Math.Pow(width / 2, 2) + Math.Pow(point.Y - centerY, 2) / Math.Pow(height / 2, 2) <= 1;
-        }
-
-        public override bool isSelectable()
-        {
-            return true;
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
@@ -59,15 +37,13 @@ namespace PolyPaint.Modeles.Strokes
             StylusPoint stp = this.StylusPoints[0];
             StylusPoint sp = this.StylusPoints[1];
 
-            if (this.isEditing())
-            {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.Blue), 10);
-                selectedPen.Freeze();
-                drawingContext.DrawEllipse(null, selectedPen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
-
-
-            }
-            else if (this.isSelected())
+            //if (this.isEditing())
+            //{
+            //    Pen selectedPen = new Pen(new SolidColorBrush(Colors.Blue), 10);
+            //    selectedPen.Freeze();
+            //    drawingContext.DrawEllipse(null, selectedPen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
+            //}
+            if (this.isSelected())
             {
                 Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
                 selectedPen.Freeze();
@@ -75,7 +51,11 @@ namespace PolyPaint.Modeles.Strokes
             }
 
             drawingContext.DrawEllipse(fillBrush, outlinePen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
-            this.addDragHandles();
+
+            if (this.isEditing())
+            {
+                this.addDragHandles();
+            }
         }
     }
 }
