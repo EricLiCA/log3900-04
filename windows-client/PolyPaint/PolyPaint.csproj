@@ -191,6 +191,7 @@
     <Compile Include="Modeles\Image.cs" />
     <Compile Include="Modeles\Messaging.cs" />
     <Compile Include="Modeles\Strokes\CustomStrokeCollection.cs" />
+    <Compile Include="Modeles\Strokes\DragHandle.cs" />
     <Compile Include="Modeles\Tools\BasicCanvasTool.cs" />
     <Compile Include="Modeles\Tools\ObjectEraser.cs" />
     <Compile Include="Modeles\Tools\SegmentEraser.cs" />
