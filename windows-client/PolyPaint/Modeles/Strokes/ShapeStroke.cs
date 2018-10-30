@@ -22,6 +22,9 @@ namespace PolyPaint.Modeles.Strokes
 
         public override void addDragHandles()
         {
+            if (!this.strokes.has(this.Id.ToString())) return;
+
+            int index = this.strokes.IndexOf(this.strokes.get(Id.ToString())) + 1;
             if (TOP_LEFT == null)
             {
                 var points = new StylusPointCollection();

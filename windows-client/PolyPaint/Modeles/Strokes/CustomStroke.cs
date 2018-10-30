@@ -97,13 +97,14 @@ namespace PolyPaint.Modeles
 
         private void Refresh()
         {
+            int index = -1;
             if (strokes.has(this.Id.ToString()))
             {
-                Console.WriteLine("isIn");
                 strokes.get(this.Id.ToString()).deleteDragHandles();
+                index = strokes.IndexOf(strokes.get(this.Id.ToString()));
                 strokes.Remove(strokes.get(this.Id.ToString()));
             }
-            strokes.Add(this.Clone());
+            strokes.Insert(index, this.Clone());
         }
     }
 
