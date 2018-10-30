@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PolyPaint.Modeles.Strokes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,66 +46,57 @@ namespace PolyPaint.Modeles
             return Editing;
         }
 
-        public void Select(StrokeCollection strokes)
+        public void Select(CustomStrokeCollection strokes)
         {
             if (!this.Locked && isSelectable())
             {
                 this.Selected = true;
-                if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
-                    strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
-                strokes.Add(this.Clone());
+                this.Refresh(strokes);
             }
         }
 
-        public void Unselect(StrokeCollection strokes)
+        public void Unselect(CustomStrokeCollection strokes)
         {
             this.Selected = false;
             this.Editing = false;
-            if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
-                strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
-            strokes.Add(this.Clone());
+            this.Refresh(strokes);
         }
 
-        internal CustomStroke startEditing(StrokeCollection strokes)
+        public CustomStroke startEditing(CustomStrokeCollection strokes)
         {
-            CustomStroke clone = null;
-            if (this.Selected)
-            {
-                this.Editing = true;
-                if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
-                    strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
+            if (!this.Selected) return null;
 
-                clone = (CustomStroke)this.Clone();
-                strokes.Add(this.Clone());
-            }
-            return clone;
+            this.Editing = true;
+            this.Refresh(strokes);
+            return strokes.get(this.Id.ToString());
         }
 
-        internal void stopEditing(StrokeCollection strokes)
+        public void stopEditing(CustomStrokeCollection strokes)
         {
             this.Editing = false;
-            if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
-                strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
-            strokes.Add(this.Clone());
+            this.Refresh(strokes);
         }
 
-        public void Lock(StrokeCollection strokes)
+        public void Lock(CustomStrokeCollection strokes)
         {
-            if (this.isSelectable())
-            {
-                this.Locked = true;
-                this.Editing = false;
-                if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
-                    strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
-                strokes.Add(this.Clone());
-            }
+            if (!this.isSelectable()) return;
+
+            this.Locked = true;
+            this.Editing = false;
+            this.Refresh(strokes);
+
         }
 
-        public void Unlock(StrokeCollection strokes)
+        public void Unlock(CustomStrokeCollection strokes)
         {
             this.Locked = false;
-            if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
-                strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
+            this.Refresh(strokes);
+        }
+
+        private void Refresh(CustomStrokeCollection strokes)
+        {
+            if (strokes.has(this.Id.ToString()))
+                strokes.Remove(strokes.get(this.Id.ToString()));
             strokes.Add(this.Clone());
         }
     }

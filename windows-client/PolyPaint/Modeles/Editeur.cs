@@ -1,4 +1,5 @@
 ﻿using PolyPaint.Modeles.Outils;
+using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,8 @@ namespace PolyPaint.Modeles
     class Editeur : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public StrokeCollection traits = new StrokeCollection();
-        private StrokeCollection traitsRetires = new StrokeCollection();
+        public CustomStrokeCollection traits = new CustomStrokeCollection();
+        private CustomStrokeCollection traitsRetires = new CustomStrokeCollection();
 
         private Tool Lasso = new Lasso();
         private Tool Pencil = new Pencil();
@@ -44,9 +45,8 @@ namespace PolyPaint.Modeles
             get { return editingStroke; }
             set
             {
-                if (this.editingStroke != null)
-                    if (this.traits.Any(stroke => ((CustomStroke)stroke).Id.ToString() == this.editingStroke))
-                        ((CustomStroke)this.traits.First(stroke => ((CustomStroke)stroke).Id.ToString() == this.editingStroke)).stopEditing(this.traits);
+                if (this.editingStroke != null && this.traits.has(this.editingStroke))
+                    this.traits.get(this.editingStroke).stopEditing(this.traits);
 
                 this.editingStroke = value;
             }
