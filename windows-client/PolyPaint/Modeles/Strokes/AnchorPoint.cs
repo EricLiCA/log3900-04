@@ -13,6 +13,19 @@ namespace PolyPaint.Modeles.Strokes
     class AnchorPoint : CustomStroke
     {
         public readonly string ParentId;
+        private bool hover = false;
+        public bool Hover
+        {
+            get => hover;
+            set
+            {
+                if (this.hover != value)
+                {
+                    this.hover = value;
+                    this.Refresh();
+                }
+            }
+        }
 
         public AnchorPoint(StylusPointCollection pts, CustomStrokeCollection strokes, string parentId) : base(pts, strokes)
         {
@@ -41,7 +54,7 @@ namespace PolyPaint.Modeles.Strokes
 
         public override bool HitTest(Point point)
         {
-            return 6 > Math.Sqrt(Math.Pow(point.X - this.StylusPoints[0].X, 2) + Math.Pow(point.Y - this.StylusPoints[0].Y, 2));
+            return 10 > Math.Sqrt(Math.Pow(point.X - this.StylusPoints[0].X, 2) + Math.Pow(point.Y - this.StylusPoints[0].Y, 2));
         }
 
         public override bool isSelectable()
@@ -57,7 +70,9 @@ namespace PolyPaint.Modeles.Strokes
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
             Pen pen = new Pen(new SolidColorBrush(Colors.Gray), 2);
-            drawingContext.DrawEllipse(null, pen, this.StylusPoints[0].ToPoint(), 6, 6);
+            Brush fill = Hover ? new SolidColorBrush(Colors.Red) : null;
+
+            drawingContext.DrawEllipse(fill, pen, this.StylusPoints[0].ToPoint(), 6, 6);
 
         }
     }

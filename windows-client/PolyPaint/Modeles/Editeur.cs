@@ -178,6 +178,13 @@ namespace PolyPaint.Modeles
         internal void MouseMove(Point point)
         {
             this.outilSelectionne.MouseMove(point, traits, (Color)ColorConverter.ConvertFromString(couleurSelectionnee));
+            this.traits.ToList().ForEach(stroke =>
+            {
+                if (((CustomStroke)stroke).getType() == StrokeType.ANCHOR_POINT)
+                {
+                    ((AnchorPoint)stroke).Hover = ((CustomStroke)stroke).HitTest(point);
+                }
+            });
         }
 
         internal void MouseDown(Point point)

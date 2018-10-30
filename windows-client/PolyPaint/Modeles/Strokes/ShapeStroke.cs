@@ -106,28 +106,28 @@ namespace PolyPaint.Modeles.Strokes
             if (TOP == null)
             {
                 var points = new StylusPointCollection();
-                points.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y));
+                points.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y - 2));
                 TOP = new AnchorPoint(points, this.strokes, this.Id.ToString());
                 this.strokes.Insert(index, TOP);
             }
             if (BOTTOM == null)
             {
                 var points = new StylusPointCollection();
-                points.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height));
+                points.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height + 2));
                 BOTTOM = new AnchorPoint(points, this.strokes, this.Id.ToString());
                 this.strokes.Insert(index, BOTTOM);
             }
             if (LEFT == null)
             {
                 var points = new StylusPointCollection();
-                points.Add(new StylusPoint(topLeft.X, topLeft.Y + height / 2));
+                points.Add(new StylusPoint(topLeft.X - 2, topLeft.Y + height / 2));
                 LEFT = new AnchorPoint(points, this.strokes, this.Id.ToString());
                 this.strokes.Insert(index, LEFT);
             }
             if (RIGHT == null)
             {
                 var points = new StylusPointCollection();
-                points.Add(new StylusPoint(topLeft.X + width, topLeft.Y + height / 2));
+                points.Add(new StylusPoint(topLeft.X + width + 2, topLeft.Y + height / 2));
                 RIGHT = new AnchorPoint(points, this.strokes, this.Id.ToString());
                 this.strokes.Insert(index, RIGHT);
             }
