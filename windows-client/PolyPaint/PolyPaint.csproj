@@ -180,6 +180,7 @@
     <Compile Include="Modeles\ChatUser.cs" />
     <Compile Include="Modeles\Strokes\BaseElipseStroke.cs" />
     <Compile Include="Modeles\Strokes\BaseRectangleStroke.cs" />
+    <Compile Include="Modeles\Strokes\AnchorPoint.cs" />
     <Compile Include="Modeles\Strokes\ClassStroke.cs" />
     <Compile Include="Modeles\Strokes\CustomStroke.cs" />
     <Compile Include="Modeles\S3Communication.cs" />
@@ -192,9 +193,11 @@
     <Compile Include="Modeles\Messaging.cs" />
     <Compile Include="Modeles\Strokes\CustomStrokeCollection.cs" />
     <Compile Include="Modeles\Strokes\DragHandle.cs" />
+    <Compile Include="Modeles\Strokes\PersonStroke.cs" />
     <Compile Include="Modeles\Strokes\ShapeStroke.cs" />
     <Compile Include="Modeles\Tools\BasicCanvasTool.cs" />
     <Compile Include="Modeles\Tools\ObjectEraser.cs" />
+    <Compile Include="Modeles\Tools\Person.cs" />
     <Compile Include="Modeles\Tools\SegmentEraser.cs" />
     <Compile Include="Modeles\Tools\Lasso.cs" />
     <Compile Include="Modeles\Tools\Pencil.cs" />
@@ -322,6 +325,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\leave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\person.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="palette.ico" />
