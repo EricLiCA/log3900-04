@@ -23,6 +23,7 @@ namespace PolyPaint.Modeles
         public CustomStrokeCollection traits = new CustomStrokeCollection();
         private CustomStrokeCollection traitsRetires = new CustomStrokeCollection();
 
+        private Tool EditTool = new Edit();
         private Tool Lasso = new Lasso();
         private Tool Pencil = new Pencil();
         private Tool SegmentEraser = new SegmentEraser();
@@ -110,9 +111,10 @@ namespace PolyPaint.Modeles
 
         public Editeur()
         {
-            this.outilSelectionne = this.Lasso;
+            this.outilSelectionne = this.EditTool;
 
             this.Tools = new List<Tool>();
+            this.Tools.Add(EditTool);
             this.Tools.Add(Lasso);
             //this.Tools.Add(Pencil);
             //this.Tools.Add(SegmentEraser);

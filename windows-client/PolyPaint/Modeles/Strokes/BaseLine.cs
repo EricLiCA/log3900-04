@@ -8,8 +8,8 @@ namespace PolyPaint.Modeles.Strokes
 {
     class BaseLine : CustomStroke
     {
-        DragHandle FIRST_POINT;
-        DragHandle SECOND_POINT;
+        Guid FIRST_POINT = Guid.NewGuid();
+        Guid SECOND_POINT = Guid.NewGuid();
 
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
@@ -18,38 +18,25 @@ namespace PolyPaint.Modeles.Strokes
 
         public override void addDragHandles()
         {
-            if (FIRST_POINT == null)
-            {
-                var points = new StylusPointCollection();
-                points.Add(new StylusPoint(this.StylusPoints[0].X, this.StylusPoints[0].Y));
-                FIRST_POINT = new DragHandle(points, this.strokes, this.Id.ToString());
-                this.strokes.Add(FIRST_POINT);
-            }
-            if (SECOND_POINT == null)
-            {
-                var points = new StylusPointCollection();
-                points.Add(new StylusPoint( this.StylusPoints[1].X, this.StylusPoints[1].Y));
-                SECOND_POINT = new DragHandle(points, this.strokes, this.Id.ToString());
-                this.strokes.Add(SECOND_POINT);
-            }
+            if (!this.strokes.has(this.Id.ToString())) return;
+            this.deleteDragHandles();
+
+            var pointsFirst = new StylusPointCollection();
+            pointsFirst.Add(new StylusPoint(this.StylusPoints[0].X, this.StylusPoints[0].Y));
+            this.strokes.Add(new DragHandle(pointsFirst, this.strokes, FIRST_POINT, this.Id.ToString()));
+            
+            var pointsSecond = new StylusPointCollection();
+            pointsSecond.Add(new StylusPoint( this.StylusPoints[1].X, this.StylusPoints[1].Y));
+            this.strokes.Add(new DragHandle(pointsSecond, this.strokes, SECOND_POINT, this.Id.ToString()));
+            
         }
 
         public override void deleteDragHandles()
         {
-            if (this.FIRST_POINT != null)
-            {
-                if (this.strokes.has(FIRST_POINT.Id.ToString()))
-                    this.strokes.Remove(this.strokes.get(FIRST_POINT.Id.ToString()));
-
-                this.FIRST_POINT = null;
-            }
-            if (this.SECOND_POINT != null)
-            {
-                if (this.strokes.has(SECOND_POINT.Id.ToString()))
-                    this.strokes.Remove(this.strokes.get(SECOND_POINT.Id.ToString()));
-
-                this.SECOND_POINT = null;
-            }
+            if (this.strokes.has(FIRST_POINT.ToString()))
+                this.strokes.Remove(this.strokes.get(FIRST_POINT.ToString()));
+            if (this.strokes.has(SECOND_POINT.ToString()))
+                this.strokes.Remove(this.strokes.get(SECOND_POINT.ToString()));
         }
 
         public override StrokeType getType()
@@ -58,6 +45,11 @@ namespace PolyPaint.Modeles.Strokes
         }
 
         public override void hideAnchorPoints()
+        {
+            // A Line does not have anchor points
+        }
+
+        public override void showAnchorPoints()
         {
             // A Line does not have anchor points
         }
@@ -75,9 +67,24 @@ namespace PolyPaint.Modeles.Strokes
             return true;
         }
 
-        public override void showAnchorPoints()
+        public override void Move(StylusPointCollection newPoints)
         {
-            // A Line does not have anchor points
+            this.StylusPoints = newPoints;
+            this.Refresh();
+        }
+
+        public override void handleMoved(Guid id, Point point)
+        {
+            if (this.FIRST_POINT.ToString() == id.ToString())
+            {
+                this.StylusPoints[0] = new StylusPoint(point.X, point.Y);
+                this.Refresh();
+            }
+            else if (this.SECOND_POINT.ToString() == id.ToString())
+            {
+                this.StylusPoints[1] = new StylusPoint(point.X, point.Y);
+                this.Refresh();
+            }
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

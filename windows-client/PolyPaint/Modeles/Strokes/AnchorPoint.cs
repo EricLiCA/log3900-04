@@ -75,5 +75,15 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.DrawEllipse(fill, pen, this.StylusPoints[0].ToPoint(), 6, 6);
 
         }
+
+        public override void Move(StylusPointCollection newPoints)
+        {
+            // Connot move Drag Handle
+        }
+
+        public override void handleMoved(Guid id, Point point)
+        {
+            // A drag handle can't have drag handles
+        }
     }
 }
