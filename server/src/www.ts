@@ -105,8 +105,6 @@ async function startServices(): Promise<Map<string, boolean>> {
             .end();
     }
 
-
-
     if (process.env.PROD) {
         post(SLACK_API)
             .send({ text: 'Starting server application' })

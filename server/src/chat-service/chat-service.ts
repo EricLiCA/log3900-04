@@ -1,8 +1,6 @@
 import { ConnectedUsersService } from '../connected-users-service.ts/connected-users-service';
 import { User } from '../connected-users-service.ts/user';
 import { SocketServer } from '../socket-server';
-import { User } from '../connected-users-service.ts/user';
-import { ConnectedUsersService } from '../connected-users-service.ts/connected-users-service';
 
 export class ChatService {
     private static chatService: ChatService;

@@ -46,16 +46,20 @@ export class ImageLikesRoute {
 
     public async delete(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('DELETE FROM ImageLikes WHERE "ImageId" = $1 and "UserId" = $2 RETURNING *', [req.params.imageId, req.params.userId]).then((query) => {
-            if (query.rowCount > 0) {
-                const result = query.rows[0];
-                res.send({
-                    imageId: result.ImageId,
-                    userId: result.UserId,
-                });
-            }
-            res.sendStatus(404);
-        })
+        db.query(
+            'DELETE FROM ImageLikes WHERE "ImageId" = $1 and "UserId" = $2 RETURNING *',
+            [req.params.imageId, req.params.userId],
+        )
+            .then((query) => {
+                if (query.rowCount > 0) {
+                    const result = query.rows[0];
+                    res.send({
+                        imageId: result.ImageId,
+                        userId: result.UserId,
+                    });
+                }
+                res.sendStatus(404);
+            })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
             });

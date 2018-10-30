@@ -1,5 +1,5 @@
 import * as express from 'express';
-export interface DAO {
+export interface IDAO {
 
     getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void>;
     get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void>;

@@ -1,11 +1,9 @@
 import * as express from 'express';
 import { ImagesModel } from '../models/Images.model';
 import { PostgresDatabase } from '../postgres-database';
-import { DAO } from './dao';
+import { IDAO } from './dao';
 
-const RANDOM_IMAGE: string = 'https://picsum.photos/300/400/?random';
-
-export class ImagesRoute implements DAO {
+export class ImagesRoute implements IDAO {
 
     public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         if (req.query.ownerId !== undefined) {
@@ -66,9 +64,15 @@ export class ImagesRoute implements DAO {
             });
     }
 
-    public async getPublicExceptMine(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+    public async getPublicExceptMine(
+        req: express.Request, res: express.Response, next: express.NextFunction,
+        ): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM Images where ("ProtectionLevel" = $1 or "ProtectionLevel" = $2) and "OwnerId" != $3', ['public', 'protected', req.params.id]).then((query) => {
+        db.query(
+            'SELECT * FROM Images where ("ProtectionLevel" = $1 or "ProtectionLevel" = $2) and "OwnerId" != $3',
+             ['public', 'protected', req.params.id],
+             )
+             .then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows.map((row) => {
                     return {

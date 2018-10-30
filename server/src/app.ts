@@ -69,55 +69,55 @@ export class Application {
         const chatRooms: ChatRooms = new ChatRooms();
 
         // hello world path
-        router.get('/status', serverStatus.status.bind(serverStatus.status));
+        router.get('/status', serverStatus.status);
 
         // Users
-        router.get('/users', usersRoute.getAll.bind(usersRoute.getAll));
-        router.get('/users/:id', usersRoute.get.bind(usersRoute.get));
-        router.post('/users', usersRoute.post.bind(usersRoute.post));
-        router.put('/users/:id', usersRoute.update.bind(usersRoute.update));
-        router.delete('/users/:id', usersRoute.delete.bind(usersRoute.delete));
+        router.get('/users', usersRoute.getAll);
+        router.get('/users/:id', usersRoute.get);
+        router.post('/users', usersRoute.post);
+        router.put('/users/:id', usersRoute.update);
+        router.delete('/users/:id', usersRoute.delete);
 
         // Sessions
-        router.get('/sessions', sessionsRoute.getAll.bind(sessionsRoute.getAll));
-        router.post('/sessions', sessionsRoute.login.bind(sessionsRoute.login));
-        router.delete('/sessions/:id', sessionsRoute.logout.bind(sessionsRoute.logout));
+        router.get('/sessions', sessionsRoute.getAll);
+        router.post('/sessions', sessionsRoute.login);
+        router.delete('/sessions/:id', sessionsRoute.logout);
 
         // Friendships
-        router.get('/friendships/:id', friendshipsRoute.get.bind(friendshipsRoute.get));
-        router.get('/usersExceptFriends/:id', friendshipsRoute.getUsersExceptFriends.bind(friendshipsRoute.getUsersExceptFriends));
-        router.post('/friendships/:id', friendshipsRoute.post.bind(friendshipsRoute.post));
-        router.delete('/friendships/:id', friendshipsRoute.delete.bind(friendshipsRoute.delete));
+        router.get('/friendships/:id', friendshipsRoute.get);
+        router.get('/usersExceptFriends/:id', friendshipsRoute.getUsersExceptFriends);
+        router.post('/friendships/:id', friendshipsRoute.post);
+        router.delete('/friendships/:id', friendshipsRoute.delete);
 
         // PendingFriendRequest
-        router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
-        router.get('/pendingFriendRequest/:id', pendingFriendRequestRoute.get.bind(pendingFriendRequestRoute.get));
-        router.get('/pendingFriendRequestByRequesterId/:id', pendingFriendRequestRoute.getByRequesterId.bind(pendingFriendRequestRoute.getByRequesterId));
-        router.delete('/pendingFriendRequest/:id', pendingFriendRequestRoute.delete.bind(pendingFriendRequestRoute.delete));
+        router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll);
+        router.get('/pendingFriendRequest/:id', pendingFriendRequestRoute.get);
+        router.get('/pendingFriendRequestByRequesterId/:id', pendingFriendRequestRoute.getByRequesterId);
+        router.delete('/pendingFriendRequest/:id', pendingFriendRequestRoute.delete);
 
         // Images
-        router.get('/images', imagesRoute.getAll.bind(imagesRoute.getAll));
-        router.get('/images/:id', imagesRoute.get.bind(imagesRoute.get));
-        router.get('/imagesByOwnerId/:id', imagesRoute.getByOwnerId.bind(imagesRoute.getByOwnerId));
-        router.get('/imagesPublicExceptMine/:id', imagesRoute.getPublicExceptMine.bind(imagesRoute.getPublicExceptMine));
-        router.post('/images', imagesRoute.post.bind(imagesRoute.post));
-        router.put('/images/:id', imagesRoute.update.bind(imagesRoute.update));
-        router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
+        router.get('/images', imagesRoute.getAll);
+        router.get('/images/:id', imagesRoute.get);
+        router.get('/imagesByOwnerId/:id', imagesRoute.getByOwnerId);
+        router.get('/imagesPublicExceptMine/:id', imagesRoute.getPublicExceptMine);
+        router.post('/images', imagesRoute.post);
+        router.put('/images/:id', imagesRoute.update);
+        router.delete('/images/:id', imagesRoute.delete);
 
         // ImageLikes
-        router.get('/imageLikes/:imageId', imageLikes.get.bind(imageLikes.get));
-        router.post('/imageLikes', imageLikes.post.bind(imageLikes.post));
-        router.delete('/imageLikes/:imageId/:userId', imageLikes.delete.bind(imageLikes.delete));
+        router.get('/imageLikes/:imageId', imageLikes.get);
+        router.post('/imageLikes', imageLikes.post);
+        router.delete('/imageLikes/:imageId/:userId', imageLikes.delete);
 
         // ImageComments
-        router.get('/imageComments/:imageId', imageComments.get.bind(imageComments.get));
-        router.post('/imageComments', imageComments.post.bind(imageComments.post));
-        router.delete('/imageComments/:imageId/:userId', imageComments.delete.bind(imageComments.delete));
+        router.get('/imageComments/:imageId', imageComments.get);
+        router.post('/imageComments', imageComments.post);
+        router.delete('/imageComments/:imageId/:userId', imageComments.delete);
 
         // Chat Rooms
-        router.get('/chatRooms', chatRooms.get.bind(chatRooms.get));
-        router.get('/chatRooms/:room', chatRooms.getUsers.bind(chatRooms.getUsers));
-        router.get('/connectedUsers', chatRooms.all.bind(chatRooms.all));
+        router.get('/chatRooms', chatRooms.get);
+        router.get('/chatRooms/:room', chatRooms.getUsers);
+        router.get('/connectedUsers', chatRooms.all);
 
         // use router middleware
         this.app.use('/v2', router);

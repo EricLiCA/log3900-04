@@ -22,7 +22,13 @@ export class PendingFriendRequestRoute {
 
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM Users INNER JOIN (SELECT * FROM pending_friend_requests WHERE "ReceiverId" = $1) as f ON "Id" = f."RequesterId"', [req.params.id]).then((query) => {
+        db.query(
+            `SELECT *
+            FROM Users
+            INNER JOIN (SELECT * FROM pending_friend_requests WHERE "ReceiverId" = $1) as f
+            ON "Id" = f."RequesterId"`,
+            [req.params.id],
+        ).then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows.map((row) => {
                     return {
@@ -41,7 +47,9 @@ export class PendingFriendRequestRoute {
             });
     }
 
-    public async getByRequesterId(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+    public async getByRequesterId(
+        req: express.Request, res: express.Response, next: express.NextFunction,
+    ): Promise<void> {
         const db = await PostgresDatabase.getInstance();
         db.query('SELECT * FROM pending_friend_requests WHERE "RequesterId" = $1', [req.params.id]).then((query) => {
             if (query.rowCount > 0) {
@@ -61,7 +69,9 @@ export class PendingFriendRequestRoute {
 
     public async delete(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('DELETE FROM pending_friend_requests WHERE "RequesterId" = $1 and "ReceiverId" = $2 RETURNING *', [req.body.friendId, req.params.id]).then((query) => {
+        db.query('DELETE FROM pending_friend_requests WHERE "RequesterId" = $1 and "ReceiverId" = $2 RETURNING *',
+            [req.body.friendId, req.params.id],
+        ).then((query) => {
             if (query.rowCount > 0) {
                 const result = query.rows[0];
                 res.send({
