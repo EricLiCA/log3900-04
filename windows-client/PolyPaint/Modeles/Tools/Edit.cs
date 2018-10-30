@@ -60,9 +60,9 @@ namespace PolyPaint.Modeles.Tools
                 return;
             }
 
-            if (clicked.Count > 0)
+            if (clickedSelected.Count > 0)
             {
-                this.editing = (CustomStroke)clicked.Last();
+                this.editing = (CustomStroke)clickedSelected.Last();
                 this.initialCursorPosition = point;
                 this.initialObjectPoints = this.editing.StylusPoints;
             }

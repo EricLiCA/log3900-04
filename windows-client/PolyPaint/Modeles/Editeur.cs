@@ -82,7 +82,7 @@ namespace PolyPaint.Modeles
         }
 
         // Couleur des traits tracés par le crayon.
-        private string couleurSelectionnee = "Black";
+        private string couleurSelectionnee = "White";
         public string CouleurSelectionnee
         {
             get { return couleurSelectionnee; }
