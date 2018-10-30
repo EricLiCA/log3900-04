@@ -13,6 +13,7 @@ namespace PolyPaint.Modeles
     {
         private bool Selected = false;
         private bool Locked = false;
+        private Guid Id = Guid.NewGuid();
 
         public CustomStroke(StylusPointCollection pts) : base(pts)
         {
@@ -37,14 +38,19 @@ namespace PolyPaint.Modeles
         {
             if (!this.Locked && isSelectable())
             {
-                this.DrawingAttributes.Color = Colors.Azure;
+                this.Selected = true;
+                if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
+                    strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
+                strokes.Add(this.Clone());
             }
         }
 
         public void Unselect(StrokeCollection strokes)
         {
             this.Selected = false;
-            this.DrawingAttributes.Color = Colors.Green;
+            if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
+                strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
+            strokes.Add(this.Clone());
         }
 
         public void Lock(StrokeCollection strokes)
@@ -52,16 +58,18 @@ namespace PolyPaint.Modeles
             if (this.isSelectable())
             {
                 this.Locked = true;
-                strokes.Remove(this);
-                strokes.Add(this);
+                if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
+                    strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
+                strokes.Add(this.Clone());
             }
         }
 
         public void Unlock(StrokeCollection strokes)
         {
             this.Locked = false;
-            strokes.Remove(this);
-            strokes.Add(this);
+            if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
+                strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
+            strokes.Add(this.Clone());
         }
     }
 
