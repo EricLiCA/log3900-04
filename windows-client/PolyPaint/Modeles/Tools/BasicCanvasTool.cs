@@ -1,4 +1,5 @@
 ﻿using PolyPaint.Modeles.Outils;
+using PolyPaint.Modeles.Strokes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,17 @@ namespace PolyPaint.Modeles.Tools
 {
     abstract class BasicCanvasTool : Tool
     {
-        public override void MouseMove(Point point, StrokeCollection strokes, Color selectedColor)
+        public override void MouseMove(Point point, CustomStrokeCollection strokes, Color selectedColor)
         {
             // Is a base canvas fonctionnality and is treated by the canvas
         }
 
-        public override void MouseDown(Point point, StrokeCollection strokes)
+        public override void MouseDown(Point point, CustomStrokeCollection strokes)
         {
             // Is a base canvas fonctionnality and is treated by the canvas
         }
 
-        public override void MouseUp(Point point, StrokeCollection strokes)
+        public override void MouseUp(Point point, CustomStrokeCollection strokes)
         {
             // Is a base canvas fonctionnality and is treated by the canvas
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,17 +13,18 @@ namespace PolyPaint.Modeles.Strokes
 {
     class BaseRectangleStroke : CustomStroke
     {
-        public BaseRectangleStroke(StylusPointCollection pts) : base(pts)
+        DragHandle TOP_LEFT;
+        public BaseRectangleStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
 
         }
 
-        public override void addDragHandles(StrokeCollection strokes)
+        public override void addDragHandles()
         {
             throw new NotImplementedException();
         }
 
-        public override void deleteDragHandles(StrokeCollection strokes)
+        public override void deleteDragHandles()
         {
             throw new NotImplementedException();
         }

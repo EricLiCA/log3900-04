@@ -46,7 +46,10 @@ namespace PolyPaint.Modeles
             set
             {
                 if (this.editingStroke != null && this.traits.has(this.editingStroke))
-                    this.traits.get(this.editingStroke).stopEditing(this.traits);
+                {
+                    Console.WriteLine("stopedition");
+                    this.traits.get(this.editingStroke).stopEditing();
+                }
 
                 this.editingStroke = value;
             }
@@ -131,11 +134,14 @@ namespace PolyPaint.Modeles
             strokes.ToList().ForEach(stroke => {
                 if (((CustomStroke)stroke).isSelected())
                 {
-                    ((CustomStroke)stroke).Unselect(this.traits);
+                    if (((CustomStroke)stroke).isEditing())
+                        this.EditingStroke = null;
+
+                    ((CustomStroke)stroke).Unselect();
                 }
                 else
                 {
-                    ((CustomStroke)stroke).Select(this.traits);
+                    ((CustomStroke)stroke).Select();
                 }
             });
         }
@@ -150,7 +156,7 @@ namespace PolyPaint.Modeles
                 this.EditingStroke = null;
             } else
             {
-                stroke.startEditing(this.traits);
+                stroke.startEditing();
                 this.EditingStroke = stroke.Id.ToString();
             }
         }

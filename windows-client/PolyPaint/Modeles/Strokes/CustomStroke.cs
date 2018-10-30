@@ -17,16 +17,18 @@ namespace PolyPaint.Modeles
         private bool Locked = false;
         public readonly Guid Id = Guid.NewGuid();
         private bool Editing = false;
+        protected CustomStrokeCollection strokes;
 
-        public CustomStroke(StylusPointCollection pts) : base(pts)
+        public CustomStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts)
         {
+            this.strokes = strokes;
         }
 
         public abstract StrokeType getType();
         public abstract new bool HitTest(Point point);
         public abstract bool isSelectable();
-        public abstract void addDragHandles(StrokeCollection strokes);
-        public abstract void deleteDragHandles(StrokeCollection strokes);
+        public abstract void addDragHandles();
+        public abstract void deleteDragHandles();
 
         public bool isLocked()
         {
@@ -46,63 +48,67 @@ namespace PolyPaint.Modeles
             return Editing;
         }
 
-        public void Select(CustomStrokeCollection strokes)
+        public void Select()
         {
             if (!this.Locked && isSelectable())
             {
                 this.Selected = true;
-                this.Refresh(strokes);
+                this.Refresh();
             }
         }
 
-        public void Unselect(CustomStrokeCollection strokes)
+        public void Unselect()
         {
             this.Selected = false;
             this.Editing = false;
-            this.Refresh(strokes);
+            this.Refresh();
         }
 
-        public CustomStroke startEditing(CustomStrokeCollection strokes)
+        public CustomStroke startEditing()
         {
             if (!this.Selected) return null;
 
             this.Editing = true;
-            this.Refresh(strokes);
+            this.Refresh();
             return strokes.get(this.Id.ToString());
         }
 
-        public void stopEditing(CustomStrokeCollection strokes)
+        public void stopEditing()
         {
             this.Editing = false;
-            this.Refresh(strokes);
+            this.Refresh();
         }
 
-        public void Lock(CustomStrokeCollection strokes)
+        public void Lock()
         {
             if (!this.isSelectable()) return;
 
             this.Locked = true;
             this.Editing = false;
-            this.Refresh(strokes);
+            this.Refresh();
 
         }
 
-        public void Unlock(CustomStrokeCollection strokes)
+        public void Unlock()
         {
             this.Locked = false;
-            this.Refresh(strokes);
+            this.Refresh();
         }
 
-        private void Refresh(CustomStrokeCollection strokes)
+        private void Refresh()
         {
             if (strokes.has(this.Id.ToString()))
+            {
+                Console.WriteLine("isIn");
+                strokes.get(this.Id.ToString()).deleteDragHandles();
                 strokes.Remove(strokes.get(this.Id.ToString()));
+            }
             strokes.Add(this.Clone());
         }
     }
 
     public enum StrokeType
     {
-        OBJECT, RESIZE_GUIDE, ANCHOR_POINT
+        OBJECT, DRAG_HANDLE, ANCHOR_POINT
     }
 }

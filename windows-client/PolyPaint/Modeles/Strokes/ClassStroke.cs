@@ -15,7 +15,7 @@ namespace PolyPaint.Modeles.Strokes
     {
         private List<string> textContent;
 
-        public ClassStroke(StylusPointCollection pts, List<string> text) : base(pts)
+        public ClassStroke(StylusPointCollection pts, CustomStrokeCollection strokes, List<string> text) : base(pts, strokes)
         {
             this.textContent = text;
         }

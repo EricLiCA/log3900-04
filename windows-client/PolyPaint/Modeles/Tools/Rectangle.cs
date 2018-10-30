@@ -32,13 +32,13 @@ namespace PolyPaint.Modeles.Tools
             return "Rectangle";
         }
 
-        public override void MouseDown(Point point, StrokeCollection strokes)
+        public override void MouseDown(Point point, CustomStrokeCollection strokes)
         {
             IsDrawing = true;
             MouseLeftDownPoint = point;
         }
 
-        public override void MouseMove(Point point, StrokeCollection strokes, Color selectedColor)
+        public override void MouseMove(Point point, CustomStrokeCollection strokes, Color selectedColor)
         {
             if (!IsDrawing) return;
             
@@ -49,12 +49,12 @@ namespace PolyPaint.Modeles.Tools
             if (ActiveStroke != null)
                 strokes.Remove(ActiveStroke);
 
-            ActiveStroke = new BaseRectangleStroke(pts);
+            ActiveStroke = new BaseRectangleStroke(pts, strokes);
             ActiveStroke.DrawingAttributes.Color = selectedColor;
             strokes.Add(ActiveStroke);
         }
 
-        public override void MouseUp(Point point, StrokeCollection strokes)
+        public override void MouseUp(Point point, CustomStrokeCollection strokes)
         {
             if (ActiveStroke != null)
             {

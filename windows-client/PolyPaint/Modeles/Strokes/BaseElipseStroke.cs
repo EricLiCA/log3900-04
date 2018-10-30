@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,19 +13,20 @@ namespace PolyPaint.Modeles.Strokes
 
     class BaseElipseStroke : CustomStroke
     {
-        public BaseElipseStroke(StylusPointCollection pts) : base(pts)
+        
+
+        public BaseElipseStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
-            this.StylusPoints = pts;
         }
 
-        public override void addDragHandles(StrokeCollection strokes)
+        public override void addDragHandles()
         {
             throw new NotImplementedException();
         }
 
-        public override void deleteDragHandles(StrokeCollection strokes)
+        public override void deleteDragHandles()
         {
-            throw new NotImplementedException();
+            
         }
 
         public override StrokeType getType()
@@ -63,6 +64,8 @@ namespace PolyPaint.Modeles.Strokes
                 Pen selectedPen = new Pen(new SolidColorBrush(Colors.Blue), 10);
                 selectedPen.Freeze();
                 drawingContext.DrawEllipse(null, selectedPen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
+
+
             }
             else if (this.isSelected())
             {
