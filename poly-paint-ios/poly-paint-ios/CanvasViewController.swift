@@ -8,20 +8,47 @@
 
 import UIKit
 
+enum ShapeType {
+    case Square
+    case None
+}
+
 class CanvasViewController: UIViewController {
 
+    @IBOutlet weak var squareButton: UIButton!
+    var shapeType = ShapeType.None
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(didTap(tapGR:)))
+        self.view.addGestureRecognizer(tapGR)
+        // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    @objc func didTap(tapGR: UITapGestureRecognizer) {
+        if(self.shapeType == ShapeType.Square) {
+            let tapPoint = tapGR.location(in: self.view)
+            let shapeView = SquareView(origin: tapPoint)
+            self.view.addSubview(shapeView)
+            
+        }
+    }
+    
+    @IBAction func squareTapped(_ sender: UIButton) {
+        if(self.shapeType == ShapeType.Square) {
+            self.shapeType = ShapeType.None
+            self.squareButton.backgroundColor = #colorLiteral(red: 0, green: 0.4352941176, blue: 1, alpha: 1)
+        } else {
+            self.shapeType = ShapeType.Square
+            self.squareButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

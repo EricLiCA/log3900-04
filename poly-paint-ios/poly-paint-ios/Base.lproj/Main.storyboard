@@ -392,7 +392,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505.46875" y="-905.27343749999989"/>
+            <point key="canvasLocation" x="913" y="-891"/>
         </scene>
         <!--Canvas View Controller-->
         <scene sceneID="9ZE-eI-zHS">
@@ -401,13 +401,36 @@
                     <view key="view" contentMode="scaleToFill" id="mi0-N8-UcY">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Qz-Ln-HK5">
+                                <rect key="frame" x="19" y="85" width="100" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="U3Y-Ou-WhQ"/>
+                                    <constraint firstAttribute="width" constant="100" id="zY4-YO-87K"/>
+                                </constraints>
+                                <state key="normal" title="Square">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="squareTapped:" destination="0ef-6Q-afh" eventType="touchUpInside" id="Jrn-BZ-7cv"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="9Qz-Ln-HK5" firstAttribute="leading" secondItem="QgM-s3-xb4" secondAttribute="leading" constant="19" id="3yK-9w-gwG"/>
+                            <constraint firstItem="9Qz-Ln-HK5" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="21" id="LHB-zJ-9h4"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="QgM-s3-xb4"/>
                     </view>
+                    <connections>
+                        <outlet property="squareButton" destination="9Qz-Ln-HK5" id="hbE-bi-Kf1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jGP-k9-3qL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2418" y="-912"/>
+            <point key="canvasLocation" x="2417.96875" y="-912.30468749999989"/>
         </scene>
         <!--Login Scene-->
         <scene sceneID="maM-Fp-ADF">
