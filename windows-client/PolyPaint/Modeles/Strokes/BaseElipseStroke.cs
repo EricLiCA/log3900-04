@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,6 +47,13 @@ namespace PolyPaint.Modeles.Strokes
 
             StylusPoint stp = this.StylusPoints[0];
             StylusPoint sp = this.StylusPoints[1];
+
+            if (this.isSelected())
+            {
+                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
+                selectedPen.Freeze();
+                drawingContext.DrawEllipse(null, selectedPen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
+            }
 
             drawingContext.DrawEllipse(fillBrush, outlinePen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
         }

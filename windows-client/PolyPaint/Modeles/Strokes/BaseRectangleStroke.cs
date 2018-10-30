@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -44,15 +44,14 @@ namespace PolyPaint.Modeles.Strokes
             SolidColorBrush fillBrush = new SolidColorBrush(drawingAttributes.Color);
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
 
-            drawingContext.DrawRectangle(fillBrush, outlinePen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
-
             if (this.isSelected())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
+                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
                 selectedPen.Freeze();
                 drawingContext.DrawRectangle(null, selectedPen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
-                
             }
+
+            drawingContext.DrawRectangle(fillBrush, outlinePen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
         }
     }
 }

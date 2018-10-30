@@ -39,6 +39,19 @@ namespace PolyPaint.Modeles
         }
 
         // Forme de la pointe du crayon
+        private CustomStroke editingStroke;
+        public CustomStroke EditingStroke
+        {
+            get { return editingStroke; }
+            set
+            {
+                this.editingStroke.stopEditing(this.traits);
+                this.editingStroke = value;
+                this.editingStroke.startEditing(this.traits);
+            }
+        }
+
+        // Forme de la pointe du crayon
         private string pointeSelectionnee = "ronde";
         public string PointeSelectionnee
         {
@@ -85,8 +98,8 @@ namespace PolyPaint.Modeles
 
             this.Tools = new List<Tool>();
             this.Tools.Add(Lasso);
-            this.Tools.Add(Pencil);
-            this.Tools.Add(SegmentEraser);
+            //this.Tools.Add(Pencil);
+            //this.Tools.Add(SegmentEraser);
             this.Tools.Add(ObjectEraser);
             this.Tools.Add(Rectangle);
             this.Tools.Add(Elipse);
@@ -124,6 +137,17 @@ namespace PolyPaint.Modeles
                     ((CustomStroke)stroke).Select(this.traits);
                 }
             });
+        }
+
+        internal void Edit(CustomStroke stroke)
+        {
+            if (stroke.isEditing())
+            {
+                stroke.startEditing(this.traits);
+            } else
+            {
+                stroke.stopEditing(this.traits);
+            }
         }
 
         internal void MouseMove(Point point)

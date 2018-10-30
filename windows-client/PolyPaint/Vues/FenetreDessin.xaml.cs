@@ -8,6 +8,9 @@ using System.Windows.Controls;
 using PolyPaint.Modeles.Outils;
 using System.Windows.Input;
 using System.Windows.Forms;
+using System.Linq;
+using System.Windows.Ink;
+using PolyPaint.Modeles;
 
 namespace PolyPaint
 {
@@ -83,12 +86,12 @@ namespace PolyPaint
             ((VueModele)this.DataContext).ChoisirOutil.Execute((Tool)this.ToolSelection.SelectedItem);
         }
 
-        private void Canvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        private void Canvas_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             ((VueModele)this.DataContext).MouseUp.Execute(e.GetPosition((IInputElement)sender));
         }
 
-        private void Canvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void Canvas_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ((VueModele)this.DataContext).MouseDown.Execute(e.GetPosition((IInputElement)sender));
         }
@@ -100,8 +103,27 @@ namespace PolyPaint
 
         private void Canvas_SelectionChanged(object sender, EventArgs e)
         {
-            ((VueModele)this.DataContext).SelectStrokes.Execute(Canvas.GetSelectedStrokes().Clone());
-            Canvas.Select(new System.Windows.Ink.StrokeCollection());
+            ((VueModele)this.DataContext).SelectStrokes.Execute(Canvas.GetSelectedStrokes());
+            Canvas.Select(new StrokeCollection());
+        }
+
+        private void Canvas_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Point point = e.GetPosition((IInputElement)sender);
+            CustomStroke clicked = null;
+            Canvas.Strokes.ToList().ForEach(stroke =>
+            {
+                CustomStroke customStroke = (CustomStroke)stroke;
+                if (!customStroke.isSelectable()) return;
+                if (!customStroke.HitTest(point)) return;
+
+                clicked = customStroke;
+            });
+
+            if (clicked != null)
+            {
+                ((VueModele)this.DataContext).Edit.Execute(clicked);
+            }
         }
     }
 }

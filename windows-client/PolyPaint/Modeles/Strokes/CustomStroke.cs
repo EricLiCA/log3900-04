@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -14,6 +15,7 @@ namespace PolyPaint.Modeles
         private bool Selected = false;
         private bool Locked = false;
         private Guid Id = Guid.NewGuid();
+        private bool Editing = false;
 
         public CustomStroke(StylusPointCollection pts) : base(pts)
         {
@@ -34,6 +36,13 @@ namespace PolyPaint.Modeles
             return Selected;
         }
 
+        public bool isEditing()
+        {
+            if (!isSelectable()) return false;
+            if (!isLocked()) return false;
+            return Editing;
+        }
+
         public void Select(StrokeCollection strokes)
         {
             if (!this.Locked && isSelectable())
@@ -48,6 +57,26 @@ namespace PolyPaint.Modeles
         public void Unselect(StrokeCollection strokes)
         {
             this.Selected = false;
+            this.Editing = false;
+            if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
+                strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
+            strokes.Add(this.Clone());
+        }
+
+        internal void startEditing(StrokeCollection strokes)
+        {
+            if (this.Selected)
+            {
+                this.Editing = true;
+                if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
+                    strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
+                strokes.Add(this.Clone());
+            }
+        }
+
+        internal void stopEditing(StrokeCollection strokes)
+        {
+            this.Editing = false;
             if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
                 strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
             strokes.Add(this.Clone());
@@ -58,6 +87,7 @@ namespace PolyPaint.Modeles
             if (this.isSelectable())
             {
                 this.Locked = true;
+                this.Editing = false;
                 if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
                     strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
                 strokes.Add(this.Clone());
