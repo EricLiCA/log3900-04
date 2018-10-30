@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +20,7 @@ namespace PolyPaint.Modeles
         }
 
         public abstract StrokeType getType();
-
+        public abstract new bool HitTest(Point point);
         public abstract bool isSelectable();
 
         public bool isLocked()

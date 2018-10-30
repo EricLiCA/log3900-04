@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +21,15 @@ namespace PolyPaint.Modeles.Strokes
         public override StrokeType getType()
         {
             return StrokeType.OBJECT;
+        }
+
+        public override bool HitTest(Point point)
+        {
+            double width = Math.Abs(this.StylusPoints[0].X - this.StylusPoints[1].X);
+            double height = Math.Abs(this.StylusPoints[0].Y - this.StylusPoints[1].Y);
+            double centerX = (this.StylusPoints[0].X + this.StylusPoints[1].X) / 2;
+            double centerY = (this.StylusPoints[0].Y + this.StylusPoints[1].Y) / 2;
+            return Math.Pow(point.X - centerX, 2) / Math.Pow(width / 2, 2) + Math.Pow(point.Y - centerY, 2) / Math.Pow(height / 2, 2) <= 1;
         }
 
         public override bool isSelectable()
