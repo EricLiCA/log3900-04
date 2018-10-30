@@ -99,11 +99,14 @@ final class MyImagesViewController: UICollectionViewController {
         return sectionInsets.left
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let Storyboard = UIStoryboard(name:"Main", bundle: nil)
-        let PrivateImageVC = Storyboard.instantiateViewController(withIdentifier: "PrivateImageViewController") as!PrivateImageViewController
-        PrivateImageVC.image = images?[indexPath.item]
-        self.navigationController?.pushViewController(PrivateImageVC, animated: true)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ToPrivateImage" {
+            let PrivateImageVC = segue.destination as! PrivateImageViewController
+            if let cell = sender as? PrivateImageCell,
+                let indexPath = self.collectionView?.indexPath(for: cell) {
+                PrivateImageVC.image = images?[indexPath.item]
+            }
+        }
     }
 }
 

@@ -112,11 +112,14 @@ final class PublicPhotosViewController: UICollectionViewController {
         return sectionInsets.left
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let Storyboard = UIStoryboard(name:"Main", bundle: nil)
-        let PublicImageVC = Storyboard.instantiateViewController(withIdentifier: "PublicImageViewController") as! PublicImageViewController
-        PublicImageVC.image = images?[indexPath.item]
-        self.navigationController?.pushViewController(PublicImageVC, animated: true)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ToPublicImage" {
+            let PublicImageViewController = segue.destination as! PublicImageViewController
+            if let cell = sender as? PhotoCell,
+                let indexPath = self.collectionView?.indexPath(for: cell) {
+                PublicImageViewController.image = images?[indexPath.item]
+            }
+        }
     }
     
 }

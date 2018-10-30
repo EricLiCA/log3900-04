@@ -13,15 +13,17 @@ class PublicImageViewController: UIViewController {
     var image: Image?
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageProtectionLevelLabel: UILabel!
-    @IBOutlet weak var imageTitleLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = image?.fullImage
-        imageTitleLabel.text =  image?.title
-        imageProtectionLevelLabel.text = image?.protectionLevel
+        self.updateView()
+       
     }
-    
+    func updateView () {
+        imageView.image = image?.fullImage
+        imageProtectionLevelLabel.text = image?.protectionLevel
+        self.navigationItem.title = image?.title
+    }
     
  
 

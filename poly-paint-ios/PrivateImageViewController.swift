@@ -11,15 +11,13 @@ import UIKit
 class PrivateImageViewController: UIViewController {
     var image: Image?
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var imageTitleLabel: UILabel!
     @IBOutlet weak var imageProtectionLevelLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = image?.fullImage
-        imageTitleLabel.text =  image?.title
         imageProtectionLevelLabel.text = image?.protectionLevel
-
+        self.navigationItem.title = image?.title
     }
     
 

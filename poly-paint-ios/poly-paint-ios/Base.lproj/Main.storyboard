@@ -745,6 +745,7 @@
                                 </view>
                                 <connections>
                                     <outlet property="imageView" destination="WZ4-E4-tbu" id="dQ0-vI-MQr"/>
+                                    <segue destination="CCC-qc-Lsg" kind="show" identifier="ToPublicImage" id="5Cn-Ey-vaa"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -756,20 +757,14 @@
                     <tabBarItem key="tabBarItem" title="Public images" id="SiO-fD-hDE"/>
                     <navigationItem key="navigationItem" id="7A6-ed-CbX">
                         <nil key="title"/>
-                        <textField key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="search" textAlignment="natural" minimumFontSize="17" id="aRx-IL-pdR">
-                            <rect key="frame" x="0.0" y="0.0" width="269" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <nil key="textColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                        </textField>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="CIY-13-l8v" userLabel="testt"/>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3de-HZ-5PF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2201" y="-1247"/>
+            <point key="canvasLocation" x="2200.78125" y="-1247.4609375"/>
         </scene>
-        <!--Public Image View Controller-->
+        <!--Title-->
         <scene sceneID="8qG-aZ-cHP">
             <objects>
                 <viewController storyboardIdentifier="PublicImageViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CCC-qc-Lsg" customClass="PublicImageViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
@@ -778,30 +773,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rkt-xv-5Io">
-                                <rect key="frame" x="0.0" y="57" width="768" height="822"/>
+                                <rect key="frame" x="0.0" y="57" width="768" height="867"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tO1-X5-fHY">
-                                <rect key="frame" x="33" y="887" width="270" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpj-Rf-U1Q">
-                                <rect key="frame" x="139" y="940" width="245" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image Type :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yqf-me-rFI">
-                                <rect key="frame" x="33" y="942" width="98" height="21"/>
+                                <rect key="frame" x="20" y="959" width="98" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uUo-RI-6h1">
-                                <rect key="frame" x="651" y="940" width="84" height="21"/>
+                                <rect key="frame" x="652" y="960" width="84" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fpj-Rf-U1Q">
+                                <rect key="frame" x="126" y="957" width="245" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -810,15 +799,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="3LB-gt-3Oc"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="iT3-Ug-kv5"/>
                     <connections>
                         <outlet property="imageProtectionLevelLabel" destination="fpj-Rf-U1Q" id="Zup-jw-i7s"/>
-                        <outlet property="imageTitleLabel" destination="tO1-X5-fHY" id="X3f-Vo-TVK"/>
                         <outlet property="imageView" destination="Rkt-xv-5Io" id="iar-2m-6ii"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IDe-SH-Yb4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2905" y="-1247"/>
+            <point key="canvasLocation" x="2904.6875" y="-1247.4609375"/>
         </scene>
         <!--My Images-->
         <scene sceneID="zQT-O3-ylN">
@@ -850,6 +839,7 @@
                                 </view>
                                 <connections>
                                     <outlet property="imageView" destination="fhD-PB-QRh" id="RNJ-Id-YET"/>
+                                    <segue destination="qVN-7t-AXJ" kind="show" identifier="ToPrivateImage" id="AFt-uw-ljK"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -864,7 +854,7 @@
             </objects>
             <point key="canvasLocation" x="2200.78125" y="-560.15625"/>
         </scene>
-        <!--Private Image View Controller-->
+        <!--Title-->
         <scene sceneID="K5n-fK-FCd">
             <objects>
                 <viewController storyboardIdentifier="PrivateImageViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qVN-7t-AXJ" customClass="PrivateImageViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
@@ -873,16 +863,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0a-2l-wuc">
-                                <rect key="frame" x="0.0" y="36" width="768" height="868"/>
+                                <rect key="frame" x="0.0" y="62" width="768" height="879"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9f-QG-w0F">
-                                <rect key="frame" x="33" y="912" width="270" height="47"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qr4-ec-deY">
                                 <rect key="frame" x="139" y="965" width="245" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -905,9 +889,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Is7-h1-ww2"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="Xq9-dy-yf8"/>
                     <connections>
                         <outlet property="imageProtectionLevelLabel" destination="Qr4-ec-deY" id="cUJ-s6-Vxm"/>
-                        <outlet property="imageTitleLabel" destination="N9f-QG-w0F" id="Eym-Gm-Q8B"/>
                         <outlet property="imageView" destination="i0a-2l-wuc" id="6rz-oe-5CN"/>
                     </connections>
                 </viewController>
