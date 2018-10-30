@@ -38,7 +38,18 @@ namespace PolyPaint.Modeles
         public Tool OutilSelectionne
         {
             get { return outilSelectionne; }
-            set { outilSelectionne = value; ProprieteModifiee(); }
+            set
+            {
+                outilSelectionne = value;
+                if (this.outilSelectionne == Line)
+                {
+                    this.traits.ToList().ForEach(stroke => ((CustomStroke)stroke).showAnchorPoints());
+                } else
+                {
+                    this.traits.ToList().ForEach(stroke => ((CustomStroke)stroke).hideAnchorPoints());
+                }
+                ProprieteModifiee();
+            }
         }
         
         private string editingStroke;
@@ -49,7 +60,6 @@ namespace PolyPaint.Modeles
             {
                 if (this.editingStroke != null && this.traits.has(this.editingStroke))
                 {
-                    Console.WriteLine("stopedition");
                     this.traits.get(this.editingStroke).stopEditing();
                 }
 

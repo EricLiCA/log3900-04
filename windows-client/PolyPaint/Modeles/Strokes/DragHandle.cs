@@ -35,6 +35,11 @@ namespace PolyPaint.Modeles.Strokes
             return StrokeType.DRAG_HANDLE;
         }
 
+        public override void hideAnchorPoints()
+        {
+            // A Drag Handle does not have anchor points
+        }
+
         public override bool HitTest(Point point)
         {
             return 6 > Math.Sqrt(Math.Pow(point.X - this.StylusPoints[0].X, 2) + Math.Pow(point.Y - this.StylusPoints[0].Y, 2));
@@ -43,6 +48,11 @@ namespace PolyPaint.Modeles.Strokes
         public override bool isSelectable()
         {
             return false;
+        }
+
+        public override void showAnchorPoints()
+        {
+            // A Drag Handle does not have anchor points
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

@@ -50,6 +50,11 @@ namespace PolyPaint.Modeles.Strokes
                 drawingContext.DrawEllipse(null, selectedPen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
             }
 
+            if (this.AnchorPointVisibility)
+            {
+                this.addAnchorPoints();
+            }
+
             drawingContext.DrawEllipse(fillBrush, outlinePen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
 
             if (this.isEditing())

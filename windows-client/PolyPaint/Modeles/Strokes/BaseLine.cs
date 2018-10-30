@@ -57,6 +57,11 @@ namespace PolyPaint.Modeles.Strokes
             return StrokeType.OBJECT;
         }
 
+        public override void hideAnchorPoints()
+        {
+            // A Line does not have anchor points
+        }
+
         public override bool HitTest(Point point)
         {
             Point topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
@@ -68,6 +73,11 @@ namespace PolyPaint.Modeles.Strokes
         public override bool isSelectable()
         {
             return true;
+        }
+
+        public override void showAnchorPoints()
+        {
+            // A Line does not have anchor points
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

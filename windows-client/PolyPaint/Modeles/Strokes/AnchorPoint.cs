@@ -34,6 +34,11 @@ namespace PolyPaint.Modeles.Strokes
             return StrokeType.ANCHOR_POINT;
         }
 
+        public override void hideAnchorPoints()
+        {
+            // An Anchor Point does not have anchor points
+        }
+
         public override bool HitTest(Point point)
         {
             return 6 > Math.Sqrt(Math.Pow(point.X - this.StylusPoints[0].X, 2) + Math.Pow(point.Y - this.StylusPoints[0].Y, 2));
@@ -44,10 +49,15 @@ namespace PolyPaint.Modeles.Strokes
             return false;
         }
 
+        public override void showAnchorPoints()
+        {
+            // An Anchor Point does not have anchor points
+        }
+
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
-            Pen pen = new Pen(new SolidColorBrush(Colors.Gray), 1.5);
-            drawingContext.DrawEllipse(null, pen, this.StylusPoints[0].ToPoint(), 3, 3);
+            Pen pen = new Pen(new SolidColorBrush(Colors.Gray), 2);
+            drawingContext.DrawEllipse(null, pen, this.StylusPoints[0].ToPoint(), 6, 6);
 
         }
     }

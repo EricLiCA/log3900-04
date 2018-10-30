@@ -29,6 +29,8 @@ namespace PolyPaint.Modeles
         public abstract bool isSelectable();
         public abstract void addDragHandles();
         public abstract void deleteDragHandles();
+        public abstract void showAnchorPoints();
+        public abstract void hideAnchorPoints();
 
         public bool isLocked()
         {
@@ -95,7 +97,7 @@ namespace PolyPaint.Modeles
             this.Refresh();
         }
 
-        private void Refresh()
+        protected void Refresh()
         {
             int index = -1;
             if (strokes.has(this.Id.ToString()))
