@@ -416,15 +416,24 @@
                                     <action selector="squareTapped:" destination="0ef-6Q-afh" eventType="touchUpInside" id="Jrn-BZ-7cv"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eGy-gY-gZG">
+                                <rect key="frame" x="20" y="123" width="728" height="881"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9Qz-Ln-HK5" firstAttribute="leading" secondItem="QgM-s3-xb4" secondAttribute="leading" constant="19" id="3yK-9w-gwG"/>
                             <constraint firstItem="9Qz-Ln-HK5" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="21" id="LHB-zJ-9h4"/>
+                            <constraint firstItem="eGy-gY-gZG" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="59" id="NuQ-xd-n6Z"/>
+                            <constraint firstItem="QgM-s3-xb4" firstAttribute="trailing" secondItem="eGy-gY-gZG" secondAttribute="trailing" constant="20" id="OOP-jc-59r"/>
+                            <constraint firstItem="eGy-gY-gZG" firstAttribute="leading" secondItem="QgM-s3-xb4" secondAttribute="leading" constant="20" id="kCW-h7-a7y"/>
+                            <constraint firstItem="QgM-s3-xb4" firstAttribute="bottom" secondItem="eGy-gY-gZG" secondAttribute="bottom" constant="20" id="rbN-dh-hwu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="QgM-s3-xb4"/>
                     </view>
                     <connections>
+                        <outlet property="canvasView" destination="eGy-gY-gZG" id="96a-28-ZZM"/>
                         <outlet property="squareButton" destination="9Qz-Ln-HK5" id="hbE-bi-Kf1"/>
                     </connections>
                 </viewController>

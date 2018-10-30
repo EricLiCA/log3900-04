@@ -16,6 +16,8 @@ enum ShapeType {
 class CanvasViewController: UIViewController {
 
     @IBOutlet weak var squareButton: UIButton!
+    @IBOutlet weak var canvasView: UIView!
+    
     var shapeType = ShapeType.None
     
     override func viewDidLoad() {
@@ -31,11 +33,12 @@ class CanvasViewController: UIViewController {
     }
     
     @objc func didTap(tapGR: UITapGestureRecognizer) {
-        if(self.shapeType == ShapeType.Square) {
-            let tapPoint = tapGR.location(in: self.view)
-            let shapeView = SquareView(origin: tapPoint)
-            self.view.addSubview(shapeView)
-            
+        if(self.canvasView.frame.contains(tapGR.location(in: self.view))) {
+            if(self.shapeType == ShapeType.Square) {
+                let tapPoint = tapGR.location(in: self.canvasView)
+                let shapeView = SquareView(origin: tapPoint)
+                self.canvasView.addSubview(shapeView)
+            }
         }
     }
     
