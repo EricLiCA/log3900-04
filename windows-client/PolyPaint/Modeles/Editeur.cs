@@ -29,6 +29,7 @@ namespace PolyPaint.Modeles
         private Tool ObjectEraser = new ObjectEraser();
         private Tool Rectangle = new Rectangle();
         private Tool Elipse = new Elipse();
+        private Tool Line = new Line();
         public List<Tool> Tools;
 
         // Outil actif dans l'éditeur
@@ -107,6 +108,7 @@ namespace PolyPaint.Modeles
             this.Tools.Add(ObjectEraser);
             this.Tools.Add(Rectangle);
             this.Tools.Add(Elipse);
+            this.Tools.Add(Line);
         }
 
         /// <summary>
