@@ -25,6 +25,10 @@
 		CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2D721820DB600F21F57 /* DrawViewController.swift */; };
 		CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2D921820E7200F21F57 /* DrawView.swift */; };
 		CF21E2DC2182143500F21F57 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2DB2182143500F21F57 /* Line.swift */; };
+		CF21E32A2188EE7100F21F57 /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3292188EE7100F21F57 /* SquareView.swift */; };
+		CF21E32C2188EEA100F21F57 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32B2188EEA100F21F57 /* RectangleView.swift */; };
+		CF21E32E2188EEB000F21F57 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32D2188EEB000F21F57 /* CircleView.swift */; };
+		CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32F2188EEC300F21F57 /* EllipseView.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -75,6 +79,10 @@
 		CF21E2D721820DB600F21F57 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
 		CF21E2D921820E7200F21F57 /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		CF21E2DB2182143500F21F57 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		CF21E3292188EE7100F21F57 /* SquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
+		CF21E32B2188EEA100F21F57 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
+		CF21E32D2188EEB000F21F57 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		CF21E32F2188EEC300F21F57 /* EllipseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseView.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
@@ -140,6 +148,7 @@
 		A77C46ED21569CFB0056135A /* poly-paint-ios */ = {
 			isa = PBXGroup;
 			children = (
+				CF21E3282188C2CE00F21F57 /* Shapes */,
 				A77C46FD21569CFB0056135A /* Info.plist */,
 				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
 				A77C46F021569CFB0056135A /* ChatViewController.swift */,
@@ -189,6 +198,18 @@
 				142B8D5CF9AB57002345952A /* Pods-poly-paint-ios.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		CF21E3282188C2CE00F21F57 /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				CF21E3292188EE7100F21F57 /* SquareView.swift */,
+				CF21E32B2188EEA100F21F57 /* RectangleView.swift */,
+				CF21E32D2188EEB000F21F57 /* CircleView.swift */,
+				CF21E32F2188EEC300F21F57 /* EllipseView.swift */,
+			);
+			name = Shapes;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,6 +388,7 @@
 			files = (
 				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
+				CF21E32E2188EEB000F21F57 /* CircleView.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */,
@@ -377,7 +399,10 @@
 				CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */,
 				A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */,
 				CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */,
+				CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */,
+				CF21E32A2188EE7100F21F57 /* SquareView.swift in Sources */,
 				CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */,
+				CF21E32C2188EEA100F21F57 /* RectangleView.swift in Sources */,
 				CF21E2DC2182143500F21F57 /* Line.swift in Sources */,
 				A78A733A215ED91C007A854F /* DateTime.swift in Sources */,
 				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,
