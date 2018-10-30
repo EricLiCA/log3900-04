@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +14,7 @@ namespace PolyPaint.Modeles
     {
         private bool Selected = false;
         private bool Locked = false;
-        private Guid Id = Guid.NewGuid();
+        public readonly Guid Id = Guid.NewGuid();
         private bool Editing = false;
 
         public CustomStroke(StylusPointCollection pts) : base(pts)
@@ -24,6 +24,8 @@ namespace PolyPaint.Modeles
         public abstract StrokeType getType();
         public abstract new bool HitTest(Point point);
         public abstract bool isSelectable();
+        public abstract void addDragHandles(StrokeCollection strokes);
+        public abstract void deleteDragHandles(StrokeCollection strokes);
 
         public bool isLocked()
         {
@@ -39,7 +41,7 @@ namespace PolyPaint.Modeles
         public bool isEditing()
         {
             if (!isSelectable()) return false;
-            if (!isLocked()) return false;
+            if (isLocked()) return false;
             return Editing;
         }
 
@@ -63,15 +65,19 @@ namespace PolyPaint.Modeles
             strokes.Add(this.Clone());
         }
 
-        internal void startEditing(StrokeCollection strokes)
+        internal CustomStroke startEditing(StrokeCollection strokes)
         {
+            CustomStroke clone = null;
             if (this.Selected)
             {
                 this.Editing = true;
                 if (strokes.Any(stroke => ((CustomStroke)stroke).Id == this.Id))
                     strokes.Remove(strokes.First(stroke => ((CustomStroke)stroke).Id == this.Id));
+
+                clone = (CustomStroke)this.Clone();
                 strokes.Add(this.Clone());
             }
+            return clone;
         }
 
         internal void stopEditing(StrokeCollection strokes)

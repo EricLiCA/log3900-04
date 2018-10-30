@@ -37,17 +37,18 @@ namespace PolyPaint.Modeles
             get { return outilSelectionne; }
             set { outilSelectionne = value; ProprieteModifiee(); }
         }
-
-        // Forme de la pointe du crayon
-        private CustomStroke editingStroke;
-        public CustomStroke EditingStroke
+        
+        private string editingStroke;
+        public string EditingStroke
         {
             get { return editingStroke; }
             set
             {
-                this.editingStroke.stopEditing(this.traits);
+                if (this.editingStroke != null)
+                    if (this.traits.Any(stroke => ((CustomStroke)stroke).Id.ToString() == this.editingStroke))
+                        ((CustomStroke)this.traits.First(stroke => ((CustomStroke)stroke).Id.ToString() == this.editingStroke)).stopEditing(this.traits);
+
                 this.editingStroke = value;
-                this.editingStroke.startEditing(this.traits);
             }
         }
 
@@ -94,7 +95,7 @@ namespace PolyPaint.Modeles
 
         public Editeur()
         {
-            this.outilSelectionne = this.Pencil;
+            this.outilSelectionne = this.Lasso;
 
             this.Tools = new List<Tool>();
             this.Tools.Add(Lasso);
@@ -141,12 +142,16 @@ namespace PolyPaint.Modeles
 
         internal void Edit(CustomStroke stroke)
         {
+            if (stroke.isLocked()) return;
+            if (!stroke.isSelected()) return;
+
             if (stroke.isEditing())
             {
-                stroke.startEditing(this.traits);
+                this.EditingStroke = null;
             } else
             {
-                stroke.stopEditing(this.traits);
+                stroke.startEditing(this.traits);
+                this.EditingStroke = stroke.Id.ToString();
             }
         }
 

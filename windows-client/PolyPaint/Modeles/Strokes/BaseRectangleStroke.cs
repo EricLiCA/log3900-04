@@ -18,6 +18,16 @@ namespace PolyPaint.Modeles.Strokes
 
         }
 
+        public override void addDragHandles(StrokeCollection strokes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void deleteDragHandles(StrokeCollection strokes)
+        {
+            throw new NotImplementedException();
+        }
+
         public override StrokeType getType()
         {
             return StrokeType.OBJECT;
@@ -27,9 +37,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             Point topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
             Point bottomRight = new Point(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
-
-            Console.WriteLine(point);
-
+            
             return point.X > topLeft.X && point.X < bottomRight.X && point.Y > topLeft.Y && point.Y < bottomRight.Y;
         }
 
@@ -43,8 +51,14 @@ namespace PolyPaint.Modeles.Strokes
             DrawingAttributes originalDa = drawingAttributes.Clone();
             SolidColorBrush fillBrush = new SolidColorBrush(drawingAttributes.Color);
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
-
-            if (this.isSelected())
+            
+            if (this.isEditing())
+            {
+                Pen selectedPen = new Pen(new SolidColorBrush(Colors.Blue), 10);
+                selectedPen.Freeze();
+                drawingContext.DrawRectangle(null, selectedPen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
+            }
+            else if (this.isSelected())
             {
                 Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
                 selectedPen.Freeze();
