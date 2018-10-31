@@ -31,14 +31,14 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
         
         if image?.protectionLevel != "public" {
             let makePublicAction = UIAlertAction(title: "Set As Public", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-                //  Do some action here.
+                self.setImageAsPublic()
             })
             alertController.addAction(makePublicAction)
         }
         
         if image?.protectionLevel != "private" {
             let makePrivateAction = UIAlertAction(title: "Set As Private", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-                //  Do some destructive action here.
+                self.setImageAsPrivate()
             })
             alertController.addAction(makePrivateAction)
         }
@@ -58,7 +58,6 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
-            //  Do something here upon cancellation.
         })
         alertController.addAction(cancelAction)
         
@@ -79,7 +78,87 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
         }
     }
     
+    func setImageAsPublic() {
+        let urlString = "http://localhost:3000/v2/images/" + (image?.id)!
+        let url = URL(string: urlString)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "PUT"
+        
+        let imageToSend: [String: Any] = [
+            "ownerId": (image?.ownerId)!,
+            "title" :(image?.title)!,
+            "protectionLevel": "public",
+            "password": "",
+            "thumbnailUrl": "", // leave empty until thumbnails are supported. Would cause a nil crash while unwrapping otherwise
+            "fullImageUrl": (image?.fullImageUrl)!,
+            ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: imageToSend, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            _ = response as? HTTPURLResponse
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if (responseJSON as? [String: Any]) != nil {
+                DispatchQueue.main.async {
+                    self.image?.protectionLevel = "public"
+                    self.image?.password = ""
+                    self.imageProtectionLevelLabel.text = self.image?.protectionLevel
+                }
+            }
+        }
+        
+        task.resume()
+    }
+   
+    func setImageAsPrivate() {
+        let urlString = "http://localhost:3000/v2/images/" + (image?.id)!
+        let url = URL(string: urlString)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "PUT"
+        
+        let imageToSend: [String: Any] = [
+            "ownerId": (image?.ownerId)!,
+            "title" :(image?.title)!,
+            "protectionLevel": "private",
+            "password": "",
+            "thumbnailUrl": "", // leave empty until thumbnails are supported
+            "fullImageUrl": (image?.fullImageUrl)!,
+            ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: imageToSend, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            _ = response as? HTTPURLResponse
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if (responseJSON as? [String: Any]) != nil {
+                DispatchQueue.main.async {
+                    self.image?.protectionLevel = "private"
+                    self.image?.password = ""
+                    self.imageProtectionLevelLabel.text = self.image?.protectionLevel
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    
     func setNewImage (image: Image?){
+        self.image = image
+        self.imageProtectionLevelLabel.text = image?.protectionLevel!
         
     }
 }
