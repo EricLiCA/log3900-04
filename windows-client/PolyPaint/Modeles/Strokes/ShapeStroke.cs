@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Strokes
 {
-     public abstract class ShapeStroke : CustomStroke, Anchorable, Handleable
+     public abstract class ShapeStroke : CustomStroke, Anchorable, Handleable, Movable
     {
         private double _rotation = 0;
         public double Rotation {
@@ -162,7 +162,7 @@ namespace PolyPaint.Modeles.Strokes
             this.Refresh();
         }
 
-        public override void Move(StylusPointCollection newPoints)
+        public void Move(StylusPointCollection newPoints)
         {
             this.StylusPoints = newPoints;
             this.Refresh();

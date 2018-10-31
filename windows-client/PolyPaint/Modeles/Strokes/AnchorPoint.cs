@@ -69,10 +69,5 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.Pop();
 
         }
-
-        public override void Move(StylusPointCollection newPoints)
-        {
-            // Connot move Drag Handle
-        }
     }
 }

@@ -52,12 +52,6 @@ namespace PolyPaint.Modeles.Strokes
             return true;
         }
 
-        public override void Move(StylusPointCollection newPoints)
-        {
-            this.StylusPoints = newPoints;
-            this.Refresh();
-        }
-
         public void handleMoved(Guid id, Point point)
         {
             Console.WriteLine(id);

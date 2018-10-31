@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Strokes
 {
-    public class DragHandle : CustomStroke
+    public class DragHandle : CustomStroke, Movable
     {
 
         public readonly string ParentId;
@@ -45,7 +45,7 @@ namespace PolyPaint.Modeles.Strokes
             return false;
         }
 
-        public override void Move(StylusPointCollection newPoints)
+        public void Move(StylusPointCollection newPoints)
         {
             if (!this.strokes.has(this.ParentId)) return;
 

@@ -26,7 +26,6 @@ namespace PolyPaint.Modeles
         
         public abstract new bool HitTest(Point point);
         public abstract bool isSelectable();
-        public abstract void Move(StylusPointCollection newPoints);
 
         public bool isLocked()
         {

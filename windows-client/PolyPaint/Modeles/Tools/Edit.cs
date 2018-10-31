@@ -14,7 +14,7 @@ namespace PolyPaint.Modeles.Tools
 {
     class Edit : Tool
     {
-        private CustomStroke editing;
+        private Movable editing;
         private Point initialCursorPosition;
         private StylusPointCollection initialObjectPoints;
 
@@ -37,23 +37,23 @@ namespace PolyPaint.Modeles.Tools
         {
             if (editing != null) return;
 
-            List<Stroke> clicked = strokes.ToList().FindAll(stroke => ((CustomStroke)stroke).HitTest(point));
+            List<Stroke> clicked = strokes.ToList().FindAll(stroke => ((CustomStroke)stroke).HitTest(point) && stroke is Movable);
             List<Stroke> clickedHandles = clicked.FindAll(stroke => stroke is DragHandle);
             List<Stroke> clickedSelected = clicked.FindAll(stroke => ((CustomStroke)stroke).isSelected());
 
             if (clickedHandles.Count > 0)
             {
-                this.editing = (CustomStroke)clicked.Last();
                 this.initialCursorPosition = point;
-                this.initialObjectPoints = this.editing.StylusPoints;
+                this.initialObjectPoints = clicked.Last().StylusPoints;
+                this.editing = (Movable)clickedHandles.Last();
                 return;
             }
 
             if (clickedSelected.Count > 0)
             {
-                this.editing = (CustomStroke)clickedSelected.Last();
                 this.initialCursorPosition = point;
-                this.initialObjectPoints = this.editing.StylusPoints;
+                this.initialObjectPoints = clicked.Last().StylusPoints;
+                this.editing = (Movable)clickedSelected.Last();
             }
         }
 
@@ -76,7 +76,6 @@ namespace PolyPaint.Modeles.Tools
 
         public override void MouseUp(Point point, CustomStrokeCollection strokes)
         {
-            if (editing == null) return;
             this.editing = null;
         }
     }
