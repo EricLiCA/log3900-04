@@ -71,6 +71,7 @@ namespace PolyPaint.Modeles
                 if (this.editingStroke != null && this.traits.has(this.editingStroke))
                 {
                     this.traits.get(this.editingStroke).stopEditing();
+                    this.ClassContent = "";
                 }
 
                 this.editingStroke = value;
@@ -169,13 +170,6 @@ namespace PolyPaint.Modeles
                 else
                 {
                     ((CustomStroke)stroke).Select();
-                    if (stroke.GetType() == typeof(ClassStroke))
-                    {
-                        ClassStroke classStroke = (ClassStroke)stroke;
-                        classStroke.textContent.ForEach(textLine => {
-                            this.ClassContent = this.ClassContent + textLine + "\r\n";
-                        });
-                    }
                 }
             });
         }
@@ -192,6 +186,13 @@ namespace PolyPaint.Modeles
             {
                 stroke.startEditing();
                 this.EditingStroke = stroke.Id.ToString();
+                if (stroke.GetType() == typeof(ClassStroke))
+                {
+                    ClassStroke classStroke = (ClassStroke)stroke;
+                    classStroke.textContent.ForEach(textLine => {
+                        this.ClassContent = this.ClassContent + textLine + "\r\n";
+                    });
+                }
             }
         }
 
@@ -253,8 +254,7 @@ namespace PolyPaint.Modeles
             if (this.traits.has(EditingStroke) && this.traits.get(EditingStroke).GetType() == typeof(ClassStroke))
             {
                 ClassStroke editingClass = (ClassStroke)this.traits.get(EditingStroke);
-                char[] chartab = { '\r', '\n' };
-                editingClass.textContent = content.Split(chartab, StringSplitOptions.RemoveEmptyEntries).ToList();
+                editingClass.textContent = content.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 editingClass.Refresh();
             }
         }

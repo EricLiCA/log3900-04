@@ -156,7 +156,7 @@
         <Border BorderThickness="0.5,0,0,0" BorderBrush="#77000000" Width="174" Background="AliceBlue" HorizontalAlignment="Right" VerticalAlignment="Center" Height="285.25" DockPanel.Dock="Right">
             <StackPanel>
                 <TextBox Name="ClassPreview" Text="{Binding Path=ClassContent, UpdateSourceTrigger=PropertyChanged, Mode=OneWay }" Style="{StaticResource MaterialDesignTextAreaTextBox}" Margin="5" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="236.96"/>
-                <Button  Command="{Binding Path=ChangeClassContent}" CommandParameter="{Binding Text, ElementName=ClassPreview }"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Save" Margin="0,0,5,0" />
+                <Button  Command="{Binding Path=ChangeClassContent}" CommandParameter="{Binding Text, ElementName=ClassPreview }" IsEnabled="{Binding Text.Length, ElementName=ClassPreview}"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Save" Margin="0,0,5,0" />
             </StackPanel>
         </Border>
 

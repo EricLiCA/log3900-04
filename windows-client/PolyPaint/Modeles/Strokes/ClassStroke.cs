@@ -15,9 +15,16 @@ namespace PolyPaint.Modeles.Strokes
     {
         public List<string> textContent;
 
-        public ClassStroke(StylusPointCollection pts, CustomStrokeCollection strokes, List<string> text) : base(pts, strokes)
+        public ClassStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
-            this.textContent = text;
+            this.textContent = new List<string>
+            {
+                "Class title",
+                "--",
+                "Attribute",
+                "--",
+                "Operations()"
+            };
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

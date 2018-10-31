@@ -46,13 +46,7 @@ namespace PolyPaint.Modeles.Tools
             if (ActiveStroke != null)
                 strokes.Remove(ActiveStroke);
 
-            List<string> text = new List<string>();
-            text.Add("Class title");
-            text.Add("--");
-            text.Add("Attribute");
-            text.Add("--");
-            text.Add("Operations()");
-            ActiveStroke = new ClassStroke(pts, strokes, text);
+            ActiveStroke = new ClassStroke(pts, strokes);
             ActiveStroke.DrawingAttributes.Color = selectedColor;
             strokes.Add(ActiveStroke);
 
