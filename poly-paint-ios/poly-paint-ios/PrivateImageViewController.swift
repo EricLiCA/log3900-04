@@ -44,7 +44,7 @@ class PrivateImageViewController: UIViewController {
         }
         
         if image?.protectionLevel != "protected" {
-            let makeProtectedAction = UIAlertAction(title: "Set As Protective", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            let makeProtectedAction = UIAlertAction(title: "Set As Protected", style: .default, handler: { (alert: UIAlertAction!) -> Void in
                 self.performSegue(withIdentifier: "toChangeImagePassword", sender: self)
             })
             alertController.addAction(makeProtectedAction)
