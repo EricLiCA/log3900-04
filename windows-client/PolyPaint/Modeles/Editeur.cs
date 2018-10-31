@@ -54,14 +54,29 @@ namespace PolyPaint.Modeles
             }
         }
 
-
-        // Class diagram preview
-        private string classContent;
-        public string ClassContent
-        {
-            get { return classContent; }
-            set { classContent = value; ProprieteModifiee(); }
+        public string ActiveItemTextContent {
+            get
+            {
+                if (this.traits.has(this.EditingStroke))
+                {
+                    CustomStroke editing = this.traits.get(this.EditingStroke);
+                    if (editing is Textable)
+                        return ((Textable)editing).GetText();
+                }
+                return "";
+            }
+            set
+            {
+                if (this.traits.has(this.EditingStroke))
+                {
+                    CustomStroke editing = this.traits.get(this.EditingStroke);
+                    if (editing is Textable)
+                        ((Textable)editing).SetText(value);
+                }
+                this.ProprieteModifiee();
+            }
         }
+        
         private string editingStroke;
         public string EditingStroke
         {
@@ -74,6 +89,7 @@ namespace PolyPaint.Modeles
                 }
 
                 this.editingStroke = value;
+                ProprieteModifiee("ActiveItemTextContent");
             }
         }
 
@@ -133,7 +149,6 @@ namespace PolyPaint.Modeles
             this.Tools.Add(Person);
             this.Tools.Add(Line);
             this.Tools.Add(ClassDiagram);
-            this.classContent = "";
         }
 
         /// <summary>
@@ -169,13 +184,6 @@ namespace PolyPaint.Modeles
                 else
                 {
                     ((CustomStroke)stroke).Select();
-                    if (stroke.GetType() == typeof(ClassStroke))
-                    {
-                        ClassStroke classStroke = (ClassStroke)stroke;
-                        classStroke.textContent.ForEach(textLine => {
-                            this.ClassContent = this.ClassContent + textLine + "\r\n";
-                        });
-                    }
                 }
             });
         }
@@ -247,16 +255,5 @@ namespace PolyPaint.Modeles
 
         // On vide la surface de dessin de tous ses traits.
         public void Reinitialiser(object o) => traits.Clear();
-        
-        public void ChangeClassContent(string content)
-        {
-            if (this.traits.has(EditingStroke) && this.traits.get(EditingStroke).GetType() == typeof(ClassStroke))
-            {
-                ClassStroke editingClass = (ClassStroke)this.traits.get(EditingStroke);
-                char[] chartab = { '\r', '\n' };
-                editingClass.textContent = content.Split(chartab, StringSplitOptions.RemoveEmptyEntries).ToList();
-                editingClass.Refresh();
-            }
-        }
     }
 }

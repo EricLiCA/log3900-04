@@ -31,10 +31,10 @@ namespace PolyPaint.VueModeles
             set { ProprieteModifiee(); }
         }
 
-        public string ClassContent
+        public string ActiveItemTextContent
         {
-            get { return editeur.ClassContent; }
-            set { ProprieteModifiee(); }
+            get => editeur.ActiveItemTextContent;
+            set => editeur.ActiveItemTextContent = value;
         }
 
         public string CouleurSelectionnee
@@ -101,7 +101,6 @@ namespace PolyPaint.VueModeles
             MouseMove = new RelayCommand<Point>(editeur.MouseMove);
             SelectStrokes = new RelayCommand<StrokeCollection>(editeur.SelectStrokes);
             Edit = new RelayCommand<CustomStroke>(editeur.Edit);
-            ChangeClassContent = new RelayCommand<string>(editeur.ChangeClassContent);
         }
 
         /// <summary>
@@ -138,9 +137,9 @@ namespace PolyPaint.VueModeles
                 PointeSelectionnee = editeur.PointeSelectionnee;
                 AjusterPointe();
             }
-            else if (e.PropertyName == "ClassContent")
+            else if (e.PropertyName == "ActiveItemTextContent")
             {
-                ClassContent = editeur.ClassContent;
+                this.ProprieteModifiee("ActiveItemTextContent");
             }
             else // e.PropertyName == "TailleTrait"
             {               
