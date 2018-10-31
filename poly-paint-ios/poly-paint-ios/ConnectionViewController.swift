@@ -42,7 +42,7 @@ class ConnectionViewController: UIViewController {
         guard segue.destination is ChatViewController else { return }
         let destinationVC = segue.destination as! ChatViewController
         destinationVC.username = UserDefaults.standard.string(forKey: "username")!
-        destinationVC.serverAddress = serverAddress.text!
+        SocketService.instance.serverAddress = serverAddress.text!
     }
     
     // MARK: - Actions

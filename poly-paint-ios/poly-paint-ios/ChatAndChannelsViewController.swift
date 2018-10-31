@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ChannelTableViewCell: UITableViewCell {
     
     @IBOutlet weak var joinChannelButton: UIButton!
@@ -31,7 +30,8 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     
     var myChannelsArray = [String]()
     var allChannelsArray = [String]()
-    
+    var socketService: SocketService = SocketService.instance
+    var chatManager: ChatManager = ChatManager.instance
     var selectedSegment = 1
     
     @IBOutlet weak var channelsTableView: UITableView!

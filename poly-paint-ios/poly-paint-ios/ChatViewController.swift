@@ -18,12 +18,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Models
     var messagesArray = [String]()
-    var serverAddress: String = "http://ec2-18-214-40-211.compute-1.amazonaws.com"
     var username: String = UserDefaults.standard.string(forKey: "username")!
     var invalidUsername: Bool = false
-    // MARK: Sockets
-    var manager: SocketManager!
-    var socketIOClient: SocketIOClient!
     
     // MARK: - Initialization and Cleanup
     override func viewDidLoad() {
@@ -44,7 +40,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.messageTextField.clearsOnBeginEditing = true
         
         // Initialize socket connection
-        connectToSocket()
+        connectToChat()
         
         // Focus on message text field + show keyboard
         messageTextField.becomeFirstResponder()
@@ -54,7 +50,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Hide keyboard
         messageTextField.resignFirstResponder()
         
-        socketIOClient.disconnect()
+        SocketService.instance.socketIOClient.emit("user left")
     }
     
     override func didReceiveMemoryWarning() {
@@ -96,47 +92,38 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // MARK: - Server communication
-    private func connectToSocket() {
+    private func connectToChat() {
         self.setConnectionStatus(as: "connecting")
         
-        manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(true), .compress])
-        socketIOClient = manager.defaultSocket
-        
-        socketIOClient.on("setUsernameStatus") { (data, ack) in
+        SocketService.instance.socketIOClient.on("setUsernameStatus") { (data, ack) in
             if (data[0] as! String == "Username already taken!") {
                 self.invalidUsername = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.socketIOClient.disconnect()
-                    _ = self.navigationController?.popViewController(animated: true)
-                }
             } else {
                 self.setConnectionStatus(as: "connected")
             }
         }
         
-        socketIOClient.on(clientEvent: .connect) {data, ack in
-            self.socketIOClient.emit("setUsername", self.username)
+        SocketService.instance.socketIOClient.on(clientEvent: .connect) {data, ack in
+            SocketService.instance.socketIOClient.emit("setUsername", self.username)
         }
         
-        socketIOClient.on(clientEvent: .error) { (data, ack) in
+        SocketService.instance.socketIOClient.on(clientEvent: .error) { (data, ack) in
             self.setConnectionStatus(as: "connecting")
         }
         
-        socketIOClient.on(clientEvent: .disconnect) { (data, ack) in
+        SocketService.instance.socketIOClient.on(clientEvent: .disconnect) { (data, ack) in
             self.setConnectionStatus(as: "connecting")
         }
         
-        socketIOClient.on("message") { (data: [Any], ack) in
-            guard let username = data[0] as? String else { return }
-            guard let message = data[1] as? String else { return }
+        SocketService.instance.socketIOClient.on("message") { (data: [Any], ack) in
+            guard let username = data[1] as? String else { return }
+            guard let message = data[0] as? String else { return }
             self.addToMessageTableView(message: message, sentBy: username)
         }
         
-        socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, ack) in
+        SocketService.instance.socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, ack) in
             self.setConnectionStatus(as: "connecting")
         }
-        
-        socketIOClient.connect()
     }
     
     private func setConnectionStatus(as status: String) {
@@ -151,7 +138,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.connectionStatus.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             self.connectionStatus.text = "Connected"
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                if self.socketIOClient.status == .connected {
+                if SocketService.instance.socketIOClient.status == .connected {
                     self.connectionStatus.isHidden = true
                 }
             }
@@ -163,7 +150,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func sendMessage() {
         let trimmedMessage = messageTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if (!trimmedMessage.isEmpty) {
-            socketIOClient.emit("message", messageTextField.text!)
+            SocketService.instance.socketIOClient.emit("message", messageTextField.text!)
         }
         messageTextField.text = ""
     }
