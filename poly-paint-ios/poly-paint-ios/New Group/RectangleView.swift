@@ -14,12 +14,15 @@ class RectangleView: UIView {
     let defaultWidth: CGFloat = 150.0
     let lineWidth: CGFloat = 1
     let uuid = NSUUID.init().uuidString.lowercased()
+    var lastRotation: CGFloat = 0
+    var originalRotation = CGFloat()
     
     init(origin: CGPoint) {
         super.init(frame:CGRect(x: 0.0, y: 0.0, width: defaultWidth, height: defaultHeight))
         self.center = origin
         self.backgroundColor = UIColor.clear
         initGestureRecognizers()
+        self.transform.rotated(by: .pi/2)
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -75,13 +78,27 @@ class RectangleView: UIView {
             self.transform = self.transform.scaledBy(x: x_scale, y: y_scale)
             pinchGR.scale = 1
         }
+        
+        
+        
     }
     
     @objc func didRotate(rotationGR: UIRotationGestureRecognizer) {
-        self.superview!.bringSubview(toFront: self)
+        /*self.superview!.bringSubview(toFront: self)
         let rotation = rotationGR.rotation
-        self.transform = self.transform.rotated(by: rotation)
-        rotationGR.rotation = 0.0
+        self.transform = CGAffineTransform(rotationAngle: rotation)
+        //self.transform = self.transform.rotated(by: .pi/50)
+        rotationGR.rotation = 0.0*/
+        
+        if rotationGR.state == .began {
+            rotationGR.rotation = self.lastRotation
+            self.originalRotation = rotationGR.rotation
+        } else if rotationGR.state == .changed {
+            let newRotation = rotationGR.rotation + originalRotation
+            rotationGR.view?.transform = CGAffineTransform(rotationAngle: newRotation)
+        } else if rotationGR.state == .ended {
+            lastRotation = rotationGR.rotation
+        }
     }
     
     func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
