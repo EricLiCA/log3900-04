@@ -52,7 +52,7 @@ class PrivateImageViewController: UIViewController {
         
         if image?.protectionLevel == "protected" {
             let changePasswordAction = UIAlertAction(title: "Change Password", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-                //  Do some destructive action here.
+                self.performSegue(withIdentifier: "toChangeImagePassword", sender: self)
             })
             alertController.addAction(changePasswordAction)
         }
