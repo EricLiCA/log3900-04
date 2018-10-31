@@ -11,7 +11,7 @@ import UIKit
 class SquareView: UIView {
     
     let defaultSize: CGFloat = 150.0
-    let lineWidth: CGFloat = 3
+    let lineWidth: CGFloat = 1
     
     init(origin: CGPoint) {
         super.init(frame:CGRect(x: 0.0, y: 0.0, width: defaultSize, height: defaultSize))
@@ -28,8 +28,7 @@ class SquareView: UIView {
     override func draw(_ rect: CGRect) {
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = UIBezierPath(roundedRect: insetRect, cornerRadius: 10)
-        
-        UIColor.red.setFill()
+        UIColor.white.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
         UIColor.black.setStroke()

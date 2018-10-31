@@ -12,7 +12,7 @@ class RectangleView: UIView {
 
     let defaultHeight: CGFloat = 100.0
     let defaultWidth: CGFloat = 150.0
-    let lineWidth: CGFloat = 3
+    let lineWidth: CGFloat = 1
     
     init(origin: CGPoint) {
         super.init(frame:CGRect(x: 0.0, y: 0.0, width: defaultWidth, height: defaultHeight))
@@ -37,8 +37,8 @@ class RectangleView: UIView {
     
     override func draw(_ rect: CGRect) {
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
-        let path = UIBezierPath(roundedRect: insetRect, cornerRadius: 10)
-        UIColor.red.setFill()
+        let path = UIBezierPath(roundedRect: insetRect, cornerRadius: 0)
+        UIColor.white.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
         UIColor.black.setStroke()
