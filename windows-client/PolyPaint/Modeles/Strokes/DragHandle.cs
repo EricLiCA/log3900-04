@@ -21,16 +21,6 @@ namespace PolyPaint.Modeles.Strokes
             this.ParentId = parentId;
         }
 
-        public override void addDragHandles()
-        {
-            // A drag handle can't have drag handles
-        }
-
-        public override void deleteDragHandles()
-        {
-            // A drag handle can't have drag handles
-        }
-
         public override StrokeType getType()
         {
             return StrokeType.DRAG_HANDLE;
@@ -64,13 +54,8 @@ namespace PolyPaint.Modeles.Strokes
         {
             if (!this.strokes.has(this.ParentId)) return;
 
-            CustomStroke parent = this.strokes.get(this.ParentId);
+            Handleable parent = (Handleable)this.strokes.get(this.ParentId);
             parent.handleMoved(this.Id, newPoints[0].ToPoint());
-        }
-
-        public override void handleMoved(Guid id, Point point)
-        {
-            // An Anchor Point does not have anchor points
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

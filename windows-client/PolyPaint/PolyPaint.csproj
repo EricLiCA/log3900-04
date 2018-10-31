@@ -195,6 +195,7 @@
     <Compile Include="Modeles\Messaging.cs" />
     <Compile Include="Modeles\Strokes\CustomStrokeCollection.cs" />
     <Compile Include="Modeles\Strokes\DragHandle.cs" />
+    <Compile Include="Modeles\Strokes\Handleable.cs" />
     <Compile Include="Modeles\Strokes\PersonStroke.cs" />
     <Compile Include="Modeles\Strokes\ShapeStroke.cs" />
     <Compile Include="Modeles\Strokes\Textable.cs" />

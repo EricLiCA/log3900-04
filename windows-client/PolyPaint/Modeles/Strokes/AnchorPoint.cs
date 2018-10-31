@@ -32,16 +32,6 @@ namespace PolyPaint.Modeles.Strokes
             this.ParentId = parentId;
         }
 
-        public override void addDragHandles()
-        {
-            // An Anchor Point does not have handles
-        }
-
-        public override void deleteDragHandles()
-        {
-            // An Anchor Point does not have handles
-        }
-
         public override StrokeType getType()
         {
             return StrokeType.ANCHOR_POINT;
@@ -88,11 +78,6 @@ namespace PolyPaint.Modeles.Strokes
         public override void Move(StylusPointCollection newPoints)
         {
             // Connot move Drag Handle
-        }
-
-        public override void handleMoved(Guid id, Point point)
-        {
-            // A drag handle can't have drag handles
         }
     }
 }

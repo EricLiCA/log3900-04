@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Strokes
 {
-     public abstract class ShapeStroke : CustomStroke, Anchorable
+     public abstract class ShapeStroke : CustomStroke, Anchorable, Handleable
     {
         private double _rotation = 0;
         public double Rotation {
@@ -39,7 +39,7 @@ namespace PolyPaint.Modeles.Strokes
         {
         }
 
-        public override void addDragHandles()
+        public void addDragHandles()
         {
             if (!this.strokes.has(this.Id.ToString())) return;
             this.deleteDragHandles();
@@ -66,7 +66,7 @@ namespace PolyPaint.Modeles.Strokes
 
         }
 
-        public override void deleteDragHandles()
+        public void deleteDragHandles()
         {
             if (this.strokes.has(TOP_LEFT.ToString()))
                 this.strokes.Remove(this.strokes.get(TOP_LEFT.ToString()));
@@ -168,7 +168,7 @@ namespace PolyPaint.Modeles.Strokes
             this.Refresh();
         }
 
-        public override void handleMoved(Guid id, Point point)
+        public void handleMoved(Guid id, Point point)
         {
             Point oppo;
             if (id.ToString() == TOP_RIGHT.ToString())

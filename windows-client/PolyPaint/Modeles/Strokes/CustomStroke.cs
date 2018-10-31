@@ -28,9 +28,6 @@ namespace PolyPaint.Modeles
         public abstract new bool HitTest(Point point);
         public abstract bool isSelectable();
         public abstract void Move(StylusPointCollection newPoints);
-        public abstract void addDragHandles();
-        public abstract void deleteDragHandles();
-        public abstract void handleMoved(Guid id, Point point);
 
         public bool isLocked()
         {
@@ -103,7 +100,7 @@ namespace PolyPaint.Modeles
             int index = -1;
             if (strokes.has(this.Id.ToString()))
             {
-                strokes.get(this.Id.ToString()).deleteDragHandles();
+                ((Handleable)strokes.get(this.Id.ToString())).deleteDragHandles();
                 index = strokes.IndexOf(strokes.get(this.Id.ToString()));
                 strokes.Remove(strokes.get(this.Id.ToString()));
             }

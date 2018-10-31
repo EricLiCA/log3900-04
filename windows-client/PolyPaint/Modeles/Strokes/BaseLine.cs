@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Strokes
 {
-    class BaseLine : CustomStroke
+    class BaseLine : CustomStroke, Handleable
     {
         Guid FIRST_POINT = Guid.NewGuid();
         Guid SECOND_POINT = Guid.NewGuid();
@@ -16,7 +16,7 @@ namespace PolyPaint.Modeles.Strokes
             Console.WriteLine(FIRST_POINT + "   -   " + SECOND_POINT);
         }
 
-        public override void addDragHandles()
+        public void addDragHandles()
         {
             if (!this.strokes.has(this.Id.ToString())) return;
             this.deleteDragHandles();
@@ -31,7 +31,7 @@ namespace PolyPaint.Modeles.Strokes
 
         }
 
-        public override void deleteDragHandles()
+        public void deleteDragHandles()
         {
             if (this.strokes.has(FIRST_POINT.ToString()))
                 this.strokes.Remove(this.strokes.get(FIRST_POINT.ToString()));
@@ -63,7 +63,7 @@ namespace PolyPaint.Modeles.Strokes
             this.Refresh();
         }
 
-        public override void handleMoved(Guid id, Point point)
+        public void handleMoved(Guid id, Point point)
         {
             Console.WriteLine(id);
             if (this.FIRST_POINT.ToString() == id.ToString())
