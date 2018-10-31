@@ -17,7 +17,7 @@ class PublicImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.updateView()
-       
+        
     }
     func updateView () {
         imageView.image = image?.fullImage
@@ -25,6 +25,6 @@ class PublicImageViewController: UIViewController {
         self.navigationItem.title = image?.title
     }
     
- 
-
+    
+    
 }

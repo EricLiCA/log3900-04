@@ -59,7 +59,7 @@ final class PublicPhotosViewController: UICollectionViewController {
                         self.images?.append(image)
                     }
                 }
-               
+                
                 DispatchQueue.main.async {
                     self.collectionView?.reloadData()
                 }

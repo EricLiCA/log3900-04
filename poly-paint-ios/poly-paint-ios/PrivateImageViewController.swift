@@ -72,7 +72,7 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toChangeImagePassword" {
-           let ProtectedImagePasswordVC = segue.destination as! ProtectedImagePasswordViewController
+            let ProtectedImagePasswordVC = segue.destination as! ProtectedImagePasswordViewController
             ProtectedImagePasswordVC.image = self.image
             ProtectedImagePasswordVC.changeImagePasswordProtocol = self
         }
@@ -116,7 +116,7 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
         
         task.resume()
     }
-   
+    
     func setImageAsPrivate() {
         let urlString = "http://localhost:3000/v2/images/" + (image?.id)!
         let url = URL(string: urlString)
