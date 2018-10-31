@@ -39,11 +39,6 @@ namespace PolyPaint.Modeles.Strokes
                 this.strokes.Remove(this.strokes.get(SECOND_POINT.ToString()));
         }
 
-        public override StrokeType getType()
-        {
-            return StrokeType.OBJECT;
-        }
-
         public override bool HitTest(Point point)
         {
             Point topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));

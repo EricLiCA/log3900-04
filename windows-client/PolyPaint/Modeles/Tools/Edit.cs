@@ -37,20 +37,9 @@ namespace PolyPaint.Modeles.Tools
         {
             if (editing != null) return;
 
-            List<Stroke> clicked = strokes.ToList().FindAll(stroke =>
-            {
-                return ((CustomStroke)stroke).HitTest(point);
-            });
-
-            List<Stroke> clickedHandles = clicked.FindAll(stroke =>
-            {
-                return ((CustomStroke)stroke).getType() == StrokeType.DRAG_HANDLE;
-            });
-
-            List<Stroke> clickedSelected = clicked.FindAll(stroke =>
-            {
-                return ((CustomStroke)stroke).isSelected();
-            });
+            List<Stroke> clicked = strokes.ToList().FindAll(stroke => ((CustomStroke)stroke).HitTest(point));
+            List<Stroke> clickedHandles = clicked.FindAll(stroke => stroke is DragHandle);
+            List<Stroke> clickedSelected = clicked.FindAll(stroke => ((CustomStroke)stroke).isSelected());
 
             if (clickedHandles.Count > 0)
             {

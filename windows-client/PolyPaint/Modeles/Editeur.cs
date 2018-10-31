@@ -48,7 +48,7 @@ namespace PolyPaint.Modeles
                 {
                     this.EditingStroke = null;
                     this.traits.ToList().ForEach(stroke => {
-                        if (((CustomStroke)stroke).getType() == StrokeType.OBJECT)
+                        if (((CustomStroke)stroke).isSelectable())
                             ((CustomStroke)stroke).Unselect();
                     });
                 }

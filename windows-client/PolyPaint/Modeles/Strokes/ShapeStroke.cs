@@ -215,11 +215,6 @@ namespace PolyPaint.Modeles.Strokes
             base.Refresh();
         }
 
-        public override StrokeType getType()
-        {
-            return StrokeType.OBJECT;
-        }
-
         public override bool isSelectable()
         {
             return true;

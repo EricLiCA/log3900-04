@@ -32,11 +32,6 @@ namespace PolyPaint.Modeles.Strokes
             this.ParentId = parentId;
         }
 
-        public override StrokeType getType()
-        {
-            return StrokeType.ANCHOR_POINT;
-        }
-
         public override bool HitTest(Point point)
         {
             if (!this.strokes.has(this.ParentId)) return false;
