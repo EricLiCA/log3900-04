@@ -46,7 +46,10 @@ namespace PolyPaint.Modeles.Strokes
             text.MaxTextHeight = bottomRight.Y - center.Y;
             // TODO: Fix Origin text point. For now its just an estimation
             center.X = 0.85 * center.X;
+
+            drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
             drawingContext.DrawText(text, center);
+            drawingContext.Pop();
         }
     }
 }
