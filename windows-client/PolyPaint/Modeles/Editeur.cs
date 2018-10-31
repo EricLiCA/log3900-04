@@ -51,13 +51,14 @@ namespace PolyPaint.Modeles
                             ((CustomStroke)stroke).Unselect();
                     });
                 }
-                if (this.outilSelectionne == Line)
-                {
-                    this.traits.ToList().ForEach(stroke => ((CustomStroke)stroke).showAnchorPoints());
-                } else
-                {
-                    this.traits.ToList().ForEach(stroke => ((CustomStroke)stroke).hideAnchorPoints());
-                }
+
+                this.traits.ToList().FindAll(stroke => stroke is Anchorable).ForEach(stroke => {
+                    if (this.outilSelectionne == Line)
+                        ((Anchorable)stroke).showAnchorPoints();
+                    else
+                        ((Anchorable)stroke).hideAnchorPoints();
+                });
+
                 ProprieteModifiee();
             }
         }

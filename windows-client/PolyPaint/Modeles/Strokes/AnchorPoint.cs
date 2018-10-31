@@ -47,11 +47,6 @@ namespace PolyPaint.Modeles.Strokes
             return StrokeType.ANCHOR_POINT;
         }
 
-        public override void hideAnchorPoints()
-        {
-            // An Anchor Point does not have anchor points
-        }
-
         public override bool HitTest(Point point)
         {
             if (!this.strokes.has(this.ParentId)) return false;
@@ -74,11 +69,6 @@ namespace PolyPaint.Modeles.Strokes
         public override bool isSelectable()
         {
             return false;
-        }
-
-        public override void showAnchorPoints()
-        {
-            // An Anchor Point does not have anchor points
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

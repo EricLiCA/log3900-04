@@ -36,16 +36,6 @@ namespace PolyPaint.Modeles.Strokes
             return StrokeType.DRAG_HANDLE;
         }
 
-        public override void hideAnchorPoints()
-        {
-            // A Drag Handle does not have anchor points
-        }
-
-        public override void showAnchorPoints()
-        {
-            // A Drag Handle does not have anchor points
-        }
-
         public override bool HitTest(Point point)
         {
             if (!this.strokes.has(this.ParentId)) return false;

@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Strokes
 {
-     public abstract class ShapeStroke : CustomStroke
+     public abstract class ShapeStroke : CustomStroke, Anchorable
     {
         private double _rotation = 0;
         public double Rotation {
@@ -154,13 +150,13 @@ namespace PolyPaint.Modeles.Strokes
             }
         }
 
-        public override void showAnchorPoints()
+        public void showAnchorPoints()
         {
             this.AnchorPointVisibility = true;
             this.Refresh();
         }
 
-        public override void hideAnchorPoints()
+        public void hideAnchorPoints()
         {
             this.AnchorPointVisibility = false;
             this.Refresh();

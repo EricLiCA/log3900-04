@@ -27,11 +27,9 @@ namespace PolyPaint.Modeles
         public abstract StrokeType getType();
         public abstract new bool HitTest(Point point);
         public abstract bool isSelectable();
+        public abstract void Move(StylusPointCollection newPoints);
         public abstract void addDragHandles();
         public abstract void deleteDragHandles();
-        public abstract void showAnchorPoints();
-        public abstract void hideAnchorPoints();
-        public abstract void Move(StylusPointCollection newPoints);
         public abstract void handleMoved(Guid id, Point point);
 
         public bool isLocked()

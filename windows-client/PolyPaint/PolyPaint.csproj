@@ -178,6 +178,7 @@
     <Compile Include="Modeles\ChatModel.cs" />
     <Compile Include="Modeles\ChatRoom.cs" />
     <Compile Include="Modeles\ChatUser.cs" />
+    <Compile Include="Modeles\Strokes\Anchorable.cs" />
     <Compile Include="Modeles\Strokes\BaseElipseStroke.cs" />
     <Compile Include="Modeles\Strokes\BaseLine.cs" />
     <Compile Include="Modeles\Strokes\BaseRectangleStroke.cs" />
