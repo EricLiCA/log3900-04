@@ -2,13 +2,12 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
-using System.Windows.Forms;
 using PolyPaint.VueModeles;
-using PolyPaint.Vues;
-using System.Net;
 using System.IO;
 using System.Windows.Controls;
-using RestSharp;
+using PolyPaint.Modeles.Outils;
+using System.Windows.Input;
+using System.Windows.Forms;
 
 namespace PolyPaint
 {
@@ -35,20 +34,20 @@ namespace PolyPaint
         }
 
         // Pour la gestion de l'affichage de position du pointeur.
-        private void surfaceDessin_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e) => textBlockPosition.Text = "";
-        private void surfaceDessin_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Canvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e) => textBlockPosition.Text = "";
+        private void Canvas_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Point p = e.GetPosition(surfaceDessin);
+            Point p = e.GetPosition(Canvas);
             textBlockPosition.Text = Math.Round(p.X) + ", " + Math.Round(p.Y) + "px";
         }
 
         private void DupliquerSelection(object sender, RoutedEventArgs e)
-        {          
-            surfaceDessin.CopySelection();
-            surfaceDessin.Paste();
+        {
+            Canvas.CopySelection();
+            Canvas.Paste();
         }
 
-        private void SupprimerSelection(object sender, RoutedEventArgs e) => surfaceDessin.CutSelection();
+        private void SupprimerSelection(object sender, RoutedEventArgs e) => Canvas.CutSelection();
 
         
         private void Menu_Change_Avatar_Click(object sender, System.EventArgs e)
@@ -80,8 +79,23 @@ namespace PolyPaint
             {
                 return;
             }
+            
+            ((VueModele)this.DataContext).ChoisirOutil.Execute((Tool)this.ToolSelection.SelectedItem);
+        }
 
-            ((VueModele)this.DataContext).ChoisirOutil.Execute(((ListBoxItem)this.ToolSelection.SelectedItem).Name);
+        private void Canvas_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            ((VueModele)this.DataContext).MouseUp.Execute(e.GetPosition((IInputElement)sender));
+        }
+
+        private void Canvas_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ((VueModele)this.DataContext).MouseDown.Execute(e.GetPosition((IInputElement)sender));
+        }
+
+        private void Canvas_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            ((VueModele)this.DataContext).MouseMove.Execute(e.GetPosition((IInputElement)sender));
         }
     }
 }

@@ -42,6 +42,8 @@
   ],
   "license": "GPL-3.0",
   "dependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "aws-sdk": "^2.332.0",
     "@types/supertest": "^2.0.6",
     "@types/uuid": "^3.4.4",
     "bcrypt-nodejs": "^0.0.3",

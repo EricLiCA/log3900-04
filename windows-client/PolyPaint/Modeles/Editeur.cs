@@ -1,7 +1,13 @@
-﻿using System.ComponentModel;
+﻿using PolyPaint.Modeles.Outils;
+using PolyPaint.Modeles.Tools;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Ink;
+using System.Windows.Media;
 
 namespace PolyPaint.Modeles
 {
@@ -16,9 +22,17 @@ namespace PolyPaint.Modeles
         public StrokeCollection traits = new StrokeCollection();
         private StrokeCollection traitsRetires = new StrokeCollection();
 
+        private Tool Lasso = new Lasso();
+        private Tool Pencil = new Pencil();
+        private Tool SegmentEraser = new SegmentEraser();
+        private Tool ObjectEraser = new ObjectEraser();
+        private Tool Rectangle = new Rectangle();
+        private Tool Elipse = new Elipse();
+        public List<Tool> Tools;
+
         // Outil actif dans l'éditeur
-        private string outilSelectionne = "crayon";
-        public string OutilSelectionne
+        private Tool outilSelectionne;
+        public Tool OutilSelectionne
         {
             get { return outilSelectionne; }
             set { outilSelectionne = value; ProprieteModifiee(); }
@@ -31,8 +45,8 @@ namespace PolyPaint.Modeles
             get { return pointeSelectionnee; }
             set
             {
-                OutilSelectionne = "crayon";
-                pointeSelectionnee = value;                                
+                OutilSelectionne = Pencil;
+                pointeSelectionnee = value;
                 ProprieteModifiee();
             }
         }
@@ -47,7 +61,6 @@ namespace PolyPaint.Modeles
             set
             {
                 couleurSelectionnee = value;
-                OutilSelectionne = "crayon";
                 ProprieteModifiee();
             }
         }
@@ -62,9 +75,21 @@ namespace PolyPaint.Modeles
             set
             {
                 tailleTrait = value;
-                OutilSelectionne = "crayon";
                 ProprieteModifiee();
             }
+        }
+
+        public Editeur()
+        {
+            this.outilSelectionne = this.Pencil;
+
+            this.Tools = new List<Tool>();
+            this.Tools.Add(Lasso);
+            this.Tools.Add(Pencil);
+            this.Tools.Add(SegmentEraser);
+            this.Tools.Add(ObjectEraser);
+            this.Tools.Add(Rectangle);
+            this.Tools.Add(Elipse);
         }
 
         /// <summary>
@@ -80,7 +105,23 @@ namespace PolyPaint.Modeles
         }
 
         // S'il y a au moins 1 trait sur la surface, il est possible d'exécuter Empiler.
-        public bool PeutEmpiler(object o) => (traits.Count > 0); 
+        public bool PeutEmpiler(object o) => (traits.Count > 0);
+
+        internal void MouseUp(Point point)
+        {
+            this.outilSelectionne.MouseUp(point, traits);
+        }
+
+        internal void MouseMove(Point point)
+        {
+            this.outilSelectionne.MouseMove(point, traits, (Color)ColorConverter.ConvertFromString(couleurSelectionnee));
+        }
+
+        internal void MouseDown(Point point)
+        {
+            this.outilSelectionne.MouseDown(point, traits);
+        }
+
         // On retire le trait le plus récent de la surface de dessin et on le place sur une pile.
         public void Empiler(object o)
         {
@@ -112,7 +153,7 @@ namespace PolyPaint.Modeles
         public void ChoisirPointe(string pointe) => PointeSelectionnee = pointe;
 
         // L'outil actif devient celui passé en paramètre.
-        public void ChoisirOutil(string outil) => OutilSelectionne = outil;
+        public void ChoisirOutil(Tool tool) => OutilSelectionne = tool;
 
         // On vide la surface de dessin de tous ses traits.
         public void Reinitialiser(object o) => traits.Clear();
