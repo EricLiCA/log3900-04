@@ -13,6 +13,7 @@ class RectangleView: UIView {
     let defaultHeight: CGFloat = 100.0
     let defaultWidth: CGFloat = 150.0
     let lineWidth: CGFloat = 1
+    let uuid = NSUUID.init().uuidString.lowercased()
     
     init(origin: CGPoint) {
         super.init(frame:CGRect(x: 0.0, y: 0.0, width: defaultWidth, height: defaultHeight))

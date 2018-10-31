@@ -25,7 +25,6 @@ class CanvasViewController: UIViewController {
     @IBOutlet weak var circleButton: UIButton!
     @IBOutlet weak var canvasView: UIView!
     @IBOutlet weak var triangleButton: UIButton!
-    
     var shapeType = ShapeType.None
     
     override func viewDidLoad() {
@@ -46,6 +45,7 @@ class CanvasViewController: UIViewController {
                 let tapPoint = tapGR.location(in: self.canvasView)
                 let shapeView = SquareView(origin: tapPoint)
                 self.canvasView.addSubview(shapeView)
+                print(shapeView.uuid)
             } else if (self.shapeType == ShapeType.Rectangle) {
                 let tapPoint = tapGR.location(in: self.canvasView)
                 let shapeView = RectangleView(origin: tapPoint)
