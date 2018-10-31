@@ -462,13 +462,29 @@
                                     <action selector="circleButton:" destination="0ef-6Q-afh" eventType="touchUpInside" id="OTV-l7-J29"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAW-67-39B">
+                                <rect key="frame" x="544" y="85" width="100" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Syd-HK-ie9"/>
+                                    <constraint firstAttribute="width" constant="100" id="usR-hF-U9z"/>
+                                </constraints>
+                                <state key="normal" title="Triangle">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="triangleTapped:" destination="0ef-6Q-afh" eventType="touchUpInside" id="qmN-Ub-QOf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9Qz-Ln-HK5" firstAttribute="leading" secondItem="QgM-s3-xb4" secondAttribute="leading" constant="19" id="3yK-9w-gwG"/>
+                            <constraint firstItem="MAW-67-39B" firstAttribute="leading" secondItem="o2o-Ky-ddt" secondAttribute="trailing" constant="22" id="Bi9-rn-907"/>
                             <constraint firstItem="9Qz-Ln-HK5" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="21" id="LHB-zJ-9h4"/>
                             <constraint firstItem="eGy-gY-gZG" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="59" id="NuQ-xd-n6Z"/>
                             <constraint firstItem="QgM-s3-xb4" firstAttribute="trailing" secondItem="eGy-gY-gZG" secondAttribute="trailing" constant="20" id="OOP-jc-59r"/>
+                            <constraint firstItem="MAW-67-39B" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="21" id="Q4K-nu-0du"/>
                             <constraint firstItem="o2o-Ky-ddt" firstAttribute="top" secondItem="QgM-s3-xb4" secondAttribute="top" constant="21" id="QXJ-Ln-b2Q"/>
                             <constraint firstItem="KMi-ax-6Ef" firstAttribute="leading" secondItem="4A3-IW-Hn6" secondAttribute="trailing" constant="33" id="Vep-Et-vUu"/>
                             <constraint firstItem="o2o-Ky-ddt" firstAttribute="leading" secondItem="KMi-ax-6Ef" secondAttribute="trailing" constant="36" id="Wlp-D0-X7O"/>
@@ -486,6 +502,7 @@
                         <outlet property="ellipseButton" destination="KMi-ax-6Ef" id="ohw-da-n12"/>
                         <outlet property="rectangleButton" destination="4A3-IW-Hn6" id="RnH-Aa-zSD"/>
                         <outlet property="squareButton" destination="9Qz-Ln-HK5" id="hbE-bi-Kf1"/>
+                        <outlet property="triangleButton" destination="MAW-67-39B" id="vr8-Iz-L0d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jGP-k9-3qL" userLabel="First Responder" sceneMemberID="firstResponder"/>
