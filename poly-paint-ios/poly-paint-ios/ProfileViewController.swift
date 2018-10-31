@@ -128,7 +128,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func getFriends() {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserManager.instance.id)
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserManager.instance.id!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
