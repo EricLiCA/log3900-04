@@ -139,9 +139,10 @@ namespace PolyPaint
 
                 scrolled = customStroke;
             });
-            
-            if (scrolled is ShapeStroke)
-                ((ShapeStroke)scrolled).Rotation = ((ShapeStroke)scrolled).Rotation += e.Delta / 8.0;
+
+            /* UNCOMMENT TO ENABLE ROTATING */
+            //if (scrolled is ShapeStroke)
+            //    ((ShapeStroke)scrolled).Rotation = ((ShapeStroke)scrolled).Rotation += e.Delta / 8.0;
         }
     }
 }

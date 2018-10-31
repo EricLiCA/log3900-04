@@ -41,13 +41,14 @@ namespace PolyPaint.Modeles.Tools
             List<Stroke> clickedHandles = clicked.FindAll(stroke => stroke is DragHandle);
             List<Stroke> clickedSelected = clicked.FindAll(stroke => ((CustomStroke)stroke).isSelected());
 
-            if (clickedHandles.Count > 0)
-            {
-                this.initialCursorPosition = point;
-                this.initialObjectPoints = clicked.Last().StylusPoints;
-                this.editing = (Movable)clickedHandles.Last();
-                return;
-            }
+            /* UNCOMMENT TO ENABLE RESIZING */
+            //if (clickedHandles.Count > 0)
+            //{
+            //    this.initialCursorPosition = point;
+            //    this.initialObjectPoints = clicked.Last().StylusPoints;
+            //    this.editing = (Movable)clickedHandles.Last();
+            //    return;
+            //}
 
             if (clickedSelected.Count > 0)
             {
