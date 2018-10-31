@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PrivateImageViewController: UIViewController {
+class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol {
     var image: Image?
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageProtectionLevelLabel: UILabel!
@@ -75,38 +75,11 @@ class PrivateImageViewController: UIViewController {
         if segue.identifier == "toChangeImagePassword" {
            let ProtectedImagePasswordVC = segue.destination as! ProtectedImagePasswordViewController
             ProtectedImagePasswordVC.image = self.image
+            ProtectedImagePasswordVC.changeImagePasswordProtocol = self
         }
     }
     
+    func setNewImage (image: Image?){
+        
+    }
 }
-
-/*if image?.protectionLevel != "public" {
- let makePublicAction = UIAlertAction(title: "Public", style: .default, handler: { (alert: UIAlertAction!) -> Void in
- //  Do some action here.
- })
- alertController.addAction(makePublicAction)
- }
- if image?.protectionLevel != "private" {
- let makePrivateAction = UIAlertAction(title: "Private", style: .default, handler: { (alert: UIAlertAction!) -> Void in
- //  Do some destructive action here.
- })
- alertController.addAction(makePrivateAction)
- }
- 
- if image?.protectionLevel != "protected" {
- let makeProtectedAction = UIAlertAction(title: "Protective", style: .default, handler: { (alert: UIAlertAction!) -> Void in
- //  Do some destructive action here.
- })
- alertController.addAction(makeProtectedAction)
- }
- 
- let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
- //  Do something here upon cancellation.
- })
- alertController.addAction(cancelAction)*/
-
-/*if let popoverController = alertController.popoverPresentationController {
- popoverController.sourceView = self.view
- popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
- popoverController.permittedArrowDirections = []
- }*/

@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol ChangeImagePasswordProtocol {
+    func setNewImage (image: Image?)
+}
+
 class ProtectedImagePasswordViewController: UIViewController {
     var image: Image?
+    var changeImagePasswordProtocol: ChangeImagePasswordProtocol?
     @IBOutlet weak var newPasswordTextField: UITextField!
     @IBOutlet weak var confirmNewPasswordTextField: UITextField!
     @IBOutlet weak var passwordsDontMatchLabel: UILabel!
@@ -21,11 +26,11 @@ class ProtectedImagePasswordViewController: UIViewController {
         super.viewDidLoad()
         self.hideLabels()
         if (image?.protectionLevel == "protected") {
-            self.titleLabel.text = "Change " + (image?.title)! + " Password"
+            self.titleLabel.text = "Change Image Password"
             self.changePassBtn.setTitle("Change password", for: [])
         }
         else {
-            self.titleLabel.text = "Set " + (image?.title)! + " Password"
+            self.titleLabel.text = "Set Image Password"
             self.changePassBtn.setTitle("Set Password", for: [])
         }
     }
@@ -47,12 +52,12 @@ class ProtectedImagePasswordViewController: UIViewController {
     }
     
     func changePassword(password: String) {
-        print("ello")
         let urlString = "http://localhost:3000/v2/images/" + (image?.id)!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "PUT"
+        
         let imageToSend: [String: Any] = [
             "ownerId": (image?.ownerId)!,
             "title" :(image?.title)!,
@@ -61,24 +66,22 @@ class ProtectedImagePasswordViewController: UIViewController {
             "thumbnailUrl": "", // leave empty until thumbnails are supported. Would cause a nil crash while unwrapping otherwise
             "fullImageUrl": (image?.fullImageUrl)!,
             ]
+        
         let jsonData = try? JSONSerialization.data(withJSONObject: imageToSend, options: .prettyPrinted)
-    let jsonString = String(data: jsonData!, encoding: .utf8)
-        print(jsonString!)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
         
         let task = session.dataTask(with: request) { data, response, error in
             _ = response as? HTTPURLResponse
             guard let data = data, error == nil else {
-                print("here")
                 return
             }
             
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-            print(responseJSON!)
             if (responseJSON as? [String: Any]) != nil {
-                print(responseJSON)
                 DispatchQueue.main.async {
+                    self.image?.protectionLevel = "protected"
+                    self.image?.password = self.newPasswordTextField.text!
                     self.changePasswordDone()
                 }
             }
@@ -89,6 +92,7 @@ class ProtectedImagePasswordViewController: UIViewController {
     
     func changePasswordDone() {
         self.resetPasswordLabelAndTextFields()
+        self.changeImagePasswordProtocol?.setNewImage(image: self.image)
         self.showPasswordChangedLabel()
     }
     
@@ -102,7 +106,6 @@ class ProtectedImagePasswordViewController: UIViewController {
     }
     
     func hideLabels(){
-        
         self.passwordsDontMatchLabel.isHidden = true
         self.passwordChangedLabel.isHidden = true
     }
