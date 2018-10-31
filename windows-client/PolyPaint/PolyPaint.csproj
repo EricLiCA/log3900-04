@@ -198,6 +198,7 @@
     <Compile Include="Modeles\Strokes\PersonStroke.cs" />
     <Compile Include="Modeles\Strokes\ShapeStroke.cs" />
     <Compile Include="Modeles\Strokes\Textable.cs" />
+    <Compile Include="Modeles\Strokes\UseCaseStroke.cs" />
     <Compile Include="Modeles\Tools\BasicCanvasTool.cs" />
     <Compile Include="Modeles\Tools\ClassDiagram.cs" />
     <Compile Include="Modeles\Tools\Line.cs" />
@@ -211,6 +212,7 @@
     <Compile Include="Modeles\Tools\Rectangle.cs" />
     <Compile Include="Modeles\Tools\Elipse.cs" />
     <Compile Include="Modeles\PendingFriendRequest.cs" />
+    <Compile Include="Modeles\Tools\UseCase.cs" />
     <Compile Include="Modeles\User.cs" />
     <Compile Include="Services\MessagingViewManager.cs" />
     <Compile Include="Services\ServerService.cs" />

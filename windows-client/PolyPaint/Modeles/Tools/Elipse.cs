@@ -1,6 +1,5 @@
 ﻿using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
-using System;
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;

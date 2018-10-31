@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
@@ -36,7 +32,7 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
             
             DrawingAttributes originalDa = drawingAttributes.Clone();
-            SolidColorBrush fillBrush = new SolidColorBrush(drawingAttributes.Color);
+            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(new Color()) : new SolidColorBrush(drawingAttributes.Color);
             fillBrush.Freeze();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
             outlinePen.Freeze();

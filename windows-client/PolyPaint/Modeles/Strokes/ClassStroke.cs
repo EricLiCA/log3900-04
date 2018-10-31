@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
@@ -15,9 +13,16 @@ namespace PolyPaint.Modeles.Strokes
     {
         public List<string> textContent;
 
-        public ClassStroke(StylusPointCollection pts, CustomStrokeCollection strokes, List<string> text) : base(pts, strokes)
+        public ClassStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
-            this.textContent = text;
+            this.textContent = new List<string>
+            {
+                "Class title",
+                "--",
+                "Attribute",
+                "--",
+                "Operations()"
+            }; ;
         }
 
         public string GetText()
