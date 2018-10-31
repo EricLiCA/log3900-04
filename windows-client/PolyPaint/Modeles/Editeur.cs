@@ -33,6 +33,7 @@ namespace PolyPaint.Modeles
         private Tool Person = new Person();
         private Tool Line = new Line();
         private Tool ClassDiagram = new ClassDiagram();
+        private Tool UseCase = new UseCase();
         public List<Tool> Tools;
 
         // Outil actif dans l'éditeur
@@ -160,6 +161,7 @@ namespace PolyPaint.Modeles
             this.Tools.Add(Person);
             this.Tools.Add(Line);
             this.Tools.Add(ClassDiagram);
+            this.Tools.Add(UseCase);
         }
 
         /// <summary>

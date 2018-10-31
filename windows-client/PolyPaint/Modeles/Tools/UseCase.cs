@@ -7,7 +7,7 @@ using PolyPaint.Modeles.Strokes;
 
 namespace PolyPaint.Modeles.Tools
 {
-    class ClassDiagram : Tool
+    class UseCase : Tool
     {
         private bool IsDrawing;
         private Point MouseLeftDownPoint;
@@ -15,17 +15,17 @@ namespace PolyPaint.Modeles.Tools
 
         public override string GetToolImage()
         {
-            return "/Resources/classDiagram-tool.png";
+            return "/Resources/useCase-tool.png";
         }
 
         public override string GetToolName()
         {
-            return "classDiagram";
+            return "useCase";
         }
 
         public override string GetToolTooltip()
         {
-            return "Class Diagram";
+            return "Use Case";
         }
 
         public override void MouseDown(Point point, CustomStrokeCollection strokes)
@@ -45,10 +45,9 @@ namespace PolyPaint.Modeles.Tools
             if (ActiveStroke != null)
                 strokes.Remove(ActiveStroke);
 
-            ActiveStroke = new ClassStroke(pts, strokes);
+            ActiveStroke = new UseCaseStroke(pts, strokes);
             ActiveStroke.DrawingAttributes.Color = selectedColor;
             strokes.Add(ActiveStroke);
-
         }
 
         public override void MouseUp(Point point, CustomStrokeCollection strokes)

@@ -24,7 +24,7 @@ namespace PolyPaint.Modeles.Strokes
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
             DrawingAttributes originalDa = drawingAttributes.Clone();
-            SolidColorBrush fillBrush = new SolidColorBrush(drawingAttributes.Color);
+            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(new Color()) : new SolidColorBrush(drawingAttributes.Color);
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
             
             if (this.isSelected())
