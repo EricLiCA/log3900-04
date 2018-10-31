@@ -196,6 +196,7 @@
     <Compile Include="Modeles\Strokes\DragHandle.cs" />
     <Compile Include="Modeles\Strokes\PersonStroke.cs" />
     <Compile Include="Modeles\Strokes\ShapeStroke.cs" />
+    <Compile Include="Modeles\Strokes\Textable.cs" />
     <Compile Include="Modeles\Tools\BasicCanvasTool.cs" />
     <Compile Include="Modeles\Tools\ClassDiagram.cs" />
     <Compile Include="Modeles\Tools\Line.cs" />

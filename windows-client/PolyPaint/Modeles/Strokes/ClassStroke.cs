@@ -11,13 +11,24 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Strokes
 {
-    class ClassStroke : BaseRectangleStroke
+    class ClassStroke : BaseRectangleStroke, Textable
     {
         public List<string> textContent;
 
         public ClassStroke(StylusPointCollection pts, CustomStrokeCollection strokes, List<string> text) : base(pts, strokes)
         {
             this.textContent = text;
+        }
+
+        public string GetText()
+        {
+            return textContent.Aggregate((a, b) => a + "\r\n" + b);
+        }
+
+        public void SetText(string text)
+        {
+            this.textContent = text.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
+            this.Refresh();
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
@@ -38,7 +49,7 @@ namespace PolyPaint.Modeles.Strokes
                 var point = topLeft;
                 point.Y += wordSize * 1.25 * line;
                 if (point.Y + wordSize * 1.25 > bottomRight.Y) return;
-
+                
                 if (textLine == "--")
                 {
                     var secondPoint = bottomRight;

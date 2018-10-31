@@ -43,6 +43,14 @@ namespace PolyPaint.Modeles
             set
             {
                 outilSelectionne = value;
+                if (this.outilSelectionne != EditTool)
+                {
+                    this.EditingStroke = null;
+                    this.traits.ToList().ForEach(stroke => {
+                        if (((CustomStroke)stroke).getType() == StrokeType.OBJECT)
+                            ((CustomStroke)stroke).Unselect();
+                    });
+                }
                 if (this.outilSelectionne == Line)
                 {
                     this.traits.ToList().ForEach(stroke => ((CustomStroke)stroke).showAnchorPoints());
@@ -54,14 +62,29 @@ namespace PolyPaint.Modeles
             }
         }
 
-
-        // Class diagram preview
-        private string classContent;
-        public string ClassContent
-        {
-            get { return classContent; }
-            set { classContent = value; ProprieteModifiee(); }
+        public string ActiveItemTextContent {
+            get
+            {
+                if (this.traits.has(this.EditingStroke))
+                {
+                    CustomStroke editing = this.traits.get(this.EditingStroke);
+                    if (editing is Textable)
+                        return ((Textable)editing).GetText();
+                }
+                return "";
+            }
+            set
+            {
+                if (this.traits.has(this.EditingStroke))
+                {
+                    CustomStroke editing = this.traits.get(this.EditingStroke);
+                    if (editing is Textable)
+                        ((Textable)editing).SetText(value);
+                }
+                this.ProprieteModifiee();
+            }
         }
+        
         private string editingStroke;
         public string EditingStroke
         {
@@ -74,6 +97,10 @@ namespace PolyPaint.Modeles
                 }
 
                 this.editingStroke = value;
+
+                if (this.editingStroke != null)
+                    this.OutilSelectionne = this.EditTool;
+                ProprieteModifiee("ActiveItemTextContent");
             }
         }
 
@@ -133,7 +160,6 @@ namespace PolyPaint.Modeles
             this.Tools.Add(Person);
             this.Tools.Add(Line);
             this.Tools.Add(ClassDiagram);
-            this.classContent = "";
         }
 
         /// <summary>
@@ -169,13 +195,6 @@ namespace PolyPaint.Modeles
                 else
                 {
                     ((CustomStroke)stroke).Select();
-                    if (stroke.GetType() == typeof(ClassStroke))
-                    {
-                        ClassStroke classStroke = (ClassStroke)stroke;
-                        classStroke.textContent.ForEach(textLine => {
-                            this.ClassContent = this.ClassContent + textLine + "\r\n";
-                        });
-                    }
                 }
             });
         }
@@ -183,7 +202,12 @@ namespace PolyPaint.Modeles
         internal void Edit(CustomStroke stroke)
         {
             if (stroke.isLocked()) return;
-            if (!stroke.isSelected()) return;
+            if (!stroke.isSelected())
+            {
+                StrokeCollection sc = new StrokeCollection();
+                sc.Add(stroke);
+                this.SelectStrokes(sc);
+            };
 
             if (stroke.isEditing())
             {
@@ -200,7 +224,7 @@ namespace PolyPaint.Modeles
             this.outilSelectionne.MouseMove(point, traits, (Color)ColorConverter.ConvertFromString(couleurSelectionnee));
             this.traits.ToList().ForEach(stroke =>
             {
-                if (((CustomStroke)stroke).getType() == StrokeType.ANCHOR_POINT)
+                if (stroke is AnchorPoint)
                 {
                     ((AnchorPoint)stroke).Hover = ((CustomStroke)stroke).HitTest(point);
                 }
@@ -247,16 +271,5 @@ namespace PolyPaint.Modeles
 
         // On vide la surface de dessin de tous ses traits.
         public void Reinitialiser(object o) => traits.Clear();
-        
-        public void ChangeClassContent(string content)
-        {
-            if (this.traits.has(EditingStroke) && this.traits.get(EditingStroke).GetType() == typeof(ClassStroke))
-            {
-                ClassStroke editingClass = (ClassStroke)this.traits.get(EditingStroke);
-                char[] chartab = { '\r', '\n' };
-                editingClass.textContent = content.Split(chartab, StringSplitOptions.RemoveEmptyEntries).ToList();
-                editingClass.Refresh();
-            }
-        }
     }
 }
