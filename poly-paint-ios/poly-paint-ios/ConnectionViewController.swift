@@ -20,14 +20,14 @@ class ConnectionViewController: UIViewController {
         super.viewDidLoad()
         
         // set username
-        self.pseudonym = UserDefaults.standard.string(forKey: "username") ?? ""
+        self.pseudonym = UserManager.instance.username
         if (self.pseudonym != "anonymous") {
             self.username.text = self.pseudonym
             self.username.isEnabled = false
         }
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -36,12 +36,12 @@ class ConnectionViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Send username and server address to ChatViewController
         if (self.pseudonym == "anonymous") {
-            UserDefaults.standard.set("anonymous " + self.username.text!, forKey: "username")
+            UserManager.instance.username = "anonymous " + self.username.text!
         }
         
         guard segue.destination is ChatViewController else { return }
         let destinationVC = segue.destination as! ChatViewController
-        destinationVC.username = UserDefaults.standard.string(forKey: "username")!
+        destinationVC.username = UserManager.instance.username
         SocketService.instance.serverAddress = serverAddress.text!
     }
     

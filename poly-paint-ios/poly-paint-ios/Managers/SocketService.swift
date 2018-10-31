@@ -19,6 +19,13 @@ class SocketService {
     private init() {
         manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(true), .compress])
         socketIOClient = manager.defaultSocket
+    }
+    
+    func connect() {
         socketIOClient.connect()
+    }
+    
+    func disconnect() {
+        socketIOClient.disconnect()
     }
 }

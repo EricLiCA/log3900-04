@@ -11,8 +11,14 @@ import Foundation
 class UserManager {
     static let instance = UserManager()
     var username = ""
-    var id = ""
-    var token = ""
+    var id: String? = nil
+    var token: String? = nil
     
-    init() {}
+    private init() {}
+    
+    func reset() {
+        username = ""
+        id = nil
+        token = nil
+    }
 }

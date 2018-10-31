@@ -32,7 +32,7 @@ class AccountSettingsViewController: UIViewController {
     @IBAction func changeUsernameTapped(_ sender: UIButton) {
         let username = self.newUsernameTextField.text
         
-        if username != "" && username != UserDefaults.standard.string(forKey: "username") {
+        if username != "" && username != UserManager.instance.username {
             self.changeUsername(username: username!)
         }
     }
@@ -49,14 +49,14 @@ class AccountSettingsViewController: UIViewController {
     }
 
     func changePassword(password: String) {
-        let urlString = "http://localhost:3000/v2/users/" + UserDefaults.standard.string(forKey: "id")!
+        let urlString = "http://localhost:3000/v2/users/" + UserManager.instance.id!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "PUT"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["password": password as Any, "token": UserDefaults.standard.string(forKey: "token") as Any]
+        let paramToSend: [String: Any] = ["password": password as Any, "token": UserManager.instance.token as Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -78,14 +78,14 @@ class AccountSettingsViewController: UIViewController {
     }
     
     func changeUsername(username: String) {
-        let urlString = "http://localhost:3000/v2/users/" + UserDefaults.standard.string(forKey: "id")!
+        let urlString = "http://localhost:3000/v2/users/" + UserManager.instance.id!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "PUT"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["username": username as Any, "token": UserDefaults.standard.string(forKey: "token") as Any]
+        let paramToSend: [String: Any] = ["username": username as Any, "token": UserManager.instance.id as Any]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -111,7 +111,7 @@ class AccountSettingsViewController: UIViewController {
     }
     
     func changeUsernameDone(username: String) {
-        UserDefaults.standard.set(username, forKey: "username")
+        UserManager.instance.username = username
         self.resetUsernameLabelAndTextFields()
         self.showUsernameChangedLabel()
         self.sendUpdateUsernameNotification()

@@ -18,7 +18,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Models
     var messagesArray = [String]()
-    var username: String = UserDefaults.standard.string(forKey: "username")!
+    var username: String = UserManager.instance.username
     var invalidUsername: Bool = false
     
     // MARK: - Initialization and Cleanup
@@ -101,10 +101,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             } else {
                 self.setConnectionStatus(as: "connected")
             }
-        }
-        
-        SocketService.instance.socketIOClient.on(clientEvent: .connect) {data, ack in
-            SocketService.instance.socketIOClient.emit("setUsername", self.username)
         }
         
         SocketService.instance.socketIOClient.on(clientEvent: .error) { (data, ack) in

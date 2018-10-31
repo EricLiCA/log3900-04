@@ -102,7 +102,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @objc func updateUsernameAlert(sender: AnyObject) {
-        self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
+        self.usernameLabel.text = UserManager.instance.username
     }
     
     @objc func removeAsFriendAlert(_ notification: Notification) {
@@ -128,7 +128,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func getFriends() {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserManager.instance.id)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
@@ -160,13 +160,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func deleteFriendship(friendId: String, friendNumberInArray: Int) {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserManager.instance.id!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "DELETE"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["friendId": friendId, "token": UserDefaults.standard.string(forKey: "token")!]
+        let paramToSend: [String: Any] = ["friendId": friendId, "token": UserManager.instance.token!]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -199,7 +199,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func setUsernameLabel() {
-        self.usernameLabel.text = UserDefaults.standard.string(forKey: "username")
+        self.usernameLabel.text = UserManager.instance.username
     }
     
     /*

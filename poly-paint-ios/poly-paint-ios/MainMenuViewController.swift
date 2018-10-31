@@ -17,6 +17,7 @@ class MainMenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SocketService.instance.connect()
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainMenuViewController.back(sender:)))
         self.navigationItem.leftBarButtonItem = newBackButton
@@ -24,7 +25,7 @@ class MainMenuViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -37,15 +38,12 @@ class MainMenuViewController: UIViewController {
     }
     
     func resetDefaults() {
-        let defaults = UserDefaults.standard
-        let dictionary = defaults.dictionaryRepresentation()
-        dictionary.keys.forEach { key in
-            defaults.removeObject(forKey: key)
-        }
+        UserManager.instance.reset()
+        SocketService.instance.disconnect()
     }
     
     func checkIfAnonymous() {
-        if UserDefaults.standard.string(forKey: "id") == nil {
+        if UserManager.instance.id == nil {
             self.blockProfile()
         }
     }
@@ -57,13 +55,13 @@ class MainMenuViewController: UIViewController {
     
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

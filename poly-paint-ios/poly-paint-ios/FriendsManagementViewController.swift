@@ -176,13 +176,13 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func sendFriendRequest(user: User) {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserManager.instance.id!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["friendId": user.id, "token": UserDefaults.standard.string(forKey: "token")!]
+        let paramToSend: [String: Any] = ["friendId": user.id, "token": UserManager.instance.token!]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -207,13 +207,13 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func sendAcceptFriendship(user: User) {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserManager.instance.id!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["friendId": user.id, "token": UserDefaults.standard.string(forKey: "token")!]
+        let paramToSend: [String: Any] = ["friendId": user.id, "token": UserManager.instance.token!]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -235,13 +235,13 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func sendRefuseFriendship(userId: String) {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserManager.instance.id!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "DELETE"
         
         // Setting data to send
-        let paramToSend: [String: Any] = ["friendId": userId, "token": UserDefaults.standard.string(forKey: "token")!]
+        let paramToSend: [String: Any] = ["friendId": userId, "token": UserManager.instance.token!]
         let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonData
@@ -262,7 +262,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func loadPendingFrienships() {
-        let urlString = "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")! + "?pending=true"
+        let urlString = "http://localhost:3000/v2/friendships/" + UserManager.instance.id! + "?pending=true"
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
@@ -290,7 +290,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func loadUsersNotInFriends() {
-        let urlString = "http://localhost:3000/v2/usersExceptFriends/" + UserDefaults.standard.string(forKey: "id")!
+        let urlString = "http://localhost:3000/v2/usersExceptFriends/" + UserManager.instance.id!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)

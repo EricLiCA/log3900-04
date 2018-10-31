@@ -9,7 +9,7 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-
+    
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -20,12 +20,12 @@ class LoginViewController: UIViewController {
         authenticationFailedLabel.isHidden = true
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     @IBAction func loginTapped(_ sender: UIButton) {
         let username = usernameTextField.text
         let password = passwordTextField.text
@@ -37,9 +37,9 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func anonymousLogin(_ sender: UIButton) {
-        UserDefaults.standard.set("anonymous", forKey: "username")
-        UserDefaults.standard.set(nil, forKey: "id")
-        UserDefaults.standard.set(nil, forKey: "token")
+        UserManager.instance.username = "anonymous"
+        UserManager.instance.token = nil
+        UserManager.instance.id = nil
         performSegue(withIdentifier: "toMainMenu", sender: self)
     }
     
@@ -63,9 +63,9 @@ class LoginViewController: UIViewController {
             if let responseJSON = responseJSON as? [String: Any] {
                 print(responseJSON)
                 DispatchQueue.main.async {
-                    UserDefaults.standard.set(user, forKey: "username")
-                    UserDefaults.standard.set(responseJSON["id"], forKey: "id")
-                    UserDefaults.standard.set(responseJSON["token"], forKey: "token")
+                    UserManager.instance.username = user
+                    UserManager.instance.id = responseJSON["id"] as? String
+                    UserManager.instance.token = responseJSON["token"] as? String
                     self.loginDone()
                 }
             } else {
@@ -95,13 +95,13 @@ class LoginViewController: UIViewController {
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

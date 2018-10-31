@@ -54,10 +54,13 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         channelsTableView.delegate = self
         channelsTableView.dataSource = self
         setUpNotifications()
+        SocketService.instance.socketIOClient.on(clientEvent: .connect) {data, ack in
+            SocketService.instance.socketIOClient.emit("setUsername", UserManager.instance.username)
+        }
         self.getChannels()
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -160,14 +163,14 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 

@@ -12,6 +12,7 @@ class ChatManager {
     static let instance = ChatManager();
     let chatRooms = [String: [ChatRoom]]();
     let activeUsers = Set<String>();
+    var currentChannel = ""
     
     private init() {}
 }
