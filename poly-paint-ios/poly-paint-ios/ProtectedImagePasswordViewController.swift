@@ -14,11 +14,20 @@ class ProtectedImagePasswordViewController: UIViewController {
     @IBOutlet weak var confirmNewPasswordTextField: UITextField!
     @IBOutlet weak var passwordsDontMatchLabel: UILabel!
     @IBOutlet weak var passwordChangedLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var changePassBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideLabels()
-        // Do any additional setup after loading the view.
+        if (image?.protectionLevel == "protected") {
+            self.titleLabel.text = "Change " + (image?.title)! + " Password"
+            self.changePassBtn.setTitle("Change password", for: [])
+        }
+        else {
+            self.titleLabel.text = "Set " + (image?.title)! + " Password"
+            self.changePassBtn.setTitle("Set Password", for: [])
+        }
     }
     
     override func didReceiveMemoryWarning() {

@@ -916,17 +916,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="dzw-Cd-5XK">
-                                <rect key="frame" x="269" y="392" width="230" height="241.5"/>
+                                <rect key="frame" x="269" y="392" width="230" height="271"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Image Password" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9b-Ax-lIx">
-                                        <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9b-Ax-lIx">
+                                        <rect key="frame" x="0.0" y="0.0" width="230" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="TW1-Am-yTt">
-                                        <rect key="frame" x="0.0" y="70.5" width="230" height="171"/>
+                                        <rect key="frame" x="0.0" y="100" width="230" height="171"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password changed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2Z-um-3SN">
                                                 <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
@@ -965,7 +965,7 @@
                                                     <constraint firstAttribute="height" constant="30" id="KZH-Hg-veR"/>
                                                     <constraint firstAttribute="width" constant="230" id="VxB-AR-Ryg"/>
                                                 </constraints>
-                                                <state key="normal" title="Change password">
+                                                <state key="normal">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -988,10 +988,12 @@
                         <viewLayoutGuide key="safeArea" id="8qN-vQ-PhD"/>
                     </view>
                     <connections>
+                        <outlet property="changePassBtn" destination="uJS-uU-DBl" id="2hX-eO-Lla"/>
                         <outlet property="confirmNewPasswordTextField" destination="aWk-G1-IoF" id="0D2-WV-0Bc"/>
                         <outlet property="newPasswordTextField" destination="QoY-to-VmB" id="fpl-Bi-SKL"/>
                         <outlet property="passwordChangedLabel" destination="n2Z-um-3SN" id="btb-dd-fzC"/>
                         <outlet property="passwordsDontMatchLabel" destination="PWF-Wt-e4C" id="h2Y-GM-CKp"/>
+                        <outlet property="titleLabel" destination="G9b-Ax-lIx" id="ze0-av-PE6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8vG-aV-sEp" userLabel="First Responder" sceneMemberID="firstResponder"/>
