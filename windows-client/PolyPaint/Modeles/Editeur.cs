@@ -43,6 +43,14 @@ namespace PolyPaint.Modeles
             set
             {
                 outilSelectionne = value;
+                if (this.outilSelectionne != EditTool)
+                {
+                    this.EditingStroke = null;
+                    this.traits.ToList().ForEach(stroke => {
+                        if (((CustomStroke)stroke).getType() == StrokeType.OBJECT)
+                            ((CustomStroke)stroke).Unselect();
+                    });
+                }
                 if (this.outilSelectionne == Line)
                 {
                     this.traits.ToList().ForEach(stroke => ((CustomStroke)stroke).showAnchorPoints());
@@ -89,6 +97,9 @@ namespace PolyPaint.Modeles
                 }
 
                 this.editingStroke = value;
+
+                if (this.editingStroke != null)
+                    this.OutilSelectionne = this.EditTool;
                 ProprieteModifiee("ActiveItemTextContent");
             }
         }
@@ -191,7 +202,12 @@ namespace PolyPaint.Modeles
         internal void Edit(CustomStroke stroke)
         {
             if (stroke.isLocked()) return;
-            if (!stroke.isSelected()) return;
+            if (!stroke.isSelected())
+            {
+                StrokeCollection sc = new StrokeCollection();
+                sc.Add(stroke);
+                this.SelectStrokes(sc);
+            };
 
             if (stroke.isEditing())
             {
@@ -208,7 +224,7 @@ namespace PolyPaint.Modeles
             this.outilSelectionne.MouseMove(point, traits, (Color)ColorConverter.ConvertFromString(couleurSelectionnee));
             this.traits.ToList().ForEach(stroke =>
             {
-                if (((CustomStroke)stroke).getType() == StrokeType.ANCHOR_POINT)
+                if (stroke is AnchorPoint)
                 {
                     ((AnchorPoint)stroke).Hover = ((CustomStroke)stroke).HitTest(point);
                 }
