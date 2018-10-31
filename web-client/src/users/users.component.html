@@ -1,1 +1,15 @@
 <p>Users</p>
+
+<links>
+    <div class="users">
+        <li class="userList" *ngFor="let user of users">
+            <a class="userImages" mdbWavesEffect (click)="userOnClic(user)">{{user.username}}</a>
+        </li>
+    </div>
+<links>
+
+<div class="images">
+    <li *ngFor="let image of userImages">
+        <img src={{image}}>
+    </li>
+</div>

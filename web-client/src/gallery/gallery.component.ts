@@ -1,6 +1,6 @@
 import { Component , OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ImageService } from '../services/gallery.service'
+import { ImageService } from '../services/gallery.service';
 
 @Component({
   selector: 'gallery-component',
