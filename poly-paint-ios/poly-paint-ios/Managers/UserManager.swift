@@ -11,6 +11,8 @@ import Foundation
 class UserManager {
     static let instance = UserManager()
     var username = ""
+    var id = ""
+    var token = ""
     
     init() {}
 }
