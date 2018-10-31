@@ -15,8 +15,9 @@ namespace PolyPaint.Modeles.Strokes
 
         public readonly string ParentId;
 
-        public DragHandle(StylusPointCollection pts, CustomStrokeCollection strokes, string parentId) : base(pts, strokes)
+        public DragHandle(StylusPointCollection pts, CustomStrokeCollection strokes, Guid id, string parentId) : base(pts, strokes)
         {
+            this.Id = id;
             this.ParentId = parentId;
         }
 
@@ -35,6 +36,16 @@ namespace PolyPaint.Modeles.Strokes
             return StrokeType.DRAG_HANDLE;
         }
 
+        public override void hideAnchorPoints()
+        {
+            // A Drag Handle does not have anchor points
+        }
+
+        public override void showAnchorPoints()
+        {
+            // A Drag Handle does not have anchor points
+        }
+
         public override bool HitTest(Point point)
         {
             return 6 > Math.Sqrt(Math.Pow(point.X - this.StylusPoints[0].X, 2) + Math.Pow(point.Y - this.StylusPoints[0].Y, 2));
@@ -43,6 +54,17 @@ namespace PolyPaint.Modeles.Strokes
         public override bool isSelectable()
         {
             return false;
+        }
+
+        public override void Move(StylusPointCollection newPoints)
+        {
+            if (this.strokes.has(this.ParentId))
+                ((CustomStroke)this.strokes.get(this.ParentId)).handleMoved(this.Id, newPoints[0].ToPoint());
+        }
+
+        public override void handleMoved(Guid id, Point point)
+        {
+            // An Anchor Point does not have anchor points
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

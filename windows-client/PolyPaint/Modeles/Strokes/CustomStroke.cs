@@ -15,7 +15,7 @@ namespace PolyPaint.Modeles
     {
         private bool Selected = false;
         private bool Locked = false;
-        public readonly Guid Id = Guid.NewGuid();
+        public Guid Id = Guid.NewGuid();
         private bool Editing = false;
         protected CustomStrokeCollection strokes;
 
@@ -29,6 +29,10 @@ namespace PolyPaint.Modeles
         public abstract bool isSelectable();
         public abstract void addDragHandles();
         public abstract void deleteDragHandles();
+        public abstract void showAnchorPoints();
+        public abstract void hideAnchorPoints();
+        public abstract void Move(StylusPointCollection newPoints);
+        public abstract void handleMoved(Guid id, Point point);
 
         public bool isLocked()
         {
@@ -89,6 +93,7 @@ namespace PolyPaint.Modeles
 
         }
 
+
         public void Unlock()
         {
             this.Locked = false;
@@ -97,13 +102,14 @@ namespace PolyPaint.Modeles
 
         public void Refresh()
         {
+            int index = -1;
             if (strokes.has(this.Id.ToString()))
             {
-                Console.WriteLine("isIn");
                 strokes.get(this.Id.ToString()).deleteDragHandles();
+                index = strokes.IndexOf(strokes.get(this.Id.ToString()));
                 strokes.Remove(strokes.get(this.Id.ToString()));
             }
-            strokes.Add(this.Clone());
+            strokes.Insert(index, this.Clone());
         }
     }
 

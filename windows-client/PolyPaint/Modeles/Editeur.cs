@@ -23,6 +23,7 @@ namespace PolyPaint.Modeles
         public CustomStrokeCollection traits = new CustomStrokeCollection();
         private CustomStrokeCollection traitsRetires = new CustomStrokeCollection();
 
+        private Tool EditTool = new Edit();
         private Tool Lasso = new Lasso();
         private Tool Pencil = new Pencil();
         private Tool SegmentEraser = new SegmentEraser();
@@ -39,7 +40,18 @@ namespace PolyPaint.Modeles
         public Tool OutilSelectionne
         {
             get { return outilSelectionne; }
-            set { outilSelectionne = value; ProprieteModifiee(); }
+            set
+            {
+                outilSelectionne = value;
+                if (this.outilSelectionne == Line)
+                {
+                    this.traits.ToList().ForEach(stroke => ((CustomStroke)stroke).showAnchorPoints());
+                } else
+                {
+                    this.traits.ToList().ForEach(stroke => ((CustomStroke)stroke).hideAnchorPoints());
+                }
+                ProprieteModifiee();
+            }
         }
 
 
@@ -58,7 +70,6 @@ namespace PolyPaint.Modeles
             {
                 if (this.editingStroke != null && this.traits.has(this.editingStroke))
                 {
-                    Console.WriteLine("stopedition");
                     this.traits.get(this.editingStroke).stopEditing();
                 }
 
@@ -80,7 +91,7 @@ namespace PolyPaint.Modeles
         }
 
         // Couleur des traits tracés par le crayon.
-        private string couleurSelectionnee = "Black";
+        private string couleurSelectionnee = "White";
         public string CouleurSelectionnee
         {
             get { return couleurSelectionnee; }
@@ -109,9 +120,10 @@ namespace PolyPaint.Modeles
 
         public Editeur()
         {
-            this.outilSelectionne = this.Lasso;
+            this.outilSelectionne = this.EditTool;
 
             this.Tools = new List<Tool>();
+            this.Tools.Add(EditTool);
             this.Tools.Add(Lasso);
             //this.Tools.Add(Pencil);
             //this.Tools.Add(SegmentEraser);
@@ -186,6 +198,13 @@ namespace PolyPaint.Modeles
         internal void MouseMove(Point point)
         {
             this.outilSelectionne.MouseMove(point, traits, (Color)ColorConverter.ConvertFromString(couleurSelectionnee));
+            this.traits.ToList().ForEach(stroke =>
+            {
+                if (((CustomStroke)stroke).getType() == StrokeType.ANCHOR_POINT)
+                {
+                    ((AnchorPoint)stroke).Hover = ((CustomStroke)stroke).HitTest(point);
+                }
+            });
         }
 
         internal void MouseDown(Point point)

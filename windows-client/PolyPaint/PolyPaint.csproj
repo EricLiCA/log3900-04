@@ -202,6 +202,7 @@
     <Compile Include="Modeles\Tools\ObjectEraser.cs" />
     <Compile Include="Modeles\Tools\Person.cs" />
     <Compile Include="Modeles\Tools\SegmentEraser.cs" />
+    <Compile Include="Modeles\Tools\Edit.cs" />
     <Compile Include="Modeles\Tools\Lasso.cs" />
     <Compile Include="Modeles\Tools\Pencil.cs" />
     <Compile Include="Modeles\Tools\Tool.cs" />
@@ -322,6 +323,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\position.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cursor.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\person_add.png" />

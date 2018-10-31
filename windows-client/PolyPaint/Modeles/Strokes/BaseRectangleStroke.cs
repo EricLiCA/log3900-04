@@ -34,12 +34,10 @@ namespace PolyPaint.Modeles.Strokes
                 drawingContext.DrawRectangle(null, selectedPen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
             }
 
-            //if (this.isEditing())
-            //{
-            //    Pen selectedPen = new Pen(new SolidColorBrush(Colors.Blue), 10);
-            //    selectedPen.Freeze();
-            //    drawingContext.DrawRectangle(null, selectedPen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
-            //}
+            if (this.AnchorPointVisibility)
+            {
+                this.addAnchorPoints();
+            }
 
             drawingContext.DrawRectangle(fillBrush, outlinePen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
 
