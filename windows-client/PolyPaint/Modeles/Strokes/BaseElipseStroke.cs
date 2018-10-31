@@ -15,19 +15,26 @@ namespace PolyPaint.Modeles.Strokes
     {
         public BaseElipseStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
+            
         }
 
         public override bool HitTest(Point point)
         {
+            Matrix antiRotationMatix = new Matrix();
+            antiRotationMatix.RotateAt(-Rotation, Center.X, Center.Y);
+            Point clickedLocal = antiRotationMatix.Transform(point);
+
             double width = Math.Abs(this.StylusPoints[0].X - this.StylusPoints[1].X);
             double height = Math.Abs(this.StylusPoints[0].Y - this.StylusPoints[1].Y);
             double centerX = (this.StylusPoints[0].X + this.StylusPoints[1].X) / 2;
             double centerY = (this.StylusPoints[0].Y + this.StylusPoints[1].Y) / 2;
-            return Math.Pow(point.X - centerX, 2) / Math.Pow(width / 2, 2) + Math.Pow(point.Y - centerY, 2) / Math.Pow(height / 2, 2) <= 1;
+            return Math.Pow(clickedLocal.X - centerX, 2) / Math.Pow(width / 2, 2) + Math.Pow(clickedLocal.Y - centerY, 2) / Math.Pow(height / 2, 2) <= 1;
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
+            drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
+            
             DrawingAttributes originalDa = drawingAttributes.Clone();
             SolidColorBrush fillBrush = new SolidColorBrush(drawingAttributes.Color);
             fillBrush.Freeze();
@@ -48,13 +55,15 @@ namespace PolyPaint.Modeles.Strokes
             {
                 this.addAnchorPoints();
             }
-
             drawingContext.DrawEllipse(fillBrush, outlinePen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
+            
 
             if (this.isEditing())
             {
                 this.addDragHandles();
             }
+
+            drawingContext.Pop();
         }
     }
 }

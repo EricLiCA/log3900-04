@@ -76,7 +76,10 @@ namespace PolyPaint.Modeles.Tools
             StylusPointCollection newPoints = new StylusPointCollection();
             this.initialObjectPoints.ToList().ForEach(originalPoint =>
             {
-                newPoints.Add(new StylusPoint(originalPoint.X + displacement.X, originalPoint.Y + displacement.Y));
+                if (editing is ShapeStroke)
+                    newPoints.Add(new StylusPoint(originalPoint.X + displacement.X, originalPoint.Y + displacement.Y));
+                else
+                    newPoints.Add(new StylusPoint(point.X, point.Y));
             });
 
             this.editing.Move(newPoints);

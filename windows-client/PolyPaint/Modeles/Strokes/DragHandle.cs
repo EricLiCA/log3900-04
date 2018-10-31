@@ -48,7 +48,21 @@ namespace PolyPaint.Modeles.Strokes
 
         public override bool HitTest(Point point)
         {
-            return 6 > Math.Sqrt(Math.Pow(point.X - this.StylusPoints[0].X, 2) + Math.Pow(point.Y - this.StylusPoints[0].Y, 2));
+            if (!this.strokes.has(this.ParentId)) return false;
+
+            CustomStroke parent = this.strokes.get(this.ParentId);
+            Point thisDisplayedPosition;
+            if (parent is ShapeStroke)
+            {
+                ShapeStroke shapeParent = (ShapeStroke)parent;
+                Matrix rotationMatix = new Matrix();
+                rotationMatix.RotateAt(shapeParent.Rotation, shapeParent.Center.X, shapeParent.Center.Y);
+                thisDisplayedPosition = rotationMatix.Transform(this.StylusPoints[0].ToPoint()) ;
+            }
+            else
+                thisDisplayedPosition = this.StylusPoints[0].ToPoint();
+            
+            return 6 > Math.Sqrt(Math.Pow(point.X - thisDisplayedPosition.X, 2) + Math.Pow(point.Y - thisDisplayedPosition.Y, 2));
         }
 
         public override bool isSelectable()
@@ -58,8 +72,10 @@ namespace PolyPaint.Modeles.Strokes
 
         public override void Move(StylusPointCollection newPoints)
         {
-            if (this.strokes.has(this.ParentId))
-                ((CustomStroke)this.strokes.get(this.ParentId)).handleMoved(this.Id, newPoints[0].ToPoint());
+            if (!this.strokes.has(this.ParentId)) return;
+
+            CustomStroke parent = this.strokes.get(this.ParentId);
+            parent.handleMoved(this.Id, newPoints[0].ToPoint());
         }
 
         public override void handleMoved(Guid id, Point point)
@@ -69,6 +85,10 @@ namespace PolyPaint.Modeles.Strokes
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
+            CustomStroke parent = this.strokes.get(this.ParentId);
+            if (parent is ShapeStroke)
+                drawingContext.PushTransform(new RotateTransform(((ShapeStroke)parent).Rotation, ((ShapeStroke)parent).Center.X, ((ShapeStroke)parent).Center.Y));
+
             DrawingAttributes originalDa = drawingAttributes.Clone();
             Pen pen = new Pen(new SolidColorBrush(Colors.Gray), 1.5);
 
@@ -82,6 +102,9 @@ namespace PolyPaint.Modeles.Strokes
             right.X = right.X + 6;
             drawingContext.DrawLine(pen, left, right);
             drawingContext.DrawLine(pen, up, down);
+
+            if (parent is ShapeStroke)
+                drawingContext.Pop();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace PolyPaint.Modeles.Strokes
 
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
-
+            Console.WriteLine(FIRST_POINT + "   -   " + SECOND_POINT);
         }
 
         public override void addDragHandles()
@@ -28,7 +28,7 @@ namespace PolyPaint.Modeles.Strokes
             var pointsSecond = new StylusPointCollection();
             pointsSecond.Add(new StylusPoint( this.StylusPoints[1].X, this.StylusPoints[1].Y));
             this.strokes.Add(new DragHandle(pointsSecond, this.strokes, SECOND_POINT, this.Id.ToString()));
-            
+
         }
 
         public override void deleteDragHandles()
@@ -75,6 +75,7 @@ namespace PolyPaint.Modeles.Strokes
 
         public override void handleMoved(Guid id, Point point)
         {
+            Console.WriteLine(id);
             if (this.FIRST_POINT.ToString() == id.ToString())
             {
                 this.StylusPoints[0] = new StylusPoint(point.X, point.Y);

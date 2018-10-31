@@ -54,7 +54,21 @@ namespace PolyPaint.Modeles.Strokes
 
         public override bool HitTest(Point point)
         {
-            return 10 > Math.Sqrt(Math.Pow(point.X - this.StylusPoints[0].X, 2) + Math.Pow(point.Y - this.StylusPoints[0].Y, 2));
+            if (!this.strokes.has(this.ParentId)) return false;
+
+            CustomStroke parent = this.strokes.get(this.ParentId);
+            Point thisDisplayedPosition;
+            if (parent is ShapeStroke)
+            {
+                ShapeStroke shapeParent = (ShapeStroke)parent;
+                Matrix rotationMatix = new Matrix();
+                rotationMatix.RotateAt(shapeParent.Rotation, shapeParent.Center.X, shapeParent.Center.Y);
+                thisDisplayedPosition = rotationMatix.Transform(this.StylusPoints[0].ToPoint());
+            }
+            else
+                thisDisplayedPosition = this.StylusPoints[0].ToPoint();
+
+            return 6 > Math.Sqrt(Math.Pow(point.X - thisDisplayedPosition.X, 2) + Math.Pow(point.Y - thisDisplayedPosition.Y, 2));
         }
 
         public override bool isSelectable()
@@ -71,8 +85,13 @@ namespace PolyPaint.Modeles.Strokes
         {
             Pen pen = new Pen(new SolidColorBrush(Colors.Gray), 2);
             Brush fill = Hover ? new SolidColorBrush(Colors.Red) : null;
+            
+            CustomStroke parent = this.strokes.get(this.ParentId);
+            if (parent is ShapeStroke)
+                drawingContext.PushTransform(new RotateTransform(((ShapeStroke)parent).Rotation, ((ShapeStroke)parent).Center.X, ((ShapeStroke)parent).Center.Y));
 
             drawingContext.DrawEllipse(fill, pen, this.StylusPoints[0].ToPoint(), 6, 6);
+            drawingContext.Pop();
 
         }
 

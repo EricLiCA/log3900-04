@@ -197,7 +197,8 @@
                            PreviewMouseLeftButtonUp="Canvas_PreviewMouseLeftButtonUp"
                            PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown"
                            PreviewMouseRightButtonUp="Canvas_PreviewMouseRightButtonUp"
-                           SelectionChanged="Canvas_SelectionChanged" />
+                           SelectionChanged="Canvas_SelectionChanged"
+                           PreviewMouseWheel="Canvas_PreviewMouseWheel"/>
             </Border>
         </Grid>
     </DockPanel>

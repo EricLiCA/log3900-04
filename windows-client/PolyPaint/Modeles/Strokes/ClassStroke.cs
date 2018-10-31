@@ -43,6 +43,8 @@ namespace PolyPaint.Modeles.Strokes
             Point bottomRight = new Point(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
             int wordSize = 18;
 
+            drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
+
             int line = 0;
             textContent.ForEach(textLine =>
             {
@@ -64,6 +66,8 @@ namespace PolyPaint.Modeles.Strokes
                 drawingContext.DrawText(text, point);
                 line += ((int)text.Height % wordSize) / 3;
             });
+
+            drawingContext.Pop();
         }
     }
 }

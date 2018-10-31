@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Windows.Ink;
 using PolyPaint.Modeles;
+using PolyPaint.Modeles.Strokes;
 
 namespace PolyPaint
 {
@@ -124,6 +125,23 @@ namespace PolyPaint
             {
                 ((VueModele)this.DataContext).Edit.Execute(clicked);
             }
+        }
+
+        private void Canvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            Point point = e.GetPosition((IInputElement)sender);
+            CustomStroke scrolled = null;
+            Canvas.Strokes.ToList().ForEach(stroke =>
+            {
+                CustomStroke customStroke = (CustomStroke)stroke;
+                if (!customStroke.isSelected()) return;
+                if (!customStroke.HitTest(point)) return;
+
+                scrolled = customStroke;
+            });
+            
+            if (scrolled is ShapeStroke)
+                ((ShapeStroke)scrolled).Rotation = ((ShapeStroke)scrolled).Rotation += e.Delta / 8.0;
         }
     }
 }

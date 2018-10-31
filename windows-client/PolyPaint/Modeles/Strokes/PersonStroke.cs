@@ -25,10 +25,14 @@ namespace PolyPaint.Modeles.Strokes
 
         public override bool HitTest(Point point)
         {
+            Matrix antiRotationMatix = new Matrix();
+            antiRotationMatix.RotateAt(-Rotation, Center.X, Center.Y);
+            Point clickedLocal = antiRotationMatix.Transform(point);
+
             Point topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
             Point bottomRight = new Point(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
 
-            return point.X > topLeft.X && point.X < bottomRight.X && point.Y > topLeft.Y && point.Y < bottomRight.Y;
+            return clickedLocal.X > topLeft.X && clickedLocal.X < bottomRight.X && clickedLocal.Y > topLeft.Y && clickedLocal.Y < bottomRight.Y;
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
@@ -61,6 +65,9 @@ namespace PolyPaint.Modeles.Strokes
             Point rightFoot = leftFoot;
             rightFoot.X += width;
 
+
+            drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
+
             if (this.isSelected())
             {
                 Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
@@ -78,10 +85,13 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.DrawLine(outlinePen, crouch, rightFoot);
             drawingContext.DrawLine(outlinePen, crouch, leftFoot);
 
+            drawingContext.Pop();
+
             if (this.isEditing())
             {
                 this.addDragHandles();
             }
+
         }
     }
 }
