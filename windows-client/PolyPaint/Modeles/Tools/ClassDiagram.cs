@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -7,7 +8,7 @@ using PolyPaint.Modeles.Strokes;
 
 namespace PolyPaint.Modeles.Tools
 {
-    class Line : Tool
+    class ClassDiagram : Tool
     {
         private bool IsDrawing;
         private Point MouseLeftDownPoint;
@@ -15,17 +16,17 @@ namespace PolyPaint.Modeles.Tools
 
         public override string GetToolImage()
         {
-            return "/Resources/line-tool.png";
+            return "/Resources/classDiagram-tool.png";
         }
 
         public override string GetToolName()
         {
-            return "line";
+            return "classDiagram";
         }
 
         public override string GetToolTooltip()
         {
-            return "Line";
+            return "Class Diagram";
         }
 
         public override void MouseDown(Point point, CustomStrokeCollection strokes)
@@ -38,18 +39,23 @@ namespace PolyPaint.Modeles.Tools
         {
             if (!IsDrawing) return;
 
-            StylusPointCollection pts = new StylusPointCollection
-            {
-                new StylusPoint(MouseLeftDownPoint.X, MouseLeftDownPoint.Y),
-                new StylusPoint(point.X, point.Y)
-            };
+            StylusPointCollection pts = new StylusPointCollection();
+            pts.Add(new StylusPoint(MouseLeftDownPoint.X, MouseLeftDownPoint.Y));
+            pts.Add(new StylusPoint(point.X, point.Y));
 
             if (ActiveStroke != null)
                 strokes.Remove(ActiveStroke);
 
-            ActiveStroke = new BaseLine(pts, strokes);
+            List<string> text = new List<string>();
+            text.Add("Class title");
+            text.Add("--");
+            text.Add("Attribute");
+            text.Add("--");
+            text.Add("Operations()");
+            ActiveStroke = new ClassStroke(pts, strokes, text);
             ActiveStroke.DrawingAttributes.Color = selectedColor;
             strokes.Add(ActiveStroke);
+
         }
 
         public override void MouseUp(Point point, CustomStrokeCollection strokes)

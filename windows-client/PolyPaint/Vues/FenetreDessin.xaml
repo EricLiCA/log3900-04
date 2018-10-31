@@ -24,7 +24,6 @@
         </x:Array>
     </Page.Resources>
     <DockPanel>
-
         <Border Name="Chat_Reserved_Zone" DockPanel.Dock="Right" BorderThickness="0.5,0,0,0" BorderBrush="#77000000" Width="250" Background="AliceBlue" Visibility="Collapsed">
             <Frame Name="Chat_Docker" />
         </Border>
@@ -154,6 +153,12 @@
                 <TextBlock Name="textBlockPosition" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             </StackPanel>
         </Border>
+        <Border BorderThickness="0.5,0,0,0" BorderBrush="#77000000" Width="174" Background="AliceBlue" HorizontalAlignment="Right" VerticalAlignment="Center" Height="285.25" DockPanel.Dock="Right">
+            <StackPanel>
+                <TextBox Name="ClassPreview" Text="{Binding Path=ClassContent, UpdateSourceTrigger=PropertyChanged, Mode=OneWay }" Style="{StaticResource MaterialDesignTextAreaTextBox}" Margin="5" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Height="236.96"/>
+                <Button  Command="{Binding Path=ChangeClassContent}" CommandParameter="{Binding Text, ElementName=ClassPreview }"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Save" Margin="0,0,5,0" />
+            </StackPanel>
+        </Border>
 
         <Grid DockPanel.Dock="Left" Margin="0,1,0,0">
             <Grid.ColumnDefinitions>
@@ -164,33 +169,33 @@
                 <RowDefinition Name="ligne" Height="310" />
                 <RowDefinition Height="6" />
             </Grid.RowDefinitions>
-            <Thumb Name="horizontal" Grid.Row="0" Grid.Column="1" Background="White" 
+            <Thumb x:Name="horizontal" Grid.Row="0" Grid.Column="1" Background="White" 
                       Width="6" Height="6" DragDelta="GlisserMouvementRecu" 
                       DragStarted="GlisserCommence" DragCompleted="GlisserTermine"
                       />
-            <Thumb Name="diagonal" Grid.Row="1" Grid.Column="1" Background="White" 
+            <Thumb x:Name="diagonal" Grid.Row="1" Grid.Column="1" Background="White" 
                       Width="6" Height="6" DragDelta="GlisserMouvementRecu" 
                       DragStarted="GlisserCommence" DragCompleted="GlisserTermine"
                       />
-            <Thumb Name="vertical" Grid.Row="1" Grid.Column="0" Background="White" 
+            <Thumb x:Name="vertical" Grid.Row="1" Grid.Column="0" Background="White" 
                       Width="6" Height="6" DragDelta="GlisserMouvementRecu" 
                       DragStarted="GlisserCommence" DragCompleted="GlisserTermine"
                       />
             <Border BorderThickness="5,5,0,0">
-                <InkCanvas ClipToBounds="True" Grid.Column="0" Grid.Row="0" Name="Canvas" 
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.3" BlurRadius="10"/>
+                </Border.Effect>
+                <InkCanvas ClipToBounds="True" Grid.Column="0" Grid.Row="0" x:Name="Canvas" 
                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"                           
                            MouseLeave="Canvas_MouseLeave" MouseMove="Canvas_MouseMove"                                              
-                           Strokes="{Binding Path=Traits, Mode=OneTime}"
-                           EditingMode="{Binding Path=OutilSelectionne, Converter={StaticResource convertisseurModeEdition}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                           DefaultDrawingAttributes="{Binding Path=AttributsDessin, Mode=OneTime}"
+                           Strokes="{Binding Traits, Mode=OneTime}"
+                           EditingMode="{Binding OutilSelectionne, Converter={StaticResource convertisseurModeEdition}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                           DefaultDrawingAttributes="{Binding AttributsDessin, Mode=OneTime}"
                            PreviewMouseMove="Canvas_PreviewMouseMove"
                            PreviewMouseLeftButtonUp="Canvas_PreviewMouseLeftButtonUp"
                            PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown"
                            PreviewMouseRightButtonUp="Canvas_PreviewMouseRightButtonUp"
                            SelectionChanged="Canvas_SelectionChanged" />
-                <Border.Effect>
-                    <DropShadowEffect Opacity="0.3" BlurRadius="10"/>
-                </Border.Effect>
             </Border>
         </Grid>
     </DockPanel>

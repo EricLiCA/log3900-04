@@ -13,7 +13,7 @@ namespace PolyPaint.Modeles.Strokes
 {
     class ClassStroke : BaseRectangleStroke
     {
-        private List<string> textContent;
+        public List<string> textContent;
 
         public ClassStroke(StylusPointCollection pts, CustomStrokeCollection strokes, List<string> text) : base(pts, strokes)
         {

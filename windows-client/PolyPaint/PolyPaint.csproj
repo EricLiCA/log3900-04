@@ -197,6 +197,7 @@
     <Compile Include="Modeles\Strokes\PersonStroke.cs" />
     <Compile Include="Modeles\Strokes\ShapeStroke.cs" />
     <Compile Include="Modeles\Tools\BasicCanvasTool.cs" />
+    <Compile Include="Modeles\Tools\ClassDiagram.cs" />
     <Compile Include="Modeles\Tools\Line.cs" />
     <Compile Include="Modeles\Tools\ObjectEraser.cs" />
     <Compile Include="Modeles\Tools\Person.cs" />
@@ -369,6 +370,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\line-tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\classDiagram-tool.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

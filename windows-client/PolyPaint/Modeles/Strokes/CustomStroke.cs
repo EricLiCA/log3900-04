@@ -95,7 +95,7 @@ namespace PolyPaint.Modeles
             this.Refresh();
         }
 
-        private void Refresh()
+        public void Refresh()
         {
             if (strokes.has(this.Id.ToString()))
             {
