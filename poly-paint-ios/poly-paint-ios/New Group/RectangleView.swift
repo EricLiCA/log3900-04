@@ -86,8 +86,8 @@ class RectangleView: UIView {
     @objc func didRotate(rotationGR: UIRotationGestureRecognizer) {
         /*self.superview!.bringSubview(toFront: self)
         let rotation = rotationGR.rotation
-        self.transform = CGAffineTransform(rotationAngle: rotation)
-        //self.transform = self.transform.rotated(by: .pi/50)
+        //self.transform = CGAffineTransform(rotationAngle: rotation)
+        self.transform = self.transform.rotated(by: rotation)
         rotationGR.rotation = 0.0*/
         
         if rotationGR.state == .began {
