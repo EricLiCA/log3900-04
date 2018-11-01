@@ -46,6 +46,12 @@ namespace PolyPaint.Modeles.Tools
                 this.initialCursorPosition = point;
                 this.initialObjectPoints = clicked.Last().StylusPoints;
                 this.editing = (Movable)clickedHandles.Last();
+
+                if (strokes.get(((DragHandle)this.editing).ParentId) is BaseLine)
+                    strokes.ToList().FindAll(stroke => stroke is Anchorable).ForEach(stroke => {
+                        ((Anchorable)stroke).showAnchorPoints();
+                    });
+
                 return;
             }
 
@@ -77,6 +83,9 @@ namespace PolyPaint.Modeles.Tools
         public override void MouseUp(Point point, CustomStrokeCollection strokes)
         {
             this.editing = null;
+            strokes.ToList().FindAll(stroke => stroke is Anchorable).ForEach(stroke => {
+                ((Anchorable)stroke).hideAnchorPoints();
+            });
         }
     }
 }

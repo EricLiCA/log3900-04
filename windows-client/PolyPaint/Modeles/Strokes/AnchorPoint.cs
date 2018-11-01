@@ -13,6 +13,10 @@ namespace PolyPaint.Modeles.Strokes
     class AnchorPoint : CustomStroke
     {
         public readonly string ParentId;
+        public readonly int AnchorIndex;
+
+        public Anchorable Parent { get => (Anchorable)this.strokes.get(this.ParentId); }
+
         private bool hover = false;
         public bool Hover
         {
@@ -27,16 +31,18 @@ namespace PolyPaint.Modeles.Strokes
             }
         }
 
-        public AnchorPoint(StylusPointCollection pts, CustomStrokeCollection strokes, string parentId) : base(pts, strokes)
+        public AnchorPoint(StylusPointCollection pts, CustomStrokeCollection strokes, Guid id, Anchorable parent, int anchorIndex) : base(pts, strokes)
         {
-            this.ParentId = parentId;
+            this.Id = id;
+            this.ParentId = ((CustomStroke)parent).Id.ToString();
+            this.AnchorIndex = anchorIndex;
         }
 
         public override bool HitTest(Point point)
         {
             if (!this.strokes.has(this.ParentId)) return false;
 
-            CustomStroke parent = this.strokes.get(this.ParentId);
+            Anchorable parent = this.Parent;
             Point thisDisplayedPosition;
             if (parent is ShapeStroke)
             {
@@ -48,7 +54,7 @@ namespace PolyPaint.Modeles.Strokes
             else
                 thisDisplayedPosition = this.StylusPoints[0].ToPoint();
 
-            return 6 > Math.Sqrt(Math.Pow(point.X - thisDisplayedPosition.X, 2) + Math.Pow(point.Y - thisDisplayedPosition.Y, 2));
+            return 10 > Math.Sqrt(Math.Pow(point.X - thisDisplayedPosition.X, 2) + Math.Pow(point.Y - thisDisplayedPosition.Y, 2));
         }
 
         public override bool isSelectable()

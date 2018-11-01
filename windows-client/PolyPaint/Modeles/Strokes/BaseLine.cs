@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
@@ -11,9 +13,29 @@ namespace PolyPaint.Modeles.Strokes
         Guid FIRST_POINT = Guid.NewGuid();
         Guid SECOND_POINT = Guid.NewGuid();
 
+        string FirstAnchorId;
+        string SecondAncorId;
+        int FirstAnchorIndex;
+        int SecondAncorIndex;
+
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
-            Console.WriteLine(FIRST_POINT + "   -   " + SECOND_POINT);
+        }
+
+        public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes,
+                        string firstAnchorId, int firstAnchorIndex,
+                        string secondAnchorId, int secondAnchorIndex) : base(pts, strokes)
+        {
+            if (firstAnchorId != null)
+            {
+                this.FirstAnchorId = firstAnchorId;
+                this.FirstAnchorIndex = firstAnchorIndex;
+            }
+            if (secondAnchorId != null)
+            {
+                this.SecondAncorId = secondAnchorId;
+                this.SecondAncorIndex = secondAnchorIndex;
+            }
         }
 
         public void addDragHandles()
@@ -54,15 +76,44 @@ namespace PolyPaint.Modeles.Strokes
 
         public void handleMoved(Guid id, Point point)
         {
-            Console.WriteLine(id);
+            AnchorPoint anchor = null;
+            string hoverId = null;
+            int hoverIndex = -1;
+            List<Stroke> hoveredAnchors = strokes.ToList().FindAll(stroke => stroke is AnchorPoint && ((CustomStroke)stroke).HitTest(point));
+            if (hoveredAnchors.Count > 0)
+            {
+                anchor = (AnchorPoint)hoveredAnchors.Last();
+                point = anchor.Parent.getAnchorPointPosition(anchor.AnchorIndex);
+                hoverId = anchor.ParentId;
+                hoverIndex = anchor.AnchorIndex;
+            }
+
             if (this.FIRST_POINT.ToString() == id.ToString())
             {
-                this.StylusPoints[0] = new StylusPoint(point.X, point.Y);
+                this.FirstAnchorId = hoverId;
+                this.FirstAnchorIndex = hoverIndex;
+                if (hoverId == null || anchor == null)
+                    this.StylusPoints[0] = new StylusPoint(point.X, point.Y);
+                else
+                {
+                    Point clip = anchor.Parent.getAnchorPointPosition(hoverIndex);
+                    this.StylusPoints[0] = new StylusPoint(clip.X, clip.Y);
+                }
+
                 this.Refresh();
             }
             else if (this.SECOND_POINT.ToString() == id.ToString())
             {
-                this.StylusPoints[1] = new StylusPoint(point.X, point.Y);
+                this.SecondAncorId = hoverId;
+                this.SecondAncorIndex = hoverIndex;
+                if (hoverId == null || anchor == null)
+                    this.StylusPoints[1] = new StylusPoint(point.X, point.Y);
+                else
+                {
+                    Point clip = anchor.Parent.getAnchorPointPosition(hoverIndex);
+                    this.StylusPoints[1] = new StylusPoint(clip.X, clip.Y);
+                }
+
                 this.Refresh();
             }
         }
@@ -85,6 +136,26 @@ namespace PolyPaint.Modeles.Strokes
             {
                 this.addDragHandles();
             }
+        }
+
+        internal void anchorableMoved(Anchorable anchorable)
+        {
+            bool changed = false;
+            if (((CustomStroke)anchorable).Id.ToString() == this.FirstAnchorId)
+            {
+                Point newPoint = anchorable.getAnchorPointPosition(this.FirstAnchorIndex);
+                this.StylusPoints[0] = new StylusPoint(newPoint.X, newPoint.Y);
+                changed = true;
+            }
+
+            if (((CustomStroke)anchorable).Id.ToString() == this.SecondAncorId)
+            {
+                Point newPoint = anchorable.getAnchorPointPosition(this.SecondAncorIndex);
+                this.StylusPoints[1] = new StylusPoint(newPoint.X, newPoint.Y);
+                changed = true;
+            }
+
+            if (changed) this.Refresh();
         }
     }
 }
