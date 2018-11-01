@@ -16,6 +16,7 @@ namespace PolyPaint.Modeles.Strokes
                 _rotation = value % 360;
                 _rotation -= value % 10;
                 this.Refresh();
+                this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableMoved(this));
             }
         }
 
@@ -186,6 +187,7 @@ namespace PolyPaint.Modeles.Strokes
 
             this.StylusPoints = newPoints;
             this.Refresh();
+            this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableMoved(this));
         }
 
         private new void Refresh()
