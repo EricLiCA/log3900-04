@@ -12,10 +12,10 @@ export class ImageService {
     ) { }
 
   /** GET heroes from the server */
-  getImages (): Promise<String[]> {
+  getImages (): Promise<Image[]> {
     return this.http.get(this.apiUrl).toPromise().then((data: Array<Image>) => {
       const imageUrls = data.map((singleFullImage) => {
-        return singleFullImage.fullImageUrl;
+        return singleFullImage;
       })
       return imageUrls;
     });

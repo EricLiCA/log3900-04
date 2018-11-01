@@ -1,5 +1,4 @@
 import { Component , OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ImageService } from '../services/gallery.service';
 
 @Component({
@@ -10,16 +9,18 @@ import { ImageService } from '../services/gallery.service';
 export class GalleryComponent {
 
   private images: String[];
+  private date: Date = new Date();
 
   constructor(
-    private http: HttpClient,
     private imageService: ImageService
   ) { }
 
   /** GET images from the server */
   ngOnInit()  {
     this.imageService.getImages().then(result => {
-      this.images = result;
+      this.images = result.map(elem => {
+        return elem.fullImageUrl;
+      });
     });
   }
 }

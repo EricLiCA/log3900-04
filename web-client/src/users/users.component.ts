@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { UserService } from '../services/user.service';
 import { User } from './User';
 import { ActivatedRoute } from '@angular/router';
@@ -17,7 +16,6 @@ export class UsersComponent {
   private userImages: String[];
 
   constructor(
-    private http: HttpClient,
     private userService: UserService
   ) { }
 
