@@ -180,6 +180,7 @@
     <Compile Include="Modeles\ChatUser.cs" />
     <Compile Include="Modeles\Strokes\Anchorable.cs" />
     <Compile Include="Modeles\Strokes\BaseElipseStroke.cs" />
+    <Compile Include="Modeles\Strokes\BaseTriangleStroke.cs" />
     <Compile Include="Modeles\Strokes\BaseLine.cs" />
     <Compile Include="Modeles\Strokes\BaseRectangleStroke.cs" />
     <Compile Include="Modeles\Strokes\AnchorPoint.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Modeles\Tools\Edit.cs" />
     <Compile Include="Modeles\Tools\Lasso.cs" />
     <Compile Include="Modeles\Tools\Pencil.cs" />
+    <Compile Include="Modeles\Tools\Triangle.cs" />
     <Compile Include="Modeles\Tools\Tool.cs" />
     <Compile Include="Modeles\Tools\Rectangle.cs" />
     <Compile Include="Modeles\Tools\Elipse.cs" />
@@ -350,6 +352,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\eraser-tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\triangle-outline.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\circle-outline.png" />

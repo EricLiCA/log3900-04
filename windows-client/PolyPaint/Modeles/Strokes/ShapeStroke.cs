@@ -25,15 +25,15 @@ namespace PolyPaint.Modeles.Strokes
             get => new Point((StylusPoints[0].X + StylusPoints[1].X) / 2, (StylusPoints[0].Y + StylusPoints[1].Y) / 2);
         }
         
-        Guid TOP_LEFT = Guid.NewGuid();
-        Guid BOTTOM_LEFT = Guid.NewGuid();
-        Guid TOP_RIGHT = Guid.NewGuid();
-        Guid BOTTOM_RIGHT = Guid.NewGuid();
+        protected Guid TOP_LEFT = Guid.NewGuid();
+        protected Guid BOTTOM_LEFT = Guid.NewGuid();
+        protected Guid TOP_RIGHT = Guid.NewGuid();
+        protected Guid BOTTOM_RIGHT = Guid.NewGuid();
 
-        Guid TOP = Guid.NewGuid();
-        Guid BOTTOM = Guid.NewGuid();
-        Guid LEFT = Guid.NewGuid();
-        Guid RIGHT = Guid.NewGuid();
+        protected Guid TOP = Guid.NewGuid();
+        protected Guid BOTTOM = Guid.NewGuid();
+        protected Guid LEFT = Guid.NewGuid();
+        protected Guid RIGHT = Guid.NewGuid();
 
         protected bool AnchorPointVisibility = false;
 
@@ -227,7 +227,7 @@ namespace PolyPaint.Modeles.Strokes
             return ((AnchorPoint)this.strokes.get(anchorId)).HitTest(point);
         }
 
-        public Point getAnchorPointPosition(int index)
+        public virtual Point getAnchorPointPosition(int index)
         {
             var topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
             double height = Math.Abs(this.StylusPoints[0].Y - this.StylusPoints[1].Y);

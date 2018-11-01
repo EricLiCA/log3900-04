@@ -30,6 +30,7 @@ namespace PolyPaint.Modeles
         private Tool ObjectEraser = new ObjectEraser();
         private Tool Rectangle = new Rectangle();
         private Tool Elipse = new Elipse();
+        private Tool Triangle = new Triangle();
         private Tool Person = new Person();
         private Tool Line = new Line();
         private Tool ClassDiagram = new ClassDiagram();
@@ -159,6 +160,7 @@ namespace PolyPaint.Modeles
             this.Tools.Add(ObjectEraser);
             this.Tools.Add(Rectangle);
             this.Tools.Add(Elipse);
+            this.Tools.Add(Triangle);
             this.Tools.Add(Person);
             this.Tools.Add(Line);
             this.Tools.Add(ClassDiagram);
