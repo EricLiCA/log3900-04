@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -63,10 +63,47 @@ namespace PolyPaint.Modeles.Strokes
 
         public override bool HitTest(Point point)
         {
-            Point topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
-            Point bottomRight = new Point(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
+            return 10 > FindDistanceToSegment(point, this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint());
+        }
 
-            return point.X > topLeft.X && point.X < bottomRight.X && point.Y > topLeft.Y && point.Y < bottomRight.Y;
+        private double FindDistanceToSegment( Point pt, Point p1, Point p2)
+        {
+            double dx = p2.X - p1.X;
+            double dy = p2.Y - p1.Y;
+            if ((dx == 0) && (dy == 0))
+            {
+                // It's a point not a line segment.
+                dx = pt.X - p1.X;
+                dy = pt.Y - p1.Y;
+                return Math.Sqrt(dx * dx + dy * dy);
+            }
+
+            // Calculate the t that minimizes the distance.
+            double t = ((pt.X - p1.X) * dx + (pt.Y - p1.Y) * dy) /
+                (dx * dx + dy * dy);
+
+            // See if this represents one of the segment's
+            // end points or a point in the middle.
+            if (t < 0)
+            {
+                Point closest = new Point(p1.X, p1.Y);
+                dx = pt.X - p1.X;
+                dy = pt.Y - p1.Y;
+            }
+            else if (t > 1)
+            {
+                Point closest = new Point(p2.X, p2.Y);
+                dx = pt.X - p2.X;
+                dy = pt.Y - p2.Y;
+            }
+            else
+            {
+                Point closest = new Point(p1.X + t * dx, p1.Y + t * dy);
+                dx = pt.X - closest.X;
+                dy = pt.Y - closest.Y;
+            }
+
+            return Math.Sqrt(dx * dx + dy * dy);
         }
 
         public override bool isSelectable()
