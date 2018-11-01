@@ -77,7 +77,11 @@ namespace PolyPaint.Modeles.Strokes
                 drawingContext.DrawLine(selectedPen, crouch, rightFoot);
                 drawingContext.DrawLine(selectedPen, crouch, leftFoot);
             }
-
+            
+            if (this.AnchorPointVisibility)
+            {
+                this.addAnchorPoints();
+            }
 
             drawingContext.DrawEllipse(new SolidColorBrush(Colors.White), outlinePen, headPos, width / 2.5, height / 7);
             drawingContext.DrawLine(outlinePen, neck, crouch);
