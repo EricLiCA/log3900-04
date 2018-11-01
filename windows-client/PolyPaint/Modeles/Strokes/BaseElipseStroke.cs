@@ -32,7 +32,7 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
             
             DrawingAttributes originalDa = drawingAttributes.Clone();
-            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(new Color()) : new SolidColorBrush(drawingAttributes.Color);
+            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(drawingAttributes.Color);
             fillBrush.Freeze();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
             outlinePen.Freeze();
