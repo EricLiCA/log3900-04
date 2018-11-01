@@ -112,9 +112,8 @@ class DrawViewController: UIViewController {
             case .None:
                 print("nothing")
             }
-            
+
             UIColor.blue.set()
-            
             self.currentContext?.setLineWidth(4)
             self.currentContext?.addPath(bezier.cgPath)
             self.currentContext?.strokePath()

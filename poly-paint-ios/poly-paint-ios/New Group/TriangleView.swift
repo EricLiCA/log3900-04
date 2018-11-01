@@ -37,6 +37,7 @@ class TriangleView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
+        print("called draw")
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = self.trianglePathInRect(rect: insetRect)
         UIColor.white.setFill()

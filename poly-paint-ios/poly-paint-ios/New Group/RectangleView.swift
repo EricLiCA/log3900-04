@@ -22,7 +22,8 @@ class RectangleView: UIView {
         self.center = origin
         self.backgroundColor = UIColor.clear
         initGestureRecognizers()
-        self.transform.rotated(by: .pi/2)
+        self.transform = self.transform.rotated(by: .pi/6)
+        self.transform = self.transform.scaledBy(x: 1, y: 2)
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -84,13 +85,13 @@ class RectangleView: UIView {
     }
     
     @objc func didRotate(rotationGR: UIRotationGestureRecognizer) {
-        /*self.superview!.bringSubview(toFront: self)
+        self.superview!.bringSubview(toFront: self)
         let rotation = rotationGR.rotation
         //self.transform = CGAffineTransform(rotationAngle: rotation)
         self.transform = self.transform.rotated(by: rotation)
-        rotationGR.rotation = 0.0*/
+        rotationGR.rotation = 0.0
         
-        if rotationGR.state == .began {
+        /*if rotationGR.state == .began {
             rotationGR.rotation = self.lastRotation
             self.originalRotation = rotationGR.rotation
         } else if rotationGR.state == .changed {
@@ -98,7 +99,7 @@ class RectangleView: UIView {
             rotationGR.view?.transform = CGAffineTransform(rotationAngle: newRotation)
         } else if rotationGR.state == .ended {
             lastRotation = rotationGR.rotation
-        }
+        }*/
     }
     
     func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {

@@ -37,7 +37,10 @@ class CanvasViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
     }
+    
+    
     
     @objc func didTap(tapGR: UITapGestureRecognizer) {
         if(self.canvasView.frame.contains(tapGR.location(in: self.view))) {
@@ -64,6 +67,7 @@ class CanvasViewController: UIViewController {
                 self.canvasView.addSubview(shapeView)
             }
         }
+        
     }
     
     @IBAction func squareTapped(_ sender: UIButton) {
