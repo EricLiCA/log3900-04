@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -28,10 +29,10 @@ namespace PolyPaint.Modeles.Strokes
         Guid TOP_RIGHT = Guid.NewGuid();
         Guid BOTTOM_RIGHT = Guid.NewGuid();
 
-        AnchorPoint TOP;
-        AnchorPoint BOTTOM;
-        AnchorPoint LEFT;
-        AnchorPoint RIGHT;
+        Guid TOP = Guid.NewGuid();
+        Guid BOTTOM = Guid.NewGuid();
+        Guid LEFT = Guid.NewGuid();
+        Guid RIGHT = Guid.NewGuid();
 
         protected bool AnchorPointVisibility = false;
 
@@ -80,6 +81,8 @@ namespace PolyPaint.Modeles.Strokes
 
         public void addAnchorPoints()
         {
+            this.deleteAnchorPoints();
+
             if (!this.strokes.has(this.Id.ToString())) return;
 
             var topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
@@ -87,67 +90,44 @@ namespace PolyPaint.Modeles.Strokes
             double width = Math.Abs(this.StylusPoints[0].X - this.StylusPoints[1].X);
             
             int index = this.strokes.IndexOf(this.strokes.get(Id.ToString()));
-            if (TOP == null)
-            {
-                var points = new StylusPointCollection();
-                points.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y - 2));
-                TOP = new AnchorPoint(points, this.strokes, this.Id.ToString());
-                this.strokes.Insert(index, TOP);
-            }
-            if (BOTTOM == null)
-            {
-                var points = new StylusPointCollection();
-                points.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height + 2));
-                BOTTOM = new AnchorPoint(points, this.strokes, this.Id.ToString());
-                this.strokes.Insert(index, BOTTOM);
-            }
-            if (LEFT == null)
-            {
-                var points = new StylusPointCollection();
-                points.Add(new StylusPoint(topLeft.X - 2, topLeft.Y + height / 2));
-                LEFT = new AnchorPoint(points, this.strokes, this.Id.ToString());
-                this.strokes.Insert(index, LEFT);
-            }
-            if (RIGHT == null)
-            {
-                var points = new StylusPointCollection();
-                points.Add(new StylusPoint(topLeft.X + width + 2, topLeft.Y + height / 2));
-                RIGHT = new AnchorPoint(points, this.strokes, this.Id.ToString());
-                this.strokes.Insert(index, RIGHT);
-            }
+            
+            var points1 = new StylusPointCollection();
+            points1.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y - 2));
+            points1.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y));
+            var anchor1 = new AnchorPoint(points1, this.strokes, TOP, this, 3);
+            this.strokes.Insert(index, anchor1);
+            
+            var points2 = new StylusPointCollection();
+            points2.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height + 2));
+            points2.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height));
+            var anchor2 = new AnchorPoint(points2, this.strokes, BOTTOM, this, 1);
+            this.strokes.Insert(index, anchor2);
+            
+            var points3 = new StylusPointCollection();
+            points3.Add(new StylusPoint(topLeft.X - 2, topLeft.Y + height / 2));
+            points3.Add(new StylusPoint(topLeft.X, topLeft.Y + height / 2));
+            var anchor3 = new AnchorPoint(points3, this.strokes, LEFT, this, 2);
+            this.strokes.Insert(index, anchor3);
+            
+            var points4 = new StylusPointCollection();
+            points4.Add(new StylusPoint(topLeft.X + width + 2, topLeft.Y + height / 2));
+            points4.Add(new StylusPoint(topLeft.X + width, topLeft.Y + height / 2));
+            var anchor4 = new AnchorPoint(points4, this.strokes, RIGHT, this, 0);
+            this.strokes.Insert(index, anchor4);
+            
 
         }
 
         public void deleteAnchorPoints()
         {
-            if (this.TOP != null)
-            {
-                if (this.strokes.has(TOP.Id.ToString()))
-                    this.strokes.Remove(this.strokes.get(TOP.Id.ToString()));
-
-                this.TOP = null;
-            }
-            if (this.BOTTOM != null)
-            {
-                if (this.strokes.has(BOTTOM.Id.ToString()))
-                    this.strokes.Remove(this.strokes.get(BOTTOM.Id.ToString()));
-
-                this.BOTTOM = null;
-            }
-            if (this.LEFT != null)
-            {
-                if (this.strokes.has(LEFT.Id.ToString()))
-                    this.strokes.Remove(this.strokes.get(LEFT.Id.ToString()));
-
-                this.LEFT = null;
-            }
-            if (this.RIGHT != null)
-            {
-                if (this.strokes.has(RIGHT.Id.ToString()))
-                    this.strokes.Remove(this.strokes.get(RIGHT.Id.ToString()));
-
-                this.RIGHT = null;
-            }
+            if (this.strokes.has(TOP.ToString()))
+                this.strokes.Remove(this.strokes.get(TOP.ToString()));
+            if (this.strokes.has(BOTTOM.ToString()))
+                this.strokes.Remove(this.strokes.get(BOTTOM.ToString()));
+            if (this.strokes.has(LEFT.ToString()))
+                this.strokes.Remove(this.strokes.get(LEFT.ToString()));
+            if (this.strokes.has(RIGHT.ToString()))
+                this.strokes.Remove(this.strokes.get(RIGHT.ToString()));
         }
 
         public void showAnchorPoints()
@@ -166,6 +146,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.StylusPoints = newPoints;
             this.Refresh();
+            this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableMoved(this));
         }
 
         public void handleMoved(Guid id, Point point)
@@ -218,6 +199,59 @@ namespace PolyPaint.Modeles.Strokes
         public override bool isSelectable()
         {
             return true;
+        }
+
+        public bool isOnAnchorPoint(int index, Point point)
+        {
+            string anchorId = null;
+            switch (index)
+            {
+                case 0:
+                    anchorId = RIGHT.ToString();
+                    break;
+                case 1:
+                    anchorId = BOTTOM.ToString();
+                    break;
+                case 2:
+                    anchorId = LEFT.ToString();
+                    break;
+                case 3:
+                    anchorId = TOP.ToString();
+                    break;
+            }
+
+            if (anchorId == null || !this.strokes.has(anchorId)) return false;
+
+            return ((AnchorPoint)this.strokes.get(anchorId)).HitTest(point);
+        }
+
+        public Point getAnchorPointPosition(int index)
+        {
+            var topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
+            double height = Math.Abs(this.StylusPoints[0].Y - this.StylusPoints[1].Y);
+            double width = Math.Abs(this.StylusPoints[0].X - this.StylusPoints[1].X);
+
+            Point localPosition;
+            switch (index)
+            {
+                case 0:
+                    localPosition = new Point(topLeft.X + width, topLeft.Y + height / 2);
+                    break;
+                case 1:
+                    localPosition = new Point(topLeft.X + width / 2, topLeft.Y + height);
+                    break;
+                case 2:
+                    localPosition = new Point(topLeft.X, topLeft.Y + height / 2);
+                    break;
+                default:
+                    localPosition = new Point(topLeft.X + width / 2, topLeft.Y);
+                    break;
+            }
+
+            Matrix shader = new Matrix();
+            shader.RotateAt(Rotation, Center.X, Center.Y);
+            return shader.Transform(localPosition);
+
         }
     }
 }
