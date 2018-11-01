@@ -21,7 +21,7 @@
 		A78A733A215ED91C007A854F /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7339215ED91C007A854F /* DateTime.swift */; };
 		CCA46DAD2177E1BD00DC32EC /* PublicPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */; };
 		CCA46DAF2177E8AC00DC32EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DAE2177E8AC00DC32EC /* Image.swift */; };
-		CCA46DB1217815D500DC32EC /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DB0217815D500DC32EC /* PhotoCell.swift */; };
+		CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DB0217815D500DC32EC /* PublicImageCell.swift */; };
 		CCD4FA7221801444005E124B /* MyImagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD4FA7121801444005E124B /* MyImagesCollectionViewController.swift */; };
 		CCD4FA7421801C98005E124B /* PrivateImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD4FA7321801C98005E124B /* PrivateImageCell.swift */; };
 		CCD4FA762186536B005E124B /* PublicImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD4FA752186536B005E124B /* PublicImageViewController.swift */; };
@@ -76,7 +76,7 @@
 		C83DCF8B210537D23F9A45E1 /* Pods-poly-paint-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPhotosViewController.swift; sourceTree = "<group>"; };
 		CCA46DAE2177E8AC00DC32EC /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
-		CCA46DB0217815D500DC32EC /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		CCA46DB0217815D500DC32EC /* PublicImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicImageCell.swift; sourceTree = "<group>"; };
 		CCD4FA7121801444005E124B /* MyImagesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyImagesCollectionViewController.swift; sourceTree = "<group>"; };
 		CCD4FA7321801C98005E124B /* PrivateImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateImageCell.swift; sourceTree = "<group>"; };
 		CCD4FA752186536B005E124B /* PublicImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicImageViewController.swift; sourceTree = "<group>"; };
@@ -174,7 +174,7 @@
 				CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */,
 				CCA46DAE2177E8AC00DC32EC /* Image.swift */,
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
-				CCA46DB0217815D500DC32EC /* PhotoCell.swift */,
+				CCA46DB0217815D500DC32EC /* PublicImageCell.swift */,
 			);
 			path = "poly-paint-ios";
 			sourceTree = "<group>";
@@ -381,7 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFEF506821790C89001C93AB /* User.swift in Sources */,
-				CCA46DB1217815D500DC32EC /* PhotoCell.swift in Sources */,
+				CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,

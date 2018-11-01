@@ -87,7 +87,7 @@ final class PublicPhotosViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! PhotoCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! PublicImageCell
         cell.imageView.image = images?[indexPath.item].fullImage
         return cell
     }
@@ -120,7 +120,7 @@ final class PublicPhotosViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToPublicImage" {
             let PublicImageViewController = segue.destination as! PublicImageViewController
-            if let cell = sender as? PhotoCell,
+            if let cell = sender as? PublicImageCell,
                 let indexPath = self.collectionView?.indexPath(for: cell) {
                 PublicImageViewController.image = images?[indexPath.item]
             }
