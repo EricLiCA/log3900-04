@@ -757,7 +757,6 @@
                     <tabBarItem key="tabBarItem" title="Public images" id="SiO-fD-hDE"/>
                     <navigationItem key="navigationItem" id="7A6-ed-CbX">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="CIY-13-l8v" userLabel="testt"/>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3de-HZ-5PF" userLabel="First Responder" sceneMemberID="firstResponder"/>

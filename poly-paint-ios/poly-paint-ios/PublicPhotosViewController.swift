@@ -16,6 +16,7 @@ final class PublicPhotosViewController: UICollectionViewController {
     fileprivate var searches = [Image]();
     fileprivate let itemsPerRow: CGFloat = 3 ;
     var images:[Image]?
+    var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
     
     func getPublicImageUrl() -> String{
         if (UserDefaults.standard.string(forKey: "username") != "anonymous"){
@@ -62,6 +63,7 @@ final class PublicPhotosViewController: UICollectionViewController {
                 
                 DispatchQueue.main.async {
                     self.collectionView?.reloadData()
+                    self.activityIndicator.stopAnimating()
                 }
                 
                 
@@ -73,8 +75,11 @@ final class PublicPhotosViewController: UICollectionViewController {
     }
     
     override func viewDidLoad(){
+        self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.center = self.collectionView!.center
+        self.activityIndicator.startAnimating() //For Start Activity Indicator
+        self.view.addSubview(activityIndicator)
         fetchPublicImages()
-        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -8,6 +8,7 @@ final class MyImagesViewController: UICollectionViewController {
     fileprivate var searches = [Image]();
     fileprivate let itemsPerRow: CGFloat = 3 ;
     var images:[Image]?
+    var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
     
     func getPrivateImageUrl() -> String{
         
@@ -50,6 +51,7 @@ final class MyImagesViewController: UICollectionViewController {
                 
                 DispatchQueue.main.async {
                     self.collectionView?.reloadData()
+                    self.activityIndicator.stopAnimating()
                 }
                 
                 
@@ -62,6 +64,10 @@ final class MyImagesViewController: UICollectionViewController {
     
     override func viewDidLoad(){
         if UserDefaults.standard.string(forKey: "id") != nil {
+            self.activityIndicator.hidesWhenStopped = true
+            self.activityIndicator.center = self.collectionView!.center
+            self.activityIndicator.startAnimating() //For Start Activity Indicator
+            self.view.addSubview(activityIndicator)
             fetchPrivateImages()
         }
     }
