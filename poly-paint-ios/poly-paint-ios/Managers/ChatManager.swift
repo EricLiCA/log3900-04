@@ -7,12 +7,21 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 class ChatManager {
     static let instance = ChatManager();
     let chatRooms = [String: [ChatRoom]]();
     let activeUsers = Set<String>();
-    var currentChannel = ""
+    private let channelUpdate = PublishSubject<String>()
+    let currentChannel: Observable<String>?
     
-    private init() {}
+    func triggerChannelUpdate(newValue: String) {
+        channelUpdate.onNext(newValue)
+    }
+    
+    private init() {
+        currentChannel = channelUpdate.share(replay: 1)
+    }
 }

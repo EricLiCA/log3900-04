@@ -30,7 +30,7 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     
     var myChannelsArray = [String]()
     var allChannelsArray = [String]()
-    var socketService: SocketService = SocketService.instance
+    let io = SocketService.instance.socketIOClient!
     var chatManager: ChatManager = ChatManager.instance
     var selectedSegment = 1
     
@@ -54,9 +54,6 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
         channelsTableView.delegate = self
         channelsTableView.dataSource = self
         setUpNotifications()
-        SocketService.instance.socketIOClient.on(clientEvent: .connect) {data, ack in
-            SocketService.instance.socketIOClient.emit("setUsername", UserManager.instance.username)
-        }
         self.getChannels()
         // Do any additional setup after loading the view.
     }
@@ -115,6 +112,7 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     
     // TODO: Display chat according to channel in embedded view
     func displaySelectedChannel(channel: String) {
+        self.chatManager.triggerChannelUpdate(newValue: channel)
         print("channel: \(channel)")
     }
     
@@ -149,14 +147,18 @@ class ChatAndChannelsViewController: UIViewController, UITableViewDelegate, UITa
     
     // TODO: call api to join channel
     func addChannelToMyChannels(channelName: String) {
+        self.io.emit("joinRoom", channelName)
         self.myChannelsArray.append(channelName)
         self.channelsTableView.reloadData()
     }
     
     // TODO: call api to get channels
     func getChannels() {
-        self.myChannelsArray = ["General", "Popo", "Hello you"]
-        self.allChannelsArray = ["General", "Bob", "Poly", "Popo", "PolyAcme", "Hello you", "HEYYY"]
+        self.io.on("currentChannels") { (data, ack) in
+            self.allChannelsArray = data[0] as! [String]
+        }
+        self.io.emit("chatRooms")
+        self.myChannelsArray = []
     }
     
     

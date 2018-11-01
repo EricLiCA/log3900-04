@@ -15,9 +15,21 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var galleryButton: UIButton!
     @IBOutlet weak var newImageButton: UIButton!
     
+    let io = SocketService.instance.socketIOClient!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        SocketService.instance.connect()
+        io.on(clientEvent: .connect) {data, ack in
+            self.io.emit("setUsername", UserManager.instance.username)
+        }
+        io.on("setUsernameStatus") { (data, ack) in
+            if (data[0] as! String == "Username already taken!") {
+                print(data[0])
+            } else {
+                print("Set username succeeded")
+            }
+        }
+        io.connect()
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainMenuViewController.back(sender:)))
         self.navigationItem.leftBarButtonItem = newBackButton
@@ -39,7 +51,7 @@ class MainMenuViewController: UIViewController {
     
     func resetDefaults() {
         UserManager.instance.reset()
-        SocketService.instance.disconnect()
+        io.disconnect()
     }
     
     func checkIfAnonymous() {

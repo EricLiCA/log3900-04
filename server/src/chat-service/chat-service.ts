@@ -9,6 +9,7 @@ export class ChatService {
     private constructor() {
         // Reserve key usernames
         this.rooms = new Map<string, Set<string>>();
+        this.rooms.set('testRoom1', new Set<string>());
     }
 
     public static get instance(): ChatService {
@@ -23,6 +24,15 @@ export class ChatService {
     }
 
     public newConnection(user: User): void {
+        user.socket.on('chatRooms', () => {
+            const rooms = Array.from(this.rooms.keys());
+            user.socket.emit('currentChannels', rooms);
+            console.log(rooms);
+        });
+
+        user.socket.on('pingChat', () => {
+            user.socket.emit('pongChat', 'chatConnected');
+        });
 
         user.socket.on('joinRoom', (room: string) => {
             this.addToRoom(room, user);
