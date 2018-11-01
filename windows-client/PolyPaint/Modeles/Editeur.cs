@@ -207,6 +207,11 @@ namespace PolyPaint.Modeles
             if (stroke.isLocked()) return;
             if (!stroke.isSelected())
             {
+                this.traits.ToList().ForEach(s => {
+                    if (((CustomStroke)s).isSelectable())
+                        ((CustomStroke)s).Unselect();
+                });
+
                 StrokeCollection sc = new StrokeCollection();
                 sc.Add(stroke);
                 this.SelectStrokes(sc);

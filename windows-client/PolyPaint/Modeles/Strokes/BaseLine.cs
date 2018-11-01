@@ -158,7 +158,7 @@ namespace PolyPaint.Modeles.Strokes
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
             DrawingAttributes originalDa = drawingAttributes.Clone();
-            Pen outlinePen = new Pen(new SolidColorBrush(drawingAttributes.Color), 2);
+            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
 
             if (this.isSelected())
             {
