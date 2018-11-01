@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -12,6 +15,9 @@ namespace PolyPaint.Modeles.Tools
         private bool IsDrawing;
         private Point MouseLeftDownPoint;
         private Stroke ActiveStroke;
+
+        private string FirstAnchorPointId;
+        private int FirstAnchorPointIndex = -1;
 
         public override string GetToolImage()
         {
@@ -32,11 +38,32 @@ namespace PolyPaint.Modeles.Tools
         {
             IsDrawing = true;
             MouseLeftDownPoint = point;
+
+            List<Stroke> hoveredAnchors = strokes.ToList().FindAll( stroke => stroke is AnchorPoint && ((CustomStroke)stroke).HitTest(point));
+            if (hoveredAnchors.Count > 0)
+            {
+                AnchorPoint anchor = (AnchorPoint)hoveredAnchors.Last();
+                this.FirstAnchorPointId = anchor.ParentId;
+                this.FirstAnchorPointIndex = anchor.AnchorIndex;
+                MouseLeftDownPoint = anchor.Parent.getAnchorPointPosition(this.FirstAnchorPointIndex);
+            }
+
         }
 
         public override void MouseMove(Point point, CustomStrokeCollection strokes, Color selectedColor)
         {
             if (!IsDrawing) return;
+
+            string secondId = null;
+            int secondIndex = -1;
+            List<Stroke> hoveredAnchors = strokes.ToList().FindAll(stroke => stroke is AnchorPoint && ((CustomStroke)stroke).HitTest(point));
+            if (hoveredAnchors.Count > 0)
+            {
+                AnchorPoint anchor = (AnchorPoint)hoveredAnchors.Last();
+                point = anchor.Parent.getAnchorPointPosition(anchor.AnchorIndex);
+                secondId = anchor.ParentId;
+                secondIndex = anchor.AnchorIndex;
+            }
 
             StylusPointCollection pts = new StylusPointCollection
             {
@@ -47,7 +74,29 @@ namespace PolyPaint.Modeles.Tools
             if (ActiveStroke != null)
                 strokes.Remove(ActiveStroke);
 
-            ActiveStroke = new BaseLine(pts, strokes);
+            if (this.FirstAnchorPointId == null)
+            {
+                if (secondId == null)
+                {
+                    ActiveStroke = new BaseLine(pts, strokes);
+                }
+                else
+                {
+                    ActiveStroke = new BaseLine(pts, strokes, null, -1, secondId, secondIndex);
+                }
+            }
+            else
+            {
+                if (secondId == null)
+                {
+                    ActiveStroke = new BaseLine(pts, strokes, this.FirstAnchorPointId, this.FirstAnchorPointIndex, null, -1);
+                }
+                else
+                {
+                    ActiveStroke = new BaseLine(pts, strokes, this.FirstAnchorPointId, this.FirstAnchorPointIndex, secondId, secondIndex);
+                }
+            }
+
             ActiveStroke.DrawingAttributes.Color = selectedColor;
             strokes.Add(ActiveStroke);
         }
@@ -60,6 +109,7 @@ namespace PolyPaint.Modeles.Tools
                 strokes.Add(ActiveStroke.Clone());
             }
             IsDrawing = false;
+            this.FirstAnchorPointId = null;
         }
     }
 }
