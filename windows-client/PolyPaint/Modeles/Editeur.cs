@@ -236,6 +236,7 @@ namespace PolyPaint.Modeles
         {
             try
             {
+                EditingStroke = null;
                 Stroke trait = traits.Last();
                 traitsRetires.Add(trait);
                 traits.Remove(trait);               
