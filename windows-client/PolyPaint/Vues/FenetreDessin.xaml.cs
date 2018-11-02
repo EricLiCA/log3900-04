@@ -49,6 +49,7 @@ namespace PolyPaint
         private void DupliquerSelection(object sender, RoutedEventArgs e)
         {
             List<ShapeStroke> selectedStrokes = ((VueModele)this.DataContext).Traits.Where(stroke => ((CustomStroke)stroke).isSelected()).Cast<ShapeStroke>().ToList();
+            ((VueModele)this.DataContext).editeur.EditingStroke = null;
             selectedStrokes.ForEach(stroke =>
             {
                 ((VueModele)this.DataContext).Traits.Add(stroke.Duplicate());
