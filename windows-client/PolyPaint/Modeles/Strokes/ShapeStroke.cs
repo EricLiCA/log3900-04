@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -254,6 +254,28 @@ namespace PolyPaint.Modeles.Strokes
             shader.RotateAt(Rotation, Center.X, Center.Y);
             return shader.Transform(localPosition);
 
+        }
+
+        public ShapeStroke Duplicate()
+        {
+            this.stopEditing();
+            ShapeStroke duplicate = (ShapeStroke)this.Clone();
+            this.Unselect();
+            duplicate.RefreshGuids();
+            return duplicate;
+        }
+
+        private void RefreshGuids()
+        {
+            Id = Guid.NewGuid();
+            TOP_LEFT = Guid.NewGuid();
+            BOTTOM_LEFT = Guid.NewGuid();
+            TOP_RIGHT = Guid.NewGuid();
+            BOTTOM_RIGHT = Guid.NewGuid();
+            TOP = Guid.NewGuid();
+            BOTTOM = Guid.NewGuid();
+            LEFT = Guid.NewGuid();
+            RIGHT = Guid.NewGuid();
         }
     }
 }

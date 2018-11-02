@@ -12,6 +12,7 @@ using System.Linq;
 using System.Windows.Ink;
 using PolyPaint.Modeles;
 using PolyPaint.Modeles.Strokes;
+using System.Collections.Generic;
 
 namespace PolyPaint
 {
@@ -47,8 +48,11 @@ namespace PolyPaint
 
         private void DupliquerSelection(object sender, RoutedEventArgs e)
         {
-            Canvas.CopySelection();
-            Canvas.Paste();
+            List<ShapeStroke> selectedStrokes = ((VueModele)this.DataContext).Traits.Where(stroke => ((CustomStroke)stroke).isSelected()).Cast<ShapeStroke>().ToList();
+            selectedStrokes.ForEach(stroke =>
+            {
+                ((VueModele)this.DataContext).Traits.Add(stroke.Duplicate());
+            });
         }
 
         private void SupprimerSelection(object sender, RoutedEventArgs e) => Canvas.CutSelection();
