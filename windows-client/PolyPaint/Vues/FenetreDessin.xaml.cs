@@ -22,12 +22,14 @@ namespace PolyPaint
     public partial class FenetreDessin : Page
     {
 
+        public StrokeCollection ClipBoard { get; set; }
         public FenetreDessin()
         {
             InitializeComponent();
             DataContext = new VueModele();
+            ClipBoard = new StrokeCollection();
         }
-        
+
         // Pour gérer les points de contrôles.
         private void GlisserCommence(object sender, DragStartedEventArgs e) => (sender as Thumb).Background = Brushes.Black;
         private void GlisserTermine(object sender, DragCompletedEventArgs e) => (sender as Thumb).Background = Brushes.White;
@@ -48,17 +50,41 @@ namespace PolyPaint
 
         private void DupliquerSelection(object sender, RoutedEventArgs e)
         {
-            List<ShapeStroke> selectedStrokes = ((VueModele)this.DataContext).Traits.Where(stroke => ((CustomStroke)stroke).isSelected()).Cast<ShapeStroke>().ToList();
-            ((VueModele)this.DataContext).editeur.EditingStroke = null;
-            selectedStrokes.ForEach(stroke =>
+            VueModele vueModele = ((VueModele)this.DataContext);
+            List<ShapeStroke> selectedStrokes = vueModele.Traits.Where(stroke => ((CustomStroke)stroke).isSelected()).Cast<ShapeStroke>().ToList();
+            //If no stroke is selected ==> Cut/Paste operation
+            if (selectedStrokes.Count == 0)
             {
-                ((VueModele)this.DataContext).Traits.Add(stroke.Duplicate());
-            });
+                vueModele.Traits.Add(ClipBoard);
+                ClipBoard.Clear();
+            }
+            else
+            {
+                vueModele.editeur.EditingStroke = null;
+                selectedStrokes.ForEach(stroke =>
+                {
+                    ((VueModele)this.DataContext).Traits.Add(stroke.Duplicate());
+                });
+            }
+
         }
 
-        private void SupprimerSelection(object sender, RoutedEventArgs e) => Canvas.CutSelection();
+        private void SupprimerSelection(object sender, RoutedEventArgs e)
+        {
+            var selectedStrokes = ((VueModele)this.DataContext).Traits.Where(stroke => ((CustomStroke)stroke).isSelected()).ToList();
+            if (selectedStrokes.Count > 0)
+            {
+                ClipBoard.Clear();
+                selectedStrokes.ForEach(stroke =>
+                {
+                    ((ShapeStroke)stroke).deleteDragHandles();
+                    ((VueModele)this.DataContext).Traits.Remove(stroke);
+                    ClipBoard.Add(stroke);
+                });
+            }
+        }
 
-        
+
         private void Menu_Change_Avatar_Click(object sender, System.EventArgs e)
         {
             string fileName = null;
@@ -88,7 +114,7 @@ namespace PolyPaint
             {
                 return;
             }
-            
+
             ((VueModele)this.DataContext).ChoisirOutil.Execute((Tool)this.ToolSelection.SelectedItem);
         }
 
