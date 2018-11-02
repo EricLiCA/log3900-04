@@ -194,5 +194,12 @@ namespace PolyPaint.Modeles.Strokes
 
             if (changed) this.Refresh();
         }
+
+        public override void RefreshGuids()
+        {
+            Id = Guid.NewGuid();
+            FIRST_POINT = Guid.NewGuid();
+            SECOND_POINT = Guid.NewGuid();
+        }
     }
 }

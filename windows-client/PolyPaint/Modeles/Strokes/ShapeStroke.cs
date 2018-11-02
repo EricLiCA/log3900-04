@@ -256,16 +256,7 @@ namespace PolyPaint.Modeles.Strokes
 
         }
 
-        public ShapeStroke Duplicate()
-        {
-            this.stopEditing();
-            ShapeStroke duplicate = (ShapeStroke)this.Clone();
-            this.Unselect();
-            duplicate.RefreshGuids();
-            return duplicate;
-        }
-
-        private void RefreshGuids()
+        public override void RefreshGuids()
         {
             Id = Guid.NewGuid();
             TOP_LEFT = Guid.NewGuid();

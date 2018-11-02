@@ -106,5 +106,18 @@ namespace PolyPaint.Modeles
             }
             strokes.Insert(index, this.Clone());
         }
+
+        public CustomStroke Duplicate()
+        {
+            this.stopEditing();
+            CustomStroke duplicate = (CustomStroke)this.Clone();
+            this.Unselect();
+            duplicate.RefreshGuids();
+            return duplicate;
+        }
+
+        public virtual void RefreshGuids() {
+            Id = Guid.NewGuid();
+        }
     }
 }

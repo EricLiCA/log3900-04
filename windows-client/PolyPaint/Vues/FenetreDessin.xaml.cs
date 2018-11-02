@@ -51,7 +51,7 @@ namespace PolyPaint
         private void DupliquerSelection(object sender, RoutedEventArgs e)
         {
             VueModele vueModele = ((VueModele)this.DataContext);
-            List<ShapeStroke> selectedStrokes = vueModele.Traits.Where(stroke => ((CustomStroke)stroke).isSelected()).Cast<ShapeStroke>().ToList();
+            List<CustomStroke> selectedStrokes = vueModele.Traits.Where(stroke => ((CustomStroke)stroke).isSelected()).Cast<CustomStroke>().ToList();
             //If no stroke is selected ==> Cut/Paste operation
             if (selectedStrokes.Count == 0)
             {
@@ -71,14 +71,15 @@ namespace PolyPaint
 
         private void SupprimerSelection(object sender, RoutedEventArgs e)
         {
-            var selectedStrokes = ((VueModele)this.DataContext).Traits.Where(stroke => ((CustomStroke)stroke).isSelected()).ToList();
+            VueModele vueModele = ((VueModele)this.DataContext);
+            vueModele.editeur.EditingStroke = null;
+            var selectedStrokes = vueModele.Traits.Where(stroke => ((CustomStroke)stroke).isSelected()).ToList();
             if (selectedStrokes.Count > 0)
             {
                 ClipBoard.Clear();
                 selectedStrokes.ForEach(stroke =>
                 {
-                    ((ShapeStroke)stroke).deleteDragHandles();
-                    ((VueModele)this.DataContext).Traits.Remove(stroke);
+                    vueModele.Traits.Remove(stroke);
                     ClipBoard.Add(stroke);
                 });
             }
