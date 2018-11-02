@@ -25,8 +25,6 @@ namespace PolyPaint.Modeles
 
         private Tool EditTool = new Edit();
         private Tool Lasso = new Lasso();
-        private Tool Pencil = new Pencil();
-        private Tool SegmentEraser = new SegmentEraser();
         private Tool ObjectEraser = new ObjectEraser();
         private Tool Rectangle = new Rectangle();
         private Tool Elipse = new Elipse();
@@ -107,19 +105,6 @@ namespace PolyPaint.Modeles
             }
         }
 
-        // Forme de la pointe du crayon
-        private string pointeSelectionnee = "ronde";
-        public string PointeSelectionnee
-        {
-            get { return pointeSelectionnee; }
-            set
-            {
-                OutilSelectionne = Pencil;
-                pointeSelectionnee = value;
-                ProprieteModifiee();
-            }
-        }
-
         // Couleur des traits tracés par le crayon.
         private string couleurSelectionnee = "White";
         public string CouleurSelectionnee
@@ -152,19 +137,19 @@ namespace PolyPaint.Modeles
         {
             this.outilSelectionne = this.EditTool;
 
-            this.Tools = new List<Tool>();
-            this.Tools.Add(EditTool);
-            this.Tools.Add(Lasso);
-            //this.Tools.Add(Pencil);
-            //this.Tools.Add(SegmentEraser);
-            this.Tools.Add(ObjectEraser);
-            this.Tools.Add(Rectangle);
-            this.Tools.Add(Elipse);
-            this.Tools.Add(Triangle);
-            this.Tools.Add(Person);
-            this.Tools.Add(Line);
-            this.Tools.Add(ClassDiagram);
-            this.Tools.Add(UseCase);
+            this.Tools = new List<Tool>
+            {
+                EditTool,
+                Lasso,
+                ObjectEraser,
+                Rectangle,
+                Elipse,
+                Triangle,
+                Person,
+                Line,
+                ClassDiagram,
+                UseCase
+            };
         }
 
         /// <summary>
@@ -272,9 +257,6 @@ namespace PolyPaint.Modeles
             }
             catch { }         
         }
-        
-        // On assigne une nouvelle forme de pointe passée en paramètre.
-        public void ChoisirPointe(string pointe) => PointeSelectionnee = pointe;
 
         // L'outil actif devient celui passé en paramètre.
         public void ChoisirOutil(Tool tool) => OutilSelectionne = tool;

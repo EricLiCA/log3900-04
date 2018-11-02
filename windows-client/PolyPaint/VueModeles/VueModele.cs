@@ -43,12 +43,6 @@ namespace PolyPaint.VueModeles
             set { editeur.CouleurSelectionnee = value; }
         }
 
-        public string PointeSelectionnee
-        {
-            get { return editeur.PointeSelectionnee; }
-            set { ProprieteModifiee(); }
-        }
-
         public int TailleTrait
         {
             get { return editeur.TailleTrait; }
@@ -60,7 +54,6 @@ namespace PolyPaint.VueModeles
         // Commandes sur lesquels la vue pourra se connecter.
         public RelayCommand<object> Empiler { get; set; }
         public RelayCommand<object> Depiler { get; set; }
-        public RelayCommand<string> ChoisirPointe { get; set; }
         public RelayCommand<Tool> ChoisirOutil { get; set; }
         public RelayCommand<object> Reinitialiser { get; set; }
         public RelayCommand<Point> MouseUp { get; set; }
@@ -83,8 +76,6 @@ namespace PolyPaint.VueModeles
             // On initialise les attributs de dessin avec les valeurs de départ du modèle.
             AttributsDessin = new DrawingAttributes();            
             AttributsDessin.Color = (Color)ColorConverter.ConvertFromString(editeur.CouleurSelectionnee);
-            AjusterPointe();
-
             Traits = editeur.traits;
             
             // Pour chaque commande, on effectue la liaison avec des méthodes du modèle.            
@@ -92,7 +83,6 @@ namespace PolyPaint.VueModeles
             Depiler = new RelayCommand<object>(editeur.Depiler, editeur.PeutDepiler);
             // Pour les commandes suivantes, il est toujours possible des les activer.
             // Donc, aucune vérification de type Peut"Action" à faire.
-            ChoisirPointe = new RelayCommand<string>(editeur.ChoisirPointe);
             ChoisirOutil = new RelayCommand<Tool>(editeur.ChoisirOutil);
             Reinitialiser = new RelayCommand<object>(editeur.Reinitialiser);
 
@@ -132,31 +122,10 @@ namespace PolyPaint.VueModeles
             {
                 OutilSelectionne = editeur.OutilSelectionne;
             }                
-            else if (e.PropertyName == "PointeSelectionnee")
-            {
-                PointeSelectionnee = editeur.PointeSelectionnee;
-                AjusterPointe();
-            }
             else if (e.PropertyName == "ActiveItemTextContent")
             {
                 this.ProprieteModifiee("ActiveItemTextContent");
-            }
-            else // e.PropertyName == "TailleTrait"
-            {               
-                AjusterPointe();
-            }                
-        }
-
-        /// <summary>
-        /// C'est ici qu'est défini la forme de la pointe, mais aussi sa taille (TailleTrait).
-        /// Pourquoi deux caractéristiques se retrouvent définies dans une même méthode? Parce que pour créer une pointe 
-        /// horizontale ou verticale, on utilise une pointe carrée et on joue avec les tailles pour avoir l'effet désiré.
-        /// </summary>
-        private void AjusterPointe()
-        {
-            AttributsDessin.StylusTip = (editeur.PointeSelectionnee == "ronde") ? StylusTip.Ellipse : StylusTip.Rectangle;
-            AttributsDessin.Width = (editeur.PointeSelectionnee == "verticale") ? 1 : editeur.TailleTrait;
-            AttributsDessin.Height = (editeur.PointeSelectionnee == "horizontale") ? 1 : editeur.TailleTrait;
+            }           
         }
     }
 }

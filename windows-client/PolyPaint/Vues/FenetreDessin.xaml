@@ -80,50 +80,6 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <Separator />
-
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Name="PointeRonde" Width="24" Height="24" Margin="0" Padding="0"
-                                HorizontalContentAlignment="Center"              
-                                BorderBrush="Transparent" 
-                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=ronde, UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="ronde"
-                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
-                                <Ellipse Width="10" Height="10" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
-                            </Button>
-                            <Button Name="PointeCarree" Width="24" Height="24" Margin="0" Padding="0"
-                                HorizontalContentAlignment="Center"
-                                BorderBrush="Transparent" 
-                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=carree, UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="carree"
-                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
-                                <Rectangle Width="10" Height="10" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
-                            </Button>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Name="Verticale" Width="20" Height="20" Margin="2" Padding="0"
-                                HorizontalContentAlignment="Center"
-                                BorderBrush="Transparent" 
-                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=verticale, UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="verticale"
-                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
-                                <Rectangle Width="2" Height="10" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
-                            </Button>
-                            <Button Name="Horizontale" Width="24" Height="24" Margin="0" Padding="0"
-                                HorizontalContentAlignment="Center"
-                                BorderBrush="Transparent"
-                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=horizontale, UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="horizontale"
-                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
-                                <Rectangle Width="10" Height="2" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
-                            </Button>
-                        </StackPanel>
-                    </StackPanel>
                     <xctk:ColorPicker x:Name="selecteurCouleur"                             
                       VerticalContentAlignment="Stretch"
                       Background="#00000000"
@@ -138,11 +94,6 @@
                       RecentColorsHeader="Récemment utilisées"
                       UsingAlphaChannel="True"
                       AdvancedButtonHeader="Personnalisé" />
-                    <Slider Width="100" Height="26" Minimum="1" Maximum="50"
-                            Value="{Binding Path=TailleTrait, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                            Margin="12" Foreground="Gray"                        
-                            TickFrequency="10" TickPlacement="BottomRight" IsSnapToTickEnabled="False">
-                    </Slider>
                 </ToolBar>
             </ToolBarTray>
         </Border>
