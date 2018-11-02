@@ -46,7 +46,7 @@ namespace PolyPaint.Modeles.Strokes
             return !(has_neg && has_pos);
         }
 
-        public new void addAnchorPoints()
+        public override void addAnchorPoints()
         {
             this.deleteAnchorPoints();
 

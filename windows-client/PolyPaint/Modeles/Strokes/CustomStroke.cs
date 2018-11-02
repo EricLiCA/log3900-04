@@ -93,7 +93,7 @@ namespace PolyPaint.Modeles
             this.Refresh();
         }
 
-        public void Refresh()
+        public virtual void Refresh()
         {
             int index = -1;
             if (strokes.has(this.Id.ToString()))

@@ -80,7 +80,7 @@ namespace PolyPaint.Modeles.Strokes
                 this.strokes.Remove(this.strokes.get(BOTTOM_RIGHT.ToString()));
         }
 
-        public void addAnchorPoints()
+        public virtual void addAnchorPoints()
         {
             this.deleteAnchorPoints();
 
@@ -190,7 +190,7 @@ namespace PolyPaint.Modeles.Strokes
             this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableMoved(this));
         }
 
-        private new void Refresh()
+        public override void Refresh()
         {
             if (strokes.has(this.Id.ToString()))
                 ((ShapeStroke)strokes.get(this.Id.ToString())).deleteAnchorPoints();
