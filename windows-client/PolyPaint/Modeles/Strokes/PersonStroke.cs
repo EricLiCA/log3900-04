@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 
+
 namespace PolyPaint.Modeles.Strokes
 {
-    class PersonStroke : ShapeStroke
+    class PersonStroke : ShapeStroke, Textable
     {
         private string Name;
 
         public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
+            this.Name = "Actor";
         }
 
-        public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes, string name) : base(pts, strokes)
+        public string GetText()
         {
-            this.Name = name;
+            return Name;
         }
 
         public override bool HitTest(Point point)
@@ -33,6 +32,12 @@ namespace PolyPaint.Modeles.Strokes
             Point bottomRight = new Point(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
 
             return clickedLocal.X > topLeft.X && clickedLocal.X < bottomRight.X && clickedLocal.Y > topLeft.Y && clickedLocal.Y < bottomRight.Y;
+        }
+
+        public void SetText(string text)
+        {
+            this.Name = text;
+            this.Refresh();
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
@@ -89,13 +94,23 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.DrawLine(outlinePen, crouch, rightFoot);
             drawingContext.DrawLine(outlinePen, crouch, leftFoot);
 
+            int wordSize = 18;
+            FormattedText text = new FormattedText(Name, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), wordSize, Brushes.Black)
+            {
+                TextAlignment = TextAlignment.Center,
+                MaxTextWidth = width + 50
+            };
+
+            Point textOrigin = new Point(TOP_LEFT.X - 25, TOP_LEFT.Y + height);
+            drawingContext.DrawText(text, textOrigin);
+
             drawingContext.Pop();
 
             if (this.isEditing())
             {
                 this.addDragHandles();
             }
-
         }
+
     }
 }
