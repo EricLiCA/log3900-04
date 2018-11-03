@@ -22,9 +22,9 @@ class EllipseView: UIView {
     let lineWidth: CGFloat = 1
     let uuid = NSUUID.init().uuidString.lowercased()
     
-    init(origin: CGPoint) {
-        super.init(frame:CGRect(x: 0.0, y: 0.0, width: defaultSize, height: defaultSize))
-        self.center = origin
+    init(frame: CGRect, layer: CALayer) {
+        super.init(frame:frame)
+        //self.center = origin
         self.backgroundColor = UIColor.clear
         initGestureRecognizers()
     }

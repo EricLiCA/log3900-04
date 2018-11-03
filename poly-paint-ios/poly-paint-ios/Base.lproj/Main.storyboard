@@ -324,9 +324,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="x1J-FI-BAJ">
-                                <rect key="frame" x="20" y="138" width="728" height="866"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOf-Jz-Zu9">
                                 <rect key="frame" x="99" y="100" width="100" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -366,33 +363,53 @@
                                     <action selector="ellipseTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="0sm-JN-k0K"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tNz-CW-3rW">
+                                <rect key="frame" x="20" y="138" width="728" height="866"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="laE-6R-FW3">
+                                <rect key="frame" x="533" y="100" width="100" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Vei-Cc-jrz"/>
+                                    <constraint firstAttribute="height" constant="30" id="tiK-Fk-q1y"/>
+                                </constraints>
+                                <state key="normal" title="Triangle">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="triangleTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="C8l-Jt-rEV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="x1J-FI-BAJ" secondAttribute="bottom" constant="20" id="3Dz-Qx-Wea"/>
-                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="20" id="69E-0M-lIa"/>
+                            <constraint firstItem="tNz-CW-3rW" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="74" id="Chk-RJ-gUY"/>
                             <constraint firstItem="el7-WA-nyl" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="DBm-NZ-XkX"/>
-                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="centerX" secondItem="7FJ-AM-LDR" secondAttribute="centerX" id="KcV-Xl-X9m"/>
+                            <constraint firstItem="laE-6R-FW3" firstAttribute="leading" secondItem="el7-WA-nyl" secondAttribute="trailing" constant="38" id="F9L-h2-3Jm"/>
                             <constraint firstItem="DOf-Jz-Zu9" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="99" id="LUr-a2-uEd"/>
+                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="trailing" secondItem="tNz-CW-3rW" secondAttribute="trailing" constant="20" id="Nuj-nF-qPr"/>
                             <constraint firstItem="DOf-Jz-Zu9" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="PAz-GC-7kZ"/>
-                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="trailing" secondItem="x1J-FI-BAJ" secondAttribute="trailing" constant="20" id="k3i-dY-91I"/>
+                            <constraint firstItem="tNz-CW-3rW" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="20" id="Q1o-yo-WZ4"/>
+                            <constraint firstItem="laE-6R-FW3" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="dwb-I4-XE0"/>
                             <constraint firstItem="Nyb-26-1LO" firstAttribute="leading" secondItem="DOf-Jz-Zu9" secondAttribute="trailing" constant="47" id="nBD-0F-BAf"/>
                             <constraint firstItem="Nyb-26-1LO" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="oNm-5v-5Gs"/>
-                            <constraint firstItem="x1J-FI-BAJ" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="74" id="pyd-sw-6RZ"/>
                             <constraint firstItem="el7-WA-nyl" firstAttribute="leading" secondItem="Nyb-26-1LO" secondAttribute="trailing" constant="49" id="u1K-Jt-fnf"/>
+                            <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="tNz-CW-3rW" secondAttribute="bottom" constant="20" id="vm1-jW-p8r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7FJ-AM-LDR"/>
                     </view>
                     <connections>
                         <outlet property="circleButton" destination="Nyb-26-1LO" id="cr4-Lh-AGy"/>
-                        <outlet property="drawingPlace" destination="x1J-FI-BAJ" id="cV1-eG-vVO"/>
+                        <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="ellipseButton" destination="el7-WA-nyl" id="idg-NM-5Yl"/>
                         <outlet property="rectangleButton" destination="DOf-Jz-Zu9" id="TBa-aG-pbk"/>
+                        <outlet property="triangleButton" destination="laE-6R-FW3" id="fxB-vS-QUj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="913" y="-891"/>
+            <point key="canvasLocation" x="912.5" y="-891.21093749999989"/>
         </scene>
         <!--Canvas View Controller-->
         <scene sceneID="9ZE-eI-zHS">

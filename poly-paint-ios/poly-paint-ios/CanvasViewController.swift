@@ -37,7 +37,6 @@ class CanvasViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-        
     }
     
     
@@ -51,20 +50,20 @@ class CanvasViewController: UIViewController {
                 print(shapeView.uuid)
             } else if (self.shapeType == ShapeType.Rectangle) {
                 let tapPoint = tapGR.location(in: self.canvasView)
-                let shapeView = RectangleView(origin: tapPoint)
-                self.canvasView.addSubview(shapeView)
+                //let shapeView = RectangleView(origin: tapPoint)
+                //self.canvasView.addSubview(shapeView)
             } else if (self.shapeType == ShapeType.Ellipse) {
                 let tapPoint = tapGR.location(in: self.canvasView)
-                let shapeView = EllipseView(origin: tapPoint)
-                self.canvasView.addSubview(shapeView)
+                //let shapeView = EllipseView(origin: tapPoint)
+                //self.canvasView.addSubview(shapeView)
             } else if (self.shapeType == ShapeType.Circle) {
                 let tapPoint = tapGR.location(in: self.canvasView)
                 let shapeView = CircleView(origin: tapPoint)
                 self.canvasView.addSubview(shapeView)
             } else if (self.shapeType == ShapeType.Triangle) {
                 let tapPoint = tapGR.location(in: self.canvasView)
-                let shapeView = TriangleView(origin: tapPoint)
-                self.canvasView.addSubview(shapeView)
+                //let shapeView = TriangleView(origin: tapPoint)
+                //self.canvasView.addSubview(shapeView)
             }
         }
         
