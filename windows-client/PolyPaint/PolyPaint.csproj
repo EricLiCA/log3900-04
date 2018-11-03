@@ -204,13 +204,12 @@
     <Compile Include="Modeles\Strokes\UseCaseStroke.cs" />
     <Compile Include="Modeles\Tools\BasicCanvasTool.cs" />
     <Compile Include="Modeles\Tools\ClassDiagram.cs" />
+    <Compile Include="Modeles\Tools\FormTool.cs" />
     <Compile Include="Modeles\Tools\Line.cs" />
     <Compile Include="Modeles\Tools\ObjectEraser.cs" />
     <Compile Include="Modeles\Tools\Person.cs" />
-    <Compile Include="Modeles\Tools\SegmentEraser.cs" />
     <Compile Include="Modeles\Tools\Edit.cs" />
     <Compile Include="Modeles\Tools\Lasso.cs" />
-    <Compile Include="Modeles\Tools\Pencil.cs" />
     <Compile Include="Modeles\Tools\Triangle.cs" />
     <Compile Include="Modeles\Tools\Tool.cs" />
     <Compile Include="Modeles\Tools\Rectangle.cs" />
