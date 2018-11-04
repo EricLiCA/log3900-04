@@ -99,14 +99,12 @@ class RectangleView: UIView {
         print("it works")
         self.superview!.bringSubview(toFront: self)
         guard let gestureView = gesture.view, let superView = gestureView.superview else {
-            print("stopping at A")
             return
         }
         
         let menuController = UIMenuController.shared
        
        guard !menuController.isMenuVisible, gestureView.canBecomeFirstResponder else {
-             print("stopping at B")
             return
         }
         gestureView.becomeFirstResponder()
