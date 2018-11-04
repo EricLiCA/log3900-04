@@ -340,6 +340,9 @@
                         <rightBarButtonItems>
                             <barButtonItem systemItem="cancel" id="XMc-53-DIO">
                                 <color key="tintColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="cancelTapped:" destination="nxp-f4-1rm" id="UVY-kN-sBe"/>
+                                </connections>
                             </barButtonItem>
                             <barButtonItem title="Insert" id="vVf-wi-6Rz">
                                 <connections>
@@ -349,6 +352,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="cancelButton" destination="XMc-53-DIO" id="Hfb-E2-GxG"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="editButton" destination="vVf-wi-6Rz" id="Y8R-iC-UUg"/>
                     </connections>

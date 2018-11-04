@@ -19,6 +19,7 @@ class DrawViewController: UIViewController {
 
     @IBOutlet weak var drawingPlace: UIView!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -32,6 +33,7 @@ class DrawViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drawingPlace.clipsToBounds = true
+        self.cancelButton.isEnabled = false
         // Do any additional setup after loading the view.
     }
     
@@ -54,14 +56,14 @@ class DrawViewController: UIViewController {
             self.ellipseTapped()
         })
         alertController.addAction(drawEllipseAction)
-
+        
         
         let drawTriangleAction = UIAlertAction(title: "Triangle", style: .default, handler: { (alert: UIAlertAction!) -> Void in
             self.triangleTapped()
         })
         alertController.addAction(drawTriangleAction)
         
-
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
         })
         alertController.addAction(cancelAction)
@@ -73,15 +75,21 @@ class DrawViewController: UIViewController {
         }
         
         self.present(alertController, animated: true, completion: nil)
-
+        
     }
-     func rectangleTapped() {
+    
+    @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
+        self.stopDrawing()
+    }
+    
+    func rectangleTapped() {
         if(self.currentShape == Shape.Rectangle) {
             self.isUserEditing = false
             self.currentShape = Shape.None
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Rectangle
+            self.cancelButton.isEnabled = true
         }
     }
     
@@ -91,8 +99,10 @@ class DrawViewController: UIViewController {
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Ellipse
-        }
+            self.cancelButton.isEnabled = true
     }
+            
+        }
     
   func triangleTapped() {
         if(self.currentShape == Shape.Triangle) {
@@ -101,8 +111,9 @@ class DrawViewController: UIViewController {
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Triangle
-        }
+            self.cancelButton.isEnabled = true
     }
+        }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
@@ -248,6 +259,7 @@ class DrawViewController: UIViewController {
     func stopDrawing(){
         self.isUserEditing = false
         self.currentShape = Shape.None
+        self.cancelButton.isEnabled = false;
     }
 
     
