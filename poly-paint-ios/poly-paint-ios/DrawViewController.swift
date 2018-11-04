@@ -18,9 +18,6 @@ enum Shape {
 class DrawViewController: UIViewController {
 
     @IBOutlet weak var drawingPlace: UIView!
-    @IBOutlet weak var triangleButton: UIButton!
-    @IBOutlet weak var ellipseButton: UIButton!
-    @IBOutlet weak var rectangleButton: UIButton!
     @IBOutlet weak var editButton: UIBarButtonItem!
     
     var firstTouch : CGPoint?
@@ -48,19 +45,19 @@ class DrawViewController: UIViewController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let drawRectangleAction = UIAlertAction(title: "Rectangle", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            //  insert Rectangle here
+            self.rectangleTapped()
         })
         alertController.addAction(drawRectangleAction)
         
         
         let drawEllipseAction = UIAlertAction(title: "Ellipse", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            //  insert ellipse here
+            self.ellipseTapped()
         })
         alertController.addAction(drawEllipseAction)
 
         
         let drawTriangleAction = UIAlertAction(title: "Triangle", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            //  insert triangle here
+            self.triangleTapped()
         })
         alertController.addAction(drawTriangleAction)
         
@@ -78,45 +75,32 @@ class DrawViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
 
     }
-    @IBAction func rectangleTapped(_ sender: UIButton) {
+     func rectangleTapped() {
         if(self.currentShape == Shape.Rectangle) {
             self.isUserEditing = false
-            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.currentShape = Shape.None
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Rectangle
-            self.rectangleButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         }
     }
     
-    @IBAction func ellipseTapped(_ sender: UIButton) {
+   func ellipseTapped() {
         if(self.currentShape == Shape.Ellipse) {
             self.isUserEditing = false
-            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.currentShape = Shape.None
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Ellipse
-            self.ellipseButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         }
     }
     
-    @IBAction func triangleTapped(_ sender: UIButton) {
+  func triangleTapped() {
         if(self.currentShape == Shape.Triangle) {
             self.isUserEditing = false
-            self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.currentShape = Shape.None
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Triangle
-            self.triangleButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         }
     }
     
