@@ -28,13 +28,20 @@ class RectangleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
     func initGestureRecognizers() {
+        isUserInteractionEnabled = true
         let panGR = UIPanGestureRecognizer(target: self, action: #selector(didPan(panGR:)))
         addGestureRecognizer(panGR)
         let pinchGR = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(pinchGR:)))
         addGestureRecognizer(pinchGR)
         let rotationGR = UIRotationGestureRecognizer(target: self, action: #selector(didRotate(rotationGR:)))
         addGestureRecognizer(rotationGR)
+        let longPressGR = ( UILongPressGestureRecognizer( target: self, action: #selector(didLongPressed(_:))))
+        addGestureRecognizer(longPressGR)
     }
     
     override func draw(_ rect: CGRect) {
@@ -86,6 +93,58 @@ class RectangleView: UIView {
         let rotation = rotationGR.rotation
         self.transform = self.transform.rotated(by: rotation)
         rotationGR.rotation = 0.0
+    }
+    
+    @objc func didLongPressed(_ gesture: UILongPressGestureRecognizer) {
+        print("it works")
+        self.superview!.bringSubview(toFront: self)
+        guard let gestureView = gesture.view, let superView = gestureView.superview else {
+            print("stopping at A")
+            return
+        }
+        
+        let menuController = UIMenuController.shared
+       
+       guard !menuController.isMenuVisible, gestureView.canBecomeFirstResponder else {
+             print("stopping at B")
+            return
+        }
+        gestureView.becomeFirstResponder()
+      
+        
+        menuController.menuItems = [
+            UIMenuItem(
+                title: "Copy",
+                action: #selector(handleCopyAction(_:))
+            ),
+            UIMenuItem(
+                title: "Cut",
+                action: #selector(handleCutAction(_:))
+            ),
+            UIMenuItem(
+                title: "Edit",
+                action: #selector(handleEditAction(_:))
+            ),
+            UIMenuItem(
+            title: "Delete",
+            action: #selector(handleDeleteAction(_:))
+            )
+        ]
+        
+        menuController.setTargetRect(gestureView.frame, in: superView)
+        menuController.setMenuVisible(true, animated: true)
+    }
+    
+    @objc internal func handleCutAction(_ controller: UIMenuController) {
+    }
+    
+    @objc internal func handleCopyAction(_ controller: UIMenuController) {
+    }
+    
+    @objc internal func handleEditAction(_ controller: UIMenuController) {
+    }
+    
+    @objc internal func handleDeleteAction(_ controller: UIMenuController) {
     }
     
     func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
