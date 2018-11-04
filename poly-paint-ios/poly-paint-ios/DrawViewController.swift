@@ -200,7 +200,7 @@ class DrawViewController: UIViewController {
             }
             self.insideCanvas = false
         }
-        
+        self.stopDrawing()
     }
     
     func drawRectangle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
@@ -215,21 +215,12 @@ class DrawViewController: UIViewController {
         bezier.move(to:CGPoint(x: (startPoint.x), y: (secondPoint.y)))
         bezier.addLine(to: CGPoint(x: (startPoint.x), y: (startPoint.y)))
         bezier.close()
-        
         return bezier
     }
     
     func drawEllipse(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
         let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.x - startPoint.x, height: secondPoint.y - startPoint.y))
         bezier.close()
-        
-        return bezier
-    }
-    
-    func drawCircle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
-        let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.y - startPoint.y, height: secondPoint.y - startPoint.y))
-        bezier.close()
-        
         return bezier
     }
     
@@ -245,7 +236,6 @@ class DrawViewController: UIViewController {
         bezier.addLine(to: leftCorner)
         bezier.move(to:leftCorner)
         bezier.addLine(to: topCorner)
-        
         return bezier
     }
     
@@ -253,6 +243,11 @@ class DrawViewController: UIViewController {
         let xDist = a.x - b.x
         let yDist = a.y - b.y
         return CGFloat(sqrt(xDist * xDist + yDist * yDist))
+    }
+    
+    func stopDrawing(){
+        self.isUserEditing = false
+        self.currentShape = Shape.None
     }
 
     
