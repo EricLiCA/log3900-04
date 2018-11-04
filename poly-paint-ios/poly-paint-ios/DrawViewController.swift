@@ -127,12 +127,14 @@ class DrawViewController: UIViewController {
                 self.currentBezierPath = bezier
                 self.currentContext?.addPath(bezier.cgPath)
                 self.currentContext?.strokePath()
+                
 
                 let shape = CAShapeLayer()
                 shape.frame = (self.drawingPlace.bounds)
                 shape.path = self.currentBezierPath?.cgPath;
                 shape.strokeColor = UIColor.black.cgColor
                 shape.borderColor = UIColor.gray.cgColor
+                shape.fillColor = UIColor.white.cgColor
                 self.drawingPlace.layer.addSublayer(shape)
                 self.currentContext?.addPath((self.currentBezierPath?.cgPath)!)
             }
