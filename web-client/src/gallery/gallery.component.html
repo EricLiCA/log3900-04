@@ -15,7 +15,7 @@
         <!--/.Card image-->
       
         <!--Button-->
-        <a class="btn-floating btn-action ml-auto mr-4 mdb-color lighten-3 waves-light" mdbWavesEffect>
+        <a class="btn-floating btn-action ml-auto mr-4 mdb-color lighten-3 waves-light" mdbWavesEffect routerLink="/userDetail/{{image.ownerId}}">
           <i class="fa fa-chevron-right pl-1 waves-light" mdbWavesEffect></i>
         </a>
       
@@ -26,27 +26,10 @@
           <mdb-card-title>
             <h4>{{image.title}}</h4>
           </mdb-card-title>
-      
-          <hr>
-          <!--Text-->
-          <p class="font-small grey-dark-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
         </mdb-card-body>
         <!--/.Card content-->
         <!-- Card footer -->
-        <mdb-card-footer class="mdb-color lighten-3 text-center">
-          <ul class="list-unstyled list-inline font-small mt-3">
-            <li class="list-inline-item pr-2 white-text">
-              <i class="fa fa-clock-o pr-1"></i>{{date}}</li>
-            <li class="list-inline-item pr-2">
-              <a href="#" class="white-text">
-                <i class="fa fa-comments-o pr-1"></i>12</a>
-            </li>
-            <li class="list-inline-item pr-2">
-              <a href="#" class="white-text">
-                <i class="fa fa-thumbs-up pr-1"> </i></a>
-            </li>
-          </ul>
-        </mdb-card-footer>
         <!-- Card footer -->
       </mdb-card>
       <!--/.Card-->

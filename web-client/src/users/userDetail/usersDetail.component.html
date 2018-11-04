@@ -21,18 +21,18 @@
           <mdb-card-title>
             <h4>{{image.title}}</h4>
           </mdb-card-title>
-
+          <hr>
+          <!--Text-->
+          <h4>Author: {{currentUser.username}}</h4>
+          <h5>Protection level: {{image.protectionLevel}}</h5>
         </mdb-card-body>
         <!--/.Card content-->
+
         <!-- Card footer -->
         <mdb-card-footer class="mdb-color lighten-3 text-center">
           <ul class="list-unstyled list-inline font-small mt-3">
             <li class="list-inline-item pr-2 white-text">
               <i class="fa fa-clock-o pr-1"></i>{{date}}</li>
-            <li class="list-inline-item pr-2">
-              <a href="#" class="white-text">
-                <i class="fa fa-comments-o pr-1"></i>12</a>
-            </li>
             <li class="list-inline-item pr-2">
               <a href="#" class="white-text">
                 <i class="fa fa-thumbs-up pr-1"> </i></a>
