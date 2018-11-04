@@ -22,6 +22,7 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var ellipseButton: UIButton!
     @IBOutlet weak var rectangleButton: UIButton!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var stickFigure: UIButton!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -118,6 +119,11 @@ class DrawViewController: UIViewController {
             self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         }
+    }
+    
+    @IBAction func stickfigureTapped(_ sender: UIButton) {
+        let stickFigure = StickFigureView()
+        self.drawingPlace.addSubview(stickFigure)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
