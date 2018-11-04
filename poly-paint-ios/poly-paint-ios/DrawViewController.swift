@@ -29,9 +29,11 @@ class DrawViewController: UIViewController {
     var isUserEditing: Bool = false
     var currentBezierPath: UIBezierPath?
     var layersFromShapes = [CALayer]()
+    var insideCanvas = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.drawingPlace.clipsToBounds = true
         // Do any additional setup after loading the view.
     }
     
@@ -85,11 +87,13 @@ class DrawViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         self.firstTouch = touch?.location(in: drawingPlace)
+        self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
+        print(self.insideCanvas)
     }
     
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if(isUserEditing) {
+        if(isUserEditing && self.insideCanvas) {
             // erase sublayers used for drawing
             if(self.drawingPlace.layer.sublayers != nil) {
                 for layer in self.drawingPlace.layer.sublayers! {
@@ -143,7 +147,7 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if(isUserEditing) {
+        if(isUserEditing && self.insideCanvas) {
             for touch in touches {
                 print("touch ended")
             }
@@ -174,6 +178,7 @@ class DrawViewController: UIViewController {
             for layer in self.layersFromShapes {
                 self.drawingPlace.layer.addSublayer(layer)
             }
+            self.insideCanvas = false
         }
         
     }
