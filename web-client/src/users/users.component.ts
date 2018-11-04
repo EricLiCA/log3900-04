@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { User } from './User';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'users-component',
@@ -11,11 +11,14 @@ import { ActivatedRoute } from '@angular/router';
 
 export class UsersComponent {
   
+  private date: Date = new Date();
   private route: ActivatedRoute;
   private users: User[];
   private userImages: String[];
+  private userId: Number;
 
   constructor(
+    private router: Router,
     private userService: UserService
   ) { }
 
@@ -23,12 +26,6 @@ export class UsersComponent {
   ngOnInit() {
     this.userService.getUsers().then(result => {
       this.users = result;
-    });
-  }
-
-  userOnClic(user) {
-    this.userService.getUserImages(user.id).then(result => {
-      this.userImages = result;
     });
   }
 }

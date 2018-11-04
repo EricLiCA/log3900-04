@@ -18,13 +18,17 @@ export class UserService {
         });
     }
     
-    getUserImages(id: Number): Promise<String[]> {
+    getUserById (id: String): Promise<User> {
+        const apiUrl = 'http://localhost:3000/v2/users/' + id;
+        return this.http.get(apiUrl).toPromise().then((data: User) => {
+            return data;
+        })
+    }
+ 
+    getUserImages(id: String): Promise<Image[]> {
         const apiUrl = 'http://localhost:3000/v2/imagesByOwnerId/' + id;  
         return this.http.get(apiUrl).toPromise().then((data: Array<Image>) => {
-            const images = data.map((singleFullImage) => {
-                return singleFullImage.fullImageUrl;
-            });
-            return images;
+            return data;
         });
     }
 }

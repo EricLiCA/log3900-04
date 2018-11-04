@@ -11,6 +11,7 @@ import { AdminComponent } from '../admin/admin.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationService } from '../admin/login.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UsersDetailComponent } from 'src/users/userDetail/usersDetail.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     GalleryComponent,
     UsersComponent,
     AdminComponent,
+    UsersDetailComponent,
   ],
   imports: [
     BrowserModule,

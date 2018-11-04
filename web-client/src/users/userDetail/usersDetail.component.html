@@ -1,0 +1,47 @@
+<p>Gallery of {{currentUser.username}}</p>
+
+<div class="d-flex flex-wrap">
+    <li class="image" *ngFor="let image of userImages">
+        <!--Card-->
+    <mdb-card>
+
+        <!--Card image-->
+        <div class="view overlay waves-light" mdbWavesEffect>
+          <mdb-card-img src={{image.fullImageUrl}}></mdb-card-img>
+          <a>
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+        <!--/.Card image-->
+      
+        <!--Card content-->
+        <mdb-card-body>
+      
+          <!--Title-->
+          <mdb-card-title>
+            <h4>{{image.title}}</h4>
+          </mdb-card-title>
+
+        </mdb-card-body>
+        <!--/.Card content-->
+        <!-- Card footer -->
+        <mdb-card-footer class="mdb-color lighten-3 text-center">
+          <ul class="list-unstyled list-inline font-small mt-3">
+            <li class="list-inline-item pr-2 white-text">
+              <i class="fa fa-clock-o pr-1"></i>{{date}}</li>
+            <li class="list-inline-item pr-2">
+              <a href="#" class="white-text">
+                <i class="fa fa-comments-o pr-1"></i>12</a>
+            </li>
+            <li class="list-inline-item pr-2">
+              <a href="#" class="white-text">
+                <i class="fa fa-thumbs-up pr-1"> </i></a>
+            </li>
+          </ul>
+        </mdb-card-footer>
+        <!-- Card footer -->
+      </mdb-card>
+      <!--/.Card-->
+    </li>
+</div>
+

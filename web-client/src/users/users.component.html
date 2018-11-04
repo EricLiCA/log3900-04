@@ -28,21 +28,21 @@
         <!--/.Card image-->
       
         <!--Button-->
-        <a class="btn-floating btn-action ml-auto mr-4 mdb-color lighten-3 waves-light" mdbWavesEffect>
-          <i class="fa fa-chevron-right pl-1 waves-light" mdbWavesEffect></i>
+        <a class="btn-floating btn-action ml-auto mr-4 mdb-color lighten-3 waves-light" routerLink="/userDetail/{{user.id}}">
+            <i class="fa fa-chevron-right pl-1 waves-light" mdbWavesEffect></i>
         </a>
-      
+        
         <!--Card content-->
         <mdb-card-body>
-      
-          <!--Title-->
-          <mdb-card-title>
-            <h4>{{user.username}}</h4>
-          </mdb-card-title>
-          <!--Text-->
+            
+            <!--Title-->
+            <mdb-card-title>
+                <h4>{{user.username}}</h4>
+            </mdb-card-title>
+            <!--Text-->
         </mdb-card-body>
         <!--/.Card content-->
-      </mdb-card>
-      <!--/.Card-->
-    </li>
+    </mdb-card>
+    <!--/.Card-->
+</li>
 </div>
