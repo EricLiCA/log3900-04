@@ -1,6 +1,6 @@
 <p>Users</p>
 
-<links>
+<!-- <links>
     <div class="users">
         <li class="userList" *ngFor="let user of users">
             <a class="userImages" mdbWavesEffect (click)="userOnClic(user)">{{user.username}}</a>
@@ -11,5 +11,38 @@
 <div class="images">
     <li *ngFor="let image of userImages">
         <img src={{image}}>
+    </li>
+</div> -->
+<div class="d-flex flex-wrap">
+    <li class="users" *ngFor="let user of users">
+        <!--Card-->
+    <mdb-card>
+
+        <!--Card image-->
+        <div class="view overlay waves-light" mdbWavesEffect>
+          <mdb-card-img src={{user.profileImage}}></mdb-card-img>
+          <a>
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+        <!--/.Card image-->
+      
+        <!--Button-->
+        <a class="btn-floating btn-action ml-auto mr-4 mdb-color lighten-3 waves-light" mdbWavesEffect>
+          <i class="fa fa-chevron-right pl-1 waves-light" mdbWavesEffect></i>
+        </a>
+      
+        <!--Card content-->
+        <mdb-card-body>
+      
+          <!--Title-->
+          <mdb-card-title>
+            <h4>{{user.username}}</h4>
+          </mdb-card-title>
+          <!--Text-->
+        </mdb-card-body>
+        <!--/.Card content-->
+      </mdb-card>
+      <!--/.Card-->
     </li>
 </div>
