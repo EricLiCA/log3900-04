@@ -132,7 +132,6 @@ class RectangleView: UIView {
         
         for anchor in self.anchorPointsLayers {
             self.layer.addSublayer(anchor)
-            print("num layers \(self.layer.sublayers?.count)")
         }
         
         self.hideAnchorPoints()
