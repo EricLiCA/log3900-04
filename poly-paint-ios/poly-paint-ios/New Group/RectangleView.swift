@@ -10,8 +10,6 @@ import UIKit
 
 class RectangleView: UIView {
 
-    let defaultHeight: CGFloat = 100.0
-    let defaultWidth: CGFloat = 150.0
     let lineWidth: CGFloat = 1
     let uuid = NSUUID.init().uuidString.lowercased()
     var lastRotation: CGFloat = 0

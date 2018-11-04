@@ -22,23 +22,16 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var ellipseButton: UIButton!
     @IBOutlet weak var rectangleButton: UIButton!
     
-    var startTouch : CGPoint?
+    var firstTouch : CGPoint?
     var secondTouch : CGPoint?
     var currentContext : CGContext?
-    var prevImage : UIImage?
-    var lines = [Line]()
-    var currentLineStartPoint: CGPoint?
-    var currentLineEndPoint: CGPoint?
     var currentShape = Shape.None
     var isUserEditing: Bool = false
-    var path = [UIBezierPath]()
     var currentBezierPath: UIBezierPath?
-    var goodLayer = [CALayer]()
+    var layersFromShapes = [CALayer]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tapGR = UITapGestureRecognizer(target: self, action: #selector(didTap(tapGR:)))
-        self.view.addGestureRecognizer(tapGR)
         // Do any additional setup after loading the view.
     }
     
@@ -46,12 +39,7 @@ class DrawViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @objc func didTap(tapGR: UITapGestureRecognizer) {
-        print("DIDTAPPPP")
-    }
-    
-    
+
     @IBAction func rectangleTapped(_ sender: UIButton) {
         if(self.currentShape == Shape.Rectangle) {
             self.isUserEditing = false
@@ -96,25 +84,23 @@ class DrawViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        startTouch = touch?.location(in: drawingPlace)
-        self.currentLineStartPoint = startTouch
+        self.firstTouch = touch?.location(in: drawingPlace)
     }
     
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(isUserEditing) {
-            
             // erase sublayers used for drawing
             if(self.drawingPlace.layer.sublayers != nil) {
                 for layer in self.drawingPlace.layer.sublayers! {
                     self.drawingPlace.layer.sublayers?.popLast()
                 }
-                for layer in self.goodLayer {
+                for layer in self.layersFromShapes {
                     self.drawingPlace.layer.addSublayer(layer)
                 }
             }
             
-            for touch in touches{
+            for touch in touches {
                 secondTouch = touch.location(in: drawingPlace)
                 
                 if(self.currentContext == nil) {
@@ -127,11 +113,11 @@ class DrawViewController: UIViewController {
                 var bezier = UIBezierPath()
                 switch self.currentShape {
                 case .Rectangle:
-                    bezier = self.drawRectangle(startPoint: startTouch!, secondPoint: secondTouch!)
+                    bezier = self.drawRectangle(startPoint: firstTouch!, secondPoint: secondTouch!)
                 case .Ellipse:
-                    bezier = self.drawEllipse(startPoint: startTouch!, secondPoint: secondTouch!)
+                    bezier = self.drawEllipse(startPoint: firstTouch!, secondPoint: secondTouch!)
                 case .Triangle:
-                    bezier = self.drawTriangle(startPoint: startTouch!, secondPoint: secondTouch!)
+                    bezier = self.drawTriangle(startPoint: firstTouch!, secondPoint: secondTouch!)
                 case .None:
                     print("nothing")
                 }
@@ -161,11 +147,8 @@ class DrawViewController: UIViewController {
             }
             
             let touch = touches.first
-            self.currentLineEndPoint = touch?.location(in: drawingPlace)
             self.currentContext = nil
             self.currentBezierPath?.close()
-            self.path.append(currentBezierPath!)
-            self.addToLines()
             let myLayer = CAShapeLayer()
             myLayer.path = self.currentBezierPath?.cgPath
             myLayer.borderWidth = 2
@@ -182,19 +165,15 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.addSubview(triangleView)
             }
             
-            self.goodLayer.append((self.drawingPlace.layer.sublayers?.popLast())!)
+            self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
             for layer in self.drawingPlace.layer.sublayers! {
                 self.drawingPlace.layer.sublayers?.popLast()
             }
-            for layer in self.goodLayer {
+            for layer in self.layersFromShapes {
                 self.drawingPlace.layer.addSublayer(layer)
             }
         }
         
-    }
-    
-    func addToLines() {
-        lines.append(Line(start: self.currentLineStartPoint!, end: self.currentLineEndPoint!))
     }
     
     func drawRectangle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
@@ -208,10 +187,6 @@ class DrawViewController: UIViewController {
         bezier.addLine(to: CGPoint(x: (startPoint.x), y: (secondPoint.y)))
         bezier.move(to:CGPoint(x: (startPoint.x), y: (secondPoint.y)))
         bezier.addLine(to: CGPoint(x: (startPoint.x), y: (startPoint.y)))
-        
-        // For rectangle
-        
-        
         bezier.close()
         
         return bezier
@@ -219,7 +194,6 @@ class DrawViewController: UIViewController {
     
     func drawEllipse(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
         let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.x - startPoint.x, height: secondPoint.y - startPoint.y))
-        
         bezier.close()
         
         return bezier
@@ -227,7 +201,6 @@ class DrawViewController: UIViewController {
     
     func drawCircle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
         let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.y - startPoint.y, height: secondPoint.y - startPoint.y))
-        
         bezier.close()
         
         return bezier
