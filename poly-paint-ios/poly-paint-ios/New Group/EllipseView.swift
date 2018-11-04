@@ -21,6 +21,7 @@ class EllipseView: UIView {
     let defaultSize: CGFloat = 150.0
     let lineWidth: CGFloat = 1
     let uuid = NSUUID.init().uuidString.lowercased()
+    var anchorPointsLayers = [CAShapeLayer]()
     
     init(frame: CGRect, layer: CALayer) {
         super.init(frame:frame)
@@ -51,6 +52,7 @@ class EllipseView: UIView {
         path.lineWidth = self.lineWidth
         UIColor.black.setStroke()
         path.stroke()
+        self.initializeAnchorPoints()
     }
     
     @objc func didPan(panGR: UIPanGestureRecognizer) {
@@ -60,6 +62,12 @@ class EllipseView: UIView {
         self.center.x += translation.x
         self.center.y += translation.y
         panGR.setTranslation(.zero, in: self)
+        
+        if(panGR.state == .ended) {
+            self.hideAnchorPoints()
+        } else if(panGR.state == .began) {
+            self.showAnchorPoints()
+        }
     }
     
     @objc func didPinch(pinchGR: UIPinchGestureRecognizer) {
@@ -104,6 +112,42 @@ class EllipseView: UIView {
             return "x"
         } else {
             return "y"
+        }
+    }
+    
+    func initializeAnchorPoints() {
+        let topAnchorPoint = CGPoint(x: self.frame.size.width/2, y: 0)
+        let rightAnchorPoint = CGPoint(x: self.frame.size.width, y: self.frame.size.height/2)
+        let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
+        let leftAnchorPoint = CGPoint(x: 0, y: self.frame.size.height/2)
+        var anchorPoints = [topAnchorPoint, rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
+        
+        for anchor in anchorPoints {
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(3), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var shapeLayer = CAShapeLayer()
+            shapeLayer.path = circlePath.cgPath
+            shapeLayer.fillColor = UIColor.red.cgColor
+            shapeLayer.strokeColor = UIColor.red.cgColor
+            shapeLayer.lineWidth = 3.0
+            self.anchorPointsLayers.append(shapeLayer)
+        }
+        
+        for anchor in self.anchorPointsLayers {
+            self.layer.addSublayer(anchor)
+        }
+        
+        self.hideAnchorPoints()
+    }
+    
+    func showAnchorPoints() {
+        for index in 0...3 {
+            self.layer.sublayers![index].isHidden = false
+        }
+    }
+    
+    func hideAnchorPoints() {
+        for index in 0...3 {
+            self.layer.sublayers![index].isHidden = true
         }
     }
 
