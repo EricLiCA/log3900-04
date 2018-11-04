@@ -25,7 +25,6 @@
 		CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2D721820DB600F21F57 /* DrawViewController.swift */; };
 		CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2D921820E7200F21F57 /* DrawView.swift */; };
 		CF21E2DC2182143500F21F57 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2DB2182143500F21F57 /* Line.swift */; };
-		CF21E32A2188EE7100F21F57 /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3292188EE7100F21F57 /* SquareView.swift */; };
 		CF21E32C2188EEA100F21F57 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32B2188EEA100F21F57 /* RectangleView.swift */; };
 		CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32F2188EEC300F21F57 /* EllipseView.swift */; };
 		CF21E3322188F61100F21F57 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3312188F61100F21F57 /* CanvasViewController.swift */; };
@@ -80,7 +79,6 @@
 		CF21E2D721820DB600F21F57 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
 		CF21E2D921820E7200F21F57 /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		CF21E2DB2182143500F21F57 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
-		CF21E3292188EE7100F21F57 /* SquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
 		CF21E32B2188EEA100F21F57 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
 		CF21E32F2188EEC300F21F57 /* EllipseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseView.swift; sourceTree = "<group>"; };
 		CF21E3312188F61100F21F57 /* CanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
@@ -206,7 +204,6 @@
 		CF21E3282188C2CE00F21F57 /* Shapes */ = {
 			isa = PBXGroup;
 			children = (
-				CF21E3292188EE7100F21F57 /* SquareView.swift */,
 				CF21E32B2188EEA100F21F57 /* RectangleView.swift */,
 				CF21E32F2188EEC300F21F57 /* EllipseView.swift */,
 				CF21E3332189361C00F21F57 /* TriangleView.swift */,
@@ -402,7 +399,6 @@
 				A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */,
 				CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */,
 				CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */,
-				CF21E32A2188EE7100F21F57 /* SquareView.swift in Sources */,
 				CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */,
 				CF21E32C2188EEA100F21F57 /* RectangleView.swift in Sources */,
 				CF21E2DC2182143500F21F57 /* Line.swift in Sources */,

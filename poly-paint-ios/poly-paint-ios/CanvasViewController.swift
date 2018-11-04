@@ -45,9 +45,9 @@ class CanvasViewController: UIViewController {
         if(self.canvasView.frame.contains(tapGR.location(in: self.view))) {
             if(self.shapeType == ShapeType.Square) {
                 let tapPoint = tapGR.location(in: self.canvasView)
-                let shapeView = SquareView(origin: tapPoint)
-                self.canvasView.addSubview(shapeView)
-                print(shapeView.uuid)
+                //let shapeView = SquareView(origin: tapPoint)
+                //self.canvasView.addSubview(shapeView)
+                //print(shapeView.uuid)
             } else if (self.shapeType == ShapeType.Rectangle) {
                 let tapPoint = tapGR.location(in: self.canvasView)
                 //let shapeView = RectangleView(origin: tapPoint)
