@@ -21,6 +21,7 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var triangleButton: UIButton!
     @IBOutlet weak var ellipseButton: UIButton!
     @IBOutlet weak var rectangleButton: UIButton!
+    @IBOutlet weak var editButton: UIBarButtonItem!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -42,6 +43,41 @@ class DrawViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func insertTapped(_ sender: UIBarButtonItem) {
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let drawRectangleAction = UIAlertAction(title: "Rectangle", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            //  insert Rectangle here
+        })
+        alertController.addAction(drawRectangleAction)
+        
+        
+        let drawEllipseAction = UIAlertAction(title: "Ellipse", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            //  insert ellipse here
+        })
+        alertController.addAction(drawEllipseAction)
+
+        
+        let drawTriangleAction = UIAlertAction(title: "Triangle", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            //  insert triangle here
+        })
+        alertController.addAction(drawTriangleAction)
+        
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
+        })
+        alertController.addAction(cancelAction)
+        
+        
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.barButtonItem = sender
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+
+    }
     @IBAction func rectangleTapped(_ sender: UIButton) {
         if(self.currentShape == Shape.Rectangle) {
             self.isUserEditing = false
