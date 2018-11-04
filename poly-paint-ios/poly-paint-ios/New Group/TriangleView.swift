@@ -14,6 +14,7 @@ class TriangleView: UIView {
     let defaultWidth: CGFloat = 150.0
     let lineWidth: CGFloat = 1
     let uuid = NSUUID.init().uuidString.lowercased()
+    var anchorPointsLayers = [CAShapeLayer]()
     
     init(frame: CGRect, layer:CALayer) {
         //super.init(frame:CGRect(x: 0.0, y: 0.0, width: defaultWidth, height: defaultHeight))
@@ -46,6 +47,7 @@ class TriangleView: UIView {
         path.lineWidth = self.lineWidth
         UIColor.black.setStroke()
         path.stroke()
+        self.initializeAnchorPoints()
     }
     
     @objc func didPan(panGR: UIPanGestureRecognizer) {
@@ -55,6 +57,12 @@ class TriangleView: UIView {
         self.center.x += translation.x
         self.center.y += translation.y
         panGR.setTranslation(.zero, in: self)
+        
+        if(panGR.state == .ended) {
+            self.hideAnchorPoints()
+        } else if(panGR.state == .began) {
+            self.showAnchorPoints()
+        }
     }
     
     @objc func didPinch(pinchGR: UIPinchGestureRecognizer) {
@@ -113,6 +121,40 @@ class TriangleView: UIView {
         return path
     }
     
+    func initializeAnchorPoints() {
+        let rightAnchorPoint = CGPoint(x: self.frame.size.width*0.75, y: self.frame.size.height/2)
+        let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
+        let leftAnchorPoint = CGPoint(x: self.frame.size.width/4, y: self.frame.size.height/2)
+        var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
+        
+        for anchor in anchorPoints {
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(3), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var shapeLayer = CAShapeLayer()
+            shapeLayer.path = circlePath.cgPath
+            shapeLayer.fillColor = UIColor.red.cgColor
+            shapeLayer.strokeColor = UIColor.red.cgColor
+            shapeLayer.lineWidth = 3.0
+            self.anchorPointsLayers.append(shapeLayer)
+        }
+        
+        for anchor in self.anchorPointsLayers {
+            self.layer.addSublayer(anchor)
+        }
+        
+        self.hideAnchorPoints()
+    }
+    
+    func showAnchorPoints() {
+        for index in 0...2 {
+            self.layer.sublayers![index].isHidden = false
+        }
+    }
+    
+    func hideAnchorPoints() {
+        for index in 0...2 {
+            self.layer.sublayers![index].isHidden = true
+        }
+    }
     
     /*
      // Only override draw() if you perform custom drawing.
