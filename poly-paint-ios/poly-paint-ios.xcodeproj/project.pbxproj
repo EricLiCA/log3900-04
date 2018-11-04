@@ -27,7 +27,6 @@
 		CF21E2DC2182143500F21F57 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2DB2182143500F21F57 /* Line.swift */; };
 		CF21E32A2188EE7100F21F57 /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3292188EE7100F21F57 /* SquareView.swift */; };
 		CF21E32C2188EEA100F21F57 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32B2188EEA100F21F57 /* RectangleView.swift */; };
-		CF21E32E2188EEB000F21F57 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32D2188EEB000F21F57 /* CircleView.swift */; };
 		CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32F2188EEC300F21F57 /* EllipseView.swift */; };
 		CF21E3322188F61100F21F57 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3312188F61100F21F57 /* CanvasViewController.swift */; };
 		CF21E3342189361C00F21F57 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3332189361C00F21F57 /* TriangleView.swift */; };
@@ -83,7 +82,6 @@
 		CF21E2DB2182143500F21F57 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		CF21E3292188EE7100F21F57 /* SquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
 		CF21E32B2188EEA100F21F57 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
-		CF21E32D2188EEB000F21F57 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		CF21E32F2188EEC300F21F57 /* EllipseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseView.swift; sourceTree = "<group>"; };
 		CF21E3312188F61100F21F57 /* CanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		CF21E3332189361C00F21F57 /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
@@ -210,7 +208,6 @@
 			children = (
 				CF21E3292188EE7100F21F57 /* SquareView.swift */,
 				CF21E32B2188EEA100F21F57 /* RectangleView.swift */,
-				CF21E32D2188EEB000F21F57 /* CircleView.swift */,
 				CF21E32F2188EEC300F21F57 /* EllipseView.swift */,
 				CF21E3332189361C00F21F57 /* TriangleView.swift */,
 			);
@@ -394,7 +391,6 @@
 			files = (
 				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
-				CF21E32E2188EEB000F21F57 /* CircleView.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */,

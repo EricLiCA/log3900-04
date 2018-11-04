@@ -58,8 +58,8 @@ class CanvasViewController: UIViewController {
                 //self.canvasView.addSubview(shapeView)
             } else if (self.shapeType == ShapeType.Circle) {
                 let tapPoint = tapGR.location(in: self.canvasView)
-                let shapeView = CircleView(origin: tapPoint)
-                self.canvasView.addSubview(shapeView)
+                //let shapeView = CircleView(origin: tapPoint)
+                //self.canvasView.addSubview(shapeView)
             } else if (self.shapeType == ShapeType.Triangle) {
                 let tapPoint = tapGR.location(in: self.canvasView)
                 //let shapeView = TriangleView(origin: tapPoint)

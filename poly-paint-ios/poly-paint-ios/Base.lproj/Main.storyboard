@@ -337,19 +337,6 @@
                                     <action selector="rectangleTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="aY3-DS-Dtu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nyb-26-1LO">
-                                <rect key="frame" x="246" y="100" width="100" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="cos-w5-6JS"/>
-                                </constraints>
-                                <state key="normal" title="Circle">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="circleTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="Szi-Be-EQB"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="el7-WA-nyl">
                                 <rect key="frame" x="395" y="100" width="100" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -388,19 +375,16 @@
                             <constraint firstItem="el7-WA-nyl" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="DBm-NZ-XkX"/>
                             <constraint firstItem="laE-6R-FW3" firstAttribute="leading" secondItem="el7-WA-nyl" secondAttribute="trailing" constant="38" id="F9L-h2-3Jm"/>
                             <constraint firstItem="DOf-Jz-Zu9" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="99" id="LUr-a2-uEd"/>
+                            <constraint firstItem="el7-WA-nyl" firstAttribute="leading" secondItem="DOf-Jz-Zu9" secondAttribute="trailing" constant="196" id="Mjo-NZ-suQ"/>
                             <constraint firstItem="7FJ-AM-LDR" firstAttribute="trailing" secondItem="tNz-CW-3rW" secondAttribute="trailing" constant="20" id="Nuj-nF-qPr"/>
                             <constraint firstItem="DOf-Jz-Zu9" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="PAz-GC-7kZ"/>
                             <constraint firstItem="tNz-CW-3rW" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="20" id="Q1o-yo-WZ4"/>
                             <constraint firstItem="laE-6R-FW3" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="dwb-I4-XE0"/>
-                            <constraint firstItem="Nyb-26-1LO" firstAttribute="leading" secondItem="DOf-Jz-Zu9" secondAttribute="trailing" constant="47" id="nBD-0F-BAf"/>
-                            <constraint firstItem="Nyb-26-1LO" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="oNm-5v-5Gs"/>
-                            <constraint firstItem="el7-WA-nyl" firstAttribute="leading" secondItem="Nyb-26-1LO" secondAttribute="trailing" constant="49" id="u1K-Jt-fnf"/>
                             <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="tNz-CW-3rW" secondAttribute="bottom" constant="20" id="vm1-jW-p8r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7FJ-AM-LDR"/>
                     </view>
                     <connections>
-                        <outlet property="circleButton" destination="Nyb-26-1LO" id="cr4-Lh-AGy"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="ellipseButton" destination="el7-WA-nyl" id="idg-NM-5Yl"/>
                         <outlet property="rectangleButton" destination="DOf-Jz-Zu9" id="TBa-aG-pbk"/>

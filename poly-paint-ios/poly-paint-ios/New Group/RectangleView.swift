@@ -18,24 +18,12 @@ class RectangleView: UIView {
     var originalRotation = CGFloat()
     
     init(frame: CGRect, layer: CALayer) {
-        /*super.init(frame:CGRect(x: 0.0, y: 0.0, width: defaultWidth, height: defaultHeight))
-        self.center = origin
-        self.backgroundColor = UIColor.clear
-        initGestureRecognizers()
-        self.transform = self.transform.rotated(by: .pi/6)
-        self.transform = self.transform.scaledBy(x: 1, y: 2)*/
         super.init(frame: frame)
         layer.backgroundColor = UIColor.blue.cgColor
-        //self.layer.addSublayer(layer)
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.setNeedsDisplay()
     }
-    
-    /*init(frame: CGRect, layer: CALayer) {
-        super.init(frame: frame)
-        self.layer.addSublayer(layer)
-    }*/
     
     // We need to implement init(coder) to avoid compilation errors
     required init?(coder aDecoder: NSCoder) {
@@ -43,7 +31,6 @@ class RectangleView: UIView {
     }
     
     func initGestureRecognizers() {
-        print("init")
         let panGR = UIPanGestureRecognizer(target: self, action: #selector(didPan(panGR:)))
         addGestureRecognizer(panGR)
         let pinchGR = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(pinchGR:)))
@@ -53,7 +40,6 @@ class RectangleView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        print("called draw")
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = UIBezierPath(roundedRect: insetRect, cornerRadius: 0)
         UIColor.white.setFill()
@@ -100,19 +86,8 @@ class RectangleView: UIView {
     @objc func didRotate(rotationGR: UIRotationGestureRecognizer) {
         self.superview!.bringSubview(toFront: self)
         let rotation = rotationGR.rotation
-        //self.transform = CGAffineTransform(rotationAngle: rotation)
         self.transform = self.transform.rotated(by: rotation)
         rotationGR.rotation = 0.0
-        
-        /*if rotationGR.state == .began {
-            rotationGR.rotation = self.lastRotation
-            self.originalRotation = rotationGR.rotation
-        } else if rotationGR.state == .changed {
-            let newRotation = rotationGR.rotation + originalRotation
-            rotationGR.view?.transform = CGAffineTransform(rotationAngle: newRotation)
-        } else if rotationGR.state == .ended {
-            lastRotation = rotationGR.rotation
-        }*/
     }
     
     func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
