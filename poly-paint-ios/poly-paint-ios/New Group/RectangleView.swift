@@ -96,7 +96,6 @@ class RectangleView: UIView {
     }
     
     @objc func didLongPressed(_ gesture: UILongPressGestureRecognizer) {
-        print("it works")
         self.superview!.bringSubview(toFront: self)
         guard let gestureView = gesture.view, let superView = gestureView.superview else {
             return
@@ -143,6 +142,7 @@ class RectangleView: UIView {
     }
     
     @objc internal func handleDeleteAction(_ controller: UIMenuController) {
+        self.removeFromSuperview()
     }
     
     func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
