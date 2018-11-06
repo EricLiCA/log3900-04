@@ -177,11 +177,11 @@ namespace PolyPaint.Modeles.Strokes
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
             DrawingAttributes originalDa = drawingAttributes.Clone();
-            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
+            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
 
             if (this.isSelected())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
+                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
                 selectedPen.Freeze();
                 for (int i = 0; i < this.StylusPoints.Count - 1; i++)
                     drawingContext.DrawLine(selectedPen, this.StylusPoints[i].ToPoint(), this.StylusPoints[i + 1].ToPoint());

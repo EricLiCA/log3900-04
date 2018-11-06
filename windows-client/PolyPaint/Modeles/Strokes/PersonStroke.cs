@@ -44,7 +44,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             DrawingAttributes originalDa = drawingAttributes.Clone();
             SolidColorBrush fillBrush = new SolidColorBrush(drawingAttributes.Color);
-            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
+            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
 
             double height = Math.Abs(this.StylusPoints[0].Y - this.StylusPoints[1].Y);
             double width = Math.Abs(this.StylusPoints[0].X - this.StylusPoints[1].X);
@@ -75,7 +75,7 @@ namespace PolyPaint.Modeles.Strokes
 
             if (this.isSelected())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
+                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
                 drawingContext.DrawEllipse(new SolidColorBrush(Colors.White), selectedPen, headPos, width / 2.5, height / 7);
                 drawingContext.DrawLine(selectedPen, neck, crouch);
                 drawingContext.DrawLine(selectedPen, rightArm, leftArm);
@@ -94,7 +94,7 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.DrawLine(outlinePen, crouch, rightFoot);
             drawingContext.DrawLine(outlinePen, crouch, leftFoot);
 
-            int wordSize = 18;
+            int wordSize = 17;
             FormattedText text = new FormattedText(Name, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), wordSize, Brushes.Black)
             {
                 TextAlignment = TextAlignment.Center,

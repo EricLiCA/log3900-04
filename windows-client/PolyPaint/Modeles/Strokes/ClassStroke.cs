@@ -41,12 +41,12 @@ namespace PolyPaint.Modeles.Strokes
             base.DrawCore(drawingContext, drawingAttributes);
 
             DrawingAttributes originalDa = drawingAttributes.Clone();
-            Pen Pen = new Pen(new SolidColorBrush(Colors.Black), 2);
+            Pen Pen = new Pen(new SolidColorBrush(Colors.Black), 1);
             Pen.Freeze();
 
             Point topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
             Point bottomRight = new Point(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
-            int wordSize = 18;
+            int wordSize = 17;
 
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
 
@@ -54,8 +54,8 @@ namespace PolyPaint.Modeles.Strokes
             textContent.ForEach(textLine =>
             {
                 var point = topLeft;
-                point.Y += wordSize * 1.25 * line;
-                if (point.Y + wordSize * 1.25 > bottomRight.Y) return;
+                point.Y += wordSize * 1.5 * line;
+                if (point.Y + wordSize * 1.5 > bottomRight.Y) return;
                 
                 if (textLine == "--")
                 {

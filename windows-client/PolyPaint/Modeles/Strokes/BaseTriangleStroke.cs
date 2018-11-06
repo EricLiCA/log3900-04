@@ -85,7 +85,7 @@ namespace PolyPaint.Modeles.Strokes
             DrawingAttributes originalDa = drawingAttributes.Clone();
             SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(drawingAttributes.Color);
             fillBrush.Freeze();
-            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
+            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
 
             Point top = new Point((this.StylusPoints[0].X + this.StylusPoints[1].X) / 2, Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
             Point bottomRight = new Point(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
@@ -94,17 +94,17 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
 
             var segments = new[]
-       {
-          new LineSegment(bottomRight, true),
-          new LineSegment(bottomLeft, true)
-       };
+           {
+              new LineSegment(bottomRight, true),
+              new LineSegment(bottomLeft, true)
+           };
 
             var figure = new PathFigure(top, segments, true);
             var geo = new PathGeometry(new[] { figure });
 
             if (this.isSelected())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
+                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
                 selectedPen.Freeze();
                 drawingContext.DrawGeometry(fillBrush, selectedPen, geo);
             }

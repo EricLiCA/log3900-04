@@ -44,7 +44,7 @@ namespace PolyPaint.Modeles.Strokes
 
             if ( bottomRight.X - topLeft.X > 0 && bottomRight.Y - topLeft.Y > 0)
             {
-                int wordSize = 18;
+                int wordSize = 17;
                 FormattedText text = new FormattedText(textContent, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), wordSize, Brushes.Black)
                 {
                     TextAlignment = TextAlignment.Center,

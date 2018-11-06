@@ -34,7 +34,7 @@ namespace PolyPaint.Modeles.Strokes
             DrawingAttributes originalDa = drawingAttributes.Clone();
             SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(drawingAttributes.Color);
             fillBrush.Freeze();
-            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
+            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
             outlinePen.Freeze();
 
             StylusPoint stp = this.StylusPoints[0];
@@ -42,7 +42,7 @@ namespace PolyPaint.Modeles.Strokes
             
             if (this.isSelected())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
+                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
                 selectedPen.Freeze();
                 drawingContext.DrawEllipse(null, selectedPen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
             }

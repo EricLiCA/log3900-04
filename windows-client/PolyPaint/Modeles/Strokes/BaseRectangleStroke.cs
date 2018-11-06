@@ -31,13 +31,13 @@ namespace PolyPaint.Modeles.Strokes
             DrawingAttributes originalDa = drawingAttributes.Clone();
             SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(drawingAttributes.Color);
             fillBrush.Freeze();
-            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 2);
+            Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
             
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
 
             if (this.isSelected())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
+                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
                 selectedPen.Freeze();
                 drawingContext.DrawRectangle(null, selectedPen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
             }
