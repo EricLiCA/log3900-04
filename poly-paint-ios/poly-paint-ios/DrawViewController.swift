@@ -295,6 +295,9 @@ class DrawViewController: UIViewController {
         let dumpLayer = CALayer()
         let classDiagram = ClassDiagramView(frame: rectangle, layer: dumpLayer, text: processText(text: text as! String))
         self.drawingPlace.addSubview(classDiagram)
+        self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+        self.drawingPlace.layer.addSublayer(self.layersFromShapes[self.layersFromShapes.count-1])
+  
     }
     
     func processText(text: String) -> [String] {

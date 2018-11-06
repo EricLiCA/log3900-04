@@ -163,7 +163,7 @@ class ClassDiagramView: UIView {
             let toPoint = CGPoint(x: self.frame.width, y: currentHeight)
             self.drawLine(fromPoint: fromPoint, toPoint: toPoint)
             // set label
-            let label = UILabel(frame: CGRect(x: self.textGap, y: currentHeight, width: self.frame.width, height: self.defaultTextLineHeight))
+            let label = UILabel(frame: CGRect(x: self.textGap, y: currentHeight, width: self.frame.width - self.textGap, height: self.defaultTextLineHeight))
             label.contentMode = .scaleToFill
             label.numberOfLines = self.defaultMaxNumOfLines
             label.text = word
@@ -206,6 +206,7 @@ class classDiagramPopoverView: UIView {
     
     @IBAction func addClassTapped(_ sender: UIButton) {
         self.sendCreateClassDiagramNotification()
+        
     }
     
     func sendCreateClassDiagramNotification() {
