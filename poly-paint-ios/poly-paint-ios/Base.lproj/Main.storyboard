@@ -388,6 +388,9 @@
                                 <state key="normal" title="Class"/>
                                 <connections>
                                     <action selector="classTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="4S2-4l-9oa"/>
+                                    <segue destination="82l-V1-XRu" kind="popoverPresentation" popoverAnchorView="EFY-ek-Vzt" id="DpR-pp-jZn">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
                                 </connections>
                             </button>
                         </subviews>
@@ -435,6 +438,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="912.5" y="-891.21093749999989"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="2JB-on-srr">
+            <objects>
+                <viewController id="82l-V1-XRu" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4Hv-8g-iJq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NlW-PG-7wi">
+                                <rect key="frame" x="16" y="95" width="288" height="326"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" smartDashesType="yes"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7n0-x0-Ndg">
+                                <rect key="frame" x="16" y="430" width="288" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Gw1-IC-bCK"/>
+                                    <constraint firstAttribute="width" constant="288" id="ZxJ-pL-Ing"/>
+                                </constraints>
+                                <state key="normal" title="Add Class Diagram">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write two dashes to draw a line" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVo-k0-NbN">
+                                <rect key="frame" x="16" y="44" width="288" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="M1C-q5-18P"/>
+                                    <constraint firstAttribute="height" constant="21" id="Qey-2F-bfu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7n0-x0-Ndg" firstAttribute="top" secondItem="NlW-PG-7wi" secondAttribute="bottom" constant="9" id="0Wm-i2-teN"/>
+                            <constraint firstItem="NlW-PG-7wi" firstAttribute="centerX" secondItem="q1D-W7-Ihn" secondAttribute="centerX" id="DjU-La-UyQ"/>
+                            <constraint firstItem="q1D-W7-Ihn" firstAttribute="bottom" secondItem="NlW-PG-7wi" secondAttribute="bottom" constant="59" id="JPV-ia-XcX"/>
+                            <constraint firstItem="NlW-PG-7wi" firstAttribute="centerX" secondItem="q1D-W7-Ihn" secondAttribute="centerX" id="K2I-FW-0Jw"/>
+                            <constraint firstItem="zVo-k0-NbN" firstAttribute="leading" secondItem="q1D-W7-Ihn" secondAttribute="leading" constant="16" id="KBn-Y5-cca"/>
+                            <constraint firstItem="zVo-k0-NbN" firstAttribute="top" secondItem="q1D-W7-Ihn" secondAttribute="top" constant="44" id="MJj-Co-zVb"/>
+                            <constraint firstItem="NlW-PG-7wi" firstAttribute="leading" secondItem="q1D-W7-Ihn" secondAttribute="leading" constant="16" id="gqZ-55-zGQ"/>
+                            <constraint firstItem="NlW-PG-7wi" firstAttribute="top" secondItem="q1D-W7-Ihn" secondAttribute="top" constant="95" id="nPl-OF-asx"/>
+                            <constraint firstItem="7n0-x0-Ndg" firstAttribute="leading" secondItem="q1D-W7-Ihn" secondAttribute="leading" constant="16" id="yJ6-ru-Fd0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="q1D-W7-Ihn"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Cd-f8-ZiB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1906.25" y="-942.18749999999989"/>
         </scene>
         <!--Login Scene-->
         <scene sceneID="maM-Fp-ADF">

@@ -17,6 +17,7 @@ class ClassDiagramView: UIView {
     let defaultTextLineHeight: CGFloat = 40
     let defaultMaxNumOfLines = 5
     let textGap: CGFloat = 5
+
     
     init(frame: CGRect, layer: CALayer) {
         super.init(frame: frame)
