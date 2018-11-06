@@ -10,5 +10,6 @@ namespace PolyPaint.Modeles.Strokes
     public interface Movable
     {
         void Move(StylusPointCollection newPoints);
+        void DoneMoving();
     }
 }

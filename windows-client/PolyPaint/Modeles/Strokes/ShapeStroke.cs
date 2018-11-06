@@ -268,5 +268,15 @@ namespace PolyPaint.Modeles.Strokes
             LEFT = Guid.NewGuid();
             RIGHT = Guid.NewGuid();
         }
+
+        public void DoneMoving()
+        {
+            //Send Modifications to server
+        }
+
+        public void HandleStoped(Guid id)
+        {
+            //Send Modifications to server
+        }
     }
 }

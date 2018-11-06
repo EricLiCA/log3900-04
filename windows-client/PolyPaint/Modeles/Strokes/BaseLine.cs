@@ -62,6 +62,14 @@ namespace PolyPaint.Modeles.Strokes
             }
         }
 
+        internal void newPoint(Point point)
+        {
+            int clickedLine = this.ClickedLine(point);
+            this.StylusPoints.Insert(clickedLine + 1, new StylusPoint(point.X, point.Y));
+            this.HandlePoints.Insert(clickedLine + 1, Guid.NewGuid());
+            this.Refresh();
+        }
+
         public override bool HitTest(Point point)
         {
             return this.ClickedLine(point) > -1;
@@ -150,6 +158,20 @@ namespace PolyPaint.Modeles.Strokes
 
             this.StylusPoints[movedIndex] = new StylusPoint(point.X, point.Y);
             this.Refresh();
+        }
+
+        public void HandleStoped(Guid id)
+        {
+            int movedIndex = this.HandlePoints.FindIndex(i => i.ToString() == id.ToString());
+            if (movedIndex == 0 || movedIndex == this.HandlePoints.Count - 1) return;
+
+            if (10 > this.FindDistanceToSegment(this.StylusPoints[movedIndex].ToPoint(), this.StylusPoints[movedIndex - 1].ToPoint(), this.StylusPoints[movedIndex + 1].ToPoint()))
+            {
+                this.deleteDragHandles();
+                this.HandlePoints.RemoveAt(movedIndex);
+                this.StylusPoints.RemoveAt(movedIndex);
+                this.Refresh();
+            } 
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

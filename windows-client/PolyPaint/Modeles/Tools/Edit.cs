@@ -37,7 +37,7 @@ namespace PolyPaint.Modeles.Tools
         {
             if (editing != null) return;
 
-            List<Stroke> clicked = strokes.ToList().FindAll(stroke => ((CustomStroke)stroke).HitTest(point) && stroke is Movable);
+            List<Stroke> clicked = strokes.ToList().FindAll(stroke => ((CustomStroke)stroke).HitTest(point) && (stroke is Movable || stroke is BaseLine));
             List<Stroke> clickedHandles = clicked.FindAll(stroke => stroke is DragHandle);
             List<Stroke> clickedSelected = clicked.FindAll(stroke => ((CustomStroke)stroke).isSelected());
 
@@ -57,6 +57,13 @@ namespace PolyPaint.Modeles.Tools
 
             if (clickedSelected.Count > 0)
             {
+                if (clicked.Last() is BaseLine)
+                {
+                    ((BaseLine)clicked.Last()).newPoint(point);
+                    this.MouseDown(point, strokes);
+                    return;
+                }
+
                 this.initialCursorPosition = point;
                 this.initialObjectPoints = clicked.Last().StylusPoints;
                 this.editing = (Movable)clickedSelected.Last();
@@ -82,10 +89,12 @@ namespace PolyPaint.Modeles.Tools
 
         public override void MouseUp(Point point, CustomStrokeCollection strokes)
         {
-            this.editing = null;
             strokes.ToList().FindAll(stroke => stroke is Anchorable).ForEach(stroke => {
                 ((Anchorable)stroke).hideAnchorPoints();
             });
+            if (this.editing != null)
+                this.editing.DoneMoving();
+            this.editing = null;
         }
     }
 }

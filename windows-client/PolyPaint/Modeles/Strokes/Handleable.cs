@@ -12,5 +12,6 @@ namespace PolyPaint.Modeles.Strokes
         void addDragHandles();
         void deleteDragHandles();
         void handleMoved(Guid id, Point point);
+        void HandleStoped(Guid id);
     }
 }

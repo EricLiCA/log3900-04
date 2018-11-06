@@ -53,6 +53,14 @@ namespace PolyPaint.Modeles.Strokes
             parent.handleMoved(this.Id, newPoints[0].ToPoint());
         }
 
+        public void DoneMoving()
+        {
+            if (!this.strokes.has(this.ParentId)) return;
+
+            Handleable parent = (Handleable)this.strokes.get(this.ParentId);
+            parent.HandleStoped(this.Id);
+        }
+
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
             CustomStroke parent = this.strokes.get(this.ParentId);
