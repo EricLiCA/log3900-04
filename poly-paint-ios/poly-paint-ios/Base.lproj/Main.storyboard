@@ -383,6 +383,13 @@
                                     <action selector="stickfigureTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="bjN-xO-K12"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EFY-ek-Vzt">
+                                <rect key="frame" x="49" y="100" width="38" height="30"/>
+                                <state key="normal" title="Class"/>
+                                <connections>
+                                    <action selector="classTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="4S2-4l-9oa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -398,6 +405,8 @@
                             <constraint firstItem="laE-6R-FW3" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="dwb-I4-XE0"/>
                             <constraint firstItem="sNV-0h-Pxl" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="krk-dk-Qui"/>
                             <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="tNz-CW-3rW" secondAttribute="bottom" constant="20" id="vm1-jW-p8r"/>
+                            <constraint firstItem="EFY-ek-Vzt" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="49" id="wev-JY-8Jg"/>
+                            <constraint firstItem="EFY-ek-Vzt" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="zO2-Se-DPd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7FJ-AM-LDR"/>
                     </view>
@@ -414,6 +423,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="classButton" destination="EFY-ek-Vzt" id="fHH-yW-rE3"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="editButton" destination="vVf-wi-6Rz" id="Y8R-iC-UUg"/>
                         <outlet property="ellipseButton" destination="el7-WA-nyl" id="idg-NM-5Yl"/>
