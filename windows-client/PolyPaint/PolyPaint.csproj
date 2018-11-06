@@ -388,5 +388,8 @@
   <ItemGroup>
     <Resource Include="Resources\classDiagram-tool.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\useCase-tool.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
