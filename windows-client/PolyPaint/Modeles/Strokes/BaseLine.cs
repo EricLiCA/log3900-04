@@ -24,7 +24,7 @@ namespace PolyPaint.Modeles.Strokes
 
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes,
                         string firstAnchorId, int firstAnchorIndex,
-                        string secondAnchorId, int secondAnchorIndex) : base(pts, strokes)
+                        string secondAnchorId, int secondAnchorIndex) : this(pts, strokes)
         {
             if (firstAnchorId != null)
             {
@@ -48,7 +48,7 @@ namespace PolyPaint.Modeles.Strokes
             this.strokes.Add(new DragHandle(pointsFirst, this.strokes, FIRST_POINT, this.Id.ToString()));
             
             var pointsSecond = new StylusPointCollection();
-            pointsSecond.Add(new StylusPoint( this.StylusPoints[1].X, this.StylusPoints[1].Y));
+            pointsSecond.Add(new StylusPoint( this.StylusPoints[this.StylusPoints.Count - 1].X, this.StylusPoints[this.StylusPoints.Count - 1].Y));
             this.strokes.Add(new DragHandle(pointsSecond, this.strokes, SECOND_POINT, this.Id.ToString()));
 
         }
@@ -63,7 +63,16 @@ namespace PolyPaint.Modeles.Strokes
 
         public override bool HitTest(Point point)
         {
-            return 10 > FindDistanceToSegment(point, this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint());
+            return this.ClickedLine(point) > -1;
+        }
+
+        public int ClickedLine(Point point)
+        {
+            for (int i = 0; i < this.StylusPoints.Count - 1; i++)
+                if (10 > FindDistanceToSegment(point, this.StylusPoints[i].ToPoint(), this.StylusPoints[i + 1].ToPoint()))
+                    return i;
+            
+            return -1;
         }
 
         private double FindDistanceToSegment( Point pt, Point p1, Point p2)
@@ -72,18 +81,14 @@ namespace PolyPaint.Modeles.Strokes
             double dy = p2.Y - p1.Y;
             if ((dx == 0) && (dy == 0))
             {
-                // It's a point not a line segment.
                 dx = pt.X - p1.X;
                 dy = pt.Y - p1.Y;
                 return Math.Sqrt(dx * dx + dy * dy);
             }
-
-            // Calculate the t that minimizes the distance.
+            
             double t = ((pt.X - p1.X) * dx + (pt.Y - p1.Y) * dy) /
                 (dx * dx + dy * dy);
-
-            // See if this represents one of the segment's
-            // end points or a point in the middle.
+            
             if (t < 0)
             {
                 Point closest = new Point(p1.X, p1.Y);
@@ -144,11 +149,11 @@ namespace PolyPaint.Modeles.Strokes
                 this.SecondAncorId = hoverId;
                 this.SecondAncorIndex = hoverIndex;
                 if (hoverId == null || anchor == null)
-                    this.StylusPoints[1] = new StylusPoint(point.X, point.Y);
+                    this.StylusPoints[this.StylusPoints.Count - 1] = new StylusPoint(point.X, point.Y);
                 else
                 {
                     Point clip = anchor.Parent.getAnchorPointPosition(hoverIndex);
-                    this.StylusPoints[1] = new StylusPoint(clip.X, clip.Y);
+                    this.StylusPoints[this.StylusPoints.Count - 1] = new StylusPoint(clip.X, clip.Y);
                 }
 
                 this.Refresh();
@@ -164,10 +169,12 @@ namespace PolyPaint.Modeles.Strokes
             {
                 Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 10);
                 selectedPen.Freeze();
-                drawingContext.DrawLine(selectedPen, this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint());
+                for (int i = 0; i < this.StylusPoints.Count - 1; i++)
+                    drawingContext.DrawLine(selectedPen, this.StylusPoints[i].ToPoint(), this.StylusPoints[i + 1].ToPoint());
             }
 
-            drawingContext.DrawLine(outlinePen, this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint());
+            for (int i = 0; i < this.StylusPoints.Count - 1; i++)
+                drawingContext.DrawLine(outlinePen, this.StylusPoints[i].ToPoint(), this.StylusPoints[i + 1].ToPoint());
 
             if (this.isEditing())
             {
@@ -188,7 +195,7 @@ namespace PolyPaint.Modeles.Strokes
             if (((CustomStroke)anchorable).Id.ToString() == this.SecondAncorId)
             {
                 Point newPoint = anchorable.getAnchorPointPosition(this.SecondAncorIndex);
-                this.StylusPoints[1] = new StylusPoint(newPoint.X, newPoint.Y);
+                this.StylusPoints[this.StylusPoints.Count - 1] = new StylusPoint(newPoint.X, newPoint.Y);
                 changed = true;
             }
 
