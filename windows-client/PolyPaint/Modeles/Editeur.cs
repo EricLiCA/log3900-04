@@ -17,7 +17,7 @@ namespace PolyPaint.Modeles
     /// Contient ses différents états et propriétés ainsi que la logique
     /// qui régis son fonctionnement.
     /// </summary>
-    class Editeur : INotifyPropertyChanged
+    public class Editeur : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public CustomStrokeCollection traits = new CustomStrokeCollection();

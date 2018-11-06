@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Outils
 {
-    abstract class Tool
+    public abstract class Tool
     {
         public string ToolName { get => this.GetToolName(); }
         public string ToolImage { get => this.GetToolImage(); }

@@ -234,6 +234,9 @@
     <Compile Include="Vues\GalleryComment.xaml.cs">
       <DependentUpon>GalleryComment.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\LineEdit.xaml.cs">
+      <DependentUpon>LineEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\LoginDialogBox.xaml.cs">
       <DependentUpon>LoginDialogBox.xaml</DependentUpon>
     </Compile>
@@ -276,6 +279,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\GalleryComment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\LineEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

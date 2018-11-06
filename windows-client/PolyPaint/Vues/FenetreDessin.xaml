@@ -112,6 +112,7 @@
                          AcceptsReturn="True" Height="236.96"/>
             </StackPanel>
         </Border>
+        <Frame BorderBrush="#77000000" Width="200" Background="AliceBlue" DockPanel.Dock="Right" Content="{Binding Path=EditorWindow}" />
 
         <Grid DockPanel.Dock="Left" Margin="0,1,0,0">
             <Grid.ColumnDefinitions>
