@@ -20,9 +20,10 @@ class ClassDiagramView: UIView {
     var text = [String]()
 
     
-    init(frame: CGRect, layer: CALayer, text: [String]) {
-        super.init(frame: frame)
-        layer.backgroundColor = UIColor.blue.cgColor
+    init(text: [String]) {
+        let rectangle = CGRect(x: 100, y: 100, width: 200, height: 82)
+        super.init(frame: rectangle)
+        //layer.backgroundColor = UIColor.blue.cgColor
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.text = text
@@ -168,8 +169,12 @@ class ClassDiagramView: UIView {
             label.numberOfLines = self.defaultMaxNumOfLines
             label.text = word
             label.lineBreakMode = NSLineBreakMode.byWordWrapping
-            label.sizeToFit()
             
+            if(currentHeight == CGFloat(0)) {
+                label.textAlignment = NSTextAlignment.center
+            } else {
+                label.sizeToFit()
+            }
             currentHeight += label.frame.height
             self.addSubview(label)
         }

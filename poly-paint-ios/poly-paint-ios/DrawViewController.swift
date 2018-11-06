@@ -291,9 +291,7 @@ class DrawViewController: UIViewController {
     
     @objc func createClassDiagramAlert(sender: AnyObject) {
         var text = sender.userInfo["text"]
-        let rectangle = CGRect(x: 100, y: 100, width: 200, height: 250)
-        let dumpLayer = CALayer()
-        let classDiagram = ClassDiagramView(frame: rectangle, layer: dumpLayer, text: processText(text: text as! String))
+        let classDiagram = ClassDiagramView(text: processText(text: text as! String))
         self.drawingPlace.addSubview(classDiagram)
         self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
         self.drawingPlace.layer.addSublayer(self.layersFromShapes[self.layersFromShapes.count-1])
