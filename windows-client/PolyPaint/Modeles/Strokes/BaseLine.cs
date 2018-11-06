@@ -10,8 +10,7 @@ namespace PolyPaint.Modeles.Strokes
 {
     class BaseLine : CustomStroke, Handleable
     {
-        Guid FIRST_POINT = Guid.NewGuid();
-        Guid SECOND_POINT = Guid.NewGuid();
+        List<Guid> HandlePoints;
 
         string FirstAnchorId;
         string SecondAncorId;
@@ -20,6 +19,9 @@ namespace PolyPaint.Modeles.Strokes
 
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
+            this.HandlePoints = new List<Guid>();
+            for (int i = 0; i < pts.Count; i++)
+                this.HandlePoints.Add(Guid.NewGuid());
         }
 
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes,
@@ -43,22 +45,21 @@ namespace PolyPaint.Modeles.Strokes
             if (!this.strokes.has(this.Id.ToString())) return;
             this.deleteDragHandles();
 
-            var pointsFirst = new StylusPointCollection();
-            pointsFirst.Add(new StylusPoint(this.StylusPoints[0].X, this.StylusPoints[0].Y));
-            this.strokes.Add(new DragHandle(pointsFirst, this.strokes, FIRST_POINT, this.Id.ToString()));
-            
-            var pointsSecond = new StylusPointCollection();
-            pointsSecond.Add(new StylusPoint( this.StylusPoints[this.StylusPoints.Count - 1].X, this.StylusPoints[this.StylusPoints.Count - 1].Y));
-            this.strokes.Add(new DragHandle(pointsSecond, this.strokes, SECOND_POINT, this.Id.ToString()));
-
+            for (int i = 0; i < this.HandlePoints.Count; i++)
+            {
+                var positions = new StylusPointCollection();
+                positions.Add(new StylusPoint(this.StylusPoints[i].X, this.StylusPoints[i].Y));
+                this.strokes.Add(new DragHandle(positions, this.strokes, this.HandlePoints[i], this.Id.ToString()));
+            }
         }
 
         public void deleteDragHandles()
         {
-            if (this.strokes.has(FIRST_POINT.ToString()))
-                this.strokes.Remove(this.strokes.get(FIRST_POINT.ToString()));
-            if (this.strokes.has(SECOND_POINT.ToString()))
-                this.strokes.Remove(this.strokes.get(SECOND_POINT.ToString()));
+            for (int i = 0; i < this.HandlePoints.Count; i++)
+            {
+                if (this.strokes.has(this.HandlePoints[i].ToString()))
+                    this.strokes.Remove(this.strokes.get(this.HandlePoints[i].ToString()));
+            }
         }
 
         public override bool HitTest(Point point)
@@ -118,46 +119,37 @@ namespace PolyPaint.Modeles.Strokes
 
         public void handleMoved(Guid id, Point point)
         {
-            AnchorPoint anchor = null;
-            string hoverId = null;
-            int hoverIndex = -1;
-            List<Stroke> hoveredAnchors = strokes.ToList().FindAll(stroke => stroke is AnchorPoint && ((CustomStroke)stroke).HitTest(point));
-            if (hoveredAnchors.Count > 0)
-            {
-                anchor = (AnchorPoint)hoveredAnchors.Last();
-                point = anchor.Parent.getAnchorPointPosition(anchor.AnchorIndex);
-                hoverId = anchor.ParentId;
-                hoverIndex = anchor.AnchorIndex;
-            }
+            int movedIndex = this.HandlePoints.FindIndex(i => i.ToString() == id.ToString());
+            
+            if (movedIndex == 0 || movedIndex == this.HandlePoints.Count - 1) {
+                List<Stroke> hoveredAnchors = strokes.ToList().FindAll(stroke => stroke is AnchorPoint && ((CustomStroke)stroke).HitTest(point));
+                if (hoveredAnchors.Count > 0)
+                {
+                    AnchorPoint anchor = (AnchorPoint)hoveredAnchors.Last();
+                    point = anchor.Parent.getAnchorPointPosition(anchor.AnchorIndex);
 
-            if (this.FIRST_POINT.ToString() == id.ToString())
-            {
-                this.FirstAnchorId = hoverId;
-                this.FirstAnchorIndex = hoverIndex;
-                if (hoverId == null || anchor == null)
-                    this.StylusPoints[0] = new StylusPoint(point.X, point.Y);
+                    if (movedIndex == 0)
+                    {
+                        this.FirstAnchorId = anchor.ParentId;
+                        this.FirstAnchorIndex = anchor.AnchorIndex;
+                    }
+                    else
+                    {
+                        this.SecondAncorId = anchor.ParentId;
+                        this.SecondAncorIndex = anchor.AnchorIndex;
+                    }
+                }
                 else
                 {
-                    Point clip = anchor.Parent.getAnchorPointPosition(hoverIndex);
-                    this.StylusPoints[0] = new StylusPoint(clip.X, clip.Y);
+                    if (movedIndex == 0)
+                        this.FirstAnchorId = null;
+                    else
+                        this.SecondAncorId = null;
                 }
-
-                this.Refresh();
             }
-            else if (this.SECOND_POINT.ToString() == id.ToString())
-            {
-                this.SecondAncorId = hoverId;
-                this.SecondAncorIndex = hoverIndex;
-                if (hoverId == null || anchor == null)
-                    this.StylusPoints[this.StylusPoints.Count - 1] = new StylusPoint(point.X, point.Y);
-                else
-                {
-                    Point clip = anchor.Parent.getAnchorPointPosition(hoverIndex);
-                    this.StylusPoints[this.StylusPoints.Count - 1] = new StylusPoint(clip.X, clip.Y);
-                }
 
-                this.Refresh();
-            }
+            this.StylusPoints[movedIndex] = new StylusPoint(point.X, point.Y);
+            this.Refresh();
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
@@ -204,9 +196,10 @@ namespace PolyPaint.Modeles.Strokes
 
         public override void RefreshGuids()
         {
-            Id = Guid.NewGuid();
-            FIRST_POINT = Guid.NewGuid();
-            SECOND_POINT = Guid.NewGuid();
+            this.HandlePoints.Clear();
+            this.HandlePoints = new List<Guid>();
+            for (int i = 0; i < this.StylusPoints.Count; i++)
+                this.HandlePoints.Add(Guid.NewGuid());
         }
     }
 }
