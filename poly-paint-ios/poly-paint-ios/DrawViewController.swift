@@ -37,6 +37,7 @@ class DrawViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drawingPlace.clipsToBounds = true
+        self.setUpNotifications()
         // Do any additional setup after loading the view.
     }
     
@@ -135,10 +136,10 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func classTapped(_ sender: UIButton) {
-        let rectangle = CGRect(x: 100, y: 100, width: 200, height: 250)
+        /*let rectangle = CGRect(x: 100, y: 100, width: 200, height: 250)
         let dumpLayer = CALayer()
         let classDiagram = ClassDiagramView(frame: rectangle, layer: dumpLayer)
-        self.drawingPlace.addSubview(classDiagram )
+        self.drawingPlace.addSubview(classDiagram )*/
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -284,7 +285,25 @@ class DrawViewController: UIViewController {
         return CGFloat(sqrt(xDist * xDist + yDist * yDist))
     }
 
+    func setUpNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(createClassDiagramAlert), name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil)
+    }
     
+    @objc func createClassDiagramAlert(sender: AnyObject) {
+        var text = sender.userInfo["text"]
+        let rectangle = CGRect(x: 100, y: 100, width: 200, height: 250)
+        let dumpLayer = CALayer()
+        let classDiagram = ClassDiagramView(frame: rectangle, layer: dumpLayer, text: processText(text: text as! String))
+        self.drawingPlace.addSubview(classDiagram)
+    }
+    
+    func processText(text: String) -> [String] {
+        let separators = CharacterSet(charactersIn: "--\n")
+        let textArray = text.components(separatedBy: separators as CharacterSet)
+        print(textArray)
+        return textArray
+    }
+
     /*
     // MARK: - Navigation
 

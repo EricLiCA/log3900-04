@@ -52,7 +52,7 @@ class ClassDiagramView: UIView {
         UIColor.black.setStroke()
         path.stroke()
         self.initializeAnchorPoints()
-        self.initializeTextFields(words: ["Class Name \n blablabala this is a long text \n yes", "Attributs popopopopopopo \n tatatata", "Methods"])
+        self.initializeTextFields(words: self.text)
     }
     
     @objc func didPan(panGR: UIPanGestureRecognizer) {
@@ -169,6 +169,7 @@ class ClassDiagramView: UIView {
             label.text = word
             label.lineBreakMode = NSLineBreakMode.byWordWrapping
             label.sizeToFit()
+            
             currentHeight += label.frame.height
             self.addSubview(label)
         }
@@ -204,11 +205,13 @@ class classDiagramPopoverView: UIView {
     
     
     @IBAction func addClassTapped(_ sender: UIButton) {
+        self.sendCreateClassDiagramNotification()
     }
     
     func sendCreateClassDiagramNotification() {
         // Send notification to update username label in ProfileViewController
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil)
+        let userInfo = [ "text" : rawText.text! ]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil, userInfo: userInfo)
     }
     
 }
