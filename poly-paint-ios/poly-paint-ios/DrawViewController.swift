@@ -135,7 +135,7 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func classTapped(_ sender: UIButton) {
-        let rectangle = CGRect(x: 100, y: 100, width: 100, height: 150)
+        let rectangle = CGRect(x: 100, y: 100, width: 200, height: 250)
         let dumpLayer = CALayer()
         let classDiagram = ClassDiagramView(frame: rectangle, layer: dumpLayer)
         self.drawingPlace.addSubview(classDiagram )

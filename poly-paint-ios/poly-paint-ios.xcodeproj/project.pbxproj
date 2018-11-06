@@ -27,7 +27,6 @@
 		CF21E2DC2182143500F21F57 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2DB2182143500F21F57 /* Line.swift */; };
 		CF21E32C2188EEA100F21F57 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32B2188EEA100F21F57 /* RectangleView.swift */; };
 		CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32F2188EEC300F21F57 /* EllipseView.swift */; };
-		CF21E3322188F61100F21F57 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3312188F61100F21F57 /* CanvasViewController.swift */; };
 		CF21E3342189361C00F21F57 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3332189361C00F21F57 /* TriangleView.swift */; };
 		CF21E336218F93B000F21F57 /* StickFigureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E335218F93B000F21F57 /* StickFigureView.swift */; };
 		CF21E338218F9FC400F21F57 /* ClassDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E337218F9FC400F21F57 /* ClassDiagramView.swift */; };
@@ -83,7 +82,6 @@
 		CF21E2DB2182143500F21F57 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		CF21E32B2188EEA100F21F57 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
 		CF21E32F2188EEC300F21F57 /* EllipseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseView.swift; sourceTree = "<group>"; };
-		CF21E3312188F61100F21F57 /* CanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		CF21E3332189361C00F21F57 /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		CF21E335218F93B000F21F57 /* StickFigureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickFigureView.swift; sourceTree = "<group>"; };
 		CF21E337218F9FC400F21F57 /* ClassDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDiagramView.swift; sourceTree = "<group>"; };
@@ -171,7 +169,6 @@
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
 				A77C46F221569CFB0056135A /* Main.storyboard */,
 				CF21E2D921820E7200F21F57 /* DrawView.swift */,
-				CF21E3312188F61100F21F57 /* CanvasViewController.swift */,
 				CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */,
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
 			);
@@ -412,7 +409,6 @@
 				CF21E3342189361C00F21F57 /* TriangleView.swift in Sources */,
 				A78A733A215ED91C007A854F /* DateTime.swift in Sources */,
 				CF21E338218F9FC400F21F57 /* ClassDiagramView.swift in Sources */,
-				CF21E3322188F61100F21F57 /* CanvasViewController.swift in Sources */,
 				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

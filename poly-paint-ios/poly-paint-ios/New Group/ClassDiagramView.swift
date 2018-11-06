@@ -14,6 +14,9 @@ class ClassDiagramView: UIView {
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()
     var anchorPointsLayers = [CAShapeLayer]()
+    let defaultTextLineHeight: CGFloat = 40
+    let defaultMaxNumOfLines = 5
+    let textGap: CGFloat = 5
     
     init(frame: CGRect, layer: CALayer) {
         super.init(frame: frame)
@@ -39,7 +42,7 @@ class ClassDiagramView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
+        let insetRect = rect.insetBy(dx: lineWidth, dy: lineWidth)
         let path = UIBezierPath(roundedRect: insetRect, cornerRadius: 0)
         UIColor.white.setFill()
         path.fill()
@@ -47,7 +50,7 @@ class ClassDiagramView: UIView {
         UIColor.black.setStroke()
         path.stroke()
         self.initializeAnchorPoints()
-        self.initializeTextFields()
+        self.initializeTextFields(words: ["Class Name \n blablabala this is a long text \n yes", "Attributs popopopopopopo \n tatatata", "Methods"])
     }
     
     @objc func didPan(panGR: UIPanGestureRecognizer) {
@@ -150,23 +153,38 @@ class ClassDiagramView: UIView {
         }
     }
     
-    func initializeTextFields() {
-        let label = UILabel(frame: CGRect(x: 1, y: 1, width: 100, height: 40))
-        label.text = "TEst"
-        
-        /*let sampleTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 100, height: 40))
-        sampleTextField.placeholder = "Enter text here"
-        sampleTextField.font = UIFont.systemFont(ofSize: 15)
-        sampleTextField.borderStyle = UITextBorderStyle.roundedRect
-        sampleTextField.autocorrectionType = UITextAutocorrectionType.no
-        sampleTextField.keyboardType = UIKeyboardType.default
-        sampleTextField.returnKeyType = UIReturnKeyType.done
-        sampleTextField.clearButtonMode = UITextFieldViewMode.whileEditing;
-        sampleTextField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
-        //sampleTextField.delegate = self as! UITextFieldDelegate*/
-        self.addSubview(label)
-        self.subviews[self.subviews.count - 1].isHidden = false
+    func initializeTextFields(words: [String]) {
+        var currentHeight = CGFloat(0)
+        for word in words {
+            // draw ligne
+            let fromPoint = CGPoint(x: 0, y: currentHeight)
+            let toPoint = CGPoint(x: self.frame.width, y: currentHeight)
+            self.drawLine(fromPoint: fromPoint, toPoint: toPoint)
+            // set label
+            let label = UILabel(frame: CGRect(x: self.textGap, y: currentHeight, width: self.frame.width, height: self.defaultTextLineHeight))
+            label.contentMode = .scaleToFill
+            label.numberOfLines = self.defaultMaxNumOfLines
+            label.text = word
+            label.lineBreakMode = NSLineBreakMode.byWordWrapping
+            label.sizeToFit()
+            currentHeight += label.frame.height
+            self.addSubview(label)
+        }
     }
+    
+    func drawLine(fromPoint: CGPoint, toPoint: CGPoint) {
+        let aPath = UIBezierPath()
+        aPath.move(to: fromPoint)
+        aPath.addLine(to: toPoint)
+        //Keep using the method addLineToPoint until you get to the one where about to close the path
+        aPath.close()
+        //If you want to stroke it with a red color
+        UIColor.black.set()
+        aPath.stroke()
+        //If you want to fill it as well
+        aPath.fill()
+    }
+    
     
     /*
      // Only override draw() if you perform custom drawing.
