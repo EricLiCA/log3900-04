@@ -203,6 +203,10 @@ class classDiagramPopoverView: UIView {
     
     @IBOutlet weak var rawText: UITextView!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.rawText.text = "Class Name\n--\nAttributes\n--\nMethods"
+    }
     
     @IBAction func addClassTapped(_ sender: UIButton) {
         self.sendCreateClassDiagramNotification()
