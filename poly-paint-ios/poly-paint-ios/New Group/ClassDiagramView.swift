@@ -17,15 +17,16 @@ class ClassDiagramView: UIView {
     let defaultTextLineHeight: CGFloat = 40
     let defaultMaxNumOfLines = 5
     let textGap: CGFloat = 5
+    var text = [String]()
 
     
-    init(frame: CGRect, layer: CALayer) {
+    init(frame: CGRect, layer: CALayer, text: [String]) {
         super.init(frame: frame)
         layer.backgroundColor = UIColor.blue.cgColor
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
+        self.text = text
         //self.setNeedsDisplay()
-        
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -195,4 +196,19 @@ class ClassDiagramView: UIView {
      }
      */
 
+}
+
+class classDiagramPopoverView: UIView {
+    
+    @IBOutlet weak var rawText: UITextView!
+    
+    
+    @IBAction func addClassTapped(_ sender: UIButton) {
+    }
+    
+    func sendCreateClassDiagramNotification() {
+        // Send notification to update username label in ProfileViewController
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil)
+    }
+    
 }
