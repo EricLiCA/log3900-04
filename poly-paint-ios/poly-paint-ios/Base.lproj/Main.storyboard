@@ -400,6 +400,20 @@
                                     </segue>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KsB-r3-vJz">
+                                <rect key="frame" x="100" y="100" width="100" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="P6t-iO-xQJ"/>
+                                    <constraint firstAttribute="width" constant="100" id="Z3u-wu-wr5"/>
+                                </constraints>
+                                <state key="normal" title="Line">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="lineTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="7lZ-rF-MOC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -408,6 +422,7 @@
                             <constraint firstItem="DOf-Jz-Zu9" firstAttribute="leading" secondItem="EFY-ek-Vzt" secondAttribute="trailing" constant="8" id="Dzp-fo-f39"/>
                             <constraint firstItem="7FJ-AM-LDR" firstAttribute="trailing" secondItem="tNz-CW-3rW" secondAttribute="trailing" constant="20" id="Nuj-nF-qPr"/>
                             <constraint firstItem="tNz-CW-3rW" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="20" id="Q1o-yo-WZ4"/>
+                            <constraint firstItem="KsB-r3-vJz" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="36" id="QGh-xW-YEe"/>
                             <constraint firstItem="DOf-Jz-Zu9" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="35" id="SwG-sL-7Mg"/>
                             <constraint firstItem="el7-WA-nyl" firstAttribute="leading" secondItem="sNV-0h-Pxl" secondAttribute="trailing" constant="8" id="VCD-Db-R8M"/>
                             <constraint firstItem="el7-WA-nyl" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="34" id="WCQ-am-gUP"/>
@@ -416,6 +431,7 @@
                             <constraint firstItem="sNV-0h-Pxl" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="34" id="gT5-SY-HrO"/>
                             <constraint firstItem="sNV-0h-Pxl" firstAttribute="leading" secondItem="DOf-Jz-Zu9" secondAttribute="trailing" constant="8" id="qcU-rz-SYL"/>
                             <constraint firstItem="EFY-ek-Vzt" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="216" id="seJ-Lq-HH4"/>
+                            <constraint firstItem="EFY-ek-Vzt" firstAttribute="leading" secondItem="KsB-r3-vJz" secondAttribute="trailing" constant="16" id="t2M-hb-S7B"/>
                             <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="tNz-CW-3rW" secondAttribute="bottom" constant="20" id="vm1-jW-p8r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7FJ-AM-LDR"/>
@@ -437,6 +453,7 @@
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="editButton" destination="vVf-wi-6Rz" id="Y8R-iC-UUg"/>
                         <outlet property="ellipseButton" destination="el7-WA-nyl" id="idg-NM-5Yl"/>
+                        <outlet property="lineButton" destination="KsB-r3-vJz" id="OFv-e7-eeY"/>
                         <outlet property="rectangleButton" destination="DOf-Jz-Zu9" id="TBa-aG-pbk"/>
                         <outlet property="stickFigure" destination="sNV-0h-Pxl" id="zPY-Yk-Axc"/>
                         <outlet property="triangleButton" destination="laE-6R-FW3" id="fxB-vS-QUj"/>

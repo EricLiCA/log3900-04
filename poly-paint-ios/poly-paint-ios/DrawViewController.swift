@@ -12,6 +12,7 @@ enum Shape {
     case Rectangle
     case Ellipse
     case Triangle
+    case Line
     case None
 }
 
@@ -24,6 +25,7 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var stickFigure: UIButton!
     @IBOutlet weak var classButton: UIButton!
+    @IBOutlet weak var lineButton: UIButton!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -92,6 +94,7 @@ class DrawViewController: UIViewController {
             self.rectangleButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.lineButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         }
     }
     
@@ -106,6 +109,7 @@ class DrawViewController: UIViewController {
             self.ellipseButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.lineButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         }
     }
     
@@ -120,6 +124,22 @@ class DrawViewController: UIViewController {
             self.triangleButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.lineButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        }
+    }
+    
+    @IBAction func lineTapped(_ sender: UIButton) {
+        if(self.currentShape == Shape.Line) {
+            self.isUserEditing = false
+            self.lineButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.currentShape = Shape.None
+        } else {
+            self.isUserEditing = true
+            self.currentShape = Shape.Line
+            self.lineButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         }
     }
     
@@ -172,6 +192,9 @@ class DrawViewController: UIViewController {
                     bezier = self.drawEllipse(startPoint: firstTouch!, secondPoint: secondTouch!)
                 case .Triangle:
                     bezier = self.drawTriangle(startPoint: firstTouch!, secondPoint: secondTouch!)
+                case .Line:
+                    bezier.move(to: self.firstTouch!)
+                    bezier.addLine(to: secondTouch!)
                 case .None:
                     print("nothing")
                 }
@@ -219,6 +242,8 @@ class DrawViewController: UIViewController {
             } else if(currentShape == Shape.Triangle) {
                 let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer)
                 self.drawingPlace.addSubview(triangleView)
+            } else if(currentShape == Shape.Line) {
+                self.drawingPlace.layer.addSublayer(myLayer)
             }
             
             self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
