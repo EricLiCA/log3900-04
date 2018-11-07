@@ -20,6 +20,7 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var drawingPlace: UIView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var colorButton: UIBarButtonItem!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -29,6 +30,7 @@ class DrawViewController: UIViewController {
     var currentBezierPath: UIBezierPath?
     var layersFromShapes = [CALayer]()
     var insideCanvas = false
+    var selectedColor : UIColor = UIColor.black
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -167,9 +169,16 @@ class DrawViewController: UIViewController {
                 let shape = CAShapeLayer()
                 shape.frame = (self.drawingPlace.bounds)
                 shape.path = self.currentBezierPath?.cgPath;
-                shape.strokeColor = UIColor.black.cgColor
-                shape.borderColor = UIColor.gray.cgColor
-                shape.fillColor = UIColor.white.cgColor
+               // shape.strokeColor = UIColor.black.cgColor
+                shape.strokeColor = self.selectedColor.cgColor
+                
+                //shape.borderColor = UIColor.gray.cgColor
+                shape.borderColor = self.selectedColor.cgColor
+                
+                //shape.fillColor = UIColor.white.cgColor
+                shape.fillColor = self.selectedColor.cgColor
+                
+                
                 self.drawingPlace.layer.addSublayer(shape)
                 self.currentContext?.addPath((self.currentBezierPath?.cgPath)!)
             }
@@ -189,7 +198,8 @@ class DrawViewController: UIViewController {
             let myLayer = CAShapeLayer()
             myLayer.path = self.currentBezierPath?.cgPath
             myLayer.borderWidth = 2
-            myLayer.strokeColor = UIColor.black.cgColor
+            //myLayer.strokeColor = UIColor.black.cgColor
+            myLayer.strokeColor = self.selectedColor.cgColor
             
             if(currentShape == Shape.Rectangle) {
                 let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer)
@@ -260,6 +270,30 @@ class DrawViewController: UIViewController {
         self.isUserEditing = false
         self.currentShape = Shape.None
         self.cancelButton.isEnabled = false;
+    }
+    
+    @IBAction func colorPickerButton(_ sender: UIBarButtonItem) {
+        
+        let popoverVC = storyboard?.instantiateViewController(withIdentifier: "colorPickerPopover") as! ColorPickerViewController
+        popoverVC.modalPresentationStyle = .popover
+        popoverVC.preferredContentSize = CGSize(width: 284, height: 446)
+        if let popoverController = popoverVC.popoverPresentationController {
+            popoverController.barButtonItem = sender
+            popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
+            popoverController.permittedArrowDirections = .any
+           // popoverController.delegate? = self
+            popoverVC.delegate = self
+        }
+        present(popoverVC, animated: true, completion: nil)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    func setButtonColor (_ color: UIColor) {
+        self.colorButton.tintColor = color
+        self.selectedColor = color
     }
 
     
