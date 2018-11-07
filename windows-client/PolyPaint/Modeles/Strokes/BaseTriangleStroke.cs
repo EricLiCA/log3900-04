@@ -151,6 +151,6 @@ namespace PolyPaint.Modeles.Strokes
 
         }
 
-        public override string StrokeType() => "TRIANGLE";
+        public override StrokeType StrokeType() => Strokes.StrokeType.TRIANGLE;
     }
 }

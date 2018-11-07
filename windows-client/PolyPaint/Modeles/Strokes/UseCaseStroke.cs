@@ -63,21 +63,17 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.Pop();
         }
 
-        public override string toJson()
-        {
-            SerializedTextableShape toSend = new SerializedTextableShape()
-            {
-                Id = this.Id,
-                Type = this.StrokeType(),
-                Index = -1,
-                Center = this.Center,
-                Width = this.Width,
-                Height = this.Height,
-                Content = this.textContent
-            };
-            return JsonConvert.SerializeObject(toSend);
-        }
-
         public override StrokeType StrokeType() => Strokes.StrokeType.USE;
+
+        public override ShapeInfo GetShapeInfo()
+        {
+            return new TextableShapeInfo
+            {
+                Center = this.Center,
+                Height = this.Height,
+                Width = this.Width,
+                Content  = this.textContent
+            };
+        }
     }
 }

@@ -292,18 +292,25 @@ namespace PolyPaint.Modeles.Strokes
 
         public virtual string toJson()
         {
-            SerializedShape toSend = new SerializedShape()
+            SerializedStroke toSend = new SerializedStroke()
             {
                 Id = this.Id,
-                Type = this.StrokeType(),
+                Type = this.StrokeType().ToString(),
                 Index = -1,
-                Center = this.Center,
-                Width = this.Width,
-                Height = this.Height
+                ShapeInfo = JsonConvert.SerializeObject(GetShapeInfo())
             };
             return JsonConvert.SerializeObject(toSend);
         }
 
         public abstract StrokeType StrokeType();
+        public virtual ShapeInfo GetShapeInfo()
+        {
+            return new ShapeInfo
+            {
+                Center = this.Center,
+                Height = this.Height,
+                Width = this.Width
+            };
+        }
     }
 }

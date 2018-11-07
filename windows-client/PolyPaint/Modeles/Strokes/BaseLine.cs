@@ -386,11 +386,22 @@ namespace PolyPaint.Modeles.Strokes
 
         public virtual string toJson()
         {
-            SerializedLine toSend = new SerializedLine()
+            SerializedStroke toSend = new SerializedStroke()
             {
                 Id = this.Id,
-                Type = this.StrokeType(),
+                Type = this.StrokeType().ToString(),
                 Index = -1,
+                ShapeInfo = JsonConvert.SerializeObject(GetShapeInfo())
+            };
+            return JsonConvert.SerializeObject(toSend);
+        }
+
+        public StrokeType StrokeType() => Strokes.StrokeType.LINE;
+
+        public LineInfo GetShapeInfo()
+        {
+            return new LineInfo()
+            {
                 Points = this.StylusPoints.Select(point => point.ToPoint()).ToList(),
                 FirstAnchorId = this.FirstAnchorId,
                 FirstAnchorIndex = this.FirstAnchorIndex,
@@ -401,10 +412,7 @@ namespace PolyPaint.Modeles.Strokes
                 SecondEndLabel = this.SecondText,
                 SecondEndRelation = this.SecondRelation.ToString()
             };
-            return JsonConvert.SerializeObject(toSend);
         }
-
-        public StrokeType StrokeType() => Strokes.StrokeType.LINE;
     }
 
     public enum Relation
