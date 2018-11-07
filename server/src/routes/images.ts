@@ -54,7 +54,7 @@ export class ImagesRoute implements DAO {
 
     public async getPublicExceptMine(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM Images where ("ProtectionLevel" = $1 or "ProtectionLevel" = $2) and "OwnerId" != $3', ["public", "protected", req.params.id]).then((query) => {
+        db.query('SELECT * FROM Images where ("ProtectionLevel" = $1 or "ProtectionLevel" = $2) and "OwnerId" != $3', ['public', 'protected', req.params.id]).then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows.map((row) => {
                     return {
@@ -74,7 +74,7 @@ export class ImagesRoute implements DAO {
                 res.sendStatus(400); // Bad request
         });
     }
-    
+
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
         db.query('SELECT * FROM Images WHERE "Id" = $1', [req.params.id]).then((query) => {

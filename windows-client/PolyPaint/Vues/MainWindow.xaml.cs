@@ -1,20 +1,18 @@
-﻿using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using PolyPaint.DAO;
+using PolyPaint.Services;
+using Amazon;
+using Amazon.S3;
+using Amazon.S3.Model;
+using Amazon.S3.Transfer;
+using PolyPaint.Utilitaires;
+using PolyPaint.Modeles;
+using System.Threading.Tasks;
 
 namespace PolyPaint.Vues
 {
@@ -23,26 +21,47 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public Gallery Gallery;
+        public Users Users;
         private FenetreDessin FenetreDessin;
-        private string AvatarLocation;
 
         public MainWindow()
         {
-            this.FenetreDessin = new FenetreDessin();
-            this.Gallery = new Gallery();
-            this.Server_Connect();
+            Server_Connect();
+            UsersManager.instance.fetchAll();
+            FenetreDessin = new FenetreDessin();
             InitializeComponent();
+            Gallery = new Gallery();
+            Users = new Users();
             GridMain.Content = Gallery;
+            InitDialogBox();
+            if (ServerService.instance.user.isGuest)
+            {
+                RestrictPermissions();
+            }
+            else
+            {
+                Uri profileImage = ServerService.instance.user.profileImage;
+                if(profileImage != null)
+                {
+                    AvatarImage.Source = new BitmapImage(profileImage);
+                }
+            }
         }
+
+        private void RestrictPermissions()
+        {
+            ManageProfileButton.Visibility = Visibility.Collapsed;
+            AvatarButton.IsEnabled = false;
+        }
+
         private void Server_Connect()
         {
             LoginDialogBox dlg = new LoginDialogBox();
             if (dlg.ShowDialog() == false)
             {
                 System.Environment.Exit(0);
-            }  
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -55,21 +74,25 @@ namespace PolyPaint.Vues
             {
                 case 0:
                     {
-                        Gallery.Init();
+                        Gallery.Load();
                         GridMain.Content = Gallery;
                         break;
                     }
                 case 1:
-                    GridMain.Content = "Users";
-                    break;
+                    {
+                        Users.Load();
+                        GridMain.Content = Users;
+                        break;
+                    }
                 case 2:
-                    GridMain.Content = "Chat";
+                    GridMain.Content = MessagingViewManager.instance.LargeMessagingView;
                     break;
                 case 3:
                     GridMain.Content = this.FenetreDessin;
                     break;
             }
         }
+
         private void Menu_Change_Avatar_Click(object sender, System.EventArgs e)
         {
             string fileName = null;
@@ -89,15 +112,57 @@ namespace PolyPaint.Vues
 
             if (fileName != null)
             {
-                this.AvatarLocation = fileName;
+                String avatarLocation = fileName;
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
-                bitmap.UriSource = new Uri(this.AvatarLocation);
+                bitmap.UriSource = new Uri(avatarLocation);
                 bitmap.DecodePixelHeight = 40;
                 bitmap.DecodePixelWidth = 40;
                 bitmap.EndInit();
                 AvatarImage.Source = bitmap;
+
+                ServerService.instance.S3Communication.UploadFileAsync(avatarLocation);
+
+                Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
+                ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
+                UserDao.Put(ServerService.instance.user);
             }
         }
+
+        private void InitDialogBox()
+        {
+            CurrentProfileName.Text = ServerService.instance.user.username;
+            CurrentProfilePassword.Password = ServerService.instance.user.password;
+        }
+
+        private void ChangeProfileInformationsButton_Click(object sender, System.EventArgs e)
+        {
+            ServerService.instance.user.username = CurrentProfileName.Text;
+            ServerService.instance.user.password = CurrentProfilePassword.Password;
+            UserDao.Put(ServerService.instance.user);
+            ChangeProfileInformationsButton.IsEnabled = false;
+        }
+
+        private void CloseDialogButton_Click(object sender, RoutedEventArgs e)
+        {
+            InitDialogBox();
+            ChangeProfileInformationsButton.IsEnabled = false;
+        }
+
+        private void CurrentProfileInformations_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            Boolean invalideUserName = CurrentProfileName.Text.Length == 0 || CurrentProfileName.Text.Contains(" ");
+            Boolean invalidPassword = CurrentProfilePassword.Password.Length == 0 || CurrentProfilePassword.Password.Contains(" ");
+
+            if (invalideUserName || invalidPassword)
+            {
+                ChangeProfileInformationsButton.IsEnabled = false;
+            }
+            else
+            {
+                ChangeProfileInformationsButton.IsEnabled = true;
+            }
+        }
+
     }
 }

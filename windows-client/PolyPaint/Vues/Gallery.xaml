@@ -9,7 +9,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="597" d:DesignWidth="983"
       Title="Gallery">
-    <materialDesign:DialogHost Name="zeb" Canvas.Left="50" Canvas.Top="50" Margin="0">
+    <materialDesign:DialogHost Canvas.Left="50" Canvas.Top="50" Margin="0">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="16">
                 <TextBlock>Add a password to the selected image</TextBlock>
@@ -52,14 +52,34 @@
                                 <materialDesign:PackIcon  Kind="Key" Height="24" Width="24" />
                             </Button>
 
-                            <ToggleButton x:Name="LockButton" Style="{StaticResource MaterialDesignActionToggleButton}" Width="40" Height="40" Margin="0,0,10,0" Click="LockButton_Click">
+                            <ToggleButton x:Name="LockButton" Width="40" Height="40" Margin="0,0,10,0" Click="LockButton_Click">
+                                <ToggleButton.Style >
+                                    <Style BasedOn="{StaticResource MaterialDesignActionToggleButton}" TargetType="ToggleButton">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="ToolTip" Value="Make the image public. A public image can be seen by anyone"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                        <Setter Property="ToolTip" Value="Make the image private. A private image can be seen only by you"></Setter>
+                                    </Style>
+                                </ToggleButton.Style>
                                 <materialDesign:ToggleButtonAssist.OnContent>
                                     <materialDesign:PackIcon Kind="LockOpen" />
                                 </materialDesign:ToggleButtonAssist.OnContent>
                                 <materialDesign:PackIcon
                                     Kind="Lock" />
                             </ToggleButton>
-                            <ToggleButton x:Name="LikeButton" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Width="40" Height="40" Margin="0,0,10,0" Click="LikeButton_Click">
+                            <ToggleButton x:Name="LikeButton" Width="40" Height="40" Margin="0,0,10,0" Click="LikeButton_Click">
+                                <ToggleButton.Style >
+                                    <Style BasedOn="{StaticResource MaterialDesignFlatPrimaryToggleButton}" TargetType="ToggleButton">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="ToolTip" Value="Dislike this image"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                        <Setter Property="ToolTip" Value="Like this image"></Setter>
+                                    </Style>
+                                </ToggleButton.Style>
                                 <materialDesign:PackIcon Kind="Heart" Height="21"  Width="21" />
                             </ToggleButton>
                             <TextBlock x:Name="ImageViewLikes"/>
@@ -69,7 +89,7 @@
                         <GroupBox x:Name="groupBox" Header="Comments" Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0" Margin="16,0,0,0">
                             <StackPanel>
                                 <TextBox Name="CurrentComment" Style="{StaticResource MaterialDesignTextAreaTextBox}" Margin="0,0,0,5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Write something about this image..."  VerticalAlignment="Top" Height="61.96"/>
-                                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="87" materialDesign:RippleAssist.Feedback="#DD000000" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" FontSize="12" Background="#FF7E52AC" BorderThickness="0" SnapsToDevicePixels="True" Click="AddCommentButton_Click" Margin="0,0,0,10">
+                                <Button Name="AddCommentButton" Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="87" materialDesign:RippleAssist.Feedback="#DD000000" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" FontSize="12" Background="#FF7E52AC" BorderThickness="0" SnapsToDevicePixels="True" Click="AddCommentButton_Click" Margin="0,0,0,10">
                                     Comment
                                 </Button>
                                 <WrapPanel Name="CommentsContainer" Orientation="Vertical"/>
@@ -81,16 +101,16 @@
             </Expander>
             <ScrollViewer>
                 <StackPanel>
-                    <GroupBox Header="Private Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+                    <GroupBox Name="MyImagesGroupBox" Header="My Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon  Kind="EyeOff" Height="32" Width="32" VerticalAlignment="Center" />
+                                    <materialDesign:PackIcon  Kind="Image" Height="32" Width="32" VerticalAlignment="Center" />
                                     <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}" />
                                 </StackPanel>
                             </DataTemplate>
                         </GroupBox.HeaderTemplate>
-                        <WrapPanel x:Name="PrivateImagesContainer" Margin="10"/>
+                        <WrapPanel x:Name="MyImagesContainer" Margin="10"/>
                     </GroupBox>
                     <GroupBox Header="Public Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
