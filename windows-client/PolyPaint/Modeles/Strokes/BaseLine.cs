@@ -18,8 +18,8 @@ namespace PolyPaint.Modeles.Strokes
         int FirstAnchorIndex;
         int SecondAncorIndex;
 
-        Relation FirstRelation = Relation.AGGREGATION;
-        Relation SecondRelation = Relation.INHERITANCE;
+        Relation FirstRelation = Relation.INHERITANCE;
+        Relation SecondRelation = Relation.COMPOSITION;
         string FirstText = "0..n";
         string SecondText = "2";
 
@@ -128,7 +128,7 @@ namespace PolyPaint.Modeles.Strokes
 
         private double FindAngle(Point p1, Point p2)
         {
-            double angle = -Math.Atan((p2.Y - p1.Y) / (p2.X - p1.X));
+            double angle = Math.Atan((p2.Y - p1.Y) / (p2.X - p1.X));
             if (p1.X > p2.X)
                 angle += Math.PI;
             if (angle < 0)
@@ -216,6 +216,75 @@ namespace PolyPaint.Modeles.Strokes
             
             FormattedText secondLabel = new FormattedText(this.SecondText, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), 12, Brushes.Black);
             drawingContext.DrawText(secondLabel, this.GetLabelPosition(this.StylusPoints[this.StylusPoints.Count - 1].ToPoint(), this.StylusPoints[this.StylusPoints.Count - 2].ToPoint(), firstLabel.Width, false));
+
+            double symbolSize = 6;
+            double firstAngle = this.FindAngle(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint());
+            Point firstRelationPosition = new Point(
+                this.StylusPoints[0].X + Math.Cos(firstAngle) * Math.Sqrt(Math.Pow(symbolSize, 2) * 2),
+                this.StylusPoints[0].Y + Math.Sin(firstAngle) * Math.Sqrt(Math.Pow(symbolSize, 2) * 2));
+            drawingContext.PushTransform(new RotateTransform((firstAngle + Math.PI / 4) / Math.PI * 180, firstRelationPosition.X, firstRelationPosition.Y));
+
+            if (this.FirstRelation == Relation.AGGREGATION)
+                drawingContext.DrawRectangle(new SolidColorBrush(Colors.White), outlinePen, new Rect(firstRelationPosition.X - symbolSize, firstRelationPosition.Y - symbolSize, symbolSize * 2 , symbolSize * 2));
+
+            if (this.FirstRelation == Relation.COMPOSITION)
+                drawingContext.DrawRectangle(new SolidColorBrush(Colors.Black), outlinePen, new Rect(firstRelationPosition.X - symbolSize, firstRelationPosition.Y - symbolSize, symbolSize * 2, symbolSize * 2));
+
+            if (this.FirstRelation == Relation.INHERITANCE)
+            {
+
+                var segments = new[]
+                {
+                   new LineSegment(new Point(
+                       firstRelationPosition.X - symbolSize,
+                       firstRelationPosition.Y - symbolSize), true),
+                   new LineSegment(new Point(
+                       firstRelationPosition.X - symbolSize,
+                       firstRelationPosition.Y + symbolSize), true)
+                };
+
+                var figure = new PathFigure(new Point(
+                       firstRelationPosition.X + symbolSize,
+                       firstRelationPosition.Y + symbolSize), segments, true);
+                var geo = new PathGeometry(new[] { figure });
+                drawingContext.DrawGeometry(new SolidColorBrush(Colors.White), outlinePen, geo);
+            }
+
+            drawingContext.Pop();
+
+            double secondAngle = this.FindAngle(this.StylusPoints[this.StylusPoints.Count - 1].ToPoint(), this.StylusPoints[this.StylusPoints.Count - 2].ToPoint());
+            Point secondRelationPosition = new Point(
+                this.StylusPoints[this.StylusPoints.Count - 1].X + Math.Cos(secondAngle) * Math.Sqrt(Math.Pow(symbolSize, 2) * 2),
+                this.StylusPoints[this.StylusPoints.Count - 1].Y + Math.Sin(secondAngle) * Math.Sqrt(Math.Pow(symbolSize, 2) * 2));
+            drawingContext.PushTransform(new RotateTransform((secondAngle + Math.PI / 4) / Math.PI * 180, secondRelationPosition.X, secondRelationPosition.Y));
+
+            if (this.SecondRelation == Relation.AGGREGATION)
+                drawingContext.DrawRectangle(new SolidColorBrush(Colors.White), outlinePen, new Rect(secondRelationPosition.X - symbolSize, secondRelationPosition.Y - symbolSize, symbolSize * 2, symbolSize * 2));
+
+            if (this.SecondRelation == Relation.COMPOSITION)
+                drawingContext.DrawRectangle(new SolidColorBrush(Colors.Black), outlinePen, new Rect(secondRelationPosition.X - symbolSize, secondRelationPosition.Y - symbolSize, symbolSize * 2, symbolSize * 2));
+
+            if (this.SecondRelation == Relation.INHERITANCE)
+            {
+
+                var segments = new[]
+                {
+                   new LineSegment(new Point(
+                       secondRelationPosition.X - symbolSize,
+                       secondRelationPosition.Y - symbolSize), true),
+                   new LineSegment(new Point(
+                       secondRelationPosition.X - symbolSize,
+                       secondRelationPosition.Y + symbolSize), true)
+                };
+
+                var figure = new PathFigure(new Point(
+                       secondRelationPosition.X + symbolSize,
+                       secondRelationPosition.Y + symbolSize), segments, true);
+                var geo = new PathGeometry(new[] { figure });
+                drawingContext.DrawGeometry(new SolidColorBrush(Colors.White), outlinePen, geo);
+            }
+
+            drawingContext.Pop();
         }
 
         private Point GetLabelPosition(Point p1, Point p2, double labelWidth, bool IsFirst)
@@ -237,7 +306,7 @@ namespace PolyPaint.Modeles.Strokes
             if (p1.Y > p2.Y && isAnchoredOnSide || p1.Y < p2.Y && !isAnchoredOnSide)
                 y = p1.Y;
             else
-            y = p1.Y - 17;
+                y = p1.Y - 17;
 
             return new Point(x, y);
         }
@@ -273,6 +342,6 @@ namespace PolyPaint.Modeles.Strokes
 
     public enum Relation
     {
-        ASSOSIATION, AGGREGATION, COMPOSITION, INHERITANCE, NONE
+        ASSOSIATION, AGGREGATION, COMPOSITION, INHERITANCE
     }
 }
