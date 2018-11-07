@@ -36,6 +36,8 @@ class RectangleView: UIView {
         addGestureRecognizer(pinchGR)
         let rotationGR = UIRotationGestureRecognizer(target: self, action: #selector(didRotate(rotationGR:)))
         addGestureRecognizer(rotationGR)
+        let longPressGR = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(longPressGR:)))
+        addGestureRecognizer(longPressGR)
     }
     
     override func draw(_ rect: CGRect) {
@@ -63,6 +65,37 @@ class RectangleView: UIView {
             self.showAnchorPoints()
         }
 
+    }
+    
+    @objc func didLongPress(longPressGR: UILongPressGestureRecognizer) {
+        self.showAnchorPoints()
+        
+        if(longPressGR.state == .cancelled) {
+            self.hideAnchorPoints()
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //self.showAnchorPoints()
+        print("called touches began")
+        
+        for layer in self.anchorPointsLayers {
+            let touchArea = CGRect(x: (touches.first?.location(in: self).x)!, y: (touches.first?.location(in: self).y)!, width: 50, height: 50)
+            //print("TEXT: \(touchArea.contains((layer.path?.currentPoint)!))")
+            //print("center: \(layer.path?.currentPoint)")
+            //print("touch: \(touches.first?.location(in: self))")
+            //layer.path?.currentPoint.
+            print(layer.path?.contains((touches.first?.location(in: self))!))
+            //print(layer.hitTest((touches.first?.location(in: self))!))
+            if let path = layer.path?.contains((touches.first?.location(in: self))!) {
+                print("touche anchor")
+            }
+            
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //self.hideAnchorPoints()
     }
     
     @objc func didPinch(pinchGR: UIPinchGestureRecognizer) {

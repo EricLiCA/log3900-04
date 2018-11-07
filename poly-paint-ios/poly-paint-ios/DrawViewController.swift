@@ -152,7 +152,7 @@ class DrawViewController: UIViewController {
         let touch = touches.first
         self.firstTouch = touch?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
-        print(self.insideCanvas)
+        //print(self.insideCanvas)
     }
     
     @IBAction func classTapped(_ sender: UIButton) {
