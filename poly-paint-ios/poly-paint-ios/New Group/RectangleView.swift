@@ -15,6 +15,7 @@ class RectangleView: UIView {
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()
     var anchorPointsLayers = [CAShapeLayer]()
+    var touchAnchorPoint = false
     
     init(frame: CGRect, layer: CALayer) {
         super.init(frame: frame)
@@ -85,17 +86,25 @@ class RectangleView: UIView {
             //print("center: \(layer.path?.currentPoint)")
             //print("touch: \(touches.first?.location(in: self))")
             //layer.path?.currentPoint.
-            print(layer.path?.contains((touches.first?.location(in: self))!))
-            //print(layer.hitTest((touches.first?.location(in: self))!))
-            if let path = layer.path?.contains((touches.first?.location(in: self))!) {
-                print("touche anchor")
+            
+            if (layer.path?.contains((touches.first?.location(in: self))!))! {
+                // start drawing line
+                self.touchAnchorPoint = true
             }
+            
             
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         //self.hideAnchorPoints()
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if(self.touchAnchorPoint) {
+            print("moving")
+        }
+        
     }
     
     @objc func didPinch(pinchGR: UIPinchGestureRecognizer) {
@@ -154,7 +163,7 @@ class RectangleView: UIView {
         var anchorPoints = [topAnchorPoint, rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(3), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(5), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
