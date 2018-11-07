@@ -25,6 +25,7 @@ namespace PolyPaint.VueModeles
         public Editeur editeur = new Editeur();
 
         private Page lineEditor;
+        private Page classEditor;
 
         // Ensemble d'attributs qui définissent l'apparence d'un trait.
         public DrawingAttributes AttributsDessin { get; set; } = new DrawingAttributes();
@@ -88,6 +89,9 @@ namespace PolyPaint.VueModeles
                 if (stroke is BaseLine)
                     return this.lineEditor;
 
+                if (stroke is PersonStroke || stroke is ClassStroke || stroke is UseCaseStroke)
+                    return this.classEditor;
+
                 return null;
             }
         }
@@ -117,6 +121,7 @@ namespace PolyPaint.VueModeles
             editeur.PropertyChanged += new PropertyChangedEventHandler(EditeurProprieteModifiee);
 
             this.lineEditor = new LineEdit(this);
+            this.classEditor = new ClassEdit(this);
 
             // On initialise les attributs de dessin avec les valeurs de départ du modèle.
             AttributsDessin = new DrawingAttributes();            

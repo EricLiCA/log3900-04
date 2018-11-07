@@ -225,6 +225,9 @@
     <Compile Include="VueModeles\ChatViewModel.cs" />
     <Compile Include="VueModeles\MessagingViewModel.cs" />
     <Compile Include="VueModeles\VueModele.cs" />
+    <Compile Include="Vues\ClassEdit.xaml.cs">
+      <DependentUpon>ClassEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\Gallery.xaml.cs">
       <DependentUpon>Gallery.xaml</DependentUpon>
     </Compile>
@@ -253,6 +256,10 @@
       <DependentUpon>UsersCard.xaml</DependentUpon>
     </Compile>
     <Page Include="Vues\Chat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\ClassEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

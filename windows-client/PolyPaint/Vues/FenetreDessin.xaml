@@ -104,15 +104,8 @@
                 <TextBlock Name="textBlockPosition" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             </StackPanel>
         </Border>
-        <Border BorderThickness="0.5,0,0,0" BorderBrush="#77000000" Width="174" Background="AliceBlue" HorizontalAlignment="Right" VerticalAlignment="Center" Height="285.25" DockPanel.Dock="Right">
-            <StackPanel>
-                <TextBox Text="{Binding Path=ActiveItemTextContent, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay }"
-                         Style="{StaticResource MaterialDesignTextAreaTextBox}"
-                         Margin="5" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
-                         AcceptsReturn="True" Height="236.96"/>
-            </StackPanel>
-        </Border>
-        <Frame BorderBrush="#77000000" MaxWidth="200" Background="AliceBlue" DockPanel.Dock="Right" Content="{Binding Path=EditingFrameContent}" />
+        <Frame BorderBrush="#77000000" MaxWidth="200" Background="AliceBlue" DockPanel.Dock="Right"
+               Content="{Binding Path=EditingFrameContent}" />
 
         <Grid DockPanel.Dock="Left" Margin="0,1,0,0">
             <Grid.ColumnDefinitions>
