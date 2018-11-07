@@ -10,16 +10,20 @@ import { Image } from './Image';
 export class GalleryComponent {
 
   private date: Date = new Date();
-  private imageData: Image[];
+  private imageData: Image[] = [];
 
   constructor(
-    private imageService: ImageService
+    private imageService: ImageService,
   ) { }
 
   /** GET images from the server */
   ngOnInit()  {
     this.imageService.getImages().then(result => {
-      this.imageData = result;
+      result.forEach((image: Image) => {
+        if(image.protectionLevel === "public") {
+          this.imageData.push(image);
+        }
+      });
     });
   }
 }

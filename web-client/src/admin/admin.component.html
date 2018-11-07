@@ -1,1 +1,41 @@
 <p>Admin</p>
+
+<button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample" (click)="frame.show()"
+  mdbWavesEffect>Manage account</button>
+
+<div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Manage account</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+            <i class="fa fa-user prefix grey-text"></i>
+          <input #newUsername type="username" id="orangeForm-name" class="form-control validate" [formControl]="signupFormModalName" mdbInputDirective>
+          <label data-error="wrong" data-success="right" for="orangeForm-name">New username</label>
+        </div>
+
+        <div class="md-form mb-5">
+            <i class="fa fa-user prefix grey-text"></i>
+          <input #newPassword type="password" id="orangeForm-name" class="form-control validate" [formControl]="signupFormModalName" mdbInputDirective>
+          <label data-error="wrong" data-success="right" for="orangeForm-name">New password</label>
+        </div>
+
+        <div class="md-form mb-4">
+          <i class="fa fa-lock prefix grey-text"></i>
+          <input #passowrd type="password" id="orangeForm-pass" class="form-control validate" [formControl]="signupFormModalPassword" mdbInputDirective>
+          <label data-error="wrong" data-success="right" for="orangeForm-pass">Password</label>
+        </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button mdbBtn color="deep-orange" class="waves-light" (click)="changeAccount(newUsername.value, newPassword.value, passowrd.value)" (click)="frame.hide()" mdbWavesEffect>Change username</button>
+      </div>
+    </div>
+  </div>
+</div>

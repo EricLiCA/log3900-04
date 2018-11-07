@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { Image } from 'src/gallery/Image';
 import { User } from '../User';
 
@@ -14,7 +13,7 @@ import { User } from '../User';
 export class UsersDetailComponent {
   
   private date: Date = new Date();
-  private userImages: Image[];
+  private userImages: Image[] = [];
   private currentUser: User;
 
   constructor(
@@ -31,7 +30,7 @@ export class UsersDetailComponent {
 
     this.userService.getUserById(id).then((user: User) => {
       this.currentUser = user;
-    })
+    });
 
   }
 }
