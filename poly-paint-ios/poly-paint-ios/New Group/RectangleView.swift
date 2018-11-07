@@ -23,6 +23,7 @@ class RectangleView: UIView {
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.setNeedsDisplay()
+        setUpNotifications()
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -53,19 +54,20 @@ class RectangleView: UIView {
     }
     
     @objc func didPan(panGR: UIPanGestureRecognizer) {
-        self.superview!.bringSubview(toFront: self)
-        var translation = panGR.translation(in: self)
-        translation = translation.applying(self.transform)
-        self.center.x += translation.x
-        self.center.y += translation.y
-        panGR.setTranslation(.zero, in: self)
-
-        if(panGR.state == .ended) {
-            self.hideAnchorPoints()
-        } else if(panGR.state == .began) {
-            self.showAnchorPoints()
+        if(!self.touchAnchorPoint) {
+            self.superview!.bringSubview(toFront: self)
+            var translation = panGR.translation(in: self)
+            translation = translation.applying(self.transform)
+            self.center.x += translation.x
+            self.center.y += translation.y
+            panGR.setTranslation(.zero, in: self)
+            
+            if(panGR.state == .ended) {
+                self.hideAnchorPoints()
+            } else if(panGR.state == .began) {
+                self.showAnchorPoints()
+            }
         }
-
     }
     
     @objc func didLongPress(longPressGR: UILongPressGestureRecognizer) {
@@ -86,15 +88,33 @@ class RectangleView: UIView {
             //print("center: \(layer.path?.currentPoint)")
             //print("touch: \(touches.first?.location(in: self))")
             //layer.path?.currentPoint.
+            //print(layer.path?.contains((touches.first?.location(in: self))!))
             
             if (layer.path?.contains((touches.first?.location(in: self))!))! {
                 // start drawing line
+                print("touched!")
+                //layer.fillColor = UIColor.green as! CGColor
+                layer.fillColor = UIColor.green.cgColor
                 self.touchAnchorPoint = true
+                let userInfo = [ "point" : touches.first?.location(in: self.superview) ]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "drawLineAlert"), object: nil, userInfo: userInfo)
             }
-            
-            
         }
     }
+    
+    func setUpNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(lineDrawnAlert), name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
+        
+    }
+    
+    @objc func lineDrawnAlert(sender: AnyObject) {
+        for layer in self.anchorPointsLayers {
+            layer.fillColor = UIColor.red.cgColor
+        }
+        self.touchAnchorPoint = false
+    }
+    
+    
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         //self.hideAnchorPoints()
@@ -163,7 +183,7 @@ class RectangleView: UIView {
         var anchorPoints = [topAnchorPoint, rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(5), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
@@ -178,6 +198,8 @@ class RectangleView: UIView {
         
         self.hideAnchorPoints()
     }
+    
+    
     
     func showAnchorPoints() {
         for index in 0...3 {

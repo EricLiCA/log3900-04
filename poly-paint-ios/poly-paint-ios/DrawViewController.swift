@@ -35,6 +35,8 @@ class DrawViewController: UIViewController {
     var currentBezierPath: UIBezierPath?
     var layersFromShapes = [CALayer]()
     var insideCanvas = false
+    var startPointOfLine: CGPoint?
+    var endPointOfLine: CGPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,6 +155,7 @@ class DrawViewController: UIViewController {
         self.firstTouch = touch?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
         //print(self.insideCanvas)
+        print("touches BEGAN DRAWING PLACE")
     }
     
     @IBAction func classTapped(_ sender: UIButton) {
@@ -163,6 +166,7 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touches moved")
         if(isUserEditing && self.insideCanvas) {
             // erase sublayers used for drawing
             if(self.drawingPlace.layer.sublayers != nil) {
@@ -312,6 +316,7 @@ class DrawViewController: UIViewController {
 
     func setUpNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(createClassDiagramAlert), name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(drawLineAlert), name: NSNotification.Name(rawValue: "drawLineAlert"), object: nil)
     }
     
     @objc func createClassDiagramAlert(sender: AnyObject) {
@@ -321,6 +326,27 @@ class DrawViewController: UIViewController {
         self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
         self.drawingPlace.layer.addSublayer(self.layersFromShapes[self.layersFromShapes.count-1])
   
+    }
+    
+    @objc func drawLineAlert(sender: AnyObject) {
+        if(self.startPointOfLine == nil) {
+            self.startPointOfLine = sender.userInfo["point"] as! CGPoint
+        } else if(self.endPointOfLine == nil) {
+            print("drawline!")
+            self.endPointOfLine = sender.userInfo["point"] as! CGPoint
+            // draw line
+            var bezier = UIBezierPath()
+            bezier.move(to: self.startPointOfLine!)
+            bezier.addLine(to: self.endPointOfLine!)
+            self.currentContext = nil
+            bezier.close()
+            let myLayer = CAShapeLayer()
+            myLayer.path = bezier.cgPath
+            myLayer.borderWidth = 2
+            myLayer.strokeColor = UIColor.black.cgColor
+            self.drawingPlace.layer.addSublayer(myLayer)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
+        }
     }
     
     func processText(text: String) -> [String] {
