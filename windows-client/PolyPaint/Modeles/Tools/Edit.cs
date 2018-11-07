@@ -59,6 +59,8 @@ namespace PolyPaint.Modeles.Tools
             {
                 if (clicked.Last() is BaseLine)
                 {
+                    if (!((CustomStroke)clicked.Last()).isEditing()) return;
+
                     ((BaseLine)clicked.Last()).newPoint(point);
                     this.MouseDown(point, strokes);
                     return;

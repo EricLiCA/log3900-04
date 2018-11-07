@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Ink;
@@ -16,6 +17,11 @@ namespace PolyPaint.Modeles.Strokes
         string SecondAncorId;
         int FirstAnchorIndex;
         int SecondAncorIndex;
+
+        Relation FirstRelation = Relation.AGGREGATION;
+        Relation SecondRelation = Relation.INHERITANCE;
+        string FirstText = "0..n";
+        string SecondText = "2";
 
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
@@ -120,6 +126,16 @@ namespace PolyPaint.Modeles.Strokes
             return Math.Sqrt(dx * dx + dy * dy);
         }
 
+        private double FindAngle(Point p1, Point p2)
+        {
+            double angle = -Math.Atan((p2.Y - p1.Y) / (p2.X - p1.X));
+            if (p1.X > p2.X)
+                angle += Math.PI;
+            if (angle < 0)
+                angle += 2 * Math.PI;
+            return angle;
+        }
+
         public override bool isSelectable()
         {
             return true;
@@ -194,6 +210,36 @@ namespace PolyPaint.Modeles.Strokes
             {
                 this.addDragHandles();
             }
+
+            FormattedText firstLabel = new FormattedText(this.FirstText, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), 12, Brushes.Black);
+            drawingContext.DrawText(firstLabel, this.GetLabelPosition(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint(), firstLabel.Width, true));
+            
+            FormattedText secondLabel = new FormattedText(this.SecondText, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), 12, Brushes.Black);
+            drawingContext.DrawText(secondLabel, this.GetLabelPosition(this.StylusPoints[this.StylusPoints.Count - 1].ToPoint(), this.StylusPoints[this.StylusPoints.Count - 2].ToPoint(), firstLabel.Width, false));
+        }
+
+        private Point GetLabelPosition(Point p1, Point p2, double labelWidth, bool IsFirst)
+        {
+            bool isAnchoredOnSide = true;
+            if (this.FirstAnchorId != null && IsFirst)
+                isAnchoredOnSide = this.FirstAnchorIndex % 2 == 0;
+
+            if (this.SecondAncorId != null && !IsFirst)
+                isAnchoredOnSide = this.SecondAncorIndex % 2 == 0;
+
+            double x;
+            if (p1.X < p2.X && isAnchoredOnSide || p1.X > p2.X && !isAnchoredOnSide)
+                x = p1.X + 10;
+            else
+                x = p1.X - labelWidth - 10;
+
+            double y;
+            if (p1.Y > p2.Y && isAnchoredOnSide || p1.Y < p2.Y && !isAnchoredOnSide)
+                y = p1.Y;
+            else
+            y = p1.Y - 17;
+
+            return new Point(x, y);
         }
 
         internal void anchorableMoved(Anchorable anchorable)
@@ -223,5 +269,10 @@ namespace PolyPaint.Modeles.Strokes
             for (int i = 0; i < this.StylusPoints.Count; i++)
                 this.HandlePoints.Add(Guid.NewGuid());
         }
+    }
+
+    public enum Relation
+    {
+        ASSOSIATION, AGGREGATION, COMPOSITION, INHERITANCE, NONE
     }
 }
