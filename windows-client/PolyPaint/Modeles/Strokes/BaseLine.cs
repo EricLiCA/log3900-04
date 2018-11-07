@@ -81,6 +81,28 @@ namespace PolyPaint.Modeles.Strokes
             this.Refresh();
         }
 
+        internal Relation getFirstRelation()
+        {
+            return this.FirstRelation;
+        }
+
+        internal void setFirstRelation(Relation value)
+        {
+            this.FirstRelation = value;
+            this.Refresh();
+        }
+
+        internal Relation getSecondRelation()
+        {
+            return this.SecondRelation;
+        }
+
+        internal void setSecondRelation(Relation value)
+        {
+            this.SecondRelation = value;
+            this.Refresh();
+        }
+
         public void deleteDragHandles()
         {
             for (int i = 0; i < this.HandlePoints.Count; i++)
@@ -364,6 +386,6 @@ namespace PolyPaint.Modeles.Strokes
 
     public enum Relation
     {
-        ASSOSIATION, AGGREGATION, COMPOSITION, INHERITANCE
+        ASSOCIATION, AGGREGATION, COMPOSITION, INHERITANCE
     }
 }

@@ -1,4 +1,5 @@
-﻿using PolyPaint.VueModeles;
+﻿using PolyPaint.Modeles.Strokes;
+using PolyPaint.VueModeles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,17 @@ namespace PolyPaint.Vues
         {
             this.DataContext = vueModele;
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Relation tempRelation = ((VueModele)DataContext).FirstRelation;
+            ((VueModele)DataContext).FirstRelation = ((VueModele)DataContext).SecondRelation;
+            ((VueModele)DataContext).SecondRelation = tempRelation;
+
+            string tempLabel = ((VueModele)DataContext).FirstLabel;
+            ((VueModele)DataContext).FirstLabel = ((VueModele)DataContext).SecondLabel;
+            ((VueModele)DataContext).SecondLabel = tempLabel;
         }
     }
 }

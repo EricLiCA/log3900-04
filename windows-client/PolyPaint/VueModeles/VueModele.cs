@@ -54,17 +54,17 @@ namespace PolyPaint.VueModeles
             set => editeur.SecondLabel = value;
         }
 
-        //public string FirstRelation
-        //{
-        //    get => editeur.FirstRelation;
-        //    set => editeur.FirstRelation = value;
-        //}
+        public Relation FirstRelation
+        {
+            get => editeur.FirstRelation;
+            set => editeur.FirstRelation = value;
+        }
 
-        //public string SecondRelation
-        //{
-        //    get => editeur.SecondLabel;
-        //    set => editeur.SecondLabel = value;
-        //}
+        public Relation SecondRelation
+        {
+            get => editeur.SecondRelation;
+            set => editeur.SecondRelation = value;
+        }
 
         public string CouleurSelectionnee
         {
@@ -78,11 +78,17 @@ namespace PolyPaint.VueModeles
             set { editeur.TailleTrait = value; }
         }
 
-        public Page EditorWindow
+        public Page EditingFrameContent
         {
             get
             {
-                return this.lineEditor;
+                if (!this.editeur.traits.has(this.editeur.EditingStroke)) return null;
+                CustomStroke stroke = this.editeur.traits.get(this.editeur.EditingStroke);
+
+                if (stroke is BaseLine)
+                    return this.lineEditor;
+
+                return null;
             }
         }
 
@@ -172,6 +178,18 @@ namespace PolyPaint.VueModeles
             else if (e.PropertyName == "SecondLabel")
             {
                 this.ProprieteModifiee("SecondLabel");
+            }
+            else if (e.PropertyName == "FirstRelation")
+            {
+                this.ProprieteModifiee("FirstRelation");
+            }
+            else if (e.PropertyName == "SecondRelation")
+            {
+                this.ProprieteModifiee("SecondRelation");
+            }
+            else if (e.PropertyName == "EditingStroke")
+            {
+                this.ProprieteModifiee("EditingFrameContent");
             }
         }
     }

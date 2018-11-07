@@ -116,12 +116,48 @@ namespace PolyPaint.Modeles
             }
             set
             {
-                Console.WriteLine("set");
                 if (!this.traits.has(EditingStroke)) return;
                 CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
                 if (!(stroke is BaseLine)) return;
-                Console.WriteLine("ok");
                 ((BaseLine)stroke).setSecondLabel(value);
+                this.ProprieteModifiee();
+            }
+        }
+
+        public Relation FirstRelation
+        {
+            get
+            {
+                if (!this.traits.has(EditingStroke)) return Relation.ASSOCIATION;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return Relation.ASSOCIATION;
+                return ((BaseLine)stroke).getFirstRelation();
+            }
+            set
+            {
+                if (!this.traits.has(EditingStroke)) return;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return;
+                ((BaseLine)stroke).setFirstRelation(value);
+                this.ProprieteModifiee();
+            }
+        }
+
+        public Relation SecondRelation
+        {
+            get
+            {
+                if (!this.traits.has(EditingStroke)) return Relation.ASSOCIATION;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return Relation.ASSOCIATION;
+                return ((BaseLine)stroke).getSecondRelation();
+            }
+            set
+            {
+                if (!this.traits.has(EditingStroke)) return;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return;
+                ((BaseLine)stroke).setSecondRelation(value);
                 this.ProprieteModifiee();
             }
         }
@@ -142,9 +178,12 @@ namespace PolyPaint.Modeles
                 if (this.editingStroke != null)
                     this.OutilSelectionne = this.EditTool;
 
+                ProprieteModifiee();
                 ProprieteModifiee("ActiveItemTextContent");
                 ProprieteModifiee("FirstLabel");
                 ProprieteModifiee("SecondLabel");
+                ProprieteModifiee("FirstRelation");
+                ProprieteModifiee("SecondRelation");
             }
         }
 
