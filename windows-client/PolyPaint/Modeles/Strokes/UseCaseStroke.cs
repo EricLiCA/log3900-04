@@ -78,6 +78,6 @@ namespace PolyPaint.Modeles.Strokes
             return JsonConvert.SerializeObject(toSend);
         }
 
-        public override string StrokeType() => "USE";
+        public override StrokeType StrokeType() => Strokes.StrokeType.USE;
     }
 }

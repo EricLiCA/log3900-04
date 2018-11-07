@@ -304,6 +304,6 @@ namespace PolyPaint.Modeles.Strokes
             return JsonConvert.SerializeObject(toSend);
         }
 
-        public abstract string StrokeType();
+        public abstract StrokeType StrokeType();
     }
 }

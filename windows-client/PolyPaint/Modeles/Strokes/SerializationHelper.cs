@@ -14,7 +14,7 @@ namespace PolyPaint.Modeles.Strokes
     public class SerializedStroke
     {
         public Guid Id;
-        public string Type;
+        public StrokeType Type;
         public int Index;
     }
 

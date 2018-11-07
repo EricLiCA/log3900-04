@@ -9,6 +9,11 @@ namespace PolyPaint.Modeles.Strokes
     interface Savable
     {
         string toJson();
-        string StrokeType();
+        StrokeType StrokeType();
+    }
+
+    public enum StrokeType
+    {
+        ELIPSE, TRIANGLE, RECTANGLE, USE, LINE, CLASS, ACTOR
     }
 }

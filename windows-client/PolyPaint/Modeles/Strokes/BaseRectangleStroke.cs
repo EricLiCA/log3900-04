@@ -58,6 +58,6 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.Pop();
         }
 
-        public override string StrokeType() => "RECTANGLE";
+        public override StrokeType StrokeType() => Strokes.StrokeType.RECTANGLE;
     }
 }

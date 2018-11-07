@@ -404,7 +404,7 @@ namespace PolyPaint.Modeles.Strokes
             return JsonConvert.SerializeObject(toSend);
         }
 
-        public string StrokeType() => "LINE";
+        public StrokeType StrokeType() => Strokes.StrokeType.LINE;
     }
 
     public enum Relation

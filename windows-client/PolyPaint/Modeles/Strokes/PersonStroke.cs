@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Ink;
@@ -60,7 +61,7 @@ namespace PolyPaint.Modeles.Strokes
             neck.Y += height / 7;
             Point crouch = neck;
             crouch.Y += height * 2.5 / 7;
-            
+
             Point leftArm = TOP_LEFT;
             leftArm.Y += height * 3 / 7;
             Point rightArm = leftArm;
@@ -83,7 +84,7 @@ namespace PolyPaint.Modeles.Strokes
                 drawingContext.DrawLine(selectedPen, crouch, rightFoot);
                 drawingContext.DrawLine(selectedPen, crouch, leftFoot);
             }
-            
+
             if (this.AnchorPointVisibility)
             {
                 this.addAnchorPoints();
@@ -115,10 +116,20 @@ namespace PolyPaint.Modeles.Strokes
 
         public override string toJson()
         {
-            return JsonConvert.SerializeObject(this);
+            SerializedTextableShape toSend = new SerializedTextableShape()
+            {
+                Id = this.Id,
+                Type = this.StrokeType(),
+                Index = -1,
+                Center = this.Center,
+                Width = this.Width,
+                Height = this.Height,
+                Content = new List<string>() { this.Name }
+            };
+            return JsonConvert.SerializeObject(toSend);
         }
 
-        public override string StrokeType() => "ACTOR";
+        public override StrokeType StrokeType() => Strokes.StrokeType.ACTOR;
 
     }
 }
