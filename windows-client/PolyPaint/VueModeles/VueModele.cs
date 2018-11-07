@@ -2,11 +2,14 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Media;
 using PolyPaint.Modeles;
 using PolyPaint.Modeles.Outils;
+using PolyPaint.Modeles.Strokes;
 using PolyPaint.Utilitaires;
+using PolyPaint.Vues;
 
 namespace PolyPaint.VueModeles
 {
@@ -16,10 +19,13 @@ namespace PolyPaint.VueModeles
     /// Expose des commandes et propriétés connectées au modèle aux des éléments de la vue peuvent se lier.
     /// Reçoit des avis de changement du modèle et envoie des avis de changements à la vue.
     /// </summary>
-    class VueModele : INotifyPropertyChanged
+    public class VueModele : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private Editeur editeur = new Editeur();
+        public Editeur editeur = new Editeur();
+
+        private Page lineEditor;
+        private Page classEditor;
 
         // Ensemble d'attributs qui définissent l'apparence d'un trait.
         public DrawingAttributes AttributsDessin { get; set; } = new DrawingAttributes();
@@ -29,18 +35,42 @@ namespace PolyPaint.VueModeles
         {
             get { return editeur.OutilSelectionne; }            
             set { ProprieteModifiee(); }
-        }    
-        
+        }
+
+        public string ActiveItemTextContent
+        {
+            get => editeur.ActiveItemTextContent;
+            set => editeur.ActiveItemTextContent = value;
+        }
+
+        public string FirstLabel
+        {
+            get => editeur.FirstLabel;
+            set => editeur.FirstLabel = value;
+        }
+
+        public string SecondLabel
+        {
+            get => editeur.SecondLabel;
+            set => editeur.SecondLabel = value;
+        }
+
+        public Relation FirstRelation
+        {
+            get => editeur.FirstRelation;
+            set => editeur.FirstRelation = value;
+        }
+
+        public Relation SecondRelation
+        {
+            get => editeur.SecondRelation;
+            set => editeur.SecondRelation = value;
+        }
+
         public string CouleurSelectionnee
         {
             get { return editeur.CouleurSelectionnee; }
             set { editeur.CouleurSelectionnee = value; }
-        }
-
-        public string PointeSelectionnee
-        {
-            get { return editeur.PointeSelectionnee; }
-            set { ProprieteModifiee(); }
         }
 
         public int TailleTrait
@@ -48,18 +78,37 @@ namespace PolyPaint.VueModeles
             get { return editeur.TailleTrait; }
             set { editeur.TailleTrait = value; }
         }
-       
+
+        public Page EditingFrameContent
+        {
+            get
+            {
+                if (!this.editeur.traits.has(this.editeur.EditingStroke)) return null;
+                CustomStroke stroke = this.editeur.traits.get(this.editeur.EditingStroke);
+
+                if (stroke is BaseLine)
+                    return this.lineEditor;
+
+                if (stroke is PersonStroke || stroke is ClassStroke || stroke is UseCaseStroke)
+                    return this.classEditor;
+
+                return null;
+            }
+        }
+
         public StrokeCollection Traits { get; set; }
 
         // Commandes sur lesquels la vue pourra se connecter.
         public RelayCommand<object> Empiler { get; set; }
         public RelayCommand<object> Depiler { get; set; }
-        public RelayCommand<string> ChoisirPointe { get; set; }
         public RelayCommand<Tool> ChoisirOutil { get; set; }
         public RelayCommand<object> Reinitialiser { get; set; }
         public RelayCommand<Point> MouseUp { get; set; }
         public RelayCommand<Point> MouseDown { get; set; }
         public RelayCommand<Point> MouseMove { get; set; }
+        public RelayCommand<StrokeCollection> SelectStrokes { get; set; }
+        public RelayCommand<CustomStroke> Edit { get; set; }
+        public RelayCommand<string> ChangeClassContent { get; set; }
 
         /// <summary>
         /// Constructeur de VueModele
@@ -71,11 +120,12 @@ namespace PolyPaint.VueModeles
             // On écoute pour des changements sur le modèle. Lorsqu'il y en a, EditeurProprieteModifiee est appelée.
             editeur.PropertyChanged += new PropertyChangedEventHandler(EditeurProprieteModifiee);
 
+            this.lineEditor = new LineEdit(this);
+            this.classEditor = new ClassEdit(this);
+
             // On initialise les attributs de dessin avec les valeurs de départ du modèle.
             AttributsDessin = new DrawingAttributes();            
             AttributsDessin.Color = (Color)ColorConverter.ConvertFromString(editeur.CouleurSelectionnee);
-            AjusterPointe();
-
             Traits = editeur.traits;
             
             // Pour chaque commande, on effectue la liaison avec des méthodes du modèle.            
@@ -83,13 +133,14 @@ namespace PolyPaint.VueModeles
             Depiler = new RelayCommand<object>(editeur.Depiler, editeur.PeutDepiler);
             // Pour les commandes suivantes, il est toujours possible des les activer.
             // Donc, aucune vérification de type Peut"Action" à faire.
-            ChoisirPointe = new RelayCommand<string>(editeur.ChoisirPointe);
             ChoisirOutil = new RelayCommand<Tool>(editeur.ChoisirOutil);
             Reinitialiser = new RelayCommand<object>(editeur.Reinitialiser);
 
             MouseUp = new RelayCommand<Point>(editeur.MouseUp);
             MouseDown = new RelayCommand<Point>(editeur.MouseDown);
             MouseMove = new RelayCommand<Point>(editeur.MouseMove);
+            SelectStrokes = new RelayCommand<StrokeCollection>(editeur.SelectStrokes);
+            Edit = new RelayCommand<CustomStroke>(editeur.Edit);
         }
 
         /// <summary>
@@ -116,32 +167,35 @@ namespace PolyPaint.VueModeles
             if (e.PropertyName == "CouleurSelectionnee")
             {
                 AttributsDessin.Color = (Color)ColorConverter.ConvertFromString(editeur.CouleurSelectionnee);
-            }                
+            }
             else if (e.PropertyName == "OutilSelectionne")
             {
                 OutilSelectionne = editeur.OutilSelectionne;
-            }                
-            else if (e.PropertyName == "PointeSelectionnee")
-            {
-                PointeSelectionnee = editeur.PointeSelectionnee;
-                AjusterPointe();
             }
-            else // e.PropertyName == "TailleTrait"
-            {               
-                AjusterPointe();
-            }                
-        }
-
-        /// <summary>
-        /// C'est ici qu'est défini la forme de la pointe, mais aussi sa taille (TailleTrait).
-        /// Pourquoi deux caractéristiques se retrouvent définies dans une même méthode? Parce que pour créer une pointe 
-        /// horizontale ou verticale, on utilise une pointe carrée et on joue avec les tailles pour avoir l'effet désiré.
-        /// </summary>
-        private void AjusterPointe()
-        {
-            AttributsDessin.StylusTip = (editeur.PointeSelectionnee == "ronde") ? StylusTip.Ellipse : StylusTip.Rectangle;
-            AttributsDessin.Width = (editeur.PointeSelectionnee == "verticale") ? 1 : editeur.TailleTrait;
-            AttributsDessin.Height = (editeur.PointeSelectionnee == "horizontale") ? 1 : editeur.TailleTrait;
+            else if (e.PropertyName == "ActiveItemTextContent")
+            {
+                this.ProprieteModifiee("ActiveItemTextContent");
+            }
+            else if (e.PropertyName == "FirstLabel")
+            {
+                this.ProprieteModifiee("FirstLabel");
+            }
+            else if (e.PropertyName == "SecondLabel")
+            {
+                this.ProprieteModifiee("SecondLabel");
+            }
+            else if (e.PropertyName == "FirstRelation")
+            {
+                this.ProprieteModifiee("FirstRelation");
+            }
+            else if (e.PropertyName == "SecondRelation")
+            {
+                this.ProprieteModifiee("SecondRelation");
+            }
+            else if (e.PropertyName == "EditingStroke")
+            {
+                this.ProprieteModifiee("EditingFrameContent");
+            }
         }
     }
 }

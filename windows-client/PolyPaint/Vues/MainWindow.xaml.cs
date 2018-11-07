@@ -2,17 +2,9 @@
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.IO;
 using PolyPaint.DAO;
 using PolyPaint.Services;
-using Amazon;
-using Amazon.S3;
-using Amazon.S3.Model;
-using Amazon.S3.Transfer;
 using PolyPaint.Utilitaires;
-using PolyPaint.Modeles;
-using System.Threading.Tasks;
 
 namespace PolyPaint.Vues
 {
