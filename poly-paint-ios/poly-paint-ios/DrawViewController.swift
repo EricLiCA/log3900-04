@@ -299,7 +299,7 @@ class DrawViewController: UIViewController {
     }
     
     func processText(text: String) -> [String] {
-        let separators = CharacterSet(charactersIn: "--\n")
+        let separators = CharacterSet(charactersIn: "--")
         let textArray = text.components(separatedBy: separators as CharacterSet)
         print(textArray)
         return textArray

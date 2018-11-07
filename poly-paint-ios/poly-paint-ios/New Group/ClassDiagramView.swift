@@ -21,7 +21,7 @@ class ClassDiagramView: UIView {
 
     
     init(text: [String]) {
-        let rectangle = CGRect(x: 100, y: 100, width: 200, height: 82)
+        let rectangle = CGRect(x: 100, y: 100, width: 200, height: 300)
         super.init(frame: rectangle)
         //layer.backgroundColor = UIColor.blue.cgColor
         initGestureRecognizers()
