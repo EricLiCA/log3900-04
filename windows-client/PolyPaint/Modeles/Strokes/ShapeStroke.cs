@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Windows;
@@ -6,7 +7,7 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Strokes
 {
-     public abstract class ShapeStroke : CustomStroke, Anchorable, Handleable, Movable
+     public abstract class ShapeStroke : CustomStroke, Anchorable, Handleable, Movable, Savable
     {
         private double _rotation = 0;
         public double Rotation {
@@ -24,7 +25,17 @@ namespace PolyPaint.Modeles.Strokes
         {
             get => new Point((StylusPoints[0].X + StylusPoints[1].X) / 2, (StylusPoints[0].Y + StylusPoints[1].Y) / 2);
         }
-        
+
+        public double Width
+        {
+            get => Math.Abs(StylusPoints[0].X - StylusPoints[1].X);
+        }
+
+        public double Height
+        {
+            get => Math.Abs(StylusPoints[0].Y - StylusPoints[1].Y);
+        }
+
         protected Guid TOP_LEFT = Guid.NewGuid();
         protected Guid BOTTOM_LEFT = Guid.NewGuid();
         protected Guid TOP_RIGHT = Guid.NewGuid();
@@ -278,5 +289,21 @@ namespace PolyPaint.Modeles.Strokes
         {
             //Send Modifications to server
         }
+
+        public virtual string toJson()
+        {
+            SerializedShape toSend = new SerializedShape()
+            {
+                Id = this.Id,
+                Type = this.StrokeType(),
+                Index = -1,
+                Center = this.Center,
+                Width = this.Width,
+                Height = this.Height
+            };
+            return JsonConvert.SerializeObject(toSend);
+        }
+
+        public abstract string StrokeType();
     }
 }

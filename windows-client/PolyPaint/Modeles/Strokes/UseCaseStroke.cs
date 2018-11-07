@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -11,21 +12,24 @@ namespace PolyPaint.Modeles.Strokes
 {
     class UseCaseStroke : BaseElipseStroke, Textable
     {
-        public string textContent;
+        public List<string> textContent;
 
         public UseCaseStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
-            this.textContent = "Use Case";
+            this.textContent = new List<string>
+            {
+                "Use Case"
+            };
         }
 
         public string GetText()
         {
-            return textContent;
+            return textContent.Aggregate((a, b) => a + "\r\n" + b);
         }
 
         public void SetText(string text)
         {
-            this.textContent = text;
+            this.textContent = text.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
             this.Refresh();
         }
 
@@ -45,7 +49,7 @@ namespace PolyPaint.Modeles.Strokes
             if ( bottomRight.X - topLeft.X > 0 && bottomRight.Y - topLeft.Y > 0)
             {
                 int wordSize = 17;
-                FormattedText text = new FormattedText(textContent, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), wordSize, Brushes.Black)
+                FormattedText text = new FormattedText(this.GetText(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), wordSize, Brushes.Black)
                 {
                     TextAlignment = TextAlignment.Center,
                     MaxTextWidth = bottomRight.X - topLeft.X,
@@ -58,5 +62,22 @@ namespace PolyPaint.Modeles.Strokes
             
             drawingContext.Pop();
         }
+
+        public override string toJson()
+        {
+            SerializedTextableShape toSend = new SerializedTextableShape()
+            {
+                Id = this.Id,
+                Type = this.StrokeType(),
+                Index = -1,
+                Center = this.Center,
+                Width = this.Width,
+                Height = this.Height,
+                Content = this.textContent
+            };
+            return JsonConvert.SerializeObject(toSend);
+        }
+
+        public override string StrokeType() => "USE";
     }
 }

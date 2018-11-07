@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace PolyPaint.Modeles.Strokes
                 "Attribute",
                 "--",
                 "Operations()"
-            }; ;
+            };
         }
 
         public string GetText()
@@ -74,5 +75,22 @@ namespace PolyPaint.Modeles.Strokes
 
             drawingContext.Pop();
         }
+
+        public override string toJson()
+        {
+            SerializedTextableShape toSend = new SerializedTextableShape()
+            {
+                Id = this.Id,
+                Type = this.StrokeType(),
+                Index = -1,
+                Center = this.Center,
+                Width = this.Width,
+                Height = this.Height,
+                Content = this.textContent
+            };
+            return JsonConvert.SerializeObject(toSend);
+        }
+
+        public override string StrokeType() => "CLASS";
     }
 }

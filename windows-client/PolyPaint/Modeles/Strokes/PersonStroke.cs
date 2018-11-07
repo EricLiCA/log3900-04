@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Ink;
@@ -111,6 +112,13 @@ namespace PolyPaint.Modeles.Strokes
                 this.addDragHandles();
             }
         }
+
+        public override string toJson()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
+        public override string StrokeType() => "ACTOR";
 
     }
 }

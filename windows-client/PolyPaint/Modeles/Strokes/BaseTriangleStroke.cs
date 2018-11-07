@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -149,5 +150,7 @@ namespace PolyPaint.Modeles.Strokes
             return shader.Transform(localPosition);
 
         }
+
+        public override string StrokeType() => "TRIANGLE";
     }
 }

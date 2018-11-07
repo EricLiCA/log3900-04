@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,19 +10,19 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Strokes
 {
-    class BaseLine : CustomStroke, Handleable
+    class BaseLine : CustomStroke, Handleable, Savable
     {
         List<Guid> HandlePoints;
 
-        string FirstAnchorId;
-        string SecondAncorId;
-        int FirstAnchorIndex;
-        int SecondAncorIndex;
+        protected string FirstAnchorId;
+        protected string SecondAncorId;
+        protected int FirstAnchorIndex;
+        protected int SecondAncorIndex;
 
-        Relation FirstRelation = Relation.INHERITANCE;
-        Relation SecondRelation = Relation.COMPOSITION;
-        string FirstText = "0..n";
-        string SecondText = "2";
+        protected Relation FirstRelation = Relation.ASSOCIATION;
+        protected Relation SecondRelation = Relation.ASSOCIATION;
+        protected string FirstText = "";
+        protected string SecondText = "";
 
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
@@ -382,6 +383,28 @@ namespace PolyPaint.Modeles.Strokes
             for (int i = 0; i < this.StylusPoints.Count; i++)
                 this.HandlePoints.Add(Guid.NewGuid());
         }
+
+        public virtual string toJson()
+        {
+            SerializedLine toSend = new SerializedLine()
+            {
+                Id = this.Id,
+                Type = this.StrokeType(),
+                Index = -1,
+                Points = this.StylusPoints.Select(point => point.ToPoint()).ToList(),
+                FirstAnchorId = this.FirstAnchorId,
+                FirstAnchorIndex = this.FirstAnchorIndex,
+                SecondAnchorId = this.SecondAncorId,
+                SecondAnchorIndex = this.SecondAncorIndex,
+                FirstEndLabel = this.FirstText,
+                FirstEndRelation = this.FirstRelation.ToString(),
+                SecondEndLabel = this.SecondText,
+                SecondEndRelation = this.SecondRelation.ToString()
+            };
+            return JsonConvert.SerializeObject(toSend);
+        }
+
+        public string StrokeType() => "LINE";
     }
 
     public enum Relation

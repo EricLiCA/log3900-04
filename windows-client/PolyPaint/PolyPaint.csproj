@@ -199,6 +199,8 @@
     <Compile Include="Modeles\Strokes\Handleable.cs" />
     <Compile Include="Modeles\Strokes\Movable.cs" />
     <Compile Include="Modeles\Strokes\PersonStroke.cs" />
+    <Compile Include="Modeles\Strokes\Savable.cs" />
+    <Compile Include="Modeles\Strokes\SerializationHelper.cs" />
     <Compile Include="Modeles\Strokes\ShapeStroke.cs" />
     <Compile Include="Modeles\Strokes\Textable.cs" />
     <Compile Include="Modeles\Strokes\UseCaseStroke.cs" />

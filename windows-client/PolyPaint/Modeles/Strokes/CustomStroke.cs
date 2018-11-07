@@ -1,4 +1,5 @@
-﻿using PolyPaint.Modeles.Strokes;
+﻿using Newtonsoft.Json;
+using PolyPaint.Modeles.Strokes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,6 +106,9 @@ namespace PolyPaint.Modeles
                 strokes.Remove(strokes.get(this.Id.ToString()));
             }
             strokes.Insert(index, this.Clone());
+
+            if (this is Savable)
+                Console.WriteLine(((Savable)this).toJson());
         }
 
         public CustomStroke Duplicate()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
@@ -61,5 +62,7 @@ namespace PolyPaint.Modeles.Strokes
 
             drawingContext.Pop();
         }
+
+        public override string StrokeType() => "ELIPSE";
     }
 }
