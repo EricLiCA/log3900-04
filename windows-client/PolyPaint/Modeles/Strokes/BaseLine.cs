@@ -59,6 +59,28 @@ namespace PolyPaint.Modeles.Strokes
             }
         }
 
+        internal string getFirstLabel()
+        {
+            return this.FirstText;
+        }
+
+        internal void setFirstLabel(string value)
+        {
+            this.FirstText = value;
+            this.Refresh();
+        }
+
+        internal string getSecondLabel()
+        {
+            return this.SecondText;
+        }
+
+        internal void setSecondLabel(string value)
+        {
+            this.SecondText = value;
+            this.Refresh();
+        }
+
         public void deleteDragHandles()
         {
             for (int i = 0; i < this.HandlePoints.Count; i++)
@@ -215,7 +237,7 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.DrawText(firstLabel, this.GetLabelPosition(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint(), firstLabel.Width, true));
             
             FormattedText secondLabel = new FormattedText(this.SecondText, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), 12, Brushes.Black);
-            drawingContext.DrawText(secondLabel, this.GetLabelPosition(this.StylusPoints[this.StylusPoints.Count - 1].ToPoint(), this.StylusPoints[this.StylusPoints.Count - 2].ToPoint(), firstLabel.Width, false));
+            drawingContext.DrawText(secondLabel, this.GetLabelPosition(this.StylusPoints[this.StylusPoints.Count - 1].ToPoint(), this.StylusPoints[this.StylusPoints.Count - 2].ToPoint(), secondLabel.Width, false));
 
             double symbolSize = 6;
             double firstAngle = this.FindAngle(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint());

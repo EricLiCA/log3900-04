@@ -26,25 +26,5 @@ namespace PolyPaint.Vues
             this.DataContext = vueModele;
             InitializeComponent();
         }
-
-        private void FirstComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void SecondComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void FirstTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void SecondTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
 }

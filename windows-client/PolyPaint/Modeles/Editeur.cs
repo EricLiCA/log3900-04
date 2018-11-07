@@ -85,7 +85,47 @@ namespace PolyPaint.Modeles
                 this.ProprieteModifiee();
             }
         }
-        
+
+        public string FirstLabel
+        {
+            get
+            {
+                if (!this.traits.has(EditingStroke)) return "";
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return "";
+                return ((BaseLine)stroke).getFirstLabel();
+            }
+            set
+            {
+                if (!this.traits.has(EditingStroke)) return;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return;
+                ((BaseLine)stroke).setFirstLabel(value);
+                this.ProprieteModifiee();
+            }
+        }
+
+        public string SecondLabel
+        {
+            get
+            {
+                if (!this.traits.has(EditingStroke)) return "";
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return "";
+                return ((BaseLine)stroke).getSecondLabel();
+            }
+            set
+            {
+                Console.WriteLine("set");
+                if (!this.traits.has(EditingStroke)) return;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return;
+                Console.WriteLine("ok");
+                ((BaseLine)stroke).setSecondLabel(value);
+                this.ProprieteModifiee();
+            }
+        }
+
         private string editingStroke;
         public string EditingStroke
         {
@@ -101,7 +141,10 @@ namespace PolyPaint.Modeles
 
                 if (this.editingStroke != null)
                     this.OutilSelectionne = this.EditTool;
+
                 ProprieteModifiee("ActiveItemTextContent");
+                ProprieteModifiee("FirstLabel");
+                ProprieteModifiee("SecondLabel");
             }
         }
 

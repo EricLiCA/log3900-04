@@ -7,6 +7,7 @@ using System.Windows.Ink;
 using System.Windows.Media;
 using PolyPaint.Modeles;
 using PolyPaint.Modeles.Outils;
+using PolyPaint.Modeles.Strokes;
 using PolyPaint.Utilitaires;
 using PolyPaint.Vues;
 
@@ -40,6 +41,30 @@ namespace PolyPaint.VueModeles
             get => editeur.ActiveItemTextContent;
             set => editeur.ActiveItemTextContent = value;
         }
+
+        public string FirstLabel
+        {
+            get => editeur.FirstLabel;
+            set => editeur.FirstLabel = value;
+        }
+
+        public string SecondLabel
+        {
+            get => editeur.SecondLabel;
+            set => editeur.SecondLabel = value;
+        }
+
+        //public string FirstRelation
+        //{
+        //    get => editeur.FirstRelation;
+        //    set => editeur.FirstRelation = value;
+        //}
+
+        //public string SecondRelation
+        //{
+        //    get => editeur.SecondLabel;
+        //    set => editeur.SecondLabel = value;
+        //}
 
         public string CouleurSelectionnee
         {
@@ -131,15 +156,23 @@ namespace PolyPaint.VueModeles
             if (e.PropertyName == "CouleurSelectionnee")
             {
                 AttributsDessin.Color = (Color)ColorConverter.ConvertFromString(editeur.CouleurSelectionnee);
-            }                
+            }
             else if (e.PropertyName == "OutilSelectionne")
             {
                 OutilSelectionne = editeur.OutilSelectionne;
-            }                
+            }
             else if (e.PropertyName == "ActiveItemTextContent")
             {
                 this.ProprieteModifiee("ActiveItemTextContent");
-            }           
+            }
+            else if (e.PropertyName == "FirstLabel")
+            {
+                this.ProprieteModifiee("FirstLabel");
+            }
+            else if (e.PropertyName == "SecondLabel")
+            {
+                this.ProprieteModifiee("SecondLabel");
+            }
         }
     }
 }
