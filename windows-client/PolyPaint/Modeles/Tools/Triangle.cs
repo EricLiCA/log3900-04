@@ -4,26 +4,26 @@ using System.Windows.Input;
 
 namespace PolyPaint.Modeles.Tools
 {
-    class Elipse : FormTool
+    class Triangle : FormTool
     {
         public override string GetToolImage()
         {
-            return "/Resources/circle-outline.png";
+            return "/Resources/triangle-outline.png";
         }
 
         public override string GetToolName()
         {
-            return "elipse";
+            return "triangle";
         }
 
         public override string GetToolTooltip()
         {
-            return "Elipse";
+            return "Triangle";
         }
 
         public override Stroke InstantiateForm(StylusPointCollection pts, CustomStrokeCollection strokes)
         {
-            return new BaseElipseStroke(pts, strokes);
+            return new BaseTrangleStroke(pts, strokes);
         }
     }
 }

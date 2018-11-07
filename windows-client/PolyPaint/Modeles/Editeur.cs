@@ -1,4 +1,5 @@
 ﻿using PolyPaint.Modeles.Outils;
+using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
 using System;
 using System.Collections.Generic;
@@ -16,18 +17,22 @@ namespace PolyPaint.Modeles
     /// Contient ses différents états et propriétés ainsi que la logique
     /// qui régis son fonctionnement.
     /// </summary>
-    class Editeur : INotifyPropertyChanged
+    public class Editeur : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public StrokeCollection traits = new StrokeCollection();
-        private StrokeCollection traitsRetires = new StrokeCollection();
+        public CustomStrokeCollection traits = new CustomStrokeCollection();
+        private CustomStrokeCollection traitsRetires = new CustomStrokeCollection();
 
+        private Tool EditTool = new Edit();
         private Tool Lasso = new Lasso();
-        private Tool Pencil = new Pencil();
-        private Tool SegmentEraser = new SegmentEraser();
         private Tool ObjectEraser = new ObjectEraser();
         private Tool Rectangle = new Rectangle();
         private Tool Elipse = new Elipse();
+        private Tool Triangle = new Triangle();
+        private Tool Person = new Person();
+        private Tool Line = new Line();
+        private Tool ClassDiagram = new ClassDiagram();
+        private Tool UseCase = new UseCase();
         public List<Tool> Tools;
 
         // Outil actif dans l'éditeur
@@ -35,24 +40,155 @@ namespace PolyPaint.Modeles
         public Tool OutilSelectionne
         {
             get { return outilSelectionne; }
-            set { outilSelectionne = value; ProprieteModifiee(); }
-        }
-
-        // Forme de la pointe du crayon
-        private string pointeSelectionnee = "ronde";
-        public string PointeSelectionnee
-        {
-            get { return pointeSelectionnee; }
             set
             {
-                OutilSelectionne = Pencil;
-                pointeSelectionnee = value;
+                outilSelectionne = value;
+                if (this.outilSelectionne != EditTool)
+                {
+                    this.EditingStroke = null;
+                    this.traits.ToList().ForEach(stroke => {
+                        if (((CustomStroke)stroke).isSelectable())
+                            ((CustomStroke)stroke).Unselect();
+                    });
+                }
+
+                this.traits.ToList().FindAll(stroke => stroke is Anchorable).ForEach(stroke => {
+                    if (this.outilSelectionne == Line)
+                        ((Anchorable)stroke).showAnchorPoints();
+                    else
+                        ((Anchorable)stroke).hideAnchorPoints();
+                });
+
                 ProprieteModifiee();
             }
         }
 
+        public string ActiveItemTextContent {
+            get
+            {
+                if (this.traits.has(this.EditingStroke))
+                {
+                    CustomStroke editing = this.traits.get(this.EditingStroke);
+                    if (editing is Textable)
+                        return ((Textable)editing).GetText();
+                }
+                return "";
+            }
+            set
+            {
+                if (this.traits.has(this.EditingStroke))
+                {
+                    CustomStroke editing = this.traits.get(this.EditingStroke);
+                    if (editing is Textable)
+                        ((Textable)editing).SetText(value);
+                }
+                this.ProprieteModifiee();
+            }
+        }
+
+        public string FirstLabel
+        {
+            get
+            {
+                if (!this.traits.has(EditingStroke)) return "";
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return "";
+                return ((BaseLine)stroke).getFirstLabel();
+            }
+            set
+            {
+                if (!this.traits.has(EditingStroke)) return;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return;
+                ((BaseLine)stroke).setFirstLabel(value);
+                this.ProprieteModifiee();
+            }
+        }
+
+        public string SecondLabel
+        {
+            get
+            {
+                if (!this.traits.has(EditingStroke)) return "";
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return "";
+                return ((BaseLine)stroke).getSecondLabel();
+            }
+            set
+            {
+                if (!this.traits.has(EditingStroke)) return;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return;
+                ((BaseLine)stroke).setSecondLabel(value);
+                this.ProprieteModifiee();
+            }
+        }
+
+        public Relation FirstRelation
+        {
+            get
+            {
+                if (!this.traits.has(EditingStroke)) return Relation.ASSOCIATION;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return Relation.ASSOCIATION;
+                return ((BaseLine)stroke).getFirstRelation();
+            }
+            set
+            {
+                if (!this.traits.has(EditingStroke)) return;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return;
+                ((BaseLine)stroke).setFirstRelation(value);
+                this.ProprieteModifiee();
+            }
+        }
+
+        public Relation SecondRelation
+        {
+            get
+            {
+                if (!this.traits.has(EditingStroke)) return Relation.ASSOCIATION;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return Relation.ASSOCIATION;
+                return ((BaseLine)stroke).getSecondRelation();
+            }
+            set
+            {
+                if (!this.traits.has(EditingStroke)) return;
+                CustomStroke stroke = (CustomStroke)this.traits.get(EditingStroke);
+                if (!(stroke is BaseLine)) return;
+                ((BaseLine)stroke).setSecondRelation(value);
+                this.ProprieteModifiee();
+            }
+        }
+
+        private string editingStroke;
+        public string EditingStroke
+        {
+            get { return editingStroke; }
+            set
+            {
+                if (this.editingStroke != null && this.traits.has(this.editingStroke))
+                {
+                    this.traits.get(this.editingStroke).stopEditing();
+                }
+
+                this.editingStroke = value;
+
+                if (this.editingStroke != null)
+                    this.OutilSelectionne = this.EditTool;
+
+                ProprieteModifiee();
+                ProprieteModifiee("ActiveItemTextContent");
+                ProprieteModifiee("FirstLabel");
+                ProprieteModifiee("SecondLabel");
+                ProprieteModifiee("FirstRelation");
+                ProprieteModifiee("SecondRelation");
+            }
+        }
+
         // Couleur des traits tracés par le crayon.
-        private string couleurSelectionnee = "Black";
+        private string couleurSelectionnee = "White";
         public string CouleurSelectionnee
         {
             get { return couleurSelectionnee; }
@@ -81,15 +217,21 @@ namespace PolyPaint.Modeles
 
         public Editeur()
         {
-            this.outilSelectionne = this.Pencil;
+            this.outilSelectionne = this.EditTool;
 
-            this.Tools = new List<Tool>();
-            this.Tools.Add(Lasso);
-            this.Tools.Add(Pencil);
-            this.Tools.Add(SegmentEraser);
-            this.Tools.Add(ObjectEraser);
-            this.Tools.Add(Rectangle);
-            this.Tools.Add(Elipse);
+            this.Tools = new List<Tool>
+            {
+                EditTool,
+                Lasso,
+                ObjectEraser,
+                Rectangle,
+                Elipse,
+                Triangle,
+                Person,
+                Line,
+                ClassDiagram,
+                UseCase
+            };
         }
 
         /// <summary>
@@ -112,9 +254,58 @@ namespace PolyPaint.Modeles
             this.outilSelectionne.MouseUp(point, traits);
         }
 
+        internal void SelectStrokes(StrokeCollection strokes)
+        {
+            strokes.ToList().ForEach(stroke => {
+                if (((CustomStroke)stroke).isSelected())
+                {
+                    if (((CustomStroke)stroke).isEditing())
+                        this.EditingStroke = null;
+
+                    ((CustomStroke)stroke).Unselect();
+                }
+                else
+                {
+                    ((CustomStroke)stroke).Select();
+                }
+            });
+        }
+
+        internal void Edit(CustomStroke stroke)
+        {
+            if (stroke.isLocked()) return;
+            if (!stroke.isSelected())
+            {
+                this.traits.ToList().ForEach(s => {
+                    if (((CustomStroke)s).isSelectable())
+                        ((CustomStroke)s).Unselect();
+                });
+
+                StrokeCollection sc = new StrokeCollection();
+                sc.Add(stroke);
+                this.SelectStrokes(sc);
+            };
+
+            if (stroke.isEditing())
+            {
+                this.EditingStroke = null;
+            } else
+            {
+                stroke.startEditing();
+                this.EditingStroke = stroke.Id.ToString();
+            }
+        }
+
         internal void MouseMove(Point point)
         {
             this.outilSelectionne.MouseMove(point, traits, (Color)ColorConverter.ConvertFromString(couleurSelectionnee));
+            this.traits.ToList().ForEach(stroke =>
+            {
+                if (stroke is AnchorPoint)
+                {
+                    ((AnchorPoint)stroke).Hover = ((CustomStroke)stroke).HitTest(point);
+                }
+            });
         }
 
         internal void MouseDown(Point point)
@@ -127,6 +318,7 @@ namespace PolyPaint.Modeles
         {
             try
             {
+                EditingStroke = null;
                 Stroke trait = traits.Last();
                 traitsRetires.Add(trait);
                 traits.Remove(trait);               
@@ -148,9 +340,6 @@ namespace PolyPaint.Modeles
             }
             catch { }         
         }
-        
-        // On assigne une nouvelle forme de pointe passée en paramètre.
-        public void ChoisirPointe(string pointe) => PointeSelectionnee = pointe;
 
         // L'outil actif devient celui passé en paramètre.
         public void ChoisirOutil(Tool tool) => OutilSelectionne = tool;
