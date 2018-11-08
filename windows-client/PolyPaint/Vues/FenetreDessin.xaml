@@ -32,6 +32,8 @@
             <ToolBarTray>
                 <ToolBar Style="{DynamicResource MaterialDesignToolBar}"
                          ClipToBounds="True">
+                    <Button x:Name="SaveButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" FontSize="12" Margin="0,9" Content="SAVE" Click="SaveButton_Click"/>
+
                     <Button x:Name="reinitialiser"
                             ToolTip="Erase canvas"
                             Command="{Binding Reinitialiser}">

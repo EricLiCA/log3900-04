@@ -14,9 +14,10 @@ namespace PolyPaint.Modeles.Strokes
     public class SerializedStroke
     {
         public Guid Id;
-        public string Type;
+        public string ShapeType;
         public int Index;
         public string ShapeInfo;
+        public string ImageId;
     }
 
     public class ShapeInfo

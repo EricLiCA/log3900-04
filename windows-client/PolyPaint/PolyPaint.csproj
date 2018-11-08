@@ -173,6 +173,7 @@
     <Compile Include="DAO\ImageCommentDao.cs" />
     <Compile Include="DAO\ImageDao.cs" />
     <Compile Include="DAO\ImageLikeDao.cs" />
+    <Compile Include="DAO\ShapeObjectDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Modeles\ChatModel.cs" />

@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using PolyPaint.Services;
 using System;
 using System.Linq;
 using System.Windows;
@@ -295,9 +296,10 @@ namespace PolyPaint.Modeles.Strokes
             SerializedStroke toSend = new SerializedStroke()
             {
                 Id = this.Id,
-                Type = this.StrokeType().ToString(),
+                ShapeType = this.StrokeType().ToString(),
                 Index = -1,
-                ShapeInfo = JsonConvert.SerializeObject(GetShapeInfo())
+                ShapeInfo = JsonConvert.SerializeObject(GetShapeInfo()),
+                ImageId = ServerService.instance.currentImage
             };
             return JsonConvert.SerializeObject(toSend);
         }
