@@ -64,7 +64,9 @@ namespace PolyPaint
                 vueModele.editeur.EditingStroke = null;
                 selectedStrokes.ForEach(stroke =>
                 {
-                    ((VueModele)this.DataContext).Traits.Add(stroke.Duplicate());
+                    CustomStroke duplicate = stroke.Duplicate();
+                    ((VueModele)this.DataContext).Traits.Add(duplicate);
+                    duplicate.Select();
                 });
             }
 

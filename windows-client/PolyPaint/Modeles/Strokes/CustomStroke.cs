@@ -113,12 +113,13 @@ namespace PolyPaint.Modeles
 
         public CustomStroke Duplicate()
         {
-            this.stopEditing();
-            CustomStroke duplicate = (CustomStroke)this.Clone();
             this.Unselect();
+            CustomStroke duplicate = (CustomStroke)this.Clone();
             duplicate.RefreshGuids();
-            duplicate.StylusPoints[0] = new StylusPoint(duplicate.StylusPoints[0].X - 10, duplicate.StylusPoints[0].Y - 10);
-            duplicate.StylusPoints[1] = new StylusPoint(duplicate.StylusPoints[1].X - 10, duplicate.StylusPoints[1].Y - 10);
+            for (int i = 0; i < duplicate.StylusPoints.Count; i++)
+            {
+                duplicate.StylusPoints[i] = new StylusPoint(duplicate.StylusPoints[i].X - 10, duplicate.StylusPoints[i].Y - 10);
+            }
             return duplicate;
         }
 
