@@ -379,10 +379,13 @@ namespace PolyPaint.Modeles.Strokes
 
         public override void RefreshGuids()
         {
+            this.Id = new Guid();
             this.HandlePoints.Clear();
             this.HandlePoints = new List<Guid>();
             for (int i = 0; i < this.StylusPoints.Count; i++)
                 this.HandlePoints.Add(Guid.NewGuid());
+            this.FirstAnchorId = null;
+            this.SecondAncorId = null;
         }
 
         public virtual string toJson()
