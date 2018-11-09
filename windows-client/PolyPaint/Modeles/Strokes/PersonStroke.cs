@@ -12,7 +12,7 @@ namespace PolyPaint.Modeles.Strokes
 {
     class PersonStroke : ShapeStroke, Textable
     {
-        private string Name;
+        public string Name;
 
         public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
@@ -123,7 +123,8 @@ namespace PolyPaint.Modeles.Strokes
                 Center = new ShapeCenter() { X = this.Center.X, Y = this.Center.Y },
                 Height = this.Height,
                 Width = this.Width,
-                Content = new List<string>() { this.Name }
+                Content = new List<string>() { this.Name },
+                Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
             };
         }
     }

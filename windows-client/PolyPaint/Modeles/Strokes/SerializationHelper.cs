@@ -25,6 +25,7 @@ namespace PolyPaint.Modeles.Strokes
         public ShapeCenter Center;
         public double Width;
         public double Height;
+        public string Color;
     }
     public class ShapeCenter
     {

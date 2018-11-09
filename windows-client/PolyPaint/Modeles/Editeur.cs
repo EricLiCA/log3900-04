@@ -361,15 +361,58 @@ namespace PolyPaint.Modeles
                 for (int i = 0; i < shapeObjects.Count; i++)
                 {
                     dynamic shape = JObject.Parse(shapeObjects[i].ToString());
-                    if (shape["ShapeType"] == StrokeType.RECTANGLE.ToString())
+                    if (shape["ShapeType"] != StrokeType.LINE.ToString())
                     {
                         StylusPoint topLeft = new StylusPoint((double)(shape["ShapeInfo"]["Center"]["X"] - shape["ShapeInfo"]["Width"] / 2),
                             (double)(shape["ShapeInfo"]["Center"]["Y"] - shape["ShapeInfo"]["Height"] / 2));
                         StylusPoint bottomRight = new StylusPoint((double)(shape["ShapeInfo"]["Center"]["X"] + shape["ShapeInfo"]["Width"] / 2),
                             (double)(shape["ShapeInfo"]["Center"]["Y"] + shape["ShapeInfo"]["Height"] / 2));
-                        BaseRectangleStroke loadedRectangle = new BaseRectangleStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
-                        traits.Add(loadedRectangle);
-                        //loadedRectangle.DrawCore(dess, )
+
+                        ShapeStroke loadedShape;
+
+                        if (shape["ShapeType"] == StrokeType.RECTANGLE.ToString())
+                        {
+                            loadedShape = new BaseRectangleStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                        }
+                        else if (shape["ShapeType"] == StrokeType.ELIPSE.ToString())
+                        {
+                            loadedShape = new BaseElipseStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                        }
+                        else if (shape["ShapeType"] == StrokeType.TRIANGLE.ToString())
+                        {
+                            loadedShape = new BaseTrangleStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+
+                        }
+                        else if (shape["ShapeType"] == StrokeType.ACTOR.ToString())
+                        {
+                            loadedShape = new PersonStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                            ((PersonStroke)loadedShape).Name = "";
+                            for (int j = 0; j< shape["ShapeInfo"]["Content"].Count; j++)
+                            {
+                                ((PersonStroke)loadedShape).Name += shape["ShapeInfo"]["Content"][j] + " ";
+                            }
+                        }
+                        else if (shape["ShapeType"] == StrokeType.CLASS.ToString())
+                        {
+                            loadedShape = new ClassStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                            ((ClassStroke)loadedShape).textContent = new List<string>();
+                            for (int j = 0; j < shape["ShapeInfo"]["Content"].Count; j++)
+                            {
+                                ((ClassStroke)loadedShape).textContent.Add((string)shape["ShapeInfo"]["Content"][j]);
+                            }
+                        }
+                        else
+                        {
+                            loadedShape = new UseCaseStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                            ((UseCaseStroke)loadedShape).textContent = new List<string>();
+                            for (int j = 0; j < shape["ShapeInfo"]["Content"].Count; j++)
+                            {
+                                ((UseCaseStroke)loadedShape).textContent.Add((string)shape["ShapeInfo"]["Content"][j]);
+                            }
+                        }
+                        loadedShape.Id = shape["Id"];
+                        loadedShape.DrawingAttributes.Color = (Color)ColorConverter.ConvertFromString((string)shape["ShapeInfo"]["Color"]);
+                        traits.Add(loadedShape);
                     }
                 }
             }

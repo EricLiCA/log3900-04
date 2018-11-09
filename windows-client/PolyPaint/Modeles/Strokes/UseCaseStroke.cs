@@ -72,7 +72,8 @@ namespace PolyPaint.Modeles.Strokes
                 Center = new ShapeCenter() { X = this.Center.X, Y = this.Center.Y },
                 Height = this.Height,
                 Width = this.Width,
-                Content  = this.textContent
+                Content  = this.textContent,
+                Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
             };
         }
     }
