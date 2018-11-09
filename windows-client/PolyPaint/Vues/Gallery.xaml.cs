@@ -267,6 +267,11 @@ namespace PolyPaint.Vues
             }
         }
 
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
+        }
+
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
         {
             ImageComment imageComment = new ImageComment
@@ -346,8 +351,9 @@ namespace PolyPaint.Vues
             ImageDao.Post(newImage);
         }
 
+
         #endregion
 
-
+        
     }
 }

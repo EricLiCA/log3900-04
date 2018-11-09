@@ -346,5 +346,9 @@ namespace PolyPaint.Modeles
 
         // On vide la surface de dessin de tous ses traits.
         public void Reinitialiser(object o) => traits.Clear();
+
+        public void Load()
+        {
+        }
     }
 }

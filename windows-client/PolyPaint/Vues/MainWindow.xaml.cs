@@ -156,8 +156,9 @@ namespace PolyPaint.Vues
             }
         }
 
-        public void LoadImage()
+        public void LoadImage(string imageId)
         {
+            ServerService.instance.currentImageId = imageId;
             ButtonEdit.Visibility = Visibility.Visible;
             GridMain.Content = FenetreDessin;
         }

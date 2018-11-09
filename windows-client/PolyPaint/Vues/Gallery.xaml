@@ -105,6 +105,9 @@
                             <TextBlock x:Name="ImageViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="0,114,8,241.92">
+                            <Button x:Name="EditButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Edit image" Margin="0,0,10,0" Click="EditButton_Click">
+                                <materialDesign:PackIcon  Kind="Pencil" Height="24" Width="24" />
+                            </Button>
                             <Button x:Name="PasswordButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Manage image password" Margin="0,0,10,0" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="PasswordButton_Click">
                                 <materialDesign:PackIcon  Kind="Key" Height="24" Width="24" />
                             </Button>
