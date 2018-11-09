@@ -299,7 +299,7 @@ namespace PolyPaint.Modeles.Strokes
                 ShapeType = this.StrokeType().ToString(),
                 Index = -1,
                 ShapeInfo = JsonConvert.SerializeObject(GetShapeInfo()),
-                ImageId = ServerService.instance.currentImage
+                ImageId = ServerService.instance.currentImageId
             };
             return JsonConvert.SerializeObject(toSend);
         }

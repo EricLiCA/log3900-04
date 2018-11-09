@@ -28,6 +28,6 @@ namespace PolyPaint.Services
         public Socket Socket { get; set; }
         public User user { get; set; }
         public S3Communication S3Communication { get; set; }
-        public string currentImage = "a50ad28c-cd6b-11e8-8ded-12e4abeee048";
+        public string currentImageId { get; set; }
     }
 }

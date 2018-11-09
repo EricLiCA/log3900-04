@@ -9,23 +9,80 @@
       mc:Ignorable="d" 
       d:DesignHeight="597" d:DesignWidth="983"
       Title="Gallery">
-    <materialDesign:DialogHost Canvas.Left="50" Canvas.Top="50" Margin="0">
+    <materialDesign:DialogHost Canvas.Left="50" Canvas.Top="50" Margin="0" Name="ChangePasswordDialog">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="16">
-                <TextBlock>Add a password to the selected image</TextBlock>
-                <TextBox Margin="0 8 0 0" HorizontalAlignment="Stretch" x:Name="CurrentImagePassword" materialDesign:HintAssist.Hint="Password" KeyUp="CurrentImagePassword_KeyUp"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                    <Button Name="AddPasswordButton" IsEnabled="False" Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="AddPasswordButton_Click" ToolTip="Apply new password">
-                        Accept
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="RemovePasswordButton_Click" ToolTip="Remove existing password">
-                        Remove
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="CloseDialogButton_Click">
-                        Cancel
-                    </Button>
+                <StackPanel Name="ChangePasswordContainer">
+                    <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Top" HorizontalAlignment="Center"> Add Password </TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="4,10,4,4">
+                        <materialDesign:PackIcon Kind="Key" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
+                        <TextBox x:Name="CurrentImagePassword" materialDesign:HintAssist.Hint="Password*" Width="300"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <Button Name="AddPasswordButton" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="AddPasswordButton_Click" ToolTip="Apply new password">
+                            Accept
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text.Length, ElementName=CurrentImagePassword, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="RemovePasswordButton_Click" ToolTip="Remove existing password">
+                            Remove
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                            Cancel
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Name="CreateImageContainer">
+                    <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Top" HorizontalAlignment="Center"> Create a new image</TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="4,10,4,4">
+                        <materialDesign:PackIcon Kind="Image" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
+                        <TextBox x:Name="ImageTitle" materialDesign:HintAssist.Hint="Image Title*" Width="300"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="4,10,4,4">
+                        <materialDesign:PackIcon Kind="Key" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
+                        <PasswordBox x:Name="ImagePassword" materialDesign:HintAssist.Hint="Password. Optional field" Width="300">
+                            <PasswordBox.Style>
+                                <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource MaterialDesignPasswordBox}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked, ElementName=PrivateProtectionLevel, UpdateSourceTrigger=PropertyChanged}" Value="true">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </PasswordBox.Style>
+                        </PasswordBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="4,10,4,4">
+                        <RadioButton Name="PrivateProtectionLevel" IsChecked="True" Style="{StaticResource MaterialDesignRadioButton}" GroupName="ImageProtectionLevel" ToolTip="A private image can be accessed by only you">Private</RadioButton>
+                        <RadioButton Name="PublicProtectionLevel" Style="{StaticResource MaterialDesignRadioButton}" GroupName="ImageProtectionLevel" ToolTip="A public image can be accessed by anyone but you can protect it with a password">Public</RadioButton>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <Button Name="CreateImageButton" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="CreateImageClick" ToolTip="Create the image">
+                            Create
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text.Length, ElementName=ImageTitle, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
+                            Cancel
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
+
         </materialDesign:DialogHost.DialogContent>
         <DockPanel Margin="0" Height="{Binding ActualHeight, ElementName=canvas}" Width="{Binding ActualWidth, ElementName=canvas}">
             <Expander x:Name="ImageView" ExpandDirection="Left" DockPanel.Dock="Right" HorizontalAlignment="Right">
@@ -48,7 +105,7 @@
                             <TextBlock x:Name="ImageViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                         <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="0,114,8,241.92">
-                            <Button x:Name="PasswordButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Manage image password" Margin="0,0,10,0" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                            <Button x:Name="PasswordButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Manage image password" Margin="0,0,10,0" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="PasswordButton_Click">
                                 <materialDesign:PackIcon  Kind="Key" Height="24" Width="24" />
                             </Button>
 
@@ -101,6 +158,9 @@
             </Expander>
             <ScrollViewer>
                 <StackPanel>
+                    <Button Name="AddImageButton"  Style="{StaticResource MaterialDesignFloatingActionDarkButton}" ToolTip="Add a new image" HorizontalAlignment="Right" VerticalAlignment="Top" Click="AddImageButton_Click" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                        <materialDesign:PackIcon Kind="Plus" Height="24"  Width="24" />
+                    </Button>
                     <GroupBox Name="MyImagesGroupBox" Header="My Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
