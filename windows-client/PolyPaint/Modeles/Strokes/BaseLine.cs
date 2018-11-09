@@ -15,15 +15,15 @@ namespace PolyPaint.Modeles.Strokes
     {
         List<Guid> HandlePoints;
 
-        protected string FirstAnchorId;
-        protected string SecondAncorId;
-        protected int FirstAnchorIndex;
-        protected int SecondAncorIndex;
+        public string FirstAnchorId;
+        public string SecondAncorId;
+        public int FirstAnchorIndex;
+        public int SecondAncorIndex;
 
-        protected Relation FirstRelation = Relation.ASSOCIATION;
-        protected Relation SecondRelation = Relation.ASSOCIATION;
-        protected string FirstText = "";
-        protected string SecondText = "";
+        public Relation FirstRelation = Relation.ASSOCIATION;
+        public Relation SecondRelation = Relation.ASSOCIATION;
+        public string FirstText = "";
+        public string SecondText = "";
 
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
@@ -404,9 +404,14 @@ namespace PolyPaint.Modeles.Strokes
 
         public LineInfo GetShapeInfo()
         {
+            List<ShapePoint> points = new List<ShapePoint>();
+            for (int i = 0; i < this.StylusPoints.Count; i++)
+            {
+                points.Add(new ShapePoint() { X = this.StylusPoints[i].X, Y = this.StylusPoints[i].Y });
+            }
             return new LineInfo()
             {
-                Points = this.StylusPoints.Select(point => point.ToPoint()).ToList(),
+                Points = points,
                 FirstAnchorId = this.FirstAnchorId,
                 FirstAnchorIndex = this.FirstAnchorIndex,
                 SecondAnchorId = this.SecondAncorId,

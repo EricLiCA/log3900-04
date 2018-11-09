@@ -22,12 +22,12 @@ namespace PolyPaint.Modeles.Strokes
 
     public class ShapeInfo
     {
-        public ShapeCenter Center;
+        public ShapePoint Center;
         public double Width;
         public double Height;
         public string Color;
     }
-    public class ShapeCenter
+    public class ShapePoint
     {
         public double X;
         public double Y;
@@ -41,7 +41,7 @@ namespace PolyPaint.Modeles.Strokes
      
     public class LineInfo
     {
-        public List<Point> Points;
+        public List<ShapePoint> Points;
 
         public string FirstAnchorId;
         public int FirstAnchorIndex;

@@ -3,7 +3,6 @@ using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
 using RestSharp;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -50,13 +49,15 @@ namespace PolyPaint.Modeles
                 if (this.outilSelectionne != EditTool)
                 {
                     this.EditingStroke = null;
-                    this.traits.ToList().ForEach(stroke => {
+                    this.traits.ToList().ForEach(stroke =>
+                    {
                         if (((CustomStroke)stroke).isSelectable())
                             ((CustomStroke)stroke).Unselect();
                     });
                 }
 
-                this.traits.ToList().FindAll(stroke => stroke is Anchorable).ForEach(stroke => {
+                this.traits.ToList().FindAll(stroke => stroke is Anchorable).ForEach(stroke =>
+                {
                     if (this.outilSelectionne == Line)
                         ((Anchorable)stroke).showAnchorPoints();
                     else
@@ -67,7 +68,8 @@ namespace PolyPaint.Modeles
             }
         }
 
-        public string ActiveItemTextContent {
+        public string ActiveItemTextContent
+        {
             get
             {
                 if (this.traits.has(this.EditingStroke))
@@ -260,7 +262,8 @@ namespace PolyPaint.Modeles
 
         internal void SelectStrokes(StrokeCollection strokes)
         {
-            strokes.ToList().ForEach(stroke => {
+            strokes.ToList().ForEach(stroke =>
+            {
                 if (((CustomStroke)stroke).isSelected())
                 {
                     if (((CustomStroke)stroke).isEditing())
@@ -280,7 +283,8 @@ namespace PolyPaint.Modeles
             if (stroke.isLocked()) return;
             if (!stroke.isSelected())
             {
-                this.traits.ToList().ForEach(s => {
+                this.traits.ToList().ForEach(s =>
+                {
                     if (((CustomStroke)s).isSelectable())
                         ((CustomStroke)s).Unselect();
                 });
@@ -293,7 +297,8 @@ namespace PolyPaint.Modeles
             if (stroke.isEditing())
             {
                 this.EditingStroke = null;
-            } else
+            }
+            else
             {
                 stroke.startEditing();
                 this.EditingStroke = stroke.Id.ToString();
@@ -325,7 +330,7 @@ namespace PolyPaint.Modeles
                 EditingStroke = null;
                 Stroke trait = traits.Last();
                 traitsRetires.Add(trait);
-                traits.Remove(trait);               
+                traits.Remove(trait);
             }
             catch { }
 
@@ -342,7 +347,7 @@ namespace PolyPaint.Modeles
                 traits.Add(trait);
                 traitsRetires.Remove(trait);
             }
-            catch { }         
+            catch { }
         }
 
         // L'outil actif devient celui passé en paramètre.
@@ -387,7 +392,7 @@ namespace PolyPaint.Modeles
                         {
                             loadedShape = new PersonStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
                             ((PersonStroke)loadedShape).Name = "";
-                            for (int j = 0; j< shape["ShapeInfo"]["Content"].Count; j++)
+                            for (int j = 0; j < shape["ShapeInfo"]["Content"].Count; j++)
                             {
                                 ((PersonStroke)loadedShape).Name += shape["ShapeInfo"]["Content"][j] + " ";
                             }
@@ -413,6 +418,27 @@ namespace PolyPaint.Modeles
                         loadedShape.Id = shape["Id"];
                         loadedShape.DrawingAttributes.Color = (Color)ColorConverter.ConvertFromString((string)shape["ShapeInfo"]["Color"]);
                         traits.Add(loadedShape);
+                    }
+                    else
+                    {
+                        StylusPointCollection points = new StylusPointCollection();
+                        for (int j = 0; j < shape["ShapeInfo"]["Points"].Count; j++)
+                        {
+                            points.Add(new StylusPoint((double)shape["ShapeInfo"]["Points"][j]["X"], (double)shape["ShapeInfo"]["Points"][j]["Y"]));
+                        }
+                        BaseLine loadedLine = new BaseLine(points, traits)
+                        {
+                            Id = shape["Id"],
+                            FirstAnchorId = shape["ShapeInfo"]["FirstAnchorId"],
+                            FirstAnchorIndex = shape["ShapeInfo"]["FirstAnchorIndex"],
+                            SecondAncorId = shape["ShapeInfo"]["SecondAnchorId"],
+                            SecondAncorIndex = shape["ShapeInfo"]["SecondAnchorIndex"],
+                            FirstText = shape["ShapeInfo"]["FirstEndLabel"],
+                            FirstRelation = shape["ShapeInfo"]["FirstEndRelation"],
+                            SecondText = shape["ShapeInfo"]["SecondEndLabel"],
+                            SecondRelation = shape["ShapeInfo"]["SecondEndRelation"]
+                        };
+                        traits.Add(loadedLine);
                     }
                 }
             }

@@ -309,7 +309,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             return new ShapeInfo
             {
-                Center = new ShapeCenter() { X = this.Center.X, Y = this.Center.Y },
+                Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y },
                 Height = this.Height,
                 Width = this.Width,
                 Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
