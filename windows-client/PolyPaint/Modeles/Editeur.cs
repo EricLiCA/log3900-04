@@ -1,13 +1,17 @@
-﻿using PolyPaint.Modeles.Outils;
+﻿using Newtonsoft.Json.Linq;
+using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Ink;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace PolyPaint.Modeles
@@ -347,8 +351,32 @@ namespace PolyPaint.Modeles
         // On vide la surface de dessin de tous ses traits.
         public void Reinitialiser(object o) => traits.Clear();
 
-        public void Load()
+        public void Load(IRestResponse response)
         {
+            traits.Clear();
+            traitsRetires.Clear();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                JArray shapeObjects = JArray.Parse(response.Content);
+                for (int i = 0; i < shapeObjects.Count; i++)
+                {
+                    dynamic shape = JObject.Parse(shapeObjects[i].ToString());
+                    if (shape["ShapeType"] == StrokeType.RECTANGLE.ToString())
+                    {
+                        StylusPoint topLeft = new StylusPoint((double)(shape["ShapeInfo"]["Center"]["X"] - shape["ShapeInfo"]["Width"] / 2),
+                            (double)(shape["ShapeInfo"]["Center"]["Y"] - shape["ShapeInfo"]["Height"] / 2));
+                        StylusPoint bottomRight = new StylusPoint((double)(shape["ShapeInfo"]["Center"]["X"] + shape["ShapeInfo"]["Width"] / 2),
+                            (double)(shape["ShapeInfo"]["Center"]["Y"] + shape["ShapeInfo"]["Height"] / 2));
+                        BaseRectangleStroke loadedRectangle = new BaseRectangleStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                        traits.Add(loadedRectangle);
+                        //loadedRectangle.DrawCore(dess, )
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Could not load the image", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

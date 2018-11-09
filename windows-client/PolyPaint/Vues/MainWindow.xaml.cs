@@ -161,6 +161,7 @@ namespace PolyPaint.Vues
             ServerService.instance.currentImageId = imageId;
             ButtonEdit.Visibility = Visibility.Visible;
             GridMain.Content = FenetreDessin;
+            ShapeObjectDao.Get();
         }
 
     }

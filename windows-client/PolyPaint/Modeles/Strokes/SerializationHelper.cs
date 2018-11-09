@@ -22,10 +22,16 @@ namespace PolyPaint.Modeles.Strokes
 
     public class ShapeInfo
     {
-        public Point Center;
+        public ShapeCenter Center;
         public double Width;
         public double Height;
     }
+    public class ShapeCenter
+    {
+        public double X;
+        public double Y;
+    }
+
 
     public class TextableShapeInfo : ShapeInfo
     {

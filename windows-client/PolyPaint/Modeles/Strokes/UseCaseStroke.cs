@@ -69,7 +69,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             return new TextableShapeInfo
             {
-                Center = this.Center,
+                Center = new ShapeCenter() { X = this.Center.X, Y = this.Center.Y },
                 Height = this.Height,
                 Width = this.Width,
                 Content  = this.textContent

@@ -38,14 +38,13 @@ namespace PolyPaint.DAO
 
         public static void Get()
         {
-            var request = new RestRequest(Settings.API_VERSION + Settings.SHAPE_OBJECT_PATH + "/" + ServerService.instance.currentImageId,
-                Method.GET);
+            var request = new RestRequest(Settings.API_VERSION + Settings.SHAPE_OBJECT_PATH + "/" + ServerService.instance.currentImageId, Method.GET);
             ServerService.instance.server.ExecuteAsync<Image>(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Editeur currentEditingImage = ((VueModele)((MainWindow)Application.Current.MainWindow).FenetreDessin.DataContext).editeur;
-                    currentEditingImage.Load();
+                    currentEditingImage.Load(response);
                 });
             });
         }
