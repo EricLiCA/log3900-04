@@ -2,29 +2,12 @@ import { PostgresDatabase } from '../postgres-database';
 
 export class ShapeObject {
 
-    public static async create(newShapeObjects: ShapeObject[], imageId: string): Promise<ShapeObject> {
+    public static async create(newShapeObject: ShapeObject): Promise<ShapeObject> {
         const db = await PostgresDatabase.getInstance();
-        await db.query( 'DELETE from shapeobjects where "imageid" = $1',[imageId]);
-        
-        let values = Array<string>();
-        let index: number = 1;
-        let order: string = "";
-        for (let i: number = 0; i < newShapeObjects.length; i++) {
-            values.push(newShapeObjects[i].Id);
-            values.push(newShapeObjects[i].ImageId);
-            values.push(newShapeObjects[i].ShapeType);
-            values.push(newShapeObjects[i].Index);
-            values.push(newShapeObjects[i].ShapeInfo);
-            order += "($" + index++ + ",$" + index++ + ",$" + index++ + ",$" + index++ + ",$" + index++ + "),";
-            console.log(order);
-        }
-        order = order.slice(0, -1);
-        console.log(order);
-        console.log(values);
         const queryResponse = await db.query(
-            'INSERT INTO shapeobjects("id", "imageid", "shapetype", "index", "shapeinfo") VALUES ' + order + ' RETURNING *',
-            values
-        );
+            'INSERT INTO shapeobjects("imageid", "shapetype", "index", "shapeinfo") VALUES($1, $2, $3, $4) RETURNING *',
+            [newShapeObject.ImageId, newShapeObject.ShapeType, newShapeObject.Index, newShapeObject.ShapeInfo],
+        )
         if (queryResponse.rowCount > 0) {
             const row = queryResponse.rows[0];
             return Promise.resolve(new ShapeObject(
