@@ -3,7 +3,7 @@ import { ShapeObject } from '../models/Shape-object';
 
 export class ShapeObjectRoute {
     public async post(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        ShapeObject.create(req.body).then((newShapeObject) => {
+        ShapeObject.create(req.body.shapeObjects, req.body.imageId).then((newShapeObject) => {
             if (newShapeObject === undefined) {
                 res.sendStatus(404);
             } else {
