@@ -3,6 +3,25 @@ import { PostgresDatabase } from '../postgres-database';
 
 export class ImageLikesRoute {
 
+    public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        const db = await PostgresDatabase.getInstance();
+
+        db.query('SELECT * FROM ImageLikes').then((query) => {
+            if (query.rowCount > 0) {
+                console.log(query.rows);
+                res.send(query.rows.map((row) => {
+                    return {imageId: row.ImageId,
+                            userId: row.UserId
+                        };
+                }));
+            }
+            res.sendStatus(404); // Not found
+        })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
+            });
+    }
+
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
 

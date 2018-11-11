@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../users/User';
 import { Image } from 'src/gallery/Image';
+import { Likes } from './Likes';
+import { ImageWithLikes } from 'src/gallery/ImageWithLikes';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {         
@@ -31,4 +33,25 @@ export class UserService {
             return data;
         });
     }
+
+    getUserImagesLikes(images: Image[]): Promise<ImageWithLikes[]> {
+        const apiUrl = 'http://localhost:3000/v2/imageLikes/';
+        let imageIds: string[] = [];
+        let imagesWithLikes: ImageWithLikes[] = [];
+        images.forEach(image => {
+            imageIds.push(image.id.toString());
+            imagesWithLikes.push(new ImageWithLikes(image, 0));
+        });
+        return this.http.get(apiUrl).toPromise().then((likes: Likes[])=> {
+            imagesWithLikes.forEach(image => {
+                likes.forEach(like => {
+                    if(image.id === like.imageId){
+                        image.imageLikes = image.imageLikes.valueOf() + 1;
+                    }
+                });
+            });
+            return imagesWithLikes;
+        });
+    }
+
 }

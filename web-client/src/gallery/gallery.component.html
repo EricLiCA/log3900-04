@@ -1,10 +1,16 @@
 <p>Gallery</p>
 
+<div class="md-form my-0">
+    <input [(ngModel)]="searchText" class="form-control" type="text" placeholder="Search" aria-label="Search">
+</div>
+
 <div class="d-flex flex-wrap">
-    <li class="image" *ngFor="let image of imageData">
+    <li class="image" *ngFor="let image of imageData | filter : searchText">
         <!--Card-->
       <mdb-card>
-
+        <button *ngIf="admin" type="button" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
         <!--Card image-->
         <div class="view overlay waves-light" mdbWavesEffect>
           <mdb-card-img src={{image.fullImageUrl}}></mdb-card-img>

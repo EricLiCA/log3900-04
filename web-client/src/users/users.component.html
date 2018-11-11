@@ -1,6 +1,11 @@
 <p>Users</p>
+
+<div class="md-form my-0">
+    <input [(ngModel)]="searchText" class="form-control" type="text" placeholder="Search" aria-label="Search">
+</div>
+
 <div class="d-flex flex-wrap">
-    <li class="users" *ngFor="let user of users">
+    <li class="users" *ngFor="let user of users | filter : searchText">
         <!--Card-->
     <mdb-card>
 

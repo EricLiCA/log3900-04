@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthenticationService } from '../admin/login.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UsersDetailComponent } from 'src/users/userDetail/usersDetail.component';
+import { FilterPipe } from 'src/services/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { UsersDetailComponent } from 'src/users/userDetail/usersDetail.component
     UsersComponent,
     AdminComponent,
     UsersDetailComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -27,7 +29,7 @@ import { UsersDetailComponent } from 'src/users/userDetail/usersDetail.component
     MDBBootstrapModulesPro.forRoot(),
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule 
   ],
   providers: [
     MDBSpinningPreloader,

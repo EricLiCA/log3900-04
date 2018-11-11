@@ -3,6 +3,8 @@ import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { Image } from 'src/gallery/Image';
 import { User } from '../User';
+import { AuthenticationService } from 'src/admin/login.service';
+import { ImageWithLikes } from 'src/gallery/ImageWithLikes';
 
 @Component({
   selector: 'usersDetail-component',
@@ -14,23 +16,51 @@ export class UsersDetailComponent {
   
   private date: Date = new Date();
   private userImages: Image[] = [];
+  private userImagesWithLikes: ImageWithLikes[] = [];
   private currentUser: User;
+  private admin = this.loginService.admin;
 
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private loginService: AuthenticationService
   ) { }
 
   /** GET images from the server */
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.userService.getUserImages(id).then((imageUrls: Image[]) => {
-      this.userImages = imageUrls;
-    });
-
     this.userService.getUserById(id).then((user: User) => {
       this.currentUser = user;
     });
-
+    this.initImages(id);
   }
+
+  initImages(id: string): void {
+    
+    this.userService.getUserImages(id).then((images: Image[]) => {
+        images.forEach(image => {
+          if(image.protectionLevel === "public" || image.protectionLevel === "protected"){
+            this.userImages.push(image);
+          }
+          if(this.loginService.user && image.ownerId === this.loginService.user.id && image.protectionLevel === "private" || this.admin) {
+            this.userImages.push(image);
+          }
+        });
+    }).then(result => {
+      this.userService.getUserImagesLikes(this.userImages).then(images => {
+        this.userImagesWithLikes = images;
+      });
+    })
+  }
+
+  removeImage(clickedImage): void {
+    if(this.admin){
+      this.userImages = this.userImages.map(image => {
+        if (image !== clickedImage) {
+          return image;
+        }
+      });
+    }
+  }
+
 }

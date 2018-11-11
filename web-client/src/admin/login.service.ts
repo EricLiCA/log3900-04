@@ -6,7 +6,8 @@ import { User } from "src/users/User";
 @Injectable()
 export class AuthenticationService {
     private _loggedIn = false;
-    private user: Credentials;
+    public admin = false;
+    public user: Credentials;
     private password: String;
 
     constructor(
@@ -30,6 +31,9 @@ export class AuthenticationService {
             if(data.id) {
                 this._loggedIn = true;
                 this.user = data;
+                if(data.userLevel === "admin"){
+                    this.admin = true;
+                }
                 return data;
             }
             else {

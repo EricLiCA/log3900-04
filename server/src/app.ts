@@ -105,6 +105,7 @@ export class Application {
         router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
 
         // ImageLikes
+        router.get('/imageLikes', imageLikes.getAll.bind(imageLikes.getAll));
         router.get('/imageLikes/:imageId', imageLikes.get.bind(imageLikes.get));
         router.post('/imageLikes', imageLikes.post.bind(imageLikes.post));
         router.delete('/imageLikes/:imageId/:userId', imageLikes.delete.bind(imageLikes.delete));
