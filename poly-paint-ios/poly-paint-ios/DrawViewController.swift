@@ -38,6 +38,11 @@ class DrawViewController: UIViewController {
     var startPointOfLine: CGPoint?
     var endPointOfLine: CGPoint?
     
+    var startPointView: RectangleView?
+    var endPointView: RectangleView?
+    var startAnchorNumber: Int?
+    var endAnchorNumber: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drawingPlace.clipsToBounds = true
@@ -154,19 +159,9 @@ class DrawViewController: UIViewController {
         let touch = touches.first
         self.firstTouch = touch?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
-        //print(self.insideCanvas)
-        print("touches BEGAN DRAWING PLACE")
-    }
-    
-    @IBAction func classTapped(_ sender: UIButton) {
-        /*let rectangle = CGRect(x: 100, y: 100, width: 200, height: 250)
-        let dumpLayer = CALayer()
-        let classDiagram = ClassDiagramView(frame: rectangle, layer: dumpLayer)
-        self.drawingPlace.addSubview(classDiagram )*/
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("touches moved")
         if(isUserEditing && self.insideCanvas) {
             // erase sublayers used for drawing
             if(self.drawingPlace.layer.sublayers != nil) {
@@ -225,32 +220,29 @@ class DrawViewController: UIViewController {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(isUserEditing && self.insideCanvas) {
-            for touch in touches {
-                print("touch ended")
-            }
-            
             let touch = touches.first
             self.currentContext = nil
             self.currentBezierPath?.close()
-            let myLayer = CAShapeLayer()
-            myLayer.path = self.currentBezierPath?.cgPath
-            myLayer.borderWidth = 2
-            myLayer.strokeColor = UIColor.black.cgColor
+            let layer = CAShapeLayer()
+            layer.path = self.currentBezierPath?.cgPath
+            layer.borderWidth = 2
+            layer.strokeColor = UIColor.black.cgColor
             
             if(currentShape == Shape.Rectangle) {
-                let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer)
+                let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
                 self.drawingPlace.addSubview(rectangleView)
             } else if(currentShape == Shape.Ellipse) {
-                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer)
+                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
                 self.drawingPlace.addSubview(ellipseView)
             } else if(currentShape == Shape.Triangle) {
-                let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer)
+                let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
                 self.drawingPlace.addSubview(triangleView)
             } else if(currentShape == Shape.Line) {
-                self.drawingPlace.layer.addSublayer(myLayer)
+                self.drawingPlace.layer.addSublayer(layer)
             }
             
             self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+            
             for layer in self.drawingPlace.layer.sublayers! {
                 self.drawingPlace.layer.sublayers?.popLast()
             }
@@ -331,21 +323,30 @@ class DrawViewController: UIViewController {
     @objc func drawLineAlert(sender: AnyObject) {
         if(self.startPointOfLine == nil) {
             self.startPointOfLine = sender.userInfo["point"] as! CGPoint
+            self.startPointView = sender.userInfo["view"] as! RectangleView
+            self.startAnchorNumber = sender.userInfo["anchorNumber"] as! Int
         } else if(self.endPointOfLine == nil) {
-            print("drawline!")
+            self.endPointView = sender.userInfo["view"] as! RectangleView
             self.endPointOfLine = sender.userInfo["point"] as! CGPoint
+            self.endAnchorNumber = sender.userInfo["anchorNumber"] as! Int
+            // make anchor points
+            self.startPointView?.anchorPoints[self.startAnchorNumber!].setToUUID(toUUID: (self.endPointView?.uuid)!, toAnchorNumber: self.endAnchorNumber!, toPoint: self.endPointOfLine!)
+            self.endPointView?.anchorPoints[self.endAnchorNumber!].setToUUID(toUUID: (self.startPointView?.uuid)!, toAnchorNumber: self.startAnchorNumber!, toPoint: self.startPointOfLine!)
+            
             // draw line
             var bezier = UIBezierPath()
             bezier.move(to: self.startPointOfLine!)
             bezier.addLine(to: self.endPointOfLine!)
             self.currentContext = nil
             bezier.close()
-            let myLayer = CAShapeLayer()
-            myLayer.path = bezier.cgPath
-            myLayer.borderWidth = 2
-            myLayer.strokeColor = UIColor.black.cgColor
-            self.drawingPlace.layer.addSublayer(myLayer)
+            let layer = CAShapeLayer()
+            layer.path = bezier.cgPath
+            layer.borderWidth = 2
+            layer.strokeColor = UIColor.black.cgColor
+            self.drawingPlace.layer.addSublayer(layer)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
+            self.startPointOfLine = nil
+            self.endPointOfLine = nil
         }
     }
     

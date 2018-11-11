@@ -16,6 +16,7 @@ class RectangleView: UIView {
     var originalRotation = CGFloat()
     var anchorPointsLayers = [CAShapeLayer]()
     var touchAnchorPoint = false
+    var anchorPoints = [Anchor]()
     
     init(frame: CGRect, layer: CALayer) {
         super.init(frame: frame)
@@ -61,6 +62,7 @@ class RectangleView: UIView {
             self.center.x += translation.x
             self.center.y += translation.y
             panGR.setTranslation(.zero, in: self)
+            self.updateAnchorPoints()
             
             if(panGR.state == .ended) {
                 self.hideAnchorPoints()
@@ -81,7 +83,7 @@ class RectangleView: UIView {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //self.showAnchorPoints()
         print("called touches began")
-        
+        var numAnchor = 0
         for layer in self.anchorPointsLayers {
             let touchArea = CGRect(x: (touches.first?.location(in: self).x)!, y: (touches.first?.location(in: self).y)!, width: 50, height: 50)
             //print("TEXT: \(touchArea.contains((layer.path?.currentPoint)!))")
@@ -96,9 +98,11 @@ class RectangleView: UIView {
                 //layer.fillColor = UIColor.green as! CGColor
                 layer.fillColor = UIColor.green.cgColor
                 self.touchAnchorPoint = true
-                let userInfo = [ "point" : touches.first?.location(in: self.superview) ]
+                //let userInfo = [ "point" : touches.first?.location(in: self.superview), "viewUUID": self.uuid ] as [String : Any]
+                let userInfo = ["view": self, "point" : touches.first?.location(in: self.superview), "anchorNumber": numAnchor] as [String : Any]
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "drawLineAlert"), object: nil, userInfo: userInfo)
             }
+            numAnchor = numAnchor + 1
         }
     }
     
@@ -181,7 +185,7 @@ class RectangleView: UIView {
         let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
         let leftAnchorPoint = CGPoint(x: 0, y: self.frame.size.height/2)
         var anchorPoints = [topAnchorPoint, rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
-        
+        var anchorNumber = 0
         for anchor in anchorPoints {
             var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
@@ -190,6 +194,8 @@ class RectangleView: UIView {
             shapeLayer.strokeColor = UIColor.red.cgColor
             shapeLayer.lineWidth = 3.0
             self.anchorPointsLayers.append(shapeLayer)
+            self.anchorPoints.append(Anchor(fromUUID: self.uuid, fromAnchorNumber: anchorNumber, fromPoint: anchor))
+            anchorNumber = anchorNumber + 1
         }
         
         for anchor in self.anchorPointsLayers {
@@ -197,6 +203,20 @@ class RectangleView: UIView {
         }
         
         self.hideAnchorPoints()
+    }
+    
+    func updateAnchorPoints() {
+        let topAnchorPoint = CGPoint(x: self.frame.size.width/2, y: 0)
+        let rightAnchorPoint = CGPoint(x: self.frame.size.width, y: self.frame.size.height/2)
+        let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
+        let leftAnchorPoint = CGPoint(x: 0, y: self.frame.size.height/2)
+        var anchorPoints = [topAnchorPoint, rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
+        var anchorNumber = 0
+        
+        for anchor in anchorPoints {
+            self.anchorPoints[anchorNumber].fromPoint = anchor
+            anchorNumber = anchorNumber + 1
+        }
     }
     
     
