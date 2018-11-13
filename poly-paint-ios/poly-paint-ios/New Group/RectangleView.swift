@@ -14,13 +14,14 @@ class RectangleView: UIView {
     let uuid = NSUUID.init().uuidString.lowercased()
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()
-    
-    init(frame: CGRect, layer: CALayer) {
+    var color: UIColor?
+    init(frame: CGRect, layer: CALayer, color: UIColor) {
         super.init(frame: frame)
         layer.backgroundColor = UIColor.blue.cgColor
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.setNeedsDisplay()
+        self.color = color
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -47,10 +48,10 @@ class RectangleView: UIView {
     override func draw(_ rect: CGRect) {
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = UIBezierPath(roundedRect: insetRect, cornerRadius: 0)
-        UIColor.white.setFill()
+        self.color?.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
-        UIColor.black.setStroke()
+        self.color?.setStroke()
         path.stroke()
     }
     

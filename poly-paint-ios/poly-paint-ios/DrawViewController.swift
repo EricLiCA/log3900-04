@@ -159,9 +159,11 @@ class DrawViewController: UIViewController {
                     print("nothing")
                 }
                 
-                UIColor.gray.set()
+                self.selectedColor.set()
                 self.currentContext?.setLineWidth(1)
                 self.currentBezierPath = bezier
+                self.currentBezierPath?.fill()
+                self.currentBezierPath?.stroke()
                 self.currentContext?.addPath(bezier.cgPath)
                 self.currentContext?.strokePath()
                 
@@ -169,13 +171,8 @@ class DrawViewController: UIViewController {
                 let shape = CAShapeLayer()
                 shape.frame = (self.drawingPlace.bounds)
                 shape.path = self.currentBezierPath?.cgPath;
-               // shape.strokeColor = UIColor.black.cgColor
                 shape.strokeColor = self.selectedColor.cgColor
-                
-                //shape.borderColor = UIColor.gray.cgColor
                 shape.borderColor = self.selectedColor.cgColor
-                
-                //shape.fillColor = UIColor.white.cgColor
                 shape.fillColor = self.selectedColor.cgColor
                 
                 
@@ -194,21 +191,25 @@ class DrawViewController: UIViewController {
             
             let touch = touches.first
             self.currentContext = nil
+            self.selectedColor.setFill()
+            self.selectedColor.setStroke()
+            self.currentBezierPath?.fill()
+            self.currentBezierPath?.stroke()
             self.currentBezierPath?.close()
             let myLayer = CAShapeLayer()
             myLayer.path = self.currentBezierPath?.cgPath
             myLayer.borderWidth = 2
-            //myLayer.strokeColor = UIColor.black.cgColor
             myLayer.strokeColor = self.selectedColor.cgColor
+            myLayer.fillColor = self.selectedColor.cgColor
             
             if(currentShape == Shape.Rectangle) {
-                let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer)
+                let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer, color: self.selectedColor)
                 self.drawingPlace.addSubview(rectangleView)
             } else if(currentShape == Shape.Ellipse) {
-                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer)
+                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer, color: self.selectedColor)
                 self.drawingPlace.addSubview(ellipseView)
             } else if(currentShape == Shape.Triangle) {
-                let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer)
+                let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, layer: myLayer, color: self.selectedColor)
                 self.drawingPlace.addSubview(triangleView)
             }
             

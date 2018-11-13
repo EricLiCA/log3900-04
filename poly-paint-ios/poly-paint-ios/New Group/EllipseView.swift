@@ -21,12 +21,14 @@ class EllipseView: UIView {
     let defaultSize: CGFloat = 150.0
     let lineWidth: CGFloat = 1
     let uuid = NSUUID.init().uuidString.lowercased()
+    var color: UIColor?
     
-    init(frame: CGRect, layer: CALayer) {
+    init(frame: CGRect, layer: CALayer, color: UIColor) {
         super.init(frame:frame)
         //self.center = origin
         self.backgroundColor = UIColor.clear
         initGestureRecognizers()
+        self.color = color
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -46,10 +48,10 @@ class EllipseView: UIView {
     override func draw(_ rect: CGRect) {
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = UIBezierPath(ovalIn: insetRect)
-        UIColor.white.setFill()
+        self.color?.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
-        UIColor.black.setStroke()
+        self.color?.setStroke()
         path.stroke()
     }
     

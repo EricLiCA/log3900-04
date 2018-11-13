@@ -14,13 +14,16 @@ class TriangleView: UIView {
     let defaultWidth: CGFloat = 150.0
     let lineWidth: CGFloat = 1
     let uuid = NSUUID.init().uuidString.lowercased()
+    var color: UIColor?
     
-    init(frame: CGRect, layer:CALayer) {
+    
+    init(frame: CGRect, layer:CALayer, color: UIColor) {
         //super.init(frame:CGRect(x: 0.0, y: 0.0, width: defaultWidth, height: defaultHeight))
         //self.center = origin
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
         initGestureRecognizers()
+        self.color = color
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -41,10 +44,10 @@ class TriangleView: UIView {
         print("called draw")
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = self.trianglePathInRect(rect: insetRect)
-        UIColor.white.setFill()
+        self.color?.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
-        UIColor.black.setStroke()
+        self.color?.setStroke()
         path.stroke()
     }
     
