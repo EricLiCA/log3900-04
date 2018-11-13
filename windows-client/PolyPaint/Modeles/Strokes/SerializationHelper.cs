@@ -14,25 +14,34 @@ namespace PolyPaint.Modeles.Strokes
     public class SerializedStroke
     {
         public Guid Id;
-        public string Type;
+        public string ShapeType;
         public int Index;
+        public string ShapeInfo;
+        public string ImageId;
     }
 
-    public class SerializedShape : SerializedStroke
+    public class ShapeInfo
     {
-        public Point Center;
+        public ShapePoint Center;
         public double Width;
         public double Height;
+        public string Color;
+    }
+    public class ShapePoint
+    {
+        public double X;
+        public double Y;
     }
 
-    public class SerializedTextableShape : SerializedShape
+
+    public class TextableShapeInfo : ShapeInfo
     {
         public List<string> Content;
     }
-
-    public class SerializedLine : SerializedStroke
+     
+    public class LineInfo
     {
-        public List<Point> Points;
+        public List<ShapePoint> Points;
 
         public string FirstAnchorId;
         public int FirstAnchorIndex;

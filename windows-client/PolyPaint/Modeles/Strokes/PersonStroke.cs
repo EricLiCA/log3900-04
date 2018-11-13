@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Ink;
@@ -11,7 +12,7 @@ namespace PolyPaint.Modeles.Strokes
 {
     class PersonStroke : ShapeStroke, Textable
     {
-        private string Name;
+        public string Name;
 
         public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
@@ -60,7 +61,7 @@ namespace PolyPaint.Modeles.Strokes
             neck.Y += height / 7;
             Point crouch = neck;
             crouch.Y += height * 2.5 / 7;
-            
+
             Point leftArm = TOP_LEFT;
             leftArm.Y += height * 3 / 7;
             Point rightArm = leftArm;
@@ -83,7 +84,7 @@ namespace PolyPaint.Modeles.Strokes
                 drawingContext.DrawLine(selectedPen, crouch, rightFoot);
                 drawingContext.DrawLine(selectedPen, crouch, leftFoot);
             }
-            
+
             if (this.AnchorPointVisibility)
             {
                 this.addAnchorPoints();
@@ -113,12 +114,18 @@ namespace PolyPaint.Modeles.Strokes
             }
         }
 
-        public override string toJson()
+        public override StrokeType StrokeType() => Strokes.StrokeType.ACTOR;
+
+        public override ShapeInfo GetShapeInfo()
         {
-            return JsonConvert.SerializeObject(this);
+            return new TextableShapeInfo
+            {
+                Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y },
+                Height = this.Height,
+                Width = this.Width,
+                Content = new List<string>() { this.Name },
+                Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
+            };
         }
-
-        public override string StrokeType() => "ACTOR";
-
     }
 }

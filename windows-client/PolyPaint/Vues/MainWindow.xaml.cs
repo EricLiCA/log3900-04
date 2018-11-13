@@ -15,7 +15,7 @@ namespace PolyPaint.Vues
     {
         public Gallery Gallery;
         public Users Users;
-        private FenetreDessin FenetreDessin;
+        public FenetreDessin FenetreDessin;
 
         public MainWindow()
         {
@@ -154,6 +154,14 @@ namespace PolyPaint.Vues
             {
                 ChangeProfileInformationsButton.IsEnabled = true;
             }
+        }
+
+        public void LoadImage(string imageId)
+        {
+            ServerService.instance.currentImageId = imageId;
+            ButtonEdit.Visibility = Visibility.Visible;
+            GridMain.Content = FenetreDessin;
+            ShapeObjectDao.Get();
         }
 
     }

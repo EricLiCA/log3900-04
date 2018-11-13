@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
@@ -22,7 +21,7 @@ namespace PolyPaint.Modeles.Strokes
 
             Point topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
             Point bottomRight = new Point(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
-            
+
             return clickedLocal.X > topLeft.X && clickedLocal.X < bottomRight.X && clickedLocal.Y > topLeft.Y && clickedLocal.Y < bottomRight.Y;
         }
 
@@ -33,7 +32,7 @@ namespace PolyPaint.Modeles.Strokes
             SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(drawingAttributes.Color);
             fillBrush.Freeze();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
-            
+
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
 
             if (this.isSelected())
@@ -47,7 +46,7 @@ namespace PolyPaint.Modeles.Strokes
             {
                 this.addAnchorPoints();
             }
-            
+
             drawingContext.DrawRectangle(fillBrush, outlinePen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
 
             if (this.isEditing())
@@ -58,6 +57,6 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.Pop();
         }
 
-        public override string StrokeType() => "RECTANGLE";
+        public override StrokeType StrokeType() => Strokes.StrokeType.RECTANGLE;
     }
 }

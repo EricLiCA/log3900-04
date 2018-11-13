@@ -13,6 +13,7 @@ using System.Windows.Ink;
 using PolyPaint.Modeles;
 using PolyPaint.Modeles.Strokes;
 using System.Collections.Generic;
+using PolyPaint.DAO;
 
 namespace PolyPaint
 {
@@ -63,7 +64,9 @@ namespace PolyPaint
                 vueModele.editeur.EditingStroke = null;
                 selectedStrokes.ForEach(stroke =>
                 {
-                    ((VueModele)this.DataContext).Traits.Add(stroke.Duplicate());
+                    CustomStroke duplicate = stroke.Duplicate();
+                    ((VueModele)this.DataContext).Traits.Add(duplicate);
+                    duplicate.Select();
                 });
             }
 
@@ -175,6 +178,18 @@ namespace PolyPaint
             /* UNCOMMENT TO ENABLE ROTATING */
             //if (scrolled is ShapeStroke)
             //    ((ShapeStroke)scrolled).Rotation = ((ShapeStroke)scrolled).Rotation += e.Delta / 8.0;
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            StrokeCollection strokes = ((VueModele)this.DataContext).Traits;
+            for (int i = 0; i < strokes.Count; i++)
+            {
+                if (strokes[i] is Savable)
+                {
+                    ShapeObjectDao.Post((CustomStroke)strokes[i]);
+                }
+            }
         }
     }
 }

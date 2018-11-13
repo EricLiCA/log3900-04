@@ -267,6 +267,11 @@ namespace PolyPaint.Vues
             }
         }
 
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
+        }
+
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
         {
             ImageComment imageComment = new ImageComment
@@ -282,19 +287,23 @@ namespace PolyPaint.Vues
             CommentsContainer.Children.Insert(0, galleryComment);
         }
 
-        #region AddPassword/RemovePassword Dialog
-
-        private void CurrentImagePassword_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void PasswordButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentImagePassword.Text.Length == 0 || CurrentImagePassword.Text.Contains(" "))
-            {
-                AddPasswordButton.IsEnabled = false;
-            }
-            else
-            {
-                AddPasswordButton.IsEnabled = true;
-            }
+            CreateImageContainer.Visibility = Visibility.Collapsed;
+            ChangePasswordContainer.Visibility = Visibility.Visible;
+            CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
         }
+
+        private void AddImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateImageContainer.Visibility = Visibility.Visible;
+            ChangePasswordContainer.Visibility = Visibility.Collapsed;
+            ImageTitle.Text = "";
+            ImagePassword.Password = "";
+            PrivateProtectionLevel.IsChecked = true;
+        }
+
+        #region Dialog
 
         private void AddPasswordButton_Click(object sender, RoutedEventArgs e)
         {
@@ -302,7 +311,6 @@ namespace PolyPaint.Vues
             CurrentGalleryCard.Image.protectionLevel = "protected";
             CurrentGalleryCard.ConfigIcon();
             ImageDao.Put(CurrentGalleryCard.Image);
-            AddPasswordButton.IsEnabled = false;
         }
 
         private void RemovePasswordButton_Click(object sender, RoutedEventArgs e)
@@ -312,14 +320,40 @@ namespace PolyPaint.Vues
             CurrentGalleryCard.ConfigIcon();
             CurrentImagePassword.Text = null;
             ImageDao.Put(CurrentGalleryCard.Image);
-            AddPasswordButton.IsEnabled = false;
         }
 
-        private void CloseDialogButton_Click(object sender, RoutedEventArgs e)
+        private void CreateImageClick(object sender, RoutedEventArgs e)
         {
-            CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
-            AddPasswordButton.IsEnabled = false;
+            string protectionLevel;
+            
+            if ((bool)PrivateProtectionLevel.IsChecked)
+            {
+                protectionLevel = "private";
+            } else
+            {
+                if (ImagePassword.Password.Length > 0)
+                {
+                    protectionLevel = "protected";
+                } else
+                {
+                    protectionLevel = "public";
+                }
+            }
+
+            Image newImage = new Image
+            {
+                title = ImageTitle.Text,
+                ownerId = ServerService.instance.user.id,
+                password = ImagePassword.Password,
+                protectionLevel = protectionLevel
+            };
+
+            ImageDao.Post(newImage);
         }
+
+
         #endregion
+
+        
     }
 }
