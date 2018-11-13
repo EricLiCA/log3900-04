@@ -26,7 +26,6 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var stickFigure: UIButton!
     @IBOutlet weak var classButton: UIButton!
     @IBOutlet weak var lineButton: UIButton!
-    
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
     var currentContext : CGContext?
