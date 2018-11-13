@@ -3,6 +3,7 @@ import * as io from 'socket.io';
 import { ChatService } from './chat-service/chat-service';
 import { ConnectedUsersService } from './connected-users-service.ts/connected-users-service';
 import { User } from './connected-users-service.ts/user';
+import { CollaborativeService } from './collaborative-edition/collaborative-service';
 
 export class SocketServer {
     private static socketServer: SocketIO.Server;
@@ -31,8 +32,10 @@ export class SocketServer {
                     let user = new User(true, socket, username);
                     ConnectedUsersService.connect(user);
                     ChatService.instance.newConnection(user);
+                    CollaborativeService.instance.newConnection(user);
 
                     socket.on('disconnect', () => {
+                        CollaborativeService.instance.closeConnection(user);
                         ChatService.instance.closeConnection(user);
                         ConnectedUsersService.disconnect(socket);
                     });
