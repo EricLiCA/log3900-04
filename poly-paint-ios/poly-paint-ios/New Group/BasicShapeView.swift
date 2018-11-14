@@ -29,7 +29,7 @@ class BasicShapeView: UIView {
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.setNeedsDisplay()
-        setUpNotifications()
+        self.setUpNotifications()
     }
     
     required init?(coder aDecoder: NSCoder) {

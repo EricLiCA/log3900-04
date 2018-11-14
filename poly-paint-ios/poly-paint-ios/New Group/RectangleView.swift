@@ -20,7 +20,6 @@ class RectangleView: BasicShapeView {
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.setNeedsDisplay()
-        setUpNotifications()
     }
     
     // We need to implement init(coder) to avoid compilation errors

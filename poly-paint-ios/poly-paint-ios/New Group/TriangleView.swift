@@ -18,7 +18,6 @@ class TriangleView: BasicShapeView {
         super.init(frame: frame, layer: layer, numberOfAnchorPoints: 3)
         self.backgroundColor = UIColor.clear
         initGestureRecognizers()
-        self.setUpNotifications()
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -73,14 +72,14 @@ class TriangleView: BasicShapeView {
     
     override func getAnchorPoint(index: Int) -> CGPoint {
         if(index == 0) {
-            let rightAnchorPoint = CGPoint(x: self.center.x + self.frame.size.width/2*0.25, y: self.center.y)
+            let rightAnchorPoint = CGPoint(x: self.center.x + self.frame.size.width/2*0.5, y: self.center.y)
             print(rightAnchorPoint)
             return rightAnchorPoint
         } else if (index == 1) {
             let bottomAnchorPoint = CGPoint(x: self.center.x, y: self.center.y + self.frame.size.height/2)
             return bottomAnchorPoint
         } else if(index == 2) {
-            let leftAnchorPoint = CGPoint(x: self.center.x - self.frame.size.width/2*0.25, y: self.center.y)
+            let leftAnchorPoint = CGPoint(x: self.center.x - self.frame.size.width/2*0.5, y: self.center.y)
             return leftAnchorPoint
         } else { // garbage
             return CGPoint(x: 0, y: 0)

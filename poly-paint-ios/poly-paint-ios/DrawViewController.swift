@@ -241,6 +241,7 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.addSubview(rectangleView)
             } else if(currentShape == Shape.Ellipse) {
                 let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
+                self.shapes[ellipseView.uuid] = ellipseView
                 self.drawingPlace.addSubview(ellipseView)
             } else if(currentShape == Shape.Triangle) {
                 let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
