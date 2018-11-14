@@ -7,4 +7,20 @@ export class Canvas {
 
     public protections: Map<User, string>
 
+    constructor(_id: string) {
+        this.id = _id;
+    }
+
+    public load(): Promise<ShapeObject[]> {
+        return new Promise<ShapeObject[]>((resolve, reject) => {
+            ShapeObject.get(this.id).then(
+                (value: ShapeObject[]) => {
+                    this.strokes = value;
+                    resolve(value);
+                },
+                (rejectReason: any) =>  reject(rejectReason)
+            );
+        });
+    }
+
 }
