@@ -355,6 +355,8 @@
                                     <action selector="colorPickerButton:" destination="nxp-f4-1rm" id="BfL-Wy-8f6"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem tag="-1" title="Redo" width="11" id="nbC-No-vhD"/>
+                            <barButtonItem title="Undo" id="5oG-1Z-XUe"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -1192,7 +1194,7 @@
         <!--Color Picker View Controller-->
         <scene sceneID="0Yb-U4-XRC">
             <objects>
-                <viewController storyboardIdentifier="colorPickerPopover" id="5Hm-4W-36O" customClass="ColorPickerViewController" customModule="ColorPickerExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="colorPickerPopover" id="5Hm-4W-36O" customClass="ColorPickerViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DaG-C1-7M2"/>
                         <viewControllerLayoutGuide type="bottom" id="f6P-Pa-Y8u"/>
