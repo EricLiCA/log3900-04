@@ -15,6 +15,9 @@ class RectangleView: UIView {
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()
     var color: UIColor?
+    var myframe: CGRect?
+    var mylayer: CALayer?
+    
     init(frame: CGRect, layer: CALayer, color: UIColor) {
         super.init(frame: frame)
         layer.backgroundColor = UIColor.blue.cgColor
@@ -22,6 +25,8 @@ class RectangleView: UIView {
         self.backgroundColor = UIColor.blue
         self.setNeedsDisplay()
         self.color = color
+        self.mylayer = layer
+        self.myframe = frame
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -112,8 +117,8 @@ class RectangleView: UIView {
         
         menuController.menuItems = [
             UIMenuItem(
-                title: "Copy",
-                action: #selector(handleCopyAction(_:))
+                title: "Duplicate",
+                action: #selector(handleDuplicateAction(_:))
             ),
             UIMenuItem(
                 title: "Cut",
@@ -136,7 +141,9 @@ class RectangleView: UIView {
     @objc internal func handleCutAction(_ controller: UIMenuController) {
     }
     
-    @objc internal func handleCopyAction(_ controller: UIMenuController) {
+    @objc internal func handleDuplicateAction(_ controller: UIMenuController) {
+        let shapeData = ["frame": self.myframe!, "layer": self.mylayer!, "color": self.color!] as [String : Any]
+        NotificationCenter.default.post(name: .duplicateRectangle, object: nil, userInfo: shapeData)
     }
     
     @objc internal func handleEditAction(_ controller: UIMenuController) {
@@ -144,6 +151,7 @@ class RectangleView: UIView {
     
     @objc internal func handleDeleteAction(_ controller: UIMenuController) {
         self.removeFromSuperview()
+       
     }
     
     func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
@@ -168,5 +176,10 @@ class RectangleView: UIView {
         // Drawing code
     }
     */
+        
 
+}
+
+extension Notification.Name {
+    static let duplicateRectangle = Notification.Name("duplicateRectangle")
 }

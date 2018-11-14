@@ -36,6 +36,7 @@ class DrawViewController: UIViewController {
         super.viewDidLoad()
         self.drawingPlace.clipsToBounds = true
         self.cancelButton.isEnabled = false
+        NotificationCenter.default.addObserver(self, selector: #selector(onDuplicateRectangle(_:)), name: .duplicateRectangle, object: nil)
         // Do any additional setup after loading the view.
     }
     
@@ -295,6 +296,11 @@ class DrawViewController: UIViewController {
     func setButtonColor (_ color: UIColor) {
         self.colorButton.tintColor = color
         self.selectedColor = color
+    }
+    
+    @objc func onDuplicateRectangle(_ notification:Notification) {
+        let rectangleView = RectangleView(frame: notification.userInfo?["frame"] as! CGRect, layer: notification.userInfo?["layer"] as! CALayer, color: notification.userInfo?["color"] as! UIColor)
+        self.drawingPlace.addSubview(rectangleView)
     }
 
     
