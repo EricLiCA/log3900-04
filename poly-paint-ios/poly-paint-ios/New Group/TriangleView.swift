@@ -15,6 +15,7 @@ class TriangleView: UIView {
     let lineWidth: CGFloat = 1
     let uuid = NSUUID.init().uuidString.lowercased()
     var anchorPointsLayers = [CAShapeLayer]()
+    var touchAnchorPoint = false
     
     init(frame: CGRect, layer:CALayer) {
         //super.init(frame:CGRect(x: 0.0, y: 0.0, width: defaultWidth, height: defaultHeight))
@@ -22,6 +23,7 @@ class TriangleView: UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clear
         initGestureRecognizers()
+        self.setUpNotifications()
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -36,6 +38,8 @@ class TriangleView: UIView {
         addGestureRecognizer(pinchGR)
         let rotationGR = UIRotationGestureRecognizer(target: self, action: #selector(didRotate(rotationGR:)))
         addGestureRecognizer(rotationGR)
+        let longPressGR = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(longPressGR:)))
+        addGestureRecognizer(longPressGR)
     }
     
     override func draw(_ rect: CGRect) {
@@ -63,6 +67,66 @@ class TriangleView: UIView {
         } else if(panGR.state == .began) {
             self.showAnchorPoints()
         }
+        
+        let userInfo = ["view": self.uuid] as [String : String]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
+    }
+    
+    @objc func didLongPress(longPressGR: UILongPressGestureRecognizer) {
+        self.showAnchorPoints()
+        
+        if(longPressGR.state == .cancelled) {
+            self.hideAnchorPoints()
+        }
+    }
+    
+    func setUpNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(lineDrawnAlert), name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
+        
+    }
+    
+    @objc func lineDrawnAlert(sender: AnyObject) {
+        for layer in self.anchorPointsLayers {
+            layer.fillColor = UIColor.red.cgColor
+        }
+        self.touchAnchorPoint = false
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //self.showAnchorPoints()
+        print("called touches began")
+        var numAnchor = 0
+        for layer in self.anchorPointsLayers {
+            let touchArea = CGRect(x: (touches.first?.location(in: self).x)!, y: (touches.first?.location(in: self).y)!, width: 50, height: 50)
+            //print("TEXT: \(touchArea.contains((layer.path?.currentPoint)!))")
+            //print("center: \(layer.path?.currentPoint)")
+            //print("touch: \(touches.first?.location(in: self))")
+            //layer.path?.currentPoint.
+            //print(layer.path?.contains((touches.first?.location(in: self))!))
+            
+            if (layer.path?.contains((touches.first?.location(in: self))!))! {
+                // start drawing line
+                print("touched!")
+                //layer.fillColor = UIColor.green as! CGColor
+                layer.fillColor = UIColor.green.cgColor
+                self.touchAnchorPoint = true
+                //let userInfo = [ "point" : touches.first?.location(in: self.superview), "viewUUID": self.uuid ] as [String : Any]
+                let userInfo = ["view": self, "point" : touches.first?.location(in: self.superview), "anchorNumber": numAnchor] as [String : Any]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "drawLineAlert"), object: nil, userInfo: userInfo)
+            }
+            numAnchor = numAnchor + 1
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //self.hideAnchorPoints()
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if(self.touchAnchorPoint) {
+            print("moving")
+        }
+        
     }
     
     @objc func didPinch(pinchGR: UIPinchGestureRecognizer) {
@@ -153,6 +217,21 @@ class TriangleView: UIView {
     func hideAnchorPoints() {
         for index in 0...2 {
             self.layer.sublayers![index].isHidden = true
+        }
+    }
+    
+    func getAnchorPoint(index: Int) -> CGPoint {
+        if(index == 0) {
+            let rightAnchorPoint = CGPoint(x: self.center.x + self.frame.size.width/2, y: self.center.y)
+            return rightAnchorPoint
+        } else if (index == 1) {
+            let bottomAnchorPoint = CGPoint(x: self.center.x, y: self.center.y + self.frame.size.height/2)
+            return bottomAnchorPoint
+        } else if(index == 2) {
+            let leftAnchorPoint = CGPoint(x: self.center.x - self.frame.size.width/2, y: self.center.y)
+            return leftAnchorPoint
+        } else { // garbage
+            return CGPoint(x: 0, y: 0)
         }
     }
     
