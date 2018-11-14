@@ -43,6 +43,7 @@ class DrawViewController: UIViewController {
     var endAnchorNumber: Int?
     
     var lines = [Line]()
+    var shapes = [String: RectangleView]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -236,8 +237,7 @@ class DrawViewController: UIViewController {
             
             if(currentShape == Shape.Rectangle) {
                 let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
-                print(rectangleView.center)
-                print(rectangleView.getAnchorPoint(index: 3))
+                self.shapes[rectangleView.uuid] = rectangleView
                 self.drawingPlace.addSubview(rectangleView)
             } else if(currentShape == Shape.Ellipse) {
                 let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
@@ -336,7 +336,16 @@ class DrawViewController: UIViewController {
     }
     
     @objc func movedViewAlert(sender: AnyObject) {
-        print(sender.userInfo["uuid"])
+        let viewUUID = sender.userInfo["view"] as! String
+        for line in self.lines {
+            if(line.firstAnchorShapeId == viewUUID) {
+                line.points[0] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.firstAnchorShapeIndex!))!
+                let bezier = UIBezierPath()
+                bezier.move(to: line.points[0])
+                bezier.addLine(to: line.points[1])
+                line.layer?.path = bezier.cgPath
+            }
+        }
     }
     
     @objc func drawLineAlert(sender: AnyObject) {

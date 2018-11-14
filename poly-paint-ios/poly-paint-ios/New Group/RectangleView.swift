@@ -70,7 +70,7 @@ class RectangleView: UIView {
                 self.showAnchorPoints()
             }
             
-            let userInfo = ["uuid": self.uuid] as [String : String]
+            let userInfo = ["view": self.uuid] as [String : String]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
         }
     }
@@ -110,7 +110,7 @@ class RectangleView: UIView {
     }
     
     func setUpNotifications() {
-        //NotificationCenter.default.addObserver(self, selector: #selector(lineDrawnAlert), name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(lineDrawnAlert), name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
         
     }
     
@@ -187,7 +187,7 @@ class RectangleView: UIView {
         let rightAnchorPoint = CGPoint(x: self.frame.size.width, y: self.frame.size.height/2)
         let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
         let leftAnchorPoint = CGPoint(x: 0, y: self.frame.size.height/2)
-        var anchorPoints = [topAnchorPoint, rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
+        var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         var anchorNumber = 0
         for anchor in anchorPoints {
             var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
