@@ -161,11 +161,11 @@ class BasicShapeView: UIView {
                 // start drawing line
                 if(self.touchAnchorPoint) {
                     layer.fillColor = UIColor.red.cgColor
-                    layer.borderColor = UIColor.red.cgColor
+                    layer.strokeColor = UIColor.red.cgColor
                     self.touchAnchorPoint = false
                 } else {
                     layer.fillColor = UIColor.green.cgColor
-                    layer.borderColor = UIColor.green.cgColor
+                    layer.strokeColor = UIColor.green.cgColor
                     self.touchAnchorPoint = true
                 }
                 
