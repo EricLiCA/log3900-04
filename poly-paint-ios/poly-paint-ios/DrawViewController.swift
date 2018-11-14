@@ -339,6 +339,7 @@ class DrawViewController: UIViewController {
         let viewUUID = sender.userInfo["view"] as! String
         for line in self.lines {
             if(line.firstAnchorShapeId == viewUUID) {
+                print(line.firstAnchorShapeIndex!)
                 line.points[0] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.firstAnchorShapeIndex!))!
                 let bezier = UIBezierPath()
                 bezier.move(to: line.points[0])

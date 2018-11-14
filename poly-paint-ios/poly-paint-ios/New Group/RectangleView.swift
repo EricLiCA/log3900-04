@@ -62,7 +62,7 @@ class RectangleView: UIView {
             self.center.x += translation.x
             self.center.y += translation.y
             panGR.setTranslation(.zero, in: self)
-            self.updateAnchorPoints()
+            //self.updateAnchorPoints()
             
             if(panGR.state == .ended) {
                 self.hideAnchorPoints()
@@ -213,7 +213,7 @@ class RectangleView: UIView {
         let rightAnchorPoint = CGPoint(x: self.frame.size.width, y: self.frame.size.height/2)
         let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
         let leftAnchorPoint = CGPoint(x: 0, y: self.frame.size.height/2)
-        var anchorPoints = [topAnchorPoint, rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
+        var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         var anchorNumber = 0
         
         for anchor in anchorPoints {
@@ -241,13 +241,13 @@ class RectangleView: UIView {
             let rightAnchorPoint = CGPoint(x: self.center.x + self.frame.size.width/2, y: self.center.y)
             return rightAnchorPoint
         } else if (index == 1) {
-            let bottomAnchorPoint = CGPoint(x: self.center.x, y: self.center.y - self.frame.size.height/2)
+            let bottomAnchorPoint = CGPoint(x: self.center.x, y: self.center.y + self.frame.size.height/2)
             return bottomAnchorPoint
         } else if(index == 2) {
             let leftAnchorPoint = CGPoint(x: self.center.x - self.frame.size.width/2, y: self.center.y)
             return leftAnchorPoint
         } else if(index == 3) {
-            let topAnchorPoint = CGPoint(x: self.center.x, y: self.center.y + self.frame.size.height/2)
+            let topAnchorPoint = CGPoint(x: self.center.x, y: self.center.y - self.frame.size.height/2)
             return topAnchorPoint
         } else { // garbage
             return CGPoint(x: 0, y: 0)
