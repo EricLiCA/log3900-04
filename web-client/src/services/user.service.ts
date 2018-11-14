@@ -34,6 +34,13 @@ export class UserService {
         });
     }
 
+    deleteUserImage(id: String): void {
+        const apiUrl = 'http://localhost:3000/v2/images/' + id;
+        this.http.delete(apiUrl).toPromise().then(result => {
+            console.log(result);
+        })
+    }
+
     getUserImagesLikes(images: Image[]): Promise<ImageWithLikes[]> {
         const apiUrl = 'http://localhost:3000/v2/imageLikes/';
         let imageIds: string[] = [];

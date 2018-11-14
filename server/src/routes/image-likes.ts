@@ -8,7 +8,6 @@ export class ImageLikesRoute {
 
         db.query('SELECT * FROM ImageLikes').then((query) => {
             if (query.rowCount > 0) {
-                console.log(query.rows);
                 res.send(query.rows.map((row) => {
                     return {imageId: row.ImageId,
                             userId: row.UserId

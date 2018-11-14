@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
+import { DropdownModule } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,6 +28,7 @@ import { FilterPipe } from 'src/services/filter.pipe';
     BrowserModule,
     HttpClientModule,
     MDBBootstrapModulesPro.forRoot(),
+    DropdownModule.forRoot(),
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule 

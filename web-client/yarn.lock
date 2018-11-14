@@ -4549,6 +4549,11 @@ neo-async@^2.5.0:
   version "6.2.6"
   resolved "git+https://oauth2:nqEdig3aLx1tZ9LFBbuL@git.mdbootstrap.com/mdb/angular/ng-uikit-pro-standard.git#acda2f4ab796782986e1be556d9d184e23ccd113"
 
+ngx-bootstrap@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-3.1.1.tgz#36ef4f6928352ee7fd186831d97731cfa571d137"
+  integrity sha512-LY9ZnzkTA67MOUcQoA3i6JM4TGPCDUnjUMZctSesic0E9617bPrKDnb2VPOEU4VFTXWMhu6xbPcXsvLrc6m/lg==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

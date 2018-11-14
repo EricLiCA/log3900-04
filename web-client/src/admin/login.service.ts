@@ -67,4 +67,20 @@ export class AuthenticationService {
             return false;
         }
     }
+
+    public createUser(name: String, pass: String): void {
+        const body = {username: name, password: pass};
+        const apiUrl = 'http://localhost:3000/v2/users';
+        this.http.post(apiUrl, body).toPromise();
+    }
+
+    public deleteUser(userToDelete: String): void {
+        const apiUrl = 'http://localhost:3000/v2/users/' + userToDelete;
+        this.http.delete(apiUrl).toPromise();
+    }
+
+    public changeUserPermissions(user: User): void {
+        const apiUrl = 'http://localhost:3000/v2/users/' + user.id;
+        this.http.put(apiUrl, user).toPromise();
+    }
 }

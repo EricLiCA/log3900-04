@@ -53,14 +53,15 @@ export class UsersDetailComponent {
     })
   }
 
-  removeImage(clickedImage): void {
-    if(this.admin){
-      this.userImages = this.userImages.map(image => {
-        if (image !== clickedImage) {
-          return image;
-        }
-      });
-    }
+  removeImage(clickedImage: ImageWithLikes): void {
+    this.userImagesWithLikes = this.userImagesWithLikes.map(image => {
+      if (image !== clickedImage) {
+        return image;
+      }
+      else {
+        this.userService.deleteUserImage(clickedImage.id);
+      }
+    });
   }
 
 }

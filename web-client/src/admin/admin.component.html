@@ -1,41 +1,94 @@
 <p>Admin</p>
 
-<button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample" (click)="frame.show()"
-  mdbWavesEffect>Manage account</button>
+<!-- Default form subscription -->
+<form class="text-center border border-light p-5">
 
-<div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Manage account</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-            <i class="fa fa-user prefix grey-text"></i>
-          <input #newUsername type="username" id="orangeForm-name" class="form-control validate" [formControl]="signupFormModalName" mdbInputDirective>
-          <label data-error="wrong" data-success="right" for="orangeForm-name">New username</label>
-        </div>
+    <p class="h4 mb-4">Change account info</p>
+  
+    <p>Use this form to change your name and/or password</p>
+    
+    <input #newUsername type="text" id="defaultSubscriptionFormUsername" class="form-control mb-4" placeholder="New name">
+    <input #newPassword type="text" id="defaultSubscriptionFormNewPassword" class="form-control mb-4" placeholder="New password">
+    <input #passowrd type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Your password">
 
-        <div class="md-form mb-5">
-            <i class="fa fa-user prefix grey-text"></i>
-          <input #newPassword type="password" id="orangeForm-name" class="form-control validate" [formControl]="signupFormModalName" mdbInputDirective>
-          <label data-error="wrong" data-success="right" for="orangeForm-name">New password</label>
-        </div>
+    <button mdbBtn color="info" block="true" type="submit" (click)="changeAccount(newUsername.value, newPassword.value, passowrd.value)">Change info</button>
+  
+  
+</form>
+<!-- Default form subscription -->
 
-        <div class="md-form mb-4">
-          <i class="fa fa-lock prefix grey-text"></i>
-          <input #passowrd type="password" id="orangeForm-pass" class="form-control validate" [formControl]="signupFormModalPassword" mdbInputDirective>
-          <label data-error="wrong" data-success="right" for="orangeForm-pass">Password</label>
-        </div>
+<!-- Default form subscription -->
+<form class="text-center border border-light p-5">
 
-      </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <button mdbBtn color="deep-orange" class="waves-light" (click)="changeAccount(newUsername.value, newPassword.value, passowrd.value)" (click)="frame.hide()" mdbWavesEffect>Change username</button>
-      </div>
+    <p class="h4 mb-4">Create account</p>
+  
+    <p>Use this form to create an account</p>
+    
+    <input #accountName type="text" id="defaultSubscriptionFormNewUsername" class="form-control mb-4" placeholder="Name">
+    <input #password1 type="text" id="defaultSubscriptionFormNewRights" class="form-control mb-4" placeholder="Password">
+    <input #passowrd2 type="text" id="defaultSubscriptionFormNewPasswordForCreatedAccount" class="form-control mb-4" placeholder="Password">
+
+    <button mdbBtn color="info" block="true" type="submit" (click)="createAccount(accountName.value, password1.value, passowrd2.value)">Create account</button>
+  
+</form>
+<!-- Default form subscription -->
+
+<!-- Default form subscription -->
+<form class="text-center border border-light p-5">
+
+    <p class="h4 mb-4">Delete account</p>
+  
+    <p>Use this form to delete an account</p>
+    
+    <input #accountNameToDelete type="text" id="usernameToDelete" class="form-control mb-4" placeholder="Name">
+
+    <button mdbBtn color="info" block="true" type="submit" (click)="deleteAccount(accountNameToDelete.value)">Delete account</button>
+  
+</form>
+<!-- Default form subscription -->
+
+<!-- Default form subscription -->
+<form class="text-center border border-light p-5">
+
+    <p class="h4 mb-4">Change permissions</p>
+  
+    <p>Use this form to change permissions for an account</p>
+    
+    <input #accountNameToChangePermissions type="text" id="permissions" class="form-control mb-4" placeholder="Name">
+    <input #permissions type="text" id="permissionsTypes" class="form-control mb-4" placeholder="admin or user">
+
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" [value]="admin" [(ngModel)]>
+        <label class="form-check-label" for="exampleRadios1">
+            Full access
+        </label>
     </div>
-  </div>
-</div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" [value]="image" [(ngModel)]>
+        <label class="form-check-label" for="exampleRadios2">
+            Image access
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" [value]="permissions" [(ngModel)]>
+        <label class="form-check-label" for="exampleRadios3">
+            Permission access
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" [value]="user" [(ngModel)]>
+        <label class="form-check-label" for="exampleRadios4">
+            User access
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" [value]="none" [(ngModel)]>
+        <label class="form-check-label" for="exampleRadios5">
+            No access
+        </label>
+    </div>
+
+    <button mdbBtn color="info" block="true" type="submit" (click)="changePermissions(accountNameToChangePermissions.value, userSelection)">Change permissions</button>
+  
+</form>
+<!-- Default form subscription -->
