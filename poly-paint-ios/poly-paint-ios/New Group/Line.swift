@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+enum Relation {
+    case Composition
+    case Association
+    case Aggregation
+    case Inheritance
+}
+
 class Line {
     
     var layer: CAShapeLayer?
