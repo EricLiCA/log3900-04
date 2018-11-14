@@ -358,11 +358,20 @@ class DrawViewController: UIViewController {
     }
     
     @objc func drawLineAlert(sender: AnyObject) {
+        let view = sender.userInfo["view"] as! BasicShapeView
         if(self.startPointOfLine == nil) {
             self.startPointOfLine = sender.userInfo["point"] as! CGPoint
             self.startPointView = sender.userInfo["view"] as! BasicShapeView
             self.startAnchorNumber = sender.userInfo["anchorNumber"] as! Int
+        } else if(view.uuid == self.startPointView?.uuid) {
+            self.startPointOfLine = nil
+            self.startPointView = nil
+            self.startAnchorNumber = nil
+            self.endPointOfLine = nil
+            self.endPointView = nil
+            self.endAnchorNumber = nil
         } else if(self.endPointOfLine == nil) {
+            print("END POINT OF LINE")
             self.endPointView = sender.userInfo["view"] as! BasicShapeView
             self.endPointOfLine = sender.userInfo["point"] as! CGPoint
             self.endAnchorNumber = sender.userInfo["anchorNumber"] as! Int
@@ -393,7 +402,11 @@ class DrawViewController: UIViewController {
             self.drawingPlace.layer.addSublayer(line.layer!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
             self.startPointOfLine = nil
+            self.startPointView = nil
+            self.startAnchorNumber = nil
             self.endPointOfLine = nil
+            self.endPointView = nil
+            self.endAnchorNumber = nil
             
             self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
             

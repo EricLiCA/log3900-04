@@ -156,19 +156,19 @@ class BasicShapeView: UIView {
         var numAnchor = 0
         for layer in self.anchorPointsLayers {
             let touchArea = CGRect(x: (touches.first?.location(in: self).x)!, y: (touches.first?.location(in: self).y)!, width: 50, height: 50)
-            //print("TEXT: \(touchArea.contains((layer.path?.currentPoint)!))")
-            //print("center: \(layer.path?.currentPoint)")
-            //print("touch: \(touches.first?.location(in: self))")
-            //layer.path?.currentPoint.
-            //print(layer.path?.contains((touches.first?.location(in: self))!))
             
             if (layer.path?.contains((touches.first?.location(in: self))!))! {
                 // start drawing line
-                print("touched!")
-                //layer.fillColor = UIColor.green as! CGColor
-                layer.fillColor = UIColor.green.cgColor
-                self.touchAnchorPoint = true
-                //let userInfo = [ "point" : touches.first?.location(in: self.superview), "viewUUID": self.uuid ] as [String : Any]
+                if(self.touchAnchorPoint) {
+                    layer.fillColor = UIColor.red.cgColor
+                    layer.borderColor = UIColor.red.cgColor
+                    self.touchAnchorPoint = false
+                } else {
+                    layer.fillColor = UIColor.green.cgColor
+                    layer.borderColor = UIColor.green.cgColor
+                    self.touchAnchorPoint = true
+                }
+                
                 let userInfo = ["view": self, "point" : touches.first?.location(in: self.superview), "anchorNumber": numAnchor] as [String : Any]
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "drawLineAlert"), object: nil, userInfo: userInfo)
             }

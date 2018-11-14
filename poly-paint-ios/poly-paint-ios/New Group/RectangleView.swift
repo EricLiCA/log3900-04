@@ -19,7 +19,6 @@ class RectangleView: BasicShapeView {
         layer.backgroundColor = UIColor.blue.cgColor
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
-        self.setNeedsDisplay()
     }
     
     // We need to implement init(coder) to avoid compilation errors
