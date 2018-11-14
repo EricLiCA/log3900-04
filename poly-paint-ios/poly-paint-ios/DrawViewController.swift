@@ -42,6 +42,8 @@ class DrawViewController: UIViewController {
     var startAnchorNumber: Int?
     var endAnchorNumber: Int?
     
+    var lines = [Line]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drawingPlace.clipsToBounds = true
@@ -158,6 +160,11 @@ class DrawViewController: UIViewController {
         let touch = touches.first
         self.firstTouch = touch?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
+        
+        for line in lines {
+            //print(line.layer?.path?.boundingBox.contains(self.firstTouch!))
+            print(line.hitTest(touchPoint: self.firstTouch!))
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -237,7 +244,13 @@ class DrawViewController: UIViewController {
                 let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
                 self.drawingPlace.addSubview(triangleView)
             } else if(currentShape == Shape.Line) {
-                self.drawingPlace.layer.addSublayer(layer)
+                var line = Line()
+                line.layer = layer
+                line.points.append(self.firstTouch!)
+                line.points.append(self.secondTouch!)
+                self.drawingPlace.layer.addSublayer(line.layer!)
+                lines.append(line)
+                
             }
             
             self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
