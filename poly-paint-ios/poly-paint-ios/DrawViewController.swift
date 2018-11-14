@@ -321,6 +321,7 @@ class DrawViewController: UIViewController {
     func setUpNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(createClassDiagramAlert), name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(drawLineAlert), name: NSNotification.Name(rawValue: "drawLineAlert"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(movedViewAlert), name: NSNotification.Name(rawValue: "movedView"), object: nil)
     }
     
     @objc func createClassDiagramAlert(sender: AnyObject) {
@@ -330,6 +331,10 @@ class DrawViewController: UIViewController {
         self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
         self.drawingPlace.layer.addSublayer(self.layersFromShapes[self.layersFromShapes.count-1])
   
+    }
+    
+    @objc func movedViewAlert(sender: AnyObject) {
+        print(sender.userInfo["uuid"])
     }
     
     @objc func drawLineAlert(sender: AnyObject) {

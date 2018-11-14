@@ -69,6 +69,9 @@ class RectangleView: UIView {
             } else if(panGR.state == .began) {
                 self.showAnchorPoints()
             }
+            
+            let userInfo = ["uuid": self.uuid] as [String : String]
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
         }
     }
     
@@ -107,7 +110,7 @@ class RectangleView: UIView {
     }
     
     func setUpNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(lineDrawnAlert), name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(lineDrawnAlert), name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
         
     }
     
