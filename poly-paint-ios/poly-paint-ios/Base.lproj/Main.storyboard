@@ -394,7 +394,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="classTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="4S2-4l-9oa"/>
                                     <segue destination="82l-V1-XRu" kind="popoverPresentation" popoverAnchorView="EFY-ek-Vzt" id="DpR-pp-jZn">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
@@ -449,7 +448,6 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
-                        <outlet property="classButton" destination="EFY-ek-Vzt" id="fHH-yW-rE3"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="editButton" destination="vVf-wi-6Rz" id="Y8R-iC-UUg"/>
                         <outlet property="ellipseButton" destination="el7-WA-nyl" id="idg-NM-5Yl"/>

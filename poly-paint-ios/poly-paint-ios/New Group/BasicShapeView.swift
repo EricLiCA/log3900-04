@@ -28,7 +28,6 @@ class BasicShapeView: UIView {
         layer.backgroundColor = UIColor.blue.cgColor
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
-        self.setNeedsDisplay()
         self.setUpNotifications()
     }
     
@@ -55,6 +54,7 @@ class BasicShapeView: UIView {
     @objc func lineDrawnAlert(sender: AnyObject) {
         for layer in self.anchorPointsLayers {
             layer.fillColor = UIColor.red.cgColor
+            layer.strokeColor = UIColor.red.cgColor
         }
         self.touchAnchorPoint = false
     }
