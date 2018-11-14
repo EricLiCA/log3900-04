@@ -8,12 +8,10 @@
 
 import UIKit
 
-class ClassDiagramView: UIView {
+class ClassDiagramView: BasicShapeView {
     let lineWidth: CGFloat = 1
-    let uuid = NSUUID.init().uuidString.lowercased()
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()
-    var anchorPointsLayers = [CAShapeLayer]()
     let defaultTextLineHeight: CGFloat = 40
     let defaultMaxNumOfLines = 5
     let textGap: CGFloat = 5
@@ -22,26 +20,16 @@ class ClassDiagramView: UIView {
     
     init(text: [String]) {
         let rectangle = CGRect(x: 100, y: 100, width: 200, height: 300)
-        super.init(frame: rectangle)
-        //layer.backgroundColor = UIColor.blue.cgColor
+        let dumpLayer = CALayer()
+        super.init(frame: rectangle, layer: dumpLayer, numberOfAnchorPoints: 4)
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.text = text
-        //self.setNeedsDisplay()
     }
     
     // We need to implement init(coder) to avoid compilation errors
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func initGestureRecognizers() {
-        let panGR = UIPanGestureRecognizer(target: self, action: #selector(didPan(panGR:)))
-        addGestureRecognizer(panGR)
-        let pinchGR = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(pinchGR:)))
-        addGestureRecognizer(pinchGR)
-        let rotationGR = UIRotationGestureRecognizer(target: self, action: #selector(didRotate(rotationGR:)))
-        addGestureRecognizer(rotationGR)
     }
     
     override func draw(_ rect: CGRect) {
@@ -56,70 +44,6 @@ class ClassDiagramView: UIView {
         self.initializeTextFields(words: self.text)
     }
     
-    @objc func didPan(panGR: UIPanGestureRecognizer) {
-        self.superview!.bringSubview(toFront: self)
-        var translation = panGR.translation(in: self)
-        translation = translation.applying(self.transform)
-        self.center.x += translation.x
-        self.center.y += translation.y
-        panGR.setTranslation(.zero, in: self)
-        
-        if(panGR.state == .ended) {
-            self.hideAnchorPoints()
-        } else if(panGR.state == .began) {
-            self.showAnchorPoints()
-        }
-        
-    }
-    
-    @objc func didPinch(pinchGR: UIPinchGestureRecognizer) {
-        if pinchGR.state == .changed{
-            let p1: CGPoint = pinchGR.location(ofTouch: 0, in: self)
-            let p2: CGPoint = pinchGR.location(ofTouch: 1, in: self)
-            var x_scale = pinchGR.scale;
-            var y_scale = pinchGR.scale;
-            
-            if axisFromPoints(p1: p1,p2) == "x" {
-                y_scale = 1;
-                x_scale = pinchGR.scale
-            }
-            
-            if axisFromPoints(p1: p1, p2) == "y" {
-                x_scale = 1;
-                y_scale = pinchGR.scale
-            }
-            
-            self.transform = self.transform.scaledBy(x: x_scale, y: y_scale)
-            pinchGR.scale = 1
-        }
-        
-        
-        
-    }
-    
-    @objc func didRotate(rotationGR: UIRotationGestureRecognizer) {
-        self.superview!.bringSubview(toFront: self)
-        let rotation = rotationGR.rotation
-        self.transform = self.transform.rotated(by: rotation)
-        rotationGR.rotation = 0.0
-    }
-    
-    func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
-        let x_1 = p1.x
-        let x_2 = p2.x
-        let y_1 = p1.y
-        let y_2 = p2.y
-        let absolutePoint = CGPoint(x: x_2 - x_1, y: y_2 - y_1)
-        let radians = atan2(Double(absolutePoint.x), Double(absolutePoint.y))
-        let absRad = fabs(radians)
-        
-        if absRad > (.pi / 4) && absRad < 3*(.pi / 4) {
-            return "x"
-        } else {
-            return "y"
-        }
-    }
-    
     func initializeAnchorPoints() {
         let topAnchorPoint = CGPoint(x: self.frame.size.width/2, y: 0)
         let rightAnchorPoint = CGPoint(x: self.frame.size.width, y: self.frame.size.height/2)
@@ -128,7 +52,7 @@ class ClassDiagramView: UIView {
         var anchorPoints = [topAnchorPoint, rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(3), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
@@ -142,18 +66,6 @@ class ClassDiagramView: UIView {
         }
         
         self.hideAnchorPoints()
-    }
-    
-    func showAnchorPoints() {
-        for index in 0...3 {
-            self.layer.sublayers![index].isHidden = false
-        }
-    }
-    
-    func hideAnchorPoints() {
-        for index in 0...3 {
-            self.layer.sublayers![index].isHidden = true
-        }
     }
     
     func initializeTextFields(words: [String]) {

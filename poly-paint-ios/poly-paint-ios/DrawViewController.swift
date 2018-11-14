@@ -331,10 +331,10 @@ class DrawViewController: UIViewController {
     @objc func createClassDiagramAlert(sender: AnyObject) {
         var text = sender.userInfo["text"]
         let classDiagram = ClassDiagramView(text: processText(text: text as! String))
+        self.shapes[classDiagram.uuid] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
-        self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
-        self.drawingPlace.layer.addSublayer(self.layersFromShapes[self.layersFromShapes.count-1])
-  
+        self.layersFromShapes.append(classDiagram.layer)
+        
     }
     
     @objc func movedViewAlert(sender: AnyObject) {
