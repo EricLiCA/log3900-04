@@ -37,7 +37,8 @@ class DrawViewController: UIViewController {
         self.drawingPlace.clipsToBounds = true
         self.cancelButton.isEnabled = false
         NotificationCenter.default.addObserver(self, selector: #selector(onDuplicateRectangle(_:)), name: .duplicateRectangle, object: nil)
-        // Do any additional setup after loading the view.
+        NotificationCenter.default.addObserver(self, selector: #selector(onDuplicateEllipse(_:)), name: .duplicateEllipse, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onDuplicateTriangle(_:)), name: .duplicateTriangle, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -301,6 +302,40 @@ class DrawViewController: UIViewController {
     @objc func onDuplicateRectangle(_ notification:Notification) {
         let rectangleView = RectangleView(frame: notification.userInfo?["frame"] as! CGRect, layer: notification.userInfo?["layer"] as! CALayer, color: notification.userInfo?["color"] as! UIColor)
         self.drawingPlace.addSubview(rectangleView)
+        self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+        for layer in self.drawingPlace.layer.sublayers! {
+            self.drawingPlace.layer.sublayers?.popLast()
+        }
+        for layer in self.layersFromShapes {
+            self.drawingPlace.layer.addSublayer(layer)
+        }
+        self.insideCanvas = false
+    }
+    
+    @objc func onDuplicateEllipse(_ notification:Notification) {
+        let ellipseView = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, layer: notification.userInfo?["layer"] as! CALayer, color: notification.userInfo?["color"] as! UIColor)
+        self.drawingPlace.addSubview(ellipseView)
+        self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+        for layer in self.drawingPlace.layer.sublayers! {
+            self.drawingPlace.layer.sublayers?.popLast()
+        }
+        for layer in self.layersFromShapes {
+            self.drawingPlace.layer.addSublayer(layer)
+        }
+        self.insideCanvas = false
+    }
+    
+    @objc func onDuplicateTriangle(_ notification:Notification) {
+        let triangleView = TriangleView(frame: notification.userInfo?["frame"] as! CGRect, layer: notification.userInfo?["layer"] as! CALayer, color: notification.userInfo?["color"] as! UIColor)
+        self.drawingPlace.addSubview(triangleView)
+        self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+        for layer in self.drawingPlace.layer.sublayers! {
+            self.drawingPlace.layer.sublayers?.popLast()
+        }
+        for layer in self.layersFromShapes {
+            self.drawingPlace.layer.addSublayer(layer)
+        }
+        self.insideCanvas = false
     }
 
     

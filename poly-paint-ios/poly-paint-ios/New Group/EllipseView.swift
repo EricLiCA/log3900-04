@@ -22,6 +22,8 @@ class EllipseView: UIView {
     let lineWidth: CGFloat = 1
     let uuid = NSUUID.init().uuidString.lowercased()
     var color: UIColor?
+    var myframe: CGRect?
+    var mylayer: CALayer?
     
     init(frame: CGRect, layer: CALayer, color: UIColor) {
         super.init(frame:frame)
@@ -29,11 +31,17 @@ class EllipseView: UIView {
         self.backgroundColor = UIColor.clear
         initGestureRecognizers()
         self.color = color
+        self.mylayer = layer
+        self.myframe = frame
     }
     
     // We need to implement init(coder) to avoid compilation errors
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
     }
     
     func initGestureRecognizers() {
@@ -43,7 +51,11 @@ class EllipseView: UIView {
         addGestureRecognizer(pinchGR)
         let rotationGR = UIRotationGestureRecognizer(target: self, action: #selector(didRotate(rotationGR:)))
         addGestureRecognizer(rotationGR)
+        let longPressGR = ( UILongPressGestureRecognizer( target: self, action: #selector(didLongPressed(_:))))
+        addGestureRecognizer(longPressGR)
     }
+    
+    
     
     override func draw(_ rect: CGRect) {
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
@@ -93,6 +105,59 @@ class EllipseView: UIView {
         rotationGR.rotation = 0.0
     }
     
+    @objc func didLongPressed(_ gesture: UILongPressGestureRecognizer) {
+        self.superview!.bringSubview(toFront: self)
+        guard let gestureView = gesture.view, let superView = gestureView.superview else {
+            return
+        }
+        
+        let menuController = UIMenuController.shared
+        
+        guard !menuController.isMenuVisible, gestureView.canBecomeFirstResponder else {
+            return
+        }
+        gestureView.becomeFirstResponder()
+        
+        
+        menuController.menuItems = [
+            UIMenuItem(
+                title: "Duplicate",
+                action: #selector(handleDuplicateAction(_:))
+            ),
+            UIMenuItem(
+                title: "Cut",
+                action: #selector(handleCutAction(_:))
+            ),
+            UIMenuItem(
+                title: "Edit",
+                action: #selector(handleEditAction(_:))
+            ),
+            UIMenuItem(
+                title: "Delete",
+                action: #selector(handleDeleteAction(_:))
+            )
+        ]
+        
+        menuController.setTargetRect(gestureView.frame, in: superView)
+        menuController.setMenuVisible(true, animated: true)
+    }
+    
+    @objc internal func handleCutAction(_ controller: UIMenuController) {
+    }
+    
+    @objc internal func handleDuplicateAction(_ controller: UIMenuController) {
+        let shapeData = ["frame": self.myframe!, "layer": self.mylayer!, "color": self.color!] as [String : Any]
+        NotificationCenter.default.post(name: .duplicateEllipse, object: nil, userInfo: shapeData)
+    }
+    
+    @objc internal func handleEditAction(_ controller: UIMenuController) {
+    }
+    
+    @objc internal func handleDeleteAction(_ controller: UIMenuController) {
+        self.removeFromSuperview()
+        
+    }
+    
     func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
         let x_1 = p1.x
         let x_2 = p2.x
@@ -109,4 +174,7 @@ class EllipseView: UIView {
         }
     }
 
+}
+extension Notification.Name {
+    static let duplicateEllipse = Notification.Name("duplicateEllipse")
 }
