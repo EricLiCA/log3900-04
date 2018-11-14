@@ -22,6 +22,16 @@ namespace PolyPaint.Modeles.Strokes
             };
         }
 
+        public UseCaseStroke(StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(pts, strokes)
+        {
+            this.textContent = Content;
+        }
+
+        public UseCaseStroke(string id, StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(id, pts, strokes, Colors.White)
+        {
+            this.textContent = Content;
+        }
+
         public string GetText()
         {
             return textContent.Aggregate((a, b) => a + "\r\n" + b);

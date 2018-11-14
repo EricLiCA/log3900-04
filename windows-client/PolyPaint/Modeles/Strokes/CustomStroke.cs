@@ -23,8 +23,15 @@ namespace PolyPaint.Modeles
         public CustomStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts)
         {
             this.strokes = strokes;
+            Id = Guid.NewGuid();
         }
-        
+
+        public CustomStroke(string id,  StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts)
+        {
+            this.strokes = strokes;
+            Id = new Guid(id);
+        }
+
         public abstract new bool HitTest(Point point);
         public abstract bool isSelectable();
 
@@ -106,9 +113,6 @@ namespace PolyPaint.Modeles
                 strokes.Remove(strokes.get(this.Id.ToString()));
             }
             strokes.Insert(index, this.Clone());
-
-            if (this is Savable)
-                Console.WriteLine(((Savable)this).toJson());
         }
 
         public CustomStroke Duplicate()

@@ -14,9 +14,18 @@ namespace PolyPaint.Modeles.Strokes
     {
         public string Name;
 
-        public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
+        public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : this(pts, strokes, "Actor")
         {
-            this.Name = "Actor";
+        }
+
+        public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes, string name) : base(pts, strokes)
+        {
+            this.Name = name;
+        }
+
+        public PersonStroke(string id, StylusPointCollection pts, CustomStrokeCollection strokes, string name) : base(id, pts, strokes, Colors.White)
+        {
+            this.Name = name;
         }
 
         public string GetText()

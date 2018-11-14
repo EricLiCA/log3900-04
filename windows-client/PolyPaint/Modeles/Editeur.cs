@@ -2,7 +2,9 @@
 using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
+using PolyPaint.Services;
 using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -356,95 +358,120 @@ namespace PolyPaint.Modeles
         // On vide la surface de dessin de tous ses traits.
         public void Reinitialiser(object o) => traits.Clear();
 
-        public void Load(IRestResponse response)
+        public void SyncToServer()
+        {
+            ServerService.instance.Socket.Emit("joinImage", ServerService.instance.currentImageId);
+
+            ServerService.instance.Socket.On("imageData", new CustomListener((object[] server_params) =>
+            {
+                Application.Current.Dispatcher.Invoke(() => this.Load((JArray)server_params[0]));
+            }));
+
+            ServerService.instance.Socket.On("addStroke", new CustomListener((object[] server_params) =>
+            {
+
+            }));
+
+            ServerService.instance.Socket.On("editStroke", new CustomListener((object[] server_params) =>
+            {
+
+            }));
+
+            ServerService.instance.Socket.On("removeStroke", new CustomListener((object[] server_params) =>
+            {
+
+            }));
+
+            ServerService.instance.Socket.On("protection", new CustomListener((object[] server_params) =>
+            {
+
+            }));
+        }
+
+        public void Load(JArray shapeObjects)
         {
             traits.Clear();
             traitsRetires.Clear();
-            if (response.StatusCode == HttpStatusCode.OK)
+            
+            for (int i = 0; i < shapeObjects.Count; i++)
             {
-                JArray shapeObjects = JArray.Parse(response.Content);
-                for (int i = 0; i < shapeObjects.Count; i++)
-                {
-                    dynamic shape = JObject.Parse(shapeObjects[i].ToString());
-                    if (shape["ShapeType"] != StrokeType.LINE.ToString())
-                    {
-                        StylusPoint topLeft = new StylusPoint((double)(shape["ShapeInfo"]["Center"]["X"] - shape["ShapeInfo"]["Width"] / 2),
-                            (double)(shape["ShapeInfo"]["Center"]["Y"] - shape["ShapeInfo"]["Height"] / 2));
-                        StylusPoint bottomRight = new StylusPoint((double)(shape["ShapeInfo"]["Center"]["X"] + shape["ShapeInfo"]["Width"] / 2),
-                            (double)(shape["ShapeInfo"]["Center"]["Y"] + shape["ShapeInfo"]["Height"] / 2));
+                this.traits.Add(SerializationHelper.stringToStroke(shapeObjects[i].ToString(), this.traits));
 
-                        ShapeStroke loadedShape;
+                //dynamic shape = JObject.Parse(shapeObjects[i].ToString());
+                //if (shape["ShapeType"] != StrokeType.LINE.ToString())
+                //{
+                //    StylusPoint topLeft = new StylusPoint((double)(shape["ShapeInfo"]["Center"]["X"] - shape["ShapeInfo"]["Width"] / 2),
+                //        (double)(shape["ShapeInfo"]["Center"]["Y"] - shape["ShapeInfo"]["Height"] / 2));
+                //    StylusPoint bottomRight = new StylusPoint((double)(shape["ShapeInfo"]["Center"]["X"] + shape["ShapeInfo"]["Width"] / 2),
+                //        (double)(shape["ShapeInfo"]["Center"]["Y"] + shape["ShapeInfo"]["Height"] / 2));
 
-                        if (shape["ShapeType"] == StrokeType.RECTANGLE.ToString())
-                        {
-                            loadedShape = new BaseRectangleStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
-                        }
-                        else if (shape["ShapeType"] == StrokeType.ELIPSE.ToString())
-                        {
-                            loadedShape = new BaseElipseStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
-                        }
-                        else if (shape["ShapeType"] == StrokeType.TRIANGLE.ToString())
-                        {
-                            loadedShape = new BaseTrangleStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                //    ShapeStroke loadedShape;
 
-                        }
-                        else if (shape["ShapeType"] == StrokeType.ACTOR.ToString())
-                        {
-                            loadedShape = new PersonStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
-                            ((PersonStroke)loadedShape).Name = "";
-                            for (int j = 0; j < shape["ShapeInfo"]["Content"].Count; j++)
-                            {
-                                ((PersonStroke)loadedShape).Name += shape["ShapeInfo"]["Content"][j] + " ";
-                            }
-                        }
-                        else if (shape["ShapeType"] == StrokeType.CLASS.ToString())
-                        {
-                            loadedShape = new ClassStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
-                            ((ClassStroke)loadedShape).textContent = new List<string>();
-                            for (int j = 0; j < shape["ShapeInfo"]["Content"].Count; j++)
-                            {
-                                ((ClassStroke)loadedShape).textContent.Add((string)shape["ShapeInfo"]["Content"][j]);
-                            }
-                        }
-                        else
-                        {
-                            loadedShape = new UseCaseStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
-                            ((UseCaseStroke)loadedShape).textContent = new List<string>();
-                            for (int j = 0; j < shape["ShapeInfo"]["Content"].Count; j++)
-                            {
-                                ((UseCaseStroke)loadedShape).textContent.Add((string)shape["ShapeInfo"]["Content"][j]);
-                            }
-                        }
-                        loadedShape.Id = shape["Id"];
-                        loadedShape.DrawingAttributes.Color = (Color)ColorConverter.ConvertFromString((string)shape["ShapeInfo"]["Color"]);
-                        traits.Add(loadedShape);
-                    }
-                    else
-                    {
-                        StylusPointCollection points = new StylusPointCollection();
-                        for (int j = 0; j < shape["ShapeInfo"]["Points"].Count; j++)
-                        {
-                            points.Add(new StylusPoint((double)shape["ShapeInfo"]["Points"][j]["X"], (double)shape["ShapeInfo"]["Points"][j]["Y"]));
-                        }
-                        BaseLine loadedLine = new BaseLine(points, traits)
-                        {
-                            Id = shape["Id"],
-                            FirstAnchorId = shape["ShapeInfo"]["FirstAnchorId"],
-                            FirstAnchorIndex = shape["ShapeInfo"]["FirstAnchorIndex"],
-                            SecondAncorId = shape["ShapeInfo"]["SecondAnchorId"],
-                            SecondAncorIndex = shape["ShapeInfo"]["SecondAnchorIndex"],
-                            FirstText = shape["ShapeInfo"]["FirstEndLabel"],
-                            FirstRelation = shape["ShapeInfo"]["FirstEndRelation"],
-                            SecondText = shape["ShapeInfo"]["SecondEndLabel"],
-                            SecondRelation = shape["ShapeInfo"]["SecondEndRelation"]
-                        };
-                        traits.Add(loadedLine);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Could not load the image", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //    if (shape["ShapeType"] == StrokeType.RECTANGLE.ToString())
+                //    {
+                //        loadedShape = new BaseRectangleStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                //    }
+                //    else if (shape["ShapeType"] == StrokeType.ELIPSE.ToString())
+                //    {
+                //        loadedShape = new BaseElipseStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                //    }
+                //    else if (shape["ShapeType"] == StrokeType.TRIANGLE.ToString())
+                //    {
+                //        loadedShape = new BaseTrangleStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+
+                //    }
+                //    else if (shape["ShapeType"] == StrokeType.ACTOR.ToString())
+                //    {
+                //        loadedShape = new PersonStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                //        ((PersonStroke)loadedShape).Name = "";
+                //        for (int j = 0; j < shape["ShapeInfo"]["Content"].Count; j++)
+                //        {
+                //            ((PersonStroke)loadedShape).Name += shape["ShapeInfo"]["Content"][j] + " ";
+                //        }
+                //    }
+                //    else if (shape["ShapeType"] == StrokeType.CLASS.ToString())
+                //    {
+                //        loadedShape = new ClassStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                //        ((ClassStroke)loadedShape).textContent = new List<string>();
+                //        for (int j = 0; j < shape["ShapeInfo"]["Content"].Count; j++)
+                //        {
+                //            ((ClassStroke)loadedShape).textContent.Add((string)shape["ShapeInfo"]["Content"][j]);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        loadedShape = new UseCaseStroke(new StylusPointCollection() { topLeft, bottomRight }, traits);
+                //        ((UseCaseStroke)loadedShape).textContent = new List<string>();
+                //        for (int j = 0; j < shape["ShapeInfo"]["Content"].Count; j++)
+                //        {
+                //            ((UseCaseStroke)loadedShape).textContent.Add((string)shape["ShapeInfo"]["Content"][j]);
+                //        }
+                //    }
+                //    loadedShape.Id = shape["Id"];
+                //    loadedShape.DrawingAttributes.Color = (Color)ColorConverter.ConvertFromString((string)shape["ShapeInfo"]["Color"]);
+                //    traits.Add(loadedShape);
+                //}
+                //else
+                //{
+                //    StylusPointCollection points = new StylusPointCollection();
+                //    for (int j = 0; j < shape["ShapeInfo"]["Points"].Count; j++)
+                //    {
+                //        points.Add(new StylusPoint((double)shape["ShapeInfo"]["Points"][j]["X"], (double)shape["ShapeInfo"]["Points"][j]["Y"]));
+                //    }
+                //    BaseLine loadedLine = new BaseLine(points, traits)
+                //    {
+                //        Id = shape["Id"],
+                //        FirstAnchorId = shape["ShapeInfo"]["FirstAnchorId"],
+                //        FirstAnchorIndex = shape["ShapeInfo"]["FirstAnchorIndex"],
+                //        SecondAncorId = shape["ShapeInfo"]["SecondAnchorId"],
+                //        SecondAncorIndex = shape["ShapeInfo"]["SecondAnchorIndex"],
+                //        FirstText = shape["ShapeInfo"]["FirstEndLabel"],
+                //        FirstRelation = shape["ShapeInfo"]["FirstEndRelation"],
+                //        SecondText = shape["ShapeInfo"]["SecondEndLabel"],
+                //        SecondRelation = shape["ShapeInfo"]["SecondEndRelation"]
+                //    };
+                //    traits.Add(loadedLine);
+                //}
             }
         }
     }

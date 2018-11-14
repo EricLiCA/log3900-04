@@ -3,8 +3,10 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using PolyPaint.DAO;
+using PolyPaint.Modeles;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
+using PolyPaint.VueModeles;
 
 namespace PolyPaint.Vues
 {
@@ -161,7 +163,7 @@ namespace PolyPaint.Vues
             ServerService.instance.currentImageId = imageId;
             ButtonEdit.Visibility = Visibility.Visible;
             GridMain.Content = FenetreDessin;
-            ShapeObjectDao.Get();
+            ((VueModele)FenetreDessin.DataContext).editeur.SyncToServer();
         }
 
     }

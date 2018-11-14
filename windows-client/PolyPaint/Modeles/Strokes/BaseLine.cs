@@ -32,9 +32,32 @@ namespace PolyPaint.Modeles.Strokes
                 this.HandlePoints.Add(Guid.NewGuid());
         }
 
+        public BaseLine(string id, StylusPointCollection pts, CustomStrokeCollection strokes) : base(id, pts, strokes)
+        {
+            this.HandlePoints = new List<Guid>();
+            for (int i = 0; i < pts.Count; i++)
+                this.HandlePoints.Add(Guid.NewGuid());
+        }
+
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes,
                         string firstAnchorId, int firstAnchorIndex,
                         string secondAnchorId, int secondAnchorIndex) : this(pts, strokes)
+        {
+            if (firstAnchorId != null)
+            {
+                this.FirstAnchorId = firstAnchorId;
+                this.FirstAnchorIndex = firstAnchorIndex;
+            }
+            if (secondAnchorId != null)
+            {
+                this.SecondAncorId = secondAnchorId;
+                this.SecondAncorIndex = secondAnchorIndex;
+            }
+        }
+
+        public BaseLine(string id, StylusPointCollection pts, CustomStrokeCollection strokes,
+                        string firstAnchorId, int firstAnchorIndex,
+                        string secondAnchorId, int secondAnchorIndex) : this(id, pts, strokes)
         {
             if (firstAnchorId != null)
             {
@@ -391,10 +414,10 @@ namespace PolyPaint.Modeles.Strokes
         {
             SerializedStroke toSend = new SerializedStroke()
             {
-                Id = this.Id,
+                Id = this.Id.ToString(),
                 ShapeType = this.StrokeType().ToString(),
                 Index = -1,
-                ShapeInfo = JsonConvert.SerializeObject(GetShapeInfo()),
+                ShapeInfo = GetShapeInfo(),
                 ImageId = ServerService.instance.currentImageId
             };
             return JsonConvert.SerializeObject(toSend);

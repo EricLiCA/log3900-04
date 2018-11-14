@@ -18,6 +18,16 @@ namespace PolyPaint.Modeles.Strokes
 
         }
 
+        public BaseTrangleStroke(StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(pts, strokes, color)
+        {
+
+        }
+
+        public BaseTrangleStroke(string id, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, pts, strokes, color)
+        {
+
+        }
+
         public override bool HitTest(Point point)
         {
             Point top = new Point((this.StylusPoints[0].X + this.StylusPoints[1].X) / 2, Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
@@ -84,7 +94,7 @@ namespace PolyPaint.Modeles.Strokes
         {
 
             DrawingAttributes originalDa = drawingAttributes.Clone();
-            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(drawingAttributes.Color);
+            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(this.Color);
             fillBrush.Freeze();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
 

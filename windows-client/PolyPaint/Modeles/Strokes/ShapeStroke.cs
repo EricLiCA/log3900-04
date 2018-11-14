@@ -48,9 +48,21 @@ namespace PolyPaint.Modeles.Strokes
         protected Guid RIGHT = Guid.NewGuid();
 
         protected bool AnchorPointVisibility = false;
+        protected Color Color;
 
         public ShapeStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
+            this.Color = Colors.White;
+        }
+
+        public ShapeStroke(StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(pts, strokes)
+        {
+            this.Color = color;
+        }
+
+        public ShapeStroke(string id, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, pts, strokes)
+        {
+            this.Color = color;
         }
 
         public void addDragHandles()
@@ -295,10 +307,10 @@ namespace PolyPaint.Modeles.Strokes
         {
             SerializedStroke toSend = new SerializedStroke()
             {
-                Id = this.Id,
+                Id = this.Id.ToString(),
                 ShapeType = this.StrokeType().ToString(),
                 Index = -1,
-                ShapeInfo = JsonConvert.SerializeObject(GetShapeInfo()),
+                ShapeInfo = GetShapeInfo(),
                 ImageId = ServerService.instance.currentImageId
             };
             return JsonConvert.SerializeObject(toSend);

@@ -7,6 +7,7 @@ using System.Net;
 using System.Windows;
 using PolyPaint.Vues;
 using PolyPaint.VueModeles;
+using Newtonsoft.Json.Linq;
 
 namespace PolyPaint.DAO
 {
@@ -44,7 +45,15 @@ namespace PolyPaint.DAO
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Editeur currentEditingImage = ((VueModele)((MainWindow)Application.Current.MainWindow).FenetreDessin.DataContext).editeur;
-                    currentEditingImage.Load(response);
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        currentEditingImage.Load(JArray.Parse(response.Content));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not load the image", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 });
             });
         }

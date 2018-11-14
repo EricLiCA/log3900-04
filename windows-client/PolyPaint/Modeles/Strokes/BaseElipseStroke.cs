@@ -12,7 +12,17 @@ namespace PolyPaint.Modeles.Strokes
     {
         public BaseElipseStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
-            
+
+        }
+
+        public BaseElipseStroke(StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(pts, strokes, color)
+        {
+
+        }
+
+        public BaseElipseStroke(string id, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, pts, strokes, color)
+        {
+
         }
 
         public override bool HitTest(Point point)
@@ -33,7 +43,7 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
             
             DrawingAttributes originalDa = drawingAttributes.Clone();
-            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(drawingAttributes.Color);
+            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(this.Color);
             fillBrush.Freeze();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
             outlinePen.Freeze();
