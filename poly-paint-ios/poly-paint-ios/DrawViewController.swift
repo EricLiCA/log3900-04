@@ -391,6 +391,15 @@ class DrawViewController: UIViewController {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
             self.startPointOfLine = nil
             self.endPointOfLine = nil
+            
+            self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+            
+            for layer in self.drawingPlace.layer.sublayers! {
+                self.drawingPlace.layer.sublayers?.popLast()
+            }
+            for layer in self.layersFromShapes {
+                self.drawingPlace.layer.addSublayer(layer)
+            }
         }
     }
     
