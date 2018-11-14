@@ -37,13 +37,13 @@ class DrawViewController: UIViewController {
     var startPointOfLine: CGPoint?
     var endPointOfLine: CGPoint?
     
-    var startPointView: RectangleView?
-    var endPointView: RectangleView?
+    var startPointView: BasicShapeView?
+    var endPointView: BasicShapeView?
     var startAnchorNumber: Int?
     var endAnchorNumber: Int?
     
     var lines = [Line]()
-    var shapes = [String: RectangleView]()
+    var shapes = [String: BasicShapeView]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -244,6 +244,7 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.addSubview(ellipseView)
             } else if(currentShape == Shape.Triangle) {
                 let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
+                self.shapes[triangleView.uuid] = triangleView
                 self.drawingPlace.addSubview(triangleView)
             } else if(currentShape == Shape.Line) {
                 var line = Line()
@@ -339,6 +340,7 @@ class DrawViewController: UIViewController {
         let viewUUID = sender.userInfo["view"] as! String
         for line in self.lines {
             if(line.firstAnchorShapeId == viewUUID) {
+                print(self.shapes[viewUUID])
                 line.points[0] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.firstAnchorShapeIndex!))!
                 let bezier = UIBezierPath()
                 bezier.move(to: line.points[0])
@@ -357,15 +359,15 @@ class DrawViewController: UIViewController {
     @objc func drawLineAlert(sender: AnyObject) {
         if(self.startPointOfLine == nil) {
             self.startPointOfLine = sender.userInfo["point"] as! CGPoint
-            self.startPointView = sender.userInfo["view"] as! RectangleView
+            self.startPointView = sender.userInfo["view"] as! BasicShapeView
             self.startAnchorNumber = sender.userInfo["anchorNumber"] as! Int
         } else if(self.endPointOfLine == nil) {
-            self.endPointView = sender.userInfo["view"] as! RectangleView
+            self.endPointView = sender.userInfo["view"] as! BasicShapeView
             self.endPointOfLine = sender.userInfo["point"] as! CGPoint
             self.endAnchorNumber = sender.userInfo["anchorNumber"] as! Int
             // make anchor points
-            self.startPointView?.anchorPoints[self.startAnchorNumber!].setToUUID(toUUID: (self.endPointView?.uuid)!, toAnchorNumber: self.endAnchorNumber!, toPoint: self.endPointOfLine!)
-            self.endPointView?.anchorPoints[self.endAnchorNumber!].setToUUID(toUUID: (self.startPointView?.uuid)!, toAnchorNumber: self.startAnchorNumber!, toPoint: self.startPointOfLine!)
+            //self.startPointView?.anchorPoints[self.startAnchorNumber!].setToUUID(toUUID: (self.endPointView?.uuid)!, toAnchorNumber: self.endAnchorNumber!, toPoint: self.endPointOfLine!)
+            //self.endPointView?.anchorPoints[self.endAnchorNumber!].setToUUID(toUUID: (self.startPointView?.uuid)!, toAnchorNumber: self.startAnchorNumber!, toPoint: self.startPointOfLine!)
             
             // draw line
             var bezier = UIBezierPath()

@@ -13,7 +13,6 @@ class RectangleView: BasicShapeView {
     let lineWidth: CGFloat = 1
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()
-    var anchorPoints = [Anchor]()
     
     init(frame: CGRect, layer: CALayer) {
         super.init(frame: frame, layer: layer, numberOfAnchorPoints: 4)
@@ -55,7 +54,6 @@ class RectangleView: BasicShapeView {
             shapeLayer.strokeColor = UIColor.red.cgColor
             shapeLayer.lineWidth = 3.0
             self.anchorPointsLayers.append(shapeLayer)
-            self.anchorPoints.append(Anchor(fromUUID: self.uuid, fromAnchorNumber: anchorNumber, fromPoint: anchor))
             anchorNumber = anchorNumber + 1
         }
         
@@ -66,7 +64,7 @@ class RectangleView: BasicShapeView {
         self.hideAnchorPoints()
     }
     
-    func getAnchorPoint(index: Int) -> CGPoint {
+    override func getAnchorPoint(index: Int) -> CGPoint {
         if(index == 0) {
             let rightAnchorPoint = CGPoint(x: self.center.x + self.frame.size.width/2, y: self.center.y)
             return rightAnchorPoint

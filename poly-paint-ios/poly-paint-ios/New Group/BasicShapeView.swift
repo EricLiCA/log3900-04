@@ -146,6 +146,10 @@ class BasicShapeView: UIView {
         }
     }
     
+    func getAnchorPoint(index: Int) -> CGPoint {
+        return CGPoint(x: 0, y: 0)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         //self.showAnchorPoints()
         print("called touches began")
@@ -182,5 +186,7 @@ class BasicShapeView: UIView {
         }
         
     }
+    
+    
 
 }
