@@ -236,6 +236,24 @@ class RectangleView: UIView {
         }
     }
     
+    func getAnchorPoint(index: Int) -> CGPoint {
+        if(index == 0) {
+            let rightAnchorPoint = CGPoint(x: self.center.x + self.frame.size.width/2, y: self.center.y)
+            return rightAnchorPoint
+        } else if (index == 1) {
+            let bottomAnchorPoint = CGPoint(x: self.center.x, y: self.center.y - self.frame.size.height/2)
+            return bottomAnchorPoint
+        } else if(index == 2) {
+            let leftAnchorPoint = CGPoint(x: self.center.x - self.frame.size.width/2, y: self.center.y)
+            return leftAnchorPoint
+        } else if(index == 3) {
+            let topAnchorPoint = CGPoint(x: self.center.x, y: self.center.y + self.frame.size.height/2)
+            return topAnchorPoint
+        } else { // garbage
+            return CGPoint(x: 0, y: 0)
+        }
+    }
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
