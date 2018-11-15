@@ -8,31 +8,13 @@
 
 import UIKit
 
-class EllipseView: UIView {
+class EllipseView: BasicShapeView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
-    let defaultSize: CGFloat = 150.0
-    let lineWidth: CGFloat = 1
-    let uuid = NSUUID.init().uuidString.lowercased()
-    var color: UIColor?
-    var myframe: CGRect?
-    var mylayer: CALayer?
-    
-    init(frame: CGRect, layer: CALayer, color: UIColor) {
-        super.init(frame:frame)
-        //self.center = origin
+    init(frame: CGRect) {
+        super.init(frame:frame, numberOfAnchorPoints: 4)
         self.backgroundColor = UIColor.clear
-        initGestureRecognizers()
+        self.initGestureRecognizers()
         self.color = color
-        self.mylayer = layer
-        self.myframe = frame
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -65,39 +47,48 @@ class EllipseView: UIView {
         path.lineWidth = self.lineWidth
         self.color?.setStroke()
         path.stroke()
+        self.initializeAnchorPoints()
     }
     
-    @objc func didPan(panGR: UIPanGestureRecognizer) {
-        self.superview!.bringSubview(toFront: self)
-        var translation = panGR.translation(in: self)
-        translation = translation.applying(self.transform)
-        self.center.x += translation.x
-        self.center.y += translation.y
-        panGR.setTranslation(.zero, in: self)
-    }
-    
-    @objc func didPinch(pinchGR: UIPinchGestureRecognizer) {
-        if pinchGR.state == .changed{
-            let p1: CGPoint = pinchGR.location(ofTouch: 0, in: self)
-            let p2: CGPoint = pinchGR.location(ofTouch: 1, in: self)
-            var x_scale = pinchGR.scale;
-            var y_scale = pinchGR.scale;
-            
-            if axisFromPoints(p1: p1,p2) == "x" {
-                y_scale = 1;
-                x_scale = pinchGR.scale
-            }
-            
-            if axisFromPoints(p1: p1, p2) == "y" {
-                x_scale = 1;
-                y_scale = pinchGR.scale
-            }
-            
-            self.transform = self.transform.scaledBy(x: x_scale, y: y_scale)
-            pinchGR.scale = 1
+    func initializeAnchorPoints() {
+        let topAnchorPoint = CGPoint(x: self.frame.size.width/2, y: 0)
+        let rightAnchorPoint = CGPoint(x: self.frame.size.width, y: self.frame.size.height/2)
+        let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
+        let leftAnchorPoint = CGPoint(x: 0, y: self.frame.size.height/2)
+        var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
+        
+        for anchor in anchorPoints {
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var shapeLayer = CAShapeLayer()
+            shapeLayer.path = circlePath.cgPath
+            shapeLayer.fillColor = UIColor.red.cgColor
+            shapeLayer.strokeColor = UIColor.red.cgColor
+            shapeLayer.lineWidth = 3.0
+            self.anchorPointsLayers.append(shapeLayer)
         }
+        
+        for anchor in self.anchorPointsLayers {
+            self.layer.addSublayer(anchor)
+        }
+        
+        self.hideAnchorPoints()
     }
     
+    override func getAnchorPoint(index: Int) -> CGPoint {
+        if(index == 0) {
+            let rightAnchorPoint = CGPoint(x: self.center.x + self.frame.size.width/2, y: self.center.y)
+            return rightAnchorPoint
+        } else if (index == 1) {
+            let bottomAnchorPoint = CGPoint(x: self.center.x, y: self.center.y + self.frame.size.height/2)
+            return bottomAnchorPoint
+        } else if(index == 2) {
+            let leftAnchorPoint = CGPoint(x: self.center.x - self.frame.size.width/2, y: self.center.y)
+            return leftAnchorPoint
+        } else if(index == 3) {
+            let topAnchorPoint = CGPoint(x: self.center.x, y: self.center.y - self.frame.size.height/2)
+            return topAnchorPoint
+        } else { // garbage
+            return CGPoint(x: 0, y: 0)
     @objc func didRotate(rotationGR: UIRotationGestureRecognizer) {
         self.superview!.bringSubview(toFront: self)
         let rotation = rotationGR.rotation

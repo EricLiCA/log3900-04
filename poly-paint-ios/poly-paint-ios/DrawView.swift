@@ -19,7 +19,7 @@ class DrawView: UIView {
     }
     */
     
-    var lines = [Line]()
+    //var lines = [Line]()
     var lastPoint: CGPoint!
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

@@ -8,25 +8,13 @@
 
 import UIKit
 
-class TriangleView: UIView {
-
-    let defaultHeight: CGFloat = 150.0
-    let defaultWidth: CGFloat = 150.0
-    let lineWidth: CGFloat = 1
-    let uuid = NSUUID.init().uuidString.lowercased()
-    var color: UIColor?
-    var myframe: CGRect?
-    var mylayer: CALayer?
+class TriangleView: BasicShapeView {
     
-    init(frame: CGRect, layer:CALayer, color: UIColor) {
-        //super.init(frame:CGRect(x: 0.0, y: 0.0, width: defaultWidth, height: defaultHeight))
-        //self.center = origin
-        super.init(frame: frame)
+    init(frame: CGRect) {
+        super.init(frame: frame, numberOfAnchorPoints: 3)
         self.backgroundColor = UIColor.clear
-        initGestureRecognizers()
         self.color = color
-        self.mylayer = layer
-        self.myframe = frame
+        self.initGestureRecognizers()
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -50,7 +38,6 @@ class TriangleView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        print("called draw")
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = self.trianglePathInRect(rect: insetRect)
         self.color?.setFill()
@@ -58,6 +45,7 @@ class TriangleView: UIView {
         path.lineWidth = self.lineWidth
         self.color?.setStroke()
         path.stroke()
+        self.initializeAnchorPoints()
     }
     
     @objc func didPan(panGR: UIPanGestureRecognizer) {
@@ -167,7 +155,6 @@ class TriangleView: UIView {
         }
     }
 
-    
     func trianglePathInRect(rect:CGRect) -> UIBezierPath {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: rect.width / 2.0, y: rect.origin.y))
@@ -178,6 +165,43 @@ class TriangleView: UIView {
         return path
     }
     
+    func initializeAnchorPoints() {
+        let rightAnchorPoint = CGPoint(x: self.frame.size.width*0.75, y: self.frame.size.height/2)
+        let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
+        let leftAnchorPoint = CGPoint(x: self.frame.size.width/4, y: self.frame.size.height/2)
+        var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
+        
+        for anchor in anchorPoints {
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var shapeLayer = CAShapeLayer()
+            shapeLayer.path = circlePath.cgPath
+            shapeLayer.fillColor = UIColor.red.cgColor
+            shapeLayer.strokeColor = UIColor.red.cgColor
+            shapeLayer.lineWidth = 3.0
+            self.anchorPointsLayers.append(shapeLayer)
+        }
+        
+        for anchor in self.anchorPointsLayers {
+            self.layer.addSublayer(anchor)
+        }
+        
+        self.hideAnchorPoints()
+    }
+    
+    override func getAnchorPoint(index: Int) -> CGPoint {
+        if(index == 0) {
+            let rightAnchorPoint = CGPoint(x: self.center.x + self.frame.size.width/2*0.5, y: self.center.y)
+            return rightAnchorPoint
+        } else if (index == 1) {
+            let bottomAnchorPoint = CGPoint(x: self.center.x, y: self.center.y + self.frame.size.height/2)
+            return bottomAnchorPoint
+        } else if(index == 2) {
+            let leftAnchorPoint = CGPoint(x: self.center.x - self.frame.size.width/2*0.5, y: self.center.y)
+            return leftAnchorPoint
+        } else { // garbage
+            return CGPoint(x: 0, y: 0)
+        }
+    }
     
     /*
      // Only override draw() if you perform custom drawing.

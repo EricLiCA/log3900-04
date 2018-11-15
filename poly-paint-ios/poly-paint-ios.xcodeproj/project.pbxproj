@@ -28,11 +28,15 @@
 		CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F1E1C216980FF0023663E /* SignUpViewController.swift */; };
 		CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2D721820DB600F21F57 /* DrawViewController.swift */; };
 		CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2D921820E7200F21F57 /* DrawView.swift */; };
-		CF21E2DC2182143500F21F57 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2DB2182143500F21F57 /* Line.swift */; };
 		CF21E32C2188EEA100F21F57 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32B2188EEA100F21F57 /* RectangleView.swift */; };
 		CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32F2188EEC300F21F57 /* EllipseView.swift */; };
-		CF21E3322188F61100F21F57 /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3312188F61100F21F57 /* CanvasViewController.swift */; };
 		CF21E3342189361C00F21F57 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3332189361C00F21F57 /* TriangleView.swift */; };
+		CF21E336218F93B000F21F57 /* StickFigureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E335218F93B000F21F57 /* StickFigureView.swift */; };
+		CF21E338218F9FC400F21F57 /* ClassDiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E337218F9FC400F21F57 /* ClassDiagramView.swift */; };
+		CF3DD51F2197A34600A14BAF /* CanevasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */; };
+		CF3DD525219B6B4C00A14BAF /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD524219B6B4C00A14BAF /* Line.swift */; };
+		CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD528219C804900A14BAF /* BasicShapeView.swift */; };
+		CF3DD52B219D22AA00A14BAF /* UseCaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -86,11 +90,15 @@
 		CF1F1E1C216980FF0023663E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		CF21E2D721820DB600F21F57 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
 		CF21E2D921820E7200F21F57 /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
-		CF21E2DB2182143500F21F57 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		CF21E32B2188EEA100F21F57 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
 		CF21E32F2188EEC300F21F57 /* EllipseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseView.swift; sourceTree = "<group>"; };
-		CF21E3312188F61100F21F57 /* CanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		CF21E3332189361C00F21F57 /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
+		CF21E335218F93B000F21F57 /* StickFigureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickFigureView.swift; sourceTree = "<group>"; };
+		CF21E337218F9FC400F21F57 /* ClassDiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassDiagramView.swift; sourceTree = "<group>"; };
+		CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanevasViewController.swift; sourceTree = "<group>"; };
+		CF3DD524219B6B4C00A14BAF /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		CF3DD528219C804900A14BAF /* BasicShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicShapeView.swift; sourceTree = "<group>"; };
+		CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseView.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
@@ -167,7 +175,6 @@
 				CF21E2D721820DB600F21F57 /* DrawViewController.swift */,
 				CF1F1E1C216980FF0023663E /* SignUpViewController.swift */,
 				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
-				CF21E2DB2182143500F21F57 /* Line.swift */,
 				CF0099DC216571B800E2D27E /* MainMenuViewController.swift */,
 				A78A7337215AE75D007A854F /* ConnectionViewController.swift */,
 				A78A7339215ED91C007A854F /* DateTime.swift */,
@@ -178,9 +185,9 @@
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
 				A77C46F221569CFB0056135A /* Main.storyboard */,
 				CF21E2D921820E7200F21F57 /* DrawView.swift */,
-				CF21E3312188F61100F21F57 /* CanvasViewController.swift */,
 				CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */,
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
+				CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */,
 			);
 			path = "poly-paint-ios";
 			sourceTree = "<group>";
@@ -219,6 +226,11 @@
 				CCA060E8219D151A00B558CA /* UIColorExtentions.swift */,
 				CF21E32F2188EEC300F21F57 /* EllipseView.swift */,
 				CF21E3332189361C00F21F57 /* TriangleView.swift */,
+				CF21E337218F9FC400F21F57 /* ClassDiagramView.swift */,
+				CF21E335218F93B000F21F57 /* StickFigureView.swift */,
+				CF3DD524219B6B4C00A14BAF /* Line.swift */,
+				CF3DD528219C804900A14BAF /* BasicShapeView.swift */,
+				CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */,
 			);
 			name = Shapes;
 			path = "New Group";
@@ -399,13 +411,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF3DD52B219D22AA00A14BAF /* UseCaseView.swift in Sources */,
 				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				CCE6BC4D21925DE800C6DF31 /* ColorPickerViewController.swift in Sources */,
 				CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */,
+				CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */,
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
+				CF3DD51F2197A34600A14BAF /* CanevasViewController.swift in Sources */,
 				CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */,
 				A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */,
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,
@@ -417,10 +432,11 @@
 				CCA060EB219DD64000B558CA /* ImageLoader.swift in Sources */,
 				CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */,
 				CF21E32C2188EEA100F21F57 /* RectangleView.swift in Sources */,
-				CF21E2DC2182143500F21F57 /* Line.swift in Sources */,
+				CF21E336218F93B000F21F57 /* StickFigureView.swift in Sources */,
 				CF21E3342189361C00F21F57 /* TriangleView.swift in Sources */,
 				A78A733A215ED91C007A854F /* DateTime.swift in Sources */,
-				CF21E3322188F61100F21F57 /* CanvasViewController.swift in Sources */,
+				CF3DD525219B6B4C00A14BAF /* Line.swift in Sources */,
+				CF21E338218F9FC400F21F57 /* ClassDiagramView.swift in Sources */,
 				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
