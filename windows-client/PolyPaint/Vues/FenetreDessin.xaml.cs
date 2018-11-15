@@ -67,6 +67,7 @@ namespace PolyPaint
                     CustomStroke duplicate = stroke.Duplicate();
                     ((VueModele)this.DataContext).Traits.Add(duplicate);
                     duplicate.Select();
+                    EditionSocket.AddStroke(((Savable)duplicate).toJson());
                 });
             }
 
@@ -84,6 +85,7 @@ namespace PolyPaint
                 {
                     vueModele.Traits.Remove(stroke);
                     ClipBoard.Add(stroke);
+                    EditionSocket.RemoveStroke(((Savable)stroke).toJson());
                 });
             }
         }
