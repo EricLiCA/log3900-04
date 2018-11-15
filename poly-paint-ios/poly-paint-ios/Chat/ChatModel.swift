@@ -19,6 +19,8 @@ class ChatModel {
     var messagesSubject: BehaviorSubject<[String]>
     var connectionStatusSubject: BehaviorSubject<String>
     var disconnectSubject: BehaviorSubject<Bool>
+    var notifications = 0
+    var notificationsSubject: BehaviorSubject<Int>
     var serverAddress: String = "http://localhost:3000/"
     var username: String = ""
     var invalidUsername: Bool = false
@@ -31,6 +33,7 @@ class ChatModel {
         messagesSubject = BehaviorSubject<[String]>(value: [String]())
         connectionStatusSubject = BehaviorSubject<String>(value: "connecting")
         disconnectSubject = BehaviorSubject<Bool>(value: false)
+        notificationsSubject = BehaviorSubject<Int>(value: 0)
         // self.setConnectionStatus(as: "connecting")
         
         manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(true), .compress])

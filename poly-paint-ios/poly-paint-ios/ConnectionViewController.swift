@@ -12,6 +12,7 @@ class ConnectionViewController: UIViewController {
     // MARK: - View Elements
     @IBOutlet weak var serverAddress: UITextField!
     @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var notificationsLabel: UILabel!
     
     var pseudonym: String = ""
     
@@ -25,6 +26,16 @@ class ConnectionViewController: UIViewController {
             self.username.text = self.pseudonym
             self.username.isEnabled = false
         }
+        
+        notificationsLabel.text = "NotificationsTest: \(ChatModel.instance.notifications)"
+        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
+            notifications in
+            if notifications == 0 {
+                self.notificationsLabel.isHidden = true
+            } else {
+                self.notificationsLabel.isHidden = false
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {
