@@ -10,6 +10,9 @@ import { User } from 'src/users/User';
 })
 export class AdminComponent {
 
+  private management = this.authenticationService.management;
+  private permission = this.authenticationService.permission;
+  private radioData: string;
   private admin = this.authenticationService.admin;
   private users: User[] = [];
   constructor(private authenticationService: AuthenticationService,
@@ -20,6 +23,11 @@ export class AdminComponent {
     this.userService.getUsers().then(users => {
       this.users = users;
     });
+    this.radioData = "admin";
+  }
+
+  protected getRadioValue(s: string): void {
+    this.radioData = s;
   }
 
   protected changeAccount(newUsername: String, newPassword: String, password: String): void {
@@ -32,13 +40,13 @@ export class AdminComponent {
   }
 
   protected createAccount(accountName: String, password1: String, password2: String): void {
-    if(this.admin && accountName.length > 0 && password1.length > 0 && password1 == password2){
+    if((this.management ||this.admin) && accountName.length > 0 && password1.length > 0 && password1 == password2){
         this.authenticationService.createUser(accountName, password1);
     }
   }
 
   protected deleteAccount(accountName: String): void {
-    if(this.admin && accountName.length > 0){
+    if((this.management ||this.admin) && accountName.length > 0){
       let userToDelete: String;
       this.users.forEach((user: User) => {
         if(user.username === accountName) {
@@ -49,17 +57,16 @@ export class AdminComponent {
     }
   }
 
-  protected changePermissions(accountName: String, permissionType: String): void {
-    console.log(permissionType);
-    if(this.admin && accountName.length > 0){
+  protected changePermissions(accountName: String): void {
+    if((this.permission || this.admin) && accountName.length > 0){
       let userToChange: User;
       this.users.forEach((user: User) => {
         if(user.username === accountName) {
           userToChange = user;
-          userToChange.userLevel = permissionType.toString().toLowerCase();
         }
       });
-      //this.authenticationService.changeUserPermissions(userToChange);
+      userToChange.userLevel = this.radioData;
+      this.authenticationService.changeUserPermissions(userToChange);
     }
   }
 }

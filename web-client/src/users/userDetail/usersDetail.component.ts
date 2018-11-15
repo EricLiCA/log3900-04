@@ -19,6 +19,7 @@ export class UsersDetailComponent {
   private userImagesWithLikes: ImageWithLikes[] = [];
   private currentUser: User;
   private admin = this.loginService.admin;
+  private imagePermissions = this.loginService.image;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,7 +43,7 @@ export class UsersDetailComponent {
           if(image.protectionLevel === "public" || image.protectionLevel === "protected"){
             this.userImages.push(image);
           }
-          if(this.loginService.user && image.ownerId === this.loginService.user.id && image.protectionLevel === "private" || this.admin) {
+          if(this.loginService.user && image.ownerId === this.loginService.user.id && image.protectionLevel === "private" || this.admin || this.imagePermissions) {
             this.userImages.push(image);
           }
         });

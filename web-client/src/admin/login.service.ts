@@ -7,6 +7,9 @@ import { User } from "src/users/User";
 export class AuthenticationService {
     private _loggedIn = false;
     public admin = false;
+    public image = false;
+    public permission = false;
+    public management = false;
     public user: Credentials;
     private password: String;
 
@@ -33,6 +36,15 @@ export class AuthenticationService {
                 this.user = data;
                 if(data.userLevel === "admin"){
                     this.admin = true;
+                }
+                else if(data.userLevel === "image"){
+                    this.image = true;
+                }
+                else if(data.userLevel === "permissions") {
+                    this.permission = true;
+                }
+                else if (data.userLevel === "management") {
+                    this.management = true;
                 }
                 return data;
             }
@@ -80,6 +92,7 @@ export class AuthenticationService {
     }
 
     public changeUserPermissions(user: User): void {
+        console.log(user);
         const apiUrl = 'http://localhost:3000/v2/users/' + user.id;
         this.http.put(apiUrl, user).toPromise();
     }

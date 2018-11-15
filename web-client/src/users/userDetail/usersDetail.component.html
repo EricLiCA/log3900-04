@@ -8,7 +8,7 @@
     <li class="image" *ngFor="let image of userImagesWithLikes | filter : searchText">
         <!--Card-->
     <mdb-card>
-      <button *ngIf="admin" type="button" class="close" aria-label="Close" (click)="removeImage(image)">
+      <button *ngIf="admin || imagePermissions" type="button" class="close" aria-label="Close" (click)="removeImage(image)">
         <span aria-hidden="true">&times;</span>
       </button>
         <!--Card image-->

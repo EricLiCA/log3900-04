@@ -57,7 +57,6 @@ export class UsersRoute {
     }
 
     public update(req: express.Request, res: express.Response, next: express.NextFunction): void {
-        
         User.update(
             req.params.id, req.body.username, req.body.password, req.body.userLevel, req.body.profileImage,
         ).then((user) => {

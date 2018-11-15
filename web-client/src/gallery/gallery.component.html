@@ -8,9 +8,6 @@
     <li class="image" *ngFor="let image of imageData | filter : searchText">
         <!--Card-->
       <mdb-card>
-        <button *ngIf="admin" type="button" class="close" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
         <!--Card image-->
         <div class="view overlay waves-light" mdbWavesEffect>
           <mdb-card-img src={{image.fullImageUrl}}></mdb-card-img>
