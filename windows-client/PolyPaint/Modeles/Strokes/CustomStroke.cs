@@ -25,7 +25,7 @@ namespace PolyPaint.Modeles
         {
             this.strokes = strokes;
             Id = Guid.NewGuid();
-            this.Index = ((CustomStroke)strokes.Last()).Index + 1;
+            this.Index = strokes.Count > 0 ? ((CustomStroke)strokes.Last()).Index + 1 : 1;
         }
 
         public CustomStroke(int index, StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts)

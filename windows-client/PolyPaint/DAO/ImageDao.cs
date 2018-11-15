@@ -61,7 +61,7 @@ namespace PolyPaint.DAO
                     if (response.StatusCode == HttpStatusCode.Created)
                     {
                         dynamic data = JObject.Parse(response.Content);
-                        ((MainWindow)Application.Current.MainWindow).LoadImage(data["id"]);
+                        ((MainWindow)Application.Current.MainWindow).LoadImage((string)data["id"]);
                     }
                     else
                     {
