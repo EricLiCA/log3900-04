@@ -22,7 +22,6 @@ class TriangleView: BasicShapeView {
     }
     
     override func draw(_ rect: CGRect) {
-        print("called draw")
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = self.trianglePathInRect(rect: insetRect)
         UIColor.white.setFill()
@@ -69,7 +68,6 @@ class TriangleView: BasicShapeView {
     override func getAnchorPoint(index: Int) -> CGPoint {
         if(index == 0) {
             let rightAnchorPoint = CGPoint(x: self.center.x + self.frame.size.width/2*0.5, y: self.center.y)
-            print(rightAnchorPoint)
             return rightAnchorPoint
         } else if (index == 1) {
             let bottomAnchorPoint = CGPoint(x: self.center.x, y: self.center.y + self.frame.size.height/2)
