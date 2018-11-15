@@ -177,7 +177,8 @@
     <Compile Include="DAO\UserDao.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Modeles\ChatModel.cs" />
-    <Compile Include="Modeles\EditionRoom.cs" />
+    <Compile Include="Modeles\EditionSocket.cs" />
+    <Compile Include="Modeles\ShapeLoader.cs" />
     <Compile Include="Modeles\ChatRoom.cs" />
     <Compile Include="Modeles\ChatUser.cs" />
     <Compile Include="Modeles\Strokes\Anchorable.cs" />
