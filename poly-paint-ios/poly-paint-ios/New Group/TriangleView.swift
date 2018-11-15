@@ -9,14 +9,11 @@
 import UIKit
 
 class TriangleView: BasicShapeView {
-
-    let defaultHeight: CGFloat = 150.0
-    let defaultWidth: CGFloat = 150.0
     
     init(frame: CGRect) {
         super.init(frame: frame, numberOfAnchorPoints: 3)
         self.backgroundColor = UIColor.clear
-        initGestureRecognizers()
+        self.initGestureRecognizers()
     }
     
     // We need to implement init(coder) to avoid compilation errors

@@ -12,8 +12,6 @@ class StickFigureView: BasicShapeView {
 
     let defaultHeight: CGFloat = 60
     let defaultWidth: CGFloat = 50
-    var lastRotation: CGFloat = 0
-    var originalRotation = CGFloat()
     
     init() {
         let frame = CGRect(x: 0, y: 0, width: self.defaultWidth, height: self.defaultHeight)

@@ -10,12 +10,9 @@ import UIKit
 
 class RectangleView: BasicShapeView {
 
-    var lastRotation: CGFloat = 0
-    var originalRotation = CGFloat()
-    
     init(frame: CGRect) {
         super.init(frame: frame, numberOfAnchorPoints: 4)
-        initGestureRecognizers()
+        self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
     }
     
@@ -41,7 +38,7 @@ class RectangleView: BasicShapeView {
         let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
         let leftAnchorPoint = CGPoint(x: 0, y: self.frame.size.height/2)
         var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
-        var anchorNumber = 0
+        
         for anchor in anchorPoints {
             var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
@@ -50,7 +47,6 @@ class RectangleView: BasicShapeView {
             shapeLayer.strokeColor = UIColor.red.cgColor
             shapeLayer.lineWidth = 3.0
             self.anchorPointsLayers.append(shapeLayer)
-            anchorNumber = anchorNumber + 1
         }
         
         for anchor in self.anchorPointsLayers {

@@ -10,12 +10,10 @@ import UIKit
 
 class EllipseView: BasicShapeView {
 
-    let defaultSize: CGFloat = 150.0
-    
     init(frame: CGRect) {
         super.init(frame:frame, numberOfAnchorPoints: 4)
         self.backgroundColor = UIColor.clear
-        initGestureRecognizers()
+        self.initGestureRecognizers()
     }
     
     // We need to implement init(coder) to avoid compilation errors

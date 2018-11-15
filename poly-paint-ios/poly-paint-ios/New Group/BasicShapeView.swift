@@ -60,7 +60,6 @@ class BasicShapeView: UIView {
             self.center.x += translation.x
             self.center.y += translation.y
             panGR.setTranslation(.zero, in: self)
-            //self.updateAnchorPoints()
             
             if(panGR.state == .ended) {
                 self.hideAnchorPoints()
@@ -144,8 +143,6 @@ class BasicShapeView: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //self.showAnchorPoints()
-        print("called touches began")
         var numAnchor = 0
         for layer in self.anchorPointsLayers {
             let touchArea = CGRect(x: (touches.first?.location(in: self).x)!, y: (touches.first?.location(in: self).y)!, width: 50, height: 50)
@@ -168,18 +165,4 @@ class BasicShapeView: UIView {
             numAnchor = numAnchor + 1
         }
     }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //self.hideAnchorPoints()
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if(self.touchAnchorPoint) {
-            print("moving")
-        }
-        
-    }
-    
-    
-
 }
