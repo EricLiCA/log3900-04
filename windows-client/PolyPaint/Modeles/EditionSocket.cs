@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Services;
 using System.Collections.Generic;
@@ -38,8 +39,7 @@ namespace PolyPaint.Modeles
         {
             ServerService.instance.Socket.Emit("editStroke", strignifiedStroke);
         }
-
-
+        
         public static void RequestAddPerson(string imageId)
         {
             ServerService.instance.Socket.Emit("joinImage", imageId);
@@ -52,7 +52,12 @@ namespace PolyPaint.Modeles
 
         public static void LockStroke(List<string> strokesIds)
         {
-            ServerService.instance.Socket.Emit("requestProtection");
+            ServerService.instance.Socket.Emit("requestProtection", JsonConvert.SerializeObject(strokesIds));
+        }
+
+        public static void UnlockStrokes()
+        {
+            ServerService.instance.Socket.Emit("removeProtection");
         }
 
         public void AddPerson(string newId)

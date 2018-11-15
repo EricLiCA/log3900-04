@@ -85,9 +85,9 @@ namespace PolyPaint.Modeles.Strokes
 
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
 
-            if (this.isSelected())
+            if (this.isSelected() || this.isLocked())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
+                Pen selectedPen = new Pen(new SolidColorBrush(this.isSelected() ? Colors.GreenYellow : Colors.OrangeRed), 5);
                 drawingContext.DrawEllipse(new SolidColorBrush(Colors.White), selectedPen, headPos, width / 2.5, height / 7);
                 drawingContext.DrawLine(selectedPen, neck, crouch);
                 drawingContext.DrawLine(selectedPen, rightArm, leftArm);

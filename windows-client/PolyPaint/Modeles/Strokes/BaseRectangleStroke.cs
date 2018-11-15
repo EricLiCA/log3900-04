@@ -12,6 +12,7 @@ namespace PolyPaint.Modeles.Strokes
         {
 
         }
+
         public BaseRectangleStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
 
@@ -19,6 +20,7 @@ namespace PolyPaint.Modeles.Strokes
 
         public BaseRectangleStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, index, pts, strokes, color)
         {
+
         }
 
         public override bool HitTest(Point point)
@@ -35,7 +37,6 @@ namespace PolyPaint.Modeles.Strokes
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
-
             DrawingAttributes originalDa = drawingAttributes.Clone();
             SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(this.Color);
             fillBrush.Freeze();
@@ -43,9 +44,9 @@ namespace PolyPaint.Modeles.Strokes
 
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
 
-            if (this.isSelected())
+            if (this.isSelected() || this.isLocked())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
+                Pen selectedPen = new Pen(new SolidColorBrush(this.isSelected() ? Colors.GreenYellow : Colors.OrangeRed), 5);
                 selectedPen.Freeze();
                 drawingContext.DrawRectangle(null, selectedPen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
             }

@@ -83,6 +83,7 @@ namespace PolyPaint.Modeles
         {
             if (!this.Selected) return null;
 
+            Console.WriteLine("ALERT");
             this.Editing = true;
             this.Refresh();
             return strokes.get(this.Id.ToString());
@@ -127,7 +128,7 @@ namespace PolyPaint.Modeles
 
         public CustomStroke Duplicate()
         {
-            this.Unselect();
+            this.stopEditing();
             CustomStroke duplicate = (CustomStroke)this.Clone();
             duplicate.RefreshGuids();
             for (int i = 0; i < duplicate.StylusPoints.Count; i++)

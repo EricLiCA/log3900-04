@@ -269,9 +269,9 @@ namespace PolyPaint.Modeles.Strokes
             DrawingAttributes originalDa = drawingAttributes.Clone();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
 
-            if (this.isSelected())
+            if (this.isSelected() || this.isLocked())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
+                Pen selectedPen = new Pen(new SolidColorBrush(this.isSelected() ? Colors.GreenYellow : Colors.OrangeRed), 5);
                 selectedPen.Freeze();
                 for (int i = 0; i < this.StylusPoints.Count - 1; i++)
                     drawingContext.DrawLine(selectedPen, this.StylusPoints[i].ToPoint(), this.StylusPoints[i + 1].ToPoint());

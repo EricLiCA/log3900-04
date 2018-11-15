@@ -113,9 +113,9 @@ namespace PolyPaint.Modeles.Strokes
             var figure = new PathFigure(top, segments, true);
             var geo = new PathGeometry(new[] { figure });
 
-            if (this.isSelected())
+            if (this.isSelected() || this.isLocked())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
+                Pen selectedPen = new Pen(new SolidColorBrush(this.isSelected() ? Colors.GreenYellow : Colors.OrangeRed), 5);
                 selectedPen.Freeze();
                 drawingContext.DrawGeometry(fillBrush, selectedPen, geo);
             }

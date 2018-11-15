@@ -7,15 +7,14 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Strokes
 {
-
     class BaseElipseStroke : ShapeStroke
     {
-        public BaseElipseStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
+        public BaseElipseStroke(StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(pts, strokes, color)
         {
 
         }
 
-        public BaseElipseStroke(StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(pts, strokes, color)
+        public BaseElipseStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
 
         }
@@ -40,20 +39,19 @@ namespace PolyPaint.Modeles.Strokes
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
-            drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
-            
             DrawingAttributes originalDa = drawingAttributes.Clone();
             SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(this.Color);
             fillBrush.Freeze();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
-            outlinePen.Freeze();
+
+            drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
 
             StylusPoint stp = this.StylusPoints[0];
             StylusPoint sp = this.StylusPoints[1];
             
-            if (this.isSelected())
+            if (this.isSelected() || this.isLocked())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
+                Pen selectedPen = new Pen(new SolidColorBrush(this.isSelected() ? Colors.GreenYellow : Colors.OrangeRed), 5);
                 selectedPen.Freeze();
                 drawingContext.DrawEllipse(null, selectedPen, new Point((sp.X + stp.X) / 2.0, (sp.Y + stp.Y) / 2.0), Math.Abs(sp.X - stp.X) / 2, Math.Abs(sp.Y - stp.Y) / 2);
             }
