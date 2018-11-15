@@ -26,6 +26,7 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var stickFigure: UIButton!
     @IBOutlet weak var classButton: UIButton!
     @IBOutlet weak var lineButton: UIButton!
+    
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
     var currentContext : CGContext?
@@ -36,12 +37,10 @@ class DrawViewController: UIViewController {
     var insideCanvas = false
     var startPointOfLine: CGPoint?
     var endPointOfLine: CGPoint?
-    
     var startPointView: BasicShapeView?
     var endPointView: BasicShapeView?
     var startAnchorNumber: Int?
     var endAnchorNumber: Int?
-    
     var lines = [Line]()
     var shapes = [String: BasicShapeView]()
     
@@ -157,7 +156,6 @@ class DrawViewController: UIViewController {
         let stickFigure = StickFigureView()
         self.shapes[stickFigure.uuid] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
-        //print(self.drawingPlace.subviews)
         self.layersFromShapes.append(stickFigure.layer)
     }
     
@@ -167,7 +165,6 @@ class DrawViewController: UIViewController {
         self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
         
         for line in lines {
-            //print(line.layer?.path?.boundingBox.contains(self.firstTouch!))
             print(line.hitTest(touchPoint: self.firstTouch!))
         }
     }
@@ -176,12 +173,7 @@ class DrawViewController: UIViewController {
         if(isUserEditing && self.insideCanvas) {
             // erase sublayers used for drawing
             if(self.drawingPlace.layer.sublayers != nil) {
-                for layer in self.drawingPlace.layer.sublayers! {
-                    self.drawingPlace.layer.sublayers?.popLast()
-                }
-                for layer in self.layersFromShapes {
-                    self.drawingPlace.layer.addSublayer(layer)
-                }
+                self.redrawLayers()
             }
             
             for touch in touches {
@@ -214,8 +206,6 @@ class DrawViewController: UIViewController {
                 self.currentBezierPath = bezier
                 self.currentContext?.addPath(bezier.cgPath)
                 self.currentContext?.strokePath()
-                
-
                 let shape = CAShapeLayer()
                 shape.frame = (self.drawingPlace.bounds)
                 shape.path = self.currentBezierPath?.cgPath;
@@ -261,12 +251,7 @@ class DrawViewController: UIViewController {
             
             self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
             
-            for layer in self.drawingPlace.layer.sublayers! {
-                self.drawingPlace.layer.sublayers?.popLast()
-            }
-            for layer in self.layersFromShapes {
-                self.drawingPlace.layer.addSublayer(layer)
-            }
+            self.redrawLayers()
             self.insideCanvas = false
         }
         
@@ -373,14 +358,9 @@ class DrawViewController: UIViewController {
             self.endPointView = nil
             self.endAnchorNumber = nil
         } else if(self.endPointOfLine == nil) {
-            print("END POINT OF LINE")
             self.endPointView = sender.userInfo["view"] as! BasicShapeView
             self.endPointOfLine = sender.userInfo["point"] as! CGPoint
             self.endAnchorNumber = sender.userInfo["anchorNumber"] as! Int
-            // make anchor points
-            //self.startPointView?.anchorPoints[self.startAnchorNumber!].setToUUID(toUUID: (self.endPointView?.uuid)!, toAnchorNumber: self.endAnchorNumber!, toPoint: self.endPointOfLine!)
-            //self.endPointView?.anchorPoints[self.endAnchorNumber!].setToUUID(toUUID: (self.startPointView?.uuid)!, toAnchorNumber: self.startAnchorNumber!, toPoint: self.startPointOfLine!)
-            
             // draw line
             var bezier = UIBezierPath()
             bezier.move(to: self.startPointOfLine!)
@@ -391,7 +371,6 @@ class DrawViewController: UIViewController {
             layer.path = bezier.cgPath
             layer.borderWidth = 2
             layer.strokeColor = UIColor.black.cgColor
-            
             var line = Line(layer: layer)
             line.points.append(self.startPointOfLine!)
             line.points.append(self.endPointOfLine!)
@@ -408,15 +387,10 @@ class DrawViewController: UIViewController {
             self.endPointOfLine = nil
             self.endPointView = nil
             self.endAnchorNumber = nil
-            
+
             self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
             
-            for layer in self.drawingPlace.layer.sublayers! {
-                self.drawingPlace.layer.sublayers?.popLast()
-            }
-            for layer in self.layersFromShapes {
-                self.drawingPlace.layer.addSublayer(layer)
-            }
+            self.redrawLayers()
         }
     }
     
@@ -425,6 +399,15 @@ class DrawViewController: UIViewController {
         let textArray = text.components(separatedBy: separators as CharacterSet)
         print(textArray)
         return textArray
+    }
+    
+    func redrawLayers() {
+        for layer in self.drawingPlace.layer.sublayers! {
+            self.drawingPlace.layer.sublayers?.popLast()
+        }
+        for layer in self.layersFromShapes {
+            self.drawingPlace.layer.addSublayer(layer)
+        }
     }
 
     /*
