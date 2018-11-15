@@ -45,6 +45,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.textContent = text.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

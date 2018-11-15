@@ -49,6 +49,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.Name = text;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

@@ -333,6 +333,7 @@ namespace PolyPaint.Modeles
                 Stroke trait = traits.Last();
                 traitsRetires.Add(trait);
                 traits.Remove(trait);
+                EditionSocket.RemoveStroke(((CustomStroke)trait).Id.ToString());
             }
             catch { }
 
@@ -347,6 +348,7 @@ namespace PolyPaint.Modeles
             {
                 Stroke trait = traitsRetires.Last();
                 traits.Add(trait);
+                EditionSocket.AddStroke(((Savable)trait).toJson());
                 traitsRetires.Remove(trait);
             }
             catch { }
@@ -369,17 +371,30 @@ namespace PolyPaint.Modeles
 
             ServerService.instance.Socket.On("addStroke", new CustomListener((object[] server_params) =>
             {
-
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    this.traits.Add(SerializationHelper.stringToStroke((JObject)server_params[0], this.traits));
+                });
             }));
 
             ServerService.instance.Socket.On("editStroke", new CustomListener((object[] server_params) =>
             {
-
+                CustomStroke updated = SerializationHelper.stringToStroke((JObject)server_params[0], this.traits);
+                int index = this.traits.ToList().FindIndex(stroke => ((CustomStroke)stroke).Id == updated.Id);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    this.traits.RemoveAt(index);
+                    this.traits.Insert(index, updated);
+                });
             }));
 
             ServerService.instance.Socket.On("removeStroke", new CustomListener((object[] server_params) =>
             {
-
+                int index = this.traits.ToList().FindIndex(stroke => ((CustomStroke)stroke).Id.ToString() == (string)server_params[0]);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    this.traits.RemoveAt(index);
+                });
             }));
 
             ServerService.instance.Socket.On("protection", new CustomListener((object[] server_params) =>
@@ -395,7 +410,7 @@ namespace PolyPaint.Modeles
             
             for (int i = 0; i < shapeObjects.Count; i++)
             {
-                this.traits.Add(SerializationHelper.stringToStroke(shapeObjects[i].ToString(), this.traits));
+                this.traits.Add(SerializationHelper.stringToStroke((JObject)shapeObjects[i], this.traits));
 
                 //dynamic shape = JObject.Parse(shapeObjects[i].ToString());
                 //if (shape["ShapeType"] != StrokeType.LINE.ToString())

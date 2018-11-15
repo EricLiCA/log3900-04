@@ -56,7 +56,7 @@ namespace PolyPaint.Modeles.Strokes
         public void DoneMoving()
         {
             if (!this.strokes.has(this.ParentId)) return;
-
+            
             Handleable parent = (Handleable)this.strokes.get(this.ParentId);
             parent.HandleStoped(this.Id);
         }

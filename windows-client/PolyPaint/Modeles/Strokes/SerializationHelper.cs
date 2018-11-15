@@ -13,9 +13,8 @@ namespace PolyPaint.Modeles.Strokes
 {
     public class SerializationHelper
     {
-        public static CustomStroke stringToStroke(string strignifiedObject, CustomStrokeCollection strokes)
+        public static CustomStroke stringToStroke(JObject serialized, CustomStrokeCollection strokes)
         {
-            JObject serialized = JObject.Parse(strignifiedObject);
             switch (serialized.ToObject<SerializedStroke>().ShapeType)
             {
                 case "RECTANGLE":

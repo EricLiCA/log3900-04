@@ -93,6 +93,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.FirstText = value;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         internal string getSecondLabel()
@@ -104,6 +105,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.SecondText = value;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         internal Relation getFirstRelation()
@@ -115,6 +117,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.FirstRelation = value;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         internal Relation getSecondRelation()
@@ -126,6 +129,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.SecondRelation = value;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         public void deleteDragHandles()
@@ -248,15 +252,16 @@ namespace PolyPaint.Modeles.Strokes
         public void HandleStoped(Guid id)
         {
             int movedIndex = this.HandlePoints.FindIndex(i => i.ToString() == id.ToString());
-            if (movedIndex == 0 || movedIndex == this.HandlePoints.Count - 1) return;
+            if (!(movedIndex == 0 || movedIndex == this.HandlePoints.Count - 1))
+                if (10 > this.FindDistanceToSegment(this.StylusPoints[movedIndex].ToPoint(), this.StylusPoints[movedIndex - 1].ToPoint(), this.StylusPoints[movedIndex + 1].ToPoint()))
+                {
+                    this.deleteDragHandles();
+                    this.HandlePoints.RemoveAt(movedIndex);
+                    this.StylusPoints.RemoveAt(movedIndex);
+                    this.Refresh();
+                }
 
-            if (10 > this.FindDistanceToSegment(this.StylusPoints[movedIndex].ToPoint(), this.StylusPoints[movedIndex - 1].ToPoint(), this.StylusPoints[movedIndex + 1].ToPoint()))
-            {
-                this.deleteDragHandles();
-                this.HandlePoints.RemoveAt(movedIndex);
-                this.StylusPoints.RemoveAt(movedIndex);
-                this.Refresh();
-            } 
+            EditionSocket.EditStroke(this.toJson());
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
@@ -398,6 +403,14 @@ namespace PolyPaint.Modeles.Strokes
             }
 
             if (changed) this.Refresh();
+        }
+
+        internal void anchorableDoneMoving(Anchorable anchorable)
+        {
+            if (((CustomStroke)anchorable).Id.ToString() == this.FirstAnchorId || ((CustomStroke)anchorable).Id.ToString() == this.SecondAncorId)
+            {
+                EditionSocket.EditStroke(this.toJson());
+            }
         }
 
         public override void RefreshGuids()

@@ -18,7 +18,10 @@ namespace PolyPaint.Modeles.Strokes
                 _rotation = value % 360;
                 _rotation -= value % 10;
                 this.Refresh();
-                this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableMoved(this));
+                this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => {
+                    ((BaseLine)stroke).anchorableMoved(this);
+                    ((BaseLine)stroke).anchorableDoneMoving(this);
+                });
             }
         }
 
@@ -295,12 +298,14 @@ namespace PolyPaint.Modeles.Strokes
 
         public void DoneMoving()
         {
-            //Send Modifications to server
+            EditionSocket.EditStroke(this.toJson());
+            this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableDoneMoving(this));
         }
 
         public void HandleStoped(Guid id)
         {
-            //Send Modifications to server
+            EditionSocket.EditStroke(this.toJson());
+            this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableDoneMoving(this));
         }
 
         public virtual string toJson()
@@ -324,7 +329,7 @@ namespace PolyPaint.Modeles.Strokes
                 Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y },
                 Height = this.Height,
                 Width = this.Width,
-                Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
+                Color = new ColorConverter().ConvertToString(this.Color)
             };
         }
     }
