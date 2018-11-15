@@ -70,6 +70,8 @@ class ChatModel {
             if username != "You" {
                 AudioServicesPlaySystemSound (self.systemSoundID)
             }
+            self.notifications += 1
+            self.notificationsSubject.onNext(self.notifications)
             self.addToMessageTableView(message: message, sentBy: username)
         }
         
