@@ -15,8 +15,7 @@ class RectangleView: UIView {
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()
     var color: UIColor?
-    var myframe: CGRect?
-    var mylayer: CALayer?
+
     
     init(frame: CGRect, layer: CALayer, color: UIColor) {
         super.init(frame: frame)
@@ -25,8 +24,6 @@ class RectangleView: UIView {
         self.backgroundColor = UIColor.blue
         self.setNeedsDisplay()
         self.color = color
-        self.mylayer = layer
-        self.myframe = frame
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -56,7 +53,7 @@ class RectangleView: UIView {
         self.color?.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
-        self.color?.setStroke()
+       // self.color?.setStroke()
         path.stroke()
     }
     
@@ -142,7 +139,7 @@ class RectangleView: UIView {
     }
     
     @objc internal func handleDuplicateAction(_ controller: UIMenuController) {
-        let shapeData = ["frame": self.myframe!, "layer": self.mylayer!, "color": self.color!] as [String : Any]
+        let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!] as [String : Any]
         NotificationCenter.default.post(name: .duplicateRectangle, object: nil, userInfo: shapeData)
     }
     
@@ -171,14 +168,37 @@ class RectangleView: UIView {
     }
     /*
     // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
+    
+   /* func toShapeObject() -> Data? {
         
-
+        let shape: [String: Any] = [
+            "id": self.uuid,
+            "imageid": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "shapetype": "RECTANGLE",
+            "index": -1,
+            "shapeinfo": [
+                "Center": [
+                    "X": self.center.x,
+                    "Y": self.center.y
+                ],
+                "Width": self.myframe?.width,
+                "Height": self.myframe?.height,
+                "Color": self.color?.hexString
+            ]
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+        return jsonData;
+        
+    }    */
 }
+
+
 
 extension Notification.Name {
     static let duplicateRectangle = Notification.Name("duplicateRectangle")

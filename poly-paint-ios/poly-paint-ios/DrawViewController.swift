@@ -161,7 +161,7 @@ class DrawViewController: UIViewController {
                     print("nothing")
                 }
                 
-                self.selectedColor.set()
+               // self.selectedColor.setFill()
                 self.currentContext?.setLineWidth(1)
                 self.currentBezierPath = bezier
                 self.currentBezierPath?.fill()
@@ -173,8 +173,7 @@ class DrawViewController: UIViewController {
                 let shape = CAShapeLayer()
                 shape.frame = (self.drawingPlace.bounds)
                 shape.path = self.currentBezierPath?.cgPath;
-                shape.strokeColor = self.selectedColor.cgColor
-                shape.borderColor = self.selectedColor.cgColor
+                shape.strokeColor = UIColor.black.cgColor
                 shape.fillColor = self.selectedColor.cgColor
                 
                 
@@ -194,14 +193,12 @@ class DrawViewController: UIViewController {
             let touch = touches.first
             self.currentContext = nil
             self.selectedColor.setFill()
-            self.selectedColor.setStroke()
             self.currentBezierPath?.fill()
             self.currentBezierPath?.stroke()
             self.currentBezierPath?.close()
             let myLayer = CAShapeLayer()
             myLayer.path = self.currentBezierPath?.cgPath
             myLayer.borderWidth = 2
-            myLayer.strokeColor = self.selectedColor.cgColor
             myLayer.fillColor = self.selectedColor.cgColor
             
             if(currentShape == Shape.Rectangle) {
