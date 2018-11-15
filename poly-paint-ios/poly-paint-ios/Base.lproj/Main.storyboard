@@ -413,6 +413,18 @@
                                     <action selector="lineTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="7lZ-rF-MOC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xNt-dH-1Cg">
+                                <rect key="frame" x="24" y="98" width="66" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Use Case">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <segue destination="JEd-Qi-ZZU" kind="popoverPresentation" popoverAnchorView="xNt-dH-1Cg" id="Epu-r1-N7m">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -426,11 +438,13 @@
                             <constraint firstItem="el7-WA-nyl" firstAttribute="leading" secondItem="sNV-0h-Pxl" secondAttribute="trailing" constant="8" id="VCD-Db-R8M"/>
                             <constraint firstItem="el7-WA-nyl" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="34" id="WCQ-am-gUP"/>
                             <constraint firstItem="laE-6R-FW3" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="35" id="XmV-Ey-P1B"/>
+                            <constraint firstItem="xNt-dH-1Cg" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="24" id="Zdt-9X-WcI"/>
                             <constraint firstItem="EFY-ek-Vzt" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="35" id="air-HH-NXG"/>
                             <constraint firstItem="sNV-0h-Pxl" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="34" id="gT5-SY-HrO"/>
                             <constraint firstItem="sNV-0h-Pxl" firstAttribute="leading" secondItem="DOf-Jz-Zu9" secondAttribute="trailing" constant="8" id="qcU-rz-SYL"/>
                             <constraint firstItem="EFY-ek-Vzt" firstAttribute="leading" secondItem="7FJ-AM-LDR" secondAttribute="leading" constant="216" id="seJ-Lq-HH4"/>
                             <constraint firstItem="EFY-ek-Vzt" firstAttribute="leading" secondItem="KsB-r3-vJz" secondAttribute="trailing" constant="16" id="t2M-hb-S7B"/>
+                            <constraint firstItem="xNt-dH-1Cg" firstAttribute="top" secondItem="7FJ-AM-LDR" secondAttribute="top" constant="34" id="tQu-N3-yhc"/>
                             <constraint firstItem="7FJ-AM-LDR" firstAttribute="bottom" secondItem="tNz-CW-3rW" secondAttribute="bottom" constant="20" id="vm1-jW-p8r"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7FJ-AM-LDR"/>
@@ -461,6 +475,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="912.5" y="-891.21093749999989"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Es3-Na-eqb">
+            <objects>
+                <viewController id="JEd-Qi-ZZU" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PCs-XO-bbA" customClass="useCasePopoverView" customModule="poly_paint_ios" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="exh-c9-3Gq">
+                                <rect key="frame" x="40" y="176" width="240" height="128"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="47M-Zi-jmd"/>
+                                    <constraint firstAttribute="width" constant="240" id="DGt-3l-WQh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EvV-r9-yYb">
+                                <rect key="frame" x="40" y="369" width="240" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="FGQ-WQ-xci"/>
+                                    <constraint firstAttribute="width" constant="240" id="me3-k6-EoW"/>
+                                </constraints>
+                                <state key="normal" title="Create Use Case">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="createUseCaseTapped:" destination="PCs-XO-bbA" eventType="touchUpInside" id="0y4-bt-mhJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="exh-c9-3Gq" firstAttribute="centerY" secondItem="OjH-Vb-gOs" secondAttribute="centerY" id="OTK-N3-m0y"/>
+                            <constraint firstItem="EvV-r9-yYb" firstAttribute="leading" secondItem="OjH-Vb-gOs" secondAttribute="leading" constant="40" id="U3C-jQ-etd"/>
+                            <constraint firstItem="EvV-r9-yYb" firstAttribute="top" secondItem="exh-c9-3Gq" secondAttribute="bottom" constant="65" id="Wit-hB-O2I"/>
+                            <constraint firstItem="exh-c9-3Gq" firstAttribute="centerX" secondItem="OjH-Vb-gOs" secondAttribute="centerX" id="n0f-XE-M3b"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="OjH-Vb-gOs"/>
+                        <connections>
+                            <outlet property="rawText" destination="exh-c9-3Gq" id="nYc-K0-ump"/>
+                        </connections>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lni-iO-eOs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1873.4375" y="-1593.1640625"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="2JB-on-srr">

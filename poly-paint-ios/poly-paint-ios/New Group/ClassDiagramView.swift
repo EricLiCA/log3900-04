@@ -134,7 +134,6 @@ class classDiagramPopoverView: UIView {
     }
     
     func sendCreateClassDiagramNotification() {
-        // Send notification to update username label in ProfileViewController
         let userInfo = [ "text" : rawText.text! ]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil, userInfo: userInfo)
     }
