@@ -14,9 +14,18 @@ namespace PolyPaint.Modeles.Strokes
     {
         public string Name;
 
-        public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
+        public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : this(pts, strokes, "Actor")
         {
-            this.Name = "Actor";
+        }
+
+        public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes, string name) : base(pts, strokes)
+        {
+            this.Name = name;
+        }
+
+        public PersonStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, string name) : base(id, index, pts, strokes, Colors.White)
+        {
+            this.Name = name;
         }
 
         public string GetText()
@@ -40,6 +49,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.Name = text;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

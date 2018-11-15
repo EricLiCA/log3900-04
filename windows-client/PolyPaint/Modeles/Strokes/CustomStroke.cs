@@ -17,14 +17,31 @@ namespace PolyPaint.Modeles
         private bool Selected = false;
         private bool Locked = false;
         public Guid Id = Guid.NewGuid();
+        public int Index;
         private bool Editing = false;
         protected CustomStrokeCollection strokes;
 
         public CustomStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts)
         {
             this.strokes = strokes;
+            Id = Guid.NewGuid();
+            this.Index = ((CustomStroke)strokes.Last()).Index + 1;
         }
-        
+
+        public CustomStroke(int index, StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts)
+        {
+            this.strokes = strokes;
+            Id = Guid.NewGuid();
+            this.Index = index;
+        }
+
+        public CustomStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts)
+        {
+            this.strokes = strokes;
+            Id = new Guid(id);
+            this.Index = index;
+        }
+
         public abstract new bool HitTest(Point point);
         public abstract bool isSelectable();
 
@@ -106,9 +123,6 @@ namespace PolyPaint.Modeles
                 strokes.Remove(strokes.get(this.Id.ToString()));
             }
             strokes.Insert(index, this.Clone());
-
-            if (this is Savable)
-                Console.WriteLine(((Savable)this).toJson());
         }
 
         public CustomStroke Duplicate()

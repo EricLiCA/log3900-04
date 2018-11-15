@@ -124,6 +124,8 @@ export class Application {
         // Shape Object
         router.post('/shapeObject', shapeObjectRoute.post.bind(shapeObjectRoute.post));
         router.get('/shapeObject/:imageId', shapeObjectRoute.get.bind(shapeObjectRoute.get));
+        router.put('/shapeObject/:imageId', shapeObjectRoute.update.bind(shapeObjectRoute.update));
+        router.delete('/shapeObject/:id', shapeObjectRoute.delete.bind(shapeObjectRoute.delete));
 
 
         // use router middleware

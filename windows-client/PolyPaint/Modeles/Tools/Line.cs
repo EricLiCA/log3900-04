@@ -107,6 +107,7 @@ namespace PolyPaint.Modeles.Tools
             {
                 strokes.Remove(ActiveStroke);
                 strokes.Add(ActiveStroke.Clone());
+                EditionSocket.AddStroke(((Savable)ActiveStroke).toJson());
             }
             IsDrawing = false;
             this.FirstAnchorPointId = null;

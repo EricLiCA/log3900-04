@@ -22,6 +22,16 @@ namespace PolyPaint.Modeles.Strokes
             };
         }
 
+        public UseCaseStroke(StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(pts, strokes)
+        {
+            this.textContent = Content;
+        }
+
+        public UseCaseStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(id, index, pts, strokes, Colors.White)
+        {
+            this.textContent = Content;
+        }
+
         public string GetText()
         {
             return textContent.Aggregate((a, b) => a + "\r\n" + b);
@@ -31,6 +41,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.textContent = text.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
