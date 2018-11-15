@@ -30,8 +30,12 @@ export class ConnectedUsersService {
         return ConnectedUsersService.instance.users.findIndex(user => user.name === name);
     }
 
-    private static findIndexBySocket(socket: Socket): number {
-        return ConnectedUsersService.instance.users.findIndex(user => user.socket.id === socket.id);
+    private static findIndexBySocket(id: string): number {
+        return ConnectedUsersService.instance.users.findIndex(user => user.socket.id === id);
+    }
+
+    public static getBySocket(id: string): User {
+        return ConnectedUsersService.instance.users[ConnectedUsersService.findIndexBySocket(id)];
     }
 
     public static getByName(name: string): User {
@@ -43,7 +47,11 @@ export class ConnectedUsersService {
     }
 
     public static disconnect(socket: Socket): void {
-        ConnectedUsersService.connectedUsers.splice(this.findIndexBySocket(socket), 1);
+        ConnectedUsersService.connectedUsers.splice(this.findIndexBySocket(socket.id), 1);
+    }
+
+    public static getAll(): User[] {
+        return ConnectedUsersService.instance.users;
     }
 
 

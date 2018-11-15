@@ -27,5 +27,6 @@ namespace PolyPaint.Services
         public RestClient server { get; set; }
         public Socket Socket { get; set; }
         public User user { get; set; }
+        public S3Communication S3Communication { get; set; }
     }
 }
