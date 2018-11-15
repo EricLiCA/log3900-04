@@ -1,4 +1,4 @@
-//
+
 //  DrawViewController.swift
 //  poly-paint-ios
 //
@@ -18,12 +18,10 @@ enum Shape {
 
 class DrawViewController: UIViewController {
 
-    @IBOutlet weak var notificationsLabel: UILabel!
-    @IBOutlet weak var canvas: UIView!
-    @IBOutlet weak var triangleButton: UIButton!
-    @IBOutlet weak var ellipseButton: UIButton!
-    @IBOutlet weak var rectangleButton: UIButton!
+    @IBOutlet weak var drawingPlace: UIView!
     @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var colorButton: UIBarButtonItem!
     @IBOutlet weak var stickFigure: UIButton!
     @IBOutlet weak var classButton: UIButton!
     @IBOutlet weak var lineButton: UIButton!
@@ -34,8 +32,9 @@ class DrawViewController: UIViewController {
     var currentShape = Shape.None
     var isUserEditing: Bool = false
     var currentBezierPath: UIBezierPath?
-    var layersFromShapes = [CALayer]()
+   // var layersFromShapes = [CALayer]()
     var insideCanvas = false
+    var selectedColor : UIColor = UIColor.black
     var startPointOfLine: CGPoint?
     var endPointOfLine: CGPoint?
     var startPointView: BasicShapeView?
@@ -47,18 +46,10 @@ class DrawViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        notificationsLabel.text = "NotificationsTest: \(ChatModel.instance.notifications)"
-        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
-            notifications in
-            self.notificationsLabel.text = "Notifications: \(notifications)"
-            if notifications == 0 {
-                self.notificationsLabel.isHidden = true
-            } else {
-                self.notificationsLabel.isHidden = false
-            }
-        })
-        self.canvas.clipsToBounds = true
+        self.drawingPlace.clipsToBounds = true
+        self.cancelButton.isEnabled = false
         self.setUpNotifications()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -72,23 +63,38 @@ class DrawViewController: UIViewController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let drawRectangleAction = UIAlertAction(title: "Rectangle", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            //  insert Rectangle here
+            self.rectangleTapped()
         })
         alertController.addAction(drawRectangleAction)
         
         
         let drawEllipseAction = UIAlertAction(title: "Ellipse", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            //  insert ellipse here
+            self.ellipseTapped()
         })
         alertController.addAction(drawEllipseAction)
-
+        
         
         let drawTriangleAction = UIAlertAction(title: "Triangle", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            //  insert triangle here
+            self.triangleTapped()
         })
         alertController.addAction(drawTriangleAction)
         
-
+        let drawActorAction = UIAlertAction(title: "Actor", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            self.stickfigureTapped()
+        })
+        alertController.addAction(drawActorAction)
+        
+        let drawClassAction = UIAlertAction(title: "Class", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            self.createClassDiagramAlert(sender: self)
+        })
+        alertController.addAction(drawClassAction)
+        
+        let drawLineAction = UIAlertAction(title: "Line", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            self.lineTapped()
+        })
+        alertController.addAction(drawLineAction)
+        
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
         })
         alertController.addAction(cancelAction)
@@ -100,80 +106,67 @@ class DrawViewController: UIViewController {
         }
         
         self.present(alertController, animated: true, completion: nil)
-
+        
     }
-    @IBAction func rectangleTapped(_ sender: UIButton) {
+    
+    @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
+        self.stopDrawing()
+    }
+    
+    func rectangleTapped() {
         if(self.currentShape == Shape.Rectangle) {
             self.isUserEditing = false
-            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.currentShape = Shape.None
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Rectangle
-            self.rectangleButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.lineButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.cancelButton.isEnabled = true
         }
     }
-    
-    @IBAction func ellipseTapped(_ sender: UIButton) {
+    func ellipseTapped() {
         if(self.currentShape == Shape.Ellipse) {
             self.isUserEditing = false
-            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.currentShape = Shape.None
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Ellipse
-            self.ellipseButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.lineButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.cancelButton.isEnabled = true
         }
+        
     }
     
-    @IBAction func triangleTapped(_ sender: UIButton) {
+    func triangleTapped() {
         if(self.currentShape == Shape.Triangle) {
             self.isUserEditing = false
-            self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.currentShape = Shape.None
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Triangle
-            self.triangleButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.lineButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            self.cancelButton.isEnabled = true
         }
     }
     
-    @IBAction func lineTapped(_ sender: UIButton) {
+    @IBAction func lineTapped() {
         if(self.currentShape == Shape.Line) {
             self.isUserEditing = false
-            self.lineButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.currentShape = Shape.None
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Line
-            self.lineButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-            self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            
+            self.cancelButton.isEnabled = true
         }
     }
     
-    @IBAction func stickfigureTapped(_ sender: UIButton) {
+    @IBAction func stickfigureTapped() {
         let stickFigure = StickFigureView()
         self.shapes[stickFigure.uuid] = stickFigure
-        self.canvas.addSubview(stickFigure)
-        self.layersFromShapes.append(stickFigure.layer)
+        self.drawingPlace.addSubview(stickFigure)
+        //self.layersFromShapes.append(stickFigure.layer)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        self.firstTouch = touch?.location(in: canvas)
-        self.insideCanvas = self.canvas.frame.contains((touch?.location(in: self.view))!)
+        self.firstTouch = touch?.location(in: drawingPlace)
+        self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
         
         for line in self.lines {
             line.hitTest(touchPoint: self.firstTouch!)
@@ -183,18 +176,18 @@ class DrawViewController: UIViewController {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(isUserEditing && self.insideCanvas) {
             // erase sublayers used for drawing
-            if(self.canvas.layer.sublayers != nil) {
+            if(self.drawingPlace.layer.sublayers != nil) {
                 self.redrawLayers()
             }
             
             for touch in touches {
-                secondTouch = touch.location(in: canvas)
+                secondTouch = touch.location(in: drawingPlace)
                 
                 if(self.currentContext == nil) {
-                    UIGraphicsBeginImageContext(canvas.frame.size)
+                    UIGraphicsBeginImageContext(drawingPlace.frame.size)
                     self.currentContext = UIGraphicsGetCurrentContext()
                 } else {
-                    self.currentContext?.clear(CGRect(x: 0, y: 0, width: canvas.frame.width, height: canvas.frame.height))
+                    self.currentContext?.clear(CGRect(x: 0, y: 0, width: drawingPlace.frame.width, height: drawingPlace.frame.height))
                 }
                 
                 var bezier = UIBezierPath()
@@ -212,18 +205,21 @@ class DrawViewController: UIViewController {
                     print("nothing")
                 }
                 
-                UIColor.gray.set()
+               // self.selectedColor.setFill()
                 self.currentContext?.setLineWidth(1)
                 self.currentBezierPath = bezier
+                self.currentBezierPath?.fill()
+                self.currentBezierPath?.stroke()
                 self.currentContext?.addPath(bezier.cgPath)
                 self.currentContext?.strokePath()
                 let shape = CAShapeLayer()
-                shape.frame = (self.canvas.bounds)
+                shape.frame = (self.drawingPlace.bounds)
                 shape.path = self.currentBezierPath?.cgPath;
                 shape.strokeColor = UIColor.black.cgColor
-                shape.borderColor = UIColor.gray.cgColor
-                shape.fillColor = UIColor.white.cgColor
-                self.canvas.layer.addSublayer(shape)
+                shape.fillColor = self.selectedColor.cgColor
+                
+                
+                self.drawingPlace.layer.addSublayer(shape)
                 self.currentContext?.addPath((self.currentBezierPath?.cgPath)!)
             }
         }
@@ -234,38 +230,46 @@ class DrawViewController: UIViewController {
         if(isUserEditing && self.insideCanvas) {
             let touch = touches.first
             self.currentContext = nil
+            self.selectedColor.setFill()
+            self.currentBezierPath?.fill()
+            self.currentBezierPath?.stroke()
             self.currentBezierPath?.close()
+            let myLayer = CAShapeLayer()
+            myLayer.path = self.currentBezierPath?.cgPath
+            myLayer.borderWidth = 2
+            myLayer.strokeColor = UIColor.black.cgColor
             let layer = CAShapeLayer()
             layer.path = self.currentBezierPath?.cgPath
             layer.borderWidth = 2
             layer.strokeColor = UIColor.black.cgColor
             
             if(currentShape == Shape.Rectangle) {
-                let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!)
+                let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor)
                 self.shapes[rectangleView.uuid] = rectangleView
-                self.canvas.addSubview(rectangleView)
+                self.drawingPlace.addSubview(rectangleView)
             } else if(currentShape == Shape.Ellipse) {
-                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!)
+                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor)
                 self.shapes[ellipseView.uuid] = ellipseView
-                self.canvas.addSubview(ellipseView)
+                self.drawingPlace.addSubview(ellipseView)
             } else if(currentShape == Shape.Triangle) {
-                let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!)
+                let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor)
                 self.shapes[triangleView.uuid] = triangleView
-                self.canvas.addSubview(triangleView)
+                self.drawingPlace.addSubview(triangleView)
             } else if(currentShape == Shape.Line) {
                 var line = Line(layer: layer)
                 line.points.append(self.firstTouch!)
                 line.points.append(self.secondTouch!)
-                self.canvas.layer.addSublayer(line.layer!)
+                self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
             }
             
-            self.layersFromShapes.append((self.canvas.layer.sublayers?.popLast())!)
+           //self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+            self.drawingPlace.layer.sublayers?.popLast()
             
             self.redrawLayers()
             self.insideCanvas = false
         }
-        
+        self.stopDrawing()
     }
     
     func drawRectangle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
@@ -280,21 +284,12 @@ class DrawViewController: UIViewController {
         bezier.move(to:CGPoint(x: (startPoint.x), y: (secondPoint.y)))
         bezier.addLine(to: CGPoint(x: (startPoint.x), y: (startPoint.y)))
         bezier.close()
-        
         return bezier
     }
     
     func drawEllipse(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
         let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.x - startPoint.x, height: secondPoint.y - startPoint.y))
         bezier.close()
-        
-        return bezier
-    }
-    
-    func drawCircle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
-        let bezier = UIBezierPath(ovalIn: CGRect(x: startPoint.x, y: startPoint.y, width:secondPoint.y - startPoint.y, height: secondPoint.y - startPoint.y))
-        bezier.close()
-        
         return bezier
     }
     
@@ -310,7 +305,6 @@ class DrawViewController: UIViewController {
         bezier.addLine(to: leftCorner)
         bezier.move(to:leftCorner)
         bezier.addLine(to: topCorner)
-        
         return bezier
     }
     
@@ -319,19 +313,91 @@ class DrawViewController: UIViewController {
         let yDist = a.y - b.y
         return CGFloat(sqrt(xDist * xDist + yDist * yDist))
     }
-
+    
+    func stopDrawing(){
+        self.isUserEditing = false
+        self.currentShape = Shape.None
+        self.cancelButton.isEnabled = false;
+    }
+    
+    @IBAction func colorPickerButton(_ sender: UIBarButtonItem) {
+        
+        let popoverVC = storyboard?.instantiateViewController(withIdentifier: "colorPickerPopover") as! ColorPickerViewController
+        popoverVC.modalPresentationStyle = .popover
+        popoverVC.preferredContentSize = CGSize(width: 284, height: 446)
+        if let popoverController = popoverVC.popoverPresentationController {
+            popoverController.barButtonItem = sender
+            popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
+            popoverController.permittedArrowDirections = .any
+           // popoverController.delegate? = self
+            popoverVC.delegate = self
+        }
+        present(popoverVC, animated: true, completion: nil)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    func setButtonColor (_ color: UIColor) {
+        self.colorButton.tintColor = color
+        self.selectedColor = color
+    }
+    
+    @objc func onDuplicate(_ notification:Notification) {
+        let shapeType = notification.userInfo?["shapeType"] as! String
+        
+        
+        if shapeType == "RECTANGLE" {
+            let view = RectangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            view.center.x = 0 + view.frame.width/2
+            view.center.y = 0 + view.frame.height/2
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+            
+        else if shapeType == "TRIANGLE" {
+            let view = TriangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            view.center.x = 0 + view.frame.width/2
+            view.center.y = 0 + view.frame.height/2
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+            
+        else  if shapeType == "ELLIPSE" {
+            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            view.center.x = 0 + view.frame.width/2
+            view.center.y = 0 + view.frame.height/2
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+       self.drawingPlace.layer.sublayers?.popLast()
+        //self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+        self.redrawLayers()
+        self.insideCanvas = false
+        
+    }
+    
+    @objc func onDelete(_ notification:Notification) {
+        let uuid = notification.userInfo?["uuid"] as! String
+        self.shapes.removeValue(forKey: uuid)
+    }
+    
     func setUpNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(createClassDiagramAlert), name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(drawLineAlert), name: NSNotification.Name(rawValue: "drawLineAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(movedViewAlert), name: NSNotification.Name(rawValue: "movedView"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onDuplicate(_:)), name: .duplicate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onDelete(_:)), name: .delete, object: nil)
+
     }
     
     @objc func createClassDiagramAlert(sender: AnyObject) {
         var text = sender.userInfo["text"]
         let classDiagram = ClassDiagramView(text: processText(text: text as! String))
         self.shapes[classDiagram.uuid] = classDiagram
-        self.canvas.addSubview(classDiagram)
-        self.layersFromShapes.append(classDiagram.layer)
+        self.drawingPlace.addSubview(classDiagram)
+        //self.layersFromShapes.append(classDiagram.layer)
         
     }
     
@@ -384,10 +450,10 @@ class DrawViewController: UIViewController {
             line.secondAnchorShapeId = self.endPointView?.uuid
             line.secondAnchorShapeIndex = self.endAnchorNumber
             self.lines.append(line)
-            self.canvas.layer.addSublayer(line.layer!)
+            self.drawingPlace.layer.addSublayer(line.layer!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
             self.resetLineEndPoints()
-            self.layersFromShapes.append((self.canvas.layer.sublayers?.popLast())!)
+          //  self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
             self.redrawLayers()
         }
     }
@@ -408,11 +474,15 @@ class DrawViewController: UIViewController {
     }
     
     func redrawLayers() {
-        for layer in self.canvas.layer.sublayers! {
-            self.canvas.layer.sublayers?.popLast()
+        for layer in self.drawingPlace.layer.sublayers! {
+            self.drawingPlace.layer.sublayers?.popLast()
         }
-        for layer in self.layersFromShapes {
-            self.canvas.layer.addSublayer(layer)
+       for (uuid, view) in self.shapes{
+            self.drawingPlace.layer.addSublayer(view.layer)
+        }
+        
+        for line in lines {
+            self.drawingPlace.layer.addSublayer(line.layer!)
         }
     }
 
@@ -427,4 +497,13 @@ class DrawViewController: UIViewController {
     */
 
 }
+
+
+//  DrawViewController.swift
+//  poly-paint-ios
+//
+//  Created by Tomato on 2018-10-25.
+//  Copyright © 2018 PolyAcme. All rights reserved.
+//
+
 
