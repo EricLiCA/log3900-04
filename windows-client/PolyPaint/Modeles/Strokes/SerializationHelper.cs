@@ -49,8 +49,6 @@ namespace PolyPaint.Modeles.Strokes
 
                 case "LINE":
                     SerializedLine line = serialized.ToObject<SerializedLine>();
-                    Console.WriteLine(serialized);
-                    Console.WriteLine(line);
 
                     var points = line.ShapeInfo.Points.ConvertAll<StylusPoint>(point =>
                     {

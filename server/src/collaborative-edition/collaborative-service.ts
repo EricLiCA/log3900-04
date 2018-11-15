@@ -31,7 +31,6 @@ export class CollaborativeService {
     public async getCanvas(canvasId: string): Promise<Canvas> {
         let selected = this.canvas.find((image: Canvas) => image.id === canvasId);
         if (selected == undefined) {
-            console.log("Loading Canvas .." + canvasId);
             selected = new Canvas(canvasId);
             this.canvas.push(selected);
             await selected.load();

@@ -56,7 +56,6 @@ export class Canvas {
     }
 
     public requestProtection(user: User, ids: string[]): void {
-        console.log(ids);
         this.removeProtections(user);
         this.protections.set(user, ids.filter(id => {
             let alreadyLocked = false;
