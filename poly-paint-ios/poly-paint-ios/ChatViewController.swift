@@ -36,6 +36,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ChatModel.instance.notifications = 0
+        ChatModel.instance.notificationsSubject.onNext(0)
+        
         messagesArray = chatModel.messagesArray
         
         // Add listeners for keyboard events
@@ -62,6 +65,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillDisappear(_ animated: Bool) {
         // Hide keyboard
         messageTextField.resignFirstResponder()
+        ChatModel.instance.notifications = 0
+        ChatModel.instance.notificationsSubject.onNext(0)
     }
     
     override func didReceiveMemoryWarning() {
@@ -122,6 +127,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             print(messages)
             self.messagesArray = messages
             self.messageTableView.reloadData()
+            //ChatModel.instance.notifications = 0
+            //ChatModel.instance.notificationsSubject.onNext(0)
             /*let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
             self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
             self.messageTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)*/

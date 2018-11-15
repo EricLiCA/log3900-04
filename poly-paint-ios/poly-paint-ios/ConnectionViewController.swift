@@ -17,6 +17,7 @@ class ConnectionViewController: UIViewController {
     var pseudonym: String = ""
     
     // MARK: - Initialization and Cleanup
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,6 +31,7 @@ class ConnectionViewController: UIViewController {
         notificationsLabel.text = "NotificationsTest: \(ChatModel.instance.notifications)"
         ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
             notifications in
+            self.notificationsLabel.text = "Notifications: \(notifications)"
             if notifications == 0 {
                 self.notificationsLabel.isHidden = true
             } else {
