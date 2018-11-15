@@ -106,9 +106,9 @@ export class ShapeObject {
     public ImageId: string;
     public ShapeType: string;
     public Index: string;
-    public ShapeInfo: string;
+    public ShapeInfo: {};
 
-    public constructor(id: string, imageId: string, shapeType: string, index: string, shapeInfo: string) {
+    public constructor(id: string, imageId: string, shapeType: string, index: string, shapeInfo: {}) {
         this.Id = id;
         this.ImageId = imageId;
         this.ShapeType = shapeType;

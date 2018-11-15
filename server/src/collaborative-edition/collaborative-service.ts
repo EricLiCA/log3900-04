@@ -31,7 +31,9 @@ export class CollaborativeService {
     public async getCanvas(canvasId: string): Promise<Canvas> {
         let selected = this.canvas.find((image: Canvas) => image.id === canvasId);
         if (selected == undefined) {
+            console.log("Loading Canvas .." + canvasId);
             selected = new Canvas(canvasId);
+            this.canvas.push(selected);
             await selected.load();
         }
 
@@ -44,7 +46,7 @@ export class CollaborativeService {
             if (user.socket.id === userSocketId)
                 roomId = id;
         });
-        return this.getCanvas(roomId);
+        return roomId == undefined ? undefined : this.getCanvas(roomId);
     }
 
     public newConnection(user: User): void {
@@ -77,26 +79,33 @@ export class CollaborativeService {
             this.users.delete(user);
         });
 
-        user.socket.on('addStroke', (strignifiedStroke: string) => {
-            let canvas = this.getUserCanvas(user.socket.id);
-            let stroke = JSON.parse(strignifiedStroke);
-            //Add stroke to canvas
+        user.socket.on('addStroke', async (strignifiedStroke: string) => {
+            const canvas = await this.getUserCanvas(user.socket.id);
+            const stroke = JSON.parse(strignifiedStroke);
+            const toSend = canvas.add(stroke as ShapeObject);
+
+            user.socket.to(this.users.get(user)).emit('addStroke', toSend);
+            user.socket.emit('editStroke', toSend);
         });
 
-        user.socket.on('removeStroke', (strokeId: string) => {
-            let canvas = this.getUserCanvas(user.socket.id);
-            //Remove stroke from canvas
+        user.socket.on('removeStroke', async (strokeId: string) => {
+            let canvas = await this.getUserCanvas(user.socket.id);
+            canvas.remove(strokeId);
+
+            user.socket.to(this.users.get(user)).emit('removeStroke', strokeId);
         });
 
-        user.socket.on('editStroke', (strignifiedStroke: string) => {
-            let canvas = this.getUserCanvas(user.socket.id);
-            let stroke = JSON.parse(strignifiedStroke);
-            //Edit stroke in canvas
+        user.socket.on('editStroke', async (strignifiedStroke: string) => {
+            let canvas = await this.getUserCanvas(user.socket.id);
+            let stroke = JSON.parse(strignifiedStroke) as ShapeObject;
+            canvas.edit(stroke);
+
+            user.socket.to(this.users.get(user)).emit('editStroke', stroke);
         });
 
-        user.socket.on('requestProtection', (strokeIds: string) => {
-            let canvas = this.getUserCanvas(user.socket.id);
-            let stroke = JSON.parse(strokeIds);
+        user.socket.on('requestProtection', async (strokeIds: string) => {
+            //let canvas = await this.getUserCanvas(user.socket.id);
+            //let stroke = JSON.parse(strokeIds);
             //RequestProtection
         });
     }

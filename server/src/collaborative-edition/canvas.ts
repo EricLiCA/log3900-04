@@ -23,4 +23,19 @@ export class Canvas {
         });
     }
 
+    public add(newObject: ShapeObject): ShapeObject {
+        newObject.Index = this.strokes[this.strokes.length - 1].Index + 1;
+        this.strokes.push(newObject)
+        return newObject;
+    }
+
+    public remove(id: string): void {
+        this.strokes.splice(this.strokes.findIndex(stroke => stroke.Id == id), 1);
+    }
+
+    public edit(newObject: ShapeObject): void {
+        const index = this.strokes.findIndex(stroke => stroke.Id == newObject.Id);
+        this.strokes[index] = newObject;
+    }
+
 }
