@@ -72,19 +72,19 @@ namespace PolyPaint.Modeles.Strokes
             var points2 = new StylusPointCollection();
             points2.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height + 2));
             points2.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height));
-            var anchor2 = new AnchorPoint(points2, this.strokes, BOTTOM, this, 1);
+            var anchor2 = new AnchorPoint(points2, this.Index, this.strokes, BOTTOM, this, 1);
             this.strokes.Insert(index, anchor2);
 
             var points3 = new StylusPointCollection();
             points3.Add(new StylusPoint(topLeft.X + width / 4 - 2, topLeft.Y + height / 2));
             points3.Add(new StylusPoint(topLeft.X + width / 4, topLeft.Y + height / 2));
-            var anchor3 = new AnchorPoint(points3, this.strokes, LEFT, this, 2);
+            var anchor3 = new AnchorPoint(points3, this.Index, this.strokes, LEFT, this, 2);
             this.strokes.Insert(index, anchor3);
 
             var points4 = new StylusPointCollection();
             points4.Add(new StylusPoint(topLeft.X + 3 * width / 4 + 2, topLeft.Y + height / 2));
             points4.Add(new StylusPoint(topLeft.X + 3 * width / 4, topLeft.Y + height / 2));
-            var anchor4 = new AnchorPoint(points4, this.strokes, RIGHT, this, 0);
+            var anchor4 = new AnchorPoint(points4, this.Index, this.strokes, RIGHT, this, 0);
             this.strokes.Insert(index, anchor4);
 
 

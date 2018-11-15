@@ -28,6 +28,13 @@ namespace PolyPaint.Modeles
             this.Index = ((CustomStroke)strokes.Last()).Index + 1;
         }
 
+        public CustomStroke(int index, StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts)
+        {
+            this.strokes = strokes;
+            Id = Guid.NewGuid();
+            this.Index = index;
+        }
+
         public CustomStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts)
         {
             this.strokes = strokes;

@@ -15,7 +15,7 @@ namespace PolyPaint.Modeles.Strokes
 
         public readonly string ParentId;
 
-        public DragHandle(StylusPointCollection pts, CustomStrokeCollection strokes, Guid id, string parentId) : base(pts, strokes)
+        public DragHandle(StylusPointCollection pts, int index, CustomStrokeCollection strokes, Guid id, string parentId) : base(index, pts, strokes)
         {
             this.Id = id;
             this.ParentId = parentId;

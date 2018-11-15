@@ -80,7 +80,7 @@ namespace PolyPaint.Modeles.Strokes
             {
                 var positions = new StylusPointCollection();
                 positions.Add(new StylusPoint(this.StylusPoints[i].X, this.StylusPoints[i].Y));
-                this.strokes.Add(new DragHandle(positions, this.strokes, this.HandlePoints[i], this.Id.ToString()));
+                this.strokes.Add(new DragHandle(positions, this.Index, this.strokes, this.HandlePoints[i], this.Id.ToString()));
             }
         }
 
