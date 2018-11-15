@@ -14,6 +14,7 @@ export class ImageLikesRoute {
                         userId: row.UserId,
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -36,6 +37,7 @@ export class ImageLikesRoute {
                     imageId: result.ImageId,
                     userId: result.UserId,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -53,6 +55,7 @@ export class ImageLikesRoute {
                     imageId: result.ImageId,
                     userId: result.UserId,
                 });
+                return;
             }
             res.sendStatus(404);
         })

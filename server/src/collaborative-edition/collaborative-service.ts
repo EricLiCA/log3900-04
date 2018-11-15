@@ -70,9 +70,10 @@ export class CollaborativeService {
 
         });
 
-        user.socket.on('leaveImage', () => {
-            let canvas = this.getUserCanvas(user.socket.id);
+        user.socket.on('leaveImage', async () => {
+            let canvas = await this.getUserCanvas(user.socket.id);
             if (canvas != undefined) {
+                canvas.removeProtections(user);
                 //Tel clients user left
             }
             
@@ -82,7 +83,7 @@ export class CollaborativeService {
         user.socket.on('addStroke', async (strignifiedStroke: string) => {
             const canvas = await this.getUserCanvas(user.socket.id);
             const stroke = JSON.parse(strignifiedStroke);
-            const toSend = canvas.add(stroke as ShapeObject);
+            const toSend = canvas.add(user, stroke as ShapeObject);
 
             user.socket.to(this.users.get(user)).emit('addStroke', toSend);
             user.socket.emit('editStroke', toSend);
@@ -104,16 +105,21 @@ export class CollaborativeService {
         });
 
         user.socket.on('requestProtection', async (strokeIds: string) => {
-            //let canvas = await this.getUserCanvas(user.socket.id);
-            //let stroke = JSON.parse(strokeIds);
-            //RequestProtection
+            let canvas = await this.getUserCanvas(user.socket.id);
+            let ids = JSON.parse(strokeIds);
+            canvas.requestProtection(user, ids as string[]);
+        });
+
+        user.socket.on('removeProtection', async () => {
+            let canvas = await this.getUserCanvas(user.socket.id);
+            canvas.removeProtections(user);
         });
     }
 
-    public closeConnection(user: User) {
-        let canvas = this.getUserCanvas(user.socket.id);
+    public async closeConnection(user: User) {
+        let canvas = await this.getUserCanvas(user.socket.id);
         if (canvas != undefined) {
-            //Tel clients user left
+            canvas.removeProtections(user);
         }
         
         this.users.delete(user);
