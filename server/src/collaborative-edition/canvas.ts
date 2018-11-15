@@ -16,7 +16,7 @@ export class Canvas {
             ShapeObject.get(this.id).then(
                 (value: ShapeObject[]) => {
                     this.strokes = value;
-                    resolve(value);
+                    resolve(value.sort((a, b) => a.Index - b.Index));
                 },
                 (rejectReason: any) =>  reject(rejectReason)
             );
@@ -35,7 +35,9 @@ export class Canvas {
 
     public edit(newObject: ShapeObject): void {
         const index = this.strokes.findIndex(stroke => stroke.Id == newObject.Id);
-        this.strokes[index] = newObject;
+        this.strokes.splice(index, 1)
+        const newIndex = this.strokes.findIndex(stroke => stroke.Index > newObject.Index);
+        this.strokes[newIndex] = newObject;
     }
 
 }
