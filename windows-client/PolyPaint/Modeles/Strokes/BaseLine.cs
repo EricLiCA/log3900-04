@@ -32,7 +32,7 @@ namespace PolyPaint.Modeles.Strokes
                 this.HandlePoints.Add(Guid.NewGuid());
         }
 
-        public BaseLine(string id, StylusPointCollection pts, CustomStrokeCollection strokes) : base(id, pts, strokes)
+        public BaseLine(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes) : base(id, index, pts, strokes)
         {
             this.HandlePoints = new List<Guid>();
             for (int i = 0; i < pts.Count; i++)
@@ -55,9 +55,9 @@ namespace PolyPaint.Modeles.Strokes
             }
         }
 
-        public BaseLine(string id, StylusPointCollection pts, CustomStrokeCollection strokes,
+        public BaseLine(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes,
                         string firstAnchorId, int firstAnchorIndex,
-                        string secondAnchorId, int secondAnchorIndex) : this(id, pts, strokes)
+                        string secondAnchorId, int secondAnchorIndex) : this(id, index, pts, strokes)
         {
             if (firstAnchorId != null)
             {
@@ -429,7 +429,7 @@ namespace PolyPaint.Modeles.Strokes
             {
                 Id = this.Id.ToString(),
                 ShapeType = this.StrokeType().ToString(),
-                Index = -1,
+                Index = this.Index,
                 ShapeInfo = GetShapeInfo(),
                 ImageId = ServerService.instance.currentImageId
             };

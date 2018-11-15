@@ -63,7 +63,7 @@ namespace PolyPaint.Modeles.Strokes
             this.Color = color;
         }
 
-        public ShapeStroke(string id, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, pts, strokes)
+        public ShapeStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, index, pts, strokes)
         {
             this.Color = color;
         }
@@ -314,7 +314,7 @@ namespace PolyPaint.Modeles.Strokes
             {
                 Id = this.Id.ToString(),
                 ShapeType = this.StrokeType().ToString(),
-                Index = -1,
+                Index = this.Index,
                 ShapeInfo = GetShapeInfo(),
                 ImageId = ServerService.instance.currentImageId
             };

@@ -20,7 +20,7 @@ namespace PolyPaint.Modeles.Strokes
 
         }
 
-        public BaseElipseStroke(string id, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, pts, strokes, color)
+        public BaseElipseStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, index, pts, strokes, color)
         {
 
         }

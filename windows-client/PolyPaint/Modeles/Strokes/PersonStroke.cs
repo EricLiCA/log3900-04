@@ -23,7 +23,7 @@ namespace PolyPaint.Modeles.Strokes
             this.Name = name;
         }
 
-        public PersonStroke(string id, StylusPointCollection pts, CustomStrokeCollection strokes, string name) : base(id, pts, strokes, Colors.White)
+        public PersonStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, string name) : base(id, index, pts, strokes, Colors.White)
         {
             this.Name = name;
         }

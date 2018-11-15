@@ -23,7 +23,7 @@ namespace PolyPaint.Modeles.Strokes
 
         }
 
-        public BaseTrangleStroke(string id, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, pts, strokes, color)
+        public BaseTrangleStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, index, pts, strokes, color)
         {
 
         }

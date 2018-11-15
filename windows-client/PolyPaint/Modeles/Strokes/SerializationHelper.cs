@@ -19,32 +19,32 @@ namespace PolyPaint.Modeles.Strokes
             {
                 case "RECTANGLE":
                     SerializedShape rectangle = serialized.ToObject<SerializedShape>();
-                    var rectangleStroke = new BaseRectangleStroke(rectangle.Id, getExtrimities(rectangle.ShapeInfo), strokes, (Color)ColorConverter.ConvertFromString(rectangle.ShapeInfo.Color));
+                    var rectangleStroke = new BaseRectangleStroke(rectangle.Id, rectangle.Index, getExtrimities(rectangle.ShapeInfo), strokes, (Color)ColorConverter.ConvertFromString(rectangle.ShapeInfo.Color));
                     return rectangleStroke;
 
                 case "TRIANGLE":
                     SerializedShape triangle = serialized.ToObject<SerializedShape>();
-                    var triangleStroke = new BaseTrangleStroke(triangle.Id, getExtrimities(triangle.ShapeInfo), strokes, (Color)ColorConverter.ConvertFromString(triangle.ShapeInfo.Color));
+                    var triangleStroke = new BaseTrangleStroke(triangle.Id, triangle.Index, getExtrimities(triangle.ShapeInfo), strokes, (Color)ColorConverter.ConvertFromString(triangle.ShapeInfo.Color));
                     return triangleStroke;
 
                 case "ELIPSE":
                     SerializedShape elipse = serialized.ToObject<SerializedShape>();
-                    var elipseStroke = new BaseElipseStroke(elipse.Id, getExtrimities(elipse.ShapeInfo), strokes, (Color)ColorConverter.ConvertFromString(elipse.ShapeInfo.Color));
+                    var elipseStroke = new BaseElipseStroke(elipse.Id, elipse.Index, getExtrimities(elipse.ShapeInfo), strokes, (Color)ColorConverter.ConvertFromString(elipse.ShapeInfo.Color));
                     return elipseStroke;
 
                 case "CLASS":
                     SerializedTextable classCase = serialized.ToObject<SerializedTextable>();
-                    var classStroke = new ClassStroke(classCase.Id, getExtrimities(classCase.ShapeInfo), strokes, classCase.ShapeInfo.Content);
+                    var classStroke = new ClassStroke(classCase.Id, classCase.Index, getExtrimities(classCase.ShapeInfo), strokes, classCase.ShapeInfo.Content);
                     return classStroke;
 
                 case "USE":
                     SerializedTextable use = serialized.ToObject<SerializedTextable>();
-                    var useStroke = new UseCaseStroke(use.Id, getExtrimities(use.ShapeInfo), strokes, use.ShapeInfo.Content);
+                    var useStroke = new UseCaseStroke(use.Id, use.Index, getExtrimities(use.ShapeInfo), strokes, use.ShapeInfo.Content);
                     return useStroke;
 
                 case "ACTOR":
                     SerializedTextable actor = serialized.ToObject<SerializedTextable>();
-                    var actorStroke = new PersonStroke(actor.Id, getExtrimities(actor.ShapeInfo), strokes, actor.ShapeInfo.Content[0]);
+                    var actorStroke = new PersonStroke(actor.Id, actor.Index, getExtrimities(actor.ShapeInfo), strokes, actor.ShapeInfo.Content[0]);
                     return actorStroke;
 
                 case "LINE":
@@ -55,7 +55,7 @@ namespace PolyPaint.Modeles.Strokes
                         return new StylusPoint(point.X, point.Y);
                     });
 
-                    var lineStroke = new BaseLine(line.Id, new StylusPointCollection(points), strokes, line.ShapeInfo.FirstAnchorId, line.ShapeInfo.FirstAnchorIndex, line.ShapeInfo.SecondAnchorId, line.ShapeInfo.SecondAnchorIndex);
+                    var lineStroke = new BaseLine(line.Id, line.Index, new StylusPointCollection(points), strokes, line.ShapeInfo.FirstAnchorId, line.ShapeInfo.FirstAnchorIndex, line.ShapeInfo.SecondAnchorId, line.ShapeInfo.SecondAnchorIndex);
                     return lineStroke;
             }
 

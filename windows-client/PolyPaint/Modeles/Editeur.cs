@@ -380,11 +380,12 @@ namespace PolyPaint.Modeles
             ServerService.instance.Socket.On("editStroke", new CustomListener((object[] server_params) =>
             {
                 CustomStroke updated = SerializationHelper.stringToStroke((JObject)server_params[0], this.traits);
-                int index = this.traits.ToList().FindIndex(stroke => ((CustomStroke)stroke).Id == updated.Id);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
+                    int index = this.traits.ToList().FindIndex(stroke => ((CustomStroke)stroke).Id == updated.Id);
                     this.traits.RemoveAt(index);
-                    this.traits.Insert(index, updated);
+                    int newindex = this.traits.ToList().FindIndex(stroke => ((CustomStroke)stroke).Index > updated.Index);
+                    this.traits.Insert(newindex, updated);
                 });
             }));
 

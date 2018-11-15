@@ -31,7 +31,7 @@ namespace PolyPaint.Modeles.Strokes
             this.textContent = Content;
         }
 
-        public ClassStroke(string id, StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(id, pts, strokes, Colors.White)
+        public ClassStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(id, index, pts, strokes, Colors.White)
         {
             this.textContent = Content;
         }
