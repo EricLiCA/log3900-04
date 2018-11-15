@@ -382,19 +382,27 @@ namespace PolyPaint.Modeles
                 CustomStroke updated = SerializationHelper.stringToStroke((JObject)server_params[0], this.traits);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    int index = this.traits.ToList().FindIndex(stroke => ((CustomStroke)stroke).Id == updated.Id);
-                    this.traits.RemoveAt(index);
+                    Stroke old = this.traits.ToList().Find(stroke => ((CustomStroke)stroke).Id == updated.Id);
+                    bool selected = ((CustomStroke)old).isSelected();
+                    bool editting = ((CustomStroke)old).isEditing();
+                    ((CustomStroke)old).Unselect();
+                    this.traits.Remove(old);
+                    
                     int newindex = this.traits.ToList().FindIndex(stroke => ((CustomStroke)stroke).Index > updated.Index);
+                    if (selected) updated.Select();
+                    if (editting) updated.startEditing();
+
                     this.traits.Insert(newindex, updated);
                 });
             }));
 
             ServerService.instance.Socket.On("removeStroke", new CustomListener((object[] server_params) =>
             {
-                int index = this.traits.ToList().FindIndex(stroke => ((CustomStroke)stroke).Id.ToString() == (string)server_params[0]);
+                Stroke old = this.traits.ToList().Find(stroke => ((CustomStroke)stroke).Id.ToString() == (string)server_params[0]);
+                ((CustomStroke)old).Unselect();
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    this.traits.RemoveAt(index);
+                    this.traits.Remove(old);
                 });
             }));
 
