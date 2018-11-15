@@ -370,7 +370,9 @@ namespace PolyPaint.Modeles
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    this.traits.Add(SerializationHelper.stringToStroke((JObject)server_params[0], this.traits));
+                    CustomStroke newStroke = SerializationHelper.stringToStroke((JObject)server_params[0], this.traits);
+                    this.traits.Add(newStroke);
+                    newStroke.Lock();
                 });
             }));
 

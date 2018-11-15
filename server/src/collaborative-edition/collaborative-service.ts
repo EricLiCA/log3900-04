@@ -65,7 +65,9 @@ export class CollaborativeService {
             canvas = await this.getCanvas(imageId);
             
             user.socket.emit('imageData', canvas.strokes);
-            user.socket.emit('allProtections', canvas.protections);
+            canvas.protections.forEach((value: string[], key: User) => {
+                user.socket.emit("addProtections", key.name, value);
+            })
 
         });
 
