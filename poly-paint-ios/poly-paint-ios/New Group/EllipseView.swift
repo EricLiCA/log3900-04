@@ -9,12 +9,11 @@
 import UIKit
 
 class EllipseView: BasicShapeView {
-
-    init(frame: CGRect) {
-        super.init(frame:frame, numberOfAnchorPoints: 4)
+    
+    init(frame: CGRect, color: UIColor) {
+        super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE")
         self.backgroundColor = UIColor.clear
         self.initGestureRecognizers()
-        self.color = color
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -22,20 +21,7 @@ class EllipseView: BasicShapeView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
     
-    func initGestureRecognizers() {
-        let panGR = UIPanGestureRecognizer(target: self, action: #selector(didPan(panGR:)))
-        addGestureRecognizer(panGR)
-        let pinchGR = UIPinchGestureRecognizer(target: self, action: #selector(didPinch(pinchGR:)))
-        addGestureRecognizer(pinchGR)
-        let rotationGR = UIRotationGestureRecognizer(target: self, action: #selector(didRotate(rotationGR:)))
-        addGestureRecognizer(rotationGR)
-        let longPressGR = ( UILongPressGestureRecognizer( target: self, action: #selector(didLongPressed(_:))))
-        addGestureRecognizer(longPressGR)
-    }
     
     
     
@@ -89,83 +75,10 @@ class EllipseView: BasicShapeView {
             return topAnchorPoint
         } else { // garbage
             return CGPoint(x: 0, y: 0)
-    @objc func didRotate(rotationGR: UIRotationGestureRecognizer) {
-        self.superview!.bringSubview(toFront: self)
-        let rotation = rotationGR.rotation
-        self.transform = self.transform.rotated(by: rotation)
-        rotationGR.rotation = 0.0
-    }
-    
-    @objc func didLongPressed(_ gesture: UILongPressGestureRecognizer) {
-        self.superview!.bringSubview(toFront: self)
-        guard let gestureView = gesture.view, let superView = gestureView.superview else {
-            return
         }
         
-        let menuController = UIMenuController.shared
-        
-        guard !menuController.isMenuVisible, gestureView.canBecomeFirstResponder else {
-            return
-        }
-        gestureView.becomeFirstResponder()
-        
-        
-        menuController.menuItems = [
-            UIMenuItem(
-                title: "Duplicate",
-                action: #selector(handleDuplicateAction(_:))
-            ),
-            UIMenuItem(
-                title: "Cut",
-                action: #selector(handleCutAction(_:))
-            ),
-            UIMenuItem(
-                title: "Edit",
-                action: #selector(handleEditAction(_:))
-            ),
-            UIMenuItem(
-                title: "Delete",
-                action: #selector(handleDeleteAction(_:))
-            )
-        ]
-        
-        menuController.setTargetRect(gestureView.frame, in: superView)
-        menuController.setMenuVisible(true, animated: true)
     }
     
-    @objc internal func handleCutAction(_ controller: UIMenuController) {
-    }
+}
     
-    @objc internal func handleDuplicateAction(_ controller: UIMenuController) {
-        let shapeData = ["frame": self.myframe!, "layer": self.mylayer!, "color": self.color!] as [String : Any]
-        NotificationCenter.default.post(name: .duplicateEllipse, object: nil, userInfo: shapeData)
-    }
-    
-    @objc internal func handleEditAction(_ controller: UIMenuController) {
-    }
-    
-    @objc internal func handleDeleteAction(_ controller: UIMenuController) {
-        self.removeFromSuperview()
-        
-    }
-    
-    func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
-        let x_1 = p1.x
-        let x_2 = p2.x
-        let y_1 = p1.y
-        let y_2 = p2.y
-        let absolutePoint = CGPoint(x: x_2 - x_1, y: y_2 - y_1)
-        let radians = atan2(Double(absolutePoint.x), Double(absolutePoint.y))
-        let absRad = fabs(radians)
-        
-        if absRad > (.pi / 4) && absRad < 3*(.pi / 4) {
-            return "x"
-        } else {
-            return "y"
-        }
-    }
 
-}
-extension Notification.Name {
-    static let duplicateEllipse = Notification.Name("duplicateEllipse")
-}

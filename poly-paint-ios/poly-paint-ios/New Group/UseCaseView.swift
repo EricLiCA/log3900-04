@@ -17,7 +17,7 @@ class UseCaseView: EllipseView {
     
     init(frame: CGRect, text: String) {
         self.text = text
-        super.init(frame:frame)
+        super.init(frame:frame, color: UIColor.white)
         self.backgroundColor = UIColor.clear
         self.initGestureRecognizers()
     }
