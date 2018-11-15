@@ -18,7 +18,7 @@ enum Shape {
 
 class DrawViewController: UIViewController {
 
-    @IBOutlet weak var drawingPlace: UIView!
+    @IBOutlet weak var canvas: UIView!
     @IBOutlet weak var triangleButton: UIButton!
     @IBOutlet weak var ellipseButton: UIButton!
     @IBOutlet weak var rectangleButton: UIButton!
@@ -46,7 +46,7 @@ class DrawViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.drawingPlace.clipsToBounds = true
+        self.canvas.clipsToBounds = true
         self.setUpNotifications()
         // Do any additional setup after loading the view.
     }
@@ -155,14 +155,14 @@ class DrawViewController: UIViewController {
     @IBAction func stickfigureTapped(_ sender: UIButton) {
         let stickFigure = StickFigureView()
         self.shapes[stickFigure.uuid] = stickFigure
-        self.drawingPlace.addSubview(stickFigure)
+        self.canvas.addSubview(stickFigure)
         self.layersFromShapes.append(stickFigure.layer)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
-        self.firstTouch = touch?.location(in: drawingPlace)
-        self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
+        self.firstTouch = touch?.location(in: canvas)
+        self.insideCanvas = self.canvas.frame.contains((touch?.location(in: self.view))!)
         
         for line in self.lines {
             line.hitTest(touchPoint: self.firstTouch!)
@@ -172,18 +172,18 @@ class DrawViewController: UIViewController {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(isUserEditing && self.insideCanvas) {
             // erase sublayers used for drawing
-            if(self.drawingPlace.layer.sublayers != nil) {
+            if(self.canvas.layer.sublayers != nil) {
                 self.redrawLayers()
             }
             
             for touch in touches {
-                secondTouch = touch.location(in: drawingPlace)
+                secondTouch = touch.location(in: canvas)
                 
                 if(self.currentContext == nil) {
-                    UIGraphicsBeginImageContext(drawingPlace.frame.size)
+                    UIGraphicsBeginImageContext(canvas.frame.size)
                     self.currentContext = UIGraphicsGetCurrentContext()
                 } else {
-                    self.currentContext?.clear(CGRect(x: 0, y: 0, width: drawingPlace.frame.width, height: drawingPlace.frame.height))
+                    self.currentContext?.clear(CGRect(x: 0, y: 0, width: canvas.frame.width, height: canvas.frame.height))
                 }
                 
                 var bezier = UIBezierPath()
@@ -207,12 +207,12 @@ class DrawViewController: UIViewController {
                 self.currentContext?.addPath(bezier.cgPath)
                 self.currentContext?.strokePath()
                 let shape = CAShapeLayer()
-                shape.frame = (self.drawingPlace.bounds)
+                shape.frame = (self.canvas.bounds)
                 shape.path = self.currentBezierPath?.cgPath;
                 shape.strokeColor = UIColor.black.cgColor
                 shape.borderColor = UIColor.gray.cgColor
                 shape.fillColor = UIColor.white.cgColor
-                self.drawingPlace.layer.addSublayer(shape)
+                self.canvas.layer.addSublayer(shape)
                 self.currentContext?.addPath((self.currentBezierPath?.cgPath)!)
             }
         }
@@ -232,24 +232,24 @@ class DrawViewController: UIViewController {
             if(currentShape == Shape.Rectangle) {
                 let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!)
                 self.shapes[rectangleView.uuid] = rectangleView
-                self.drawingPlace.addSubview(rectangleView)
+                self.canvas.addSubview(rectangleView)
             } else if(currentShape == Shape.Ellipse) {
                 let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!)
                 self.shapes[ellipseView.uuid] = ellipseView
-                self.drawingPlace.addSubview(ellipseView)
+                self.canvas.addSubview(ellipseView)
             } else if(currentShape == Shape.Triangle) {
                 let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!)
                 self.shapes[triangleView.uuid] = triangleView
-                self.drawingPlace.addSubview(triangleView)
+                self.canvas.addSubview(triangleView)
             } else if(currentShape == Shape.Line) {
                 var line = Line(layer: layer)
                 line.points.append(self.firstTouch!)
                 line.points.append(self.secondTouch!)
-                self.drawingPlace.layer.addSublayer(line.layer!)
+                self.canvas.layer.addSublayer(line.layer!)
                 lines.append(line)
             }
             
-            self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+            self.layersFromShapes.append((self.canvas.layer.sublayers?.popLast())!)
             
             self.redrawLayers()
             self.insideCanvas = false
@@ -319,7 +319,7 @@ class DrawViewController: UIViewController {
         var text = sender.userInfo["text"]
         let classDiagram = ClassDiagramView(text: processText(text: text as! String))
         self.shapes[classDiagram.uuid] = classDiagram
-        self.drawingPlace.addSubview(classDiagram)
+        self.canvas.addSubview(classDiagram)
         self.layersFromShapes.append(classDiagram.layer)
         
     }
@@ -373,10 +373,10 @@ class DrawViewController: UIViewController {
             line.secondAnchorShapeId = self.endPointView?.uuid
             line.secondAnchorShapeIndex = self.endAnchorNumber
             self.lines.append(line)
-            self.drawingPlace.layer.addSublayer(line.layer!)
+            self.canvas.layer.addSublayer(line.layer!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
             self.resetLineEndPoints()
-            self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+            self.layersFromShapes.append((self.canvas.layer.sublayers?.popLast())!)
             self.redrawLayers()
         }
     }
@@ -397,11 +397,11 @@ class DrawViewController: UIViewController {
     }
     
     func redrawLayers() {
-        for layer in self.drawingPlace.layer.sublayers! {
-            self.drawingPlace.layer.sublayers?.popLast()
+        for layer in self.canvas.layer.sublayers! {
+            self.canvas.layer.sublayers?.popLast()
         }
         for layer in self.layersFromShapes {
-            self.drawingPlace.layer.addSublayer(layer)
+            self.canvas.layer.addSublayer(layer)
         }
     }
 
