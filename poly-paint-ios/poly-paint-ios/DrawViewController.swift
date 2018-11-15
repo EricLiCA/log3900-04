@@ -163,10 +163,6 @@ class DrawViewController: UIViewController {
         let touch = touches.first
         self.firstTouch = touch?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
-        
-        for line in lines {
-            print(line.hitTest(touchPoint: self.firstTouch!))
-        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -328,7 +324,6 @@ class DrawViewController: UIViewController {
         let viewUUID = sender.userInfo["view"] as! String
         for line in self.lines {
             if(line.firstAnchorShapeId == viewUUID) {
-                print(self.shapes[viewUUID])
                 line.points[0] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.firstAnchorShapeIndex!))!
                 let bezier = UIBezierPath()
                 bezier.move(to: line.points[0])
@@ -351,12 +346,7 @@ class DrawViewController: UIViewController {
             self.startPointView = sender.userInfo["view"] as! BasicShapeView
             self.startAnchorNumber = sender.userInfo["anchorNumber"] as! Int
         } else if(view.uuid == self.startPointView?.uuid) {
-            self.startPointOfLine = nil
-            self.startPointView = nil
-            self.startAnchorNumber = nil
-            self.endPointOfLine = nil
-            self.endPointView = nil
-            self.endAnchorNumber = nil
+            self.resetLineEndPoints()
         } else if(self.endPointOfLine == nil) {
             self.endPointView = sender.userInfo["view"] as! BasicShapeView
             self.endPointOfLine = sender.userInfo["point"] as! CGPoint
@@ -381,23 +371,24 @@ class DrawViewController: UIViewController {
             self.lines.append(line)
             self.drawingPlace.layer.addSublayer(line.layer!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
-            self.startPointOfLine = nil
-            self.startPointView = nil
-            self.startAnchorNumber = nil
-            self.endPointOfLine = nil
-            self.endPointView = nil
-            self.endAnchorNumber = nil
-
+            self.resetLineEndPoints()
             self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
-            
             self.redrawLayers()
         }
+    }
+    
+    func resetLineEndPoints() {
+        self.startPointOfLine = nil
+        self.startPointView = nil
+        self.startAnchorNumber = nil
+        self.endPointOfLine = nil
+        self.endPointView = nil
+        self.endAnchorNumber = nil
     }
     
     func processText(text: String) -> [String] {
         let separators = CharacterSet(charactersIn: "--")
         let textArray = text.components(separatedBy: separators as CharacterSet)
-        print(textArray)
         return textArray
     }
     
