@@ -37,11 +37,11 @@ class RectangleView: BasicShapeView {
         let rightAnchorPoint = CGPoint(x: self.frame.size.width, y: self.frame.size.height/2)
         let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
         let leftAnchorPoint = CGPoint(x: 0, y: self.frame.size.height/2)
-        var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
+        let anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
-            var shapeLayer = CAShapeLayer()
+            let circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            let shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
             shapeLayer.strokeColor = UIColor.red.cgColor

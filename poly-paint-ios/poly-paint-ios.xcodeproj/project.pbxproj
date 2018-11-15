@@ -131,6 +131,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A74A5B0A219DC9B300051D14 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		A77C46E221569CFB0056135A = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +163,7 @@
 		A77C46ED21569CFB0056135A /* poly-paint-ios */ = {
 			isa = PBXGroup;
 			children = (
+				A74A5B0A219DC9B300051D14 /* Chat */,
 				CF21E3282188C2CE00F21F57 /* Shapes */,
 				A77C46FD21569CFB0056135A /* Info.plist */,
 				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
