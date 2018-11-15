@@ -14,9 +14,20 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var galleryButton: UIButton!
     @IBOutlet weak var newImageButton: UIButton!
+    @IBOutlet weak var notificationsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationsLabel.text = "NotificationsTest: \(ChatModel.instance.notifications)"
+        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
+            notifications in
+            self.notificationsLabel.text = "Notifications: \(notifications)"
+            if notifications == 0 {
+                self.notificationsLabel.isHidden = true
+            } else {
+                self.notificationsLabel.isHidden = false
+            }
+        })
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainMenuViewController.back(sender:)))
         self.navigationItem.leftBarButtonItem = newBackButton

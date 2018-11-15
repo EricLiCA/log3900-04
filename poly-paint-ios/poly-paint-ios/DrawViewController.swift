@@ -18,6 +18,7 @@ enum Shape {
 
 class DrawViewController: UIViewController {
 
+    @IBOutlet weak var notificationsLabel: UILabel!
     @IBOutlet weak var canvas: UIView!
     @IBOutlet weak var triangleButton: UIButton!
     @IBOutlet weak var ellipseButton: UIButton!
@@ -46,6 +47,16 @@ class DrawViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationsLabel.text = "NotificationsTest: \(ChatModel.instance.notifications)"
+        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
+            notifications in
+            self.notificationsLabel.text = "Notifications: \(notifications)"
+            if notifications == 0 {
+                self.notificationsLabel.isHidden = true
+            } else {
+                self.notificationsLabel.isHidden = false
+            }
+        })
         self.canvas.clipsToBounds = true
         self.setUpNotifications()
         // Do any additional setup after loading the view.

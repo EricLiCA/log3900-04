@@ -49,11 +49,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var pendingFriendRequestsButton: UIButton!
-
+    @IBOutlet weak var notificationsLabel: UILabel!
     var friends = [User]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationsLabel.text = "NotificationsTest: \(ChatModel.instance.notifications)"
+        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
+            notifications in
+            self.notificationsLabel.text = "Notifications: \(notifications)"
+            if notifications == 0 {
+                self.notificationsLabel.isHidden = true
+            } else {
+                self.notificationsLabel.isHidden = false
+            }
+        })
         self.customizeUI()
         self.setUpNotifications()
         self.friendsTableView.delegate = self
