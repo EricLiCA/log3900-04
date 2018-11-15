@@ -49,13 +49,20 @@ namespace PolyPaint.Modeles.Strokes
 
                 case "LINE":
                     SerializedLine line = serialized.ToObject<SerializedLine>();
+                    Console.WriteLine(serialized);
+                    Console.WriteLine(line);
 
                     var points = line.ShapeInfo.Points.ConvertAll<StylusPoint>(point =>
                     {
                         return new StylusPoint(point.X, point.Y);
                     });
 
-                    var lineStroke = new BaseLine(line.Id, line.Index, new StylusPointCollection(points), strokes, line.ShapeInfo.FirstAnchorId, line.ShapeInfo.FirstAnchorIndex, line.ShapeInfo.SecondAnchorId, line.ShapeInfo.SecondAnchorIndex);
+                    var lineStroke = new BaseLine(
+                        line.Id, line.Index, new StylusPointCollection(points), strokes,
+                        line.ShapeInfo.FirstAnchorId, line.ShapeInfo.FirstAnchorIndex,
+                        line.ShapeInfo.SecondAnchorId, line.ShapeInfo.SecondAnchorIndex,
+                        line.ShapeInfo.FirstEndLabel, line.ShapeInfo.SecondEndLabel,
+                        line.ShapeInfo.FirstEndRelation, line.ShapeInfo.SecondEndRelation);
                     return lineStroke;
             }
 

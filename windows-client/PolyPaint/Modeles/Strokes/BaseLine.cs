@@ -57,8 +57,15 @@ namespace PolyPaint.Modeles.Strokes
 
         public BaseLine(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes,
                         string firstAnchorId, int firstAnchorIndex,
-                        string secondAnchorId, int secondAnchorIndex) : this(id, index, pts, strokes)
+                        string secondAnchorId, int secondAnchorIndex,
+                        string firstLabel, string secondLabel,
+                        string firstRelation, string secondRelation) : this(id, index, pts, strokes)
         {
+            this.FirstText = firstLabel;
+            this.SecondText = secondLabel;
+            this.FirstRelation = this.GetRelationByName(firstRelation);
+            this.SecondRelation = this.GetRelationByName(secondRelation);
+
             if (firstAnchorId != null)
             {
                 this.FirstAnchorId = firstAnchorId;
@@ -69,6 +76,22 @@ namespace PolyPaint.Modeles.Strokes
                 this.SecondAncorId = secondAnchorId;
                 this.SecondAncorIndex = secondAnchorIndex;
             }
+        }
+
+        private Relation GetRelationByName(String name)
+        {
+            switch (name)
+            {
+                case "AGGREGATION":
+                    return Relation.AGGREGATION;
+                case "ASSOCIATION":
+                    return Relation.ASSOCIATION;
+                case "COMPOSITION":
+                    return Relation.COMPOSITION;
+                case "INHERITANCE":
+                    return Relation.INHERITANCE;
+            }
+            return Relation.ASSOCIATION;
         }
 
         public void addDragHandles()
