@@ -149,12 +149,16 @@ class DrawViewController: UIViewController {
             self.ellipseButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.rectangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.triangleButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            
         }
     }
     
     @IBAction func stickfigureTapped(_ sender: UIButton) {
         let stickFigure = StickFigureView()
+        self.shapes[stickFigure.uuid] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
+        //print(self.drawingPlace.subviews)
+        self.layersFromShapes.append(stickFigure.layer)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

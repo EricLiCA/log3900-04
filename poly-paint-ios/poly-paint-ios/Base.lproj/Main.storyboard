@@ -380,7 +380,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="stickfigureTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="bjN-xO-K12"/>
+                                    <action selector="stickfigureTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="unL-SF-5Av"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EFY-ek-Vzt">
@@ -454,7 +454,7 @@
                         <outlet property="ellipseButton" destination="el7-WA-nyl" id="idg-NM-5Yl"/>
                         <outlet property="lineButton" destination="KsB-r3-vJz" id="OFv-e7-eeY"/>
                         <outlet property="rectangleButton" destination="DOf-Jz-Zu9" id="TBa-aG-pbk"/>
-                        <outlet property="stickFigure" destination="sNV-0h-Pxl" id="zPY-Yk-Axc"/>
+                        <outlet property="stickFigure" destination="sNV-0h-Pxl" id="P2g-Eu-wOx"/>
                         <outlet property="triangleButton" destination="laE-6R-FW3" id="fxB-vS-QUj"/>
                     </connections>
                 </viewController>

@@ -8,19 +8,17 @@
 
 import UIKit
 
-class StickFigureView: UIView {
+class StickFigureView: BasicShapeView {
 
     let defaultHeight: CGFloat = 60
     let defaultWidth: CGFloat = 50
-    let uuid = NSUUID.init().uuidString.lowercased()
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()
-    var anchorPointsLayers = [CAShapeLayer]()
     
     init() {
         let frame = CGRect(x: 0, y: 0, width: self.defaultWidth, height: self.defaultHeight)
-        super.init(frame: frame)
-        initGestureRecognizers()
+        let dumpLayer = CALayer()
+        super.init(frame: frame, layer: dumpLayer, numberOfAnchorPoints: 2)
         let image = UIImage(named: "StickFigure")
         self.backgroundColor = UIColor(patternImage: image!)
     }
@@ -30,28 +28,9 @@ class StickFigureView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func initGestureRecognizers() {
-        let panGR = UIPanGestureRecognizer(target: self, action: #selector(didPan(panGR:)))
-        addGestureRecognizer(panGR)
-    }
-    
     override func draw(_ rect: CGRect) {
         
         self.initializeAnchorPoints()
-    }
-    
-    @objc func didPan(panGR: UIPanGestureRecognizer) {
-        var translation = panGR.translation(in: self)
-        translation = translation.applying(self.transform)
-        self.center.x += translation.x
-        self.center.y += translation.y
-        panGR.setTranslation(.zero, in: self)
-        
-        if(panGR.state == .ended) {
-            self.hideAnchorPoints()
-        } else if(panGR.state == .began) {
-            self.showAnchorPoints()
-        }
     }
     
     func initializeAnchorPoints() {
@@ -60,7 +39,7 @@ class StickFigureView: UIView {
         var anchorPoints = [rightAnchorPoint, leftAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(3), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
@@ -75,16 +54,22 @@ class StickFigureView: UIView {
         
         self.hideAnchorPoints()
     }
-    
-    func showAnchorPoints() {
-        for index in 0...1 {
-            self.layer.sublayers![index].isHidden = false
-        }
-    }
-    
-    func hideAnchorPoints() {
-        for index in 0...1 {
-            self.layer.sublayers![index].isHidden = true
+
+    override func getAnchorPoint(index: Int) -> CGPoint {
+        if(index == 0) {
+            let rightAnchorPoint = CGPoint(x: self.center.x + self.frame.size.width/2, y: self.center.y)
+            return rightAnchorPoint
+        } else if (index == 1) {
+            let bottomAnchorPoint = CGPoint(x: self.center.x, y: self.center.y + self.frame.size.height/2)
+            return bottomAnchorPoint
+        } else if(index == 2) {
+            let leftAnchorPoint = CGPoint(x: self.center.x - self.frame.size.width/2, y: self.center.y)
+            return leftAnchorPoint
+        } else if(index == 3) {
+            let topAnchorPoint = CGPoint(x: self.center.x, y: self.center.y - self.frame.size.height/2)
+            return topAnchorPoint
+        } else { // garbage
+            return CGPoint(x: 0, y: 0)
         }
     }
     
