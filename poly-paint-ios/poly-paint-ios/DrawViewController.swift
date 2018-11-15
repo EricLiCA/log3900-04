@@ -357,7 +357,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
         }
-       
+       self.drawingPlace.layer.sublayers?.popLast()
         //self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
         self.redrawLayers()
         self.insideCanvas = false
@@ -465,6 +465,10 @@ class DrawViewController: UIViewController {
         }
        for (uuid, view) in self.shapes{
             self.drawingPlace.layer.addSublayer(view.layer)
+        }
+        
+        for line in lines {
+            self.drawingPlace.layer.addSublayer(line.layer!)
         }
     }
 
