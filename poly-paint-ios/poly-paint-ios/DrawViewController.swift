@@ -163,6 +163,10 @@ class DrawViewController: UIViewController {
         let touch = touches.first
         self.firstTouch = touch?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
+        
+        for line in self.lines {
+            line.hitTest(touchPoint: self.firstTouch!)
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
