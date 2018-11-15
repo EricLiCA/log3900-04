@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4A0815B34FF7B9EEEA4C20F2 /* Pods_poly_paint_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */; };
+		A74A5B0C219DDFE600051D14 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A5B0B219DDFE600051D14 /* ChatModel.swift */; };
 		A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46EE21569CFB0056135A /* AppDelegate.swift */; };
 		A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F021569CFB0056135A /* ChatViewController.swift */; };
 		A77C46F421569CFB0056135A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A77C46F221569CFB0056135A /* Main.storyboard */; };
@@ -66,6 +67,7 @@
 
 /* Begin PBXFileReference section */
 		142B8D5CF9AB57002345952A /* Pods-poly-paint-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.release.xcconfig"; sourceTree = "<group>"; };
+		A74A5B0B219DDFE600051D14 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		A77C46EB21569CFB0056135A /* poly-paint-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "poly-paint-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77C46EE21569CFB0056135A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A77C46F021569CFB0056135A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 		A74A5B0A219DC9B300051D14 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				A74A5B0B219DDFE600051D14 /* ChatModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 			files = (
 				CF3DD52B219D22AA00A14BAF /* UseCaseView.swift in Sources */,
 				CFEF506821790C89001C93AB /* User.swift in Sources */,
+				A74A5B0C219DDFE600051D14 /* ChatModel.swift in Sources */,
 				CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
