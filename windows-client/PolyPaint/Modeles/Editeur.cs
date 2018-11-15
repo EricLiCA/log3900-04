@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
@@ -380,9 +380,10 @@ namespace PolyPaint.Modeles
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Stroke old = this.traits.get(updated.Id.ToString());
-                    Console.WriteLine(old);
+                    Console.WriteLine(((Savable)updated).toJson());
                     bool selected = ((CustomStroke)old).isSelected();
                     bool editting = ((CustomStroke)old).isEditing();
+                    bool locked = ((CustomStroke)old).isLocked();
                     ((CustomStroke)old).stopEditing();
                     this.traits.Remove(this.traits.get(updated.Id.ToString()));
 
@@ -399,6 +400,7 @@ namespace PolyPaint.Modeles
 
                     if (selected) this.traits.get(updated.Id.ToString()).Select();
                     if (editting) this.traits.get(updated.Id.ToString()).startEditing();
+                    if (locked) this.traits.get(updated.Id.ToString()).Lock();
                 });
             }));
 
