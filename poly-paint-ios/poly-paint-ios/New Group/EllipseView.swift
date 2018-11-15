@@ -12,9 +12,8 @@ class EllipseView: BasicShapeView {
 
     let defaultSize: CGFloat = 150.0
     
-    init(frame: CGRect, layer: CALayer) {
-        super.init(frame:frame, layer: layer, numberOfAnchorPoints: 4)
-        //self.center = origin
+    init(frame: CGRect) {
+        super.init(frame:frame, numberOfAnchorPoints: 4)
         self.backgroundColor = UIColor.clear
         initGestureRecognizers()
     }

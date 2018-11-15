@@ -30,6 +30,10 @@ class Line {
     var secondEndLabel: String?
     var secondEndRelation: String?
     
+    init(layer: CAShapeLayer) {
+        self.layer = layer
+    }
+    
     func hitTest(touchPoint: CGPoint) -> Bool {
         var distanceToSegment = findDistanceToSegment(touchPoint: touchPoint)
         if(distanceToSegment > 15) {

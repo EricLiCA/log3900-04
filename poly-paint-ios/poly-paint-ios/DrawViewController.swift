@@ -240,25 +240,23 @@ class DrawViewController: UIViewController {
             layer.strokeColor = UIColor.black.cgColor
             
             if(currentShape == Shape.Rectangle) {
-                let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
+                let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!)
                 self.shapes[rectangleView.uuid] = rectangleView
                 self.drawingPlace.addSubview(rectangleView)
             } else if(currentShape == Shape.Ellipse) {
-                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
+                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!)
                 self.shapes[ellipseView.uuid] = ellipseView
                 self.drawingPlace.addSubview(ellipseView)
             } else if(currentShape == Shape.Triangle) {
-                let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, layer: layer)
+                let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!)
                 self.shapes[triangleView.uuid] = triangleView
                 self.drawingPlace.addSubview(triangleView)
             } else if(currentShape == Shape.Line) {
-                var line = Line()
-                line.layer = layer
+                var line = Line(layer: layer)
                 line.points.append(self.firstTouch!)
                 line.points.append(self.secondTouch!)
                 self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
-                
             }
             
             self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
@@ -394,14 +392,13 @@ class DrawViewController: UIViewController {
             layer.borderWidth = 2
             layer.strokeColor = UIColor.black.cgColor
             
-            var line = Line()
+            var line = Line(layer: layer)
             line.points.append(self.startPointOfLine!)
             line.points.append(self.endPointOfLine!)
             line.firstAnchorShapeId = self.startPointView?.uuid
             line.firstAnchorShapeIndex = self.startAnchorNumber
             line.secondAnchorShapeId = self.endPointView?.uuid
             line.secondAnchorShapeIndex = self.endAnchorNumber
-            line.layer = layer
             self.lines.append(line)
             self.drawingPlace.layer.addSublayer(line.layer!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)

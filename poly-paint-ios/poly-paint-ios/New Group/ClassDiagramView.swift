@@ -17,8 +17,7 @@ class ClassDiagramView: BasicShapeView {
 
     init(text: [String]) {
         let rectangle = CGRect(x: 100, y: 100, width: 200, height: 300)
-        let dumpLayer = CALayer()
-        super.init(frame: rectangle, layer: dumpLayer, numberOfAnchorPoints: 4)
+        super.init(frame: rectangle, numberOfAnchorPoints: 4)
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.text = text

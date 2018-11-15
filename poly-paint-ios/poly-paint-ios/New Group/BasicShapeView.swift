@@ -16,10 +16,9 @@ class BasicShapeView: UIView {
     var numberOfAnchorPoints: Int?
     var anchorPointsLayers = [CAShapeLayer]()
     
-    init(frame: CGRect, layer: CALayer, numberOfAnchorPoints: Int) {
+    init(frame: CGRect, numberOfAnchorPoints: Int) {
         self.numberOfAnchorPoints = numberOfAnchorPoints - 1;
         super.init(frame: frame)
-        layer.backgroundColor = UIColor.blue.cgColor
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.setUpNotifications()

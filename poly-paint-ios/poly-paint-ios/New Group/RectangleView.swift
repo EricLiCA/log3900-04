@@ -13,9 +13,8 @@ class RectangleView: BasicShapeView {
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()
     
-    init(frame: CGRect, layer: CALayer) {
-        super.init(frame: frame, layer: layer, numberOfAnchorPoints: 4)
-        layer.backgroundColor = UIColor.blue.cgColor
+    init(frame: CGRect) {
+        super.init(frame: frame, numberOfAnchorPoints: 4)
         initGestureRecognizers()
         self.backgroundColor = UIColor.blue
     }
