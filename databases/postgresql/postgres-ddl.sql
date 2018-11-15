@@ -3,7 +3,7 @@
 create type imageprotection as enum ('public', 'protected', 'private')
 ;
 
-create type userpermissionlevel as enum ('admin', 'user')
+create type userpermissionlevel as enum ('admin', 'user', 'management', 'image', 'permissions')
 ;
 
 create table if not exists users
