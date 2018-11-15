@@ -9,20 +9,17 @@
 import UIKit
 
 class ClassDiagramView: BasicShapeView {
-    let lineWidth: CGFloat = 1
-    var lastRotation: CGFloat = 0
-    var originalRotation = CGFloat()
+    
     let defaultTextLineHeight: CGFloat = 40
     let defaultMaxNumOfLines = 5
     let textGap: CGFloat = 5
     var text = [String]()
 
-    
     init(text: [String]) {
         let rectangle = CGRect(x: 100, y: 100, width: 200, height: 300)
         let dumpLayer = CALayer()
         super.init(frame: rectangle, layer: dumpLayer, numberOfAnchorPoints: 4)
-        initGestureRecognizers()
+        self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.text = text
     }
@@ -71,7 +68,7 @@ class ClassDiagramView: BasicShapeView {
     func initializeTextFields(words: [String]) {
         var currentHeight = CGFloat(0)
         for word in words {
-            // draw ligne
+            // draw line
             let fromPoint = CGPoint(x: 0, y: currentHeight)
             let toPoint = CGPoint(x: self.frame.width, y: currentHeight)
             self.drawLine(fromPoint: fromPoint, toPoint: toPoint)
@@ -87,6 +84,7 @@ class ClassDiagramView: BasicShapeView {
             } else {
                 label.sizeToFit()
             }
+            
             currentHeight += label.frame.height
             self.addSubview(label)
         }
@@ -96,12 +94,9 @@ class ClassDiagramView: BasicShapeView {
         let aPath = UIBezierPath()
         aPath.move(to: fromPoint)
         aPath.addLine(to: toPoint)
-        //Keep using the method addLineToPoint until you get to the one where about to close the path
         aPath.close()
-        //If you want to stroke it with a red color
         UIColor.black.set()
         aPath.stroke()
-        //If you want to fill it as well
         aPath.fill()
     }
     
@@ -122,15 +117,6 @@ class ClassDiagramView: BasicShapeView {
             return CGPoint(x: 0, y: 0)
         }
     }
-    
-    
-    /*
-     // Only override draw() if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func draw(_ rect: CGRect) {
-     // Drawing code
-     }
-     */
 
 }
 

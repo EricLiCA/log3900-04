@@ -10,7 +10,6 @@ import UIKit
 
 class RectangleView: BasicShapeView {
 
-    let lineWidth: CGFloat = 1
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()
     

@@ -12,7 +12,6 @@ class TriangleView: BasicShapeView {
 
     let defaultHeight: CGFloat = 150.0
     let defaultWidth: CGFloat = 150.0
-    let lineWidth: CGFloat = 1
     
     init(frame: CGRect, layer:CALayer) {
         super.init(frame: frame, layer: layer, numberOfAnchorPoints: 3)

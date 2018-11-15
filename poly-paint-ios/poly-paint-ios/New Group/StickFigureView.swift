@@ -12,7 +12,6 @@ class StickFigureView: UIView {
 
     let defaultHeight: CGFloat = 60
     let defaultWidth: CGFloat = 50
-    let lineWidth: CGFloat = 1
     let uuid = NSUUID.init().uuidString.lowercased()
     var lastRotation: CGFloat = 0
     var originalRotation = CGFloat()

@@ -10,16 +10,7 @@ import UIKit
 
 class EllipseView: BasicShapeView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
     let defaultSize: CGFloat = 150.0
-    let lineWidth: CGFloat = 1
     
     init(frame: CGRect, layer: CALayer) {
         super.init(frame:frame, layer: layer, numberOfAnchorPoints: 4)
