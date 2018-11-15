@@ -79,6 +79,21 @@ class DrawViewController: UIViewController {
         })
         alertController.addAction(drawTriangleAction)
         
+        let drawActorAction = UIAlertAction(title: "Actor", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            self.stickfigureTapped()
+        })
+        alertController.addAction(drawActorAction)
+        
+        let drawClassAction = UIAlertAction(title: "Class", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            self.createClassDiagramAlert(sender: self)
+        })
+        alertController.addAction(drawClassAction)
+        
+        let drawLineAction = UIAlertAction(title: "Line", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            self.lineTapped()
+        })
+        alertController.addAction(drawLineAction)
+        
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
         })
@@ -130,19 +145,18 @@ class DrawViewController: UIViewController {
         }
     }
     
-    @IBAction func lineTapped(_ sender: UIButton) {
+    @IBAction func lineTapped() {
         if(self.currentShape == Shape.Line) {
             self.isUserEditing = false
-            self.lineButton.backgroundColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
             self.currentShape = Shape.None
         } else {
             self.isUserEditing = true
             self.currentShape = Shape.Line
-            self.lineButton.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+            self.cancelButton.isEnabled = true
         }
     }
     
-    @IBAction func stickfigureTapped(_ sender: UIButton) {
+    @IBAction func stickfigureTapped() {
         let stickFigure = StickFigureView()
         self.shapes[stickFigure.uuid] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
