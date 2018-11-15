@@ -24,11 +24,11 @@ class Line {
     var firstAnchorShapeIndex: Int?
     var secondAnchorShapeId: String?
     var secondAnchorShapeIndex: Int?
-    
     var firstEndLabel: String?
     var firstEndRelation: String?
     var secondEndLabel: String?
     var secondEndRelation: String?
+    var selected = false
     
     init(layer: CAShapeLayer) {
         self.layer = layer
@@ -39,6 +39,14 @@ class Line {
         if(distanceToSegment > 15) {
             return false
         } else {
+            if(self.selected) {
+                self.selected = false
+                self.layer?.strokeColor = UIColor.black.cgColor
+            } else {
+                self.selected = true
+                self.layer?.strokeColor = UIColor.green.cgColor
+            }
+            
             return true
         }
     }
@@ -74,4 +82,6 @@ class Line {
         return sqrt(dx*dx + dy*dy)
         
     }
+    
+    
 }
