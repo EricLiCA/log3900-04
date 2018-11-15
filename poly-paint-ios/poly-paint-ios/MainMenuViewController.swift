@@ -21,7 +21,10 @@ class MainMenuViewController: UIViewController {
         let newBackButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainMenuViewController.back(sender:)))
         self.navigationItem.leftBarButtonItem = newBackButton
         self.checkIfAnonymous()
-        
+        print("Set username as \(UserDefaults.standard.string(forKey: "username")!)")
+        ChatModel.instance.socketIOClient!.on(clientEvent: .connect) { (data, ack) in
+            ChatModel.instance.setUsername(username: UserDefaults.standard.string(forKey: "username")!)
+        }
         // Do any additional setup after loading the view.
     }
 
