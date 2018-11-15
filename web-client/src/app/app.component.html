@@ -15,6 +15,7 @@
         </ul>
         <button *ngIf="!authenticated" class="login_button" data-toggle="modal" data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>Login</button>
         <img *ngIf="authenticated" width="40" height="40" src={{avatar}} class="rounded-circle">
+        <button *ngIf="authenticated" class="logout_button" (click)="logout()" [routerLink]="['/gallery']" mdbWavesEffect>Logout</button>
 
     </links>
 </mdb-navbar>

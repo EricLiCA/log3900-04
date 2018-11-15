@@ -22,6 +22,10 @@ export class AppComponent {
 
   }
 
+  protected logout():void{
+    window.location.reload();
+  }
+
   protected authenticate(username: String, password: String): void {
     this.authenticationService.authenticate(username, password).then((credentials: Credentials) => {
       this.avatar = credentials.profileImage.toString();
