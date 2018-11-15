@@ -29,7 +29,7 @@ namespace PolyPaint.Modeles.Strokes
 
                 case "ELIPSE":
                     SerializedShape elipse = serialized.ToObject<SerializedShape>();
-                    var elipseStroke = new BaseRectangleStroke(elipse.Id, getExtrimities(elipse.ShapeInfo), strokes, (Color)ColorConverter.ConvertFromString(elipse.ShapeInfo.Color));
+                    var elipseStroke = new BaseElipseStroke(elipse.Id, getExtrimities(elipse.ShapeInfo), strokes, (Color)ColorConverter.ConvertFromString(elipse.ShapeInfo.Color));
                     return elipseStroke;
 
                 case "CLASS":
