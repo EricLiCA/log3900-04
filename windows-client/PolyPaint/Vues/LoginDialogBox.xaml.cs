@@ -61,6 +61,7 @@ namespace PolyPaint.Vues
         {
             var url = string.Format(Settings.SERVER_IP.StartsWith("http") ? "{0}" : "http://{0}", Settings.SERVER_IP);
             var client = new RestClient(url);
+            var S3 = new S3Communication();
             var request = new RestRequest(Settings.API_VERSION + Settings.SERVER_STATUS_PATH, Method.GET);
             client.ExecuteAsync(request, response =>
             {
@@ -69,6 +70,7 @@ namespace PolyPaint.Vues
                     if (response.Content == "log3900-server")
                     {
                         ServerService.instance.server = client;
+                        ServerService.instance.S3Communication = S3;
                     }
                     else
                     {

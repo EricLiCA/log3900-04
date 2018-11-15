@@ -4,26 +4,27 @@ using System.Windows.Input;
 
 namespace PolyPaint.Modeles.Tools
 {
-    class Elipse : FormTool
+    class UseCase : FormTool
     {
+
         public override string GetToolImage()
         {
-            return "/Resources/circle-outline.png";
+            return "/Resources/useCase-tool.png";
         }
 
         public override string GetToolName()
         {
-            return "elipse";
+            return "useCase";
         }
 
         public override string GetToolTooltip()
         {
-            return "Elipse";
+            return "Use Case";
         }
 
         public override Stroke InstantiateForm(StylusPointCollection pts, CustomStrokeCollection strokes)
         {
-            return new BaseElipseStroke(pts, strokes);
+            return new UseCaseStroke(pts, strokes);
         }
     }
 }

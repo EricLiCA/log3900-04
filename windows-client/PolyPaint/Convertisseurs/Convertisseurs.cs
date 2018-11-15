@@ -68,7 +68,7 @@ namespace PolyPaint.Convertisseurs
         {
             return ((List<Tool>)value[1]).IndexOf((Tool)value[0]);
         }
-        public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture) => null;
+        public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture) => new object[0];
     }
 
     /// <summary>
@@ -89,6 +89,6 @@ namespace PolyPaint.Convertisseurs
             }
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => null;
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => new object[0];
     }
 }
