@@ -8,6 +8,7 @@
 
 import UIKit
 import SocketIO
+import AVFoundation
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     // MARK: - View Elements
@@ -18,9 +19,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - Models
     var messagesArray = [String]()
-    var serverAddress: String = "http://ec2-18-214-40-211.compute-1.amazonaws.com"
+    var serverAddress: String = "http://localhost:3000/"
     var username: String = ""
     var invalidUsername: Bool = false
+    let systemSoundID: SystemSoundID = 1016
     // MARK: Sockets
     var manager: SocketManager!
     var socketIOClient: SocketIOClient!
@@ -127,8 +129,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         socketIOClient.on("message") { (data: [Any], ack) in
-            guard let username = data[0] as? String else { return }
-            guard let message = data[1] as? String else { return }
+            guard let username = data[1] as? String else { return }
+            guard let message = data[2] as? String else { return }
+            if username != "You" {
+                AudioServicesPlaySystemSound (self.systemSoundID)
+            }
             self.addToMessageTableView(message: message, sentBy: username)
         }
         
@@ -163,7 +168,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func sendMessage() {
         let trimmedMessage = messageTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         if (!trimmedMessage.isEmpty) {
-            socketIOClient.emit("message", messageTextField.text!)
+            socketIOClient.emit("message", "Lobby", messageTextField.text!)
         }
         messageTextField.text = ""
     }

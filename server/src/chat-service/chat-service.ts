@@ -9,6 +9,7 @@ export class ChatService {
     private constructor() {
         // Reserve key usernames
         this.rooms = new Map<string, Set<string>>();
+        this.rooms.set('Lobby', new Set<string>());
     }
 
     public static get instance(): ChatService {
@@ -23,6 +24,7 @@ export class ChatService {
     }
 
     public newConnection(user: User): void {
+        this.addToRoom('Lobby', user);
 
         user.socket.on('joinRoom', (room: string) => {
             this.addToRoom(room, user);
