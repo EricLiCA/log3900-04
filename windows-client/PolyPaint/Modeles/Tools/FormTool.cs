@@ -30,8 +30,7 @@ namespace PolyPaint.Modeles.Tools
             if (ActiveStroke != null)
                 strokes.Remove(ActiveStroke);
 
-            ActiveStroke = InstantiateForm(pts, strokes);
-            ActiveStroke.DrawingAttributes.Color = selectedColor;
+            ActiveStroke = InstantiateForm(pts, strokes, selectedColor);
             strokes.Add(ActiveStroke);
         }
 
@@ -48,6 +47,6 @@ namespace PolyPaint.Modeles.Tools
             IsDrawing = false;
         }
 
-        public abstract Stroke InstantiateForm(StylusPointCollection pts, CustomStrokeCollection strokes);
+        public abstract Stroke InstantiateForm(StylusPointCollection pts, CustomStrokeCollection strokes, Color color);
     }
 }
