@@ -10,8 +10,8 @@ import UIKit
 
 class TriangleView: BasicShapeView {
     
-    init(frame: CGRect) {
-        super.init(frame: frame, numberOfAnchorPoints: 3)
+    init(frame: CGRect, color: UIColor) {
+        super.init(frame: frame, numberOfAnchorPoints: 3, color: color, shapeType: "TRIANGLE")
         self.backgroundColor = UIColor.clear
         self.initGestureRecognizers()
     }
@@ -21,17 +21,22 @@ class TriangleView: BasicShapeView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
     override func draw(_ rect: CGRect) {
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = self.trianglePathInRect(rect: insetRect)
-        UIColor.white.setFill()
+        self.color?.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
-        UIColor.black.setStroke()
+        self.color?.setStroke()
         path.stroke()
         self.initializeAnchorPoints()
     }
-
+    
+    
+    
+    
     func trianglePathInRect(rect:CGRect) -> UIBezierPath {
         let path = UIBezierPath()
         path.move(to: CGPoint(x: rect.width / 2.0, y: rect.origin.y))
@@ -89,3 +94,4 @@ class TriangleView: BasicShapeView {
      */
     
 }
+

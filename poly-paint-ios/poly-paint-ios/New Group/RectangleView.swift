@@ -9,9 +9,10 @@
 import UIKit
 
 class RectangleView: BasicShapeView {
-
-    init(frame: CGRect) {
-        super.init(frame: frame, numberOfAnchorPoints: 4)
+    
+    
+    init(frame: CGRect, color: UIColor) {
+        super.init(frame: frame, numberOfAnchorPoints: 4, color: color, shapeType: "RECTANGLE")
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
     }
@@ -21,13 +22,14 @@ class RectangleView: BasicShapeView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     override func draw(_ rect: CGRect) {
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = UIBezierPath(roundedRect: insetRect, cornerRadius: 0)
-        UIColor.white.setFill()
+        self.color?.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
-        UIColor.black.setStroke()
+        // self.color?.setStroke()
         path.stroke()
         self.initializeAnchorPoints()
     }
@@ -75,11 +77,34 @@ class RectangleView: BasicShapeView {
     }
     
     /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+     // Only override draw() if you perform custom drawing.
+     // An empty implementation adversely affects performance during animation.
+     override func draw(_ rect: CGRect) {
+     // Drawing code
+     }
+     */
+    
+    /* func toShapeObject() -> Data? {
+     
+     let shape: [String: Any] = [
+     "id": self.uuid,
+     "imageid": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+     "shapetype": "RECTANGLE",
+     "index": -1,
+     "shapeinfo": [
+     "Center": [
+     "X": self.center.x,
+     "Y": self.center.y
+     ],
+     "Width": self.myframe?.width,
+     "Height": self.myframe?.height,
+     "Color": self.color?.hexString
+     ]
+     ]
+     
+     let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+     return jsonData;
+     
+     }    */
 }
+

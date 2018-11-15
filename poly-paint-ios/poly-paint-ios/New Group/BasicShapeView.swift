@@ -15,17 +15,25 @@ class BasicShapeView: UIView {
     let uuid = NSUUID.init().uuidString.lowercased()
     var numberOfAnchorPoints: Int?
     var anchorPointsLayers = [CAShapeLayer]()
+    var color: UIColor?
+    var shapeType: String?
     
-    init(frame: CGRect, numberOfAnchorPoints: Int) {
+    init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?) {
+        self.shapeType = shapeType
         self.numberOfAnchorPoints = numberOfAnchorPoints - 1;
         super.init(frame: frame)
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.setUpNotifications()
+        self.color = color
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
     }
     
     func initGestureRecognizers() {
@@ -37,6 +45,7 @@ class BasicShapeView: UIView {
         addGestureRecognizer(rotationGR)
         let longPressGR = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(longPressGR:)))
         addGestureRecognizer(longPressGR)
+        
     }
     
     func setUpNotifications() {
@@ -108,7 +117,62 @@ class BasicShapeView: UIView {
         if(longPressGR.state == .cancelled) {
             self.hideAnchorPoints()
         }
+        
+        self.superview!.bringSubview(toFront: self)
+        guard let gestureView = longPressGR.view, let superView = gestureView.superview else {
+            return
+        }
+        
+        let menuController = UIMenuController.shared
+        
+        guard !menuController.isMenuVisible, gestureView.canBecomeFirstResponder else {
+            return
+        }
+        gestureView.becomeFirstResponder()
+        
+        
+        menuController.menuItems = [
+            UIMenuItem(
+                title: "Duplicate",
+                action: #selector(handleDuplicateAction(_:))
+            ),
+            UIMenuItem(
+                title: "Cut",
+                action: #selector(handleCutAction(_:))
+            ),
+            UIMenuItem(
+                title: "Edit",
+                action: #selector(handleEditAction(_:))
+            ),
+            UIMenuItem(
+                title: "Delete",
+                action: #selector(handleDeleteAction(_:))
+            )
+        ]
+        
+        menuController.setTargetRect(gestureView.frame, in: superView)
+        menuController.setMenuVisible(true, animated: true)
     }
+    
+    @objc internal func handleCutAction(_ controller: UIMenuController) {
+    }
+    
+    @objc internal func handleDuplicateAction(_ controller: UIMenuController) {
+        let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!, "shapeType": self.shapeType!] as [String : Any]
+        NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+    }
+    
+    @objc internal func handleEditAction(_ controller: UIMenuController) {
+    }
+    
+    @objc internal func handleDeleteAction(_ controller: UIMenuController) {
+        self.removeFromSuperview()
+         let uuid = ["uuid": self.uuid] as [String : Any]
+         NotificationCenter.default.post(name: .delete, object: nil, userInfo: uuid)
+        
+    }
+        
+    
     
     func showAnchorPoints() {
         for index in 0...self.numberOfAnchorPoints! {
@@ -165,4 +229,9 @@ class BasicShapeView: UIView {
             numAnchor = numAnchor + 1
         }
     }
+}
+
+extension Notification.Name {
+    static let duplicate = Notification.Name("duplicate")
+    static let delete = Notification.Name("delete")
 }

@@ -15,7 +15,7 @@ class StickFigureView: BasicShapeView {
     
     init() {
         let frame = CGRect(x: 0, y: 0, width: self.defaultWidth, height: self.defaultHeight)
-        super.init(frame: frame, numberOfAnchorPoints: 2)
+        super.init(frame: frame, numberOfAnchorPoints: 2, color: UIColor.white, shapeType: "ACTOR")
         let image = UIImage(named: "StickFigure")
         self.backgroundColor = UIColor(patternImage: image!)
     }
