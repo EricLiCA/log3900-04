@@ -14,6 +14,6 @@ namespace PolyPaint.Modeles.Strokes
 
     public enum StrokeType
     {
-        ELIPSE, TRIANGLE, RECTANGLE, USE, LINE, CLASS, ACTOR
+        ELLIPSE, TRIANGLE, RECTANGLE, USE, LINE, CLASS, ACTOR
     }
 }

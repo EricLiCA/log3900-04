@@ -27,7 +27,7 @@ namespace PolyPaint.Modeles.Strokes
                     var triangleStroke = new BaseTrangleStroke(triangle.Id, triangle.Index, getExtrimities(triangle.ShapeInfo), strokes, (Color)ColorConverter.ConvertFromString(triangle.ShapeInfo.Color));
                     return triangleStroke;
 
-                case "ELIPSE":
+                case "ELLIPSE":
                     SerializedShape elipse = serialized.ToObject<SerializedShape>();
                     var elipseStroke = new BaseElipseStroke(elipse.Id, elipse.Index, getExtrimities(elipse.ShapeInfo), strokes, (Color)ColorConverter.ConvertFromString(elipse.ShapeInfo.Color));
                     return elipseStroke;

@@ -71,6 +71,6 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.Pop();
         }
 
-        public override StrokeType StrokeType() => Strokes.StrokeType.ELIPSE;
+        public override StrokeType StrokeType() => Strokes.StrokeType.ELLIPSE;
     }
 }

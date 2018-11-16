@@ -34,7 +34,7 @@ namespace PolyPaint.Modeles
             {
                 loadedShape = new BaseRectangleStroke(new StylusPointCollection() { topLeft, bottomRight }, strokes);
             }
-            else if (shape["ShapeType"] == StrokeType.ELIPSE.ToString())
+            else if (shape["ShapeType"] == StrokeType.ELLIPSE.ToString())
             {
                 loadedShape = new BaseElipseStroke(new StylusPointCollection() { topLeft, bottomRight }, strokes);
             }
