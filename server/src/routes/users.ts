@@ -2,6 +2,7 @@ import * as express from 'express';
 import { RedisService } from '../redis.service';
 
 import { User } from '../models/User';
+import { ConnectedUsersService } from '../connected-users-service.ts/connected-users-service';
 
 export class UsersRoute {
 
@@ -79,6 +80,7 @@ export class UsersRoute {
             if (user === undefined) {
                 res.sendStatus(400);
             } else {
+                ConnectedUsersService.deleteUser(user.Username);
                 res.send({
                     id: user.Id,
                     username: user.Username,

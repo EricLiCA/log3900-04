@@ -35,11 +35,13 @@ export class ConnectedUsersService {
     }
 
     public static getBySocket(id: string): User {
-        return ConnectedUsersService.instance.users[ConnectedUsersService.findIndexBySocket(id)];
+        const index = ConnectedUsersService.findIndexBySocket(id);
+        return index >= 0 ? ConnectedUsersService.instance.users[index] : undefined;
     }
 
     public static getByName(name: string): User {
-        return ConnectedUsersService.instance.users[ConnectedUsersService.findIndexByName(name)];
+        const index = ConnectedUsersService.findIndexByName(name);
+        return index >= 0 ? ConnectedUsersService.instance.users[index] : undefined;
     }
 
     public static isConnectedByName(name: string): boolean {
@@ -47,11 +49,19 @@ export class ConnectedUsersService {
     }
 
     public static disconnect(socket: Socket): void {
-        ConnectedUsersService.connectedUsers.splice(this.findIndexBySocket(socket.id), 1);
+        const index = ConnectedUsersService.findIndexBySocket(socket.id);
+        if (index >= 0)
+            ConnectedUsersService.connectedUsers.splice(index, 1);
     }
 
     public static getAll(): User[] {
         return ConnectedUsersService.instance.users;
+    }
+
+    public static deleteUser(name: string): void {
+        let toDelete = ConnectedUsersService.getByName(name);
+        toDelete.socket.disconnect();
+        ConnectedUsersService.disconnect(toDelete.socket);
     }
 
 
