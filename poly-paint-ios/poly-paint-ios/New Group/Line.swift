@@ -39,13 +39,14 @@ class Line {
     func hitTest(touchPoint: CGPoint) -> Bool {
         
         for (index, point) in self.points.enumerated() {
-            if(self.findDistanceBetween(p1: touchPoint, p2: point) < 10) {
-                print("POINT TOUCHED!")
-            } else if(index != (self.points.count - 1)) {
+            if(index != (self.points.count - 1)) {
                 var distanceToSegment = findDistanceToSegment(touchPoint: touchPoint, p1: self.points[index], p2: self.points[index + 1])
-                if(distanceToSegment > 15) {
+                var distanceToPoint = self.findDistanceBetween(p1: touchPoint, p2: point)
+                if(distanceToPoint < 10) {
+                    print("TOUCHED POINT!!")
+                } else if(distanceToSegment > 15) {
                     //return false
-                } else {
+                } else if(distanceToSegment < 15) {
                     if(self.selected) {
                         self.hitStartPoint = nil
                         self.hitEndPoint = nil
