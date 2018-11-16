@@ -20,6 +20,9 @@
 		A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7335215ADDEF007A854F /* FrontPageViewController.swift */; };
 		A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7337215AE75D007A854F /* ConnectionViewController.swift */; };
 		A78A733A215ED91C007A854F /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7339215ED91C007A854F /* DateTime.swift */; };
+		A7E542FF219F3CA900261E9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E542FE219F3CA900261E9B /* User.swift */; };
+		CCA060E9219D151A00B558CA /* UIColorExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060E8219D151A00B558CA /* UIColorExtentions.swift */; };
+		CCA060EB219DD64000B558CA /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EA219DD64000B558CA /* ImageLoader.swift */; };
 		CCA46DAD2177E1BD00DC32EC /* PublicPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */; };
 		CCA46DAF2177E8AC00DC32EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DAE2177E8AC00DC32EC /* Image.swift */; };
 		CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DB0217815D500DC32EC /* PublicImageCell.swift */; };
@@ -28,8 +31,6 @@
 		CCD4FA762186536B005E124B /* PublicImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD4FA752186536B005E124B /* PublicImageViewController.swift */; };
 		CCD4FA782186848A005E124B /* PrivateImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD4FA772186848A005E124B /* PrivateImageViewController.swift */; };
 		CCD4FA7A21891A72005E124B /* ProtectedImagePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD4FA7921891A72005E124B /* ProtectedImagePasswordViewController.swift */; };
-		CCA060E9219D151A00B558CA /* UIColorExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060E8219D151A00B558CA /* UIColorExtentions.swift */; };
-		CCA060EB219DD64000B558CA /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EA219DD64000B558CA /* ImageLoader.swift */; };
 		CCE6BC4D21925DE800C6DF31 /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE6BC4C21925DE800C6DF31 /* ColorPickerViewController.swift */; };
 		CCE6BC4F2192696A00C6DF31 /* colorPalette.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCE6BC4921925CFA00C6DF31 /* colorPalette.plist */; };
 		CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099D82165066700E2D27E /* LoginViewController.swift */; };
@@ -46,7 +47,6 @@
 		CF3DD525219B6B4C00A14BAF /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD524219B6B4C00A14BAF /* Line.swift */; };
 		CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD528219C804900A14BAF /* BasicShapeView.swift */; };
 		CF3DD52B219D22AA00A14BAF /* UseCaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */; };
-		CF21E280217EA8E400F21F57 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E27F217EA8E400F21F57 /* User.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -90,8 +90,11 @@
 		A78A7335215ADDEF007A854F /* FrontPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontPageViewController.swift; sourceTree = "<group>"; };
 		A78A7337215AE75D007A854F /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		A78A7339215ED91C007A854F /* DateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTime.swift; sourceTree = "<group>"; };
+		A7E542FE219F3CA900261E9B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_poly_paint_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83DCF8B210537D23F9A45E1 /* Pods-poly-paint-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.debug.xcconfig"; sourceTree = "<group>"; };
+		CCA060E8219D151A00B558CA /* UIColorExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtentions.swift; sourceTree = "<group>"; };
+		CCA060EA219DD64000B558CA /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPhotosViewController.swift; sourceTree = "<group>"; };
 		CCA46DAE2177E8AC00DC32EC /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		CCA46DB0217815D500DC32EC /* PublicImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicImageCell.swift; sourceTree = "<group>"; };
@@ -100,8 +103,6 @@
 		CCD4FA752186536B005E124B /* PublicImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicImageViewController.swift; sourceTree = "<group>"; };
 		CCD4FA772186848A005E124B /* PrivateImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateImageViewController.swift; sourceTree = "<group>"; };
 		CCD4FA7921891A72005E124B /* ProtectedImagePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectedImagePasswordViewController.swift; sourceTree = "<group>"; };
-		CCA060E8219D151A00B558CA /* UIColorExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtentions.swift; sourceTree = "<group>"; };
-		CCA060EA219DD64000B558CA /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		CCE6BC4921925CFA00C6DF31 /* colorPalette.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = colorPalette.plist; sourceTree = "<group>"; };
 		CCE6BC4C21925DE800C6DF31 /* ColorPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		CF0099D82165066700E2D27E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -118,7 +119,6 @@
 		CF3DD524219B6B4C00A14BAF /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		CF3DD528219C804900A14BAF /* BasicShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicShapeView.swift; sourceTree = "<group>"; };
 		CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseView.swift; sourceTree = "<group>"; };
-		CF21E27F217EA8E400F21F57 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = "/Users/tomato/Documents/log3900/github/log3900-04/poly-paint-ios/poly-paint-ios/User.swift"; sourceTree = "<absolute>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
@@ -206,7 +206,6 @@
 				CF21E2D721820DB600F21F57 /* DrawViewController.swift */,
 				CF1F1E1C216980FF0023663E /* SignUpViewController.swift */,
 				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
-				CF21E27F217EA8E400F21F57 /* User.swift */,
 				CF0099DC216571B800E2D27E /* MainMenuViewController.swift */,
 				A78A7337215AE75D007A854F /* ConnectionViewController.swift */,
 				CFEF506521784173001C93AB /* ProfilePictureViewController.swift */,
@@ -226,6 +225,7 @@
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
 				CCA46DB0217815D500DC32EC /* PublicImageCell.swift */,
 				CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */,
+				A7E542FE219F3CA900261E9B /* User.swift */,
 			);
 			path = "poly-paint-ios";
 			sourceTree = "<group>";
@@ -454,7 +454,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF3DD52B219D22AA00A14BAF /* UseCaseView.swift in Sources */,
-				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				A74A5B0C219DDFE600051D14 /* ChatModel.swift in Sources */,
 				CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
@@ -467,7 +466,6 @@
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
 				CF3DD51F2197A34600A14BAF /* CanevasViewController.swift in Sources */,
 				CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */,
-				CF21E280217EA8E400F21F57 /* User.swift in Sources */,
 				A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */,
 				CCA46DAF2177E8AC00DC32EC /* Image.swift in Sources */,
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,
@@ -478,6 +476,7 @@
 				CCD4FA7A21891A72005E124B /* ProtectedImagePasswordViewController.swift in Sources */,
 				CCD4FA7221801444005E124B /* MyImagesCollectionViewController.swift in Sources */,
 				CCA060E9219D151A00B558CA /* UIColorExtentions.swift in Sources */,
+				A7E542FF219F3CA900261E9B /* User.swift in Sources */,
 				CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */,
 				CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */,
 				CCA060EB219DD64000B558CA /* ImageLoader.swift in Sources */,

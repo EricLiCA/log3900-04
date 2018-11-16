@@ -1,6 +1,6 @@
 //
 //  User.swift
-//  
+//
 //
 //  Created by Tomato on 2018-10-22.
 //
