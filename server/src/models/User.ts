@@ -70,6 +70,7 @@ export class User {
             ['ProfileImage', profileImage],
         ];
         updates = updates.filter((update) => update[1] !== undefined);
+        
         if (updates.length === 0) {
             return Promise.resolve(undefined);
         } else {
