@@ -70,8 +70,16 @@ namespace PolyPaint.Modeles
                         {
                             room.AddPerson((string)users[j]);
                         }
-                        NotSubscribedChatRooms.Add(room);
-                        ProprieteModifiee("NotSubscribedChatRooms");
+                        if (room.Name == "Lobby")
+                        {
+                            SubscribedChatRooms.Add(room);
+                            ProprieteModifiee("SubscribedChatRooms");
+                        }
+                        else
+                        {
+                            NotSubscribedChatRooms.Add(room);
+                            ProprieteModifiee("NotSubscribedChatRooms");
+                        }
                     });
                 }
             });
