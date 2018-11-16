@@ -203,6 +203,7 @@
     <Compile Include="Modeles\Strokes\Movable.cs" />
     <Compile Include="Modeles\Strokes\PersonStroke.cs" />
     <Compile Include="Modeles\Strokes\Savable.cs" />
+    <Compile Include="Modeles\Strokes\TextStroke.cs" />
     <Compile Include="Modeles\Strokes\SerializationHelper.cs" />
     <Compile Include="Modeles\Strokes\ShapeStroke.cs" />
     <Compile Include="Modeles\Strokes\Textable.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Modeles\Tools\Person.cs" />
     <Compile Include="Modeles\Tools\Edit.cs" />
     <Compile Include="Modeles\Tools\Lasso.cs" />
+    <Compile Include="Modeles\Tools\TextTool.cs" />
     <Compile Include="Modeles\Tools\Triangle.cs" />
     <Compile Include="Modeles\Tools\Tool.cs" />
     <Compile Include="Modeles\Tools\Rectangle.cs" />
@@ -388,6 +390,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\defaultImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\format-letter-case.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

@@ -40,6 +40,9 @@ namespace PolyPaint.Modeles.Tools
             {
                 strokes.Remove(ActiveStroke);
                 var clone = ActiveStroke.Clone();
+                if (clone is TextStroke)
+                    ((TextStroke)clone).showBorder = false;
+
                 strokes.Add(clone);
                 ((CustomStroke)clone).Select();
                 EditionSocket.AddStroke(((Savable)clone).toJson());

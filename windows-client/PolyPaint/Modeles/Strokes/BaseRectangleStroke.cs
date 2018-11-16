@@ -38,7 +38,16 @@ namespace PolyPaint.Modeles.Strokes
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
             DrawingAttributes originalDa = drawingAttributes.Clone();
-            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(this.Color);
+            SolidColorBrush fillBrush = new SolidColorBrush(this.Color);
+            if (this is TextStroke)
+            {
+                fillBrush = new SolidColorBrush(Colors.Transparent);
+            }
+            else if (this is Textable)
+            {
+                fillBrush = new SolidColorBrush(Colors.White);
+            }
+
             fillBrush.Freeze();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
 
@@ -55,8 +64,8 @@ namespace PolyPaint.Modeles.Strokes
             {
                 this.addAnchorPoints();
             }
-
-            drawingContext.DrawRectangle(fillBrush, outlinePen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
+            
+            drawingContext.DrawRectangle(fillBrush, ((this is TextStroke) && !((TextStroke)this).showBorder) ? null : outlinePen, new Rect(this.StylusPoints[0].ToPoint(), this.StylusPoints[1].ToPoint()));
 
             if (this.isEditing())
             {

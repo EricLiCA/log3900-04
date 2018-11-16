@@ -37,6 +37,11 @@ namespace PolyPaint.Modeles.Strokes
                     var classStroke = new ClassStroke(classCase.Id, classCase.Index, getExtrimities(classCase.ShapeInfo), strokes, classCase.ShapeInfo.Content);
                     return classStroke;
 
+                case "TEXT":
+                    SerializedTextable text = serialized.ToObject<SerializedTextable>();
+                    var textStroke = new TextStroke(text.Id, text.Index, getExtrimities(text.ShapeInfo), strokes, text.ShapeInfo.Content);
+                    return textStroke;
+
                 case "USE":
                     SerializedTextable use = serialized.ToObject<SerializedTextable>();
                     var useStroke = new UseCaseStroke(use.Id, use.Index, getExtrimities(use.ShapeInfo), strokes, use.ShapeInfo.Content);

@@ -89,7 +89,7 @@ namespace PolyPaint.VueModeles
                 if (stroke is BaseLine)
                     return this.lineEditor;
 
-                if (stroke is PersonStroke || stroke is ClassStroke || stroke is UseCaseStroke)
+                if (stroke is Textable)
                     return this.classEditor;
 
                 return null;

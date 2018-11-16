@@ -38,6 +38,7 @@ namespace PolyPaint.Modeles
         private Tool Line = new Line();
         private Tool ClassDiagram = new ClassDiagram();
         private Tool UseCase = new UseCase();
+        private Tool TextTool = new TextTool();
         public List<Tool> Tools;
 
         // Outil actif dans l'éditeur
@@ -243,7 +244,8 @@ namespace PolyPaint.Modeles
                 Person,
                 Line,
                 ClassDiagram,
-                UseCase
+                UseCase,
+                TextTool
             };
         }
 

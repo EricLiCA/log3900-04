@@ -177,7 +177,7 @@ namespace PolyPaint.Modeles.Strokes
             this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableMoved(this));
         }
 
-        public void handleMoved(Guid id, Point point)
+        public virtual void handleMoved(Guid id, Point point)
         {
             Point oppo;
             if (id.ToString() == TOP_RIGHT.ToString())
@@ -302,7 +302,7 @@ namespace PolyPaint.Modeles.Strokes
             this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableDoneMoving(this));
         }
 
-        public void HandleStoped(Guid id)
+        public virtual void HandleStoped(Guid id)
         {
             EditionSocket.EditStroke(this.toJson());
             this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableDoneMoving(this));
