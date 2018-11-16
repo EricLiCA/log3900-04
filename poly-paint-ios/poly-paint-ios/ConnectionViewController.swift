@@ -12,17 +12,33 @@ class ConnectionViewController: UIViewController {
     // MARK: - View Elements
     @IBOutlet weak var serverAddress: UITextField!
     @IBOutlet weak var username: UITextField!
+    @IBOutlet weak var notificationsLabel: UILabel!
     
     var pseudonym: String = ""
     
     // MARK: - Initialization and Cleanup
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // set username
         self.pseudonym = UserDefaults.standard.string(forKey: "username") ?? ""
-        self.username.text = self.pseudonym
-        self.username.isEnabled = false
+
+        if (self.pseudonym != "anonymous") {
+            self.username.text = self.pseudonym
+            self.username.isEnabled = false
+        }
+        
+        notificationsLabel.text = "NotificationsTest: \(ChatModel.instance.notifications)"
+        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
+            notifications in
+            self.notificationsLabel.text = "Notifications: \(notifications)"
+            if notifications == 0 {
+                self.notificationsLabel.isHidden = true
+            } else {
+                self.notificationsLabel.isHidden = false
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {

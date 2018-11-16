@@ -10,19 +10,6 @@ namespace PolyPaint.DAO
 {
     class UserDao
     {
-        public static void GetAll()
-        {
-            var request = new RestRequest(Settings.API_VERSION + Settings.USERS_PATH, Method.GET);
-            ServerService.instance.server.ExecuteAsync<User>(request, response =>
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    Users currentUsers = ((MainWindow)Application.Current.MainWindow).Users;
-                    currentUsers.LoadUsers(response);
-                });
-            });
-        }
-
         public static void Put(User userToUpdate)
         {
             var request = new RestRequest(Settings.API_VERSION + Settings.USERS_PATH + "/" + userToUpdate.id, Method.PUT);
@@ -32,6 +19,23 @@ namespace PolyPaint.DAO
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     MessageBox.Show("Could not update your profile", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+        }
+
+        public static void Post(User newUser)
+        {
+            var request = new RestRequest(Settings.API_VERSION + Settings.USERS_PATH, Method.POST);
+            request.AddJsonBody(newUser);
+            ServerService.instance.server.ExecuteAsync(request, response =>
+            {
+                if (response.StatusCode == HttpStatusCode.Created)
+                {
+                    MessageBox.Show("You can connect to your account using your informations", "Account created !", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("The username already exists", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             });
         }
