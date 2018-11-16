@@ -80,6 +80,8 @@ namespace PolyPaint.Modeles.Strokes
                 FormattedText text = new FormattedText(textLine, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), wordSize, Brushes.Black);
                 text.MaxTextWidth = bottomRight.X - topLeft.X;
                 text.MaxTextHeight = bottomRight.Y - point.Y;
+                if (line == 0)
+                    text.TextAlignment = TextAlignment.Center;
                 drawingContext.DrawText(text, point);
                 line += ((int)text.Height % wordSize) / 3;
             });
