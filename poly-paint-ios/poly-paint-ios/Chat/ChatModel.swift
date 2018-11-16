@@ -12,7 +12,7 @@ import AVFoundation
 import RxSwift
 
 class ChatModel {
-    static let instance = ChatModel()
+    static var instance = ChatModel()
     
     // MARK: - Models
     var messagesArray = [String]()
@@ -24,12 +24,13 @@ class ChatModel {
     var serverAddress: String = "http://localhost:3000/"
     var username: String = ""
     var invalidUsername: Bool = false
+    var usernameSet: Bool = false
     let systemSoundID: SystemSoundID = 1016
     // MARK: Sockets
     var manager: SocketManager!
     var socketIOClient: SocketIOClient!
     
-    private init() {
+    init() {
         messagesSubject = BehaviorSubject<[String]>(value: [String]())
         connectionStatusSubject = BehaviorSubject<String>(value: "connecting")
         disconnectSubject = BehaviorSubject<Bool>(value: false)
@@ -48,6 +49,7 @@ class ChatModel {
                     //_ = self.navigationController?.popViewController(animated: true)
                 }
             } else {
+                self.usernameSet = true
                 self.connectionStatusSubject.onNext("connected")
                 self.disconnectSubject.onNext(false)
                 //self.setConnectionStatus(as: "connected")
@@ -85,7 +87,13 @@ class ChatModel {
     
     func setUsername(username: String) {
         self.username = username
-        self.socketIOClient.emit("setUsername", self.username)
+        if self.usernameSet == false {
+            print("SETTING USERNAME")
+            self.socketIOClient.emit("setUsername", self.username)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.setUsername(username: username)
+            }
+        }
     }
     
     func sendMessage(message: String) {

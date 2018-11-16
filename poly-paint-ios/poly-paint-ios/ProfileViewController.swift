@@ -55,16 +55,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var friends = [User]()
     var imagePicker = UIImagePickerController()
     
+    @IBOutlet weak var chatButton: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
-        notificationsLabel.text = "NotificationsTest: \(ChatModel.instance.notifications)"
         ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
             notifications in
-            self.notificationsLabel.text = "Notifications: \(notifications)"
             if notifications == 0 {
-                self.notificationsLabel.isHidden = true
+                self.chatButton.image = #imageLiteral(resourceName: "Chat")
             } else {
-                self.notificationsLabel.isHidden = false
+                self.chatButton.image = #imageLiteral(resourceName: "UnreadMessage")
             }
         })
         self.customizeUI()

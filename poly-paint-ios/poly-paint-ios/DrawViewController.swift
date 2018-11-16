@@ -25,6 +25,7 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var stickFigure: UIButton!
     @IBOutlet weak var classButton: UIButton!
     @IBOutlet weak var lineButton: UIButton!
+    @IBOutlet weak var chatButton: UIBarButtonItem!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -50,6 +51,14 @@ class DrawViewController: UIViewController {
         self.cancelButton.isEnabled = false
         self.setUpNotifications()
         
+        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
+            notifications in
+            if notifications == 0 {
+                self.chatButton.image = #imageLiteral(resourceName: "Chat")
+            } else {
+                self.chatButton.image = #imageLiteral(resourceName: "UnreadMessage")
+            }
+        })
         // Do any additional setup after loading the view.
     }
     
