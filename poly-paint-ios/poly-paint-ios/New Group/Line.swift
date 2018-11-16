@@ -35,7 +35,7 @@ class Line {
     }
     
     func hitTest(touchPoint: CGPoint) -> Bool {
-        var distanceToSegment = findDistanceToSegment(touchPoint: touchPoint)
+        var distanceToSegment = findDistanceToSegment(touchPoint: touchPoint, p1: self.points[0], p2: self.points[1])
         if(distanceToSegment > 15) {
             return false
         } else {
@@ -51,9 +51,7 @@ class Line {
         }
     }
     
-    func findDistanceToSegment(touchPoint: CGPoint) -> CGFloat {
-        var p1 = self.points[0]
-        var p2 = self.points[1]
+    func findDistanceToSegment(touchPoint: CGPoint, p1: CGPoint, p2: CGPoint) -> CGFloat {
         
         var dx = p2.x - p1.x
         var dy = p2.y - p1.y

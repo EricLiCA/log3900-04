@@ -43,6 +43,8 @@ class DrawViewController: UIViewController {
     var endAnchorNumber: Int?
     var lines = [Line]()
     var shapes = [String: BasicShapeView]()
+    var lineIndexEdit: Int?
+    var lineEditing = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,14 +170,29 @@ class DrawViewController: UIViewController {
         self.firstTouch = touch?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
         
+        var lineIndex = 0
         for line in self.lines {
-            line.hitTest(touchPoint: self.firstTouch!)
+            if(self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
+                self.lineIndexEdit = nil
+                self.lineEditing = false
+            } else if (!self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
+                self.lineIndexEdit = lineIndex
+                self.lineEditing = true
+            }
+            lineIndex += 1
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if(self.lineEditing) {
+            print("Editing Line")
+        }
+        
         if(isUserEditing && self.insideCanvas) {
             // erase sublayers used for drawing
+            
+            
+            
             if(self.drawingPlace.layer.sublayers != nil) {
                 self.redrawLayers()
             }
