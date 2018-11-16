@@ -74,6 +74,7 @@ namespace PolyPaint.Modeles
                         {
                             SubscribedChatRooms.Add(room);
                             ProprieteModifiee("SubscribedChatRooms");
+                            this.SelectedIndex = 0;
                         }
                         else
                         {
