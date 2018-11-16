@@ -191,7 +191,6 @@ class DrawViewController: UIViewController {
         if(self.lineEditing && !self.addedNewPointToLine) {
             self.addedNewPointToLine = true
             self.lineBeingEdited?.addPoint(point: (touches.first?.location(in: self.drawingPlace))!)
-            print("Editing Line")
         } else if(self.lineEditing) {
             self.lineBeingEdited?.points[(self.lineBeingEdited?.hitStartPoint)! + 1] = (touches.first?.location(in: self.drawingPlace))!
             drawLine(line: self.lineBeingEdited!)
