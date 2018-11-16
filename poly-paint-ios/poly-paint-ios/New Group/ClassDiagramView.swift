@@ -119,9 +119,15 @@ class ClassDiagramView: BasicShapeView {
 
 }
 
-class classDiagramPopoverView: UIView {
+class classDiagramPopoverView: UIViewController {
     
     @IBOutlet weak var rawText: UITextView!
+    @IBOutlet weak var addClassBtn: UIButton!
+    
+    /*override func viewDidLoad() {
+        super.viewDidLoad()
+        self.rawText.text = "Class Name\n--\nAttributes\n--\nMethods"
+    }*/
     
     override func awakeFromNib() {
         super.awakeFromNib()

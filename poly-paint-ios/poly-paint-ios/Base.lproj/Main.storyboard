@@ -204,7 +204,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qsR-jg-kXw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1390.625" y="131.8359375"/>
+            <point key="canvasLocation" x="-1761" y="120"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hk1-4T-r0Z">
@@ -222,7 +222,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YVd-Uw-ZIg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-606.25" y="131.8359375"/>
+            <point key="canvasLocation" x="-1029" y="120"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="pDf-R3-iyH">
@@ -358,6 +358,9 @@
                             <barButtonItem title="Insert" id="vVf-wi-6Rz">
                                 <connections>
                                     <action selector="insertTapped:" destination="nxp-f4-1rm" id="eFx-U7-Frn"/>
+                                    <segue destination="82l-V1-XRu" kind="popoverPresentation" identifier="toCreateClass" popoverAnchorBarButtonItem="vVf-wi-6Rz" id="EpZ-ul-W1h">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Color" id="onF-ce-uHG">
@@ -374,12 +377,12 @@
                         <outlet property="cancelButton" destination="XMc-53-DIO" id="Hfb-E2-GxG"/>
                         <outlet property="colorButton" destination="onF-ce-uHG" id="hCW-DP-93z"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
-                        <outlet property="editButton" destination="vVf-wi-6Rz" id="Y8R-iC-UUg"/>
+                        <outlet property="insertButton" destination="vVf-wi-6Rz" id="DIX-kD-pgq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="912.5" y="-891.21093749999989"/>
+            <point key="canvasLocation" x="655" y="-908"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Es3-Na-eqb">
@@ -429,24 +432,24 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lni-iO-eOs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1873.4375" y="-1593.1640625"/>
+            <point key="canvasLocation" x="1398" y="-1649"/>
         </scene>
-        <!--View Controller-->
+        <!--Class Diagram Popover View-->
         <scene sceneID="2JB-on-srr">
             <objects>
-                <viewController id="82l-V1-XRu" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4Hv-8g-iJq" customClass="classDiagramPopoverView" customModule="poly_paint_ios" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                <viewController id="82l-V1-XRu" customClass="classDiagramPopoverView" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4Hv-8g-iJq" customClass="classDiagramPopoverView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NlW-PG-7wi">
-                                <rect key="frame" x="16" y="115" width="736" height="850"/>
+                                <rect key="frame" x="16" y="95" width="288" height="326"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" smartDashesType="no"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7n0-x0-Ndg">
-                                <rect key="frame" x="16" y="974" width="288" height="30"/>
+                                <rect key="frame" x="16" y="430" width="288" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Gw1-IC-bCK"/>
@@ -456,11 +459,11 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="addClassTapped:" destination="4Hv-8g-iJq" eventType="touchUpInside" id="XZv-zO-1CV"/>
+                                    <action selector="addClassTapped:" destination="4Hv-8g-iJq" eventType="touchUpInside" id="kau-11-dz2"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write two dashes to draw a line" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVo-k0-NbN">
-                                <rect key="frame" x="16" y="64" width="288" height="21"/>
+                                <rect key="frame" x="16" y="44" width="288" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="288" id="M1C-q5-18P"/>
                                     <constraint firstAttribute="height" constant="21" id="Qey-2F-bfu"/>
@@ -484,13 +487,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="q1D-W7-Ihn"/>
                         <connections>
-                            <outlet property="rawText" destination="NlW-PG-7wi" id="oXE-wN-AWz"/>
+                            <outlet property="addClassBtn" destination="7n0-x0-Ndg" id="2F0-mB-T40"/>
+                            <outlet property="rawText" destination="NlW-PG-7wi" id="FHR-2A-4nu"/>
                         </connections>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Cd-f8-ZiB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2493" y="-891"/>
+            <point key="canvasLocation" x="679" y="-1628"/>
         </scene>
         <!--Login Scene-->
         <scene sceneID="maM-Fp-ADF">
@@ -699,7 +703,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEf-0y-fS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="812.5" y="119.53124999999999"/>
+            <point key="canvasLocation" x="459" y="120"/>
         </scene>
         <!--Profile-->
         <scene sceneID="5Ad-dn-gBR">
@@ -762,7 +766,7 @@
                                         </constraints>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H42-e3-dqo">
-                                        <rect key="frame" x="8" y="8" width="752" height="21"/>
+                                        <rect key="frame" x="8" y="8" width="752" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1221,7 +1225,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQ5-CB-Woq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1505" y="-820"/>
+            <point key="canvasLocation" x="1398" y="-804"/>
         </scene>
         <!--Account Settings View Controller-->
         <scene sceneID="NMK-hB-sAV">
@@ -1385,7 +1389,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pI3-no-Z31">
-                                                    <rect key="frame" x="298" y="15" width="37" height="30"/>
+                                                    <rect key="frame" x="243" y="15" width="37" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="37" id="KAJ-X7-hNr"/>
                                                         <constraint firstAttribute="height" constant="30" id="mf5-Df-eCo"/>
@@ -2860,7 +2864,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="syA-9r-bXG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1627" y="-891"/>
+            <point key="canvasLocation" x="1354" y="-2304"/>
         </scene>
     </scenes>
     <resources>

@@ -19,12 +19,10 @@ enum Shape {
 class DrawViewController: UIViewController {
 
     @IBOutlet weak var drawingPlace: UIView!
-    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var insertButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var colorButton: UIBarButtonItem!
-    @IBOutlet weak var stickFigure: UIButton!
-    @IBOutlet weak var classButton: UIButton!
-    @IBOutlet weak var lineButton: UIButton!
+   
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -85,7 +83,7 @@ class DrawViewController: UIViewController {
         alertController.addAction(drawActorAction)
         
         let drawClassAction = UIAlertAction(title: "Class", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            self.createClassDiagramAlert(sender: self)
+           // self.performSegue(withIdentifier: "toCreateClass", sender: self)
         })
         alertController.addAction(drawClassAction)
         
@@ -145,7 +143,7 @@ class DrawViewController: UIViewController {
         }
     }
     
-    @IBAction func lineTapped() {
+    func lineTapped() {
         if(self.currentShape == Shape.Line) {
             self.isUserEditing = false
             self.currentShape = Shape.None
@@ -156,7 +154,7 @@ class DrawViewController: UIViewController {
         }
     }
     
-    @IBAction func stickfigureTapped() {
+    func stickfigureTapped() {
         let stickFigure = StickFigureView()
         self.shapes[stickFigure.uuid] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
@@ -335,9 +333,9 @@ class DrawViewController: UIViewController {
         present(popoverVC, animated: true, completion: nil)
     }
     
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+   /* func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
-    }
+    }*/
     
     func setButtonColor (_ color: UIColor) {
         self.colorButton.tintColor = color
@@ -483,6 +481,12 @@ class DrawViewController: UIViewController {
         
         for line in lines {
             self.drawingPlace.layer.addSublayer(line.layer!)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toCreateClass" {
+            let CreateClassVC = segue.destination as! classDiagramPopoverView
         }
     }
 
