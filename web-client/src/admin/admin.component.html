@@ -1,0 +1,94 @@
+<p>Admin</p>
+
+<!-- Default form subscription -->
+<form class="text-center border border-light p-5">
+
+    <p class="h4 mb-4">Change account info</p>
+  
+    <p>Use this form to change your name and/or password</p>
+    
+    <input #newUsername type="text" id="defaultSubscriptionFormUsername" class="form-control mb-4" placeholder="New name">
+    <input #newPassword type="text" id="defaultSubscriptionFormNewPassword" class="form-control mb-4" placeholder="New password">
+    <input #passowrd type="text" id="defaultSubscriptionFormPassword" class="form-control mb-4" placeholder="Your password">
+
+    <button mdbBtn color="info" block="true" type="submit" (click)="changeAccount(newUsername.value, newPassword.value, passowrd.value)">Change info</button>
+  
+  
+</form>
+<!-- Default form subscription -->
+
+<!-- Default form subscription -->
+<form *ngIf="admin || management" class="text-center border border-light p-5">
+
+    <p class="h4 mb-4">Create account</p>
+  
+    <p>Use this form to create an account</p>
+    
+    <input #accountName type="text" id="defaultSubscriptionFormNewUsername" class="form-control mb-4" placeholder="Name">
+    <input #password1 type="text" id="defaultSubscriptionFormNewRights" class="form-control mb-4" placeholder="Password">
+    <input #passowrd2 type="text" id="defaultSubscriptionFormNewPasswordForCreatedAccount" class="form-control mb-4" placeholder="Password">
+
+    <button mdbBtn color="info" block="true" type="submit" (click)="createAccount(accountName.value, password1.value, passowrd2.value)">Create account</button>
+  
+</form>
+<!-- Default form subscription -->
+
+<!-- Default form subscription -->
+<form *ngIf="admin || management" class="text-center border border-light p-5">
+
+    <p class="h4 mb-4">Delete account</p>
+  
+    <p>Use this form to delete an account</p>
+    
+    <input #accountNameToDelete type="text" id="usernameToDelete" class="form-control mb-4" placeholder="Name">
+
+    <button mdbBtn color="info" block="true" type="submit" (click)="deleteAccount(accountNameToDelete.value)">Delete account</button>
+  
+</form>
+<!-- Default form subscription -->
+
+<!-- Default form subscription -->
+<form *ngIf="admin || permission" class="text-center border border-light p-5">
+
+    <p class="h4 mb-4">Change permissions</p>
+  
+    <p>Use this form to change permissions for an account</p>
+    
+    <input #accountNameToChangePermissions type="text" id="permissions" class="form-control mb-4" placeholder="Name">
+    <!-- <input #permissions type="text" id="permissionsTypes" class="form-control mb-4" placeholder="admin or user"> -->
+
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" [value]="admin" (click)="getRadioValue('admin')" >
+        <label class="form-check-label" for="exampleRadios1">
+            Full access
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" [value]="image" (click)="getRadioValue('image')">
+        <label class="form-check-label" for="exampleRadios2">
+            Image access
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" [value]="permissions" (click)="getRadioValue('permissions')">
+        <label class="form-check-label" for="exampleRadios3">
+            Permission access
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" [value]="user" (click)="getRadioValue('management')">
+        <label class="form-check-label" for="exampleRadios4">
+            User access
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" [value]="none" (click)="getRadioValue('user')">
+        <label class="form-check-label" for="exampleRadios5">
+            No access
+        </label>
+    </div>
+
+    <button mdbBtn color="info" block="true" (click)="changePermissions(accountNameToChangePermissions.value)">Change permissions</button>
+  
+</form>
+<!-- Default form subscription -->
