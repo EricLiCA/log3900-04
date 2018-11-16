@@ -235,6 +235,9 @@
     <Compile Include="Vues\ClassEdit.xaml.cs">
       <DependentUpon>ClassEdit.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\DetachedChat.xaml.cs">
+      <DependentUpon>DetachedChat.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\Gallery.xaml.cs">
       <DependentUpon>Gallery.xaml</DependentUpon>
     </Compile>
@@ -256,6 +259,9 @@
     <Compile Include="Vues\MessagingWindow.xaml.cs">
       <DependentUpon>MessagingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\MessagingWindowOutside.xaml.cs">
+      <DependentUpon>MessagingWindowOutside.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\Users.xaml.cs">
       <DependentUpon>Users.xaml</DependentUpon>
     </Compile>
@@ -267,6 +273,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\ClassEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\DetachedChat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -309,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\MessagingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\MessagingWindowOutside.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -378,6 +392,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\circle-outline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\detach.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\square-outline.png" />

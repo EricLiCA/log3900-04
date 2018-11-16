@@ -18,6 +18,8 @@ namespace PolyPaint.Vues
         public Gallery Gallery;
         public Users Users;
         public FenetreDessin FenetreDessin;
+        Window detached;
+        bool isDetached = true;
 
         public MainWindow()
         {
@@ -41,6 +43,35 @@ namespace PolyPaint.Vues
                     AvatarImage.Source = new BitmapImage(profileImage);
                 }
             }
+
+            showDetachedChat(null, null);
+        }
+
+        public void showDetachedChat(object sender, EventArgs e)
+        {
+            this.isDetached = true;
+            if (GridMain.Content == MessagingViewManager.instance.LargeMessagingView)
+            {
+                Button_Click(ButtonGallery, null);
+            }
+            else if (GridMain.Content == FenetreDessin)
+            {
+                Button_Click(ButtonEdit, null);
+            }
+            ButtonChat.Visibility = Visibility.Collapsed;
+            detached = new DetachedChat();
+            detached.Show();
+        }
+
+        public void showAttachedChat(object sender, EventArgs e)
+        {
+            detached.Hide();
+            ButtonChat.Visibility = Visibility.Visible;
+            this.isDetached = false;
+            if (GridMain.Content == FenetreDessin)
+            {
+                Button_Click(ButtonEdit, null);
+            }
         }
 
         private void RestrictPermissions()
@@ -60,9 +91,7 @@ namespace PolyPaint.Vues
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int index = int.Parse(((System.Windows.Controls.Button)e.Source).Uid);
-
-            GridCursor.Margin = new Thickness(10 + (150 * index), 0, 0, 0);
+            int index = int.Parse(((System.Windows.Controls.Button)sender).Uid);
 
             switch (index)
             {
@@ -70,19 +99,24 @@ namespace PolyPaint.Vues
                     {
                         Gallery.Load();
                         GridMain.Content = Gallery;
+                        GridCursor.Margin = new Thickness(10 + (150 * index), 0, 0, 0);
                         break;
                     }
                 case 1:
                     {
                         Users.Load();
                         GridMain.Content = Users;
+                        GridCursor.Margin = new Thickness(10 + (150 * index), 0, 0, 0);
                         break;
                     }
                 case 2:
+                    if (isDetached) break;
                     GridMain.Content = MessagingViewManager.instance.LargeMessagingView;
+                    GridCursor.Margin = new Thickness(10 + (150 * index), 0, 0, 0);
                     break;
                 case 3:
                     GridMain.Content = this.FenetreDessin;
+                    GridCursor.Margin = new Thickness(10 + (150 * (index - (isDetached ? 1 : 0))), 0, 0, 0);
                     break;
             }
         }
@@ -165,6 +199,5 @@ namespace PolyPaint.Vues
             GridMain.Content = FenetreDessin;
             ((VueModele)FenetreDessin.DataContext).editeur.SyncToServer();
         }
-
     }
 }
