@@ -193,5 +193,11 @@ namespace PolyPaint
                 }
             }
         }
+
+        private void Canvas_StrokeErasing(object sender, InkCanvasStrokeErasingEventArgs e)
+        {
+            VueModele vueModele = ((VueModele)this.DataContext);
+            //Empiler la modification
+        }
     }
 }

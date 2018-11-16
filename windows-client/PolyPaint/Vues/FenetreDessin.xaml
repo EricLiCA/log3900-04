@@ -145,7 +145,8 @@
                            PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown"
                            PreviewMouseRightButtonUp="Canvas_PreviewMouseRightButtonUp"
                            SelectionChanged="Canvas_SelectionChanged"
-                           PreviewMouseWheel="Canvas_PreviewMouseWheel"/>
+                           PreviewMouseWheel="Canvas_PreviewMouseWheel"
+                           StrokeErasing="Canvas_StrokeErasing"/>
             </Border>
         </Grid>
     </DockPanel>
