@@ -29,6 +29,8 @@ class Line {
     var secondEndLabel: String?
     var secondEndRelation: String?
     var selected = false
+    var hitStartPoint: Int?
+    var hitEndPoint: Int?
     
     init(layer: CAShapeLayer) {
         self.layer = layer
@@ -43,9 +45,13 @@ class Line {
                     return false
                 } else {
                     if(self.selected) {
+                        self.hitStartPoint = nil
+                        self.hitEndPoint = nil
                         self.selected = false
                         self.layer?.strokeColor = UIColor.black.cgColor
                     } else {
+                        self.hitStartPoint = index
+                        self.hitEndPoint = index + 1
                         self.selected = true
                         self.layer?.strokeColor = UIColor.green.cgColor
                     }
@@ -85,6 +91,11 @@ class Line {
         
         return sqrt(dx*dx + dy*dy)
         
+    }
+    
+    func addPoint(point: CGPoint) {
+        self.points.insert(point, at: self.hitStartPoint! + 1)
+        self.hitEndPoint = self.hitEndPoint! + 1
     }
     
     
