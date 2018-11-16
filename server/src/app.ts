@@ -92,6 +92,7 @@ export class Application {
         // PendingFriendRequest
         router.get('/pendingFriendRequest', pendingFriendRequestRoute.getAll.bind(pendingFriendRequestRoute.getAll));
         router.get('/pendingFriendRequest/:id', pendingFriendRequestRoute.get.bind(pendingFriendRequestRoute.get));
+        router.get('/pendingFriendRequestByRequesterId/:id', pendingFriendRequestRoute.getByRequesterId.bind(pendingFriendRequestRoute.getByRequesterId));
         router.delete('/pendingFriendRequest/:id', pendingFriendRequestRoute.delete.bind(pendingFriendRequestRoute.delete));
 
         // Images
@@ -104,6 +105,7 @@ export class Application {
         router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
 
         // ImageLikes
+        router.get('/imageLikes', imageLikes.getAll.bind(imageLikes.getAll));
         router.get('/imageLikes/:imageId', imageLikes.get.bind(imageLikes.get));
         router.post('/imageLikes', imageLikes.post.bind(imageLikes.post));
         router.delete('/imageLikes/:imageId/:userId', imageLikes.delete.bind(imageLikes.delete));
@@ -115,6 +117,8 @@ export class Application {
 
         // Chat Rooms
         router.get('/chatRooms', chatRooms.get.bind(chatRooms.get));
+        router.get('/chatRooms/:room', chatRooms.getUsers.bind(chatRooms.getUsers));
+        router.get('/connectedUsers', chatRooms.all.bind(chatRooms.all));
 
         // use router middleware
         this.app.use('/v2', router);

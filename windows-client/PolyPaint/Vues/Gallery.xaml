@@ -89,7 +89,7 @@
                         <GroupBox x:Name="groupBox" Header="Comments" Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0" Margin="16,0,0,0">
                             <StackPanel>
                                 <TextBox Name="CurrentComment" Style="{StaticResource MaterialDesignTextAreaTextBox}" Margin="0,0,0,5" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" materialDesign:HintAssist.Hint="Write something about this image..."  VerticalAlignment="Top" Height="61.96"/>
-                                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="87" materialDesign:RippleAssist.Feedback="#DD000000" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" FontSize="12" Background="#FF7E52AC" BorderThickness="0" SnapsToDevicePixels="True" Click="AddCommentButton_Click" Margin="0,0,0,10">
+                                <Button Name="AddCommentButton" Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="87" materialDesign:RippleAssist.Feedback="#DD000000" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="25" FontSize="12" Background="#FF7E52AC" BorderThickness="0" SnapsToDevicePixels="True" Click="AddCommentButton_Click" Margin="0,0,0,10">
                                     Comment
                                 </Button>
                                 <WrapPanel Name="CommentsContainer" Orientation="Vertical"/>
@@ -101,16 +101,16 @@
             </Expander>
             <ScrollViewer>
                 <StackPanel>
-                    <GroupBox Header="Private Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+                    <GroupBox Name="MyImagesGroupBox" Header="My Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon  Kind="EyeOff" Height="32" Width="32" VerticalAlignment="Center" />
+                                    <materialDesign:PackIcon  Kind="Image" Height="32" Width="32" VerticalAlignment="Center" />
                                     <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}" />
                                 </StackPanel>
                             </DataTemplate>
                         </GroupBox.HeaderTemplate>
-                        <WrapPanel x:Name="PrivateImagesContainer" Margin="10"/>
+                        <WrapPanel x:Name="MyImagesContainer" Margin="10"/>
                     </GroupBox>
                     <GroupBox Header="Public Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>

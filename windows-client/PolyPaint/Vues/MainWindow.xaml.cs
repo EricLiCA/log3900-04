@@ -2,10 +2,9 @@
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.IO;
 using PolyPaint.DAO;
 using PolyPaint.Services;
+using PolyPaint.Utilitaires;
 
 namespace PolyPaint.Vues
 {
@@ -14,11 +13,9 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public Gallery Gallery;
         public Users Users;
         private FenetreDessin FenetreDessin;
-        private string AvatarLocation;
 
         public MainWindow()
         {
@@ -30,6 +27,24 @@ namespace PolyPaint.Vues
             Users = new Users();
             GridMain.Content = Gallery;
             InitDialogBox();
+            if (ServerService.instance.user.isGuest)
+            {
+                RestrictPermissions();
+            }
+            else
+            {
+                Uri profileImage = ServerService.instance.user.profileImage;
+                if(profileImage != null)
+                {
+                    AvatarImage.Source = new BitmapImage(profileImage);
+                }
+            }
+        }
+
+        private void RestrictPermissions()
+        {
+            ManageProfileButton.Visibility = Visibility.Collapsed;
+            AvatarButton.IsEnabled = false;
         }
 
         private void Server_Connect()
@@ -51,13 +66,13 @@ namespace PolyPaint.Vues
             {
                 case 0:
                     {
-                        ImageDao.GetAll();
+                        Gallery.Load();
                         GridMain.Content = Gallery;
                         break;
                     }
                 case 1:
                     {
-                        UserDao.GetAll();
+                        Users.Load();
                         GridMain.Content = Users;
                         break;
                     }
@@ -69,6 +84,7 @@ namespace PolyPaint.Vues
                     break;
             }
         }
+
         private void Menu_Change_Avatar_Click(object sender, System.EventArgs e)
         {
             string fileName = null;
@@ -88,14 +104,20 @@ namespace PolyPaint.Vues
 
             if (fileName != null)
             {
-                this.AvatarLocation = fileName;
+                String avatarLocation = fileName;
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
-                bitmap.UriSource = new Uri(this.AvatarLocation);
+                bitmap.UriSource = new Uri(avatarLocation);
                 bitmap.DecodePixelHeight = 40;
                 bitmap.DecodePixelWidth = 40;
                 bitmap.EndInit();
                 AvatarImage.Source = bitmap;
+
+                ServerService.instance.S3Communication.UploadFileAsync(avatarLocation);
+
+                Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
+                ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
+                UserDao.Put(ServerService.instance.user);
             }
         }
 
@@ -133,5 +155,6 @@ namespace PolyPaint.Vues
                 ChangeProfileInformationsButton.IsEnabled = true;
             }
         }
+
     }
 }
