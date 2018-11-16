@@ -11,7 +11,7 @@
     <DockPanel LastChildFill="true">
         <Border BorderBrush="SlateGray" BorderThickness="0,0,0,1" DockPanel.Dock="Top">
             <DockPanel LastChildFill="True">
-                <Button DockPanel.Dock="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Margin="5 0" Padding="0" ToolTip="LeaveRoom" Command="{Binding LeaveRoom}" CommandParameter="{Binding Path=ThreadName}">
+                <Button DockPanel.Dock="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Margin="5 0" Padding="0" ToolTip="LeaveRoom" Command="{Binding LeaveRoom}" CommandParameter="{Binding Path=ThreadName}" Visibility="{Binding Path=canLeave, Mode=OneWay}">
                     <Image Width="25" Height="25" Source="/Resources/leave.png" />
                 </Button>
                 <Button DockPanel.Dock="Right" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Margin="5 0" Padding="0" ToolTip="Add person" 

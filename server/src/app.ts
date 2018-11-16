@@ -13,6 +13,7 @@ import { ServerStatus } from './routes/server-status';
 import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
 import { ChatRooms } from './routes/chat-rooms';
+import { ShapeObjectRoute } from './routes/shape-objects';
 
 export class Application {
     /**
@@ -67,6 +68,7 @@ export class Application {
         const imageLikes : ImageLikesRoute = new ImageLikesRoute();
         const imageComments : ImageCommentsRoute = new ImageCommentsRoute();
         const chatRooms : ChatRooms = new ChatRooms();
+        const shapeObjectRoute: ShapeObjectRoute = new ShapeObjectRoute();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));
@@ -119,6 +121,13 @@ export class Application {
         router.get('/chatRooms', chatRooms.get.bind(chatRooms.get));
         router.get('/chatRooms/:room', chatRooms.getUsers.bind(chatRooms.getUsers));
         router.get('/connectedUsers', chatRooms.all.bind(chatRooms.all));
+
+        // Shape Object
+        router.post('/shapeObject', shapeObjectRoute.post.bind(shapeObjectRoute.post));
+        router.get('/shapeObject/:imageId', shapeObjectRoute.get.bind(shapeObjectRoute.get));
+        router.put('/shapeObject/:imageId', shapeObjectRoute.update.bind(shapeObjectRoute.update));
+        router.delete('/shapeObject/:id', shapeObjectRoute.delete.bind(shapeObjectRoute.delete));
+
 
         // use router middleware
         this.app.use('/v2', router);

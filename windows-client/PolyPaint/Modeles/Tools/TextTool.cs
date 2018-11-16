@@ -5,26 +5,26 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Tools
 {
-    class ClassDiagram : FormTool
+    class TextTool : FormTool
     {
         public override string GetToolImage()
         {
-            return "/Resources/classDiagram-tool.png";
+            return "/Resources/format-letter-case.png";
         }
 
         public override string GetToolName()
         {
-            return "classDiagram";
+            return "textTool";
         }
 
         public override string GetToolTooltip()
         {
-            return "Class Diagram";
+            return "Text Zone";
         }
 
         public override Stroke InstantiateForm(StylusPointCollection pts, CustomStrokeCollection strokes, Color color)
         {
-            return new ClassStroke(pts, strokes);
+            return new TextStroke(pts, strokes, true);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using PolyPaint.Modeles.Strokes;
 using System.Windows.Ink;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Tools
 {
@@ -21,9 +22,9 @@ namespace PolyPaint.Modeles.Tools
             return "Elipse";
         }
 
-        public override Stroke InstantiateForm(StylusPointCollection pts, CustomStrokeCollection strokes)
+        public override Stroke InstantiateForm(StylusPointCollection pts, CustomStrokeCollection strokes,  Color color)
         {
-            return new BaseElipseStroke(pts, strokes);
+            return new BaseElipseStroke(pts, strokes, color);
         }
     }
 }

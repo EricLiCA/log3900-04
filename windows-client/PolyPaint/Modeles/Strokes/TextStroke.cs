@@ -10,24 +10,26 @@ using System.Windows.Media;
 
 namespace PolyPaint.Modeles.Strokes
 {
-    class UseCaseStroke : BaseElipseStroke, Textable
+    class TextStroke : BaseRectangleStroke, Textable
     {
         public List<string> textContent;
+        public bool showBorder = false;
 
-        public UseCaseStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
+        public TextStroke(StylusPointCollection pts, CustomStrokeCollection strokes, bool showBorder) : base(pts, strokes)
         {
+            this.showBorder = showBorder;
             this.textContent = new List<string>
             {
-                "Use Case"
+                "Sample Text"
             };
         }
 
-        public UseCaseStroke(StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(pts, strokes)
+        public TextStroke(StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(pts, strokes)
         {
             this.textContent = Content;
         }
 
-        public UseCaseStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(id, index, pts, strokes, Colors.White)
+        public TextStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(id, index, pts, strokes, Colors.White)
         {
             this.textContent = Content;
         }
@@ -44,46 +46,58 @@ namespace PolyPaint.Modeles.Strokes
             EditionSocket.EditStroke(this.toJson());
         }
 
+        public override void HandleStoped(Guid id)
+        {
+            base.HandleStoped(id);
+            this.showBorder = false;
+        }
+
+        public override void handleMoved(Guid id, Point point)
+        {
+            base.handleMoved(id, point);
+            this.showBorder = true;
+        }
+
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
         {
             base.DrawCore(drawingContext, drawingAttributes);
 
-            DrawingAttributes originalDa = drawingAttributes.Clone();
-            Pen Pen = new Pen(new SolidColorBrush(Colors.Black), 2);
+            Pen Pen = new Pen(new SolidColorBrush(Colors.Black), 1);
             Pen.Freeze();
 
             Point topLeft = new Point(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
             Point bottomRight = new Point(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
+            int wordSize = 17;
 
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
 
-            if ( bottomRight.X - topLeft.X > 0 && bottomRight.Y - topLeft.Y > 0)
+            int line = 0;
+            textContent.ForEach(textLine =>
             {
-                int wordSize = 17;
-                FormattedText text = new FormattedText(this.GetText(), CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), wordSize, Brushes.Black)
-                {
-                    TextAlignment = TextAlignment.Center,
-                    MaxTextWidth = bottomRight.X - topLeft.X,
-                    MaxTextHeight = bottomRight.Y - topLeft.Y
-                };
-                Point center = new Point((topLeft.X + bottomRight.X) / 2, (topLeft.Y + bottomRight.Y) / 2);
-                Point textOrigin = new Point(center.X - text.MaxTextWidth / 2, center.Y - text.Height / 2);
-                drawingContext.DrawText(text, textOrigin);
-            }
-            
+                var point = topLeft;
+                point.Y += wordSize * 1.5 * line;
+                if (point.Y + wordSize * 1.5 > bottomRight.Y) return;
+
+                FormattedText text = new FormattedText(textLine, CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Verdana"), wordSize, Brushes.Black);
+                text.MaxTextWidth = bottomRight.X - topLeft.X;
+                text.MaxTextHeight = bottomRight.Y - point.Y;
+                drawingContext.DrawText(text, point);
+                line += ((int)text.Height % wordSize) / 3;
+            });
+
             drawingContext.Pop();
         }
 
-        public override StrokeType StrokeType() => Strokes.StrokeType.USE;
+        public override StrokeType StrokeType() => Strokes.StrokeType.TEXT;
 
         public override ShapeInfo GetShapeInfo()
         {
             return new TextableShapeInfo
             {
-                Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y },
+                Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y},
                 Height = this.Height,
                 Width = this.Width,
-                Content  = this.textContent,
+                Content = this.textContent,
                 Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
             };
         }

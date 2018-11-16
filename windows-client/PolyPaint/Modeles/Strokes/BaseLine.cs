@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PolyPaint.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,17 +15,24 @@ namespace PolyPaint.Modeles.Strokes
     {
         List<Guid> HandlePoints;
 
-        protected string FirstAnchorId;
-        protected string SecondAncorId;
-        protected int FirstAnchorIndex;
-        protected int SecondAncorIndex;
+        public string FirstAnchorId;
+        public string SecondAncorId;
+        public int FirstAnchorIndex;
+        public int SecondAncorIndex;
 
-        protected Relation FirstRelation = Relation.ASSOCIATION;
-        protected Relation SecondRelation = Relation.ASSOCIATION;
-        protected string FirstText = "";
-        protected string SecondText = "";
+        public Relation FirstRelation = Relation.ASSOCIATION;
+        public Relation SecondRelation = Relation.ASSOCIATION;
+        public string FirstText = "";
+        public string SecondText = "";
 
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
+        {
+            this.HandlePoints = new List<Guid>();
+            for (int i = 0; i < pts.Count; i++)
+                this.HandlePoints.Add(Guid.NewGuid());
+        }
+
+        public BaseLine(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes) : base(id, index, pts, strokes)
         {
             this.HandlePoints = new List<Guid>();
             for (int i = 0; i < pts.Count; i++)
@@ -47,6 +55,45 @@ namespace PolyPaint.Modeles.Strokes
             }
         }
 
+        public BaseLine(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes,
+                        string firstAnchorId, int firstAnchorIndex,
+                        string secondAnchorId, int secondAnchorIndex,
+                        string firstLabel, string secondLabel,
+                        string firstRelation, string secondRelation) : this(id, index, pts, strokes)
+        {
+            this.FirstText = firstLabel;
+            this.SecondText = secondLabel;
+            this.FirstRelation = this.GetRelationByName(firstRelation);
+            this.SecondRelation = this.GetRelationByName(secondRelation);
+
+            if (firstAnchorId != null)
+            {
+                this.FirstAnchorId = firstAnchorId;
+                this.FirstAnchorIndex = firstAnchorIndex;
+            }
+            if (secondAnchorId != null)
+            {
+                this.SecondAncorId = secondAnchorId;
+                this.SecondAncorIndex = secondAnchorIndex;
+            }
+        }
+
+        private Relation GetRelationByName(String name)
+        {
+            switch (name)
+            {
+                case "AGGREGATION":
+                    return Relation.AGGREGATION;
+                case "ASSOCIATION":
+                    return Relation.ASSOCIATION;
+                case "COMPOSITION":
+                    return Relation.COMPOSITION;
+                case "INHERITANCE":
+                    return Relation.INHERITANCE;
+            }
+            return Relation.ASSOCIATION;
+        }
+
         public void addDragHandles()
         {
             if (!this.strokes.has(this.Id.ToString())) return;
@@ -56,7 +103,7 @@ namespace PolyPaint.Modeles.Strokes
             {
                 var positions = new StylusPointCollection();
                 positions.Add(new StylusPoint(this.StylusPoints[i].X, this.StylusPoints[i].Y));
-                this.strokes.Add(new DragHandle(positions, this.strokes, this.HandlePoints[i], this.Id.ToString()));
+                this.strokes.Add(new DragHandle(positions, this.Index, this.strokes, this.HandlePoints[i], this.Id.ToString()));
             }
         }
 
@@ -69,6 +116,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.FirstText = value;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         internal string getSecondLabel()
@@ -80,6 +128,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.SecondText = value;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         internal Relation getFirstRelation()
@@ -91,6 +140,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.FirstRelation = value;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         internal Relation getSecondRelation()
@@ -102,6 +152,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.SecondRelation = value;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         public void deleteDragHandles()
@@ -224,15 +275,16 @@ namespace PolyPaint.Modeles.Strokes
         public void HandleStoped(Guid id)
         {
             int movedIndex = this.HandlePoints.FindIndex(i => i.ToString() == id.ToString());
-            if (movedIndex == 0 || movedIndex == this.HandlePoints.Count - 1) return;
+            if (!(movedIndex == 0 || movedIndex == this.HandlePoints.Count - 1))
+                if (10 > this.FindDistanceToSegment(this.StylusPoints[movedIndex].ToPoint(), this.StylusPoints[movedIndex - 1].ToPoint(), this.StylusPoints[movedIndex + 1].ToPoint()))
+                {
+                    this.deleteDragHandles();
+                    this.HandlePoints.RemoveAt(movedIndex);
+                    this.StylusPoints.RemoveAt(movedIndex);
+                    this.Refresh();
+                }
 
-            if (10 > this.FindDistanceToSegment(this.StylusPoints[movedIndex].ToPoint(), this.StylusPoints[movedIndex - 1].ToPoint(), this.StylusPoints[movedIndex + 1].ToPoint()))
-            {
-                this.deleteDragHandles();
-                this.HandlePoints.RemoveAt(movedIndex);
-                this.StylusPoints.RemoveAt(movedIndex);
-                this.Refresh();
-            } 
+            EditionSocket.EditStroke(this.toJson());
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
@@ -240,9 +292,9 @@ namespace PolyPaint.Modeles.Strokes
             DrawingAttributes originalDa = drawingAttributes.Clone();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
 
-            if (this.isSelected())
+            if (this.isSelected() || this.isLocked())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
+                Pen selectedPen = new Pen(new SolidColorBrush(this.isSelected() ? Colors.GreenYellow : Colors.OrangeRed), 5);
                 selectedPen.Freeze();
                 for (int i = 0; i < this.StylusPoints.Count - 1; i++)
                     drawingContext.DrawLine(selectedPen, this.StylusPoints[i].ToPoint(), this.StylusPoints[i + 1].ToPoint());
@@ -376,22 +428,49 @@ namespace PolyPaint.Modeles.Strokes
             if (changed) this.Refresh();
         }
 
+        internal void anchorableDoneMoving(Anchorable anchorable)
+        {
+            if (((CustomStroke)anchorable).Id.ToString() == this.FirstAnchorId || ((CustomStroke)anchorable).Id.ToString() == this.SecondAncorId)
+            {
+                EditionSocket.EditStroke(this.toJson());
+            }
+        }
+
         public override void RefreshGuids()
         {
-            this.HandlePoints.Clear();
+            this.Id = Guid.NewGuid();
             this.HandlePoints = new List<Guid>();
             for (int i = 0; i < this.StylusPoints.Count; i++)
                 this.HandlePoints.Add(Guid.NewGuid());
+            this.FirstAnchorId = null;
+            this.SecondAncorId = null;
         }
 
         public virtual string toJson()
         {
-            SerializedLine toSend = new SerializedLine()
+            SerializedStroke toSend = new SerializedStroke()
             {
-                Id = this.Id,
-                Type = this.StrokeType(),
-                Index = -1,
-                Points = this.StylusPoints.Select(point => point.ToPoint()).ToList(),
+                Id = this.Id.ToString(),
+                ShapeType = this.StrokeType().ToString(),
+                Index = this.Index,
+                ShapeInfo = GetShapeInfo(),
+                ImageId = ServerService.instance.currentImageId
+            };
+            return JsonConvert.SerializeObject(toSend);
+        }
+
+        public StrokeType StrokeType() => Strokes.StrokeType.LINE;
+
+        public LineInfo GetShapeInfo()
+        {
+            List<ShapePoint> points = new List<ShapePoint>();
+            for (int i = 0; i < this.StylusPoints.Count; i++)
+            {
+                points.Add(new ShapePoint() { X = this.StylusPoints[i].X, Y = this.StylusPoints[i].Y });
+            }
+            return new LineInfo()
+            {
+                Points = points,
                 FirstAnchorId = this.FirstAnchorId,
                 FirstAnchorIndex = this.FirstAnchorIndex,
                 SecondAnchorId = this.SecondAncorId,
@@ -401,10 +480,7 @@ namespace PolyPaint.Modeles.Strokes
                 SecondEndLabel = this.SecondText,
                 SecondEndRelation = this.SecondRelation.ToString()
             };
-            return JsonConvert.SerializeObject(toSend);
         }
-
-        public StrokeType StrokeType() => Strokes.StrokeType.LINE;
     }
 
     public enum Relation

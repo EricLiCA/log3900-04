@@ -59,6 +59,16 @@ export class Friendships {
     public static async create(id: string, friendId: string): Promise<FriendshipStatus> {
         const db = await PostgresDatabase.getInstance();
         try {
+            const alreadyAsked = await db.query(
+                `SELECT *
+                FROM pending_friend_requests
+                WHERE "RequesterId" = $1 AND "ReceiverId" = $2;
+                `,
+                [id, friendId],
+            );
+            if (alreadyAsked.rowCount > 0)
+                return Promise.resolve(FriendshipStatus.REQUESTED);
+
             const pendingRequest = await db.query(
                 `SELECT *
                 FROM pending_friend_requests

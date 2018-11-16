@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -173,9 +173,12 @@
     <Compile Include="DAO\ImageCommentDao.cs" />
     <Compile Include="DAO\ImageDao.cs" />
     <Compile Include="DAO\ImageLikeDao.cs" />
+    <Compile Include="DAO\ShapeObjectDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Modeles\ChatModel.cs" />
+    <Compile Include="Modeles\EditionSocket.cs" />
+    <Compile Include="Modeles\ShapeLoader.cs" />
     <Compile Include="Modeles\ChatRoom.cs" />
     <Compile Include="Modeles\ChatUser.cs" />
     <Compile Include="Modeles\Strokes\Anchorable.cs" />
@@ -200,6 +203,7 @@
     <Compile Include="Modeles\Strokes\Movable.cs" />
     <Compile Include="Modeles\Strokes\PersonStroke.cs" />
     <Compile Include="Modeles\Strokes\Savable.cs" />
+    <Compile Include="Modeles\Strokes\TextStroke.cs" />
     <Compile Include="Modeles\Strokes\SerializationHelper.cs" />
     <Compile Include="Modeles\Strokes\ShapeStroke.cs" />
     <Compile Include="Modeles\Strokes\Textable.cs" />
@@ -212,6 +216,7 @@
     <Compile Include="Modeles\Tools\Person.cs" />
     <Compile Include="Modeles\Tools\Edit.cs" />
     <Compile Include="Modeles\Tools\Lasso.cs" />
+    <Compile Include="Modeles\Tools\TextTool.cs" />
     <Compile Include="Modeles\Tools\Triangle.cs" />
     <Compile Include="Modeles\Tools\Tool.cs" />
     <Compile Include="Modeles\Tools\Rectangle.cs" />
@@ -229,6 +234,9 @@
     <Compile Include="VueModeles\VueModele.cs" />
     <Compile Include="Vues\ClassEdit.xaml.cs">
       <DependentUpon>ClassEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\DetachedChat.xaml.cs">
+      <DependentUpon>DetachedChat.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vues\Gallery.xaml.cs">
       <DependentUpon>Gallery.xaml</DependentUpon>
@@ -251,6 +259,9 @@
     <Compile Include="Vues\MessagingWindow.xaml.cs">
       <DependentUpon>MessagingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\MessagingWindowOutside.xaml.cs">
+      <DependentUpon>MessagingWindowOutside.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\Users.xaml.cs">
       <DependentUpon>Users.xaml</DependentUpon>
     </Compile>
@@ -262,6 +273,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\ClassEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\DetachedChat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -304,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\MessagingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\MessagingWindowOutside.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -375,6 +394,9 @@
     <Resource Include="Resources\circle-outline.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\detach.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\square-outline.png" />
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +407,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\defaultImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\format-letter-case.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

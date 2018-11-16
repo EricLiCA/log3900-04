@@ -21,6 +21,7 @@ export class ImagesRoute implements DAO {
                         fullImageUrl: row.FullImageUrl,
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -44,6 +45,7 @@ export class ImagesRoute implements DAO {
                         fullImageUrl: row.FullImageUrl,
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -67,6 +69,7 @@ export class ImagesRoute implements DAO {
                         fullImageUrl: row.FullImageUrl,
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -89,6 +92,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(404);
         })
@@ -116,6 +120,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -164,6 +169,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -186,6 +192,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(404);
         })
