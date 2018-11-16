@@ -67,4 +67,9 @@ export class Canvas {
         SocketServer.socketServerInstance.to(this.id).emit("addProtections", user.name, this.protections.get(user));
     }
 
+    public clear(): void {
+        this.protections.clear();
+        this.strokes = [];
+    }
+
 }

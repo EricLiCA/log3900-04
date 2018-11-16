@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -46,6 +47,11 @@ namespace PolyPaint.Modeles
         public static void UnlockStrokes()
         {
             ServerService.instance.Socket.Emit("removeProtection");
+        }
+
+        public static void ClearCanvas()
+        {
+            ServerService.instance.Socket.Emit("clearCanvas");
         }
     }
 }

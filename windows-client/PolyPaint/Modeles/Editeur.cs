@@ -285,7 +285,7 @@ namespace PolyPaint.Modeles
         {
             var stroke = this.traits.get(s.Id.ToString());
             if (stroke.isLocked()) return;
-            
+
             if (stroke.isEditing())
                 this.EditingStroke = null;
             else
@@ -355,7 +355,10 @@ namespace PolyPaint.Modeles
         public void ChoisirOutil(Tool tool) => OutilSelectionne = tool;
 
         // On vide la surface de dessin de tous ses traits.
-        public void Reinitialiser(object o) => traits.Clear();
+        public void Reinitialiser(object o)  {
+            traits.Clear();
+            EditionSocket.ClearCanvas();
+        }
 
         public void SyncToServer()
         {
@@ -416,6 +419,14 @@ namespace PolyPaint.Modeles
                     {
                         this.traits.Remove(old);
                     });
+                });
+            }));
+
+            ServerService.instance.Socket.On("clearCanvas", new CustomListener((object[] server_params) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    this.traits.Clear();
                 });
             }));
 

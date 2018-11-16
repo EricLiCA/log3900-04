@@ -115,6 +115,12 @@ export class CollaborativeService {
             let canvas = await this.getUserCanvas(user.socket.id);
             canvas.removeProtections(user);
         });
+
+        user.socket.on('clearCanvas', async () => {
+            let canvas = await this.getUserCanvas(user.socket.id);
+            user.socket.to(this.users.get(user)).emit('clearCanvas');
+            canvas.clear();
+        });
     }
 
     public async closeConnection(user: User) {
