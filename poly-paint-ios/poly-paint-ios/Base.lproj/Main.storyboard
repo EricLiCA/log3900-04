@@ -358,9 +358,6 @@
                             <barButtonItem title="Insert" id="vVf-wi-6Rz">
                                 <connections>
                                     <action selector="insertTapped:" destination="nxp-f4-1rm" id="eFx-U7-Frn"/>
-                                    <segue destination="82l-V1-XRu" kind="popoverPresentation" identifier="toCreateClass" popoverAnchorBarButtonItem="vVf-wi-6Rz" id="EpZ-ul-W1h">
-                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                    </segue>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Color" id="onF-ce-uHG">
@@ -378,6 +375,9 @@
                         <outlet property="colorButton" destination="onF-ce-uHG" id="hCW-DP-93z"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="insertButton" destination="vVf-wi-6Rz" id="DIX-kD-pgq"/>
+                        <segue destination="82l-V1-XRu" kind="popoverPresentation" identifier="toCreateClass" popoverAnchorBarButtonItem="vVf-wi-6Rz" id="1XK-x8-Tly">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -434,11 +434,11 @@
             </objects>
             <point key="canvasLocation" x="1398" y="-1649"/>
         </scene>
-        <!--Class Diagram Popover View-->
+        <!--New Class View Controller-->
         <scene sceneID="2JB-on-srr">
             <objects>
-                <viewController id="82l-V1-XRu" customClass="classDiagramPopoverView" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4Hv-8g-iJq" customClass="classDiagramPopoverView">
+                <viewController id="82l-V1-XRu" customClass="NewClassViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4Hv-8g-iJq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -459,7 +459,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="addClassTapped:" destination="4Hv-8g-iJq" eventType="touchUpInside" id="kau-11-dz2"/>
+                                    <action selector="addClassTapped:" destination="82l-V1-XRu" eventType="touchUpInside" id="DsF-Y5-9QP"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write two dashes to draw a line" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVo-k0-NbN">
@@ -486,11 +486,11 @@
                             <constraint firstItem="7n0-x0-Ndg" firstAttribute="leading" secondItem="q1D-W7-Ihn" secondAttribute="leading" constant="16" id="yJ6-ru-Fd0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="q1D-W7-Ihn"/>
-                        <connections>
-                            <outlet property="addClassBtn" destination="7n0-x0-Ndg" id="2F0-mB-T40"/>
-                            <outlet property="rawText" destination="NlW-PG-7wi" id="FHR-2A-4nu"/>
-                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="addClassBtn" destination="7n0-x0-Ndg" id="0rS-Jw-ztz"/>
+                        <outlet property="rawText" destination="NlW-PG-7wi" id="MNn-7E-G0N"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Cd-f8-ZiB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

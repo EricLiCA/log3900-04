@@ -83,7 +83,7 @@ class DrawViewController: UIViewController {
         alertController.addAction(drawActorAction)
         
         let drawClassAction = UIAlertAction(title: "Class", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-           // self.performSegue(withIdentifier: "toCreateClass", sender: self)
+           self.performSegue(withIdentifier: "toCreateClass", sender: self)
         })
         alertController.addAction(drawClassAction)
         
@@ -486,7 +486,7 @@ class DrawViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toCreateClass" {
-            let CreateClassVC = segue.destination as! classDiagramPopoverView
+            let CreateClassVC = segue.destination as! NewClassViewController
         }
     }
 

@@ -119,29 +119,3 @@ class ClassDiagramView: BasicShapeView {
 
 }
 
-class classDiagramPopoverView: UIViewController {
-    
-    @IBOutlet weak var rawText: UITextView!
-    @IBOutlet weak var addClassBtn: UIButton!
-    
-    /*override func viewDidLoad() {
-        super.viewDidLoad()
-        self.rawText.text = "Class Name\n--\nAttributes\n--\nMethods"
-    }*/
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.rawText.text = "Class Name\n--\nAttributes\n--\nMethods"
-    }
-    
-    @IBAction func addClassTapped(_ sender: UIButton) {
-        self.sendCreateClassDiagramNotification()
-        
-    }
-    
-    func sendCreateClassDiagramNotification() {
-        let userInfo = [ "text" : rawText.text! ]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil, userInfo: userInfo)
-    }
-    
-}
