@@ -13,6 +13,9 @@ namespace PolyPaint.DAO
 
         public static void Get(string imageId)
         {
+            if (ServerService.instance.isOffline())
+                return;
+
             var request = new RestRequest(Settings.API_VERSION + Settings.IMAGE_COMMENTS_PATH + "/" + imageId, Method.GET);
             ServerService.instance.server.ExecuteAsync(request, response =>
             {

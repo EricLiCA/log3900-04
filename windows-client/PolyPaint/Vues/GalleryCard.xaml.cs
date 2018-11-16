@@ -29,7 +29,7 @@ namespace PolyPaint.Vues
 
         public void ConfigIcon()
         {
-            if (ServerService.instance.user.id == Image.ownerId)
+            if (ServerService.instance.isOffline() || ServerService.instance.user.id == Image.ownerId)
             {
                 IconContainer.Visibility = System.Windows.Visibility.Visible;
                 IconContainer.ToolTip = Image.protectionLevel;

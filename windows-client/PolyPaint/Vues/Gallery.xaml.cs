@@ -32,55 +32,41 @@ namespace PolyPaint.Vues
         public void Load()
         {
             if (ServerService.instance.isOffline())
-            {
                 RestrictPermissions();
-                // Load localy stored images
-            }
-            else
-            {
-                ImageDao.GetByOwnerId();
-                ImageDao.GetPublicExceptMine();
-            }
+
+            ImageDao.GetByOwnerId();
+            ImageDao.GetPublicExceptMine();
         }
 
         private void RestrictPermissions()
         {
-            MyImagesGroupBox.Visibility = Visibility.Collapsed;
             LikeButton.IsEnabled = false;
-            LockButton.IsEnabled = false;
-            PasswordButton.IsEnabled = false;
             CurrentComment.IsEnabled = false;
             AddCommentButton.IsEnabled = false;
         }
 
-        public void LoadMyImages(IRestResponse response)
+        public void LoadMyImages(string response)
         {
-            if (response.StatusCode == HttpStatusCode.OK)
+            MyImagesContainer.Children.Clear();
+            JArray responseImages = JArray.Parse(response);
+            for (int i = 0; i < responseImages.Count; i++)
             {
-                MyImagesContainer.Children.Clear();
-                JArray responseImages = JArray.Parse(response.Content);
-                for (int i = 0; i < responseImages.Count; i++)
+                dynamic data = JObject.Parse(responseImages[i].ToString());
+                Image image = new Image
                 {
-                    dynamic data = JObject.Parse(responseImages[i].ToString());
-                    Image image = new Image
-                    {
-                        id = data["id"],
-                        ownerId = data["ownerId"],
-                        title = data["title"],
-                        protectionLevel = data["protectionLevel"],
-                        password = data["password"],
-                        thumbnailUrl = data["thumbnailUrl"],
-                        fullImageUrl = data["fullImageUrl"],
-                    };
+                    id = data["id"],
+                    ownerId = data["ownerId"],
+                    title = data["title"],
+                    protectionLevel = data["protectionLevel"],
+                    password = data["password"],
+                    thumbnailUrl = data["thumbnailUrl"],
+                    fullImageUrl = data["fullImageUrl"],
+                };
 
-                    GalleryCard galleryCard = new GalleryCard(image);
-                    galleryCard.ViewButtonClicked += ViewButton_Click;
-                    MyImagesContainer.Children.Add(galleryCard);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Could not load the images", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                GalleryCard galleryCard = new GalleryCard(image);
+                galleryCard.ViewButtonClicked += ViewButton_Click;
+                MyImagesContainer.Children.Add(galleryCard);
             }
         }
 
@@ -344,7 +330,8 @@ namespace PolyPaint.Vues
             Image newImage = new Image
             {
                 title = ImageTitle.Text,
-                ownerId = ServerService.instance.user.id,
+                ownerId = ServerService.instance.isOffline() ? null : ServerService.instance.user.id,
+                id = ServerService.instance.isOffline() ? Guid.NewGuid().ToString() : null,
                 password = ImagePassword.Password,
                 protectionLevel = protectionLevel
             };
