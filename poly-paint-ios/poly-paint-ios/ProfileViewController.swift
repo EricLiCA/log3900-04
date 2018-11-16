@@ -49,11 +49,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var pendingFriendRequestsButton: UIButton!
-
     var friends = [User]()
-    
+    @IBOutlet weak var chatButton: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
+        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
+            notifications in
+            if notifications == 0 {
+                self.chatButton.image = #imageLiteral(resourceName: "Chat")
+            } else {
+                self.chatButton.image = #imageLiteral(resourceName: "UnreadMessage")
+            }
+        })
         self.customizeUI()
         self.setUpNotifications()
         self.friendsTableView.delegate = self

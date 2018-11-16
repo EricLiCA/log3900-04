@@ -20,10 +20,46 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Grid.Column="0">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" Grid.Column="0" Width="300">
+            <StackPanel>
+                <TextBox materialDesign:HintAssist.Hint="Filter"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                             TextChanged="Filter_TextChanged" Margin="30 0"/>
+                <Button DockPanel.Dock="Right" VerticalAlignment="Center" ToolTip="Create Chat Room"
+                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Margin="10">
+                        <Button.CommandParameter>
+                            <StackPanel Margin="16" Orientation="Vertical" Width="200">
+                                <TextBox Name="newRoomName"
+                                         materialDesign:HintAssist.Hint="Room Name"
+                                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                <StackPanel>
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                            IsCancel="True"
+                                            Click="NewRoom_Click"
+                                            HorizontalAlignment="Center">
+                                        CREATE
+                                    </Button>
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                            IsCancel="True"
+                                            Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                            HorizontalAlignment="Center">
+                                        CANCEL
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button.CommandParameter>
+                    <materialDesign:PackIcon Kind="Plus" />
+                </Button>
+                <Separator />
+                
                 <TextBlock Text="Joined Chanels" HorizontalAlignment="Center" FontSize="20" FontWeight="DemiBold" Margin="5" />
-                <ListView Name="Listfirst" ScrollViewer.CanContentScroll="False" SelectionChanged="SelectionChanged" ItemsSource="{Binding Path=SubscribedChatRooms}">
+                <ListView Name="Listfirst" SelectionChanged="SelectionChanged" ItemsSource="{Binding Path=SubscribedChatRooms}">
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <ItemsPresenter />
+                        </ControlTemplate>
+                    </ListView.Template>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <materialDesign:Badged Margin="5 5 5 0">
@@ -35,7 +71,7 @@
                                         </MultiBinding.Bindings>
                                     </MultiBinding>
                                 </materialDesign:Badged.Badge>
-                                <materialDesign:Card Background="White" Width="300" Padding="20 15">
+                                <materialDesign:Card Background="White" Width="258" Padding="20 15">
                                     <StackPanel>
                                         <TextBlock FontSize="18" Text="{Binding Name}" />
                                         <ItemsControl ItemsSource="{Binding Users}" HorizontalAlignment="Stretch" BorderThickness="0">
@@ -66,12 +102,12 @@
                 <ItemsControl Name="Listsecond" VerticalAlignment="Stretch" BorderThickness="0" ItemsSource="{Binding Path=NotSubscribedChatRooms}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <materialDesign:Card Background="White" Width="300" Margin="5" Padding="20 15">
+                            <materialDesign:Card Background="White" Width="258" Margin="5" Padding="20 15">
                                 <StackPanel>
                                     <DockPanel LastChildFill="True">
                                         <Button DockPanel.Dock="Right" Content="Join"
                                                 HorizontalAlignment="Center"
-                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.JoinChat}"
+                                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.RequestJoinChat}"
                                                 CommandParameter="{Binding Name}" Margin="0 0 0 8" />
                                         <TextBlock FontSize="18" Text="{Binding Name}" />
                                     </DockPanel>

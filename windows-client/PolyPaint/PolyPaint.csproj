@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -53,6 +53,9 @@
     <ApplicationIcon>palette.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK, Version=2.3.55.2, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
+      <HintPath>..\packages\AWSSDK.2.3.55.2\lib\net45\AWSSDK.dll</HintPath>
+    </Reference>
     <Reference Include="EngineIoClientDotNet, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EngineIoClientDotNet.1.0.7\lib\net45\EngineIoClientDotNet.dll</HintPath>
     </Reference>
@@ -170,11 +173,23 @@
     <Compile Include="DAO\ImageCommentDao.cs" />
     <Compile Include="DAO\ImageDao.cs" />
     <Compile Include="DAO\ImageLikeDao.cs" />
+    <Compile Include="DAO\ShapeObjectDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Modeles\ChatModel.cs" />
+    <Compile Include="Modeles\EditionSocket.cs" />
+    <Compile Include="Modeles\ShapeLoader.cs" />
     <Compile Include="Modeles\ChatRoom.cs" />
     <Compile Include="Modeles\ChatUser.cs" />
+    <Compile Include="Modeles\Strokes\Anchorable.cs" />
+    <Compile Include="Modeles\Strokes\BaseElipseStroke.cs" />
+    <Compile Include="Modeles\Strokes\BaseTriangleStroke.cs" />
+    <Compile Include="Modeles\Strokes\BaseLine.cs" />
+    <Compile Include="Modeles\Strokes\BaseRectangleStroke.cs" />
+    <Compile Include="Modeles\Strokes\AnchorPoint.cs" />
+    <Compile Include="Modeles\Strokes\ClassStroke.cs" />
+    <Compile Include="Modeles\Strokes\CustomStroke.cs" />
+    <Compile Include="Modeles\S3Communication.cs" />
     <Compile Include="Modeles\CustomListener.cs" />
     <Compile Include="Modeles\Editeur.cs" />
     <Compile Include="Modeles\Friend.cs" />
@@ -182,7 +197,32 @@
     <Compile Include="Modeles\ImageLike.cs" />
     <Compile Include="Modeles\Image.cs" />
     <Compile Include="Modeles\Messaging.cs" />
+    <Compile Include="Modeles\Strokes\CustomStrokeCollection.cs" />
+    <Compile Include="Modeles\Strokes\DragHandle.cs" />
+    <Compile Include="Modeles\Strokes\Handleable.cs" />
+    <Compile Include="Modeles\Strokes\Movable.cs" />
+    <Compile Include="Modeles\Strokes\PersonStroke.cs" />
+    <Compile Include="Modeles\Strokes\Savable.cs" />
+    <Compile Include="Modeles\Strokes\TextStroke.cs" />
+    <Compile Include="Modeles\Strokes\SerializationHelper.cs" />
+    <Compile Include="Modeles\Strokes\ShapeStroke.cs" />
+    <Compile Include="Modeles\Strokes\Textable.cs" />
+    <Compile Include="Modeles\Strokes\UseCaseStroke.cs" />
+    <Compile Include="Modeles\Tools\BasicCanvasTool.cs" />
+    <Compile Include="Modeles\Tools\ClassDiagram.cs" />
+    <Compile Include="Modeles\Tools\FormTool.cs" />
+    <Compile Include="Modeles\Tools\Line.cs" />
+    <Compile Include="Modeles\Tools\ObjectEraser.cs" />
+    <Compile Include="Modeles\Tools\Person.cs" />
+    <Compile Include="Modeles\Tools\Edit.cs" />
+    <Compile Include="Modeles\Tools\Lasso.cs" />
+    <Compile Include="Modeles\Tools\TextTool.cs" />
+    <Compile Include="Modeles\Tools\Triangle.cs" />
+    <Compile Include="Modeles\Tools\Tool.cs" />
+    <Compile Include="Modeles\Tools\Rectangle.cs" />
+    <Compile Include="Modeles\Tools\Elipse.cs" />
     <Compile Include="Modeles\PendingFriendRequest.cs" />
+    <Compile Include="Modeles\Tools\UseCase.cs" />
     <Compile Include="Modeles\User.cs" />
     <Compile Include="Services\MessagingViewManager.cs" />
     <Compile Include="Services\ServerService.cs" />
@@ -192,6 +232,12 @@
     <Compile Include="VueModeles\ChatViewModel.cs" />
     <Compile Include="VueModeles\MessagingViewModel.cs" />
     <Compile Include="VueModeles\VueModele.cs" />
+    <Compile Include="Vues\ClassEdit.xaml.cs">
+      <DependentUpon>ClassEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\DetachedChat.xaml.cs">
+      <DependentUpon>DetachedChat.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\Gallery.xaml.cs">
       <DependentUpon>Gallery.xaml</DependentUpon>
     </Compile>
@@ -200,6 +246,9 @@
     </Compile>
     <Compile Include="Vues\GalleryComment.xaml.cs">
       <DependentUpon>GalleryComment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\LineEdit.xaml.cs">
+      <DependentUpon>LineEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vues\LoginDialogBox.xaml.cs">
       <DependentUpon>LoginDialogBox.xaml</DependentUpon>
@@ -210,6 +259,9 @@
     <Compile Include="Vues\MessagingWindow.xaml.cs">
       <DependentUpon>MessagingWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\MessagingWindowOutside.xaml.cs">
+      <DependentUpon>MessagingWindowOutside.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\Users.xaml.cs">
       <DependentUpon>Users.xaml</DependentUpon>
     </Compile>
@@ -217,6 +269,14 @@
       <DependentUpon>UsersCard.xaml</DependentUpon>
     </Compile>
     <Page Include="Vues\Chat.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\ClassEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\DetachedChat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -246,6 +306,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vues\LineEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vues\LoginDialogBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -255,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\MessagingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\MessagingWindowOutside.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -299,28 +367,49 @@
     <Resource Include="Resources\position.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\cursor.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\person_add.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\leave.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\efface.png" />
+    <Resource Include="Resources\person.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="palette.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\dupliquer.png" />
+    <Resource Include="Resources\pencil-tool.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\lasso.png" />
+    <Resource Include="Resources\eraser-tool.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\crayon.png" />
+    <Resource Include="Resources\triangle-outline.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\efface_crayon.png" />
+    <Resource Include="Resources\circle-outline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\detach.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\square-outline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\eraser_variant-tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\lasso-tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\defaultImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\format-letter-case.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -335,8 +424,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\lasso-tool.png" />
-    <Resource Include="Resources\defaultImage.png" />
+    <Resource Include="Resources\line-tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\classDiagram-tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\useCase-tool.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

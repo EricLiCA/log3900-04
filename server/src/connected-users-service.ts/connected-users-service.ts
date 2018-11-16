@@ -30,12 +30,18 @@ export class ConnectedUsersService {
         return ConnectedUsersService.instance.users.findIndex(user => user.name === name);
     }
 
-    private static findIndexBySocket(socket: Socket): number {
-        return ConnectedUsersService.instance.users.findIndex(user => user.socket.id === socket.id);
+    private static findIndexBySocket(id: string): number {
+        return ConnectedUsersService.instance.users.findIndex(user => user.socket.id === id);
+    }
+
+    public static getBySocket(id: string): User {
+        const index = ConnectedUsersService.findIndexBySocket(id);
+        return index >= 0 ? ConnectedUsersService.instance.users[index] : undefined;
     }
 
     public static getByName(name: string): User {
-        return ConnectedUsersService.instance.users[ConnectedUsersService.findIndexByName(name)];
+        const index = ConnectedUsersService.findIndexByName(name);
+        return index >= 0 ? ConnectedUsersService.instance.users[index] : undefined;
     }
 
     public static isConnectedByName(name: string): boolean {
@@ -43,7 +49,19 @@ export class ConnectedUsersService {
     }
 
     public static disconnect(socket: Socket): void {
-        ConnectedUsersService.connectedUsers.splice(this.findIndexBySocket(socket), 1);
+        const index = ConnectedUsersService.findIndexBySocket(socket.id);
+        if (index >= 0)
+            ConnectedUsersService.connectedUsers.splice(index, 1);
+    }
+
+    public static getAll(): User[] {
+        return ConnectedUsersService.instance.users;
+    }
+
+    public static deleteUser(name: string): void {
+        let toDelete = ConnectedUsersService.getByName(name);
+        toDelete.socket.disconnect();
+        ConnectedUsersService.disconnect(toDelete.socket);
     }
 
 

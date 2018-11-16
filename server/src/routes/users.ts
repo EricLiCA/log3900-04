@@ -2,6 +2,7 @@ import * as express from 'express';
 import { RedisService } from '../redis.service';
 
 import { User } from '../models/User';
+import { ConnectedUsersService } from '../connected-users-service.ts/connected-users-service';
 
 export class UsersRoute {
 
@@ -49,53 +50,43 @@ export class UsersRoute {
                         profileImage: user.ProfileImage,
                     });
                 }
+            })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
             });
         }
     }
 
     public update(req: express.Request, res: express.Response, next: express.NextFunction): void {
-        const redisClient = RedisService.getInstance();
-        redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
-            if (token !== null && token === req.body.token) {
-                User.update(
-                    req.params.id, req.body.username, req.body.password, req.body.userLevel, req.body.profileImage,
-                ).then((user) => {
-                    if (user === undefined) {
-                        res.sendStatus(400);
-                    } else {
-                        res.send({
-                            id: user.Id,
-                            username: user.Username,
-                            userLevel: user.UserLevel,
-                            profileImage: user.ProfileImage,
-                        });
-                    }
-                });
+        User.update(
+            req.params.id, req.body.username, req.body.password, req.body.userLevel, req.body.profileImage,
+        ).then((user) => {
+            if (user === undefined) {
+                res.sendStatus(400);
             } else {
-                res.sendStatus(403);
+                res.send({
+                    id: user.Id,
+                    username: user.Username,
+                    userLevel: user.UserLevel,
+                    profileImage: user.ProfileImage,
+                });
             }
         });
+
     }
 
     public async delete(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        const redisClient = RedisService.getInstance();
-        redisClient.hget('authTokens', req.params.id, async (redisErr, token) => {
-            if (token !== null && token === req.body.token) {
-                redisClient.hdel('authTokens', req.params.id);
-                User.delete(req.params.id).then((user) => {
-                    if (user === undefined) {
-                        res.sendStatus(400);
-                    } else {
-                        res.send({
-                            id: user.Id,
-                            username: user.Username,
-                            userLevel: user.UserLevel,
-                            profileImage: user.ProfileImage,
-                        });
-                    }
-                });
+        User.delete(req.params.id).then((user) => {
+            if (user === undefined) {
+                res.sendStatus(400);
             } else {
-                res.send(403);
+                ConnectedUsersService.deleteUser(user.Username);
+                res.send({
+                    id: user.Id,
+                    username: user.Username,
+                    userLevel: user.UserLevel,
+                    profileImage: user.ProfileImage,
+                });
             }
         });
     }

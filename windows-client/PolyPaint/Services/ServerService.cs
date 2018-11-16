@@ -25,11 +25,9 @@ namespace PolyPaint.Services
         }
 
         public RestClient server { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public string id { get; set; }
-        public string token { get; set; }
         public Socket Socket { get; set; }
         public User user { get; set; }
+        public S3Communication S3Communication { get; set; }
+        public string currentImageId { get; set; }
     }
 }
