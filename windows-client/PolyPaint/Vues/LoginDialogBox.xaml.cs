@@ -124,6 +124,7 @@ namespace PolyPaint.Vues
                     this.Dispatcher.Invoke(() =>
                     {
                         DialogResult = true;
+                        MessagingViewManager.instance.loadViews();
                     });
                 }
                 else
@@ -136,6 +137,12 @@ namespace PolyPaint.Vues
                     socket.Disconnect();
                     MessageBox.Show("Can't connect to the socket : " + server_params[0], "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }));
+
+            socket.On(Socket.EVENT_DISCONNECT, new CustomListener((object[] server_params) =>
+            {
+                ServerService.instance.disconnect();
+                ((MainWindow)Application.Current.MainWindow).OfflineMode();
             }));
         }
 

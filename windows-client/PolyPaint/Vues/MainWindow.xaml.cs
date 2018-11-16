@@ -47,7 +47,7 @@ namespace PolyPaint.Vues
             RefreshView();
         }
 
-        private void OfflineMode()
+        public void OfflineMode()
         {
             if (detached != null)
                 detached.Hide();
@@ -59,15 +59,15 @@ namespace PolyPaint.Vues
 
             ButtonUsers.Visibility = Visibility.Collapsed;
             ButtonChat.Visibility = Visibility.Collapsed;
+            ButtonEdit.Visibility = Visibility.Collapsed;
 
             Gallery = new Gallery();
-            if (GridMain.Content is MessagingWindow || GridMain.Content is Users)
-                GridMain.Content = Gallery;
+            GridMain.Content = Gallery;
 
             RefreshView();
         }
 
-        private void OnlineMode()
+        public void OnlineMode()
         {
             ManageProfileButton.Visibility = Visibility.Visible;
             AvatarButton.Visibility = Visibility.Visible;
@@ -123,20 +123,20 @@ namespace PolyPaint.Vues
                     {
                         Gallery.Load();
                         GridMain.Content = Gallery;
-                        GridCursor.Margin = new Thickness(10 + (150 * index), 0, 0, 0);
+                        GridCursor.Margin = new Thickness(10, 0, 0, 0);
                         break;
                     }
                 case 1:
                     {
                         Users.Load();
                         GridMain.Content = Users;
-                        GridCursor.Margin = new Thickness(10 + (150 * index), 0, 0, 0);
+                        GridCursor.Margin = new Thickness(160, 0, 0, 0);
                         break;
                     }
                 case 2:
                     if (isDetached) break;
                     GridMain.Content = MessagingViewManager.instance.LargeMessagingView;
-                    GridCursor.Margin = new Thickness(10 + (150 * index), 0, 0, 0);
+                    GridCursor.Margin = new Thickness(310, 0, 0, 0);
                     break;
                 case 3:
                     GridMain.Content = this.FenetreDessin;
@@ -220,7 +220,7 @@ namespace PolyPaint.Vues
         {
             ServerService.instance.currentImageId = imageId;
             ButtonEdit.Visibility = Visibility.Visible;
-            GridMain.Content = FenetreDessin;
+            Button_Click(ButtonEdit, null);
             ((VueModele)FenetreDessin.DataContext).editeur.SyncToServer();
         }
 
