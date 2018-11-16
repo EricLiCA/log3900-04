@@ -10,22 +10,19 @@ import UIKit
 
 class MainMenuViewController: UIViewController {
     
-    @IBOutlet weak var chatButton: UIButton!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var galleryButton: UIButton!
     @IBOutlet weak var newImageButton: UIButton!
-    @IBOutlet weak var notificationsLabel: UILabel!
+    @IBOutlet weak var chatButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        notificationsLabel.text = "NotificationsTest: \(ChatModel.instance.notifications)"
         ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
             notifications in
-            self.notificationsLabel.text = "Notifications: \(notifications)"
             if notifications == 0 {
-                self.notificationsLabel.isHidden = true
+                self.chatButton.image = #imageLiteral(resourceName: "Chat")
             } else {
-                self.notificationsLabel.isHidden = false
+                self.chatButton.image = #imageLiteral(resourceName: "UnreadMessage")
             }
         })
         self.navigationItem.hidesBackButton = true
@@ -33,9 +30,7 @@ class MainMenuViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = newBackButton
         self.checkIfAnonymous()
         print("Set username as \(UserDefaults.standard.string(forKey: "username")!)")
-        ChatModel.instance.socketIOClient!.on(clientEvent: .connect) { (data, ack) in
             ChatModel.instance.setUsername(username: UserDefaults.standard.string(forKey: "username")!)
-        }
         // Do any additional setup after loading the view.
     }
 
@@ -46,6 +41,8 @@ class MainMenuViewController: UIViewController {
     
     @objc func back(sender: UIBarButtonItem) {
         // Go back to the previous ViewController and clear UserDefaults
+        ChatModel.instance.socketIOClient.disconnect()
+        ChatModel.instance = ChatModel()
         self.resetDefaults()
         _ = navigationController?.popViewController(animated: true)
     }
