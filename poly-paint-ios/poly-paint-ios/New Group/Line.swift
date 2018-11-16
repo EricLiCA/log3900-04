@@ -35,20 +35,26 @@ class Line {
     }
     
     func hitTest(touchPoint: CGPoint) -> Bool {
-        var distanceToSegment = findDistanceToSegment(touchPoint: touchPoint, p1: self.points[0], p2: self.points[1])
-        if(distanceToSegment > 15) {
-            return false
-        } else {
-            if(self.selected) {
-                self.selected = false
-                self.layer?.strokeColor = UIColor.black.cgColor
-            } else {
-                self.selected = true
-                self.layer?.strokeColor = UIColor.green.cgColor
+        
+        for (index, point) in self.points.enumerated() {
+            if(index != (self.points.count - 1)) {
+                var distanceToSegment = findDistanceToSegment(touchPoint: touchPoint, p1: self.points[index], p2: self.points[index + 1])
+                if(distanceToSegment > 15) {
+                    return false
+                } else {
+                    if(self.selected) {
+                        self.selected = false
+                        self.layer?.strokeColor = UIColor.black.cgColor
+                    } else {
+                        self.selected = true
+                        self.layer?.strokeColor = UIColor.green.cgColor
+                    }
+                    
+                    return true
+                }
             }
-            
-            return true
         }
+        return false
     }
     
     func findDistanceToSegment(touchPoint: CGPoint, p1: CGPoint, p2: CGPoint) -> CGFloat {
