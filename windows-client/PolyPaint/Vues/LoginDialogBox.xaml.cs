@@ -33,28 +33,14 @@ namespace PolyPaint.Vues
         {
             ConnectButton.IsEnabled = false;
             ConnectionProgress.Visibility = Visibility.Visible;
-            if ((bool)GuestConnection.IsChecked)
+            ServerService.instance.user = new User
             {
-                ServerService.instance.user = new User
-                {
-                    id = Guid.NewGuid().ToString(),
-                    username = UserName.Text,
-                    password = Password.Password,
-                    profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE),
-                    isGuest = true
-                };
-                Connect_Socket();
-            } 
-            else
-            {
-                ConnectToAccount();
-            }
-        }
-
-        private void GuestConnection_Checked(object sender, RoutedEventArgs e)
-        {
-            Password.IsEnabled = !(bool)GuestConnection.IsChecked;
-            EnableOrDisableCreateButton();
+                id = Guid.NewGuid().ToString(),
+                username = UserName.Text,
+                password = Password.Password,
+                profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE)
+            };
+            ConnectToAccount();
         }
 
         private void ConnectToServer()
@@ -105,8 +91,7 @@ namespace PolyPaint.Vues
                             (string)data["profileImage"],
                             (string)data["token"],
                             (string)data["userLevel"],
-                            Password.Password,
-                            false
+                            Password.Password
                         );
 
                         Connect_Socket();
@@ -164,13 +149,15 @@ namespace PolyPaint.Vues
             Boolean invalideUserName = UserName.Text.Length == 0 || UserName.Text.Contains(" ");
             Boolean invalidPassword = Password.Password.Length == 0 || Password.Password.Contains(" ");
 
-            if ((bool)GuestConnection.IsChecked || invalideUserName || invalidPassword)
+            if (invalideUserName || invalidPassword)
             {
                 CreateButton.IsEnabled = false;
+                ConnectButton.IsEnabled = false;
             }
             else
             {
                 CreateButton.IsEnabled = true;
+                ConnectButton.IsEnabled = true;
             }
         }
     }

@@ -15,49 +15,25 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Gallery Gallery;
+        public Gallery Gallery = new Gallery();
         public Users Users;
-        public FenetreDessin FenetreDessin;
+        public FenetreDessin FenetreDessin = new FenetreDessin();
         Window detached;
         bool isDetached = true;
 
         public MainWindow()
         {
-            Server_Connect();
-            UsersManager.instance.fetchAll();
-            FenetreDessin = new FenetreDessin();
             InitializeComponent();
-            Gallery = new Gallery();
-            Users = new Users();
             GridMain.Content = Gallery;
-            InitDialogBox();
-            if (ServerService.instance.user.isGuest)
-            {
-                RestrictPermissions();
-            }
-            else
-            {
-                Uri profileImage = ServerService.instance.user.profileImage;
-                if(profileImage != null)
-                {
-                    AvatarImage.Source = new BitmapImage(profileImage);
-                }
-            }
-
-            showDetachedChat(null, null);
+            OfflineMode();
         }
 
         public void showDetachedChat(object sender, EventArgs e)
         {
             this.isDetached = true;
-            if (GridMain.Content == MessagingViewManager.instance.LargeMessagingView)
-            {
-                Button_Click(ButtonGallery, null);
-            }
-            else if (GridMain.Content == FenetreDessin)
-            {
-                Button_Click(ButtonEdit, null);
-            }
+            if (GridMain.Content is MessagingWindow)
+                GridMain.Content = Gallery;
+            RefreshView();
             ButtonChat.Visibility = Visibility.Collapsed;
             detached = new DetachedChat();
             detached.Show();
@@ -68,24 +44,72 @@ namespace PolyPaint.Vues
             detached.Hide();
             ButtonChat.Visibility = Visibility.Visible;
             this.isDetached = false;
-            if (GridMain.Content == FenetreDessin)
+            RefreshView();
+        }
+
+        private void OfflineMode()
+        {
+            if (detached != null)
+                detached.Hide();
+
+            ManageProfileButton.Visibility = Visibility.Collapsed;
+            AvatarButton.Visibility = Visibility.Collapsed;
+            ConnectButton.Visibility = Visibility.Visible;
+            DisonnectButton.Visibility = Visibility.Collapsed;
+
+            ButtonUsers.Visibility = Visibility.Collapsed;
+            ButtonChat.Visibility = Visibility.Collapsed;
+
+            Gallery = new Gallery();
+            if (GridMain.Content is MessagingWindow || GridMain.Content is Users)
+                GridMain.Content = Gallery;
+
+            RefreshView();
+        }
+
+        private void OnlineMode()
+        {
+            ManageProfileButton.Visibility = Visibility.Visible;
+            AvatarButton.Visibility = Visibility.Visible;
+            DisonnectButton.Visibility = Visibility.Visible;
+            ConnectButton.Visibility = Visibility.Collapsed;
+
+            Uri profileImage = ServerService.instance.user.profileImage;
+            if (profileImage != null)
+            {
+                AvatarImage.Source = new BitmapImage(profileImage);
+            }
+
+            Users = new Users();
+            Gallery = new Gallery();
+
+            ButtonUsers.Visibility = Visibility.Visible;
+            if (isDetached)
+                showDetachedChat(null, null);
+            else
+                showAttachedChat(null, null);
+
+            InitDialogBox();
+            UsersManager.instance.fetchAll();
+        }
+
+        private void RefreshView()
+        {
+            if (GridMain.Content is Gallery)
+            {
+                Button_Click(ButtonGallery, null);
+            }
+            else if (GridMain.Content is FenetreDessin)
             {
                 Button_Click(ButtonEdit, null);
             }
-        }
-
-        private void RestrictPermissions()
-        {
-            ManageProfileButton.Visibility = Visibility.Collapsed;
-            AvatarButton.IsEnabled = false;
-        }
-
-        private void Server_Connect()
-        {
-            LoginDialogBox dlg = new LoginDialogBox();
-            if (dlg.ShowDialog() == false)
+            else if (GridMain.Content is Users)
             {
-                System.Environment.Exit(0);
+                Button_Click(ButtonUsers, null);
+            }
+            else if (GridMain.Content is MessagingWindow)
+            {
+                Button_Click(ButtonChat, null);
             }
         }
 
@@ -116,7 +140,7 @@ namespace PolyPaint.Vues
                     break;
                 case 3:
                     GridMain.Content = this.FenetreDessin;
-                    GridCursor.Margin = new Thickness(10 + (150 * (index - (isDetached ? 1 : 0))), 0, 0, 0);
+                    GridCursor.Margin = new Thickness(10 + (150 * (index - (ServerService.instance.isOffline() ? 2 : (isDetached ? 1 : 0)))), 0, 0, 0);
                     break;
             }
         }
@@ -198,6 +222,21 @@ namespace PolyPaint.Vues
             ButtonEdit.Visibility = Visibility.Visible;
             GridMain.Content = FenetreDessin;
             ((VueModele)FenetreDessin.DataContext).editeur.SyncToServer();
+        }
+
+        private void ConnectButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginDialogBox dlg = new LoginDialogBox();
+            if (dlg.ShowDialog() == true)
+            {
+                OnlineMode();
+            }
+        }
+
+        private void DisonnectButton_Click(object sender, RoutedEventArgs e)
+        {
+            ServerService.instance.disconnect();
+            OfflineMode();
         }
     }
 }

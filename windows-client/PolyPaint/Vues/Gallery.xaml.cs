@@ -31,15 +31,16 @@ namespace PolyPaint.Vues
 
         public void Load()
         {
-            if (ServerService.instance.user.isGuest)
+            if (ServerService.instance.isOffline())
             {
                 RestrictPermissions();
+                // Load localy stored images
             }
             else
             {
                 ImageDao.GetByOwnerId();
+                ImageDao.GetPublicExceptMine();
             }
-            ImageDao.GetPublicExceptMine();
         }
 
         private void RestrictPermissions()
@@ -174,7 +175,7 @@ namespace PolyPaint.Vues
             ImageViewPicture.Source = imageBitmap;
             ImageLikeDao.Get(CurrentGalleryCard.Image.id);
             ImageCommentDao.Get(CurrentGalleryCard.Image.id);
-            if (!ServerService.instance.user.isGuest)
+            if (!ServerService.instance.isOffline())
             {
                 if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
                 {

@@ -324,7 +324,7 @@ namespace PolyPaint.Modeles
         }
 
         // On retire le trait le plus récent de la surface de dessin et on le place sur une pile.
-        public void Empiler(Stroke o)
+        public void Empiler(object o)
         {
             try
             {
