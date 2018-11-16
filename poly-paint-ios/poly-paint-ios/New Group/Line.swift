@@ -42,17 +42,17 @@ class Line {
             if(index != (self.points.count - 1)) {
                 var distanceToSegment = findDistanceToSegment(touchPoint: touchPoint, p1: self.points[index], p2: self.points[index + 1])
                 if(distanceToSegment > 15) {
-                    return false
+                    //return false
                 } else {
                     if(self.selected) {
                         self.hitStartPoint = nil
                         self.hitEndPoint = nil
-                        self.selected = false
+                        //self.selected = false
                         self.layer?.strokeColor = UIColor.black.cgColor
                     } else {
                         self.hitStartPoint = index
                         self.hitEndPoint = index + 1
-                        self.selected = true
+                        //self.selected = true
                         self.layer?.strokeColor = UIColor.green.cgColor
                     }
                     

@@ -45,6 +45,8 @@ class DrawViewController: UIViewController {
     var shapes = [String: BasicShapeView]()
     var lineIndexEdit: Int?
     var lineEditing = false
+    var lineBeingEdited: Line?
+    var addedNewPointToLine = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -178,14 +180,21 @@ class DrawViewController: UIViewController {
             } else if (!self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
                 self.lineIndexEdit = lineIndex
                 self.lineEditing = true
+                self.lineBeingEdited = line
+                line.selected = true
             }
             lineIndex += 1
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if(self.lineEditing) {
+        if(self.lineEditing && !self.addedNewPointToLine) {
+            self.addedNewPointToLine = true
+            self.lineBeingEdited?.addPoint(point: (touches.first?.location(in: self.drawingPlace))!)
             print("Editing Line")
+        } else if(self.lineEditing) {
+            self.lineBeingEdited?.points[(self.lineBeingEdited?.hitStartPoint)! + 1] = (touches.first?.location(in: self.drawingPlace))!
+            drawLine(line: self.lineBeingEdited!)
         }
         
         if(isUserEditing && self.insideCanvas) {
@@ -244,7 +253,13 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if(isUserEditing && self.insideCanvas) {
+        if(self.lineEditing) {
+            self.addedNewPointToLine = false
+            self.lineBeingEdited?.selected = false
+            self.lineBeingEdited = nil
+            self.lineIndexEdit = nil
+            self.lineEditing = false
+        } else if(isUserEditing && self.insideCanvas) {
             let touch = touches.first
             self.currentContext = nil
             self.selectedColor.setFill()
@@ -473,6 +488,24 @@ class DrawViewController: UIViewController {
           //  self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
             self.redrawLayers()
         }
+    }
+    
+    func drawLine(line: Line) {
+        var bezier = UIBezierPath()
+        for (index, point) in line.points.enumerated() {
+            if(index < line.points.count - 1) {
+                bezier.move(to: line.points[index])
+                bezier.addLine(to: line.points[index + 1])
+            }
+        }
+        self.currentContext = nil
+        bezier.close()
+        let layer = CAShapeLayer()
+        layer.path = bezier.cgPath
+        layer.borderWidth = 2
+        layer.strokeColor = UIColor.black.cgColor
+        line.layer = layer
+        redrawLayers()
     }
     
     func resetLineEndPoints() {
