@@ -438,16 +438,19 @@ class DrawViewController: UIViewController {
         for line in self.lines {
             if(line.firstAnchorShapeId == viewUUID) {
                 line.points[0] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.firstAnchorShapeIndex!))!
-                let bezier = UIBezierPath()
+                /*let bezier = UIBezierPath()
                 bezier.move(to: line.points[0])
                 bezier.addLine(to: line.points[1])
-                line.layer?.path = bezier.cgPath
+                line.layer?.path = bezier.cgPath*/
+                self.drawLine(line: line)
+                    
             } else if(line.secondAnchorShapeId == viewUUID) {
-                line.points[1] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.secondAnchorShapeIndex!))!
-                let bezier = UIBezierPath()
+                line.points[line.points.count - 1] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.secondAnchorShapeIndex!))!
+                self.drawLine(line: line)
+                /*let bezier = UIBezierPath()
                 bezier.move(to: line.points[0])
                 bezier.addLine(to: line.points[1])
-                line.layer?.path = bezier.cgPath
+                line.layer?.path = bezier.cgPath*/
             }
         }
     }
