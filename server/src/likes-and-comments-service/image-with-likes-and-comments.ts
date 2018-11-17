@@ -26,6 +26,7 @@ export class ImageWithLikesAndComments {
             ImageLike.get(this.id).then(
                 (value: ImageLike[]) => {
                     this.likes = value;
+                    resolve(value);
                 },
                 (rejectReason: any) => reject(rejectReason)
             );

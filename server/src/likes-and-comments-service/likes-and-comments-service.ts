@@ -39,15 +39,17 @@ export class LikesAndCommentsService {
     }
 
     public newConnection(user: User): void {
-
         user.socket.on('previewImage', async (imageId: string) => {
             const previousPreviewedImage = await this.getUserPreviwedImage(user.socket.id);
             if (previousPreviewedImage != undefined) {
                 user.socket.leave(previousPreviewedImage.id);
             }
 
+            const previewedImage = await this.getImage(imageId);
+
             this.users.set(user, imageId);
             user.socket.join(imageId);
+            user.socket.emit('previewImage', previewedImage);
         });
 
         user.socket.on('leaveImage', async () => {
@@ -65,7 +67,7 @@ export class LikesAndCommentsService {
         user.socket.on('removeLike', async (userId: string) => {
             const previewedImage = await this.getUserPreviwedImage(user.socket.id);
             await previewedImage.removeLike(userId);
-            user.socket.to(this.users.get(user)).emit('addLike', previewedImage.likes);
+            user.socket.to(this.users.get(user)).emit('removeLike', previewedImage.likes);
         });
     }
 
