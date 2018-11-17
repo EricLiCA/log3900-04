@@ -178,7 +178,6 @@
     <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Modeles\ChatModel.cs" />
     <Compile Include="Modeles\EditionSocket.cs" />
-    <Compile Include="Modeles\EmptyInputValidationRule.cs" />
     <Compile Include="Modeles\ShapeLoader.cs" />
     <Compile Include="Modeles\ChatRoom.cs" />
     <Compile Include="Modeles\ChatUser.cs" />
