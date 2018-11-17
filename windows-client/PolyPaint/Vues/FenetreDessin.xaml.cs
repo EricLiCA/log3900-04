@@ -86,7 +86,7 @@ namespace PolyPaint
                 {
                     vueModele.Traits.Remove(stroke);
                     ClipBoard.Add(stroke);
-                    EditionSocket.RemoveStroke(((Savable)stroke).toJson());
+                    EditionSocket.RemoveStroke(((CustomStroke)stroke).Id.ToString());
                 });
             }
         }

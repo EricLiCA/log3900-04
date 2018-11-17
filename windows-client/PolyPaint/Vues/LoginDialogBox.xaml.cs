@@ -141,8 +141,11 @@ namespace PolyPaint.Vues
 
             socket.On(Socket.EVENT_DISCONNECT, new CustomListener((object[] server_params) =>
             {
-                ServerService.instance.disconnect();
-                ((MainWindow)Application.Current.MainWindow).OfflineMode();
+                this.Dispatcher.Invoke(() =>
+                {
+                    ServerService.instance.disconnect();
+                    ((MainWindow)Application.Current.MainWindow).OfflineMode();
+                });
             }));
         }
 
