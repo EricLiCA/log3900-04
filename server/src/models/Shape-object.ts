@@ -102,6 +102,19 @@ export class ShapeObject {
         }
     }
 
+    public static async deleteCanvas(id: string): Promise<void> {
+        const db = await PostgresDatabase.getInstance();
+        const queryResponse = await db.query(
+            'DELETE FROM shapeobjects WHERE "imageid" = $1',
+            [id],
+        );
+        if (queryResponse.rowCount > 0) {
+            return Promise.resolve();
+        } else {
+            return Promise.reject();
+        }
+    }
+
     public Id: string;
     public ImageId: string;
     public ShapeType: string;

@@ -1,5 +1,4 @@
 import * as express from 'express';
-import { RedisService } from '../redis.service';
 
 import { User } from '../models/User';
 import { ConnectedUsersService } from '../connected-users-service.ts/connected-users-service';
