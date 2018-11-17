@@ -1,5 +1,4 @@
 using MaterialDesignThemes.Wpf;
-using PolyPaint.Services;
 using System;
 using Image = PolyPaint.Modeles.Image;
 
@@ -29,23 +28,21 @@ namespace PolyPaint.Vues
 
         public void ConfigIcon()
         {
-            if (ServerService.instance.isOffline() || ServerService.instance.user.id == Image.ownerId)
+            IconContainer.Visibility = System.Windows.Visibility.Visible;
+            IconContainer.ToolTip = Image.protectionLevel;
+            if (Image.protectionLevel.Equals("private"))
             {
-                IconContainer.Visibility = System.Windows.Visibility.Visible;
-                IconContainer.ToolTip = Image.protectionLevel;
-                if (Image.protectionLevel.Equals("private"))
-                {
-                    Icon.Kind = PackIconKind.Lock;
-                }
-                else if (Image.protectionLevel.Equals("protected"))
-                {
-                    Icon.Kind = PackIconKind.Key;
-                }
-                else
-                {
-                    Icon.Kind = PackIconKind.Eye;
-                }
+                Icon.Kind = PackIconKind.Lock;
             }
+            else if (Image.protectionLevel.Equals("protected"))
+            {
+                Icon.Kind = PackIconKind.Key;
+            }
+            else
+            {
+                Icon.Kind = PackIconKind.Eye;
+            }
+
         }
     }
 }
