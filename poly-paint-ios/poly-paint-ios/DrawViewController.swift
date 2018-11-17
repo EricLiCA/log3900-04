@@ -41,6 +41,7 @@ class DrawViewController: UIViewController {
     var endAnchorNumber: Int?
     var lines = [Line]()
     var shapes = [String: BasicShapeView]()
+    var undoRedoManager = UndoRedoManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -376,8 +377,36 @@ class DrawViewController: UIViewController {
         
     }
     
+    @objc func onInsertionUndoRedo(_ notification:Notification) {
+        let shapeType = notification.userInfo?["shapeType"] as! String
+        
+        if shapeType == "RECTANGLE" {
+            let view = RectangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+            
+        else if shapeType == "TRIANGLE" {
+            let view = TriangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+            
+        else  if shapeType == "ELLIPSE" {
+            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+        self.drawingPlace.layer.sublayers?.popLast()
+        //self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+        self.redrawLayers()
+        self.insideCanvas = false
+        
+    }
+    
     @objc func onDelete(_ notification:Notification) {
         let uuid = notification.userInfo?["uuid"] as! String
+        self.shapes[uuid]?.removeFromSuperview()
         self.shapes.removeValue(forKey: uuid)
     }
     
@@ -387,6 +416,7 @@ class DrawViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(movedViewAlert), name: NSNotification.Name(rawValue: "movedView"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onDuplicate(_:)), name: .duplicate, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onDelete(_:)), name: .delete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onInsertionUndoRedo(_:)), name: .insertionUndoRedo, object: nil)
 
     }
     

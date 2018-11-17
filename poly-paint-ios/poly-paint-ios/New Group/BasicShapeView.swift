@@ -166,7 +166,7 @@ class BasicShapeView: UIView {
     }
     
     @objc internal func handleDeleteAction(_ controller: UIMenuController) {
-        self.removeFromSuperview()
+       // self.removeFromSuperview()
          let uuid = ["uuid": self.uuid] as [String : Any]
          NotificationCenter.default.post(name: .delete, object: nil, userInfo: uuid)
         

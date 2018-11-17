@@ -23,6 +23,8 @@
 		CCA060E9219D151A00B558CA /* UIColorExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060E8219D151A00B558CA /* UIColorExtentions.swift */; };
 		CCA060EB219DD64000B558CA /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EA219DD64000B558CA /* ImageLoader.swift */; };
 		CCA060ED219F88A700B558CA /* NewClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EC219F88A700B558CA /* NewClassViewController.swift */; };
+		CCA060EF219F918A00B558CA /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EE219F918A00B558CA /* Stack.swift */; };
+		CCA060F1219F9AC100B558CA /* UndoRedoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060F0219F9AC100B558CA /* UndoRedoManager.swift */; };
 		CCA46DAD2177E1BD00DC32EC /* PublicPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */; };
 		CCA46DAF2177E8AC00DC32EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DAE2177E8AC00DC32EC /* Image.swift */; };
 		CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DB0217815D500DC32EC /* PublicImageCell.swift */; };
@@ -95,6 +97,8 @@
 		CCA060E8219D151A00B558CA /* UIColorExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtentions.swift; sourceTree = "<group>"; };
 		CCA060EA219DD64000B558CA /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		CCA060EC219F88A700B558CA /* NewClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClassViewController.swift; sourceTree = "<group>"; };
+		CCA060EE219F918A00B558CA /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		CCA060F0219F9AC100B558CA /* UndoRedoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UndoRedoManager.swift; path = "/Developer/log3900-04/poly-paint-ios/poly-paint-ios/UndoRedoManager.swift"; sourceTree = "<absolute>"; };
 		CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPhotosViewController.swift; sourceTree = "<group>"; };
 		CCA46DAE2177E8AC00DC32EC /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		CCA46DB0217815D500DC32EC /* PublicImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicImageCell.swift; sourceTree = "<group>"; };
@@ -192,11 +196,13 @@
 		A77C46ED21569CFB0056135A /* poly-paint-ios */ = {
 			isa = PBXGroup;
 			children = (
+				CCA060F0219F9AC100B558CA /* UndoRedoManager.swift */,
 				CCD4FA772186848A005E124B /* PrivateImageViewController.swift */,
 				CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */,
 				A74A5B0A219DC9B300051D14 /* Chat */,
 				CF21E3282188C2CE00F21F57 /* Shapes */,
 				A77C46FD21569CFB0056135A /* Info.plist */,
+				CCA060EE219F918A00B558CA /* Stack.swift */,
 				CCA060EA219DD64000B558CA /* ImageLoader.swift */,
 				CCE6BC4C21925DE800C6DF31 /* ColorPickerViewController.swift */,
 				CCE6BC4921925CFA00C6DF31 /* colorPalette.plist */,
@@ -462,6 +468,7 @@
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				CCE6BC4D21925DE800C6DF31 /* ColorPickerViewController.swift in Sources */,
 				CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */,
+				CCA060F1219F9AC100B558CA /* UndoRedoManager.swift in Sources */,
 				CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */,
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
 				CF3DD51F2197A34600A14BAF /* CanevasViewController.swift in Sources */,
@@ -489,6 +496,7 @@
 				CF3DD525219B6B4C00A14BAF /* Line.swift in Sources */,
 				CF21E338218F9FC400F21F57 /* ClassDiagramView.swift in Sources */,
 				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,
+				CCA060EF219F918A00B558CA /* Stack.swift in Sources */,
 				CCD4FA762186536B005E124B /* PublicImageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
