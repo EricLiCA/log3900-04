@@ -180,16 +180,9 @@ namespace PolyPaint.Modeles
             get { return editingStroke; }
             set
             {
-                Console.WriteLine(">---000---");
-                Console.WriteLine(editingStroke);
-                Console.WriteLine(value);
-                Console.WriteLine("---000---<");
-
                 if (this.editingStroke != null && this.traits.has(this.editingStroke))
                 {
-                    Console.WriteLine("------is");
                     this.traits.get(this.editingStroke).stopEditing();
-                    Console.WriteLine("------is" + this.traits.get(this.editingStroke).isEditing());
                 }
 
                 this.editingStroke = value;
@@ -396,6 +389,25 @@ namespace PolyPaint.Modeles
             EditionSocket.ClearCanvas();
         }
 
+        internal void Save(byte[] obj)
+        {
+            if (ServerService.instance.isOffline())
+            {
+
+                OfflineFileLoader.saveImage(obj);
+                
+                var tosave = this.traits.ToList().FindAll(stroke => stroke is Savable).ConvertAll<string>(stroke =>
+                {
+                    return ((Savable)stroke).toJson();
+                });
+                OfflineFileLoader.save(tosave);
+            }
+            else
+            {
+
+            }
+        }
+
         public void SyncToServer()
         {
             if (ServerService.instance.isOffline())
@@ -427,7 +439,6 @@ namespace PolyPaint.Modeles
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Stroke old = this.traits.get(updated.Id.ToString());
-                    Console.WriteLine(((Savable)updated).toJson());
                     bool selected = ((CustomStroke)old).isSelected();
                     bool editting = ((CustomStroke)old).isEditing();
                     bool locked = ((CustomStroke)old).isLocked();
@@ -515,14 +526,14 @@ namespace PolyPaint.Modeles
             }));
         }
 
-        private void Load(List<SerializedStroke> list)
+        private void Load(List<string> list)
         {
             traits.Clear();
             traitsRetires.Clear();
 
             for (int i = 0; i < list.Count; i++)
             {
-                this.traits.Add(SerializationHelper.stringToStroke(JObject.FromObject(list[i]), this.traits));
+                this.traits.Add(SerializationHelper.stringToStroke(JObject.Parse(list[i]), this.traits));
             }
         }
 
