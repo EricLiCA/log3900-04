@@ -12,7 +12,7 @@ class BasicShapeView: UIView {
 
     let lineWidth: CGFloat = 1
     var touchAnchorPoint = false
-    let uuid = NSUUID.init().uuidString.lowercased()
+    var uuid = NSUUID.init().uuidString.lowercased()
     var numberOfAnchorPoints: Int?
     var anchorPointsLayers = [CAShapeLayer]()
     var color: UIColor?

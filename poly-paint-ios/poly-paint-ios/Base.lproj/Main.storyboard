@@ -366,8 +366,16 @@
                                     <action selector="colorPickerButton:" destination="nxp-f4-1rm" id="BfL-Wy-8f6"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem tag="-1" title="Redo" width="11" id="nbC-No-vhD"/>
-                            <barButtonItem title="Undo" id="5oG-1Z-XUe"/>
+                            <barButtonItem tag="-1" title="Redo" width="11" id="nbC-No-vhD">
+                                <connections>
+                                    <action selector="redoTapped:" destination="nxp-f4-1rm" id="fGC-bB-yMe"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Undo" id="5oG-1Z-XUe">
+                                <connections>
+                                    <action selector="undoTapped:" destination="nxp-f4-1rm" id="are-fI-Tfm"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -375,6 +383,8 @@
                         <outlet property="colorButton" destination="onF-ce-uHG" id="hCW-DP-93z"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="insertButton" destination="vVf-wi-6Rz" id="DIX-kD-pgq"/>
+                        <outlet property="redoButton" destination="nbC-No-vhD" id="G4G-ZS-kcq"/>
+                        <outlet property="undoButton" destination="5oG-1Z-XUe" id="cJa-Nn-eWq"/>
                         <segue destination="82l-V1-XRu" kind="popoverPresentation" identifier="toCreateClass" popoverAnchorBarButtonItem="vVf-wi-6Rz" id="1XK-x8-Tly">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
