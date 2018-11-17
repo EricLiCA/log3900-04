@@ -1,3 +1,4 @@
+using MaterialDesignThemes.Wpf;
 using Newtonsoft.Json.Linq;
 using PolyPaint.DAO;
 using PolyPaint.Modeles;
@@ -269,7 +270,10 @@ namespace PolyPaint.Vues
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
+            if (CurrentGalleryCard.Image.protectionLevel != "protected")
+            {
+                ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
+            }
         }
 
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
@@ -289,15 +293,11 @@ namespace PolyPaint.Vues
 
         private void PasswordButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateImageContainer.Visibility = Visibility.Collapsed;
-            ChangePasswordContainer.Visibility = Visibility.Visible;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
         }
 
         private void AddImageButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateImageContainer.Visibility = Visibility.Visible;
-            ChangePasswordContainer.Visibility = Visibility.Collapsed;
             ImageTitle.Text = "";
             ImagePassword.Password = "";
             PrivateProtectionLevel.IsChecked = true;
@@ -352,8 +352,18 @@ namespace PolyPaint.Vues
         }
 
 
+
         #endregion
 
-        
+        private void AccessImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ImageToAccessPassword.Text != CurrentGalleryCard.Image.password)
+            {
+                
+            } else
+            {
+                ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
+            }
+        }
     }
 }

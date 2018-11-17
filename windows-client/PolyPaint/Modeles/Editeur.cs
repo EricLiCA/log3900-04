@@ -481,7 +481,7 @@ namespace PolyPaint.Modeles
             traits.Clear();
             traitsRetires.Clear();
             
-            for (int i = 0; i < shapeObjects.Count; i++)
+            for (int i = 0; i < shapeObjects?.Count; i++)
             {
                 this.traits.Add(SerializationHelper.stringToStroke((JObject)shapeObjects[i], this.traits));
             }
