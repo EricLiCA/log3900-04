@@ -35,19 +35,13 @@
                                 <materialDesign:PackIcon  Kind="Pencil" Height="24" Width="24" />
                                 <Button.CommandParameter>
                                     <StackPanel Name="AccessImageContainer" Margin="16">
-                                        <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Top" HorizontalAlignment="Center"> Enter the password in order to edit the image</TextBlock>
+                                        <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Top" HorizontalAlignment="Center">Enter the image password</TextBlock>
                                         <StackPanel Orientation="Horizontal" Margin="4,10,4,4">
                                             <materialDesign:PackIcon Kind="Key" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
                                             <TextBox x:Name="ImageToAccessPassword" materialDesign:HintAssist.Hint="Password*" Width="300">
-                                                <TextBox.Text>
-                                                    <Binding Path="ImageToAccessPassword"  UpdateSourceTrigger="PropertyChanged">
-                                                        <Binding.ValidationRules>
-                                                            <domain1:WrongPasswordValidationRule ValidatesOnTargetUpdated="True" xmlns:domain1="clr-namespace:PolyPaint.Modeles" />
-                                                        </Binding.ValidationRules>
-                                                    </Binding>
-                                                </TextBox.Text>
                                             </TextBox>
                                         </StackPanel>
+                                        <materialDesign:Snackbar Message="Wrong password" IsActive="False" x:Name="WrongPasswordMessage" Background="#FFFF7D7D" HorizontalAlignment="Stretch" />
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
                                             <Button Name="AccessImageButton" IsDefault="True" Margin="0 8 8 0" Click="AccessImageButton_Click" >
                                                 Accept
@@ -174,7 +168,7 @@
                                     </PasswordBox>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="4,10,4,4">
-                                    <RadioButton Name="PrivateProtectionLevel" IsChecked="True" Style="{StaticResource MaterialDesignRadioButton}" GroupName="ImageProtectionLevel" ToolTip="A private image can be accessed by only you">Private</RadioButton>
+                                    <RadioButton Name="PrivateProtectionLevel" IsChecked="True" Style="{StaticResource MaterialDesignRadioButton}" GroupName="ImageProtectionLevel" ToolTip="A private image can be seen only by you">Private</RadioButton>
                                     <RadioButton Name="PublicProtectionLevel" Style="{StaticResource MaterialDesignRadioButton}" GroupName="ImageProtectionLevel" ToolTip="A public image can be accessed by anyone but you can protect it with a password">Public</RadioButton>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
