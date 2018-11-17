@@ -261,7 +261,7 @@ namespace PolyPaint.Vues
             AccessImageContainer.Visibility = Visibility.Visible;
             ImageToAccessPassword.Text = "";
             WrongPasswordMessage.IsActive = false;
-            if (CurrentGalleryCard.Image.protectionLevel != "protected" || CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
+            if (ServerService.instance.isOffline() || CurrentGalleryCard.Image.protectionLevel != "protected" || CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
             {
                 ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
             }
