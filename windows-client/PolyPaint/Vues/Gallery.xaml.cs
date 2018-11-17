@@ -269,6 +269,9 @@ namespace PolyPaint.Vues
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            CreateImageContainer.Visibility = Visibility.Collapsed;
+            ChangePasswordContainer.Visibility = Visibility.Collapsed;
+            AccessImageContainer.Visibility = Visibility.Visible;
             ImageToAccessPassword.Text = "";
             WrongPasswordMessage.IsActive = false;
             if (CurrentGalleryCard.Image.protectionLevel != "protected" || CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
@@ -294,11 +297,17 @@ namespace PolyPaint.Vues
 
         private void PasswordButton_Click(object sender, RoutedEventArgs e)
         {
+            CreateImageContainer.Visibility = Visibility.Collapsed;
+            ChangePasswordContainer.Visibility = Visibility.Visible;
+            AccessImageContainer.Visibility = Visibility.Collapsed;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
         }
 
         private void AddImageButton_Click(object sender, RoutedEventArgs e)
         {
+            CreateImageContainer.Visibility = Visibility.Visible;
+            ChangePasswordContainer.Visibility = Visibility.Collapsed;
+            AccessImageContainer.Visibility = Visibility.Collapsed;
             ImageTitle.Text = "";
             ImagePassword.Password = "";
             PrivateProtectionLevel.IsChecked = true;
