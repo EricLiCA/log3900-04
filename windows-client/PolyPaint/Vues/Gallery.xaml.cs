@@ -1,15 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using PolyPaint.DAO;
 using PolyPaint.Modeles;
 using PolyPaint.Services;
-using PolyPaint.Utilitaires;
 using RestSharp;
 using System;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Image = PolyPaint.Modeles.Image;
 
@@ -29,19 +26,67 @@ namespace PolyPaint.Vues
         {
             InitializeComponent();
             ImageView.Visibility = Visibility.Hidden;
-            CurrentGalleryCard = new GalleryCard(null);
+            Load();
         }
 
-        public void Init()
+        public void Load()
         {
-            ImageDao.GetAll();
+            if (ServerService.instance.user.isGuest)
+            {
+                RestrictPermissions();
+            }
+            else
+            {
+                ImageDao.GetByOwnerId();
+            }
+            ImageDao.GetPublicExceptMine();
         }
 
-        public void LoadImages(IRestResponse response)
+        private void RestrictPermissions()
+        {
+            MyImagesGroupBox.Visibility = Visibility.Collapsed;
+            LikeButton.IsEnabled = false;
+            LockButton.IsEnabled = false;
+            PasswordButton.IsEnabled = false;
+            CurrentComment.IsEnabled = false;
+            AddCommentButton.IsEnabled = false;
+        }
+
+        public void LoadMyImages(IRestResponse response)
         {
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                PrivateImagesContainer.Children.Clear();
+                MyImagesContainer.Children.Clear();
+                JArray responseImages = JArray.Parse(response.Content);
+                for (int i = 0; i < responseImages.Count; i++)
+                {
+                    dynamic data = JObject.Parse(responseImages[i].ToString());
+                    Image image = new Image
+                    {
+                        id = data["id"],
+                        ownerId = data["ownerId"],
+                        title = data["title"],
+                        protectionLevel = data["protectionLevel"],
+                        password = data["password"],
+                        thumbnailUrl = data["thumbnailUrl"],
+                        fullImageUrl = data["fullImageUrl"],
+                    };
+
+                    GalleryCard galleryCard = new GalleryCard(image);
+                    galleryCard.ViewButtonClicked += ViewButton_Click;
+                    MyImagesContainer.Children.Add(galleryCard);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Could not load the images", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void LoadPublicImages(IRestResponse response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
                 PublicImagesContainer.Children.Clear();
                 JArray responseImages = JArray.Parse(response.Content);
                 for (int i = 0; i < responseImages.Count; i++)
@@ -60,16 +105,7 @@ namespace PolyPaint.Vues
 
                     GalleryCard galleryCard = new GalleryCard(image);
                     galleryCard.ViewButtonClicked += ViewButton_Click;
-
-                    if (image.ownerId == ServerService.instance.id && image.protectionLevel == "private")
-                    {   
-                        PrivateImagesContainer.Children.Add(galleryCard);
-                    }
-                    else if (image.protectionLevel != "private")
-                    {
-                        PublicImagesContainer.Children.Add(galleryCard);
-                    }
-
+                    PublicImagesContainer.Children.Add(galleryCard);
                 }
             }
             else
@@ -77,6 +113,7 @@ namespace PolyPaint.Vues
                 MessageBox.Show("Could not load the images", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         public void LoadCurrentImageLikes(IRestResponse response)
         {
@@ -87,7 +124,7 @@ namespace PolyPaint.Vues
                 for (int i = 0; i < responseImageLikes.Count; i++)
                 {
                     dynamic data = JObject.Parse(responseImageLikes[i].ToString());
-                    if (data["userId"] == ServerService.instance.id)
+                    if (data["userId"] == ServerService.instance.user.id)
                     {
                         LikeButton.IsChecked = true;
                     }
@@ -98,7 +135,6 @@ namespace PolyPaint.Vues
             {
                 ImageViewLikes.Text = "0";
             }
-            SetToggleButtonTooltip(LikeButton, Settings.LIKE_BUTTON_CHECKED_TOOLTIP, Settings.LIKE_BUTTON_UNCHECKED_TOOLTIP);
         }
 
         public void LoadCurrentImageComments(IRestResponse response)
@@ -138,20 +174,22 @@ namespace PolyPaint.Vues
             ImageViewPicture.Source = imageBitmap;
             ImageLikeDao.Get(CurrentGalleryCard.Image.id);
             ImageCommentDao.Get(CurrentGalleryCard.Image.id);
-
-            if (CurrentGalleryCard.Image.ownerId == ServerService.instance.id)
+            if (!ServerService.instance.user.isGuest)
             {
-                LikeButton.IsEnabled = false;
-                PasswordButton.Visibility = Visibility.Visible;
-                LockButton.Visibility = Visibility.Visible;
+                if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
+                {
+                    LikeButton.IsEnabled = false;
+                    PasswordButton.Visibility = Visibility.Visible;
+                    LockButton.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    LikeButton.IsEnabled = true;
+                    PasswordButton.Visibility = Visibility.Hidden;
+                    LockButton.Visibility = Visibility.Hidden;
+                }
+                ConfigImageViewButtons();
             }
-            else
-            {
-                LikeButton.IsEnabled = true;
-                PasswordButton.Visibility = Visibility.Hidden;
-                LockButton.Visibility = Visibility.Hidden;
-            }
-            ConfigImageViewButtons();
         }
 
         private void ConfigImageViewButtons()
@@ -177,8 +215,6 @@ namespace PolyPaint.Vues
                         break;
                     }
             }
-            SetToggleButtonTooltip(LockButton, Settings.LOCK_BUTTON_CHECKED_TOOLTIP, Settings.LOCK_BUTTON_UNCHECKED_TOOLTIP);
-
         }
 
         private void LockButton_Click(object sender, RoutedEventArgs e)
@@ -186,14 +222,12 @@ namespace PolyPaint.Vues
             if ((bool)LockButton.IsChecked)
             {
                 CurrentGalleryCard.Image.protectionLevel = "private";
-                PublicImagesContainer.Children.Remove(CurrentGalleryCard);
-                PrivateImagesContainer.Children.Add(CurrentGalleryCard);
-            } else
+            }
+            else
             {
                 CurrentGalleryCard.Image.protectionLevel = "public";
-                PrivateImagesContainer.Children.Remove(CurrentGalleryCard);
-                PublicImagesContainer.Children.Add(CurrentGalleryCard);
             }
+            CurrentGalleryCard.ConfigIcon();
             ImageDao.Put(CurrentGalleryCard.Image);
             ConfigImageViewButtons();
 
@@ -204,7 +238,7 @@ namespace PolyPaint.Vues
             ImageLike imageLike = new ImageLike
             {
                 imageId = CurrentGalleryCard.Image.id,
-                userId = ServerService.instance.id
+                userId = ServerService.instance.user.id
             };
             if ((bool)LikeButton.IsChecked)
             {
@@ -218,38 +252,34 @@ namespace PolyPaint.Vues
                     Console.WriteLine("Cannot convert string to int");
                 }
 
-            } else
+            }
+            else
             {
                 ImageLikeDao.Delete(imageLike);
                 try
                 {
-                    ImageViewLikes.Text = (System.Convert.ToInt32(ImageViewLikes.Text) -1).ToString();
+                    ImageViewLikes.Text = (System.Convert.ToInt32(ImageViewLikes.Text) - 1).ToString();
                 }
                 catch (FormatException)
                 {
                     Console.WriteLine("Cannot convert string to int");
                 }
             }
-            SetToggleButtonTooltip(LikeButton, Settings.LIKE_BUTTON_CHECKED_TOOLTIP, Settings.LIKE_BUTTON_UNCHECKED_TOOLTIP);
         }
 
-        private void SetToggleButtonTooltip(ToggleButton toggleButton, string checkedMessage, string uncheckedMessage)
+        private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            ToolTip toolTip = new ToolTip
-            {
-                Content = ((bool)toggleButton.IsChecked) ? checkedMessage : uncheckedMessage
-            };
-            toggleButton.ToolTip = toolTip;
+            ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
         }
 
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
         {
             ImageComment imageComment = new ImageComment
             {
-                userId = ServerService.instance.id,
+                userId = ServerService.instance.user.id,
                 imageId = CurrentGalleryCard.Image.id,
                 comment = CurrentComment.Text,
-                userName = ServerService.instance.username,
+                userName = ServerService.instance.user.username,
                 timestamp = DateTime.Now
             };
             ImageCommentDao.Post(imageComment);
@@ -257,42 +287,73 @@ namespace PolyPaint.Vues
             CommentsContainer.Children.Insert(0, galleryComment);
         }
 
-        #region AddPassword/RemovePassword Dialog
-
-        private void CurrentImagePassword_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void PasswordButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentImagePassword.Text.Length == 0 || CurrentImagePassword.Text.Contains(" "))
-            {
-                AddPasswordButton.IsEnabled = false;
-            }
-            else
-            {
-                AddPasswordButton.IsEnabled = true;
-            }
+            CreateImageContainer.Visibility = Visibility.Collapsed;
+            ChangePasswordContainer.Visibility = Visibility.Visible;
+            CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
         }
+
+        private void AddImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateImageContainer.Visibility = Visibility.Visible;
+            ChangePasswordContainer.Visibility = Visibility.Collapsed;
+            ImageTitle.Text = "";
+            ImagePassword.Password = "";
+            PrivateProtectionLevel.IsChecked = true;
+        }
+
+        #region Dialog
 
         private void AddPasswordButton_Click(object sender, RoutedEventArgs e)
         {
             CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
             CurrentGalleryCard.Image.protectionLevel = "protected";
+            CurrentGalleryCard.ConfigIcon();
             ImageDao.Put(CurrentGalleryCard.Image);
-            AddPasswordButton.IsEnabled = false;
         }
 
         private void RemovePasswordButton_Click(object sender, RoutedEventArgs e)
         {
             CurrentGalleryCard.Image.password = null;
             CurrentGalleryCard.Image.protectionLevel = "public";
+            CurrentGalleryCard.ConfigIcon();
             CurrentImagePassword.Text = null;
             ImageDao.Put(CurrentGalleryCard.Image);
-            AddPasswordButton.IsEnabled = false;
         }
 
-        private void CloseDialogButton_Click(object sender, RoutedEventArgs e)
+        private void CreateImageClick(object sender, RoutedEventArgs e)
         {
-            CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
-            AddPasswordButton.IsEnabled = false;
+            string protectionLevel;
+            
+            if ((bool)PrivateProtectionLevel.IsChecked)
+            {
+                protectionLevel = "private";
+            } else
+            {
+                if (ImagePassword.Password.Length > 0)
+                {
+                    protectionLevel = "protected";
+                } else
+                {
+                    protectionLevel = "public";
+                }
+            }
+
+            Image newImage = new Image
+            {
+                title = ImageTitle.Text,
+                ownerId = ServerService.instance.user.id,
+                password = ImagePassword.Password,
+                protectionLevel = protectionLevel
+            };
+
+            ImageDao.Post(newImage);
         }
+
+
         #endregion
+
+        
     }
 }

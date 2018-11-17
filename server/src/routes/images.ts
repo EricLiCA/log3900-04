@@ -2,7 +2,7 @@ import * as express from 'express';
 import { PostgresDatabase } from '../postgres-database';
 import { DAO } from './dao';
 
-const RANDOM_IMAGE: string = "https://picsum.photos/300/400/?random";
+const RANDOM_IMAGE: string = 'https://picsum.photos/300/400/?random';
 
 export class ImagesRoute implements DAO {
 
@@ -21,12 +21,61 @@ export class ImagesRoute implements DAO {
                         fullImageUrl: row.FullImageUrl,
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
             });
+    }
+
+    public async getByOwnerId(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        const db = await PostgresDatabase.getInstance();
+        db.query('SELECT * FROM Images where "OwnerId" = $1', [req.params.id]).then((query) => {
+            if (query.rowCount > 0) {
+                res.send(query.rows.map((row) => {
+                    return {
+                        id: row.Id,
+                        ownerId: row.OwnerId,
+                        title: row.Title,
+                        protectionLevel: row.ProtectionLevel,
+                        password: row.Password,
+                        thumbnailUrl: row.ThumbnailUrl,
+                        fullImageUrl: row.FullImageUrl,
+                    };
+                }));
+                return;
+            }
+            res.sendStatus(404); // Not found
+        })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
+        });
+    }
+
+    public async getPublicExceptMine(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        const db = await PostgresDatabase.getInstance();
+        db.query('SELECT * FROM Images where ("ProtectionLevel" = $1 or "ProtectionLevel" = $2) and "OwnerId" != $3', ['public', 'protected', req.params.id]).then((query) => {
+            if (query.rowCount > 0) {
+                res.send(query.rows.map((row) => {
+                    return {
+                        id: row.Id,
+                        ownerId: row.OwnerId,
+                        title: row.Title,
+                        protectionLevel: row.ProtectionLevel,
+                        password: row.Password,
+                        thumbnailUrl: row.ThumbnailUrl,
+                        fullImageUrl: row.FullImageUrl,
+                    };
+                }));
+                return;
+            }
+            res.sendStatus(404); // Not found
+        })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
+        });
     }
 
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
@@ -43,6 +92,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(404);
         })
@@ -70,6 +120,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -79,7 +130,7 @@ export class ImagesRoute implements DAO {
     }
 
     public async update(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        let updates = [
+        const updates = [
             ['OwnerId', req.body.ownerId],
             ['Title', req.body.title],
             ['ProtectionLevel', req.body.protectionLevel],
@@ -118,6 +169,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -140,6 +192,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(404);
         })

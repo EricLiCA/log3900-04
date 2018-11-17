@@ -5,7 +5,7 @@ export class ImageCommentsRoute {
 
     public async get(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        
+
         db.query('SELECT * FROM ImageComments INNER JOIN Users ON "UserId" = "Id" WHERE "ImageId" = $1 ORDER BY "Timestamp" desc', [req.params.imageId]).then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows.map((row) => {
@@ -17,6 +17,7 @@ export class ImageCommentsRoute {
                         userName: row.Username,
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -41,6 +42,7 @@ export class ImageCommentsRoute {
                     timestamp: result.Timestamp,
                     comment: result.Comment,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -60,6 +62,7 @@ export class ImageCommentsRoute {
                     timestamp: result.Timestamp,
                     comment: result.Comment,
                 });
+                return;
             }
             res.sendStatus(404);
         })

@@ -7,21 +7,56 @@
         xmlns:local="clr-namespace:PolyPaint.Vues"
         mc:Ignorable="d"
         Title="MainWindow" Height="795" Width="1200">
-    <DockPanel Background="WhiteSmoke" LastChildFill="True">
-        <Grid Height="50" DockPanel.Dock="Top">
-            <DockPanel LastChildFill="True">
-                <Button Name="AvatarButton" DockPanel.Dock="Right" Width="40" Height="40" Background="Gray" Margin="15 5" Click="Menu_Change_Avatar_Click" Padding="0">
-                    <Image Name="AvatarImage" Source="/PolyPaint;component/Resources/defaultImage.png" Width="40" Height="40"/>
-                </Button>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
-                    <Button Name="ButtonGallery" Uid="0" Width="150" Content="GALLERY" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
-                    <Button Name="ButtonUsers" Uid="1" Width="150" Content="USERS" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
-                    <Button Name="ButtonChat" Uid="2" Width="150" Content="CHAT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
-                    <Button Name="ButtonEdit" Uid="3" Width="150" Content="EDIT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+    <materialDesign:DialogHost x:Name="dialogHost" Canvas.Left="50" Canvas.Top="50" Margin="0">
+        <materialDesign:DialogHost.DialogContent>
+            <StackPanel Margin="16">
+                <TextBlock>Manage your profile informations</TextBlock>
+                <StackPanel Margin="10,20" Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Account" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
+                    <TextBox x:Name="CurrentProfileName" materialDesign:HintAssist.Hint="User Name" Width="300" KeyUp="CurrentProfileInformations_KeyUp"/>
                 </StackPanel>
-            </DockPanel>
-            <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="10 0" VerticalAlignment="Bottom"/>
-        </Grid>
-        <Frame Name="GridMain" NavigationUIVisibility="Hidden" />
-    </DockPanel>
+                <StackPanel Margin="10,20" Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="Key" Foreground="{Binding ElementName=CurrentProfilePassword, Path=BorderBrush}" Margin="0,0,5,0" />
+                    <PasswordBox x:Name="CurrentProfilePassword" materialDesign:HintAssist.Hint="Password" Width="300" KeyUp="CurrentProfileInformations_KeyUp"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Name="ChangeProfileInformationsButton" IsEnabled="False" Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" ToolTip="Apply modifications" Click="ChangeProfileInformationsButton_Click">
+                        Accept
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="CloseDialogButton_Click">
+                        Cancel
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </materialDesign:DialogHost.DialogContent>
+        <DockPanel Background="WhiteSmoke" LastChildFill="True">
+            <Grid Height="50" DockPanel.Dock="Top">
+                <DockPanel LastChildFill="True">
+                    <Button Name="AvatarButton" DockPanel.Dock="Right" Width="40" Height="40" Background="Gray" Margin="15 5" Click="Menu_Change_Avatar_Click" Padding="0">
+                        <Image Name="AvatarImage" Source="/PolyPaint;component/Resources/defaultImage.png" Width="40" Height="40"/>
+                    </Button>
+                    <Button Name="ManageProfileButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" DockPanel.Dock="Right" FontSize="12" Margin="0,9" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                        Manage profile
+                    </Button>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
+                        <Button Name="ButtonGallery" Uid="0" Width="150" Content="GALLERY" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+                        <Button Name="ButtonUsers" Uid="1" Width="150" Content="USERS" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+                        <Button Name="ButtonChat" Uid="2" Width="150" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="CHAT" Margin="0 0 10 0" />
+                                    <Button Click="showDetachedChat" Margin="0" Padding="0" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Width="20" Height="20">
+                                        <Image Source="/Resources/detach.png" Margin="0" Width="20" Height="20"/>
+                                    </Button>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                        <Button Name="ButtonEdit" Uid="3" Width="150" Content="EDIT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" Visibility="Collapsed"/>
+                    </StackPanel>
+                </DockPanel>
+                <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="10 0" VerticalAlignment="Bottom"/>
+            </Grid>
+            <Frame Name="GridMain" NavigationUIVisibility="Hidden" />
+        </DockPanel>
+    </materialDesign:DialogHost>
 </Window>

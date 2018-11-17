@@ -1,28 +1,38 @@
-﻿using RestSharp;
-using PolyPaint.Utilitaires;
+﻿using Newtonsoft.Json.Linq;
 using PolyPaint.Services;
+using PolyPaint.Utilitaires;
+using PolyPaint.Vues;
+using RestSharp;
 using System.Net;
 using System.Windows;
-using Newtonsoft.Json.Linq;
 using Image = PolyPaint.Modeles.Image;
-using PolyPaint.Vues;
-using System.Windows.Controls;
-using RestSharp.Deserializers;
 
 namespace PolyPaint.DAO
 {
     public static class ImageDao
     {
-
-        public static void GetAll()
+        public static void GetByOwnerId()
         {
-            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH, Method.GET);
+            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_BY_OWNER_ID_PATH + "/" + ServerService.instance.user.id, Method.GET);
             ServerService.instance.server.ExecuteAsync<Image>(request, response =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
-                    currentGallery.LoadImages(response);
+                    currentGallery.LoadMyImages(response);
+                });
+            });
+        }
+
+        public static void GetPublicExceptMine()
+        {
+            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PUBLIC_EXCEPT_MINE + "/" + ServerService.instance.user.id, Method.GET);
+            ServerService.instance.server.ExecuteAsync<Image>(request, response =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
+                    currentGallery.LoadPublicImages(response);
                 });
             });
         }
@@ -39,7 +49,28 @@ namespace PolyPaint.DAO
                 }
             });
         }
-    }
 
+        public static void Post(Image newImage)
+        {
+            var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH, Method.POST);
+            request.AddJsonBody(newImage);
+            ServerService.instance.server.ExecuteAsync(request, response =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (response.StatusCode == HttpStatusCode.Created)
+                    {
+                        dynamic data = JObject.Parse(response.Content);
+                        ((MainWindow)Application.Current.MainWindow).LoadImage((string)data["id"]);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Could not create the image", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                });
+            });
+        }
+
+    }
 
 }

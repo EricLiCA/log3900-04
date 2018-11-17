@@ -1,22 +1,13 @@
+﻿using PolyPaint.Modeles;
 using Newtonsoft.Json.Linq;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using Quobject.SocketIoClientDotNet.Client;
 using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using PolyPaint.DAO;
+using System;
 
 namespace PolyPaint.Vues
 {
@@ -25,28 +16,53 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class LoginDialogBox : Window
     {
+
         public LoginDialogBox()
         {
             InitializeComponent();
-            this.ip.Text = Settings.SERVER_IP;
+            ConnectToServer();
         }
 
-        private void Connect_Click(object sender, RoutedEventArgs e)
+        private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
-            progress.Visibility = Visibility.Visible;
-            Verify_Server();
+            CreateButton.IsEnabled = false;
+            UserDao.Post(new User { username = UserName.Text, password = Password.Password });
         }
 
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        private void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
-            password.IsEnabled = !(bool)anonymous.IsChecked;
+            ConnectButton.IsEnabled = false;
+            ConnectionProgress.Visibility = Visibility.Visible;
+            if ((bool)GuestConnection.IsChecked)
+            {
+                ServerService.instance.user = new User
+                {
+                    id = Guid.NewGuid().ToString(),
+                    username = UserName.Text,
+                    password = Password.Password,
+                    profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE),
+                    isGuest = true
+                };
+                Connect_Socket();
+            } 
+            else
+            {
+                ConnectToAccount();
+            }
         }
 
-        private void Verify_Server()
+        private void GuestConnection_Checked(object sender, RoutedEventArgs e)
         {
-            var url = string.Format(ip.Text.StartsWith("http") ? "{0}" : "http://{0}", ip.Text);
+            Password.IsEnabled = !(bool)GuestConnection.IsChecked;
+            EnableOrDisableCreateButton();
+        }
+
+        private void ConnectToServer()
+        {
+            var url = string.Format(Settings.SERVER_IP.StartsWith("http") ? "{0}" : "http://{0}", Settings.SERVER_IP);
             var client = new RestClient(url);
-            var request = new RestRequest(Settings.API_VERSION + "/status", Method.GET);
+            var S3 = new S3Communication();
+            var request = new RestRequest(Settings.API_VERSION + Settings.SERVER_STATUS_PATH, Method.GET);
             client.ExecuteAsync(request, response =>
             {
                 this.Dispatcher.Invoke(() =>
@@ -54,62 +70,108 @@ namespace PolyPaint.Vues
                     if (response.Content == "log3900-server")
                     {
                         ServerService.instance.server = client;
-                        Verify_Credentials();
+                        ServerService.instance.S3Communication = S3;
                     }
                     else
                     {
-                        progress.Visibility = Visibility.Collapsed;
+                        ConnectButton.IsEnabled = true;
+                        ConnectionProgress.Visibility = Visibility.Collapsed;
                         MessageBox.Show("Could not connect to server", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 });
             });
         }
 
-        private void Verify_Credentials()
+        private void ConnectToAccount()
         {
-            Credentials credentials = new Credentials(username.Text, password.Password);
-            var request = new RestRequest(Settings.API_VERSION + "/sessions", Method.POST);
-            request.AddJsonBody(credentials);
-            ServerService.instance.server.ExecuteAsync<LoginResponse>(request, response =>
+            User user = new User
+            {
+                username = UserName.Text,
+                password = Password.Password,
+                profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE)
+            };
+            var request = new RestRequest(Settings.API_VERSION + Settings.SESSION_PATH, Method.POST);
+            request.AddJsonBody(user);
+            ServerService.instance.server.ExecuteAsync(request, response =>
             {
                 this.Dispatcher.Invoke(() =>
                 {
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        ServerService.instance.username = username.Text;
-                        ServerService.instance.password = password.Password;
                         dynamic data = JObject.Parse(response.Content);
-                        ServerService.instance.id = data["id"];
-                        ServerService.instance.token = data["token"];
-                        /*ServerService.instance.id = response.Data.id;
-                        ServerService.instance.token = response.Data.token;*/
-                        DialogResult = true;
+                        ServerService.instance.user = new User(
+                            UserName.Text,
+                            (string)data["id"],
+                            (string)data["profileImage"],
+                            (string)data["token"],
+                            (string)data["userLevel"],
+                            Password.Password,
+                            false
+                        );
+
+                        Connect_Socket();
                     }
                     else
                     {
-                        progress.Visibility = Visibility.Collapsed;
+                        ConnectButton.IsEnabled = true;
+                        ConnectionProgress.Visibility = Visibility.Collapsed;
                         MessageBox.Show("Wrong Credentials", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 });
             });
         }
 
-        private class Credentials
+        private void Connect_Socket()
         {
-            public string username;
-            public string password;
-
-            public Credentials(string username, string password)
+            Socket socket = IO.Socket(ServerService.instance.server.BaseUrl);
+            socket.On(Socket.EVENT_CONNECT, (IListener) =>
             {
-                this.username = username;
-                this.password = password;
-            }
+                socket.Emit("setUsername", ServerService.instance.user.username);
+                socket.Off(Socket.EVENT_CONNECT);
+            });
+
+            socket.On("setUsernameStatus", new CustomListener((object[] server_params) =>
+            {
+                if ((string)server_params[0] == "OK")
+                {
+                    ServerService.instance.Socket = socket;
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        DialogResult = true;
+                    });
+                }
+                else
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        ConnectionProgress.Visibility = Visibility.Collapsed;
+                        ConnectButton.IsEnabled = true;
+                    });
+                    socket.Disconnect();
+                    MessageBox.Show("Can't connect to the socket : " + server_params[0], "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }));
         }
 
-        private class LoginResponse
+        private void UserNameOrPassword_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            public string id { get; }
-            public string token { get; }
+            EnableOrDisableCreateButton();
+        }
+
+        private void EnableOrDisableCreateButton()
+        {
+            Boolean invalideUserName = UserName.Text.Length == 0 || UserName.Text.Contains(" ");
+            Boolean invalidPassword = Password.Password.Length == 0 || Password.Password.Contains(" ");
+
+            if ((bool)GuestConnection.IsChecked || invalideUserName || invalidPassword)
+            {
+                CreateButton.IsEnabled = false;
+            }
+            else
+            {
+                CreateButton.IsEnabled = true;
+            }
         }
     }
 }
