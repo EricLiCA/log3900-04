@@ -190,6 +190,10 @@
                     <Button Name="AddImageButton"  Style="{StaticResource MaterialDesignFloatingActionDarkButton}" ToolTip="Add a new image" HorizontalAlignment="Right" VerticalAlignment="Top" Click="AddImageButton_Click" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
                         <materialDesign:PackIcon Kind="ImagePlus" Height="24"  Width="24" />
                     </Button>
+                    <StackPanel Margin="4,10,4,4" Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Magnify" Foreground="{Binding ElementName=Sea, Path=BorderBrush}" Margin="0,0,5,0" />
+                        <TextBox x:Name="Search" materialDesign:HintAssist.Hint="Search" Width="300"/>
+                    </StackPanel>
                     <GroupBox Name="MyImagesGroupBox" Header="My Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>

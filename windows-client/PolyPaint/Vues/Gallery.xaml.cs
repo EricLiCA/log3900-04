@@ -4,6 +4,8 @@ using PolyPaint.Modeles;
 using PolyPaint.Services;
 using RestSharp;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,12 +24,14 @@ namespace PolyPaint.Vues
     {
         public GalleryCard CurrentGalleryCard { get; set; }
         public ImagePreviewRoom ImagePreviewRoom { get; set; }
+        public List<GalleryCard> GalleryCards { get; set; }
 
         public Gallery()
         {
             InitializeComponent();
             ImageView.Visibility = Visibility.Hidden;
             ImagePreviewRoom = new ImagePreviewRoom(CommentsContainer);
+            GalleryCards = new List<GalleryCard>();
             DataContext = this;
             Load();
         }
@@ -73,10 +77,12 @@ namespace PolyPaint.Vues
                         password = data["password"],
                         thumbnailUrl = data["thumbnailUrl"],
                         fullImageUrl = data["fullImageUrl"],
+                        authorName = data["authorName"]
                     };
 
                     GalleryCard galleryCard = new GalleryCard(image);
                     galleryCard.ViewButtonClicked += ViewButton_Click;
+                    GalleryCards.Add(galleryCard);
                     MyImagesContainer.Children.Add(galleryCard);
                 }
             }
@@ -104,10 +110,12 @@ namespace PolyPaint.Vues
                         password = data["password"],
                         thumbnailUrl = data["thumbnailUrl"],
                         fullImageUrl = data["fullImageUrl"],
+                        authorName = data["authorName"]
                     };
 
                     GalleryCard galleryCard = new GalleryCard(image);
                     galleryCard.ViewButtonClicked += ViewButton_Click;
+                    GalleryCards.Add(galleryCard);
                     PublicImagesContainer.Children.Add(galleryCard);
                 }
             }
@@ -120,7 +128,7 @@ namespace PolyPaint.Vues
         public void CheckOrUncheckLikeButton()
         {
             LikeButton.IsChecked = false;
-            for (int i =0; i < ImagePreviewRoom.Likes.Count; i++)
+            for (int i = 0; i < ImagePreviewRoom.Likes.Count; i++)
             {
                 if (ImagePreviewRoom.Likes[i].userId == ServerService.instance.user.id)
                 {
@@ -321,6 +329,23 @@ namespace PolyPaint.Vues
             {
                 ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
             }
+        }
+
+        private void Search_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            GalleryCards.ForEach(card =>
+            {
+               if (card.Image.authorName.Contains(Search.Text))
+               {
+                   card.Visibility = Visibility.Visible;
+               }
+               else
+               {
+                   card.Visibility = Visibility.Collapsed;
+               }
+               return;
+            });
+
         }
     }
 }
