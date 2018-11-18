@@ -18,6 +18,7 @@ enum Shape {
 
 class DrawViewController: UIViewController {
 
+    @IBOutlet weak var optionsView: UIView!
     @IBOutlet weak var drawingPlace: UIView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
@@ -54,7 +55,7 @@ class DrawViewController: UIViewController {
         self.drawingPlace.clipsToBounds = true
         self.cancelButton.isEnabled = false
         self.setUpNotifications()
-        
+        self.hideOptionsView()
         // Do any additional setup after loading the view.
     }
     
@@ -577,6 +578,14 @@ class DrawViewController: UIViewController {
         for line in lines {
             self.drawingPlace.layer.addSublayer(line.layer!)
         }
+    }
+    
+    func hideOptionsView() {
+        self.optionsView.isHidden = true
+    }
+    
+    func showOptionsView() {
+        self.optionsView.isHidden = false
     }
 
     /*
