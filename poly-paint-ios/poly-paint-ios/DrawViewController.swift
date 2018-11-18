@@ -47,6 +47,7 @@ class DrawViewController: UIViewController {
     var lineEditing = false
     var lineBeingEdited: Line?
     var addedNewPointToLine = false
+    var pointIndexEditing: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,21 +175,34 @@ class DrawViewController: UIViewController {
         
         var lineIndex = 0
         for line in self.lines {
-            if(self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
+            var hitPointTest = line.hitPointTest(touchPoint: self.firstTouch!)
+            
+            if(!self.lineEditing && hitPointTest != -1) {
+                self.pointIndexEditing = hitPointTest
+                self.lineIndexEdit = lineIndex
+                self.lineEditing = true
+                self.lineBeingEdited = line
+                line.selected = true
+            } else if(self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
                 self.lineIndexEdit = nil
                 self.lineEditing = false
+                self.pointIndexEditing = -1
             } else if (!self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
                 self.lineIndexEdit = lineIndex
                 self.lineEditing = true
                 self.lineBeingEdited = line
                 line.selected = true
+                self.pointIndexEditing = -1
             }
             lineIndex += 1
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if(self.lineEditing && !self.addedNewPointToLine) {
+        if(self.lineEditing && self.pointIndexEditing != -1) {
+            self.lineBeingEdited?.points[self.pointIndexEditing!] = (touches.first?.location(in: self.drawingPlace))!
+            drawLine(line: self.lineBeingEdited!)
+        } else if(self.lineEditing && !self.addedNewPointToLine) {
             self.addedNewPointToLine = true
             self.lineBeingEdited?.addPoint(point: (touches.first?.location(in: self.drawingPlace))!)
         } else if(self.lineEditing) {
@@ -258,6 +272,8 @@ class DrawViewController: UIViewController {
             self.lineBeingEdited = nil
             self.lineIndexEdit = nil
             self.lineEditing = false
+            self.pointIndexEditing = -1
+
         } else if(isUserEditing && self.insideCanvas) {
             let touch = touches.first
             self.currentContext = nil
