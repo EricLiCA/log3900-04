@@ -24,14 +24,12 @@ namespace PolyPaint.Vues
     {
         public GalleryCard CurrentGalleryCard { get; set; }
         public ImagePreviewRoom ImagePreviewRoom { get; set; }
-        public List<GalleryCard> GalleryCards { get; set; }
 
         public Gallery()
         {
             InitializeComponent();
             ImageView.Visibility = Visibility.Hidden;
             ImagePreviewRoom = new ImagePreviewRoom(CommentsContainer);
-            GalleryCards = new List<GalleryCard>();
             DataContext = this;
             Load();
         }
@@ -54,7 +52,7 @@ namespace PolyPaint.Vues
             MyImagesGroupBox.Visibility = Visibility.Collapsed;
             LikeButton.IsEnabled = false;
             LockButton.IsEnabled = false;
-            PasswordButton.IsEnabled = false;
+            ImageInformationsButton.IsEnabled = false;
             CurrentComment.IsEnabled = false;
             AddCommentButton.IsEnabled = false;
         }
@@ -82,7 +80,6 @@ namespace PolyPaint.Vues
 
                     GalleryCard galleryCard = new GalleryCard(image);
                     galleryCard.ViewButtonClicked += ViewButton_Click;
-                    GalleryCards.Add(galleryCard);
                     MyImagesContainer.Children.Add(galleryCard);
                 }
             }
@@ -115,7 +112,6 @@ namespace PolyPaint.Vues
 
                     GalleryCard galleryCard = new GalleryCard(image);
                     galleryCard.ViewButtonClicked += ViewButton_Click;
-                    GalleryCards.Add(galleryCard);
                     PublicImagesContainer.Children.Add(galleryCard);
                 }
             }
@@ -144,6 +140,7 @@ namespace PolyPaint.Vues
             ImageView.Visibility = Visibility.Visible;
             ImageView.IsExpanded = true;
             ImageViewTitle.Text = CurrentGalleryCard.Image.title;
+            ImageViewAuthor.Text = "CreatedBy " + CurrentGalleryCard.Image.authorName;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
             Uri imageUri = new Uri(CurrentGalleryCard.Image.fullImageUrl);
             BitmapImage imageBitmap = new BitmapImage(imageUri);
@@ -157,14 +154,14 @@ namespace PolyPaint.Vues
                 if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
                 {
                     LikeButton.IsEnabled = false;
-                    PasswordButton.Visibility = Visibility.Visible;
+                    ImageInformationsButton.Visibility = Visibility.Visible;
                     LockButton.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     LikeButton.IsEnabled = true;
-                    PasswordButton.Visibility = Visibility.Hidden;
-                    LockButton.Visibility = Visibility.Hidden;
+                    ImageInformationsButton.Visibility = Visibility.Collapsed;
+                    LockButton.Visibility = Visibility.Collapsed;
                 }
                 ConfigImageViewButtons();
             }
@@ -177,19 +174,19 @@ namespace PolyPaint.Vues
                 case "public":
                     {
                         LockButton.IsChecked = false;
-                        PasswordButton.IsEnabled = true;
+                        ImageInformationsButton.IsEnabled = true;
                         break;
                     }
                 case "private":
                     {
                         LockButton.IsChecked = true;
-                        PasswordButton.IsEnabled = false;
+                        ImageInformationsButton.IsEnabled = true;
                         break;
                     }
                 case "protected":
                     {
                         LockButton.IsChecked = false;
-                        PasswordButton.IsEnabled = true;
+                        ImageInformationsButton.IsEnabled = true;
                         break;
                     }
             }
@@ -201,9 +198,12 @@ namespace PolyPaint.Vues
             {
                 CurrentGalleryCard.Image.protectionLevel = "private";
             }
-            else
+            else if (CurrentGalleryCard.Image.password == null || CurrentGalleryCard.Image.password == "")
             {
                 CurrentGalleryCard.Image.protectionLevel = "public";
+            } else
+            {
+                CurrentGalleryCard.Image.protectionLevel = "protected";
             }
             CurrentGalleryCard.ConfigIcon();
             ImageDao.Put(CurrentGalleryCard.Image);
@@ -231,7 +231,7 @@ namespace PolyPaint.Vues
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             CreateImageContainer.Visibility = Visibility.Collapsed;
-            ChangePasswordContainer.Visibility = Visibility.Collapsed;
+            EditImageInformationsContainer.Visibility = Visibility.Collapsed;
             AccessImageContainer.Visibility = Visibility.Visible;
             ImageToAccessPassword.Text = "";
             WrongPasswordMessage.IsActive = false;
@@ -247,18 +247,20 @@ namespace PolyPaint.Vues
             CurrentComment.Text = "";
         }
 
-        private void PasswordButton_Click(object sender, RoutedEventArgs e)
+        private void ImageInformationsButton_Click(object sender, RoutedEventArgs e)
         {
             CreateImageContainer.Visibility = Visibility.Collapsed;
-            ChangePasswordContainer.Visibility = Visibility.Visible;
+            EditImageInformationsContainer.Visibility = Visibility.Visible;
             AccessImageContainer.Visibility = Visibility.Collapsed;
+            CurrentImageTitle.Text = CurrentGalleryCard.Image.title;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
+            CurrentImagePassword.IsEnabled = (CurrentGalleryCard.Image.protectionLevel == "private") ? false : true;
         }
 
         private void AddImageButton_Click(object sender, RoutedEventArgs e)
         {
             CreateImageContainer.Visibility = Visibility.Visible;
-            ChangePasswordContainer.Visibility = Visibility.Collapsed;
+            EditImageInformationsContainer.Visibility = Visibility.Collapsed;
             AccessImageContainer.Visibility = Visibility.Collapsed;
             ImageTitle.Text = "";
             ImagePassword.Password = "";
@@ -267,20 +269,24 @@ namespace PolyPaint.Vues
 
         #region Dialog
 
-        private void AddPasswordButton_Click(object sender, RoutedEventArgs e)
+        private void EditImageInformationsButton_Click(object sender, RoutedEventArgs e)
         {
-            CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
-            CurrentGalleryCard.Image.protectionLevel = "protected";
-            CurrentGalleryCard.ConfigIcon();
-            ImageDao.Put(CurrentGalleryCard.Image);
-        }
-
-        private void RemovePasswordButton_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentGalleryCard.Image.password = null;
-            CurrentGalleryCard.Image.protectionLevel = "public";
-            CurrentGalleryCard.ConfigIcon();
-            CurrentImagePassword.Text = null;
+            CurrentGalleryCard.ImageTitle.Text = CurrentImageTitle.Text;
+            ImageViewTitle.Text = CurrentImageTitle.Text;
+            if (CurrentGalleryCard.Image.protectionLevel != "private")
+            {
+                if (CurrentImagePassword.Text == "")
+                {
+                    CurrentGalleryCard.Image.password = null;
+                    CurrentGalleryCard.Image.protectionLevel = "public";
+                }
+                else
+                {
+                    CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
+                    CurrentGalleryCard.Image.protectionLevel = "protected";
+                }
+                CurrentGalleryCard.ConfigIcon();
+            }
             ImageDao.Put(CurrentGalleryCard.Image);
         }
 
@@ -333,19 +339,39 @@ namespace PolyPaint.Vues
 
         private void Search_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            GalleryCards.ForEach(card =>
+            List<GalleryCard> gallerycards = PublicImagesContainer.Children.Cast<GalleryCard>().ToList();
+            gallerycards.AddRange(MyImagesContainer.Children.Cast<GalleryCard>().ToList());
+            string filter = ((ComboBoxItem)SearchBy.SelectedValue).Content.ToString();
+            if (filter.Contains("author"))
             {
-               if (card.Image.authorName.Contains(Search.Text))
-               {
-                   card.Visibility = Visibility.Visible;
-               }
-               else
-               {
-                   card.Visibility = Visibility.Collapsed;
-               }
-               return;
-            });
-
+                gallerycards.ForEach(card =>
+                {
+                    if (card.Image.authorName.Contains(Search.Text))
+                    {
+                        card.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        card.Visibility = Visibility.Collapsed;
+                    }
+                    return;
+                });
+            }
+            else
+            {
+                gallerycards.ForEach(card =>
+                {
+                    if (card.Image.title.Contains(Search.Text))
+                    {
+                        card.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        card.Visibility = Visibility.Collapsed;
+                    }
+                    return;
+                });
+            }
         }
     }
 }
