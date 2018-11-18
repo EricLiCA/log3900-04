@@ -41,7 +41,6 @@ public struct UndoRedoManager {
             if (action.0 == "INSERTION"){
                 let uuid = ["uuid": action.4] as [String : Any]
                 NotificationCenter.default.post(name: .deletionUndoRedo, object: nil, userInfo: uuid)
-                //action.0 = "DELETION"
                 redoStack.push(action)
             }
                 
