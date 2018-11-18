@@ -8,6 +8,8 @@ export class ImageWithLikesAndComments {
 
     constructor(id: string) {
         this.id = id;
+        this.likes = [];
+        this.comments = [];
     }
 
     public loadComments(): Promise<ImageComment[]> {
@@ -25,7 +27,9 @@ export class ImageWithLikesAndComments {
         return new Promise<ImageLike[]>((resolve, reject) => {
             ImageLike.get(this.id).then(
                 (value: ImageLike[]) => {
-                    this.likes = value;
+                    if (value != undefined) {
+                        this.likes = value;
+                    }
                     resolve(value);
                 },
                 (rejectReason: any) => reject(rejectReason)
@@ -33,17 +37,20 @@ export class ImageWithLikesAndComments {
         });
     }
 
-    public async addLike(userId: string): Promise<void> {
+    public async addLike(userId: string): Promise<ImageLike> {
         const imageLike = await ImageLike.post(new ImageLike(this.id, userId));
+        console.log("here i am");
         if (imageLike != undefined) {
             this.likes.push(imageLike);
         }
+        return Promise.resolve(imageLike);
     }
 
-    public async removeLike(userId: string): Promise<void> {
+    public async removeLike(userId: string): Promise<ImageLike> {
         const imageLike = await ImageLike.delete(new ImageLike(this.id, userId));
         if (imageLike != undefined) {
             this.likes.splice(this.likes.findIndex(likeToRemove => likeToRemove.ImageId == imageLike.ImageId && likeToRemove.UserId == imageLike.UserId), 1);
         }
+        return Promise.resolve(imageLike);
     }
 }
