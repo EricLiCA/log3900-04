@@ -177,12 +177,20 @@ class DrawViewController: UIViewController {
         for line in self.lines {
             var hitPointTest = line.hitPointTest(touchPoint: self.firstTouch!)
             
-            if(!self.lineEditing && hitPointTest != -1) {
+            if(!self.lineEditing && hitPointTest != -1) { // editing point in line
                 self.pointIndexEditing = hitPointTest
                 self.lineIndexEdit = lineIndex
                 self.lineEditing = true
                 self.lineBeingEdited = line
                 line.selected = true
+                
+                if(hitPointTest == 0) {
+                    self.lineBeingEdited?.firstAnchorShapeId = nil
+                    self.lineBeingEdited?.firstAnchorShapeIndex = nil
+                } else if(hitPointTest == ((self.lineBeingEdited?.points.count)! - 1)) {
+                    self.lineBeingEdited?.secondAnchorShapeId = nil
+                    self.lineBeingEdited?.secondAnchorShapeIndex = nil
+                }
             } else if(self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
                 self.lineIndexEdit = nil
                 self.lineEditing = false
