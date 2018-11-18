@@ -21,11 +21,14 @@ namespace PolyPaint.Vues
     public partial class Gallery : Page
     {
         public GalleryCard CurrentGalleryCard { get; set; }
+        public ImagePreviewRoom ImagePreviewRoom { get; set; }
 
         public Gallery()
         {
             InitializeComponent();
             ImageView.Visibility = Visibility.Hidden;
+            ImagePreviewRoom = new ImagePreviewRoom(CommentsContainer);
+            DataContext = this;
             Load();
         }
 
@@ -114,57 +117,22 @@ namespace PolyPaint.Vues
             }
         }
 
-
-        public void LoadCurrentImageLikes(IRestResponse response)
+        public void CheckOrUncheckLikeButton()
         {
             LikeButton.IsChecked = false;
-            if (response.StatusCode == HttpStatusCode.OK)
+            for (int i =0; i < ImagePreviewRoom.Likes.Count; i++)
             {
-                JArray responseImageLikes = JArray.Parse(response.Content);
-                for (int i = 0; i < responseImageLikes.Count; i++)
+                if (ImagePreviewRoom.Likes[i].userId == ServerService.instance.user.id)
                 {
-                    dynamic data = JObject.Parse(responseImageLikes[i].ToString());
-                    if (data["userId"] == ServerService.instance.user.id)
-                    {
-                        LikeButton.IsChecked = true;
-                    }
-                }
-                ImageViewLikes.Text = responseImageLikes.Count.ToString();
-            }
-            else
-            {
-                ImageViewLikes.Text = "0";
-            }
-        }
-
-        public void LoadCurrentImageComments(IRestResponse response)
-        {
-            CommentsContainer.Children.Clear();
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                JArray responseImageComments = JArray.Parse(response.Content);
-                for (int i = 0; i < responseImageComments.Count; i++)
-                {
-                    dynamic data = JObject.Parse(responseImageComments[i].ToString());
-                    ImageComment imageComment = new ImageComment
-                    {
-                        imageId = data["imageId"],
-                        userId = data["userId"],
-                        comment = data["comment"],
-                        timestamp = data["timestamp"],
-                        userName = data["userName"]
-                    };
-                    GalleryComment galleryComment = new GalleryComment(imageComment);
-                    CommentsContainer.Children.Add(galleryComment);
+                    LikeButton.IsChecked = true;
                 }
             }
         }
-
 
         private void ViewButton_Click(object sender, EventArgs e)
         {
-            GalleryCard galleryCard = (GalleryCard)sender;
-            CurrentGalleryCard = galleryCard;
+
+            CurrentGalleryCard = (GalleryCard)sender;
             ImageView.Visibility = Visibility.Visible;
             ImageView.IsExpanded = true;
             ImageViewTitle.Text = CurrentGalleryCard.Image.title;
@@ -172,8 +140,10 @@ namespace PolyPaint.Vues
             Uri imageUri = new Uri(CurrentGalleryCard.Image.fullImageUrl);
             BitmapImage imageBitmap = new BitmapImage(imageUri);
             ImageViewPicture.Source = imageBitmap;
-            ImageLikeDao.Get(CurrentGalleryCard.Image.id);
-            ImageCommentDao.Get(CurrentGalleryCard.Image.id);
+
+            ImagePreviewRoom.ImageId = CurrentGalleryCard.Image.id;
+            ImagePreviewRoom.PreviewImage();
+
             if (!ServerService.instance.user.isGuest)
             {
                 if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
@@ -242,28 +212,11 @@ namespace PolyPaint.Vues
             };
             if ((bool)LikeButton.IsChecked)
             {
-                ImageLikeDao.Post(imageLike);
-                try
-                {
-                    ImageViewLikes.Text = (System.Convert.ToInt32(ImageViewLikes.Text) + 1).ToString();
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Cannot convert string to int");
-                }
-
+                ImagePreviewRoom.AddLike();
             }
             else
             {
-                ImageLikeDao.Delete(imageLike);
-                try
-                {
-                    ImageViewLikes.Text = (System.Convert.ToInt32(ImageViewLikes.Text) - 1).ToString();
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Cannot convert string to int");
-                }
+                ImagePreviewRoom.RemoveLike();
             }
         }
 
@@ -274,17 +227,8 @@ namespace PolyPaint.Vues
 
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
         {
-            ImageComment imageComment = new ImageComment
-            {
-                userId = ServerService.instance.user.id,
-                imageId = CurrentGalleryCard.Image.id,
-                comment = CurrentComment.Text,
-                userName = ServerService.instance.user.username,
-                timestamp = DateTime.Now
-            };
-            ImageCommentDao.Post(imageComment);
-            GalleryComment galleryComment = new GalleryComment(imageComment);
-            CommentsContainer.Children.Insert(0, galleryComment);
+            ImagePreviewRoom.AddComment(CurrentComment.Text);
+            CurrentComment.Text = "";
         }
 
         private void PasswordButton_Click(object sender, RoutedEventArgs e)

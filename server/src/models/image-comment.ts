@@ -13,8 +13,8 @@ export class ImageComment {
             return Promise.resolve(new ImageComment(
                 row.ImageId,
                 row.UserId,
-                row.Timestamp,
                 row.Comment,
+                row.Timestamp,
                 null
             ));
         } else {
@@ -30,8 +30,8 @@ export class ImageComment {
                 return new ImageComment(
                     row.ImageId,
                     row.UserId,
-                    row.Timestamp,
                     row.Comment,
+                    row.Timestamp,
                     row.Username,
                 );
             }));
@@ -43,10 +43,10 @@ export class ImageComment {
     public ImageId: string;
     public UserId: string;
     public Timestamp: Date;
-    public Comment: Date;
+    public Comment: string;
     public UserName: string;
 
-    public constructor(imageId: string, userId: string, timestamp: Date, comment: Date, userName: string) {
+    public constructor(imageId: string, userId: string, comment: string, timestamp?: Date, userName?: string) {
         this.ImageId = imageId;
         this.UserId = userId;
         this.Timestamp = timestamp;

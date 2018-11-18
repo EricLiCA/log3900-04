@@ -170,14 +170,13 @@
     <Compile Include="Convertisseurs\Convertisseurs.cs" />
     <Compile Include="DAO\FriendDao.cs" />
     <Compile Include="DAO\PendingFriendRequestDao.cs" />
-    <Compile Include="DAO\ImageCommentDao.cs" />
     <Compile Include="DAO\ImageDao.cs" />
-    <Compile Include="DAO\ImageLikeDao.cs" />
     <Compile Include="DAO\ShapeObjectDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Modeles\ChatModel.cs" />
     <Compile Include="Modeles\EditionSocket.cs" />
+    <Compile Include="Modeles\ImagePreviewRoom.cs" />
     <Compile Include="Modeles\ShapeLoader.cs" />
     <Compile Include="Modeles\ChatRoom.cs" />
     <Compile Include="Modeles\ChatUser.cs" />
