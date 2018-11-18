@@ -221,6 +221,7 @@ class BasicShapeView: UIView {
                     layer.fillColor = UIColor.green.cgColor
                     layer.strokeColor = UIColor.green.cgColor
                     self.touchAnchorPoint = true
+                    print("touched anchor")
                 }
                 
                 let userInfo = ["view": self, "point" : touches.first?.location(in: self.superview), "anchorNumber": numAnchor] as [String : Any]
@@ -228,6 +229,22 @@ class BasicShapeView: UIView {
             }
             numAnchor = numAnchor + 1
         }
+    }
+    
+    func isOnAnchorPoint(touchPoint: CGPoint) -> Int {
+        var numAnchor = 0
+        for layer in self.anchorPointsLayers {
+            let touchArea = CGRect(x: touchPoint.x, y: touchPoint.y, width: 50, height: 50)
+
+            if (layer.path?.contains(touchPoint))! {
+                layer.fillColor = UIColor.green.cgColor
+                layer.strokeColor = UIColor.green.cgColor
+                print("touched anchor")
+                return numAnchor
+            }
+            numAnchor = numAnchor + 1
+        }
+        return -1
     }
 }
 

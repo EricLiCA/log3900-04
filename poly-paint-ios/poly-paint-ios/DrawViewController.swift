@@ -275,12 +275,29 @@ class DrawViewController: UIViewController {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(self.lineEditing) {
+            // check if end point on anchor point (if so)
+            for (key, shape) in self.shapes {
+                var anchorPointTouched = shape.isOnAnchorPoint(touchPoint: (touches.first?.location(in: shape))!)
+                if(anchorPointTouched != -1) {
+                    if(lineBeingEdited?.firstAnchorShapeId == nil) {
+                        lineBeingEdited?.firstAnchorShapeIndex = anchorPointTouched
+                        lineBeingEdited?.firstAnchorShapeId = shape.uuid
+                    } else if(lineBeingEdited?.secondAnchorShapeId == nil) {
+                        lineBeingEdited?.secondAnchorShapeIndex = anchorPointTouched
+                        lineBeingEdited?.secondAnchorShapeId = shape.uuid
+                    }
+                } else {
+                    print("NO TOUCH")
+                }
+            }
             self.addedNewPointToLine = false
             self.lineBeingEdited?.selected = false
             self.lineBeingEdited = nil
             self.lineIndexEdit = nil
             self.lineEditing = false
             self.pointIndexEditing = -1
+            
+            
 
         } else if(isUserEditing && self.insideCanvas) {
             let touch = touches.first
