@@ -50,6 +50,21 @@ class DrawViewController: UIViewController {
     var addedNewPointToLine = false
     var pointIndexEditing: Int?
     
+    // options view
+    @IBOutlet weak var firstEndTextField: UITextField!
+    @IBOutlet weak var secondEndTextField: UITextField!
+    @IBOutlet weak var firstEndAssociationButton: UIButton!
+    @IBOutlet weak var firstEndAggregationButton: UIButton!
+    @IBOutlet weak var firstEndCompositionButton: UIButton!
+    @IBOutlet weak var firstEndInheritenceButton: UIButton!
+    @IBOutlet weak var firstEndArrowButton: UIButton!
+    @IBOutlet weak var secondEndAssociationButton: UIButton!
+    @IBOutlet weak var secondEndAggregationButton: UIButton!
+    @IBOutlet weak var secondEndCompositionButton: UIButton!
+    @IBOutlet weak var secondEndInheritenceButton: UIButton!
+    @IBOutlet weak var secondEndArrowButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drawingPlace.clipsToBounds = true

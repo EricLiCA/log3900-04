@@ -420,14 +420,6 @@
                                         </constraints>
                                         <state key="normal" title="Button" image="inh_left"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlJ-kb-eFI">
-                                        <rect key="frame" x="354" y="45" width="35" height="22"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="35" id="auc-XB-G7S"/>
-                                            <constraint firstAttribute="height" constant="22" id="zeO-AJ-dcP"/>
-                                        </constraints>
-                                        <state key="normal" title="Button" image="comp_left"/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Aw-Lo-mhy">
                                         <rect key="frame" x="406" y="45" width="35" height="22"/>
                                         <constraints>
@@ -436,17 +428,44 @@
                                         </constraints>
                                         <state key="normal" title="Button" image="inh_left"/>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlJ-kb-eFI">
+                                        <rect key="frame" x="354" y="45" width="35" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="auc-XB-G7S"/>
+                                            <constraint firstAttribute="height" constant="22" id="zeO-AJ-dcP"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="comp_left"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXH-qH-Lq4">
+                                        <rect key="frame" x="460" y="8" width="35" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="24X-py-ns3"/>
+                                            <constraint firstAttribute="height" constant="22" id="uof-M2-hBz"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="arrow"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tgy-PV-U5F">
+                                        <rect key="frame" x="460" y="45" width="35" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="22" id="sy8-pX-GTG"/>
+                                            <constraint firstAttribute="width" constant="35" id="xVA-ZZ-cQd"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="arrow"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="yCi-yh-RD9" firstAttribute="top" secondItem="JvF-UF-wmA" secondAttribute="bottom" constant="16" id="6Ey-G3-2c6"/>
+                                    <constraint firstItem="Tgy-PV-U5F" firstAttribute="leading" secondItem="5Aw-Lo-mhy" secondAttribute="trailing" constant="19" id="94M-7e-wDy"/>
                                     <constraint firstItem="ewn-aM-IUw" firstAttribute="leading" secondItem="JvF-UF-wmA" secondAttribute="trailing" constant="13" id="94q-1N-6mP"/>
                                     <constraint firstItem="yCi-yh-RD9" firstAttribute="leading" secondItem="F0K-RQ-BuV" secondAttribute="trailing" constant="20" id="B1r-Xu-x3b"/>
+                                    <constraint firstItem="HXH-qH-Lq4" firstAttribute="leading" secondItem="Zyh-ht-ZlW" secondAttribute="trailing" constant="19" id="P2j-7b-4l4"/>
                                     <constraint firstItem="SBJ-bW-OHi" firstAttribute="top" secondItem="5kG-lC-orU" secondAttribute="top" constant="4" id="PP3-Ld-HNW"/>
                                     <constraint firstItem="SBJ-bW-OHi" firstAttribute="leading" secondItem="2qW-Ya-4M2" secondAttribute="trailing" constant="33" id="Qtd-Dl-d6X"/>
                                     <constraint firstItem="5Aw-Lo-mhy" firstAttribute="leading" secondItem="xlJ-kb-eFI" secondAttribute="trailing" constant="17" id="RLL-Hs-W43"/>
                                     <constraint firstItem="5Aw-Lo-mhy" firstAttribute="top" secondItem="Zyh-ht-ZlW" secondAttribute="bottom" constant="15" id="Rq1-L7-ufj"/>
                                     <constraint firstItem="Wv8-CC-xhh" firstAttribute="leading" secondItem="ewn-aM-IUw" secondAttribute="trailing" constant="16" id="Tvs-cA-uco"/>
+                                    <constraint firstItem="HXH-qH-Lq4" firstAttribute="top" secondItem="5kG-lC-orU" secondAttribute="top" constant="8" id="VEF-vI-1NY"/>
                                     <constraint firstItem="Zyh-ht-ZlW" firstAttribute="leading" secondItem="Wv8-CC-xhh" secondAttribute="trailing" constant="17" id="WMQ-Y0-Xhq"/>
                                     <constraint firstItem="F0K-RQ-BuV" firstAttribute="top" secondItem="SBJ-bW-OHi" secondAttribute="bottom" constant="7" id="Xlt-Je-ToW"/>
                                     <constraint firstItem="xlJ-kb-eFI" firstAttribute="leading" secondItem="C12-bn-SZZ" secondAttribute="trailing" constant="16" id="brn-VL-IlD"/>
@@ -456,6 +475,7 @@
                                     <constraint firstItem="JvF-UF-wmA" firstAttribute="leading" secondItem="SBJ-bW-OHi" secondAttribute="trailing" constant="20" id="iPZ-h8-Qzk"/>
                                     <constraint firstItem="ewn-aM-IUw" firstAttribute="top" secondItem="5kG-lC-orU" secondAttribute="top" constant="8" id="jQP-3N-IC9"/>
                                     <constraint firstItem="F0K-RQ-BuV" firstAttribute="leading" secondItem="RyY-d3-wCo" secondAttribute="trailing" constant="8" id="kmx-N0-eZ9"/>
+                                    <constraint firstItem="Tgy-PV-U5F" firstAttribute="top" secondItem="HXH-qH-Lq4" secondAttribute="bottom" constant="15" id="nWR-n5-CIV"/>
                                     <constraint firstItem="2qW-Ya-4M2" firstAttribute="leading" secondItem="5kG-lC-orU" secondAttribute="leading" id="nwe-iT-TTg"/>
                                     <constraint firstItem="xlJ-kb-eFI" firstAttribute="top" secondItem="Wv8-CC-xhh" secondAttribute="bottom" constant="16" id="s06-ey-ihk"/>
                                     <constraint firstItem="Zyh-ht-ZlW" firstAttribute="top" secondItem="5kG-lC-orU" secondAttribute="top" constant="8" id="v23-3F-ORy"/>
@@ -507,12 +527,24 @@
                         <outlet property="colorButton" destination="onF-ce-uHG" id="hCW-DP-93z"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="editButton" destination="vVf-wi-6Rz" id="Y8R-iC-UUg"/>
+                        <outlet property="firstEndAggregationButton" destination="ewn-aM-IUw" id="RY3-I7-oah"/>
+                        <outlet property="firstEndArrowButton" destination="HXH-qH-Lq4" id="gjb-AE-t19"/>
+                        <outlet property="firstEndAssociationButton" destination="JvF-UF-wmA" id="pYo-vH-NnN"/>
+                        <outlet property="firstEndCompositionButton" destination="Wv8-CC-xhh" id="hEe-L0-m6W"/>
+                        <outlet property="firstEndInheritenceButton" destination="Zyh-ht-ZlW" id="jEe-yy-aqk"/>
+                        <outlet property="firstEndTextField" destination="SBJ-bW-OHi" id="eNz-1K-brF"/>
                         <outlet property="optionsView" destination="5kG-lC-orU" id="6uY-R2-Ob0"/>
+                        <outlet property="secondEndAggregationButton" destination="C12-bn-SZZ" id="UxQ-3B-1y8"/>
+                        <outlet property="secondEndArrowButton" destination="Tgy-PV-U5F" id="391-Hg-Wxg"/>
+                        <outlet property="secondEndAssociationButton" destination="yCi-yh-RD9" id="ONu-5F-6Oi"/>
+                        <outlet property="secondEndCompositionButton" destination="xlJ-kb-eFI" id="VB2-Rk-nkf"/>
+                        <outlet property="secondEndInheritenceButton" destination="5Aw-Lo-mhy" id="xHz-UA-DQ4"/>
+                        <outlet property="secondEndTextField" destination="F0K-RQ-BuV" id="uXg-Ud-uqN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="912.5" y="-891.21093749999989"/>
+            <point key="canvasLocation" x="812.5" y="-963.28124999999989"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Es3-Na-eqb">
@@ -2679,6 +2711,7 @@
         <image name="SignUp" width="22" height="22"/>
         <image name="Unfriend" width="50" height="50"/>
         <image name="agg_left" width="50" height="19"/>
+        <image name="arrow" width="86" height="38"/>
         <image name="association" width="36" height="20"/>
         <image name="comp_left" width="41" height="20"/>
         <image name="inh_left" width="40" height="22"/>
