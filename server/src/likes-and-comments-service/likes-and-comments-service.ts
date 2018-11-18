@@ -60,14 +60,20 @@ export class LikesAndCommentsService {
 
         user.socket.on('addLike', async (userId: string) => {
             const previewedImage = await this.getUserPreviwedImage(user.socket.id);
-            await previewedImage.addLike(userId);
-            user.socket.to(this.users.get(user)).emit('addLike', previewedImage.likes);
+            const addedLike = await previewedImage.addLike(userId);
+            if (addedLike != undefined) {
+                user.socket.emit('addLike', addedLike);
+                user.socket.to(this.users.get(user)).emit('addLike', addedLike);
+            }
         });
 
         user.socket.on('removeLike', async (userId: string) => {
             const previewedImage = await this.getUserPreviwedImage(user.socket.id);
-            await previewedImage.removeLike(userId);
-            user.socket.to(this.users.get(user)).emit('removeLike', previewedImage.likes);
+            const removedLike = await previewedImage.removeLike(userId);
+            if (removedLike != undefined) {
+                user.socket.emit('removeLike', removedLike);
+                user.socket.to(this.users.get(user)).emit('removeLike', removedLike);
+            }
         });
     }
 
