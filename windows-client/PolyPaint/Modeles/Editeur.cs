@@ -324,7 +324,7 @@ namespace PolyPaint.Modeles
         }
 
         // On retire le trait le plus récent de la surface de dessin et on le place sur une pile.
-        public void Empiler(Stroke o)
+        public void Empiler(object o)
         {
             try
             {
@@ -481,7 +481,7 @@ namespace PolyPaint.Modeles
             traits.Clear();
             traitsRetires.Clear();
             
-            for (int i = 0; i < shapeObjects.Count; i++)
+            for (int i = 0; i < shapeObjects?.Count; i++)
             {
                 this.traits.Add(SerializationHelper.stringToStroke((JObject)shapeObjects[i], this.traits));
             }

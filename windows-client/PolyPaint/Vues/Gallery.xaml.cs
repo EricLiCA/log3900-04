@@ -269,7 +269,15 @@ namespace PolyPaint.Vues
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
+            CreateImageContainer.Visibility = Visibility.Collapsed;
+            ChangePasswordContainer.Visibility = Visibility.Collapsed;
+            AccessImageContainer.Visibility = Visibility.Visible;
+            ImageToAccessPassword.Text = "";
+            WrongPasswordMessage.IsActive = false;
+            if (CurrentGalleryCard.Image.protectionLevel != "protected" || CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
+            {
+                ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
+            }
         }
 
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
@@ -291,6 +299,7 @@ namespace PolyPaint.Vues
         {
             CreateImageContainer.Visibility = Visibility.Collapsed;
             ChangePasswordContainer.Visibility = Visibility.Visible;
+            AccessImageContainer.Visibility = Visibility.Collapsed;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
         }
 
@@ -298,6 +307,7 @@ namespace PolyPaint.Vues
         {
             CreateImageContainer.Visibility = Visibility.Visible;
             ChangePasswordContainer.Visibility = Visibility.Collapsed;
+            AccessImageContainer.Visibility = Visibility.Collapsed;
             ImageTitle.Text = "";
             ImagePassword.Password = "";
             PrivateProtectionLevel.IsChecked = true;
@@ -325,16 +335,18 @@ namespace PolyPaint.Vues
         private void CreateImageClick(object sender, RoutedEventArgs e)
         {
             string protectionLevel;
-            
+
             if ((bool)PrivateProtectionLevel.IsChecked)
             {
                 protectionLevel = "private";
-            } else
+            }
+            else
             {
                 if (ImagePassword.Password.Length > 0)
                 {
                     protectionLevel = "protected";
-                } else
+                }
+                else
                 {
                     protectionLevel = "public";
                 }
@@ -352,8 +364,19 @@ namespace PolyPaint.Vues
         }
 
 
+
         #endregion
 
-        
+        private void AccessImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ImageToAccessPassword.Text != CurrentGalleryCard.Image.password)
+            {
+                WrongPasswordMessage.IsActive = true;
+            }
+            else
+            {
+                ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
+            }
+        }
     }
 }
