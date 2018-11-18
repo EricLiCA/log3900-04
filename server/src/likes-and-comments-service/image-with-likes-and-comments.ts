@@ -16,7 +16,11 @@ export class ImageWithLikesAndComments {
         return new Promise<ImageComment[]>((resolve, reject) => {
             ImageComment.get(this.id).then(
                 (value: ImageComment[]) => {
-                    this.comments = value;
+                    if (value != undefined) {
+                        this.comments = value;
+                    }
+                    resolve(value);
+
                 },
                 (rejectReason: any) => reject(rejectReason)
             );
@@ -37,9 +41,16 @@ export class ImageWithLikesAndComments {
         });
     }
 
+    public async addComment(userId: string, comment: string): Promise<ImageComment> {
+        const imageComment = await ImageComment.post(new ImageComment(this.id, userId, comment));
+        if (imageComment != undefined) {
+            this.comments.push(imageComment);
+        }
+        return Promise.resolve(imageComment);
+    }
+
     public async addLike(userId: string): Promise<ImageLike> {
         const imageLike = await ImageLike.post(new ImageLike(this.id, userId));
-        console.log("here i am");
         if (imageLike != undefined) {
             this.likes.push(imageLike);
         }

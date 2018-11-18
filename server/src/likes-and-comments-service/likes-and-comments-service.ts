@@ -32,7 +32,7 @@ export class LikesAndCommentsService {
         if (previewedImage == undefined) {
             previewedImage = new ImageWithLikesAndComments(imageId);
             this.images.push(previewedImage);
-            await previewedImage.loadLikes();
+            await Promise.all([previewedImage.loadLikes(), previewedImage.loadComments()]);
         }
 
         return previewedImage;
@@ -56,6 +56,16 @@ export class LikesAndCommentsService {
             const previewedImage = await this.getUserPreviwedImage(user.socket.id);
             user.socket.leave(previewedImage.id);
             this.users.delete(user);
+        });
+
+        user.socket.on('addComment', async (userId: string, comment: string, userName: string) => {
+            const previewedImage = await this.getUserPreviwedImage(user.socket.id);
+            const addedComment = await previewedImage.addComment(userId, comment);
+            addedComment.UserName = userName;
+            if (addedComment != undefined) {
+                user.socket.emit('addComment', addedComment);
+                user.socket.to(this.users.get(user)).emit('addComment', addedComment);
+            }
         });
 
         user.socket.on('addLike', async (userId: string) => {
