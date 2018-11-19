@@ -173,7 +173,7 @@ namespace PolyPaint.Vues
                 bitmap.EndInit();
                 AvatarImage.Source = bitmap;
 
-                ServerService.instance.S3Communication.UploadFileAsync(avatarLocation);
+                ServerService.instance.S3Communication.UploadProfileImageAsync(avatarLocation);
 
                 Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
                 ServerService.instance.user.profileImage = avatarImageToUploadToSQL;

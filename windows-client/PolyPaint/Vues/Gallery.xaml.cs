@@ -2,6 +2,7 @@ using Newtonsoft.Json.Linq;
 using PolyPaint.DAO;
 using PolyPaint.Modeles;
 using PolyPaint.Services;
+using PolyPaint.Utilitaires;
 using RestSharp;
 using System;
 using System.Net;
@@ -62,8 +63,8 @@ namespace PolyPaint.Vues
                     title = data["title"],
                     protectionLevel = data["protectionLevel"],
                     password = data["password"],
-                    thumbnailUrl = data["thumbnailUrl"],
-                    fullImageUrl = data["fullImageUrl"],
+                    thumbnailUrl = ServerService.instance.isOffline() ? data["thumbnailUrl"] : Settings.URL_TO_GALLERY_IMAGES + data["id"] + ".png",
+                    fullImageUrl = ServerService.instance.isOffline() ? data["thumbnailUrl"] : Settings.URL_TO_GALLERY_IMAGES + data["id"] + ".png",
                 };
 
 
@@ -89,8 +90,8 @@ namespace PolyPaint.Vues
                         title = data["title"],
                         protectionLevel = data["protectionLevel"],
                         password = data["password"],
-                        thumbnailUrl = data["thumbnailUrl"],
-                        fullImageUrl = data["fullImageUrl"],
+                        thumbnailUrl = Settings.URL_TO_GALLERY_IMAGES + data["id"] + ".png",
+                        fullImageUrl = Settings.URL_TO_GALLERY_IMAGES + data["id"] + ".png",
                     };
 
                     GalleryCard galleryCard = new GalleryCard(image);

@@ -7,6 +7,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -405,6 +406,13 @@ namespace PolyPaint.Modeles
             }
             else
             {
+                string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
+                Directory.CreateDirectory(path2String);
+                string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
+                File.WriteAllBytes(file, obj);
+
+                var id = ServerService.instance.currentImageId;
+                ServerService.instance.S3Communication.UploadImageAsync(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews", id + ".png"), id + ".png");
 
             }
         }

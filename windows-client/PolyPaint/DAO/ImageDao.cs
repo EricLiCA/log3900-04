@@ -66,6 +66,8 @@ namespace PolyPaint.DAO
                 return;
             }
 
+            imageToUpdate.fullImageUrl = Settings.URL_TO_GALLERY_IMAGES + imageToUpdate.id + ".png";
+            imageToUpdate.thumbnailUrl = Settings.URL_TO_GALLERY_IMAGES + imageToUpdate.id + ".png";
             var request = new RestRequest(Settings.API_VERSION + Settings.IMAGES_PATH + "/" + imageToUpdate.id, Method.PUT);
             request.AddJsonBody(imageToUpdate);
             ServerService.instance.server.ExecuteAsync(request, response =>
@@ -96,6 +98,10 @@ namespace PolyPaint.DAO
                     {
                         dynamic data = JObject.Parse(response.Content);
                         ((MainWindow)Application.Current.MainWindow).LoadImage((string)data["id"]);
+
+                        newImage.id = (string)data["id"];
+
+                        ImageDao.Put(newImage);
                     }
                     else
                     {
