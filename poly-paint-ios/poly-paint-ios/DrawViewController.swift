@@ -198,7 +198,7 @@ class DrawViewController: UIViewController {
                 self.lineIndexEdit = lineIndex
                 self.lineEditing = true
                 self.lineBeingEdited = line
-                line.selected = true
+                line.select()
                 
                 if(hitPointTest == 0) {
                     self.lineBeingEdited?.firstAnchorShapeId = nil
@@ -208,6 +208,7 @@ class DrawViewController: UIViewController {
                     self.lineBeingEdited?.secondAnchorShapeIndex = nil
                 }
             } else if(self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
+                self.lineBeingEdited?.unselect()
                 self.lineIndexEdit = nil
                 self.lineEditing = false
                 self.pointIndexEditing = -1
@@ -215,8 +216,10 @@ class DrawViewController: UIViewController {
                 self.lineIndexEdit = lineIndex
                 self.lineEditing = true
                 self.lineBeingEdited = line
-                line.selected = true
+                line.select()
                 self.pointIndexEditing = -1
+            } else {
+                line.unselect()
             }
             lineIndex += 1
         }
@@ -307,7 +310,7 @@ class DrawViewController: UIViewController {
                 }
             }
             self.addedNewPointToLine = false
-            self.lineBeingEdited?.selected = false
+            //self.lineBeingEdited?.unselect()
             self.lineBeingEdited = nil
             self.lineIndexEdit = nil
             self.lineEditing = false
@@ -562,7 +565,7 @@ class DrawViewController: UIViewController {
         let layer = CAShapeLayer()
         layer.path = bezier.cgPath
         layer.borderWidth = 2
-        layer.strokeColor = UIColor.black.cgColor
+        layer.strokeColor = UIColor.green.cgColor
         line.layer = layer
         redrawLayers()
     }

@@ -45,7 +45,7 @@ class Line {
                 if(distanceToSegment > 15) {
                     //return false
                 } else if(distanceToSegment < 15) {
-                    if(self.selected) {
+                    /*if(self.selected) {
                         self.hitStartPoint = nil
                         self.hitEndPoint = nil
                         //self.selected = false
@@ -55,8 +55,11 @@ class Line {
                         self.hitEndPoint = index + 1
                         //self.selected = true
                         self.layer?.strokeColor = UIColor.green.cgColor
-                    }
-                    
+                    }*/
+                    self.hitStartPoint = index
+                    self.hitEndPoint = index + 1
+                    //self.selected = true
+                    self.layer?.strokeColor = UIColor.green.cgColor
                     return true
                 }
             }
@@ -121,6 +124,18 @@ class Line {
     func addPoint(point: CGPoint) {
         self.points.insert(point, at: self.hitStartPoint! + 1)
         self.hitEndPoint = self.hitEndPoint! + 1
+    }
+    
+    func unselect() {
+        self.hitStartPoint = nil
+        self.hitEndPoint = nil
+        self.selected = false
+        self.layer?.strokeColor = UIColor.black.cgColor
+    }
+    
+    func select() {
+        self.selected = true
+        self.layer?.strokeColor = UIColor.green.cgColor
     }
     
     
