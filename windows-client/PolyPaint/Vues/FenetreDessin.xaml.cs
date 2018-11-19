@@ -185,6 +185,7 @@ namespace PolyPaint
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            this.ToolSelection.SelectedIndex = 0;
             ((VueModele)this.DataContext).Traits.ToList().ForEach(temp =>
             {
                 if (((CustomStroke)temp).isSelected()) ((CustomStroke)temp).Unselect();
@@ -208,7 +209,6 @@ namespace PolyPaint
             {
                 pngEncoder.Save(ms);
                 ((VueModele)this.DataContext).Save.Execute(ms.ToArray());
-                //File.WriteAllBytes("test.png", ms.ToArray());
             }
 
             //StrokeCollection strokes = ((VueModele)this.DataContext).Traits;
