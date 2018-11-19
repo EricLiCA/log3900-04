@@ -2,7 +2,7 @@ import * as express from 'express';
 import { PostgresDatabase } from '../postgres-database';
 import { DAO } from './dao';
 
-const RANDOM_IMAGE: string = 'https://picsum.photos/300/400/?random';
+const RANDOM_IMAGE: string = 'https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg';
 
 export class ImagesRoute implements DAO {
 
@@ -23,7 +23,7 @@ export class ImagesRoute implements DAO {
                 }));
                 return;
             }
-            res.sendStatus(404); // Not found
+            res.send([]);
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
@@ -47,7 +47,7 @@ export class ImagesRoute implements DAO {
                 }));
                 return;
             }
-            res.sendStatus(404); // Not found
+            res.send([]);
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
@@ -71,7 +71,7 @@ export class ImagesRoute implements DAO {
                 }));
                 return;
             }
-            res.sendStatus(404); // Not found
+            res.send([]);
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request

@@ -14,6 +14,7 @@ import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
 import { ChatRooms } from './routes/chat-rooms';
 import { ShapeObjectRoute } from './routes/shape-objects';
+import { OfflineUpload } from './routes/offline-upload';
 
 export class Application {
     /**
@@ -69,6 +70,7 @@ export class Application {
         const imageComments : ImageCommentsRoute = new ImageCommentsRoute();
         const chatRooms : ChatRooms = new ChatRooms();
         const shapeObjectRoute: ShapeObjectRoute = new ShapeObjectRoute();
+        const offlineUpload: OfflineUpload = new OfflineUpload();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));
@@ -128,6 +130,8 @@ export class Application {
         router.put('/shapeObject/:imageId', shapeObjectRoute.update.bind(shapeObjectRoute.update));
         router.delete('/shapeObject/:id', shapeObjectRoute.delete.bind(shapeObjectRoute.delete));
 
+        // Offline Upload
+        router.put('/offlineupload/:id', offlineUpload.put.bind(offlineUpload.put));
 
         // use router middleware
         this.app.use('/v2', router);
