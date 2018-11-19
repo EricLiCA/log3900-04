@@ -212,56 +212,63 @@ class DrawViewController: UIViewController {
         
         // Shape Editing
         if(isUserEditingShape && self.insideCanvas) {
-            // erase sublayers used for drawing
-            
-            if(self.drawingPlace.layer.sublayers != nil) {
+            if(self.drawingPlace.layer.sublayers != nil) { // redraw layers
                 self.redrawLayers()
             }
             
             for touch in touches {
-                secondTouch = touch.location(in: drawingPlace)
+                self.secondTouch = touch.location(in: drawingPlace)
                 
-                if(self.currentContext == nil) {
-                    UIGraphicsBeginImageContext(drawingPlace.frame.size)
-                    self.currentContext = UIGraphicsGetCurrentContext()
-                } else {
-                    self.currentContext?.clear(CGRect(x: 0, y: 0, width: drawingPlace.frame.width, height: drawingPlace.frame.height))
-                }
+                // Prep context for graphics
+                self.setContext()
                 
                 var bezier = UIBezierPath()
                 switch self.currentShape {
                 case .Rectangle:
-                    bezier = self.drawRectangle(startPoint: firstTouch!, secondPoint: secondTouch!)
+                    bezier = self.drawRectangle(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
                 case .Ellipse:
-                    bezier = self.drawEllipse(startPoint: firstTouch!, secondPoint: secondTouch!)
+                    bezier = self.drawEllipse(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
                 case .Triangle:
-                    bezier = self.drawTriangle(startPoint: firstTouch!, secondPoint: secondTouch!)
+                    bezier = self.drawTriangle(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
                 case .Line:
                     bezier.move(to: self.firstTouch!)
-                    bezier.addLine(to: secondTouch!)
+                    bezier.addLine(to: self.secondTouch!)
                 case .None:
                     print("nothing")
                 }
                 
-               // self.selectedColor.setFill()
-                self.currentContext?.setLineWidth(1)
-                self.currentBezierPath = bezier
-                self.currentBezierPath?.fill()
-                self.currentBezierPath?.stroke()
-                self.currentContext?.addPath(bezier.cgPath)
-                self.currentContext?.strokePath()
-                let shape = CAShapeLayer()
-                shape.frame = (self.drawingPlace.bounds)
-                shape.path = self.currentBezierPath?.cgPath;
-                shape.strokeColor = UIColor.black.cgColor
-                shape.fillColor = self.selectedColor.cgColor
-                
-                
-                self.drawingPlace.layer.addSublayer(shape)
-                self.currentContext?.addPath((self.currentBezierPath?.cgPath)!)
+                self.addCurrentBezierPathToContext(bezier: bezier)
+                self.addShapeLayer()
             }
         }
-        
+    }
+    
+    func addShapeLayer() {
+        let shape = CAShapeLayer()
+        shape.frame = (self.drawingPlace.bounds)
+        shape.path = self.currentBezierPath?.cgPath;
+        shape.strokeColor = UIColor.black.cgColor
+        shape.fillColor = self.selectedColor.cgColor
+        self.drawingPlace.layer.addSublayer(shape)
+    }
+    
+    func setContext() {
+        if(self.currentContext == nil) {
+            UIGraphicsBeginImageContext(drawingPlace.frame.size)
+            self.currentContext = UIGraphicsGetCurrentContext()
+        } else {
+            self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
+        }
+    }
+    
+    func addCurrentBezierPathToContext(bezier: UIBezierPath) {
+        self.currentContext?.setLineWidth(1)
+        self.currentContext?.addPath(bezier.cgPath)
+        self.currentContext?.strokePath()
+        self.currentBezierPath = bezier
+        self.currentBezierPath?.fill()
+        self.currentBezierPath?.stroke()
+        self.currentContext?.addPath((self.currentBezierPath?.cgPath)!)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
