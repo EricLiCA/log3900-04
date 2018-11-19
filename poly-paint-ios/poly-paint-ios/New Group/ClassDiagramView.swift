@@ -116,6 +116,30 @@ class ClassDiagramView: BasicShapeView {
             return CGPoint(x: 0, y: 0)
         }
     }
-
+    
+    override func toShapeObject() -> Data? {
+        
+        let shape: [String: Any] = [
+            "Content": self.text,
+            "id": self.uuid,
+            "imageid": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "shapetype": self.shapeType!,
+            "index": -1,
+            "shapeinfo": [
+                "Center": [
+                    "X": self.center.x,
+                    "Y": self.center.y
+                ],
+                "Width": self.frame.width,
+                "Height": self.frame.height,
+                "Color": self.color?.hexString
+            ]
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+        return jsonData;
+        
+    }
+    
 }
 
