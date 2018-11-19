@@ -38,27 +38,28 @@
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Name="ChangePasswordContainer">
-                    <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Top" HorizontalAlignment="Center"> Add Password</TextBlock>
+                <StackPanel Name="EditImageInformationsContainer">
+                    <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Top" HorizontalAlignment="Center"> Manage image informations</TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="4,10,4,4">
+                        <materialDesign:PackIcon Kind="Image" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
+                        <TextBox x:Name="CurrentImageTitle" materialDesign:HintAssist.Hint="Image title*" Width="300"/>
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="4,10,4,4">
                         <materialDesign:PackIcon Kind="Key" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
-                        <TextBox x:Name="CurrentImagePassword" materialDesign:HintAssist.Hint="Password*" Width="300"/>
+                        <TextBox x:Name="CurrentImagePassword" materialDesign:HintAssist.Hint="Password" Width="300"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <Button Name="AddPasswordButton" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="AddPasswordButton_Click" ToolTip="Apply new password">
+                        <Button Name="EditImageInformationsButton" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="EditImageInformationsButton_Click" ToolTip="Apply modiciations">
                             Accept
                             <Button.Style>
                                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text.Length, ElementName=CurrentImagePassword, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                        <DataTrigger Binding="{Binding Text.Length, ElementName=CurrentImageTitle, UpdateSourceTrigger=PropertyChanged}" Value="0">
                                             <Setter Property="IsEnabled" Value="False"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
-                        </Button>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}" IsDefault="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand" Click="RemovePasswordButton_Click" ToolTip="Remove existing password">
-                            Remove
                         </Button>
                         <Button Style="{StaticResource MaterialDesignFlatButton}" IsCancel="True" Margin="0 8 8 0" Command="materialDesign:DialogHost.CloseDialogCommand">
                             Cancel
@@ -120,22 +121,18 @@
                     </TextBlock>
                 </Expander.Header>
                 <DockPanel Width="676">
-                    <Grid DockPanel.Dock="Top" Height="438">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="269" />
-                            <RowDefinition Height="0*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Image  x:Name="ImageViewPicture" Stretch="UniformToFill" Margin="1,0,0,286.92" Grid.RowSpan="3" />
-                        <StackPanel Grid.Row="2" Margin="8,114,167,241.92" >
-                            <TextBlock x:Name="ImageViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <StackPanel DockPanel.Dock="Top" Height="620">
+                        <Image  x:Name="ImageViewPicture" Height="550" Width="676"/>
+                        <StackPanel Grid.Row="2" >
+                            <TextBlock x:Name="ImageViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" TextTrimming="WordEllipsis"/>
+                            <TextBlock x:Name="ImageViewAuthor" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF7C7C7C" TextTrimming="WordEllipsis"/>
                         </StackPanel>
-                        <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="0,114,8,241.92">
+                        <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="0,-15,0,0">
                             <Button x:Name="EditButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Edit image" Margin="0,0,10,0" Click="EditButton_Click" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
                                 <materialDesign:PackIcon  Kind="Pencil" Height="24" Width="24" />
                             </Button>
-                            <Button x:Name="PasswordButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Manage image password" Margin="0,0,10,0" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="PasswordButton_Click">
-                                <materialDesign:PackIcon  Kind="Key" Height="24" Width="24" />
+                            <Button x:Name="ImageInformationsButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Manage image informations" Margin="0,0,10,0" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="ImageInformationsButton_Click">
+                                <materialDesign:PackIcon  Kind="InformationOutline" Height="24" Width="24" />
                             </Button>
 
                             <ToggleButton x:Name="LockButton" Width="40" Height="40" Margin="0,0,10,0" Click="LockButton_Click">
@@ -170,7 +167,7 @@
                             </ToggleButton>
                             <TextBlock x:Name="ImageViewLikes" Text="{Binding ImagePreviewRoom.Likes.Count}"/>
                         </StackPanel>
-                    </Grid>
+                    </StackPanel>
                     <ScrollViewer Grid.Row="3" Margin="0" DockPanel.Dock="Top">
                         <GroupBox x:Name="groupBox" Header="Comments" Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0" Margin="16,0,0,0">
                             <StackPanel>
@@ -187,9 +184,21 @@
             </Expander>
             <ScrollViewer>
                 <StackPanel>
-                    <Button Name="AddImageButton"  Style="{StaticResource MaterialDesignFloatingActionDarkButton}" ToolTip="Add a new image" HorizontalAlignment="Right" VerticalAlignment="Top" Click="AddImageButton_Click" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                    <Button Margin="0,5,5,-40"  Name="AddImageButton"  Style="{StaticResource MaterialDesignFloatingActionDarkButton}" ToolTip="Add a new image" HorizontalAlignment="Right" VerticalAlignment="Top" Click="AddImageButton_Click" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
                         <materialDesign:PackIcon Kind="ImagePlus" Height="24"  Width="24" />
                     </Button>
+                    <StackPanel Margin="10,10,0,10" Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Magnify" Foreground="{Binding ElementName=Sea, Path=BorderBrush}" Margin="0,0,5,0" />
+                        <TextBox x:Name="Search" materialDesign:HintAssist.Hint="Search" Width="300" KeyUp="Search_KeyUp"/>
+                        <ComboBox materialDesign:HintAssist.Hint="SearchBy" Name="SearchBy">
+                            <ComboBoxItem IsSelected="True">
+                                Search by author
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                Search by image name
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
                     <GroupBox Name="MyImagesGroupBox" Header="My Images"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
