@@ -14,8 +14,12 @@ class DrawingSocketManager {
     var socketIOClient: SocketIOClient = ChatModel.instance.socketIOClient
     
     public func addShape(shape: BasicShapeView) {
-        let jsonData = (shape.toShapeObject())
-        socketIOClient.emit("addStroke", jsonData!);
+        print("YOOOOOOOOOOO")
+        print(shape.toShapeObject()!)
+        if let JSONString = String(data: shape.toShapeObject()!, encoding: String.Encoding.utf8) {
+            print(JSONString)
+        }
+        socketIOClient.emit("addStroke", shape.toShapeObject()!);
     }
     
     public func removeShape(shape: BasicShapeView) {
