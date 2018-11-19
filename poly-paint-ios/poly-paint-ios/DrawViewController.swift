@@ -556,7 +556,6 @@ class DrawViewController: UIViewController {
     }
     
     func drawLine(line: Line) {
-        print("called draw line")
         var bezier = UIBezierPath()
         for (index, point) in line.points.enumerated() {
             if(index < line.points.count - 1) {
