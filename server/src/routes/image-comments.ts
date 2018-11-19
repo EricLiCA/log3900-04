@@ -17,6 +17,7 @@ export class ImageCommentsRoute {
                         userName: row.Username,
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -41,6 +42,7 @@ export class ImageCommentsRoute {
                     timestamp: result.Timestamp,
                     comment: result.Comment,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -60,6 +62,7 @@ export class ImageCommentsRoute {
                     timestamp: result.Timestamp,
                     comment: result.Comment,
                 });
+                return;
             }
             res.sendStatus(404);
         })

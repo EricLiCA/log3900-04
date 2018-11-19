@@ -12,6 +12,7 @@ namespace PolyPaint.Services
     class MessagingViewManager
     {
         private static MessagingViewManager _instance;
+
         public static MessagingViewManager instance
         {
             get
@@ -24,11 +25,13 @@ namespace PolyPaint.Services
             }
         }
 
-        public Page LargeMessagingView { get; set; }
+        public MessagingWindow LargeMessagingView { get; set; }
+        public MessagingWindowOutside DetachedMessagingView { get; set; }
 
         public MessagingViewManager()
         {
             MessagingViewModel viewModel = new MessagingViewModel();
+            this.DetachedMessagingView = new MessagingWindowOutside(viewModel);
             this.LargeMessagingView = new MessagingWindow(viewModel);
         }
     }

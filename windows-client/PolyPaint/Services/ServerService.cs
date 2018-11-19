@@ -28,5 +28,6 @@ namespace PolyPaint.Services
         public Socket Socket { get; set; }
         public User user { get; set; }
         public S3Communication S3Communication { get; set; }
+        public string currentImageId { get; set; }
     }
 }

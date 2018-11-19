@@ -22,6 +22,16 @@ namespace PolyPaint.Modeles.Strokes
             };
         }
 
+        public UseCaseStroke(StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(pts, strokes)
+        {
+            this.textContent = Content;
+        }
+
+        public UseCaseStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, List<string> Content) : base(id, index, pts, strokes, Colors.White)
+        {
+            this.textContent = Content;
+        }
+
         public string GetText()
         {
             return textContent.Aggregate((a, b) => a + "\r\n" + b);
@@ -31,6 +41,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.textContent = text.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
@@ -63,21 +74,18 @@ namespace PolyPaint.Modeles.Strokes
             drawingContext.Pop();
         }
 
-        public override string toJson()
-        {
-            SerializedTextableShape toSend = new SerializedTextableShape()
-            {
-                Id = this.Id,
-                Type = this.StrokeType(),
-                Index = -1,
-                Center = this.Center,
-                Width = this.Width,
-                Height = this.Height,
-                Content = this.textContent
-            };
-            return JsonConvert.SerializeObject(toSend);
-        }
-
         public override StrokeType StrokeType() => Strokes.StrokeType.USE;
+
+        public override ShapeInfo GetShapeInfo()
+        {
+            return new TextableShapeInfo
+            {
+                Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y },
+                Height = this.Height,
+                Width = this.Width,
+                Content  = this.textContent,
+                Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
+            };
+        }
     }
 }

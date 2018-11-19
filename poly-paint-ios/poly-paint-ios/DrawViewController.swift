@@ -25,6 +25,7 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var redoButton: UIBarButtonItem!
     @IBOutlet weak var undoButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var chatButton: UIBarButtonItem!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -50,6 +51,16 @@ class DrawViewController: UIViewController {
         self.drawingPlace.clipsToBounds = true
         self.cancelButton.isEnabled = false
         self.setUpNotifications()
+        
+        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
+            notifications in
+            if notifications == 0 {
+                self.chatButton.image = #imageLiteral(resourceName: "Chat")
+            } else {
+                self.chatButton.image = #imageLiteral(resourceName: "UnreadMessage")
+            }
+        })
+        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
