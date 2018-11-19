@@ -355,7 +355,7 @@
                                     <action selector="cancelTapped:" destination="nxp-f4-1rm" id="UVY-kN-sBe"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Insert" id="vVf-wi-6Rz">
+                            <barButtonItem systemItem="add" id="vVf-wi-6Rz">
                                 <connections>
                                     <action selector="insertTapped:" destination="nxp-f4-1rm" id="eFx-U7-Frn"/>
                                 </connections>
@@ -376,6 +376,11 @@
                                     <action selector="undoTapped:" destination="nxp-f4-1rm" id="are-fI-Tfm"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem title="Save" id="iF3-hZ-oes">
+                                <connections>
+                                    <action selector="saveTapped:" destination="nxp-f4-1rm" id="5th-Ov-0P0"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -384,6 +389,7 @@
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="insertButton" destination="vVf-wi-6Rz" id="DIX-kD-pgq"/>
                         <outlet property="redoButton" destination="nbC-No-vhD" id="G4G-ZS-kcq"/>
+                        <outlet property="saveButton" destination="iF3-hZ-oes" id="Ycg-cK-OI1"/>
                         <outlet property="undoButton" destination="5oG-1Z-XUe" id="cJa-Nn-eWq"/>
                         <segue destination="82l-V1-XRu" kind="popoverPresentation" identifier="toCreateClass" popoverAnchorBarButtonItem="vVf-wi-6Rz" id="1XK-x8-Tly">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>

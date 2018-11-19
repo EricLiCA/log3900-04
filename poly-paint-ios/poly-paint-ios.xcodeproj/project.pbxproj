@@ -25,6 +25,7 @@
 		CCA060ED219F88A700B558CA /* NewClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EC219F88A700B558CA /* NewClassViewController.swift */; };
 		CCA060EF219F918A00B558CA /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EE219F918A00B558CA /* Stack.swift */; };
 		CCA060F1219F9AC100B558CA /* UndoRedoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060F0219F9AC100B558CA /* UndoRedoManager.swift */; };
+		CCA060F321A24C2300B558CA /* DrawingSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060F221A24C2300B558CA /* DrawingSocketManager.swift */; };
 		CCA46DAD2177E1BD00DC32EC /* PublicPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */; };
 		CCA46DAF2177E8AC00DC32EC /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DAE2177E8AC00DC32EC /* Image.swift */; };
 		CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DB0217815D500DC32EC /* PublicImageCell.swift */; };
@@ -99,6 +100,7 @@
 		CCA060EC219F88A700B558CA /* NewClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClassViewController.swift; sourceTree = "<group>"; };
 		CCA060EE219F918A00B558CA /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		CCA060F0219F9AC100B558CA /* UndoRedoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UndoRedoManager.swift; path = "/Developer/log3900-04/poly-paint-ios/poly-paint-ios/UndoRedoManager.swift"; sourceTree = "<absolute>"; };
+		CCA060F221A24C2300B558CA /* DrawingSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingSocketManager.swift; sourceTree = "<group>"; };
 		CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPhotosViewController.swift; sourceTree = "<group>"; };
 		CCA46DAE2177E8AC00DC32EC /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		CCA46DB0217815D500DC32EC /* PublicImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicImageCell.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
 				CF0099DC216571B800E2D27E /* MainMenuViewController.swift */,
 				A78A7337215AE75D007A854F /* ConnectionViewController.swift */,
+				CCA060F221A24C2300B558CA /* DrawingSocketManager.swift */,
 				A78A7339215ED91C007A854F /* DateTime.swift */,
 				CFEF506721790C89001C93AB /* User.swift */,
 				A78A7335215ADDEF007A854F /* FrontPageViewController.swift */,
@@ -464,6 +467,7 @@
 				A74A5B0C219DDFE600051D14 /* ChatModel.swift in Sources */,
 				CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
+				CCA060F321A24C2300B558CA /* DrawingSocketManager.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				CCE6BC4D21925DE800C6DF31 /* ColorPickerViewController.swift in Sources */,

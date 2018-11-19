@@ -24,6 +24,7 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var colorButton: UIBarButtonItem!
     @IBOutlet weak var redoButton: UIBarButtonItem!
     @IBOutlet weak var undoButton: UIBarButtonItem!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -42,6 +43,7 @@ class DrawViewController: UIViewController {
     var lines = [Line]()
     var shapes = [String: BasicShapeView]()
     var undoRedoManager = UndoRedoManager()
+    var drawingSocketManager = DrawingSocketManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +54,12 @@ class DrawViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        for (uuid, view) in self.shapes{
+            self.drawingSocketManager.addShape(shape: view)
+        }
     }
     
     @IBAction func insertTapped(_ sender: UIBarButtonItem) {
