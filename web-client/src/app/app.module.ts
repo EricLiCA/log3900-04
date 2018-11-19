@@ -14,6 +14,12 @@ import { AuthenticationService } from '../admin/login.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UsersDetailComponent } from 'src/users/userDetail/usersDetail.component';
 import { FilterPipe } from 'src/services/filter.pipe';
+import { ImagePreviewComponent } from '../gallery/image-preview/image-preview.component';
+import { MatDialogModule } from '../../node_modules/@angular/material/dialog';
+import { BrowserAnimationsModule } from '../../node_modules/@angular/platform-browser/animations';
+import {LikesAndCommentsService} from 'src/services/likes-and-comments.service';
+
+
 
 @NgModule({
   declarations: [
@@ -22,7 +28,8 @@ import { FilterPipe } from 'src/services/filter.pipe';
     UsersComponent,
     AdminComponent,
     UsersDetailComponent,
-    FilterPipe
+    FilterPipe,
+    ImagePreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -31,11 +38,17 @@ import { FilterPipe } from 'src/services/filter.pipe';
     DropdownModule.forRoot(),
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule 
+    FormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    ImagePreviewComponent
   ],
   providers: [
     MDBSpinningPreloader,
     AuthenticationService,
+    LikesAndCommentsService
   ],
   bootstrap: [
     AppComponent

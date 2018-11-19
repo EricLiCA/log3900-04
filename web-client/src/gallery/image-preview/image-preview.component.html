@@ -1,0 +1,52 @@
+<div class="modal-header">
+  <button mat-button class="close" [mat-dialog-close]>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- Jumbotron -->
+<div class="jumbotron text-center">
+
+  <!-- Title -->
+  <h4 class="card-title h4 pb-2"><strong>My adventure</strong></h4>
+
+  <!-- Card image -->
+  <div class="view overlay my-4">
+    <img src="{{image.fullImageUrl}}" class="img-fluid image">
+    <a href="#">
+      <div class="mask rgba-white-slight"></div>
+    </a>
+  </div>
+
+  <h5 class="indigo-text h5 mb-4">{{image.title}}</h5>
+
+  <p class="card-text">Sed ut perspiciatis unde omnis iste natus sit voluptatem accusantium doloremque laudantium,
+    totam rem aperiam.</p>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea3">Rounded corners</label>
+    <textarea class="form-control" id="exampleFormControlTextarea3" rows="7"></textarea>
+  </div>
+  <button type="button" class="btn btn-primary">Post</button>
+  <div class="media">
+    <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"
+      alt="Avatar">
+    <div class="media-body">
+      <h5 class="mt-0 font-weight-bold blue-text">Anna Smith</h5>
+      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus
+      odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
+      fringilla. Donec lacinia congue felis in faucibus.
+
+      <div class="media mt-3 shadow-textarea">
+        <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg"
+          alt="Generic placeholder image">
+        <div class="media-body">
+          <h5 class="mt-0 font-weight-bold blue-text">Danny Tatuum</h5>
+          <div class="form-group basic-textarea rounded-corners">
+            <textarea class="form-control z-depth-1" id="exampleFormControlTextarea3" rows="3" placeholder="Write your comment..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <!-- Jumbotron -->
