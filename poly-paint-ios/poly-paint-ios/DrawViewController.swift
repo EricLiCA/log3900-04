@@ -151,16 +151,25 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func lineTapped() {
-        self.isUserEditingShape = true
+        //self.isUserEditingShape = true
         self.currentShape = Shape.Line
         self.cancelButton.isEnabled = true
-
+        self.optionsView.isHidden = false
     }
     
     @IBAction func stickfigureTapped() {
         let stickFigure = StickFigureView()
         self.shapes[stickFigure.uuid] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
+    }
+    
+    @IBAction func insertLineTapped(_ sender: UIButton) {
+        self.optionsView.isHidden = true
+        self.addNewLine()
+    }
+    
+    @IBAction func cancelInsertLineTapped(_ sender: UIButton) {
+        self.optionsView.isHidden = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -510,6 +519,24 @@ class DrawViewController: UIViewController {
             self.resetLineEndPoints()
             self.redrawLayers()
         }
+    }
+    
+    func addNewLine() {
+        var bezier = UIBezierPath()
+        bezier.move(to: CGPoint(x: 10, y: 10))
+        bezier.addLine(to: CGPoint(x: 100, y: 10))
+        self.currentContext = nil
+        bezier.close()
+        let layer = CAShapeLayer()
+        layer.path = bezier.cgPath
+        layer.borderWidth = 2
+        layer.strokeColor = UIColor.black.cgColor
+        var line = Line(layer: layer)
+        line.points.append(CGPoint(x: 10, y: 10))
+        line.points.append(CGPoint(x: 100, y: 10))
+        self.lines.append(line)
+        self.drawingPlace.layer.addSublayer(line.layer!)
+        self.redrawLayers()
     }
     
     func drawLine(line: Line) {

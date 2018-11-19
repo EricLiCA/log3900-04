@@ -452,6 +452,34 @@
                                         </constraints>
                                         <state key="normal" title="Button" image="arrow"/>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZEO-6W-Mle">
+                                        <rect key="frame" x="545" y="18" width="65" height="30"/>
+                                        <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="KOE-RE-veF"/>
+                                            <constraint firstAttribute="width" constant="65" id="jKA-V2-huz"/>
+                                        </constraints>
+                                        <state key="normal" title="Insert">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="insertLineTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="wH5-E8-IIC"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EKl-e2-iNJ">
+                                        <rect key="frame" x="645" y="18" width="65" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="65" id="JpP-8E-gYy"/>
+                                            <constraint firstAttribute="height" constant="30" id="odP-cD-6TU"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelInsertLineTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="6Gf-8A-kuR"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -459,6 +487,8 @@
                                     <constraint firstItem="Tgy-PV-U5F" firstAttribute="leading" secondItem="5Aw-Lo-mhy" secondAttribute="trailing" constant="19" id="94M-7e-wDy"/>
                                     <constraint firstItem="ewn-aM-IUw" firstAttribute="leading" secondItem="JvF-UF-wmA" secondAttribute="trailing" constant="13" id="94q-1N-6mP"/>
                                     <constraint firstItem="yCi-yh-RD9" firstAttribute="leading" secondItem="F0K-RQ-BuV" secondAttribute="trailing" constant="20" id="B1r-Xu-x3b"/>
+                                    <constraint firstItem="ZEO-6W-Mle" firstAttribute="centerY" secondItem="5kG-lC-orU" secondAttribute="centerY" id="Evv-Ha-KKk"/>
+                                    <constraint firstAttribute="trailing" secondItem="EKl-e2-iNJ" secondAttribute="trailing" constant="18" id="GMX-7p-n1p"/>
                                     <constraint firstItem="HXH-qH-Lq4" firstAttribute="leading" secondItem="Zyh-ht-ZlW" secondAttribute="trailing" constant="19" id="P2j-7b-4l4"/>
                                     <constraint firstItem="SBJ-bW-OHi" firstAttribute="top" secondItem="5kG-lC-orU" secondAttribute="top" constant="4" id="PP3-Ld-HNW"/>
                                     <constraint firstItem="SBJ-bW-OHi" firstAttribute="leading" secondItem="2qW-Ya-4M2" secondAttribute="trailing" constant="33" id="Qtd-Dl-d6X"/>
@@ -472,12 +502,14 @@
                                     <constraint firstItem="C12-bn-SZZ" firstAttribute="top" secondItem="ewn-aM-IUw" secondAttribute="bottom" constant="15" id="elK-v5-1Vi"/>
                                     <constraint firstItem="Wv8-CC-xhh" firstAttribute="top" secondItem="5kG-lC-orU" secondAttribute="top" constant="7" id="fuq-8H-s3E"/>
                                     <constraint firstItem="JvF-UF-wmA" firstAttribute="top" secondItem="5kG-lC-orU" secondAttribute="top" constant="8" id="g5z-Hr-Te6"/>
+                                    <constraint firstItem="EKl-e2-iNJ" firstAttribute="centerY" secondItem="5kG-lC-orU" secondAttribute="centerY" id="hOq-Mc-5yU"/>
                                     <constraint firstItem="JvF-UF-wmA" firstAttribute="leading" secondItem="SBJ-bW-OHi" secondAttribute="trailing" constant="20" id="iPZ-h8-Qzk"/>
                                     <constraint firstItem="ewn-aM-IUw" firstAttribute="top" secondItem="5kG-lC-orU" secondAttribute="top" constant="8" id="jQP-3N-IC9"/>
                                     <constraint firstItem="F0K-RQ-BuV" firstAttribute="leading" secondItem="RyY-d3-wCo" secondAttribute="trailing" constant="8" id="kmx-N0-eZ9"/>
                                     <constraint firstItem="Tgy-PV-U5F" firstAttribute="top" secondItem="HXH-qH-Lq4" secondAttribute="bottom" constant="15" id="nWR-n5-CIV"/>
                                     <constraint firstItem="2qW-Ya-4M2" firstAttribute="leading" secondItem="5kG-lC-orU" secondAttribute="leading" id="nwe-iT-TTg"/>
                                     <constraint firstItem="xlJ-kb-eFI" firstAttribute="top" secondItem="Wv8-CC-xhh" secondAttribute="bottom" constant="16" id="s06-ey-ihk"/>
+                                    <constraint firstItem="EKl-e2-iNJ" firstAttribute="leading" secondItem="ZEO-6W-Mle" secondAttribute="trailing" constant="35" id="uqH-pm-Lvw"/>
                                     <constraint firstItem="Zyh-ht-ZlW" firstAttribute="top" secondItem="5kG-lC-orU" secondAttribute="top" constant="8" id="v23-3F-ORy"/>
                                     <constraint firstItem="RyY-d3-wCo" firstAttribute="top" secondItem="5kG-lC-orU" secondAttribute="top" constant="46" id="wmm-4B-6cS"/>
                                     <constraint firstItem="C12-bn-SZZ" firstAttribute="leading" secondItem="yCi-yh-RD9" secondAttribute="trailing" constant="13" id="zu7-i7-9sU"/>
