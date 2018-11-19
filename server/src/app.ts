@@ -15,6 +15,7 @@ import { UsersRoute } from './routes/users';
 import { ChatRooms } from './routes/chat-rooms';
 import { ShapeObjectRoute } from './routes/shape-objects';
 import { OfflineUpload } from './routes/offline-upload';
+import { Secret } from './routes/secret';
 
 export class Application {
     /**
@@ -71,6 +72,7 @@ export class Application {
         const chatRooms : ChatRooms = new ChatRooms();
         const shapeObjectRoute: ShapeObjectRoute = new ShapeObjectRoute();
         const offlineUpload: OfflineUpload = new OfflineUpload();
+        const secret: Secret = new Secret();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));
@@ -132,6 +134,10 @@ export class Application {
 
         // Offline Upload
         router.put('/offlineupload/:id', offlineUpload.put.bind(offlineUpload.put));
+
+        // Unique Link
+        router.get('/secret/:secret', secret.get.bind(secret.get));
+        router.get('/secret/generate/:id', secret.generate.bind(secret.generate));
 
         // use router middleware
         this.app.use('/v2', router);
