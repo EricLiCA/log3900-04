@@ -75,36 +75,5 @@ class RectangleView: BasicShapeView {
             return CGPoint(x: 0, y: 0)
         }
     }
-    
-    /*
-     // Only override draw() if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func draw(_ rect: CGRect) {
-     // Drawing code
-     }
-     */
-    
-    /* func toShapeObject() -> Data? {
-     
-     let shape: [String: Any] = [
-     "id": self.uuid,
-     "imageid": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
-     "shapetype": "RECTANGLE",
-     "index": -1,
-     "shapeinfo": [
-     "Center": [
-     "X": self.center.x,
-     "Y": self.center.y
-     ],
-     "Width": self.myframe?.width,
-     "Height": self.myframe?.height,
-     "Color": self.color?.hexString
-     ]
-     ]
-     
-     let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
-     return jsonData;
-     
-     }    */
 }
 
