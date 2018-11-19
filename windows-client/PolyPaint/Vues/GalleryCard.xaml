@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:PolyPaint.Vues"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
-      Height="274.458" Width="200" Margin="0,0,20,20" HorizontalAlignment="Left" Cursor="Hand" MouseDown="ViewButton_Click">
+      Height="280.458" Width="200" Margin="0,0,20,20" HorizontalAlignment="Left" Cursor="Hand" MouseDown="ViewButton_Click">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="230" />
@@ -15,11 +15,12 @@
         </Grid.RowDefinitions>
         <Image Source="{Binding Image.fullImageUrl, Mode = OneWay}" Stretch="UniformToFill" Margin="2,1" />
         <Button Name="IconContainer"  Grid.Row="0" HorizontalAlignment="Right"  VerticalAlignment="Bottom"
-            Margin="0,0,5,-20" Visibility="Hidden" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
+            Margin="0,0,5,5" Visibility="Hidden" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}">
             <materialDesign:PackIcon Name="Icon"/>
         </Button>
-        <StackPanel Grid.Row="1" Margin="0,15,0,0" >
-            <TextBlock Name="ImageTitle" FontWeight="Bold" Text="{Binding Image.title, Mode = OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"></TextBlock>
+        <StackPanel Grid.Row="1" Margin="0,5,0,0" >
+            <TextBlock Margin="0,0,0,5" Name="ImageTitle" FontWeight="Bold" Text="{Binding Image.title, Mode = TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"></TextBlock>
+            <TextBlock Text="{Binding Image.authorName, Mode = OneWay, StringFormat='CreatedBy {0}'}" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Foreground="#FF7C7C7C" FontSize="10"/>
         </StackPanel>
     </Grid>
 </materialDesign:Card>
