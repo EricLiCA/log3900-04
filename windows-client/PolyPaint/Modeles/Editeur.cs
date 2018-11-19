@@ -3,6 +3,7 @@ using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
 using PolyPaint.Services;
+using PolyPaint.Vues;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,7 @@ namespace PolyPaint.Modeles
                 {
                     this.EditingStroke = null;
                     EditionSocket.UnlockStrokes();
+                    
                     if (ServerService.instance.isOffline())
                     {
                         this.traits.ToList().ForEach(temp =>
@@ -409,16 +411,19 @@ namespace PolyPaint.Modeles
                 string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
                 Directory.CreateDirectory(path2String);
                 string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
+                
                 File.WriteAllBytes(file, obj);
 
                 var id = ServerService.instance.currentImageId;
                 ServerService.instance.S3Communication.UploadImageAsync(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews", id + ".png"), id + ".png");
-
+                
             }
         }
 
         public void SyncToServer()
         {
+
+
             if (ServerService.instance.isOffline())
             {
                 this.Load(OfflineFileLoader.load(ServerService.instance.currentImageId));

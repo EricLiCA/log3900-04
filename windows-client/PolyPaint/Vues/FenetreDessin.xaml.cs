@@ -15,6 +15,7 @@ using PolyPaint.Modeles.Strokes;
 using System.Collections.Generic;
 using PolyPaint.DAO;
 using System.Windows.Media.Imaging;
+using PolyPaint.Services;
 
 namespace PolyPaint
 {
@@ -30,6 +31,7 @@ namespace PolyPaint
             InitializeComponent();
             DataContext = new VueModele();
             ClipBoard = new StrokeCollection();
+
         }
 
         // Pour gérer les points de contrôles.
@@ -183,8 +185,10 @@ namespace PolyPaint
             //    ((ShapeStroke)scrolled).Rotation = ((ShapeStroke)scrolled).Rotation += e.Delta / 8.0;
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        public void SaveButton_Click(object sender, EventArgs e)
         {
+            if (ServerService.instance.currentImageId == null) return;
+
             this.ToolSelection.SelectedIndex = 0;
             ((VueModele)this.DataContext).Traits.ToList().ForEach(temp =>
             {
@@ -210,15 +214,6 @@ namespace PolyPaint
                 pngEncoder.Save(ms);
                 ((VueModele)this.DataContext).Save.Execute(ms.ToArray());
             }
-
-            //StrokeCollection strokes = ((VueModele)this.DataContext).Traits;
-            //for (int i = 0; i < strokes.Count; i++)
-            //{
-            //    if (strokes[i] is Savable)
-            //    {
-            //        ShapeObjectDao.Post((CustomStroke)strokes[i]);
-            //    }
-            //}
         }
 
         private void Canvas_StrokeErasing(object sender, InkCanvasStrokeErasingEventArgs e)

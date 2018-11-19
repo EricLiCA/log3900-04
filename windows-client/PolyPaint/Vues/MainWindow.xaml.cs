@@ -1,9 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using PolyPaint.DAO;
-using PolyPaint.Modeles;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using PolyPaint.VueModeles;
@@ -26,6 +25,8 @@ namespace PolyPaint.Vues
             InitializeComponent();
             GridMain.Content = Gallery;
             OfflineMode();
+
+            Closing += new CancelEventHandler(((MainWindow)Application.Current.MainWindow).FenetreDessin.SaveButton_Click);
         }
 
         public void showDetachedChat(object sender, EventArgs e)
@@ -149,7 +150,7 @@ namespace PolyPaint.Vues
         {
             string fileName = null;
 
-            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            using (System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog())
             {
                 openFileDialog1.InitialDirectory = "c:\\";
                 openFileDialog1.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
@@ -218,6 +219,7 @@ namespace PolyPaint.Vues
 
         public void LoadImage(string imageId)
         {
+            FenetreDessin.SaveButton_Click(null, null);
             ServerService.instance.currentImageId = imageId;
             ButtonEdit.Visibility = Visibility.Visible;
             Button_Click(ButtonEdit, null);
