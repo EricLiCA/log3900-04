@@ -59,7 +59,7 @@ class Line {
                     self.hitStartPoint = index
                     self.hitEndPoint = index + 1
                     //self.selected = true
-                    self.layer?.strokeColor = UIColor.green.cgColor
+                    //self.layer?.strokeColor = UIColor.green.cgColor
                     return true
                 }
             }

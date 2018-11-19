@@ -271,32 +271,31 @@ class DrawViewController: UIViewController {
         self.currentContext?.addPath((self.currentBezierPath?.cgPath)!)
     }
     
+    
+    func resetLineEditing() {
+        self.addedNewPointToLine = false
+        self.lineBeingEdited = nil
+        self.lineIndexEdit = nil
+        self.lineEditing = false
+        self.pointIndexEditing = -1
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(self.lineEditing) {
-            // check if end point on anchor point (if so)
             for (key, shape) in self.shapes {
                 var anchorPointTouched = shape.isOnAnchorPoint(touchPoint: (touches.first?.location(in: shape))!)
-                if(anchorPointTouched != -1) {
-                    if(lineBeingEdited?.firstAnchorShapeId == nil) {
+                if(anchorPointTouched != -1) { // line end point touching anchor of a shape
+                    if(lineBeingEdited?.firstAnchorShapeId == nil) { // first end point
                         lineBeingEdited?.firstAnchorShapeIndex = anchorPointTouched
                         lineBeingEdited?.firstAnchorShapeId = shape.uuid
-                    } else if(lineBeingEdited?.secondAnchorShapeId == nil) {
+                    } else if(lineBeingEdited?.secondAnchorShapeId == nil) { // second end point
                         lineBeingEdited?.secondAnchorShapeIndex = anchorPointTouched
                         lineBeingEdited?.secondAnchorShapeId = shape.uuid
                     }
-                } else {
-                    print("NO TOUCH")
                 }
             }
-            self.addedNewPointToLine = false
-            //self.lineBeingEdited?.unselect()
-            self.lineBeingEdited = nil
-            self.lineIndexEdit = nil
-            self.lineEditing = false
-            self.pointIndexEditing = -1
+            self.resetLineEditing()
             
-            
-
         } else if(isUserEditingShape && self.insideCanvas) {
             let touch = touches.first
             self.currentContext = nil
@@ -304,10 +303,6 @@ class DrawViewController: UIViewController {
             self.currentBezierPath?.fill()
             self.currentBezierPath?.stroke()
             self.currentBezierPath?.close()
-            let myLayer = CAShapeLayer()
-            myLayer.path = self.currentBezierPath?.cgPath
-            myLayer.borderWidth = 2
-            myLayer.strokeColor = UIColor.black.cgColor
             let layer = CAShapeLayer()
             layer.path = self.currentBezierPath?.cgPath
             layer.borderWidth = 2
@@ -333,9 +328,7 @@ class DrawViewController: UIViewController {
                 lines.append(line)
             }
             
-           //self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
             self.drawingPlace.layer.sublayers?.popLast()
-            
             self.redrawLayers()
             self.insideCanvas = false
         }
@@ -399,7 +392,6 @@ class DrawViewController: UIViewController {
             popoverController.barButtonItem = sender
             popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
             popoverController.permittedArrowDirections = .any
-           // popoverController.delegate? = self
             popoverVC.delegate = self
         }
         present(popoverVC, animated: true, completion: nil)
@@ -467,8 +459,6 @@ class DrawViewController: UIViewController {
         let classDiagram = ClassDiagramView(text: processText(text: text as! String))
         self.shapes[classDiagram.uuid] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
-        //self.layersFromShapes.append(classDiagram.layer)
-        
     }
     
     @objc func movedViewAlert(sender: AnyObject) {
@@ -476,19 +466,11 @@ class DrawViewController: UIViewController {
         for line in self.lines {
             if(line.firstAnchorShapeId == viewUUID) {
                 line.points[0] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.firstAnchorShapeIndex!))!
-                /*let bezier = UIBezierPath()
-                bezier.move(to: line.points[0])
-                bezier.addLine(to: line.points[1])
-                line.layer?.path = bezier.cgPath*/
                 self.drawLine(line: line)
                     
             } else if(line.secondAnchorShapeId == viewUUID) {
                 line.points[line.points.count - 1] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.secondAnchorShapeIndex!))!
                 self.drawLine(line: line)
-                /*let bezier = UIBezierPath()
-                bezier.move(to: line.points[0])
-                bezier.addLine(to: line.points[1])
-                line.layer?.path = bezier.cgPath*/
             }
         }
     }
@@ -526,7 +508,6 @@ class DrawViewController: UIViewController {
             self.drawingPlace.layer.addSublayer(line.layer!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
             self.resetLineEndPoints()
-          //  self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
             self.redrawLayers()
         }
     }
@@ -562,7 +543,7 @@ class DrawViewController: UIViewController {
         let layer = CAShapeLayer()
         layer.path = bezier.cgPath
         layer.borderWidth = 2
-        layer.strokeColor = UIColor.green.cgColor
+        layer.strokeColor = UIColor.black.cgColor
         line.layer = layer
         redrawLayers()
     }
