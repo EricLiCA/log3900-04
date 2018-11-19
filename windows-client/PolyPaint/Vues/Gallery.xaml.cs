@@ -131,7 +131,7 @@ namespace PolyPaint.Vues
             ImagePreviewRoom.ImageId = CurrentGalleryCard.Image.id;
             ImagePreviewRoom.PreviewImage();
 
-            if (!ServerService.instance.user.isGuest)
+            if (!ServerService.instance.isOffline())
             {
                 if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
                 {

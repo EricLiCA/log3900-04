@@ -17,6 +17,10 @@ namespace PolyPaint.Modeles
         {
             this.Likes = new ObservableCollection<ImageLike>();
             this.Comments = commentsContainer;
+        }
+
+        public void startListening()
+        {
             this.OnPreviewImage();
             this.OnAddComment();
             this.OnAddLike();
@@ -25,7 +29,19 @@ namespace PolyPaint.Modeles
 
         public void PreviewImage()
         {
-            ServerService.instance.Socket.Emit("previewImage", this.ImageId);
+            if (!ServerService.instance.isOffline())
+            {
+                this.startListening();
+                ServerService.instance.Socket.Emit("previewImage", this.ImageId);
+            }
+            else
+            {
+                this.ImageId = ServerService.instance.currentImageId;
+                this.Likes.Clear();
+                this.Comments.Children.Clear();
+                Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
+                currentGallery.CheckOrUncheckLikeButton();
+            }
         }
 
         public void LeaveImage()
@@ -50,6 +66,7 @@ namespace PolyPaint.Modeles
 
         private void OnPreviewImage()
         {
+            ServerService.instance.Socket.Off("previewImage");
             ServerService.instance.Socket.On("previewImage", new CustomListener((dynamic[] server_params) =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -82,6 +99,7 @@ namespace PolyPaint.Modeles
 
         private void OnAddComment()
         {
+            ServerService.instance.Socket.Off("addComment");
             ServerService.instance.Socket.On("addComment", new CustomListener((object[] server_params) =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -104,6 +122,7 @@ namespace PolyPaint.Modeles
 
         private void OnAddLike()
         {
+            ServerService.instance.Socket.Off("addLike");
             ServerService.instance.Socket.On("addLike", new CustomListener((object[] server_params) =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -118,6 +137,7 @@ namespace PolyPaint.Modeles
 
         private void OnRemoveLike()
         {
+            ServerService.instance.Socket.Off("removeLike");
             ServerService.instance.Socket.On("removeLike", new CustomListener((object[] server_params) =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
