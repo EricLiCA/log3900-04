@@ -21,6 +21,7 @@ export class ImagesRoute implements DAO {
                         fullImageUrl: row.FullImageUrl,
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -31,9 +32,10 @@ export class ImagesRoute implements DAO {
 
     public async getByOwnerId(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM Images where "OwnerId" = $1', [req.params.id]).then((query) => {
+        db.query('SELECT Images.*, Users."Username" FROM Images INNER JOIN Users ON "OwnerId" = Users."Id" where "OwnerId" = $1', [req.params.id]).then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows.map((row) => {
+                    console.log(row);
                     return {
                         id: row.Id,
                         ownerId: row.OwnerId,
@@ -42,8 +44,10 @@ export class ImagesRoute implements DAO {
                         password: row.Password,
                         thumbnailUrl: row.ThumbnailUrl,
                         fullImageUrl: row.FullImageUrl,
+                        authorName: row.Username
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -54,7 +58,7 @@ export class ImagesRoute implements DAO {
 
     public async getPublicExceptMine(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM Images where ("ProtectionLevel" = $1 or "ProtectionLevel" = $2) and "OwnerId" != $3', ['public', 'protected', req.params.id]).then((query) => {
+        db.query('SELECT Images.*, Users."Username" FROM Images INNER JOIN Users ON "OwnerId" = Users."Id" where ("ProtectionLevel" = $1 or "ProtectionLevel" = $2) and "OwnerId" != $3', ['public', 'protected', req.params.id]).then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows.map((row) => {
                     return {
@@ -65,8 +69,10 @@ export class ImagesRoute implements DAO {
                         password: row.Password,
                         thumbnailUrl: row.ThumbnailUrl,
                         fullImageUrl: row.FullImageUrl,
+                        authorName: row.Username
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -89,6 +95,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(404);
         })
@@ -116,6 +123,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -164,6 +172,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -186,6 +195,7 @@ export class ImagesRoute implements DAO {
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
                 });
+                return;
             }
             res.sendStatus(404);
         })

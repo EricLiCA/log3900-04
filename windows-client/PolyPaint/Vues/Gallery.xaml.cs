@@ -4,6 +4,8 @@ using PolyPaint.Modeles;
 using PolyPaint.Services;
 using RestSharp;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,11 +23,14 @@ namespace PolyPaint.Vues
     public partial class Gallery : Page
     {
         public GalleryCard CurrentGalleryCard { get; set; }
+        public ImagePreviewRoom ImagePreviewRoom { get; set; }
 
         public Gallery()
         {
             InitializeComponent();
             ImageView.Visibility = Visibility.Hidden;
+            ImagePreviewRoom = new ImagePreviewRoom(CommentsContainer);
+            DataContext = this;
             Load();
         }
 
@@ -47,7 +52,7 @@ namespace PolyPaint.Vues
             MyImagesGroupBox.Visibility = Visibility.Collapsed;
             LikeButton.IsEnabled = false;
             LockButton.IsEnabled = false;
-            PasswordButton.IsEnabled = false;
+            ImageInformationsButton.IsEnabled = false;
             CurrentComment.IsEnabled = false;
             AddCommentButton.IsEnabled = false;
         }
@@ -70,6 +75,7 @@ namespace PolyPaint.Vues
                         password = data["password"],
                         thumbnailUrl = data["thumbnailUrl"],
                         fullImageUrl = data["fullImageUrl"],
+                        authorName = data["authorName"]
                     };
 
                     GalleryCard galleryCard = new GalleryCard(image);
@@ -101,6 +107,7 @@ namespace PolyPaint.Vues
                         password = data["password"],
                         thumbnailUrl = data["thumbnailUrl"],
                         fullImageUrl = data["fullImageUrl"],
+                        authorName = data["authorName"]
                     };
 
                     GalleryCard galleryCard = new GalleryCard(image);
@@ -114,79 +121,47 @@ namespace PolyPaint.Vues
             }
         }
 
-
-        public void LoadCurrentImageLikes(IRestResponse response)
+        public void CheckOrUncheckLikeButton()
         {
             LikeButton.IsChecked = false;
-            if (response.StatusCode == HttpStatusCode.OK)
+            for (int i = 0; i < ImagePreviewRoom.Likes.Count; i++)
             {
-                JArray responseImageLikes = JArray.Parse(response.Content);
-                for (int i = 0; i < responseImageLikes.Count; i++)
+                if (ImagePreviewRoom.Likes[i].userId == ServerService.instance.user.id)
                 {
-                    dynamic data = JObject.Parse(responseImageLikes[i].ToString());
-                    if (data["userId"] == ServerService.instance.user.id)
-                    {
-                        LikeButton.IsChecked = true;
-                    }
-                }
-                ImageViewLikes.Text = responseImageLikes.Count.ToString();
-            }
-            else
-            {
-                ImageViewLikes.Text = "0";
-            }
-        }
-
-        public void LoadCurrentImageComments(IRestResponse response)
-        {
-            CommentsContainer.Children.Clear();
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                JArray responseImageComments = JArray.Parse(response.Content);
-                for (int i = 0; i < responseImageComments.Count; i++)
-                {
-                    dynamic data = JObject.Parse(responseImageComments[i].ToString());
-                    ImageComment imageComment = new ImageComment
-                    {
-                        imageId = data["imageId"],
-                        userId = data["userId"],
-                        comment = data["comment"],
-                        timestamp = data["timestamp"],
-                        userName = data["userName"]
-                    };
-                    GalleryComment galleryComment = new GalleryComment(imageComment);
-                    CommentsContainer.Children.Add(galleryComment);
+                    LikeButton.IsChecked = true;
                 }
             }
         }
-
 
         private void ViewButton_Click(object sender, EventArgs e)
         {
-            GalleryCard galleryCard = (GalleryCard)sender;
-            CurrentGalleryCard = galleryCard;
+
+            CurrentGalleryCard = (GalleryCard)sender;
             ImageView.Visibility = Visibility.Visible;
             ImageView.IsExpanded = true;
             ImageViewTitle.Text = CurrentGalleryCard.Image.title;
+            ImageViewAuthor.Text = "CreatedBy " + CurrentGalleryCard.Image.authorName;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
             Uri imageUri = new Uri(CurrentGalleryCard.Image.fullImageUrl);
             BitmapImage imageBitmap = new BitmapImage(imageUri);
             ImageViewPicture.Source = imageBitmap;
-            ImageLikeDao.Get(CurrentGalleryCard.Image.id);
-            ImageCommentDao.Get(CurrentGalleryCard.Image.id);
+
+            ImagePreviewRoom.ImageId = CurrentGalleryCard.Image.id;
+            ImagePreviewRoom.PreviewImage();
+
             if (!ServerService.instance.user.isGuest)
             {
                 if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
                 {
                     LikeButton.IsEnabled = false;
-                    PasswordButton.Visibility = Visibility.Visible;
+                    ImageInformationsButton.Visibility = Visibility.Visible;
                     LockButton.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     LikeButton.IsEnabled = true;
-                    PasswordButton.Visibility = Visibility.Hidden;
-                    LockButton.Visibility = Visibility.Hidden;
+                    ImageInformationsButton.Visibility = Visibility.Collapsed;
+                    LockButton.Visibility = Visibility.Collapsed;
                 }
                 ConfigImageViewButtons();
             }
@@ -199,19 +174,19 @@ namespace PolyPaint.Vues
                 case "public":
                     {
                         LockButton.IsChecked = false;
-                        PasswordButton.IsEnabled = true;
+                        ImageInformationsButton.IsEnabled = true;
                         break;
                     }
                 case "private":
                     {
                         LockButton.IsChecked = true;
-                        PasswordButton.IsEnabled = false;
+                        ImageInformationsButton.IsEnabled = true;
                         break;
                     }
                 case "protected":
                     {
                         LockButton.IsChecked = false;
-                        PasswordButton.IsEnabled = true;
+                        ImageInformationsButton.IsEnabled = true;
                         break;
                     }
             }
@@ -223,9 +198,12 @@ namespace PolyPaint.Vues
             {
                 CurrentGalleryCard.Image.protectionLevel = "private";
             }
-            else
+            else if (CurrentGalleryCard.Image.password == null || CurrentGalleryCard.Image.password == "")
             {
                 CurrentGalleryCard.Image.protectionLevel = "public";
+            } else
+            {
+                CurrentGalleryCard.Image.protectionLevel = "protected";
             }
             CurrentGalleryCard.ConfigIcon();
             ImageDao.Put(CurrentGalleryCard.Image);
@@ -242,84 +220,158 @@ namespace PolyPaint.Vues
             };
             if ((bool)LikeButton.IsChecked)
             {
-                ImageLikeDao.Post(imageLike);
-                try
-                {
-                    ImageViewLikes.Text = (System.Convert.ToInt32(ImageViewLikes.Text) + 1).ToString();
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Cannot convert string to int");
-                }
-
+                ImagePreviewRoom.AddLike();
             }
             else
             {
-                ImageLikeDao.Delete(imageLike);
-                try
-                {
-                    ImageViewLikes.Text = (System.Convert.ToInt32(ImageViewLikes.Text) - 1).ToString();
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Cannot convert string to int");
-                }
+                ImagePreviewRoom.RemoveLike();
+            }
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateImageContainer.Visibility = Visibility.Collapsed;
+            EditImageInformationsContainer.Visibility = Visibility.Collapsed;
+            AccessImageContainer.Visibility = Visibility.Visible;
+            ImageToAccessPassword.Text = "";
+            WrongPasswordMessage.IsActive = false;
+            if (CurrentGalleryCard.Image.protectionLevel != "protected" || CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
+            {
+                ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
             }
         }
 
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
         {
-            ImageComment imageComment = new ImageComment
-            {
-                userId = ServerService.instance.user.id,
-                imageId = CurrentGalleryCard.Image.id,
-                comment = CurrentComment.Text,
-                userName = ServerService.instance.user.username,
-                timestamp = DateTime.Now
-            };
-            ImageCommentDao.Post(imageComment);
-            GalleryComment galleryComment = new GalleryComment(imageComment);
-            CommentsContainer.Children.Insert(0, galleryComment);
+            ImagePreviewRoom.AddComment(CurrentComment.Text);
+            CurrentComment.Text = "";
         }
 
-        #region AddPassword/RemovePassword Dialog
-
-        private void CurrentImagePassword_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        private void ImageInformationsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentImagePassword.Text.Length == 0 || CurrentImagePassword.Text.Contains(" "))
+            CreateImageContainer.Visibility = Visibility.Collapsed;
+            EditImageInformationsContainer.Visibility = Visibility.Visible;
+            AccessImageContainer.Visibility = Visibility.Collapsed;
+            CurrentImageTitle.Text = CurrentGalleryCard.Image.title;
+            CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
+            CurrentImagePassword.IsEnabled = (CurrentGalleryCard.Image.protectionLevel == "private") ? false : true;
+        }
+
+        private void AddImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateImageContainer.Visibility = Visibility.Visible;
+            EditImageInformationsContainer.Visibility = Visibility.Collapsed;
+            AccessImageContainer.Visibility = Visibility.Collapsed;
+            ImageTitle.Text = "";
+            ImagePassword.Password = "";
+            PrivateProtectionLevel.IsChecked = true;
+        }
+
+        #region Dialog
+
+        private void EditImageInformationsButton_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentGalleryCard.ImageTitle.Text = CurrentImageTitle.Text;
+            ImageViewTitle.Text = CurrentImageTitle.Text;
+            if (CurrentGalleryCard.Image.protectionLevel != "private")
             {
-                AddPasswordButton.IsEnabled = false;
+                if (CurrentImagePassword.Text == "")
+                {
+                    CurrentGalleryCard.Image.password = null;
+                    CurrentGalleryCard.Image.protectionLevel = "public";
+                }
+                else
+                {
+                    CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
+                    CurrentGalleryCard.Image.protectionLevel = "protected";
+                }
+                CurrentGalleryCard.ConfigIcon();
+            }
+            ImageDao.Put(CurrentGalleryCard.Image);
+        }
+
+        private void CreateImageClick(object sender, RoutedEventArgs e)
+        {
+            string protectionLevel;
+
+            if ((bool)PrivateProtectionLevel.IsChecked)
+            {
+                protectionLevel = "private";
             }
             else
             {
-                AddPasswordButton.IsEnabled = true;
+                if (ImagePassword.Password.Length > 0)
+                {
+                    protectionLevel = "protected";
+                }
+                else
+                {
+                    protectionLevel = "public";
+                }
+            }
+
+            Image newImage = new Image
+            {
+                title = ImageTitle.Text,
+                ownerId = ServerService.instance.user.id,
+                password = ImagePassword.Password,
+                protectionLevel = protectionLevel
+            };
+
+            ImageDao.Post(newImage);
+        }
+
+
+
+        #endregion
+
+        private void AccessImageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ImageToAccessPassword.Text != CurrentGalleryCard.Image.password)
+            {
+                WrongPasswordMessage.IsActive = true;
+            }
+            else
+            {
+                ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
             }
         }
 
-        private void AddPasswordButton_Click(object sender, RoutedEventArgs e)
+        private void Search_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
-            CurrentGalleryCard.Image.protectionLevel = "protected";
-            CurrentGalleryCard.ConfigIcon();
-            ImageDao.Put(CurrentGalleryCard.Image);
-            AddPasswordButton.IsEnabled = false;
+            List<GalleryCard> gallerycards = PublicImagesContainer.Children.Cast<GalleryCard>().ToList();
+            gallerycards.AddRange(MyImagesContainer.Children.Cast<GalleryCard>().ToList());
+            string filter = ((ComboBoxItem)SearchBy.SelectedValue).Content.ToString();
+            if (filter.Contains("author"))
+            {
+                gallerycards.ForEach(card =>
+                {
+                    if (card.Image.authorName.Contains(Search.Text))
+                    {
+                        card.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        card.Visibility = Visibility.Collapsed;
+                    }
+                    return;
+                });
+            }
+            else
+            {
+                gallerycards.ForEach(card =>
+                {
+                    if (card.Image.title.Contains(Search.Text))
+                    {
+                        card.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        card.Visibility = Visibility.Collapsed;
+                    }
+                    return;
+                });
+            }
         }
-
-        private void RemovePasswordButton_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentGalleryCard.Image.password = null;
-            CurrentGalleryCard.Image.protectionLevel = "public";
-            CurrentGalleryCard.ConfigIcon();
-            CurrentImagePassword.Text = null;
-            ImageDao.Put(CurrentGalleryCard.Image);
-            AddPasswordButton.IsEnabled = false;
-        }
-
-        private void CloseDialogButton_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
-            AddPasswordButton.IsEnabled = false;
-        }
-        #endregion
     }
 }

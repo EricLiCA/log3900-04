@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using PolyPaint.Services;
 using System;
 using System.Linq;
 using System.Windows;
@@ -17,7 +18,10 @@ namespace PolyPaint.Modeles.Strokes
                 _rotation = value % 360;
                 _rotation -= value % 10;
                 this.Refresh();
-                this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableMoved(this));
+                this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => {
+                    ((BaseLine)stroke).anchorableMoved(this);
+                    ((BaseLine)stroke).anchorableDoneMoving(this);
+                });
             }
         }
 
@@ -47,9 +51,21 @@ namespace PolyPaint.Modeles.Strokes
         protected Guid RIGHT = Guid.NewGuid();
 
         protected bool AnchorPointVisibility = false;
+        protected Color Color;
 
         public ShapeStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
+            this.Color = Colors.White;
+        }
+
+        public ShapeStroke(StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(pts, strokes)
+        {
+            this.Color = color;
+        }
+
+        public ShapeStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, index, pts, strokes)
+        {
+            this.Color = color;
         }
 
         public void addDragHandles()
@@ -60,22 +76,22 @@ namespace PolyPaint.Modeles.Strokes
             var pointsTopLeft = new StylusPointCollection();
             pointsTopLeft.Add(new StylusPoint(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X) - 4, Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y) - 4));
             pointsTopLeft.Add(new StylusPoint(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y)));
-            this.strokes.Add(new DragHandle(pointsTopLeft, this.strokes, TOP_LEFT, this.Id.ToString()));
+            this.strokes.Add(new DragHandle(pointsTopLeft, this.Index, this.strokes, TOP_LEFT, this.Id.ToString()));
 
             var pointsTopRight = new StylusPointCollection();
             pointsTopRight.Add(new StylusPoint(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X) - 4, Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y) + 4));
             pointsTopRight.Add(new StylusPoint(Math.Min(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y)));
-            this.strokes.Add(new DragHandle(pointsTopRight, this.strokes, BOTTOM_LEFT, this.Id.ToString()));
+            this.strokes.Add(new DragHandle(pointsTopRight, this.Index, this.strokes, BOTTOM_LEFT, this.Id.ToString()));
 
             var pointsBottomLeft = new StylusPointCollection();
             pointsBottomLeft.Add(new StylusPoint(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X) + 4, Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y) - 4));
             pointsBottomLeft.Add(new StylusPoint(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y)));
-            this.strokes.Add(new DragHandle(pointsBottomLeft, this.strokes, TOP_RIGHT, this.Id.ToString()));
+            this.strokes.Add(new DragHandle(pointsBottomLeft, this.Index, this.strokes, TOP_RIGHT, this.Id.ToString()));
 
             var pointsBottomRight = new StylusPointCollection();
             pointsBottomRight.Add(new StylusPoint(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X) + 4, Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y) + 4));
             pointsBottomRight.Add(new StylusPoint(Math.Max(this.StylusPoints[0].X, this.StylusPoints[1].X), Math.Max(this.StylusPoints[0].Y, this.StylusPoints[1].Y)));
-            this.strokes.Add(new DragHandle(pointsBottomRight, this.strokes, BOTTOM_RIGHT, this.Id.ToString()));
+            this.strokes.Add(new DragHandle(pointsBottomRight, this.Index, this.strokes, BOTTOM_RIGHT, this.Id.ToString()));
 
         }
 
@@ -106,25 +122,25 @@ namespace PolyPaint.Modeles.Strokes
             var points1 = new StylusPointCollection();
             points1.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y - 2));
             points1.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y));
-            var anchor1 = new AnchorPoint(points1, this.strokes, TOP, this, 3);
+            var anchor1 = new AnchorPoint(points1, this.Index, this.strokes, TOP, this, 3);
             this.strokes.Insert(index, anchor1);
             
             var points2 = new StylusPointCollection();
             points2.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height + 2));
             points2.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height));
-            var anchor2 = new AnchorPoint(points2, this.strokes, BOTTOM, this, 1);
+            var anchor2 = new AnchorPoint(points2, this.Index, this.strokes, BOTTOM, this, 1);
             this.strokes.Insert(index, anchor2);
             
             var points3 = new StylusPointCollection();
             points3.Add(new StylusPoint(topLeft.X - 2, topLeft.Y + height / 2));
             points3.Add(new StylusPoint(topLeft.X, topLeft.Y + height / 2));
-            var anchor3 = new AnchorPoint(points3, this.strokes, LEFT, this, 2);
+            var anchor3 = new AnchorPoint(points3, this.Index, this.strokes, LEFT, this, 2);
             this.strokes.Insert(index, anchor3);
             
             var points4 = new StylusPointCollection();
             points4.Add(new StylusPoint(topLeft.X + width + 2, topLeft.Y + height / 2));
             points4.Add(new StylusPoint(topLeft.X + width, topLeft.Y + height / 2));
-            var anchor4 = new AnchorPoint(points4, this.strokes, RIGHT, this, 0);
+            var anchor4 = new AnchorPoint(points4, this.Index, this.strokes, RIGHT, this, 0);
             this.strokes.Insert(index, anchor4);
             
 
@@ -161,7 +177,7 @@ namespace PolyPaint.Modeles.Strokes
             this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableMoved(this));
         }
 
-        public void handleMoved(Guid id, Point point)
+        public virtual void handleMoved(Guid id, Point point)
         {
             Point oppo;
             if (id.ToString() == TOP_RIGHT.ToString())
@@ -282,28 +298,39 @@ namespace PolyPaint.Modeles.Strokes
 
         public void DoneMoving()
         {
-            //Send Modifications to server
+            EditionSocket.EditStroke(this.toJson());
+            this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableDoneMoving(this));
         }
 
-        public void HandleStoped(Guid id)
+        public virtual void HandleStoped(Guid id)
         {
-            //Send Modifications to server
+            EditionSocket.EditStroke(this.toJson());
+            this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableDoneMoving(this));
         }
 
         public virtual string toJson()
         {
-            SerializedShape toSend = new SerializedShape()
+            SerializedStroke toSend = new SerializedStroke()
             {
-                Id = this.Id,
-                Type = this.StrokeType(),
-                Index = -1,
-                Center = this.Center,
-                Width = this.Width,
-                Height = this.Height
+                Id = this.Id.ToString(),
+                ShapeType = this.StrokeType().ToString(),
+                Index = this.Index,
+                ShapeInfo = GetShapeInfo(),
+                ImageId = ServerService.instance.currentImageId
             };
             return JsonConvert.SerializeObject(toSend);
         }
 
         public abstract StrokeType StrokeType();
+        public virtual ShapeInfo GetShapeInfo()
+        {
+            return new ShapeInfo
+            {
+                Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y },
+                Height = this.Height,
+                Width = this.Width,
+                Color = new ColorConverter().ConvertToString(this.Color)
+            };
+        }
     }
 }

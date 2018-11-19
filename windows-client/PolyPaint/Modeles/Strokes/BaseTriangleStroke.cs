@@ -18,6 +18,16 @@ namespace PolyPaint.Modeles.Strokes
 
         }
 
+        public BaseTrangleStroke(StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(pts, strokes, color)
+        {
+
+        }
+
+        public BaseTrangleStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, Color color) : base(id, index, pts, strokes, color)
+        {
+
+        }
+
         public override bool HitTest(Point point)
         {
             Point top = new Point((this.StylusPoints[0].X + this.StylusPoints[1].X) / 2, Math.Min(this.StylusPoints[0].Y, this.StylusPoints[1].Y));
@@ -62,19 +72,19 @@ namespace PolyPaint.Modeles.Strokes
             var points2 = new StylusPointCollection();
             points2.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height + 2));
             points2.Add(new StylusPoint(topLeft.X + width / 2, topLeft.Y + height));
-            var anchor2 = new AnchorPoint(points2, this.strokes, BOTTOM, this, 1);
+            var anchor2 = new AnchorPoint(points2, this.Index, this.strokes, BOTTOM, this, 1);
             this.strokes.Insert(index, anchor2);
 
             var points3 = new StylusPointCollection();
             points3.Add(new StylusPoint(topLeft.X + width / 4 - 2, topLeft.Y + height / 2));
             points3.Add(new StylusPoint(topLeft.X + width / 4, topLeft.Y + height / 2));
-            var anchor3 = new AnchorPoint(points3, this.strokes, LEFT, this, 2);
+            var anchor3 = new AnchorPoint(points3, this.Index, this.strokes, LEFT, this, 2);
             this.strokes.Insert(index, anchor3);
 
             var points4 = new StylusPointCollection();
             points4.Add(new StylusPoint(topLeft.X + 3 * width / 4 + 2, topLeft.Y + height / 2));
             points4.Add(new StylusPoint(topLeft.X + 3 * width / 4, topLeft.Y + height / 2));
-            var anchor4 = new AnchorPoint(points4, this.strokes, RIGHT, this, 0);
+            var anchor4 = new AnchorPoint(points4, this.Index, this.strokes, RIGHT, this, 0);
             this.strokes.Insert(index, anchor4);
 
 
@@ -84,7 +94,7 @@ namespace PolyPaint.Modeles.Strokes
         {
 
             DrawingAttributes originalDa = drawingAttributes.Clone();
-            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(drawingAttributes.Color);
+            SolidColorBrush fillBrush = (this is Textable) ? new SolidColorBrush(Colors.White) : new SolidColorBrush(this.Color);
             fillBrush.Freeze();
             Pen outlinePen = new Pen(new SolidColorBrush(Colors.Black), 1);
 
@@ -103,9 +113,9 @@ namespace PolyPaint.Modeles.Strokes
             var figure = new PathFigure(top, segments, true);
             var geo = new PathGeometry(new[] { figure });
 
-            if (this.isSelected())
+            if (this.isSelected() || this.isLocked())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
+                Pen selectedPen = new Pen(new SolidColorBrush(this.isSelected() ? Colors.GreenYellow : Colors.OrangeRed), 5);
                 selectedPen.Freeze();
                 drawingContext.DrawGeometry(fillBrush, selectedPen, geo);
             }
@@ -151,6 +161,6 @@ namespace PolyPaint.Modeles.Strokes
 
         }
 
-        public override string StrokeType() => "TRIANGLE";
+        public override StrokeType StrokeType() => Strokes.StrokeType.TRIANGLE;
     }
 }
