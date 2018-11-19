@@ -31,7 +31,7 @@ class DrawViewController: UIViewController {
     var secondTouch : CGPoint?
     var currentContext : CGContext?
     var currentShape = Shape.None
-    var isUserEditing: Bool = false
+    var isUserEditingShape: Bool = false
     var currentBezierPath: UIBezierPath?
     var insideCanvas = false
     var selectedColor : UIColor = UIColor.black
@@ -134,24 +134,24 @@ class DrawViewController: UIViewController {
     }
     
     func rectangleTapped() {
-        self.isUserEditing = true
+        self.isUserEditingShape = true
         self.currentShape = Shape.Rectangle
         self.cancelButton.isEnabled = true
     }
     func ellipseTapped() {
-        self.isUserEditing = true
+        self.isUserEditingShape = true
         self.currentShape = Shape.Ellipse
         self.cancelButton.isEnabled = true
     }
     
     func triangleTapped() {
-        self.isUserEditing = true
+        self.isUserEditingShape = true
         self.currentShape = Shape.Triangle
         self.cancelButton.isEnabled = true
     }
     
     @IBAction func lineTapped() {
-        self.isUserEditing = true
+        self.isUserEditingShape = true
         self.currentShape = Shape.Line
         self.cancelButton.isEnabled = true
 
@@ -197,21 +197,22 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if(self.lineEditing && self.pointIndexEditing != -1) {
+        
+        // Line Editing
+        if(self.lineEditing && self.pointIndexEditing != -1) { // Editing existing point in line
             self.lineBeingEdited?.points[self.pointIndexEditing!] = (touches.first?.location(in: self.drawingPlace))!
             redrawLine(line: self.lineBeingEdited!)
-        } else if(self.lineEditing && !self.addedNewPointToLine) {
+        } else if(self.lineEditing && !self.addedNewPointToLine) { // Added angle/point to line
             self.addedNewPointToLine = true
             self.lineBeingEdited?.addPoint(point: (touches.first?.location(in: self.drawingPlace))!)
-        } else if(self.lineEditing) {
+        } else if(self.lineEditing) { // new angle being edited
             self.lineBeingEdited?.points[(self.lineBeingEdited?.hitStartPoint)! + 1] = (touches.first?.location(in: self.drawingPlace))!
             redrawLine(line: self.lineBeingEdited!)
         }
         
-        if(isUserEditing && self.insideCanvas) {
+        // Shape Editing
+        if(isUserEditingShape && self.insideCanvas) {
             // erase sublayers used for drawing
-            
-            
             
             if(self.drawingPlace.layer.sublayers != nil) {
                 self.redrawLayers()
@@ -289,7 +290,7 @@ class DrawViewController: UIViewController {
             
             
 
-        } else if(isUserEditing && self.insideCanvas) {
+        } else if(isUserEditingShape && self.insideCanvas) {
             let touch = touches.first
             self.currentContext = nil
             self.selectedColor.setFill()
@@ -377,7 +378,7 @@ class DrawViewController: UIViewController {
     }
     
     func stopDrawing(){
-        self.isUserEditing = false
+        self.isUserEditingShape = false
         self.currentShape = Shape.None
         self.cancelButton.isEnabled = false;
     }
