@@ -168,7 +168,7 @@
                                 </ToggleButton.Style>
                                 <materialDesign:PackIcon Kind="Heart" Height="21"  Width="21" />
                             </ToggleButton>
-                            <TextBlock x:Name="ImageViewLikes"/>
+                            <TextBlock x:Name="ImageViewLikes" Text="{Binding ImagePreviewRoom.Likes.Count}"/>
                         </StackPanel>
                     </Grid>
                     <ScrollViewer Grid.Row="3" Margin="0" DockPanel.Dock="Top">
