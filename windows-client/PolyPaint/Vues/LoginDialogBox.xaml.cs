@@ -74,7 +74,7 @@ namespace PolyPaint.Vues
             {
                 username = UserName.Text,
                 password = Password.Password,
-                profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE)
+                profileImage = new Uri(Settings.DEFAULT_PROFILE_IMAGE)
             };
             var request = new RestRequest(Settings.API_VERSION + Settings.SESSION_PATH, Method.POST);
             request.AddJsonBody(user);
@@ -125,6 +125,7 @@ namespace PolyPaint.Vues
                     {
                         DialogResult = true;
                         MessagingViewManager.instance.loadViews();
+                        OfflineFileLoader.upload();
                     });
                 }
                 else

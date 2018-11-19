@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PolyPaint.Modeles;
 using PolyPaint.Modeles.Strokes;
+using PolyPaint.Utilitaires;
 using RestSharp;
 
 namespace PolyPaint.Services
@@ -102,6 +103,34 @@ namespace PolyPaint.Services
             image.thumbnailUrl = file;
 
             File.WriteAllText(pathString + "\\" + image.id, JsonConvert.SerializeObject(image));
+        }
+
+        internal static void upload()
+        {
+            string pathString = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\offlinefiles";
+            Directory.CreateDirectory(pathString);
+            string[] files = Directory.GetFiles(pathString);
+
+
+            files.ToList().ForEach((fileName) =>
+            {
+                var id = fileName.Split('\\').Last();
+                ServerService.instance.S3Communication.UploadImageAsync(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews", id + ".png"), id + ".png");
+
+                var request = new RestRequest(Settings.API_VERSION + "/offlineupload/" + ServerService.instance.user.id, Method.PUT);
+                var text = File.ReadAllText(Path.Combine(pathString, fileName));
+                OfflineFileImage image = JObject.Parse(text).ToObject<OfflineFileImage>();
+                image.fullImageUrl = Settings.URL_TO_GALLERY_IMAGES + id + ".png";
+                image.thumbnailUrl = Settings.URL_TO_GALLERY_IMAGES + id + ".png";
+                request.AddJsonBody(image);
+                ServerService.instance.server.ExecuteAsync<Boolean>(request, response =>
+                {
+                    if (response.Data)
+                    {
+                        File.Delete(Path.Combine(pathString, fileName));
+                    }
+                });
+            });
         }
     }
 
