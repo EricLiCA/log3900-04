@@ -17,6 +17,9 @@ export class Canvas {
         return new Promise<ShapeObject[]>((resolve, reject) => {
             ShapeObject.get(this.id).then(
                 (value: ShapeObject[]) => {
+                    if (value === undefined)
+                        value = [];
+
                     this.strokes = value;
                     resolve(value.sort((a, b) => a.Index - b.Index));
                 },
