@@ -14,6 +14,7 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var galleryButton: UIButton!
     @IBOutlet weak var newImageButton: UIButton!
     @IBOutlet weak var chatButton: UIBarButtonItem!
+    var newImageTitle: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +66,22 @@ class MainMenuViewController: UIViewController {
         self.profileButton.isEnabled = false
         self.profileButton.isHidden = true
     }
+    
+    @IBAction func newImageTapped(_ sender: Any) {
+        
+        self.performSegue(withIdentifier: "toNewImageCanvas", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toNewImageCanvas" {
+            let NewimageVC = segue.destination as! CreateNewImageViewController
+            NewimageVC.popoverPresentationController?.sourceRect = CGRect(x: view.center.x, y: view.center.y, width: 0, height: 0)
+            NewimageVC.popoverPresentationController?.sourceView = view
+            NewimageVC.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+        }
+    }
+    
+    
     
     
     /*
