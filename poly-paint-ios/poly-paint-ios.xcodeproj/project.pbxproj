@@ -21,6 +21,7 @@
 		A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7337215AE75D007A854F /* ConnectionViewController.swift */; };
 		A78A733A215ED91C007A854F /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7339215ED91C007A854F /* DateTime.swift */; };
 		A7E542FF219F3CA900261E9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E542FE219F3CA900261E9B /* User.swift */; };
+		A7E54302219F44A200261E9B /* S3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E54301219F44A200261E9B /* S3Service.swift */; };
 		CCA060E9219D151A00B558CA /* UIColorExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060E8219D151A00B558CA /* UIColorExtentions.swift */; };
 		CCA060EB219DD64000B558CA /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EA219DD64000B558CA /* ImageLoader.swift */; };
 		CCA46DAD2177E1BD00DC32EC /* PublicPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */; };
@@ -91,6 +92,7 @@
 		A78A7337215AE75D007A854F /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		A78A7339215ED91C007A854F /* DateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTime.swift; sourceTree = "<group>"; };
 		A7E542FE219F3CA900261E9B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A7E54301219F44A200261E9B /* S3Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Service.swift; sourceTree = "<group>"; };
 		BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_poly_paint_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83DCF8B210537D23F9A45E1 /* Pods-poly-paint-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		CCA060E8219D151A00B558CA /* UIColorExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtentions.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 		A77C46ED21569CFB0056135A /* poly-paint-ios */ = {
 			isa = PBXGroup;
 			children = (
+				A7E54300219F447F00261E9B /* S3 */,
 				CCD4FA772186848A005E124B /* PrivateImageViewController.swift */,
 				CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */,
 				A74A5B0A219DC9B300051D14 /* Chat */,
@@ -246,6 +249,14 @@
 				A77C471321569CFC0056135A /* Info.plist */,
 			);
 			path = "poly-paint-iosUITests";
+			sourceTree = "<group>";
+		};
+		A7E54300219F447F00261E9B /* S3 */ = {
+			isa = PBXGroup;
+			children = (
+				A7E54301219F44A200261E9B /* S3Service.swift */,
+			);
+			path = S3;
 			sourceTree = "<group>";
 		};
 		C5A1E53E2867D25EE2393BFD /* Pods */ = {
@@ -478,6 +489,7 @@
 				CCA060E9219D151A00B558CA /* UIColorExtentions.swift in Sources */,
 				A7E542FF219F3CA900261E9B /* User.swift in Sources */,
 				CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */,
+				A7E54302219F44A200261E9B /* S3Service.swift in Sources */,
 				CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */,
 				CCA060EB219DD64000B558CA /* ImageLoader.swift in Sources */,
 				CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */,
