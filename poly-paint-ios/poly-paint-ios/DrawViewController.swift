@@ -33,7 +33,6 @@ class DrawViewController: UIViewController {
     var currentShape = Shape.None
     var isUserEditing: Bool = false
     var currentBezierPath: UIBezierPath?
-   // var layersFromShapes = [CALayer]()
     var insideCanvas = false
     var selectedColor : UIColor = UIColor.black
     var startPointOfLine: CGPoint?
@@ -135,53 +134,33 @@ class DrawViewController: UIViewController {
     }
     
     func rectangleTapped() {
-        if(self.currentShape == Shape.Rectangle) {
-            self.isUserEditing = false
-            self.currentShape = Shape.None
-        } else {
-            self.isUserEditing = true
-            self.currentShape = Shape.Rectangle
-            self.cancelButton.isEnabled = true
-        }
+        self.isUserEditing = true
+        self.currentShape = Shape.Rectangle
+        self.cancelButton.isEnabled = true
     }
     func ellipseTapped() {
-        if(self.currentShape == Shape.Ellipse) {
-            self.isUserEditing = false
-        } else {
-            self.isUserEditing = true
-            self.currentShape = Shape.Ellipse
-            self.cancelButton.isEnabled = true
-        }
-        
+        self.isUserEditing = true
+        self.currentShape = Shape.Ellipse
+        self.cancelButton.isEnabled = true
     }
     
     func triangleTapped() {
-        if(self.currentShape == Shape.Triangle) {
-            self.isUserEditing = false
-            self.currentShape = Shape.None
-        } else {
-            self.isUserEditing = true
-            self.currentShape = Shape.Triangle
-            self.cancelButton.isEnabled = true
-        }
+        self.isUserEditing = true
+        self.currentShape = Shape.Triangle
+        self.cancelButton.isEnabled = true
     }
     
     @IBAction func lineTapped() {
-        if(self.currentShape == Shape.Line) {
-            self.isUserEditing = false
-            self.currentShape = Shape.None
-        } else {
-            self.isUserEditing = true
-            self.currentShape = Shape.Line
-            self.cancelButton.isEnabled = true
-        }
+        self.isUserEditing = true
+        self.currentShape = Shape.Line
+        self.cancelButton.isEnabled = true
+
     }
     
     @IBAction func stickfigureTapped() {
         let stickFigure = StickFigureView()
         self.shapes[stickFigure.uuid] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
-        //self.layersFromShapes.append(stickFigure.layer)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
