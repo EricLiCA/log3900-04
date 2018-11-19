@@ -17,6 +17,7 @@ class BasicShapeView: UIView {
     var anchorPointsLayers = [CAShapeLayer]()
     var color: UIColor?
     var shapeType: String?
+    var index: Int?
     
     init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?) {
         self.shapeType = shapeType
@@ -228,6 +229,29 @@ class BasicShapeView: UIView {
             }
             numAnchor = numAnchor + 1
         }
+    }
+    
+    func toShapeObject() -> Data? {
+        
+        let shape: [String: Any] = [
+            "id": self.uuid,
+            "imageid": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "shapetype": self.shapeType!,
+            "index": -1,
+            "shapeinfo": [
+                "Center": [
+                    "X": self.center.x,
+                    "Y": self.center.y
+                ],
+                "Width": self.frame.width,
+                "Height": self.frame.height,
+                "Color": self.color?.hexString
+            ]
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+        return jsonData;
+        
     }
 }
 
