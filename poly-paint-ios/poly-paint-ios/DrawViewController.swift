@@ -199,7 +199,7 @@ class DrawViewController: UIViewController {
                 self.lineEditing = true
                 self.lineBeingEdited = line
                 line.select()
-                
+                self.showOptionsView()
                 if(hitPointTest == 0) {
                     self.lineBeingEdited?.firstAnchorShapeId = nil
                     self.lineBeingEdited?.firstAnchorShapeIndex = nil
@@ -209,6 +209,7 @@ class DrawViewController: UIViewController {
                 }
             } else if(self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
                 self.lineBeingEdited?.unselect()
+                self.hideOptionsView()
                 self.lineIndexEdit = nil
                 self.lineEditing = false
                 self.pointIndexEditing = -1
@@ -217,8 +218,10 @@ class DrawViewController: UIViewController {
                 self.lineEditing = true
                 self.lineBeingEdited = line
                 line.select()
+                self.showOptionsView()
                 self.pointIndexEditing = -1
             } else {
+                self.hideOptionsView()
                 line.unselect()
             }
             lineIndex += 1
@@ -228,13 +231,13 @@ class DrawViewController: UIViewController {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(self.lineEditing && self.pointIndexEditing != -1) {
             self.lineBeingEdited?.points[self.pointIndexEditing!] = (touches.first?.location(in: self.drawingPlace))!
-            drawLine(line: self.lineBeingEdited!)
+            redrawLine(line: self.lineBeingEdited!)
         } else if(self.lineEditing && !self.addedNewPointToLine) {
             self.addedNewPointToLine = true
             self.lineBeingEdited?.addPoint(point: (touches.first?.location(in: self.drawingPlace))!)
         } else if(self.lineEditing) {
             self.lineBeingEdited?.points[(self.lineBeingEdited?.hitStartPoint)! + 1] = (touches.first?.location(in: self.drawingPlace))!
-            drawLine(line: self.lineBeingEdited!)
+            redrawLine(line: self.lineBeingEdited!)
         }
         
         if(isUserEditing && self.insideCanvas) {
@@ -553,6 +556,25 @@ class DrawViewController: UIViewController {
     }
     
     func drawLine(line: Line) {
+        print("called draw line")
+        var bezier = UIBezierPath()
+        for (index, point) in line.points.enumerated() {
+            if(index < line.points.count - 1) {
+                bezier.move(to: line.points[index])
+                bezier.addLine(to: line.points[index + 1])
+            }
+        }
+        self.currentContext = nil
+        bezier.close()
+        let layer = CAShapeLayer()
+        layer.path = bezier.cgPath
+        layer.borderWidth = 2
+        layer.strokeColor = UIColor.black.cgColor
+        line.layer = layer
+        redrawLayers()
+    }
+    
+    func redrawLine(line: Line) {
         var bezier = UIBezierPath()
         for (index, point) in line.points.enumerated() {
             if(index < line.points.count - 1) {
@@ -569,6 +591,8 @@ class DrawViewController: UIViewController {
         line.layer = layer
         redrawLayers()
     }
+    
+    
     
     func resetLineEndPoints() {
         self.startPointOfLine = nil
