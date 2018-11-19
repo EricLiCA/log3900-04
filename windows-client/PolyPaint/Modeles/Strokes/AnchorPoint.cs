@@ -31,7 +31,7 @@ namespace PolyPaint.Modeles.Strokes
             }
         }
 
-        public AnchorPoint(StylusPointCollection pts, CustomStrokeCollection strokes, Guid id, Anchorable parent, int anchorIndex) : base(pts, strokes)
+        public AnchorPoint(StylusPointCollection pts, int index,  CustomStrokeCollection strokes, Guid id, Anchorable parent, int anchorIndex) : base(index, pts, strokes)
         {
             this.Id = id;
             this.ParentId = ((CustomStroke)parent).Id.ToString();

@@ -30,8 +30,7 @@ namespace PolyPaint.Modeles.Tools
             if (ActiveStroke != null)
                 strokes.Remove(ActiveStroke);
 
-            ActiveStroke = InstantiateForm(pts, strokes);
-            ActiveStroke.DrawingAttributes.Color = selectedColor;
+            ActiveStroke = InstantiateForm(pts, strokes, selectedColor);
             strokes.Add(ActiveStroke);
         }
 
@@ -40,11 +39,17 @@ namespace PolyPaint.Modeles.Tools
             if (ActiveStroke != null)
             {
                 strokes.Remove(ActiveStroke);
-                strokes.Add(ActiveStroke.Clone());
+                var clone = ActiveStroke.Clone();
+                if (clone is TextStroke)
+                    ((TextStroke)clone).showBorder = false;
+
+                strokes.Add(clone);
+                ((CustomStroke)clone).Select();
+                EditionSocket.AddStroke(((Savable)clone).toJson());
             }
             IsDrawing = false;
         }
 
-        public abstract Stroke InstantiateForm(StylusPointCollection pts, CustomStrokeCollection strokes);
+        public abstract Stroke InstantiateForm(StylusPointCollection pts, CustomStrokeCollection strokes, Color color);
     }
 }

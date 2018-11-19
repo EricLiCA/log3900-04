@@ -12,11 +12,20 @@ namespace PolyPaint.Modeles.Strokes
 {
     class PersonStroke : ShapeStroke, Textable
     {
-        private string Name;
+        public string Name;
 
-        public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
+        public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : this(pts, strokes, "Actor")
         {
-            this.Name = "Actor";
+        }
+
+        public PersonStroke(StylusPointCollection pts, CustomStrokeCollection strokes, string name) : base(pts, strokes)
+        {
+            this.Name = name;
+        }
+
+        public PersonStroke(string id, int index, StylusPointCollection pts, CustomStrokeCollection strokes, string name) : base(id, index, pts, strokes, Colors.White)
+        {
+            this.Name = name;
         }
 
         public string GetText()
@@ -40,6 +49,7 @@ namespace PolyPaint.Modeles.Strokes
         {
             this.Name = text;
             this.Refresh();
+            EditionSocket.EditStroke(this.toJson());
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
@@ -75,9 +85,9 @@ namespace PolyPaint.Modeles.Strokes
 
             drawingContext.PushTransform(new RotateTransform(Rotation, Center.X, Center.Y));
 
-            if (this.isSelected())
+            if (this.isSelected() || this.isLocked())
             {
-                Pen selectedPen = new Pen(new SolidColorBrush(Colors.GreenYellow), 5);
+                Pen selectedPen = new Pen(new SolidColorBrush(this.isSelected() ? Colors.GreenYellow : Colors.OrangeRed), 5);
                 drawingContext.DrawEllipse(new SolidColorBrush(Colors.White), selectedPen, headPos, width / 2.5, height / 7);
                 drawingContext.DrawLine(selectedPen, neck, crouch);
                 drawingContext.DrawLine(selectedPen, rightArm, leftArm);
@@ -114,22 +124,18 @@ namespace PolyPaint.Modeles.Strokes
             }
         }
 
-        public override string toJson()
-        {
-            SerializedTextableShape toSend = new SerializedTextableShape()
-            {
-                Id = this.Id,
-                Type = this.StrokeType(),
-                Index = -1,
-                Center = this.Center,
-                Width = this.Width,
-                Height = this.Height,
-                Content = new List<string>() { this.Name }
-            };
-            return JsonConvert.SerializeObject(toSend);
-        }
-
         public override StrokeType StrokeType() => Strokes.StrokeType.ACTOR;
 
+        public override ShapeInfo GetShapeInfo()
+        {
+            return new TextableShapeInfo
+            {
+                Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y },
+                Height = this.Height,
+                Width = this.Width,
+                Content = new List<string>() { this.Name },
+                Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
+            };
+        }
     }
 }
