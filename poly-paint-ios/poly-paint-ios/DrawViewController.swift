@@ -164,47 +164,36 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first
-        self.firstTouch = touch?.location(in: drawingPlace)
-        self.insideCanvas = self.drawingPlace.frame.contains((touch?.location(in: self.view))!)
-        
+        self.firstTouch = touches.first?.location(in: drawingPlace)
+        self.insideCanvas = self.drawingPlace.frame.contains((touches.first?.location(in: self.view))!)
         var lineIndex = 0
+        
         for line in self.lines {
             var hitPointTest = line.hitPointTest(touchPoint: self.firstTouch!)
             
-            if(!self.lineEditing && hitPointTest != -1) { // editing point in line
-                self.pointIndexEditing = hitPointTest
-                self.lineIndexEdit = lineIndex
-                self.lineEditing = true
-                self.lineBeingEdited = line
-                line.select()
-                self.showOptionsView()
-                if(hitPointTest == 0) {
+            if(hitPointTest != -1) { // editing point in line
+                self.editingPointOnLine(line: line, pointBeingEdited: hitPointTest, lineIndex: lineIndex)
+                if(hitPointTest == 0) { // first end
                     self.lineBeingEdited?.firstAnchorShapeId = nil
                     self.lineBeingEdited?.firstAnchorShapeIndex = nil
-                } else if(hitPointTest == ((self.lineBeingEdited?.points.count)! - 1)) {
+                } else if(hitPointTest == ((self.lineBeingEdited?.points.count)! - 1)) { // second end
                     self.lineBeingEdited?.secondAnchorShapeId = nil
                     self.lineBeingEdited?.secondAnchorShapeIndex = nil
                 }
-            } else if(self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
-                self.lineBeingEdited?.unselect()
-                self.hideOptionsView()
-                self.lineIndexEdit = nil
-                self.lineEditing = false
-                self.pointIndexEditing = -1
-            } else if (!self.lineEditing && line.hitTest(touchPoint: self.firstTouch!)) {
-                self.lineIndexEdit = lineIndex
-                self.lineEditing = true
-                self.lineBeingEdited = line
-                line.select()
-                self.showOptionsView()
-                self.pointIndexEditing = -1
-            } else {
-                self.hideOptionsView()
-                line.unselect()
+            } else if (line.hitTest(touchPoint: self.firstTouch!)) { // adding angle to line
+                self.editingPointOnLine(line: line, pointBeingEdited: -1, lineIndex: lineIndex)
             }
+            
             lineIndex += 1
         }
+    }
+    
+    func editingPointOnLine(line: Line, pointBeingEdited: Int, lineIndex: Int) {
+        self.pointIndexEditing = pointBeingEdited
+        self.lineIndexEdit = lineIndex
+        self.lineEditing = true
+        self.lineBeingEdited = line
+        self.lineEditing = true
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -607,16 +596,6 @@ class DrawViewController: UIViewController {
     func showOptionsView() {
         self.optionsView.isHidden = false
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
