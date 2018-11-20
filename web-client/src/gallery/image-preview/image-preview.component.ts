@@ -10,20 +10,33 @@ import { LikesAndCommentsService } from '../../services/likes-and-comments.servi
 })
 export class ImagePreviewComponent implements OnInit {
 
-  comment: string;
+  private _comment: string;
+  get comment(): string {
+    return this.isConnected ? this._comment : "Must be logged in to comment";
+  }
+  set comment(value: string) {
+    this._comment = value;
+  }
+
+
+
   constructor(@Inject(MAT_DIALOG_DATA) public image,
     private likesAndCommentsService: LikesAndCommentsService,
     private authenticationService: AuthenticationService) {
-    this.comment = "";
+    this._comment = "";
   }
 
   /** GET images from the server */
   ngOnInit() {
   }
 
+  public get isConnected(): boolean {
+    return this.authenticationService.loggedIn;
+  }
+
   addComment(): void {
     this.likesAndCommentsService.addComment(this.authenticationService.user.id,
-      this.comment,
+      this._comment,
       this.authenticationService.user.userName,
       this.authenticationService.user.profileImage);
   }
@@ -37,6 +50,8 @@ export class ImagePreviewComponent implements OnInit {
   }
 
   isLiked(): boolean {
+    if (!this.isConnected) return false;
+
     let liked = false;
     this.likesAndCommentsService.likes.forEach(like => {
       if (like.UserId == this.authenticationService.user.id){
