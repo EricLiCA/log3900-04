@@ -26,7 +26,7 @@ class Line {
     var secondAnchorShapeId: String?
     var secondAnchorShapeIndex: Int?
     var firstEndLabel: String?
-    var firstEndRelation: String?
+    var firstEndRelation: Relation?
     var secondEndLabel: String?
     var secondEndRelation: String?
     var selected = false
@@ -35,6 +35,7 @@ class Line {
     
     init(layer: CAShapeLayer) {
         self.layer = layer
+        self.firstEndRelation = Relation.Arrow
     }
     
     func hitTest(touchPoint: CGPoint) -> Bool {
@@ -149,12 +150,28 @@ class Line {
                 bezier.addLine(to: self.points[index + 1])
             }
         }
+        
+        if(self.firstEndRelation == Relation.Arrow) {
+            self.addArrow(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier)
+        }
+        
         bezier.close()
         let layer = CAShapeLayer()
         layer.path = bezier.cgPath
         layer.borderWidth = 2
         layer.strokeColor = UIColor.black.cgColor
         self.layer = layer
+    }
+    
+    func addArrow(start: CGPoint, end: CGPoint, pointerLineLength: CGFloat, arrowAngle: CGFloat, bezier: UIBezierPath) {
+        
+        let startEndAngle = atan((end.y - start.y) / (end.x - start.x)) + ((end.x - start.x) < 0 ? CGFloat(Double.pi) : 0)
+        let arrowLine1 = CGPoint(x: end.x + pointerLineLength * cos(CGFloat(Double.pi) - startEndAngle + arrowAngle), y: end.y - pointerLineLength * sin(CGFloat(Double.pi) - startEndAngle + arrowAngle))
+        let arrowLine2 = CGPoint(x: end.x + pointerLineLength * cos(CGFloat(Double.pi) - startEndAngle - arrowAngle), y: end.y - pointerLineLength * sin(CGFloat(Double.pi) - startEndAngle - arrowAngle))
+        bezier.move(to: end)
+        bezier.addLine(to: arrowLine1)
+        bezier.move(to: end)
+        bezier.addLine(to: arrowLine2)
     }
     
     
