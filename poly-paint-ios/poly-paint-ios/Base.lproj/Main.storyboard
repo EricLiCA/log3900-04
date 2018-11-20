@@ -44,7 +44,7 @@
                                     <action selector="onTapProtection:" destination="vM9-gr-Oy8" eventType="valueChanged" id="Ip8-S9-9pC"/>
                                 </connections>
                             </segmentedControl>
-                            <stackView opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QMK-ZQ-dSR">
+                            <stackView opaque="NO" contentMode="center" fixedFrame="YES" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QMK-ZQ-dSR">
                                 <rect key="frame" x="54" y="213" width="230" height="100.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -83,27 +83,35 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfu-w9-hLO">
-                                <rect key="frame" x="175" y="346" width="61" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Cancel"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQ0-Du-sS4">
-                                <rect key="frame" x="103" y="346" width="30" height="36"/>
+                                <rect key="frame" x="103" y="336" width="30" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Ok"/>
+                                <connections>
+                                    <action selector="okTapped:" destination="vM9-gr-Oy8" eventType="touchUpInside" id="h85-sv-QgW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfu-w9-hLO">
+                                <rect key="frame" x="175" y="336" width="61" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelTapped:" destination="vM9-gr-Oy8" eventType="touchUpInside" id="5qW-Zb-y7Y"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="rwH-jB-jbE"/>
                     </view>
                     <connections>
+                        <outlet property="confirmPasswordField" destination="7YI-UE-o6u" id="1aa-CQ-y1I"/>
                         <outlet property="imageTitle" destination="2il-ml-mGU" id="C57-7z-nwp"/>
                         <outlet property="passMatch" destination="9Cf-fT-Lft" id="sdR-ix-pVR"/>
                         <outlet property="passwordStack" destination="QMK-ZQ-dSR" id="Csh-iQ-MI4"/>
                         <outlet property="segmentedControl" destination="Hqx-kT-gEe" id="pX8-Wp-Dd6"/>
+                        <outlet property="setPasswordField" destination="azJ-Ws-88E" id="rk4-hl-Ewn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tZP-p7-94y" userLabel="First Responder" sceneMemberID="firstResponder"/>
