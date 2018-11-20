@@ -17,7 +17,7 @@
   <button (click)="addLike()" [disabled]="isLiked() || !isConnected || isMine" class="btn btn-primary">
     <i class="fa fa-thumbs-up pr-1 fa-lg"></i> Like
   </button>
-  <button (click)="removeLike()" [disabled]="!isLiked() || !isConnected || isMine" [attr.disabled]="false" class="btn btn-danger">
+  <button (click)="removeLike()" [disabled]="!isLiked() || !isConnected || isMine" class="btn btn-danger">
     <i class="fa fa-thumbs-down pr-1 fa-lg"></i> Dislike
   </button>
 
@@ -39,11 +39,11 @@
     <label for="exampleFormControlTextarea3"></label>
     <textarea class="form-control" id="exampleFormControlTextarea3" rows="7" [(ngModel)]="this.comment" [disabled]="!isConnected" ></textarea>
   </div>
-  <button type="button" class="btn btn-primary" (click)="this.addComment()" [disabled]="!isConnected">Post</button>
+  <button type="button" class="btn btn-primary post" (click)="this.addComment()" [disabled]="!isConnected">Post</button>
   <div class="media" *ngFor="let comment of likesAndCommentsService.comments">
     <img class="d-flex rounded-circle avatar z-depth-1-half mr-3 profileImage" src="{{comment.ProfileImage}}" alt="Avatar">
     <div class="media-body">
-      <h5 class="mt-0 font-weight-bold blue-text">{{comment.UserName}}</h5>
+      <h5 class="mt-0 font-weight-bold blue-text">{{comment.UserName}}   -<span class="timestamp">   {{comment.Timestamp | date :"dd/mm/y, HH:mm"}}</span></h5>
       {{comment.Comment}}
     </div>
   </div>

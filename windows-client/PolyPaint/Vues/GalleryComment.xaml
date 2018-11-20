@@ -11,7 +11,7 @@
             <ColumnDefinition  SharedSizeGroup="Checkerz" Width="67*" />
             <ColumnDefinition Width="558*" />
         </Grid.ColumnDefinitions>
-        <Image Source="https://picsum.photos/32/32/?image=474"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="48" Height="60.22" />
+        <Image Source="{Binding ImageComment.profileImage}"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Width="48" Height="60.22" />
         <StackPanel Margin="9,0,0,0" Grid.Column="1">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <TextBlock Text="{Binding ImageComment.userName}" FontWeight="Bold" FontSize="18" />

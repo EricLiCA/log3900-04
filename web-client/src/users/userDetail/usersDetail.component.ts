@@ -5,6 +5,9 @@ import { Image } from 'src/gallery/Image';
 import { User } from '../User';
 import { AuthenticationService } from 'src/admin/login.service';
 import { ImageWithLikes } from 'src/gallery/ImageWithLikes';
+import { MatDialog } from '@angular/material';
+import { LikesAndCommentsService } from '../../services/likes-and-comments.service';
+import { ImagePreviewComponent } from '../../gallery/image-preview/image-preview.component';
 
 @Component({
   selector: 'usersDetail-component',
@@ -24,7 +27,9 @@ export class UsersDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private loginService: AuthenticationService
+    private loginService: AuthenticationService,
+    private dialog: MatDialog,
+    private likesAndCommentsService: LikesAndCommentsService
   ) { }
 
   /** GET images from the server */
@@ -62,6 +67,16 @@ export class UsersDetailComponent {
       else {
         this.userService.deleteUserImage(clickedImage.id);
       }
+    });
+  }
+
+  openDialog(image: Image): void {
+    this.likesAndCommentsService.imageId = image.id;
+    this.likesAndCommentsService.previewImage();
+    this.dialog.open(ImagePreviewComponent , {
+      data: image,
+      width: "75%",
+      height: "75%"
     });
   }
 
