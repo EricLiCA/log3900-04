@@ -36,6 +36,9 @@ class PublicImageViewController: UIViewController {
             if (self.image?.protectionLevel! == "protected") {
                 self.askCorrectPassword()
             }
+            else {
+                self.performSegue(withIdentifier: "toImageEditorWithExistingImage", sender: self)
+            }
         })
         alertController.addAction(openEditorAction)
         
@@ -79,5 +82,12 @@ class PublicImageViewController: UIViewController {
     
     func checkCorrectPassword (password: String) -> Bool {
         return password == self.image?.password!
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toImageEditorWithExistingImage" {
+            let ImageEditorVC = segue.destination as! DrawViewController
+            ImageEditorVC.image = self.image
+        }
     }
 }

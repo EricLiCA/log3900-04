@@ -137,7 +137,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eoP-gJ-ha8">
-                                <rect key="frame" x="0.0" y="70" width="768" height="908"/>
+                                <rect key="frame" x="0.0" y="70" width="768" height="858"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" id="DVL-uI-Epi">
@@ -151,7 +151,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ml-0N-ERc" userLabel="DockView">
-                                <rect key="frame" x="0.0" y="978" width="768" height="46"/>
+                                <rect key="frame" x="0.0" y="928" width="768" height="46"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Send message" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="K9w-fb-oRX">
                                         <rect key="frame" x="8" y="8" width="752" height="30"/>
@@ -449,7 +449,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="655" y="-908"/>
+            <point key="canvasLocation" x="633" y="-1263"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Es3-Na-eqb">
@@ -499,7 +499,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lni-iO-eOs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1398" y="-1649"/>
+            <point key="canvasLocation" x="-23" y="-1986"/>
         </scene>
         <!--New Class View Controller-->
         <scene sceneID="2JB-on-srr">
@@ -561,7 +561,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Cd-f8-ZiB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="679" y="-1628"/>
+            <point key="canvasLocation" x="655" y="-1993"/>
         </scene>
         <!--Login Scene-->
         <scene sceneID="maM-Fp-ADF">
@@ -1018,7 +1018,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3de-HZ-5PF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2200.78125" y="-1247.4609375"/>
+            <point key="canvasLocation" x="2201" y="-1280"/>
         </scene>
         <!--Title-->
         <scene sceneID="8qG-aZ-cHP">
@@ -1067,11 +1067,12 @@
                         <outlet property="editBtn" destination="fmz-Sz-H4R" id="DIG-35-vxJ"/>
                         <outlet property="imageProtectionLevelLabel" destination="fpj-Rf-U1Q" id="Zup-jw-i7s"/>
                         <outlet property="imageView" destination="Rkt-xv-5Io" id="iar-2m-6ii"/>
+                        <segue destination="nxp-f4-1rm" kind="show" identifier="toImageEditorWithExistingImage" id="sFe-vd-FYf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IDe-SH-Yb4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2904.6875" y="-1247.4609375"/>
+            <point key="canvasLocation" x="2905" y="-1280"/>
         </scene>
         <!--My Images-->
         <scene sceneID="zQT-O3-ylN">
@@ -1168,6 +1169,7 @@
                         <segue destination="Qfr-9e-yW8" kind="popoverPresentation" identifier="toChangeImagePassword" popoverAnchorBarButtonItem="Gn1-gp-WbM" id="7j0-iC-4dm">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
+                        <segue destination="nxp-f4-1rm" kind="show" identifier="toImageEditorFromPrivate" id="4Zh-W7-tx9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAa-l9-Bnp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1284,7 +1286,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQ5-CB-Woq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1455" y="-585"/>
+            <point key="canvasLocation" x="1216" y="-596"/>
         </scene>
         <!--Account Settings View Controller-->
         <scene sceneID="NMK-hB-sAV">
@@ -2941,6 +2943,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="IDQ-Qb-zNY"/>
-        <segue reference="Scu-Rl-Q2B"/>
+        <segue reference="sFe-vd-FYf"/>
+        <segue reference="M00-kH-IRh"/>
     </inferredMetricsTieBreakers>
 </document>
