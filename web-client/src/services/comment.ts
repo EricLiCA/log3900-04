@@ -4,4 +4,5 @@ export class Comment{
     timestamp: Date;
     comment: string;
     userName: string;
+    profileImage: string;
 }

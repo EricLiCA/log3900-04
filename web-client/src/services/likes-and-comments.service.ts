@@ -15,9 +15,13 @@ export class LikesAndCommentsService {
 
     constructor() {
         this.socket = io("http://localhost:3000/");
-        let randomId = Guid.raw();
-        this.socket.emit("setUsername", randomId);
+        this.socket.emit("setUsername", Guid.raw());
+        this.likes = [];
+        this.comments = [];
         this.onPreviewImage();
+        this.onAddComment();
+        this.onAddLike();
+        this.onRemoveLike();
     }
 
 
@@ -29,7 +33,40 @@ export class LikesAndCommentsService {
         });
     }
 
+    onAddComment(): void {
+        this.socket.on("addComment", (data) => {
+            this.comments.push(data);
+        });
+    }
+
+    onAddLike(): void {
+        this.socket.on("addLike", (data) => {
+            this.likes.push(data);
+        });
+    }
+
+    onRemoveLike(): void {
+        this.socket.on("removeLike", (data) => {
+          this.likes.splice(this.likes.findIndex(likeToRemove => likeToRemove.UserId == data.UserId), 1);
+        });
+    }
+
     previewImage(): void {
         this.socket.emit("previewImage", this.imageId);
     }
+
+    addComment(userId: String, comment: String, userName: String, profileImage: String): void {
+        this.socket.emit("addComment", userId, comment, userName, profileImage);
+    }
+
+    addLike(userId: String): void {
+      this.socket.emit("addLike", userId);
+
+    }
+
+    removeLike(userId: String): void {
+      this.socket.emit("removeLike", userId);
+    }
+
+
 }
