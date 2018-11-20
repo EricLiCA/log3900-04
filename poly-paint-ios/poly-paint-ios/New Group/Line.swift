@@ -33,13 +33,15 @@ class Line {
     var hitStartPoint: Int?
     var hitEndPoint: Int?
     
-    init(layer: CAShapeLayer, startPoint: CGPoint, endPoint: CGPoint, firstEndRelation: Relation, secondEndRelation: Relation) {
+    init(layer: CAShapeLayer, startPoint: CGPoint, endPoint: CGPoint, firstEndRelation: Relation, secondEndRelation: Relation, firstEndTextField: String, secondEndTextField: String) {
         self.points.append(startPoint)
         self.points.append(endPoint)
         self.layer = layer
         self.firstEndRelation = firstEndRelation
         self.secondEndRelation = secondEndRelation
         self.redrawLine()
+        self.firstEndLabel = firstEndTextField
+        self.secondEndLabel = secondEndTextField
     }
     
     func hitTest(touchPoint: CGPoint) -> Bool {
