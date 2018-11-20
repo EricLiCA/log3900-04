@@ -49,19 +49,7 @@ class DrawViewController: UIViewController {
     var addedNewPointToLine = false
     var pointIndexEditing: Int?
     
-    // options view
-    @IBOutlet weak var firstEndTextField: UITextField!
-    @IBOutlet weak var secondEndTextField: UITextField!
-    @IBOutlet weak var firstEndAssociationButton: UIButton!
-    @IBOutlet weak var firstEndAggregationButton: UIButton!
-    @IBOutlet weak var firstEndCompositionButton: UIButton!
-    @IBOutlet weak var firstEndInheritenceButton: UIButton!
-    @IBOutlet weak var firstEndArrowButton: UIButton!
-    @IBOutlet weak var secondEndAssociationButton: UIButton!
-    @IBOutlet weak var secondEndAggregationButton: UIButton!
-    @IBOutlet weak var secondEndCompositionButton: UIButton!
-    @IBOutlet weak var secondEndInheritenceButton: UIButton!
-    @IBOutlet weak var secondEndArrowButton: UIButton!
+
     
     
     override func viewDidLoad() {
@@ -149,28 +137,14 @@ class DrawViewController: UIViewController {
         self.currentShape = Shape.Triangle
         self.cancelButton.isEnabled = true
     }
-    
-    @IBAction func lineTapped() {
-        //self.isUserEditingShape = true
-        self.currentShape = Shape.Line
-        self.cancelButton.isEnabled = true
-        self.optionsView.isHidden = false
-    }
+
     
     @IBAction func stickfigureTapped() {
         let stickFigure = StickFigureView()
         self.shapes[stickFigure.uuid] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
     }
-    
-    @IBAction func insertLineTapped(_ sender: UIButton) {
-        self.isUserEditingShape = true
-        self.optionsView.isHidden = true
-    }
-    
-    @IBAction func cancelInsertLineTapped(_ sender: UIButton) {
-        self.optionsView.isHidden = true
-    }
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.firstTouch = touches.first?.location(in: drawingPlace)
@@ -330,7 +304,7 @@ class DrawViewController: UIViewController {
                 self.shapes[triangleView.uuid] = triangleView
                 self.drawingPlace.addSubview(triangleView)
             } else if(currentShape == Shape.Line) {
-                var line = Line(layer: layer, startPoint: self.firstTouch!, endPoint: self.secondTouch!, firstEndRelation: Relation.Arrow, secondEndRelation: Relation.Arrow)
+                var line = Line(layer: layer, startPoint: self.firstTouch!, endPoint: self.secondTouch!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!)
                 self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
             }
@@ -504,7 +478,7 @@ class DrawViewController: UIViewController {
             layer.path = bezier.cgPath
             layer.borderWidth = 2
             layer.strokeColor = UIColor.black.cgColor
-            var line = Line(layer: layer, startPoint: self.startPointOfLine!, endPoint: self.endPointOfLine!, firstEndRelation: Relation.Arrow, secondEndRelation: Relation.Arrow)
+            var line = Line(layer: layer, startPoint: self.startPointOfLine!, endPoint: self.endPointOfLine!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!)
             line.firstAnchorShapeId = self.startPointView?.uuid
             line.firstAnchorShapeIndex = self.startAnchorNumber
             line.secondAnchorShapeId = self.endPointView?.uuid
@@ -559,6 +533,137 @@ class DrawViewController: UIViewController {
         self.optionsView.isHidden = false
     }
 
+    
+    // Options View
+    // options view
+    @IBOutlet weak var firstEndTextField: UITextField!
+    @IBOutlet weak var secondEndTextField: UITextField!
+    @IBOutlet weak var firstEndAssociationButton: UIButton!
+    @IBOutlet weak var firstEndAggregationButton: UIButton!
+    @IBOutlet weak var firstEndCompositionButton: UIButton!
+    @IBOutlet weak var firstEndInheritenceButton: UIButton!
+    @IBOutlet weak var firstEndArrowButton: UIButton!
+    @IBOutlet weak var secondEndAssociationButton: UIButton!
+    @IBOutlet weak var secondEndAggregationButton: UIButton!
+    @IBOutlet weak var secondEndCompositionButton: UIButton!
+    @IBOutlet weak var secondEndInheritenceButton: UIButton!
+    @IBOutlet weak var secondEndArrowButton: UIButton!
+    var firstEndRelation: Relation?
+    var secondEndRelation: Relation?
+    
+    func lineTapped() {
+        self.optionsView.isHidden = false
+    }
+    
+    @IBAction func insertLineTapped(_ sender: UIButton) {
+        self.isUserEditingShape = true
+        self.optionsView.isHidden = true
+        self.currentShape = Shape.Line
+    }
+    
+    @IBAction func cancelInsertLineTapped(_ sender: UIButton) {
+        self.optionsView.isHidden = true
+        self.firstEndRelation = nil
+        self.secondEndRelation = nil
+    }
+    
+    @IBAction func firstEndAssociationTapped(_ sender: UIButton) {
+        self.firstEndRelation = Relation.Association
+        self.firstEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.firstEndAggregationButton.backgroundColor = UIColor.white
+        self.firstEndCompositionButton.backgroundColor = UIColor.white
+        self.firstEndInheritenceButton.backgroundColor = UIColor.white
+        self.firstEndArrowButton.backgroundColor = UIColor.white
+    }
+    
+    @IBAction func firstEndAggregationTapped(_ sender: UIButton) {
+        self.firstEndRelation = Relation.Aggregation
+        self.firstEndAssociationButton.backgroundColor = UIColor.white
+        self.firstEndAggregationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.firstEndCompositionButton.backgroundColor = UIColor.white
+        self.firstEndInheritenceButton.backgroundColor = UIColor.white
+        self.firstEndArrowButton.backgroundColor = UIColor.white
+    }
+    
+    @IBAction func firstEndCompositionTapped(_ sender: UIButton) {
+        self.firstEndRelation = Relation.Composition
+        self.firstEndAssociationButton.backgroundColor = UIColor.white
+        self.firstEndAggregationButton.backgroundColor = UIColor.white
+        self.firstEndCompositionButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.firstEndInheritenceButton.backgroundColor = UIColor.white
+        self.firstEndArrowButton.backgroundColor = UIColor.white
+    }
+    
+    @IBAction func firstEndInheritanceTapped(_ sender: UIButton) {
+        self.firstEndRelation = Relation.Inheritance
+        self.firstEndAssociationButton.backgroundColor = UIColor.white
+        self.firstEndAggregationButton.backgroundColor = UIColor.white
+        self.firstEndCompositionButton.backgroundColor = UIColor.white
+        self.firstEndInheritenceButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.firstEndArrowButton.backgroundColor = UIColor.white
+    }
+    
+    @IBAction func firstEndArrowTapped(_ sender: UIButton) {
+        self.firstEndRelation = Relation.Arrow
+        self.firstEndAssociationButton.backgroundColor = UIColor.white
+        self.firstEndAggregationButton.backgroundColor = UIColor.white
+        self.firstEndCompositionButton.backgroundColor = UIColor.white
+        self.firstEndInheritenceButton.backgroundColor = UIColor.white
+        self.firstEndArrowButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    }
+    
+    @IBAction func secondEndAssociationTapped(_ sender: UIButton) {
+        self.secondEndRelation = Relation.Association
+        self.secondEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.secondEndAggregationButton.backgroundColor = UIColor.white
+        self.secondEndCompositionButton.backgroundColor = UIColor.white
+        self.secondEndInheritenceButton.backgroundColor = UIColor.white
+        self.secondEndArrowButton.backgroundColor = UIColor.white
+    }
+    
+    @IBAction func secondEndAggregationTapped(_ sender: UIButton) {
+        self.secondEndRelation = Relation.Aggregation
+        self.secondEndAssociationButton.backgroundColor = UIColor.white
+        self.secondEndAggregationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.secondEndCompositionButton.backgroundColor = UIColor.white
+        self.secondEndInheritenceButton.backgroundColor = UIColor.white
+        self.secondEndArrowButton.backgroundColor = UIColor.white
+    }
+    
+    @IBAction func secondEndCompositionTapped(_ sender: UIButton) {
+        self.secondEndRelation = Relation.Composition
+        self.secondEndAssociationButton.backgroundColor = UIColor.white
+        self.secondEndAggregationButton.backgroundColor = UIColor.white
+        self.secondEndCompositionButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.secondEndInheritenceButton.backgroundColor = UIColor.white
+        self.secondEndArrowButton.backgroundColor = UIColor.white
+    }
+    
+    @IBAction func secondEndInheritanceTapped(_ sender: UIButton) {
+        self.secondEndRelation = Relation.Inheritance
+        self.secondEndAssociationButton.backgroundColor = UIColor.white
+        self.secondEndAggregationButton.backgroundColor = UIColor.white
+        self.secondEndCompositionButton.backgroundColor = UIColor.white
+        self.secondEndInheritenceButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.secondEndArrowButton.backgroundColor = UIColor.white
+    }
+    
+    @IBAction func secondEndArrowTapped(_ sender: UIButton) {
+        self.secondEndRelation = Relation.Arrow
+        self.secondEndAssociationButton.backgroundColor = UIColor.white
+        self.secondEndAggregationButton.backgroundColor = UIColor.white
+        self.secondEndCompositionButton.backgroundColor = UIColor.white
+        self.secondEndInheritenceButton.backgroundColor = UIColor.white
+        self.secondEndArrowButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    }
+    
+    func defaultRelationOptions() {
+        self.firstEndRelation = Relation.Association
+        self.firstEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        self.secondEndRelation = Relation.Association
+        self.secondEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    }
+    
 }
 
 

@@ -379,6 +379,9 @@
                                             <constraint firstAttribute="height" constant="22" id="wsq-fJ-MGb"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="association"/>
+                                        <connections>
+                                            <action selector="firstEndAssociationTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="05e-DF-5an"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCi-yh-RD9">
                                         <rect key="frame" x="255" y="46" width="35" height="22"/>
@@ -387,6 +390,9 @@
                                             <constraint firstAttribute="width" constant="35" id="fLU-QP-VL8"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="association"/>
+                                        <connections>
+                                            <action selector="secondEndAssociationTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="MO0-06-xlR"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ewn-aM-IUw">
                                         <rect key="frame" x="303" y="8" width="35" height="22"/>
@@ -395,6 +401,9 @@
                                             <constraint firstAttribute="width" constant="35" id="fwq-3c-boM"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="agg_left"/>
+                                        <connections>
+                                            <action selector="firstEndAggregationTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="6U8-Ut-Aup"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C12-bn-SZZ">
                                         <rect key="frame" x="303" y="45" width="35" height="22"/>
@@ -403,6 +412,9 @@
                                             <constraint firstAttribute="width" constant="35" id="g32-UJ-NOy"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="agg_left"/>
+                                        <connections>
+                                            <action selector="secondEndAggregationTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="LmD-Mb-W4b"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wv8-CC-xhh">
                                         <rect key="frame" x="354" y="7" width="35" height="22"/>
@@ -411,6 +423,9 @@
                                             <constraint firstAttribute="width" constant="35" id="Ord-8G-S14"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="comp_left"/>
+                                        <connections>
+                                            <action selector="firstEndCompositionTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="MAj-Na-oh1"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zyh-ht-ZlW">
                                         <rect key="frame" x="406" y="8" width="35" height="22"/>
@@ -419,6 +434,9 @@
                                             <constraint firstAttribute="height" constant="22" id="cTL-x1-qNT"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="inh_left"/>
+                                        <connections>
+                                            <action selector="firstEndInheritanceTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="Nem-C6-iid"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Aw-Lo-mhy">
                                         <rect key="frame" x="406" y="45" width="35" height="22"/>
@@ -427,6 +445,9 @@
                                             <constraint firstAttribute="width" constant="35" id="fu4-qx-gwb"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="inh_left"/>
+                                        <connections>
+                                            <action selector="secondEndInheritanceTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="Fxs-0r-EWJ"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlJ-kb-eFI">
                                         <rect key="frame" x="354" y="45" width="35" height="22"/>
@@ -435,6 +456,9 @@
                                             <constraint firstAttribute="height" constant="22" id="zeO-AJ-dcP"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="comp_left"/>
+                                        <connections>
+                                            <action selector="secondEndCompositionTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="lRO-YT-XTJ"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXH-qH-Lq4">
                                         <rect key="frame" x="460" y="8" width="35" height="22"/>
@@ -443,6 +467,9 @@
                                             <constraint firstAttribute="height" constant="22" id="uof-M2-hBz"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="arrow"/>
+                                        <connections>
+                                            <action selector="firstEndArrowTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="Zi8-90-K0v"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tgy-PV-U5F">
                                         <rect key="frame" x="460" y="45" width="35" height="22"/>
@@ -451,6 +478,9 @@
                                             <constraint firstAttribute="width" constant="35" id="xVA-ZZ-cQd"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="arrow"/>
+                                        <connections>
+                                            <action selector="secondEndArrowTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="57c-07-b3k"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZEO-6W-Mle">
                                         <rect key="frame" x="545" y="18" width="65" height="30"/>
