@@ -14,6 +14,7 @@ import { AuthenticationService } from '../admin/login.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UsersDetailComponent } from 'src/users/userDetail/usersDetail.component';
 import { FilterPipe } from 'src/services/filter.pipe';
+import { SecretComponent } from 'src/secret/secret.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FilterPipe } from 'src/services/filter.pipe';
     UsersComponent,
     AdminComponent,
     UsersDetailComponent,
-    FilterPipe
+    FilterPipe,
+    SecretComponent
   ],
   imports: [
     BrowserModule,
