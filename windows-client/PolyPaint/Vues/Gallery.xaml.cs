@@ -49,6 +49,7 @@ namespace PolyPaint.Vues
             LikeButton.IsEnabled = false;
             CurrentComment.IsEnabled = false;
             AddCommentButton.IsEnabled = false;
+            ShareButton.IsEnabled = false;
         }
 
         public void LoadMyImages(string response)
@@ -221,6 +222,7 @@ namespace PolyPaint.Vues
             CreateImageContainer.Visibility = Visibility.Collapsed;
             EditImageInformationsContainer.Visibility = Visibility.Collapsed;
             AccessImageContainer.Visibility = Visibility.Visible;
+            ShareImageContainer.Visibility = Visibility.Collapsed;
             ImageToAccessPassword.Text = "";
             WrongPasswordMessage.IsActive = false;
             if (ServerService.instance.isOffline() || CurrentGalleryCard.Image.protectionLevel != "protected" || CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
@@ -240,6 +242,7 @@ namespace PolyPaint.Vues
             CreateImageContainer.Visibility = Visibility.Collapsed;
             EditImageInformationsContainer.Visibility = Visibility.Visible;
             AccessImageContainer.Visibility = Visibility.Collapsed;
+            ShareImageContainer.Visibility = Visibility.Collapsed;
             CurrentImageTitle.Text = CurrentGalleryCard.Image.title;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
             CurrentImagePassword.IsEnabled = (CurrentGalleryCard.Image.protectionLevel == "private") ? false : true;
@@ -250,9 +253,27 @@ namespace PolyPaint.Vues
             CreateImageContainer.Visibility = Visibility.Visible;
             EditImageInformationsContainer.Visibility = Visibility.Collapsed;
             AccessImageContainer.Visibility = Visibility.Collapsed;
+            ShareImageContainer.Visibility = Visibility.Collapsed;
             ImageTitle.Text = "";
             ImagePassword.Password = "";
             PrivateProtectionLevel.IsChecked = true;
+        }
+
+        private void ShareButton_Click(object sender, RoutedEventArgs e)
+        {
+            CreateImageContainer.Visibility = Visibility.Collapsed;
+            EditImageInformationsContainer.Visibility = Visibility.Collapsed;
+            AccessImageContainer.Visibility = Visibility.Collapsed;
+            ShareImageContainer.Visibility = Visibility.Visible;
+
+            var request = new RestRequest(Settings.API_VERSION + "/secret/generate/" + CurrentGalleryCard.Image.id, Method.GET);
+            ServerService.instance.server.ExecuteAsync(request, response =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ShareLink.Text = Settings.WEB_CLIENT_LINK + "secret/" + (string)response.Content;
+                });
+            });
         }
 
         #region Dialog
@@ -361,6 +382,11 @@ namespace PolyPaint.Vues
                     return;
                 });
             }
+        }
+
+        private void CopyToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(ShareLink.Text);
         }
     }
 }

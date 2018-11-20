@@ -34,6 +34,7 @@ namespace PolyPaint.Utilitaires
         //Credentials
         public const string aws_access_key_id = "AKIAIZN6KZDRICBY76VA";
         public const string aws_secret_access_key = "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";
-        
+
+        public const string WEB_CLIENT_LINK = "localhost:4200/";
     }
 }
