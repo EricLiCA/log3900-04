@@ -165,7 +165,6 @@ class DrawViewController: UIViewController {
     
     @IBAction func insertLineTapped(_ sender: UIButton) {
         self.optionsView.isHidden = true
-        self.addNewLine()
     }
     
     @IBAction func cancelInsertLineTapped(_ sender: UIButton) {
@@ -330,9 +329,7 @@ class DrawViewController: UIViewController {
                 self.shapes[triangleView.uuid] = triangleView
                 self.drawingPlace.addSubview(triangleView)
             } else if(currentShape == Shape.Line) {
-                var line = Line(layer: layer)
-                line.points.append(self.firstTouch!)
-                line.points.append(self.secondTouch!)
+                var line = Line(layer: layer, startPoint: self.firstTouch!, endPoint: self.secondTouch!, firstEndRelation: Relation.Arrow, secondEndRelation: Relation.Arrow)
                 self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
             }
@@ -506,9 +503,7 @@ class DrawViewController: UIViewController {
             layer.path = bezier.cgPath
             layer.borderWidth = 2
             layer.strokeColor = UIColor.black.cgColor
-            var line = Line(layer: layer)
-            line.points.append(self.startPointOfLine!)
-            line.points.append(self.endPointOfLine!)
+            var line = Line(layer: layer, startPoint: self.startPointOfLine!, endPoint: self.endPointOfLine!, firstEndRelation: Relation.Arrow, secondEndRelation: Relation.Arrow)
             line.firstAnchorShapeId = self.startPointView?.uuid
             line.firstAnchorShapeIndex = self.startAnchorNumber
             line.secondAnchorShapeId = self.endPointView?.uuid
@@ -519,24 +514,6 @@ class DrawViewController: UIViewController {
             self.resetLineEndPoints()
             self.redrawLayers()
         }
-    }
-    
-    func addNewLine() {
-        var bezier = UIBezierPath()
-        bezier.move(to: CGPoint(x: 10, y: 10))
-        bezier.addLine(to: CGPoint(x: 100, y: 10))
-        self.currentContext = nil
-        bezier.close()
-        let layer = CAShapeLayer()
-        layer.path = bezier.cgPath
-        layer.borderWidth = 2
-        layer.strokeColor = UIColor.black.cgColor
-        var line = Line(layer: layer)
-        line.points.append(CGPoint(x: 10, y: 10))
-        line.points.append(CGPoint(x: 100, y: 10))
-        self.lines.append(line)
-        self.drawingPlace.layer.addSublayer(line.layer!)
-        self.redrawLayers()
     }
     
     func drawLine(line: Line) {

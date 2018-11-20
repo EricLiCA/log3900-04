@@ -28,14 +28,18 @@ class Line {
     var firstEndLabel: String?
     var firstEndRelation: Relation?
     var secondEndLabel: String?
-    var secondEndRelation: String?
+    var secondEndRelation: Relation?
     var selected = false
     var hitStartPoint: Int?
     var hitEndPoint: Int?
     
-    init(layer: CAShapeLayer) {
+    init(layer: CAShapeLayer, startPoint: CGPoint, endPoint: CGPoint, firstEndRelation: Relation, secondEndRelation: Relation) {
+        self.points.append(startPoint)
+        self.points.append(endPoint)
         self.layer = layer
-        self.firstEndRelation = Relation.Arrow
+        self.firstEndRelation = firstEndRelation
+        self.secondEndRelation = secondEndRelation
+        self.redrawLine()
     }
     
     func hitTest(touchPoint: CGPoint) -> Bool {
@@ -154,8 +158,29 @@ class Line {
         if(self.firstEndRelation == Relation.Arrow) {
             self.addArrow(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier)
         }
+        if(self.secondEndRelation == Relation.Arrow) {
+            self.addArrow(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier)
+        }
+        if(self.firstEndRelation == Relation.Inheritance) {
+            self.addInheritance(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier)
+        }
+        if(self.secondEndRelation == Relation.Inheritance) {
+            self.addInheritance(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier)
+        }
+        if(self.firstEndRelation == Relation.Aggregation) {
+            self.addAggregationComposition(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier, relation: Relation.Aggregation)
+        }
+        if(self.secondEndRelation == Relation.Aggregation) {
+            self.addAggregationComposition(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier, relation: Relation.Aggregation)
+        }
+        if(self.firstEndRelation == Relation.Composition) {
+            self.addAggregationComposition(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier, relation: Relation.Composition)
+        }
+        if(self.secondEndRelation == Relation.Composition) {
+            self.addAggregationComposition(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier, relation: Relation.Composition)
+        }
         
-        bezier.close()
+        
         let layer = CAShapeLayer()
         layer.path = bezier.cgPath
         layer.borderWidth = 2
@@ -172,7 +197,38 @@ class Line {
         bezier.addLine(to: arrowLine1)
         bezier.move(to: end)
         bezier.addLine(to: arrowLine2)
+        bezier.close()
     }
+    
+    func addInheritance(start: CGPoint, end: CGPoint, pointerLineLength: CGFloat, arrowAngle: CGFloat, bezier: UIBezierPath) {
+        let startEndAngle = atan((end.y - start.y) / (end.x - start.x)) + ((end.x - start.x) < 0 ? CGFloat(Double.pi) : 0)
+        let arrowLine1 = CGPoint(x: end.x + pointerLineLength * cos(CGFloat(Double.pi) - startEndAngle + arrowAngle), y: end.y - pointerLineLength * sin(CGFloat(Double.pi) - startEndAngle + arrowAngle))
+        let arrowLine2 = CGPoint(x: end.x + pointerLineLength * cos(CGFloat(Double.pi) - startEndAngle - arrowAngle), y: end.y - pointerLineLength * sin(CGFloat(Double.pi) - startEndAngle - arrowAngle))
+        bezier.move(to: end)
+        bezier.addLine(to: arrowLine1)
+        bezier.move(to: end)
+        bezier.addLine(to: arrowLine2)
+        bezier.move(to: arrowLine2)
+        bezier.addLine(to: arrowLine1)
+    }
+    
+    func addAggregationComposition(start: CGPoint, end: CGPoint, pointerLineLength: CGFloat, arrowAngle: CGFloat, bezier: UIBezierPath, relation: Relation) {
+        let startEndAngle = atan((end.y - start.y) / (end.x - start.x)) + ((end.x - start.x) < 0 ? CGFloat(Double.pi) : 0)
+        let arrowLine1 = CGPoint(x: end.x + pointerLineLength * cos(CGFloat(Double.pi) - startEndAngle + arrowAngle), y: end.y - pointerLineLength * sin(CGFloat(Double.pi) - startEndAngle + arrowAngle))
+        let arrowLine2 = CGPoint(x: end.x + pointerLineLength * cos(CGFloat(Double.pi) - startEndAngle - arrowAngle), y: end.y - pointerLineLength * sin(CGFloat(Double.pi) - startEndAngle - arrowAngle))
+        let average = CGPoint(x: (arrowLine1.x + arrowLine2.x)/2, y:(arrowLine1.y + arrowLine2.y)/2)
+        let difference = CGPoint(x: average.x - end.x, y: average.y - end.y)
+        let otherPoint = CGPoint(x: end.x + 2*difference.x, y: end.y + 2*difference.y)
+        bezier.move(to: end)
+        bezier.addLine(to: arrowLine1)
+        bezier.move(to: end)
+        bezier.addLine(to: arrowLine2)
+        bezier.move(to: otherPoint)
+        bezier.addLine(to: arrowLine1)
+        bezier.addLine(to: arrowLine2)
+        bezier.close()
+    }
+    
     
     
 }
