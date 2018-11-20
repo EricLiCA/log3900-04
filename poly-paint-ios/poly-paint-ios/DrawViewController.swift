@@ -48,6 +48,7 @@ class DrawViewController: UIViewController {
     var lineBeingEdited: Line?
     var addedNewPointToLine = false
     var pointIndexEditing: Int?
+    var drawLineAlerted = false
     
 
     
@@ -469,7 +470,9 @@ class DrawViewController: UIViewController {
             self.endPointOfLine = sender.userInfo["point"] as! CGPoint
             self.endAnchorNumber = sender.userInfo["anchorNumber"] as! Int
             // draw line
-            var bezier = UIBezierPath()
+            self.drawLineAlerted = true
+            self.showOptionsView()
+            /*var bezier = UIBezierPath()
             bezier.move(to: self.startPointOfLine!)
             bezier.addLine(to: self.endPointOfLine!)
             self.currentContext = nil
@@ -487,8 +490,31 @@ class DrawViewController: UIViewController {
             self.drawingPlace.layer.addSublayer(line.layer!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
             self.resetLineEndPoints()
-            self.redrawLayers()
+            self.redrawLayers()*/
         }
+    }
+    
+    func drawLineAlertContinue() {
+        var bezier = UIBezierPath()
+        bezier.move(to: self.startPointOfLine!)
+        bezier.addLine(to: self.endPointOfLine!)
+        self.currentContext = nil
+        bezier.close()
+        let layer = CAShapeLayer()
+        layer.path = bezier.cgPath
+        layer.borderWidth = 2
+        layer.strokeColor = UIColor.black.cgColor
+        var line = Line(layer: layer, startPoint: self.startPointOfLine!, endPoint: self.endPointOfLine!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!)
+        line.firstAnchorShapeId = self.startPointView?.uuid
+        line.firstAnchorShapeIndex = self.startAnchorNumber
+        line.secondAnchorShapeId = self.endPointView?.uuid
+        line.secondAnchorShapeIndex = self.endAnchorNumber
+        self.lines.append(line)
+        self.drawingPlace.layer.addSublayer(line.layer!)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
+        self.resetLineEndPoints()
+        self.redrawLayers()
+        self.drawLineAlerted = false
     }
     
     func drawLine(line: Line) {
@@ -531,6 +557,7 @@ class DrawViewController: UIViewController {
     
     func showOptionsView() {
         self.optionsView.isHidden = false
+        self.defaultRelationOptions()
     }
 
     
@@ -557,15 +584,26 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func insertLineTapped(_ sender: UIButton) {
-        self.isUserEditingShape = true
-        self.optionsView.isHidden = true
-        self.currentShape = Shape.Line
+        if(self.drawLineAlerted) {
+            self.isUserEditingShape = false
+            self.optionsView.isHidden = true
+            self.drawLineAlertContinue()
+        } else {
+            self.isUserEditingShape = true
+            self.optionsView.isHidden = true
+            self.currentShape = Shape.Line
+        }
     }
     
     @IBAction func cancelInsertLineTapped(_ sender: UIButton) {
         self.optionsView.isHidden = true
         self.firstEndRelation = nil
         self.secondEndRelation = nil
+        
+        if(self.drawLineAlerted) {
+            self.resetLineEndPoints()
+            self.drawLineAlerted = false
+        }
     }
     
     @IBAction func firstEndAssociationTapped(_ sender: UIButton) {
@@ -659,6 +697,7 @@ class DrawViewController: UIViewController {
     }
     
     func defaultRelationOptions() {
+        self.resetRelationOptions()
         self.firstEndRelation = Relation.Association
         self.firstEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         self.secondEndRelation = Relation.Association
