@@ -137,9 +137,11 @@ namespace PolyPaint.Vues
 
             ImagePreviewRoom.ImageId = CurrentGalleryCard.Image.id;
             ImagePreviewRoom.PreviewImage();
-
+            
+           
             if (!ServerService.instance.isOffline())
             {
+                ShareButton.Visibility = CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id ? Visibility.Visible : Visibility.Collapsed;
                 if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
                 {
                     LikeButton.IsEnabled = false;
