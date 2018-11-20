@@ -11,6 +11,8 @@ import UIKit
 class PublicImageViewController: UIViewController {
     
     var image: Image?
+    var enteredPassword: String?
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageProtectionLevelLabel: UILabel!
     @IBOutlet weak var editBtn: UIBarButtonItem!
@@ -20,6 +22,7 @@ class PublicImageViewController: UIViewController {
         self.updateView()
         
     }
+    
     func updateView () {
         imageView.image = image?.fullImage
         imageProtectionLevelLabel.text = image?.protectionLevel
@@ -30,10 +33,11 @@ class PublicImageViewController: UIViewController {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let openEditorAction = UIAlertAction(title: "Open In Editor", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            
+            if (self.image?.protectionLevel! == "protected") {
+                self.askCorrectPassword()
+            }
         })
         alertController.addAction(openEditorAction)
-       
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
         })
@@ -46,4 +50,22 @@ class PublicImageViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    func askCorrectPassword() -> Void {
+        let alertPassword = UIAlertController(title: "Open protected image", message: "Enter password", preferredStyle: UIAlertControllerStyle.alert)
+        
+        alertPassword.addTextField(configurationHandler: {(textField: UITextField!) in
+            textField.placeholder = "Enter password"
+            textField.isSecureTextEntry = true // for password input
+        })
+        let confirmPassword = UIAlertAction(title: "Ok", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            if (alertPassword.textFields?[0].text! == self.image?.password!) {
+                
+            }
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
+        })
+        alertPassword.addAction(cancelAction)
+        alertPassword.addAction(confirmPassword)
+        self.present(alertPassword, animated: true, completion: nil)
+    }
 }
