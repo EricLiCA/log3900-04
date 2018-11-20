@@ -210,13 +210,13 @@ class DrawViewController: UIViewController {
         // Line Editing
         if(self.lineEditing && self.pointIndexEditing != -1) { // Editing existing point in line
             self.lineBeingEdited?.points[self.pointIndexEditing!] = (touches.first?.location(in: self.drawingPlace))!
-            redrawLine(line: self.lineBeingEdited!)
+            drawLine(line: self.lineBeingEdited!)
         } else if(self.lineEditing && !self.addedNewPointToLine) { // Added angle/point to line
             self.addedNewPointToLine = true
             self.lineBeingEdited?.addPoint(point: (touches.first?.location(in: self.drawingPlace))!)
         } else if(self.lineEditing) { // new angle being edited
             self.lineBeingEdited?.points[(self.lineBeingEdited?.hitStartPoint)! + 1] = (touches.first?.location(in: self.drawingPlace))!
-            redrawLine(line: self.lineBeingEdited!)
+            drawLine(line: self.lineBeingEdited!)
         }
         
         // Shape Editing
@@ -540,42 +540,10 @@ class DrawViewController: UIViewController {
     }
     
     func drawLine(line: Line) {
-        var bezier = UIBezierPath()
-        for (index, point) in line.points.enumerated() {
-            if(index < line.points.count - 1) {
-                bezier.move(to: line.points[index])
-                bezier.addLine(to: line.points[index + 1])
-            }
-        }
+        line.redrawLine()
         self.currentContext = nil
-        bezier.close()
-        let layer = CAShapeLayer()
-        layer.path = bezier.cgPath
-        layer.borderWidth = 2
-        layer.strokeColor = UIColor.black.cgColor
-        line.layer = layer
         redrawLayers()
     }
-    
-    func redrawLine(line: Line) {
-        var bezier = UIBezierPath()
-        for (index, point) in line.points.enumerated() {
-            if(index < line.points.count - 1) {
-                bezier.move(to: line.points[index])
-                bezier.addLine(to: line.points[index + 1])
-            }
-        }
-        self.currentContext = nil
-        bezier.close()
-        let layer = CAShapeLayer()
-        layer.path = bezier.cgPath
-        layer.borderWidth = 2
-        layer.strokeColor = UIColor.black.cgColor
-        line.layer = layer
-        redrawLayers()
-    }
-    
-    
     
     func resetLineEndPoints() {
         self.startPointOfLine = nil

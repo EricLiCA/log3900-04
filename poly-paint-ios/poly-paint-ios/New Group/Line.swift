@@ -14,6 +14,7 @@ enum Relation {
     case Association
     case Aggregation
     case Inheritance
+    case Arrow
 }
 
 class Line {
@@ -60,11 +61,12 @@ class Line {
                     self.hitEndPoint = index + 1
                     //self.selected = true
                     //self.layer?.strokeColor = UIColor.green.cgColor
+                    self.select()
                     return true
                 }
             }
         }
-        
+        self.unselect()
         return false
     }
     
@@ -74,6 +76,7 @@ class Line {
             var distanceToPoint = self.findDistanceBetween(p1: touchPoint, p2: point)
             if(distanceToPoint < 10) {
                 print("TOUCHED POINT!!")
+                self.select()
                 return index
             } else {
                 //return false
@@ -81,7 +84,7 @@ class Line {
             
             index = index + 1
         }
-        
+        self.unselect()
         return -1
     }
     
@@ -136,6 +139,22 @@ class Line {
     func select() {
         self.selected = true
         self.layer?.strokeColor = UIColor.green.cgColor
+    }
+    
+    func redrawLine() {
+        var bezier = UIBezierPath()
+        for (index, point) in self.points.enumerated() {
+            if(index < self.points.count - 1) {
+                bezier.move(to: self.points[index])
+                bezier.addLine(to: self.points[index + 1])
+            }
+        }
+        bezier.close()
+        let layer = CAShapeLayer()
+        layer.path = bezier.cgPath
+        layer.borderWidth = 2
+        layer.strokeColor = UIColor.black.cgColor
+        self.layer = layer
     }
     
     
