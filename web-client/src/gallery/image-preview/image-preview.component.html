@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <button mat-button class="close" [mat-dialog-close]>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<!-- Jumbotron -->
+<div class="jumbotron text-center">
+
+  <!-- Title -->
+  <h4 class="card-title h4 pb-2"><strong>{{image.title}}</strong></h4>
+
+  <!-- Card image -->
+  <div class="view overlay my-4">
+    <img src="{{image.fullImageUrl}}" class="img-fluid image">
+  </div>
+  {{this.likesAndCommentsService.likes.length}}
+  <button (click)="addLike()" [disabled]="isLiked()" class="btn btn-primary">
+    <i class="fa fa-thumbs-up pr-1 fa-lg"></i>Like
+  </button>
+  <button (click)="removeLike()" [disabled]="!isLiked()" [attr.disabled]="false" class="btn btn-danger">
+    <i class="fa fa-thumbs-down pr-1 fa-lg"></i>Dislike
+  </button>
+
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea3"></label>
+    <textarea class="form-control" id="exampleFormControlTextarea3" rows="7" [(ngModel)]="this.comment"></textarea>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="this.addComment()">Post</button>
+  <div class="media" *ngFor="let comment of likesAndCommentsService.comments">
+    <img class="d-flex rounded-circle avatar z-depth-1-half mr-3 profileImage" src="{{comment.ProfileImage}}" alt="Avatar">
+    <div class="media-body">
+      <h5 class="mt-0 font-weight-bold blue-text">{{comment.UserName}}</h5>
+      {{comment.Comment}}
+    </div>
+  </div>
+  <!-- Jumbotron -->

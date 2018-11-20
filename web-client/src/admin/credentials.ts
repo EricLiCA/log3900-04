@@ -3,4 +3,5 @@ export class Credentials {
     token: String;
     userLevel: String;
     profileImage: String;
+    userName: String;
   }

@@ -12,6 +12,7 @@ export class AuthenticationService {
     public management = false;
     public user: Credentials;
     private password: String;
+    private userName: String;
 
     constructor(
         private http: HttpClient,
@@ -28,7 +29,8 @@ export class AuthenticationService {
     public authenticate(Username: String, Password: String): Promise<Credentials> {
         //Verify authentication
         this.password = Password;
-        const body = {username: Username, password: Password};
+        this.userName = Username;
+        var body = {username: Username, password: Password};
         const apiUrl = 'http://localhost:3000/v2/sessions';
         return this.http.post(apiUrl, body).toPromise().then((data: Credentials) => {
             if(data.id) {
@@ -46,6 +48,7 @@ export class AuthenticationService {
                 else if (data.userLevel === "management") {
                     this.management = true;
                 }
+                this.user.userName = this.userName;
                 return data;
             }
             else {
