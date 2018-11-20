@@ -556,6 +556,8 @@ class DrawViewController: UIViewController {
     }
     
     func showOptionsView() {
+        self.firstEndTextField.text = ""
+        self.secondEndTextField.text = ""
         self.optionsView.isHidden = false
         self.defaultRelationOptions()
     }
