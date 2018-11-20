@@ -35,7 +35,7 @@ export class LikesAndCommentsService {
 
     onAddComment(): void {
         this.socket.on("addComment", (data) => {
-            this.comments.push(data);
+            this.comments.splice(0, 0, data);
         });
     }
 
@@ -47,7 +47,7 @@ export class LikesAndCommentsService {
 
     onRemoveLike(): void {
         this.socket.on("removeLike", (data) => {
-          this.likes.splice(this.likes.findIndex(likeToRemove => likeToRemove.UserId == data.UserId), 1);
+            this.likes.splice(this.likes.findIndex(likeToRemove => likeToRemove.UserId == data.UserId), 1);
         });
     }
 
@@ -60,12 +60,12 @@ export class LikesAndCommentsService {
     }
 
     addLike(userId: String): void {
-      this.socket.emit("addLike", userId);
+        this.socket.emit("addLike", userId);
 
     }
 
     removeLike(userId: String): void {
-      this.socket.emit("removeLike", userId);
+        this.socket.emit("removeLike", userId);
     }
 
 
