@@ -17,6 +17,9 @@ export class Canvas {
         return new Promise<ShapeObject[]>((resolve, reject) => {
             ShapeObject.get(this.id).then(
                 (value: ShapeObject[]) => {
+                    if (value === undefined)
+                        value = [];
+
                     this.strokes = value;
                     resolve(value.sort((a, b) => a.Index - b.Index));
                 },
@@ -34,11 +37,13 @@ export class Canvas {
 
         newObject.Index = this.strokes[this.strokes.length - 1].Index + 1;
         this.strokes.push(newObject)
+        ShapeObject.post(newObject);
         return newObject;
     }
 
     public remove(id: string): void {
         this.strokes.splice(this.strokes.findIndex(stroke => stroke.Id == id), 1);
+        ShapeObject.delete(id);
     }
 
     public edit(newObject: ShapeObject): void {
@@ -46,6 +51,7 @@ export class Canvas {
         this.strokes.splice(index, 1)
         const newIndex = this.strokes.findIndex(stroke => stroke.Index > newObject.Index);
         this.strokes.splice(newIndex, 0, newObject);
+        ShapeObject.update(newObject);
     }
 
     public removeProtections(user: User): void {

@@ -30,6 +30,11 @@ namespace PolyPaint.Services
 
         public MessagingViewManager()
         {
+            this.loadViews();
+        }
+
+        public void loadViews()
+        {
             MessagingViewModel viewModel = new MessagingViewModel();
             this.DetachedMessagingView = new MessagingWindowOutside(viewModel);
             this.LargeMessagingView = new MessagingWindow(viewModel);
