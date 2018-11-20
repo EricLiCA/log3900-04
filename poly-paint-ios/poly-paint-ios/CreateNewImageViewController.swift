@@ -94,6 +94,7 @@ class CreateNewImageViewController: UIViewController {
                         self.image = image
                         let createdImage = ["image": image] as [String : Image]
                         NotificationCenter.default.post(name: .newImageCreated, object: nil, userInfo: createdImage)
+                        self.dismiss(animated: true, completion: nil)
                     }
                 }
             }
