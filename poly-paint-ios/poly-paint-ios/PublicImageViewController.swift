@@ -58,14 +58,26 @@ class PublicImageViewController: UIViewController {
             textField.isSecureTextEntry = true // for password input
         })
         let confirmPassword = UIAlertAction(title: "Ok", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            if (alertPassword.textFields?[0].text! == self.image?.password!) {
-                
+            if(self.checkCorrectPassword(password: alertPassword.textFields![0].text!)) {
+                self.performSegue(withIdentifier: "toImageEditorWithExistingImage", sender: self)
             }
+            else {
+                alertPassword.message = "Invalid password"
+                self.present(alertPassword, animated: true, completion: nil)
+                let message  = "Invalid password"
+                //hack to change message color
+                alertPassword.setValue(NSAttributedString(string: message, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 17),NSAttributedStringKey.foregroundColor : UIColor.red]), forKey: "attributedMessage")
+            }
+            
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
         })
         alertPassword.addAction(cancelAction)
         alertPassword.addAction(confirmPassword)
         self.present(alertPassword, animated: true, completion: nil)
+    }
+    
+    func checkCorrectPassword (password: String) -> Bool {
+        return password == self.image?.password!
     }
 }
