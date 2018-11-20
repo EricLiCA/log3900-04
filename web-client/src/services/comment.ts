@@ -1,8 +1,8 @@
 export class Comment{
-    imageId: string;
-    userId: string;
-    timestamp: Date;
-    comment: string;
-    userName: string;
-    profileImage: string;
+    ImageId: string;
+    UserId: string;
+    Timestamp: Date;
+    Comment: string;
+    UserName: string;
+    ProfileImage: string;
 }
