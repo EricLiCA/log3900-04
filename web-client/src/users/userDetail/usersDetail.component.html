@@ -12,7 +12,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
         <!--Card image-->
-        <div class="view overlay waves-light" mdbWavesEffect>
+        <div class="view overlay waves-light" mdbWavesEffect (click)="this.openDialog(image)">
           <mdb-card-img src={{image.fullImageUrl}}></mdb-card-img>
           <a>
             <div class="mask rgba-white-slight"></div>
