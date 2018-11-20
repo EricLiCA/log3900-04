@@ -45,6 +45,7 @@ class DrawViewController: UIViewController {
     var shapes = [String: BasicShapeView]()
     var undoRedoManager = UndoRedoManager()
     var drawingSocketManager = DrawingSocketManager()
+    var image: Image?
     
     override func viewDidLoad() {
         super.viewDidLoad()

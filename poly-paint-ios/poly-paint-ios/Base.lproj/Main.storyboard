@@ -379,7 +379,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tNz-CW-3rW">
-                                <rect key="frame" x="20" y="94" width="728" height="910"/>
+                                <rect key="frame" x="20" y="144" width="728" height="860"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
@@ -753,6 +753,7 @@
                         <outlet property="galleryButton" destination="khw-eQ-Wnu" id="a96-II-vLY"/>
                         <outlet property="newImageButton" destination="VfY-2l-VR3" id="n8X-fH-cAj"/>
                         <outlet property="profileButton" destination="Yid-28-lYT" id="Fgf-9d-9iX"/>
+                        <segue destination="nxp-f4-1rm" kind="show" identifier="toImageEditor" id="bzh-NQ-wv2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEf-0y-fS6" userLabel="First Responder" sceneMemberID="firstResponder"/>

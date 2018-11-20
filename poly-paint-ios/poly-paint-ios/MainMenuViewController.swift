@@ -14,7 +14,7 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var galleryButton: UIButton!
     @IBOutlet weak var newImageButton: UIButton!
     @IBOutlet weak var chatButton: UIBarButtonItem!
-    var newImageTitle: String?
+    var image: Image?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +32,7 @@ class MainMenuViewController: UIViewController {
         self.checkIfAnonymous()
         print("Set username as \(UserDefaults.standard.string(forKey: "username")!)")
             ChatModel.instance.setUsername(username: UserDefaults.standard.string(forKey: "username")!)
+        self.setUpNotifications()
         // Do any additional setup after loading the view.
     }
 
@@ -79,9 +80,22 @@ class MainMenuViewController: UIViewController {
             NewimageVC.popoverPresentationController?.sourceView = view
             NewimageVC.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
         }
+        
+        if segue.identifier == "toImageEditor" {
+            let ImageEditorVC = segue.destination as! DrawViewController
+            ImageEditorVC.image = self.image
+        }
+    }
+    
+    func setUpNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onNewImageCreated), name: NSNotification.Name(rawValue: "newImageCreated"), object: nil)
     }
     
     
+    @objc func onNewImageCreated(_ notification:Notification) {
+        self.image = (notification.userInfo?["image"] as! Image)
+        self.performSegue(withIdentifier: "toImageEditor", sender: self)
+    }
     
     
     /*

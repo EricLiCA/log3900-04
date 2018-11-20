@@ -19,6 +19,7 @@ class CreateNewImageViewController: UIViewController {
     @IBOutlet weak var confirmPasswordField: UITextField!
     
     var selectedProtectionLevel: String = "public"
+    var image: Image?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,13 +91,9 @@ class CreateNewImageViewController: UIViewController {
                         image.password = responseJSON ["password"] as? String
                         image.thumbnailUrl = responseJSON ["thumbnailUrl"] as? String
                         image.fullImageUrl = responseJSON ["fullImageUrl"] as? String
-                        print(image.id!)
-                        print(image.ownerId!)
-                        print(image.title!)
-                        print(image.protectionLevel!)
-                        print(image.password!)
-                        print(image.thumbnailUrl!)
-                        print(image.fullImageUrl!)
+                        self.image = image
+                        let createdImage = ["image": image] as [String : Image]
+                        NotificationCenter.default.post(name: .newImageCreated, object: nil, userInfo: createdImage)
                     }
                 }
             }
@@ -106,3 +103,8 @@ class CreateNewImageViewController: UIViewController {
         }
     }
 }
+
+extension Notification.Name {
+    static let newImageCreated = Notification.Name("newImageCreated")
+}
+
