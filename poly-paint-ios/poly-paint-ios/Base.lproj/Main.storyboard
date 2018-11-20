@@ -1056,8 +1056,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="3LB-gt-3Oc"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="iT3-Ug-kv5"/>
+                    <navigationItem key="navigationItem" title="Title" id="iT3-Ug-kv5">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="fmz-Sz-H4R">
+                            <connections>
+                                <action selector="editImage:" destination="CCC-qc-Lsg" id="uh5-k5-ERe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="editBtn" destination="fmz-Sz-H4R" id="DIG-35-vxJ"/>
                         <outlet property="imageProtectionLevelLabel" destination="fpj-Rf-U1Q" id="Zup-jw-i7s"/>
                         <outlet property="imageView" destination="Rkt-xv-5Io" id="iar-2m-6ii"/>
                     </connections>

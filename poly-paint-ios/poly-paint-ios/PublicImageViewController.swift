@@ -13,6 +13,7 @@ class PublicImageViewController: UIViewController {
     var image: Image?
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageProtectionLevelLabel: UILabel!
+    @IBOutlet weak var editBtn: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,24 @@ class PublicImageViewController: UIViewController {
         self.navigationItem.title = image?.title
     }
     
-    
+    @IBAction func editImage(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let openEditorAction = UIAlertAction(title: "Open In Editor", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            
+        })
+        alertController.addAction(openEditorAction)
+       
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
+        })
+        alertController.addAction(cancelAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.barButtonItem = sender
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
     
 }
