@@ -61,6 +61,7 @@ class DrawViewController: UIViewController {
                 self.chatButton.image = #imageLiteral(resourceName: "UnreadMessage")
             }
         })
+        self.navigationItem.title = image?.title!
         // Do any additional setup after loading the view.
     }
     
