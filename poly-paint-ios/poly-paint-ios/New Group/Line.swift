@@ -219,14 +219,34 @@ class Line {
         let average = CGPoint(x: (arrowLine1.x + arrowLine2.x)/2, y:(arrowLine1.y + arrowLine2.y)/2)
         let difference = CGPoint(x: average.x - end.x, y: average.y - end.y)
         let otherPoint = CGPoint(x: end.x + 2*difference.x, y: end.y + 2*difference.y)
-        bezier.move(to: end)
+        /*bezier.move(to: end)
         bezier.addLine(to: arrowLine1)
-        bezier.move(to: end)
-        bezier.addLine(to: arrowLine2)
+        bezier.move(to: arrowLine1)
+        bezier.addLine(to: otherPoint)
         bezier.move(to: otherPoint)
-        bezier.addLine(to: arrowLine1)
         bezier.addLine(to: arrowLine2)
-        bezier.close()
+        bezier.move(to: arrowLine2)
+        bezier.addLine(to: end)
+        */
+        if(relation == Relation.Composition) {
+            bezier.move(to: end)
+            bezier.addLine(to: arrowLine1)
+            bezier.addLine(to: arrowLine2)
+            bezier.move(to: otherPoint)
+            bezier.addLine(to: arrowLine1)
+            bezier.addLine(to: arrowLine2)
+            bezier.close()
+        } else {
+            bezier.move(to: end)
+            bezier.addLine(to: arrowLine1)
+            bezier.move(to: arrowLine1)
+            bezier.addLine(to: otherPoint)
+            bezier.move(to: otherPoint)
+            bezier.addLine(to: arrowLine2)
+            bezier.move(to: arrowLine2)
+            bezier.addLine(to: end)
+        }
+        
     }
     
     
