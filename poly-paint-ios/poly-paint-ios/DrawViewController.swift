@@ -595,6 +595,12 @@ class DrawViewController: UIViewController {
         }
     }
     
+    func resetTouchAnchorPoint() {
+        for (key, shape) in self.shapes {
+            shape.touchAnchorPoint = false
+        }
+    }
+    
     @IBAction func cancelInsertLineTapped(_ sender: UIButton) {
         self.optionsView.isHidden = true
         self.firstEndRelation = nil
@@ -603,6 +609,7 @@ class DrawViewController: UIViewController {
         if(self.drawLineAlerted) {
             self.resetLineEndPoints()
             self.drawLineAlerted = false
+            self.resetTouchAnchorPoint()
         }
     }
     
