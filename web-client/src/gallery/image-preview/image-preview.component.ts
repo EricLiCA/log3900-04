@@ -1,7 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { AuthenticationService } from 'src/admin/login.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { LikesAndCommentsService } from '../../services/likes-and-comments.service';
+import { Image } from '../Image';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'image-preview-component',
@@ -9,6 +11,8 @@ import { LikesAndCommentsService } from '../../services/likes-and-comments.servi
   styleUrls: ['./image-preview.component.scss']
 })
 export class ImagePreviewComponent implements OnInit {
+
+  @ViewChild('shareInput') shareInput: ElementRef;
 
   private _comment: string;
   get comment(): string {
@@ -18,11 +22,33 @@ export class ImagePreviewComponent implements OnInit {
     this._comment = value;
   }
 
+  private shareLink: string = "";
+  private _askedForShareLink: boolean = false;
+  get askedForShareLink(): boolean {
+    return this._askedForShareLink;
+  }
+  set askedForShareLink(value: boolean) {
+    this._askedForShareLink = value;
+    this.http.get(`http://localhost:3000/v2/secret/generate/${this.image.id}`).toPromise().then(
+            value => {
+                this.shareLink = "http://localhost:4200/secret/" + value.toString();
+            },
+            rejectedReason => {
+                this.shareLink = "http://localhost:4200/secret/" + rejectedReason.error['text'];
+            }
+        );
+  }
 
+  copyToClipboard(): void {
+    this.shareInput.nativeElement.focus();
+    this.shareInput.nativeElement.select();
+    document.execCommand('copy');
+  }
 
-  constructor(@Inject(MAT_DIALOG_DATA) public image,
+  constructor(@Inject(MAT_DIALOG_DATA) public image: Image,
     private likesAndCommentsService: LikesAndCommentsService,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private http: HttpClient) {
     this._comment = "";
   }
 
@@ -32,6 +58,10 @@ export class ImagePreviewComponent implements OnInit {
 
   public get isConnected(): boolean {
     return this.authenticationService.loggedIn;
+  }
+
+  public get isMine(): boolean {
+    return this.authenticationService.user.id == this.image.ownerId;
   }
 
   addComment(): void {
