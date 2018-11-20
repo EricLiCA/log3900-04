@@ -51,7 +51,7 @@ namespace PolyPaint.Modeles
 
         public void AddComment(string comment)
         {
-            ServerService.instance.Socket.Emit("addComment", ServerService.instance.user.id, comment, ServerService.instance.user.username);
+            ServerService.instance.Socket.Emit("addComment", ServerService.instance.user.id, comment, ServerService.instance.user.username, ServerService.instance.user.profileImage);
         }
 
         public void AddLike()
@@ -87,7 +87,8 @@ namespace PolyPaint.Modeles
                             userId = data["comments"][i]["UserId"],
                             comment = data["comments"][i]["Comment"],
                             timestamp = data["comments"][i]["Timestamp"],
-                            userName = data["comments"][i]["UserName"]
+                            userName = data["comments"][i]["UserName"],
+                            profileImage = data["comments"][i]["ProfileImage"]
                         };
                         this.Comments.Children.Add(new GalleryComment(comment));
                     }
@@ -111,7 +112,8 @@ namespace PolyPaint.Modeles
                         userId = data["UserId"],
                         comment = data["Comment"],
                         timestamp = data["Timestamp"],
-                        userName = data["UserName"]
+                        userName = data["UserName"],
+                        profileImage = data["ProfileImage"]
                     };
                     this.Comments.Children.Add(new GalleryComment(newComment));
                     Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
