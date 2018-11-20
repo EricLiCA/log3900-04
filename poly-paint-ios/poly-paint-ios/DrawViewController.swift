@@ -151,10 +151,10 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func lineTapped() {
-        //self.isUserEditingShape = true
+        self.isUserEditingShape = true
         self.currentShape = Shape.Line
         self.cancelButton.isEnabled = true
-        self.optionsView.isHidden = false
+        //self.optionsView.isHidden = false
     }
     
     @IBAction func stickfigureTapped() {
