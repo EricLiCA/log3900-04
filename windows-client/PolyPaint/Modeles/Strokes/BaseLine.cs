@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PolyPaint.Modeles.Actions;
 using PolyPaint.Services;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace PolyPaint.Modeles.Strokes
         public Relation SecondRelation = Relation.ASSOCIATION;
         public string FirstText = "";
         public string SecondText = "";
+        private string beforeMove;
 
         public BaseLine(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
@@ -114,9 +116,11 @@ namespace PolyPaint.Modeles.Strokes
 
         internal void setFirstLabel(string value)
         {
+            string before = this.toJson();
             this.FirstText = value;
             this.Refresh();
             EditionSocket.EditStroke(this.toJson());
+            Editeur.instance.Do(new EditStroke(this.Id.ToString(), before, this.toJson()));
         }
 
         internal string getSecondLabel()
@@ -126,9 +130,11 @@ namespace PolyPaint.Modeles.Strokes
 
         internal void setSecondLabel(string value)
         {
+            string before = this.toJson();
             this.SecondText = value;
             this.Refresh();
             EditionSocket.EditStroke(this.toJson());
+            Editeur.instance.Do(new EditStroke(this.Id.ToString(), before, this.toJson()));
         }
 
         internal Relation getFirstRelation()
@@ -138,9 +144,11 @@ namespace PolyPaint.Modeles.Strokes
 
         internal void setFirstRelation(Relation value)
         {
+            string before = this.toJson();
             this.FirstRelation = value;
             this.Refresh();
             EditionSocket.EditStroke(this.toJson());
+            Editeur.instance.Do(new EditStroke(this.Id.ToString(), before, this.toJson()));
         }
 
         internal Relation getSecondRelation()
@@ -150,9 +158,11 @@ namespace PolyPaint.Modeles.Strokes
 
         internal void setSecondRelation(Relation value)
         {
+            string before = this.toJson();
             this.SecondRelation = value;
             this.Refresh();
             EditionSocket.EditStroke(this.toJson());
+            Editeur.instance.Do(new EditStroke(this.Id.ToString(), before, this.toJson()));
         }
 
         public void deleteDragHandles()
@@ -239,6 +249,8 @@ namespace PolyPaint.Modeles.Strokes
 
         public void handleMoved(Guid id, Point point)
         {
+            if (this.beforeMove == null) this.beforeMove = this.toJson();
+
             int movedIndex = this.HandlePoints.FindIndex(i => i.ToString() == id.ToString());
             
             if (movedIndex == 0 || movedIndex == this.HandlePoints.Count - 1) {
@@ -285,6 +297,8 @@ namespace PolyPaint.Modeles.Strokes
                 }
 
             EditionSocket.EditStroke(this.toJson());
+            Editeur.instance.Do(new EditStroke(this.Id.ToString(), beforeMove, this.toJson()));
+            this.beforeMove = null;
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)

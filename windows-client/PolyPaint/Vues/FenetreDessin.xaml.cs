@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using PolyPaint.DAO;
 using System.Windows.Media.Imaging;
 using PolyPaint.Services;
+using PolyPaint.Modeles.Actions;
 
 namespace PolyPaint
 {
@@ -71,6 +72,7 @@ namespace PolyPaint
                     ((VueModele)this.DataContext).Traits.Add(duplicate);
                     duplicate.Select();
                     EditionSocket.AddStroke(((Savable)duplicate).toJson());
+                    Editeur.instance.Do(new NewStroke(((CustomStroke)duplicate).Id.ToString(), ((Savable)duplicate).toJson()));
                 });
             }
 
@@ -89,6 +91,7 @@ namespace PolyPaint
                     vueModele.Traits.Remove(stroke);
                     ClipBoard.Add(stroke);
                     EditionSocket.RemoveStroke(((CustomStroke)stroke).Id.ToString());
+                    Editeur.instance.Do(new DeleteStroke(((CustomStroke)stroke).Id.ToString(), ((Savable)stroke).toJson()));
                 });
             }
         }

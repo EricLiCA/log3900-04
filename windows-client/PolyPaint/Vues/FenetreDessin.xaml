@@ -46,12 +46,12 @@
                     </Button>
                     <Button x:Name="empiler"
                             ToolTip="Undo"
-                            Command="{Binding Empiler}">
+                            Command="{Binding Undo}">
                         <materialDesign:PackIcon Kind="Undo" Width="22" />
                     </Button>
                     <Button x:Name="depiler"
                             ToolTip="Redo"
-                            Command="{Binding Depiler}">
+                            Command="{Binding Redo}">
                         <materialDesign:PackIcon Kind="Redo" Width="22" />
                     </Button>
                     <Separator />

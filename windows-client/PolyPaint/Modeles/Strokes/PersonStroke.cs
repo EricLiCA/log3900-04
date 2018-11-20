@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PolyPaint.Modeles.Actions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -47,9 +48,11 @@ namespace PolyPaint.Modeles.Strokes
 
         public void SetText(string text)
         {
+            string before = this.toJson();
             this.Name = text;
             this.Refresh();
             EditionSocket.EditStroke(this.toJson());
+            Editeur.instance.Do(new EditStroke(this.Id.ToString(), before, this.toJson()));
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
