@@ -553,6 +553,7 @@ class DrawViewController: UIViewController {
     
     func lineTapped() {
         self.optionsView.isHidden = false
+        self.defaultRelationOptions()
     }
     
     @IBAction func insertLineTapped(_ sender: UIButton) {
@@ -662,6 +663,16 @@ class DrawViewController: UIViewController {
         self.firstEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         self.secondEndRelation = Relation.Association
         self.secondEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+    }
+    
+    func resetRelationOptions() {
+        self.firstEndRelation = nil
+        self.secondEndRelation = nil
+        self.secondEndAssociationButton.backgroundColor = UIColor.white
+        self.secondEndAggregationButton.backgroundColor = UIColor.white
+        self.secondEndCompositionButton.backgroundColor = UIColor.white
+        self.secondEndInheritenceButton.backgroundColor = UIColor.white
+        self.secondEndArrowButton.backgroundColor = UIColor.white
     }
     
 }
