@@ -608,6 +608,74 @@
             </objects>
             <point key="canvasLocation" x="812.5" y="-963.28124999999989"/>
         </scene>
+        <!--Use Case Popover View Controller-->
+        <scene sceneID="AtN-zn-JAQ">
+            <objects>
+                <viewController id="nU9-5j-V8G" customClass="UseCasePopoverViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wnp-wX-lQ1">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DDy-iP-Tz8">
+                                <rect key="frame" x="284" y="402.5" width="200" height="239"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Case" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhc-je-lJN">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="G8R-dN-RDP"/>
+                                            <constraint firstAttribute="width" constant="200" id="i7r-ft-2ZX"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Moj-Xo-t7f">
+                                        <rect key="frame" x="0.0" y="31" width="200" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="alp-C2-G95"/>
+                                            <constraint firstAttribute="height" constant="128" id="xxn-d8-YRJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYS-Fv-mG9">
+                                        <rect key="frame" x="0.0" y="169" width="200" height="30"/>
+                                        <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="YhX-oG-j0A"/>
+                                            <constraint firstAttribute="height" constant="30" id="lkO-Jz-R6z"/>
+                                        </constraints>
+                                        <state key="normal" title="Add Use Case">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SrZ-04-ihq">
+                                        <rect key="frame" x="0.0" y="209" width="200" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="4Va-TY-NPv"/>
+                                            <constraint firstAttribute="width" constant="200" id="mec-GC-Iwk"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="DDy-iP-Tz8" firstAttribute="centerX" secondItem="fjT-A9-9R7" secondAttribute="centerX" id="CmB-bV-9ZI"/>
+                            <constraint firstItem="DDy-iP-Tz8" firstAttribute="centerY" secondItem="fjT-A9-9R7" secondAttribute="centerY" id="n3d-jd-qNk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fjT-A9-9R7"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h49-4Q-YUN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="842.96875" y="-1774.2187499999998"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="Es3-Na-eqb">
             <objects>
