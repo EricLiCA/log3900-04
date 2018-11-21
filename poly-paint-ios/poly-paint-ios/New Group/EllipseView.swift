@@ -10,10 +10,14 @@ import UIKit
 
 class EllipseView: BasicShapeView {
     
+    var labelText: String?
+    
     init(frame: CGRect, color: UIColor) {
         super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE")
+        self.labelText = "USE Case"
         self.backgroundColor = UIColor.clear
         self.initGestureRecognizers()
+        
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -22,10 +26,18 @@ class EllipseView: BasicShapeView {
     }
     
     
-    
+    func addLabel() {
+        let label = UILabel()
+        label.frame = CGRect(x: self.bounds.width/2 , y: 0, width: self.bounds.width, height: self.bounds.height)
+        label.text = self.labelText!
+        label.textColor = UIColor.black
+        label.font = UIFont(name: "Helvetica", size: 12)
+        self.addSubview(label)
+    }
     
     
     override func draw(_ rect: CGRect) {
+
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = UIBezierPath(ovalIn: insetRect)
         self.color?.setFill()
@@ -56,6 +68,7 @@ class EllipseView: BasicShapeView {
         for anchor in self.anchorPointsLayers {
             self.layer.addSublayer(anchor)
         }
+        self.addLabel()
         
         self.hideAnchorPoints()
     }
