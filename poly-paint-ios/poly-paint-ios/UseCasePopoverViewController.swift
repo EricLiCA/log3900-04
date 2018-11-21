@@ -10,6 +10,8 @@ import UIKit
 
 class UseCasePopoverViewController: UIViewController {
 
+    @IBOutlet weak var useCaseTextView: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +23,11 @@ class UseCasePopoverViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func addUseCaseTapped(_ sender: UIButton) {
+    }
+    
+    @IBAction func cancelTapped(_ sender: UIButton) {
+    }
     /*
     // MARK: - Navigation
 

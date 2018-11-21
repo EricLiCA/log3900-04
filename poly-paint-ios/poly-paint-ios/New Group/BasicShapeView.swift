@@ -183,6 +183,8 @@ class BasicShapeView: UIView {
     func hideAnchorPoints() {
         for index in 0...self.numberOfAnchorPoints! {
             self.layer.sublayers![index].isHidden = true
+            self.anchorPointsLayers[index].fillColor = UIColor.red.cgColor
+            self.anchorPointsLayers[index].strokeColor = UIColor.red.cgColor
         }
     }
     

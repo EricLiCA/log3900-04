@@ -58,7 +58,6 @@ class DrawViewController: UIViewController {
         self.drawingPlace.clipsToBounds = true
         self.cancelButton.isEnabled = false
         self.setUpNotifications()
-        self.hideOptionsView()
         let value = UIInterfaceOrientation.landscapeLeft.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         // Do any additional setup after loading the view.
@@ -109,7 +108,7 @@ class DrawViewController: UIViewController {
         alertController.addAction(drawClassAction)
         
         let drawLineAction = UIAlertAction(title: "Line", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            self.lineTapped()
+            self.showRelationPopover()
         })
         alertController.addAction(drawLineAction)
         
@@ -130,6 +129,33 @@ class DrawViewController: UIViewController {
     
     @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
         self.stopDrawing()
+    }
+    
+    func showUseCasePopover(sender: UIViewController) {
+        /*let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UseCasePopoverViewController") as! UseCasePopoverViewController
+        viewController.modalPresentationStyle = .popover
+        viewController.preferredContentSize = CGSize(width: 320, height: 261)*/
+        
+        /*let popvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UseCasePopoverViewController") as! UseCasePopoverViewController
+        
+        self.addChildViewController(popvc)
+        
+        popvc.view.frame = CGRect(x: self.view.frame.origin.x, y: self.view.frame.origin.x, width: 300, height: 300)
+        self.view.addSubview(popvc.view)
+        
+        popvc.didMove(toParentViewController: self)*/
+        
+        var popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "UseCasePopoverViewControllery") as! UseCasePopoverViewController
+        var nav = UINavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        var popover = nav.popoverPresentationController
+        popoverContent.preferredContentSize = CGSize(width: 500, height: 600)
+        popover?.delegate = self as! DrawViewController as! UIPopoverPresentationControllerDelegate
+        popover?.sourceView = self.view
+        popover?.sourceRect = CGRect(x: 100,y: 100, width: 0, height: 0)
+        
+        self.present(nav, animated: true, completion: nil)
+        
     }
     
     func rectangleTapped() {
@@ -315,7 +341,7 @@ class DrawViewController: UIViewController {
                 self.shapes[triangleView.uuid] = triangleView
                 self.drawingPlace.addSubview(triangleView)
             } else if(currentShape == Shape.Line) {
-                var line = Line(layer: layer, startPoint: self.firstTouch!, endPoint: self.secondTouch!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndTextField.text!, secondEndTextField: self.secondEndTextField.text!)
+                var line = Line(layer: layer, startPoint: self.firstTouch!, endPoint: self.secondTouch!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndLabel!, secondEndTextField: self.secondEndLabel!)
                 self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
             }
@@ -443,7 +469,36 @@ class DrawViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(movedViewAlert), name: NSNotification.Name(rawValue: "movedView"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onDuplicate(_:)), name: .duplicate, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onDelete(_:)), name: .delete, object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(relationInfoAlert), name: NSNotification.Name(rawValue: "relationInfoAlert"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(relationInfoCancelAlert), name: NSNotification.Name(rawValue: "relationInfoCancelAlert"), object: nil)
+    }
+    
+    @objc func relationInfoAlert(sender: AnyObject) {
+        self.firstEndLabel = sender.userInfo["firstEndLabel"] as! String
+        self.secondEndLabel = sender.userInfo["secondEndLabel"] as! String
+        self.firstEndRelation = sender.userInfo["firstEndRelation"] as! Relation
+        self.secondEndRelation = sender.userInfo["secondEndRelation"] as! Relation
+        //self.drawLineAlertContinue()
+        self.isUserEditingShape = true
+        self.currentShape = Shape.Line
+        
+        if(self.drawLineAlerted) {
+            self.drawLineAlertContinue()
+        }
+    }
+    
+    @objc func relationInfoCancelAlert(sender: AnyObject) {
+        if(self.drawLineAlerted) {
+            self.startPointView?.hideAnchorPoints()
+            self.endPointView?.hideAnchorPoints()
+            self.startPointView?.showAnchorPoints()
+            self.endPointView?.showAnchorPoints()
+        }
+        self.resetLineEndPoints()
+        self.redrawLayers()
+        self.drawLineAlerted = false
+        self.stopDrawing()
+        self.resetTouchAnchorPoint()
     }
     
     @objc func createClassDiagramAlert(sender: AnyObject) {
@@ -481,7 +536,7 @@ class DrawViewController: UIViewController {
             self.endAnchorNumber = sender.userInfo["anchorNumber"] as! Int
             // draw line
             self.drawLineAlerted = true
-            self.showOptionsView()
+            self.showRelationPopover()
             /*var bezier = UIBezierPath()
             bezier.move(to: self.startPointOfLine!)
             bezier.addLine(to: self.endPointOfLine!)
@@ -514,7 +569,7 @@ class DrawViewController: UIViewController {
         layer.path = bezier.cgPath
         layer.borderWidth = 2
         layer.strokeColor = UIColor.black.cgColor
-        var line = Line(layer: layer, startPoint: self.startPointOfLine!, endPoint: self.endPointOfLine!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndTextField.text!, secondEndTextField: self.secondEndTextField.text!)
+        var line = Line(layer: layer, startPoint: self.startPointOfLine!, endPoint: self.endPointOfLine!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndLabel!, secondEndTextField: self.secondEndLabel!)
         line.firstAnchorShapeId = self.startPointView?.uuid
         line.firstAnchorShapeIndex = self.startAnchorNumber
         line.secondAnchorShapeId = self.endPointView?.uuid
@@ -525,6 +580,7 @@ class DrawViewController: UIViewController {
         self.resetLineEndPoints()
         self.redrawLayers()
         self.drawLineAlerted = false
+        self.stopDrawing()
     }
     
     func drawLine(line: Line) {
@@ -560,43 +616,13 @@ class DrawViewController: UIViewController {
             self.drawingPlace.layer.addSublayer(line.layer!)
         }
     }
-    
-    func hideOptionsView() {
-        self.optionsView.isHidden = true
-    }
-    
-    func showOptionsView() {
-        self.firstEndTextField.text = ""
-        self.secondEndTextField.text = ""
-        self.optionsView.isHidden = false
-        self.defaultRelationOptions()
-    }
 
-    
     // Options View
-    // options view
-    @IBOutlet weak var firstEndTextField: UITextField!
-    @IBOutlet weak var secondEndTextField: UITextField!
-    @IBOutlet weak var firstEndAssociationButton: UIButton!
-    @IBOutlet weak var firstEndAggregationButton: UIButton!
-    @IBOutlet weak var firstEndCompositionButton: UIButton!
-    @IBOutlet weak var firstEndInheritenceButton: UIButton!
-    @IBOutlet weak var firstEndArrowButton: UIButton!
-    @IBOutlet weak var secondEndAssociationButton: UIButton!
-    @IBOutlet weak var secondEndAggregationButton: UIButton!
-    @IBOutlet weak var secondEndCompositionButton: UIButton!
-    @IBOutlet weak var secondEndInheritenceButton: UIButton!
-    @IBOutlet weak var secondEndArrowButton: UIButton!
     var firstEndRelation: Relation?
     var secondEndRelation: Relation?
-    
-    func lineTapped() {
-        self.optionsView.isHidden = false
-        self.firstEndTextField.text = ""
-        self.secondEndTextField.text = ""
-        self.defaultRelationOptions()
-    }
-    
+    var firstEndLabel: String?
+    var secondEndLabel: String?
+
     @IBAction func insertLineTapped(_ sender: UIButton) {
         if(self.drawLineAlerted) {
             self.isUserEditingShape = false
@@ -615,124 +641,8 @@ class DrawViewController: UIViewController {
         }
     }
     
-    @IBAction func cancelInsertLineTapped(_ sender: UIButton) {
-        self.optionsView.isHidden = true
-        self.firstEndRelation = nil
-        self.secondEndRelation = nil
-        
-        if(self.drawLineAlerted) {
-            self.resetLineEndPoints()
-            self.drawLineAlerted = false
-            self.resetTouchAnchorPoint()
-        }
-    }
-    
-    @IBAction func firstEndAssociationTapped(_ sender: UIButton) {
-        self.firstEndRelation = Relation.Association
-        self.firstEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        self.firstEndAggregationButton.backgroundColor = UIColor.white
-        self.firstEndCompositionButton.backgroundColor = UIColor.white
-        self.firstEndInheritenceButton.backgroundColor = UIColor.white
-        self.firstEndArrowButton.backgroundColor = UIColor.white
-    }
-    
-    @IBAction func firstEndAggregationTapped(_ sender: UIButton) {
-        self.firstEndRelation = Relation.Aggregation
-        self.firstEndAssociationButton.backgroundColor = UIColor.white
-        self.firstEndAggregationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        self.firstEndCompositionButton.backgroundColor = UIColor.white
-        self.firstEndInheritenceButton.backgroundColor = UIColor.white
-        self.firstEndArrowButton.backgroundColor = UIColor.white
-    }
-    
-    @IBAction func firstEndCompositionTapped(_ sender: UIButton) {
-        self.firstEndRelation = Relation.Composition
-        self.firstEndAssociationButton.backgroundColor = UIColor.white
-        self.firstEndAggregationButton.backgroundColor = UIColor.white
-        self.firstEndCompositionButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        self.firstEndInheritenceButton.backgroundColor = UIColor.white
-        self.firstEndArrowButton.backgroundColor = UIColor.white
-    }
-    
-    @IBAction func firstEndInheritanceTapped(_ sender: UIButton) {
-        self.firstEndRelation = Relation.Inheritance
-        self.firstEndAssociationButton.backgroundColor = UIColor.white
-        self.firstEndAggregationButton.backgroundColor = UIColor.white
-        self.firstEndCompositionButton.backgroundColor = UIColor.white
-        self.firstEndInheritenceButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        self.firstEndArrowButton.backgroundColor = UIColor.white
-    }
-    
-    @IBAction func firstEndArrowTapped(_ sender: UIButton) {
-        self.firstEndRelation = Relation.Arrow
-        self.firstEndAssociationButton.backgroundColor = UIColor.white
-        self.firstEndAggregationButton.backgroundColor = UIColor.white
-        self.firstEndCompositionButton.backgroundColor = UIColor.white
-        self.firstEndInheritenceButton.backgroundColor = UIColor.white
-        self.firstEndArrowButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-    }
-    
-    @IBAction func secondEndAssociationTapped(_ sender: UIButton) {
-        self.secondEndRelation = Relation.Association
-        self.secondEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        self.secondEndAggregationButton.backgroundColor = UIColor.white
-        self.secondEndCompositionButton.backgroundColor = UIColor.white
-        self.secondEndInheritenceButton.backgroundColor = UIColor.white
-        self.secondEndArrowButton.backgroundColor = UIColor.white
-    }
-    
-    @IBAction func secondEndAggregationTapped(_ sender: UIButton) {
-        self.secondEndRelation = Relation.Aggregation
-        self.secondEndAssociationButton.backgroundColor = UIColor.white
-        self.secondEndAggregationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        self.secondEndCompositionButton.backgroundColor = UIColor.white
-        self.secondEndInheritenceButton.backgroundColor = UIColor.white
-        self.secondEndArrowButton.backgroundColor = UIColor.white
-    }
-    
-    @IBAction func secondEndCompositionTapped(_ sender: UIButton) {
-        self.secondEndRelation = Relation.Composition
-        self.secondEndAssociationButton.backgroundColor = UIColor.white
-        self.secondEndAggregationButton.backgroundColor = UIColor.white
-        self.secondEndCompositionButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        self.secondEndInheritenceButton.backgroundColor = UIColor.white
-        self.secondEndArrowButton.backgroundColor = UIColor.white
-    }
-    
-    @IBAction func secondEndInheritanceTapped(_ sender: UIButton) {
-        self.secondEndRelation = Relation.Inheritance
-        self.secondEndAssociationButton.backgroundColor = UIColor.white
-        self.secondEndAggregationButton.backgroundColor = UIColor.white
-        self.secondEndCompositionButton.backgroundColor = UIColor.white
-        self.secondEndInheritenceButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        self.secondEndArrowButton.backgroundColor = UIColor.white
-    }
-    
-    @IBAction func secondEndArrowTapped(_ sender: UIButton) {
-        self.secondEndRelation = Relation.Arrow
-        self.secondEndAssociationButton.backgroundColor = UIColor.white
-        self.secondEndAggregationButton.backgroundColor = UIColor.white
-        self.secondEndCompositionButton.backgroundColor = UIColor.white
-        self.secondEndInheritenceButton.backgroundColor = UIColor.white
-        self.secondEndArrowButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-    }
-    
-    func defaultRelationOptions() {
-        self.resetRelationOptions()
-        self.firstEndRelation = Relation.Association
-        self.firstEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        self.secondEndRelation = Relation.Association
-        self.secondEndAssociationButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-    }
-    
-    func resetRelationOptions() {
-        self.firstEndRelation = nil
-        self.secondEndRelation = nil
-        self.secondEndAssociationButton.backgroundColor = UIColor.white
-        self.secondEndAggregationButton.backgroundColor = UIColor.white
-        self.secondEndCompositionButton.backgroundColor = UIColor.white
-        self.secondEndInheritenceButton.backgroundColor = UIColor.white
-        self.secondEndArrowButton.backgroundColor = UIColor.white
+    func showRelationPopover() {
+        self.performSegue(withIdentifier: "toRelationPopover", sender: nil)
     }
     
 }
