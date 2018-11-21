@@ -22,10 +22,10 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var drawingPlace: UIView!
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var colorButton: UIBarButtonItem!
     @IBOutlet weak var stickFigure: UIButton!
     @IBOutlet weak var classButton: UIButton!
     @IBOutlet weak var lineButton: UIButton!
+    @IBOutlet weak var selectedColorButton: UIButton!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -60,6 +60,9 @@ class DrawViewController: UIViewController {
         self.setUpNotifications()
         let value = UIInterfaceOrientation.landscapeLeft.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
+        self.selectedColorButtonDefault()
+        self.drawingPlace.layer.borderWidth = 2
+        self.drawingPlace.layer.borderColor = UIColor.black.cgColor
         // Do any additional setup after loading the view.
     }
     
@@ -76,60 +79,60 @@ class DrawViewController: UIViewController {
         return true
     }
 
-    @IBAction func insertTapped(_ sender: UIBarButtonItem) {
-        
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let drawRectangleAction = UIAlertAction(title: "Rectangle", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            self.rectangleTapped()
-        })
-        alertController.addAction(drawRectangleAction)
-        
-        
-        let drawEllipseAction = UIAlertAction(title: "Ellipse", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            self.ellipseTapped()
-        })
-        alertController.addAction(drawEllipseAction)
-        
-        
-        let drawTriangleAction = UIAlertAction(title: "Triangle", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            self.triangleTapped()
-        })
-        alertController.addAction(drawTriangleAction)
-        
-        let drawActorAction = UIAlertAction(title: "Actor", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            self.stickfigureTapped()
-        })
-        alertController.addAction(drawActorAction)
-        
-        let drawClassAction = UIAlertAction(title: "Class", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            self.createClassDiagramAlert(sender: self)
-        })
-        alertController.addAction(drawClassAction)
-        
-        let drawLineAction = UIAlertAction(title: "Line", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            self.showRelationPopover()
-        })
-        alertController.addAction(drawLineAction)
-        
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
-        })
-        alertController.addAction(cancelAction)
-        
-        
-        
-        if let popoverController = alertController.popoverPresentationController {
-            popoverController.barButtonItem = sender
-        }
-        
-        self.present(alertController, animated: true, completion: nil)
-        
-    }
+    
     
     @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
         self.stopDrawing()
     }
+    
+    @IBAction func rectangleTapped(_ sender: UIButton) {
+        self.rectangleTapped()
+    }
+    
+    @IBAction func ellipseTapped(_ sender: UIButton) {
+        self.ellipseTapped()
+    }
+    
+    @IBAction func triangleTapped(_ sender: UIButton) {
+        self.triangleTapped()
+    }
+    
+    @IBAction func stickFigureTapped(_ sender: UIButton) {
+        self.stickfigureTapped()
+    }
+    
+    @IBAction func lineTapped(_ sender: UIButton) {
+        self.showRelationPopover()
+    }
+    
+    @IBAction func useCaseTapped(_ sender: UIButton) {
+        // TODO
+    }
+    
+    @IBAction func classDiagramTapped(_ sender: UIButton) {
+        // TODO
+        self.createClassDiagramAlert(sender: self)
+    }
+    
+    @IBAction func selectedColorTapped(_ sender: UIButton) {
+        /*let popoverVC = storyboard?.instantiateViewController(withIdentifier: "colorPickerPopover") as! ColorPickerViewController
+        popoverVC.modalPresentationStyle = .popover
+        popoverVC.preferredContentSize = CGSize(width: 284, height: 446)
+        if let popoverController = popoverVC.popoverPresentationController {
+            //popoverController.barButtonItem = sender
+            popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
+            popoverController.permittedArrowDirections = .any
+            popoverVC.delegate = self
+        }
+        present(popoverVC, animated: true, completion: nil)*/
+    }
+    
+    func selectedColorButtonDefault() {
+        self.selectedColorButton.backgroundColor = UIColor.white
+        self.selectedColorButton.layer.borderWidth = 3
+        self.selectedColorButton.layer.borderColor = UIColor.black.cgColor
+    }
+    
     
     func showUseCasePopover(sender: UIViewController) {
         /*let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UseCasePopoverViewController") as! UseCasePopoverViewController
@@ -400,28 +403,15 @@ class DrawViewController: UIViewController {
         self.currentShape = Shape.None
         self.cancelButton.isEnabled = false;
     }
-    
-    @IBAction func colorPickerButton(_ sender: UIBarButtonItem) {
-        
-        let popoverVC = storyboard?.instantiateViewController(withIdentifier: "colorPickerPopover") as! ColorPickerViewController
-        popoverVC.modalPresentationStyle = .popover
-        popoverVC.preferredContentSize = CGSize(width: 284, height: 446)
-        if let popoverController = popoverVC.popoverPresentationController {
-            popoverController.barButtonItem = sender
-            popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
-            popoverController.permittedArrowDirections = .any
-            popoverVC.delegate = self
-        }
-        present(popoverVC, animated: true, completion: nil)
-    }
+
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
     
     func setButtonColor (_ color: UIColor) {
-        self.colorButton.tintColor = color
         self.selectedColor = color
+        self.selectedColorButton.backgroundColor = color
     }
     
     @objc func onDuplicate(_ notification:Notification) {
@@ -471,6 +461,11 @@ class DrawViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(onDelete(_:)), name: .delete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(relationInfoAlert), name: NSNotification.Name(rawValue: "relationInfoAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(relationInfoCancelAlert), name: NSNotification.Name(rawValue: "relationInfoCancelAlert"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setColorAlert), name: NSNotification.Name(rawValue: "setColorAlert"), object: nil)
+    }
+    
+    @objc func setColorAlert(sender: AnyObject) {
+        self.setButtonColor(sender.userInfo["color"] as! UIColor)
     }
     
     @objc func relationInfoAlert(sender: AnyObject) {
