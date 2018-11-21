@@ -62,6 +62,7 @@ class DrawViewController: UIViewController {
             }
         })
         self.navigationItem.title = image?.title!
+        self.handleSocketEmits()
         // Do any additional setup after loading the view.
     }
     
@@ -555,6 +556,27 @@ class DrawViewController: UIViewController {
         if segue.identifier == "toCreateClass" {
             let CreateClassVC = segue.destination as! NewClassViewController
         }
+    }
+    
+    func handleSocketEmits() {
+        self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee048")
+        self.drawingSocketManager.socketIOClient.on("imageData") { (data: [Any], ack) in
+        print (data)
+                let data = data as! NSArray//after casting like this
+        /*do {
+            
+        
+            let jsonArray = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)  as! [[String:AnyObject]]
+            for dictionary in jsonArray{
+                
+                print(dictionary["id"] as? String)
+            }
+            
+        } catch let jsonError {
+            print(jsonError)
+        }*/
+        
+    }
     }
     
 } //end class

@@ -31,7 +31,7 @@ class DrawingSocketManager {
         socketIOClient.emit("editStroke", jsonData!);
     }
     
-    public func  requestAddPerson(imageId: String) {
+    public func  requestJoinImage(imageId: String) {
         socketIOClient.emit("joinImage", imageId);
     }
     
