@@ -1,4 +1,4 @@
 export class Likes {
-    userId: string;
-    imageId: string;
+    UserId: string;
+    ImageId: string;
   }

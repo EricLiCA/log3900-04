@@ -16,7 +16,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}" Height="227.5">
+        FontFamily="{DynamicResource MaterialDesignFont}" Height="180">
     <StackPanel>
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
@@ -39,11 +39,6 @@
                 <materialDesign:PackIcon Kind="Key" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
                 <PasswordBox x:Name="Password" materialDesign:HintAssist.Hint="Password" Width="300" KeyUp="UserNameOrPassword_KeyUp"/>
             </StackPanel>
-            <CheckBox Name="GuestConnection" Grid.Column="0" Grid.Row="2"
-                      Style="{StaticResource MaterialDesignCheckBox}"
-                      Margin="25,10,0,10" Click="GuestConnection_Checked">
-                Connect as guest
-            </CheckBox>
         </Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,5">
             <Button Name="CreateButton"
@@ -60,8 +55,8 @@
             </Button>
             <Button Name="ConnectButton"
                 Margin="0,8,8,8" Height="Auto" Width="Auto"
-                HorizontalAlignment="Right"
-                IsDefault="True" Click="ConnectButton_Click">
+                HorizontalAlignment="Right" IsEnabled="False"
+                IsDefault="false" Click="ConnectButton_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
                         <Style.Triggers>

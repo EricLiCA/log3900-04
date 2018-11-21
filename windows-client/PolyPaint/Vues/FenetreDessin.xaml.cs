@@ -14,6 +14,8 @@ using PolyPaint.Modeles;
 using PolyPaint.Modeles.Strokes;
 using System.Collections.Generic;
 using PolyPaint.DAO;
+using System.Windows.Media.Imaging;
+using PolyPaint.Services;
 
 namespace PolyPaint
 {
@@ -29,6 +31,7 @@ namespace PolyPaint
             InitializeComponent();
             DataContext = new VueModele();
             ClipBoard = new StrokeCollection();
+
         }
 
         // Pour gérer les points de contrôles.
@@ -85,7 +88,7 @@ namespace PolyPaint
                 {
                     vueModele.Traits.Remove(stroke);
                     ClipBoard.Add(stroke);
-                    EditionSocket.RemoveStroke(((Savable)stroke).toJson());
+                    EditionSocket.RemoveStroke(((CustomStroke)stroke).Id.ToString());
                 });
             }
         }
@@ -182,15 +185,34 @@ namespace PolyPaint
             //    ((ShapeStroke)scrolled).Rotation = ((ShapeStroke)scrolled).Rotation += e.Delta / 8.0;
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        public void SaveButton_Click(object sender, EventArgs e)
         {
-            StrokeCollection strokes = ((VueModele)this.DataContext).Traits;
-            for (int i = 0; i < strokes.Count; i++)
+            if (ServerService.instance.currentImageId == null) return;
+
+            this.ToolSelection.SelectedIndex = 0;
+            ((VueModele)this.DataContext).Traits.ToList().ForEach(temp =>
             {
-                if (strokes[i] is Savable)
-                {
-                    ShapeObjectDao.Post((CustomStroke)strokes[i]);
-                }
+                if (((CustomStroke)temp).isSelected()) ((CustomStroke)temp).Unselect();
+            });
+
+            Rect bounds = VisualTreeHelper.GetDescendantBounds(Canvas);
+            double dpi = 96d;
+
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)bounds.Width, (int)bounds.Height, dpi, dpi, PixelFormats.Default);
+            DrawingVisual dv = new DrawingVisual();
+            using (DrawingContext dc = dv.RenderOpen())
+            {
+                VisualBrush vb = new VisualBrush(Canvas);
+                dc.DrawRectangle(vb, null, new Rect(new Point(), bounds.Size));
+            }
+            rtb.Render(dv);
+
+            BitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+            using (MemoryStream ms = new MemoryStream())
+            {
+                pngEncoder.Save(ms);
+                ((VueModele)this.DataContext).Save.Execute(ms.ToArray());
             }
         }
 

@@ -16,42 +16,50 @@ namespace PolyPaint.Modeles
     {
         public static void AddStroke(string strignifiedStroke)
         {
+            if (!ServerService.instance.isOffline())
             ServerService.instance.Socket.Emit("addStroke", strignifiedStroke);
         }
 
         public static void RemoveStroke(string strokeId)
         {
-            ServerService.instance.Socket.Emit("removeStroke", strokeId);
+            if (!ServerService.instance.isOffline())
+                ServerService.instance.Socket.Emit("removeStroke", strokeId);
         }
 
         public static void EditStroke(string strignifiedStroke)
         {
-            ServerService.instance.Socket.Emit("editStroke", strignifiedStroke);
+            if (!ServerService.instance.isOffline())
+                ServerService.instance.Socket.Emit("editStroke", strignifiedStroke);
         }
         
         public static void RequestAddPerson(string imageId)
         {
-            ServerService.instance.Socket.Emit("joinImage", imageId);
+            if (!ServerService.instance.isOffline())
+                ServerService.instance.Socket.Emit("joinImage", imageId);
         }
 
         public static void RequestQuit(string person)
         {
-            ServerService.instance.Socket.Emit("leaveImage");
+            if (!ServerService.instance.isOffline())
+                ServerService.instance.Socket.Emit("leaveImage");
         }
 
         public static void LockStroke(List<string> strokesIds)
         {
-            ServerService.instance.Socket.Emit("requestProtection", JsonConvert.SerializeObject(strokesIds));
+            if (!ServerService.instance.isOffline())
+                ServerService.instance.Socket.Emit("requestProtection", JsonConvert.SerializeObject(strokesIds));
         }
 
         public static void UnlockStrokes()
         {
-            ServerService.instance.Socket.Emit("removeProtection");
+            if (!ServerService.instance.isOffline())
+                ServerService.instance.Socket.Emit("removeProtection");
         }
 
         public static void ClearCanvas()
         {
-            ServerService.instance.Socket.Emit("clearCanvas");
+            if (!ServerService.instance.isOffline())
+                ServerService.instance.Socket.Emit("clearCanvas");
         }
     }
 }

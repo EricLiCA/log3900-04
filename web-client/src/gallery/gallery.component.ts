@@ -2,6 +2,9 @@ import { Component , OnInit } from '@angular/core';
 import { ImageService } from '../services/gallery.service';
 import { Image } from './Image';
 import { AuthenticationService } from 'src/admin/login.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { ImagePreviewComponent } from './image-preview/image-preview.component';
+import { LikesAndCommentsService } from '../services/likes-and-comments.service';
 
 @Component({
   selector: 'gallery-component',
@@ -15,7 +18,9 @@ export class GalleryComponent {
 
   constructor(
     private imageService: ImageService,
-    private loginService: AuthenticationService
+    private loginService: AuthenticationService,
+    private dialog: MatDialog,
+    private likesAndCommentsService: LikesAndCommentsService
   ) { }
 
   /** GET images from the server */
@@ -26,6 +31,16 @@ export class GalleryComponent {
           this.imageData.push(image);
         }
       });
+    });
+  }
+
+  openDialog(image: Image): void {
+    this.likesAndCommentsService.imageId = image.id;
+    this.likesAndCommentsService.previewImage();
+    this.dialog.open(ImagePreviewComponent , {
+      data: image,
+      width: "75%",
+      height: "75%"
     });
   }
 }
