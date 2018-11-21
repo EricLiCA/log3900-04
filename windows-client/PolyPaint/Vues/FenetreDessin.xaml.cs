@@ -17,6 +17,7 @@ using PolyPaint.DAO;
 using System.Windows.Media.Imaging;
 using PolyPaint.Services;
 using PolyPaint.Modeles.Actions;
+using System.ComponentModel;
 
 namespace PolyPaint
 {
@@ -33,11 +34,25 @@ namespace PolyPaint
             DataContext = new VueModele();
             ClipBoard = new StrokeCollection();
 
+            ((VueModele)DataContext).PropertyChanged += new PropertyChangedEventHandler(EditeurProprieteModifiee);
+        }
+
+        private void EditeurProprieteModifiee(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "CanvasSize")
+            {
+                colonne.Width = new GridLength(((VueModele)DataContext).CanvasWidth);
+                ligne.Height = new GridLength(((VueModele)DataContext).CanvasHeight);
+            }
         }
 
         // Pour gérer les points de contrôles.
         private void GlisserCommence(object sender, DragStartedEventArgs e) => (sender as Thumb).Background = Brushes.Black;
-        private void GlisserTermine(object sender, DragCompletedEventArgs e) => (sender as Thumb).Background = Brushes.White;
+        private void GlisserTermine(object sender, DragCompletedEventArgs e)
+        {
+            (sender as Thumb).Background = Brushes.White;
+            ((VueModele)DataContext).CanvasSize = new Size(colonne.ActualWidth, ligne.ActualHeight);
+        }
         private void GlisserMouvementRecu(object sender, DragDeltaEventArgs e)
         {
             String nom = (sender as Thumb).Name;

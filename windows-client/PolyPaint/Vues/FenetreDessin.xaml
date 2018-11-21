@@ -116,11 +116,11 @@
 
         <Grid DockPanel.Dock="Left" Margin="0,1,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Name="colonne" Width="550" />
+                <ColumnDefinition Name="colonne" Width="{Binding Path=CanvasWidth, Mode=OneWay}" />
                 <ColumnDefinition Width="6" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Name="ligne" Height="310" />
+                <RowDefinition Name="ligne" Height="{Binding Path=CanvasHeight, Mode=OneWay}" />
                 <RowDefinition Height="6" />
             </Grid.RowDefinitions>
             <Thumb x:Name="horizontal" Grid.Row="0" Grid.Column="1" Background="White" 

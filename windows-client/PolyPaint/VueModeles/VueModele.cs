@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -78,6 +79,15 @@ namespace PolyPaint.VueModeles
             get { return editeur.TailleTrait; }
             set { editeur.TailleTrait = value; }
         }
+        
+        public Size CanvasSize
+        {
+            get => editeur.CanvasSize;
+            set => editeur.CanvasSize = value;
+        }
+
+        public int CanvasWidth { get => (int)editeur.CanvasSize.Width; }
+        public int CanvasHeight { get => (int)editeur.CanvasSize.Height; }
 
         public Page EditingFrameContent
         {
@@ -197,6 +207,10 @@ namespace PolyPaint.VueModeles
             else if (e.PropertyName == "EditingStroke")
             {
                 this.ProprieteModifiee("EditingFrameContent");
+            }
+            else if (e.PropertyName == "CanvasSize")
+            {
+                this.ProprieteModifiee("CanvasSize");
             }
         }
     }

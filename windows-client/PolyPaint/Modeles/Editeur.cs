@@ -358,10 +358,22 @@ namespace PolyPaint.Modeles
         private Stack<EditionAction> history = new Stack<EditionAction>();
         private Stack<EditionAction> undoStack = new Stack<EditionAction>();
 
+        private Size _CanvasSize = new Size(550, 310);
+        public Size CanvasSize {
+            get => _CanvasSize;
+            set
+            {
+                _CanvasSize = value;
+                ProprieteModifiee();
+                EditionSocket.resizeCanvas(value);
+            }
+        }
+
         // On retire le trait le plus récent de la surface de dessin et on le place sur une pile.
 
         public void Do(EditionAction action)
         {
+            CanvasSize = new Size(100, 100);
             try
             {
                 if (history.Count > 0 && action is EditStroke && history.Peek() is EditStroke && history.Peek().Id == action.Id)
@@ -445,8 +457,6 @@ namespace PolyPaint.Modeles
 
         public void SyncToServer()
         {
-
-
             if (ServerService.instance.isOffline())
             {
                 this.Load(OfflineFileLoader.load(ServerService.instance.currentImageId));
@@ -517,6 +527,15 @@ namespace PolyPaint.Modeles
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     this.traits.Clear();
+                });
+            }));
+
+            ServerService.instance.Socket.On("resizeCanvas", new CustomListener((object[] server_params) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    _CanvasSize = new Size(int.Parse(server_params[0].ToString()), int.Parse(server_params[1].ToString()));
+                    ProprieteModifiee("CanvasSize");
                 });
             }));
 

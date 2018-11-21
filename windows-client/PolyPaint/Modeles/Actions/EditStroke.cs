@@ -43,7 +43,7 @@ namespace PolyPaint.Modeles.Actions
                 {
                     strokes.Insert(newindex, updated);
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch
                 {
                     strokes.Add(updated);
                 }
@@ -77,7 +77,7 @@ namespace PolyPaint.Modeles.Actions
                 {
                     strokes.Insert(newindex, updated);
                 }
-                catch (ArgumentOutOfRangeException e)
+                catch
                 {
                     strokes.Add(updated);
                 }
