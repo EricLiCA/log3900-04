@@ -1,4 +1,4 @@
-import { Canvas } from "./canvas";
+import { Canvas, Size } from "./canvas";
 import { User } from "../connected-users-service.ts/user";
 import { ShapeObject } from "../models/Shape-object";
 
@@ -65,6 +65,7 @@ export class CollaborativeService {
             canvas = await this.getCanvas(imageId);
             
             user.socket.emit('imageData', canvas.strokes);
+            user.socket.emit('resizeCanvas', canvas.size.width, canvas.size.height);
             canvas.protections.forEach((value: string[], key: User) => {
                 user.socket.emit("addProtections", key.name, value);
             })
@@ -120,6 +121,12 @@ export class CollaborativeService {
             let canvas = await this.getUserCanvas(user.socket.id);
             user.socket.to(this.users.get(user)).emit('clearCanvas');
             canvas.clear();
+        });
+
+        user.socket.on('resizeCanvas', async (width: number, height: number) => {
+            let canvas = await this.getUserCanvas(user.socket.id);
+            canvas.size = new Size(width, height);
+            user.socket.to(this.users.get(user)).emit('resizeCanvas', width, height);
         });
     }
 
