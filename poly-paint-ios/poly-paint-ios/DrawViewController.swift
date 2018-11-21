@@ -59,12 +59,22 @@ class DrawViewController: UIViewController {
         self.cancelButton.isEnabled = false
         self.setUpNotifications()
         self.hideOptionsView()
+        let value = UIInterfaceOrientation.landscapeLeft.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
         // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .landscapeLeft
+    }
+    
+    override var shouldAutorotate: Bool {
+        return true
     }
 
     @IBAction func insertTapped(_ sender: UIBarButtonItem) {
