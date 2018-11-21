@@ -456,5 +456,8 @@
     <Resource Include="Resources\8_drawingUtilities.png" />
     <Resource Include="Resources\9_color1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\16_pictureDetail.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
