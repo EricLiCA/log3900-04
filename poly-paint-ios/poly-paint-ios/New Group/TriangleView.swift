@@ -29,7 +29,7 @@ class TriangleView: BasicShapeView {
         self.color?.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
-        self.color?.setStroke()
+        UIColor.black.setStroke()
         path.stroke()
         self.initializeAnchorPoints()
     }
