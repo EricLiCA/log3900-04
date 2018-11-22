@@ -14,6 +14,7 @@ class FriendTableViewCell: UITableViewCell {
     @IBOutlet weak var removeAsFriendButton: UIButton!
     @IBOutlet weak var startChatButton: UIButton!
     @IBOutlet weak var friendGallery: UIButton!
+    @IBOutlet weak var friendProfileImage: UIImageView!
     
     @IBAction func removeAsFriendTapped(_ sender: UIButton) {
         self.sendRemoveAsFriend()
@@ -94,6 +95,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = friendsTableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as! FriendTableViewCell
         cell.friendUsernameLabel?.text = friends[indexPath.row].username
+        let url: URL = URL(string: friends[indexPath.row].profilePictureUrl)!
+        print("LOADING PROFILE: \(url)")
+        let session = URLSession.shared
+        let task = session.dataTask(with: url, completionHandler: {
+            (data, response, error) in
+            if data != nil {
+                let image = UIImage(data: data!)
+                if(image != nil) {
+                    DispatchQueue.main.async(execute: {
+                        cell.friendProfileImage.image = image
+                    })
+                }
+            }
+        })
+        
+        task.resume()
         return cell
     }
     
@@ -246,6 +263,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         self.changeProfilePicture(newURL: "https://s3.amazonaws.com/polypaintpro/profile-pictures/\(UserDefaults.standard.string(forKey: "username")!).jpeg")
         UserDefaults.standard.set("https://s3.amazonaws.com/polypaintpro/profile-pictures/\(UserDefaults.standard.string(forKey: "username")!).jpeg", forKey: "profileImage")
+        URLCache.shared.removeAllCachedResponses()
     }
     
     func changeProfilePicture(newURL: String) {

@@ -786,6 +786,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="friendGallery" destination="cu6-QQ-hfX" id="UR1-RE-U3g"/>
+                                            <outlet property="friendProfileImage" destination="bYy-tH-VjF" id="qy6-hA-05Q"/>
                                             <outlet property="friendUsernameLabel" destination="3A3-UI-iFf" id="Gkn-s2-hrU"/>
                                             <outlet property="removeAsFriendButton" destination="wFG-wV-Cx0" id="WhX-VP-rM1"/>
                                             <outlet property="startChatButton" destination="Fb8-Md-X2z" id="Fxn-oy-J9o"/>
