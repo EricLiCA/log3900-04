@@ -28,10 +28,13 @@ class EllipseView: BasicShapeView {
     
     func addLabel() {
         let label = UILabel()
-        label.frame = CGRect(x: self.bounds.width/2 , y: 0, width: self.bounds.width, height: self.bounds.height)
+        label.frame = CGRect(x: 0 , y: 0, width: self.bounds.width, height: self.bounds.height)
         label.text = self.labelText!
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.numberOfLines = 10
+        label.textAlignment = NSTextAlignment.center
         label.textColor = UIColor.black
-        label.font = UIFont(name: "Helvetica", size: 12)
+        label.font = UIFont(name: "Helvetica", size: 14)
         self.addSubview(label)
     }
     
