@@ -14,7 +14,7 @@ class UseCasePopoverViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.useCaseTextView.text = ""
         // Do any additional setup after loading the view.
     }
 
@@ -23,10 +23,18 @@ class UseCasePopoverViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func addUseCaseTapped(_ sender: UIButton) {
+    @IBAction func createUseCaseTapped(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+        self.sendUseCase()
     }
     
     @IBAction func cancelTapped(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func sendUseCase() {
+        let userInfo = ["useCase": self.useCaseTextView.text] as [String : Any]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createUseCaseAlert"), object: nil, userInfo: userInfo)
     }
     /*
     // MARK: - Navigation

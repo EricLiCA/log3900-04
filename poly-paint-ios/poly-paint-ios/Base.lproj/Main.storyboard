@@ -401,7 +401,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="useCaseTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="6cV-Bc-KtE"/>
-                                                    <segue destination="5uQ-IG-6AB" kind="popoverPresentation" identifier="toRelationPopover" popoverAnchorView="jj9-Dh-xV3" id="Q6B-4Z-xHG">
+                                                    <segue destination="JEd-Qi-ZZU" kind="popoverPresentation" popoverAnchorView="jj9-Dh-xV3" id="mLE-wW-NIX">
                                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                                     </segue>
                                                 </connections>
@@ -478,93 +478,16 @@
             </objects>
             <point key="canvasLocation" x="812.5" y="-963.28124999999989"/>
         </scene>
-        <!--Use Case Popover View Controller-->
-        <scene sceneID="AtN-zn-JAQ">
-            <objects>
-                <viewController storyboardIdentifier="UseCasePopoverViewController" id="nU9-5j-V8G" customClass="UseCasePopoverViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="wnp-wX-lQ1">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DDy-iP-Tz8">
-                                <rect key="frame" x="284" y="402.5" width="200" height="239"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Case" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zhc-je-lJN">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="G8R-dN-RDP"/>
-                                            <constraint firstAttribute="width" constant="200" id="i7r-ft-2ZX"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Moj-Xo-t7f">
-                                        <rect key="frame" x="0.0" y="31" width="200" height="128"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="alp-C2-G95"/>
-                                            <constraint firstAttribute="height" constant="128" id="xxn-d8-YRJ"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYS-Fv-mG9">
-                                        <rect key="frame" x="0.0" y="169" width="200" height="30"/>
-                                        <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="YhX-oG-j0A"/>
-                                            <constraint firstAttribute="height" constant="30" id="lkO-Jz-R6z"/>
-                                        </constraints>
-                                        <state key="normal" title="Add Use Case">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addUseCaseTapped:" destination="nU9-5j-V8G" eventType="touchUpInside" id="fYX-Gv-mny"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SrZ-04-ihq">
-                                        <rect key="frame" x="0.0" y="209" width="200" height="30"/>
-                                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="4Va-TY-NPv"/>
-                                            <constraint firstAttribute="width" constant="200" id="mec-GC-Iwk"/>
-                                        </constraints>
-                                        <state key="normal" title="Cancel">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="cancelTapped:" destination="nU9-5j-V8G" eventType="touchUpInside" id="bNR-f3-lVJ"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="DDy-iP-Tz8" firstAttribute="centerX" secondItem="fjT-A9-9R7" secondAttribute="centerX" id="CmB-bV-9ZI"/>
-                            <constraint firstItem="DDy-iP-Tz8" firstAttribute="centerY" secondItem="fjT-A9-9R7" secondAttribute="centerY" id="n3d-jd-qNk"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="fjT-A9-9R7"/>
-                    </view>
-                    <connections>
-                        <outlet property="useCaseTextView" destination="Moj-Xo-t7f" id="c0m-pV-A4t"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h49-4Q-YUN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="560" y="-1709"/>
-        </scene>
         <!--Relation View Controller-->
         <scene sceneID="IBl-pZ-KGH">
             <objects>
                 <viewController id="5uQ-IG-6AB" customClass="RelationViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5mM-X1-rDO">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="06G-4d-Uyt">
-                                <rect key="frame" x="45" y="43" width="230" height="395.5"/>
+                                <rect key="frame" x="269" y="324.5" width="230" height="395.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Line/Relation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FgQ-Zf-S4F">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
@@ -796,55 +719,83 @@
             </objects>
             <point key="canvasLocation" x="1383.59375" y="-1691.015625"/>
         </scene>
-        <!--View Controller-->
+        <!--Use Case Popover View Controller-->
         <scene sceneID="Es3-Na-eqb">
             <objects>
-                <viewController id="JEd-Qi-ZZU" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="PCs-XO-bbA" customClass="useCasePopoverView" customModule="poly_paint_ios" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                <viewController id="JEd-Qi-ZZU" customClass="UseCasePopoverViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PCs-XO-bbA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="exh-c9-3Gq">
-                                <rect key="frame" x="264" y="458" width="240" height="128"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="47M-Zi-jmd"/>
-                                    <constraint firstAttribute="width" constant="240" id="DGt-3l-WQh"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EvV-r9-yYb">
-                                <rect key="frame" x="40" y="651" width="240" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="FGQ-WQ-xci"/>
-                                    <constraint firstAttribute="width" constant="240" id="me3-k6-EoW"/>
-                                </constraints>
-                                <state key="normal" title="Create Use Case">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="createUseCaseTapped:" destination="PCs-XO-bbA" eventType="touchUpInside" id="0y4-bt-mhJ"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="UiD-24-Nwy">
+                                <rect key="frame" x="40" y="111" width="240" height="258.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Case" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rrK-78-tOr">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="exh-c9-3Gq">
+                                        <rect key="frame" x="0.0" y="40.5" width="240" height="128"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="128" id="47M-Zi-jmd"/>
+                                            <constraint firstAttribute="width" constant="240" id="DGt-3l-WQh"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wkp-ma-I2P">
+                                        <rect key="frame" x="0.0" y="188.5" width="240" height="70"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EvV-r9-yYb">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
+                                                <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="FGQ-WQ-xci"/>
+                                                    <constraint firstAttribute="width" constant="240" id="me3-k6-EoW"/>
+                                                </constraints>
+                                                <state key="normal" title="Create Use Case">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="createUseCaseTapped:" destination="JEd-Qi-ZZU" eventType="touchUpInside" id="PSe-Ra-JoT"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2be-8z-Wwi">
+                                                <rect key="frame" x="0.0" y="40" width="240" height="30"/>
+                                                <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="752-YN-1cK"/>
+                                                    <constraint firstAttribute="width" constant="240" id="xQI-fr-14o"/>
+                                                </constraints>
+                                                <state key="normal" title="Cancel">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="cancelTapped:" destination="JEd-Qi-ZZU" eventType="touchUpInside" id="aj2-Av-7Uc"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="exh-c9-3Gq" firstAttribute="centerY" secondItem="OjH-Vb-gOs" secondAttribute="centerY" id="OTK-N3-m0y"/>
-                            <constraint firstItem="EvV-r9-yYb" firstAttribute="leading" secondItem="OjH-Vb-gOs" secondAttribute="leading" constant="40" id="U3C-jQ-etd"/>
-                            <constraint firstItem="EvV-r9-yYb" firstAttribute="top" secondItem="exh-c9-3Gq" secondAttribute="bottom" constant="65" id="Wit-hB-O2I"/>
-                            <constraint firstItem="exh-c9-3Gq" firstAttribute="centerX" secondItem="OjH-Vb-gOs" secondAttribute="centerX" id="n0f-XE-M3b"/>
+                            <constraint firstItem="UiD-24-Nwy" firstAttribute="centerY" secondItem="OjH-Vb-gOs" secondAttribute="centerY" id="Y3e-08-Fzl"/>
+                            <constraint firstItem="UiD-24-Nwy" firstAttribute="centerX" secondItem="OjH-Vb-gOs" secondAttribute="centerX" id="gh3-rS-WXE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OjH-Vb-gOs"/>
-                        <connections>
-                            <outlet property="rawText" destination="exh-c9-3Gq" id="nYc-K0-ump"/>
-                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="useCaseTextView" destination="exh-c9-3Gq" id="NYi-iT-Fmt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lni-iO-eOs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2203" y="-1733"/>
+            <point key="canvasLocation" x="2202.34375" y="-1733.203125"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="2JB-on-srr">

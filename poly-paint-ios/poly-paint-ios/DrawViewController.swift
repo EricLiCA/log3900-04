@@ -34,7 +34,7 @@ class DrawViewController: UIViewController {
     var isUserEditingShape: Bool = false
     var currentBezierPath: UIBezierPath?
     var insideCanvas = false
-    var selectedColor : UIColor = UIColor.black
+    var selectedColor : UIColor = UIColor.white
     var startPointOfLine: CGPoint?
     var endPointOfLine: CGPoint?
     var startPointView: BasicShapeView?
@@ -49,6 +49,7 @@ class DrawViewController: UIViewController {
     var addedNewPointToLine = false
     var pointIndexEditing: Int?
     var drawLineAlerted = false
+    var useCaseText = ""
     
 
     
@@ -336,9 +337,10 @@ class DrawViewController: UIViewController {
                 self.shapes[rectangleView.uuid] = rectangleView
                 self.drawingPlace.addSubview(rectangleView)
             } else if(currentShape == Shape.Ellipse) {
-                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor)
+                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: self.useCaseText)
                 self.shapes[ellipseView.uuid] = ellipseView
                 self.drawingPlace.addSubview(ellipseView)
+                self.useCaseText = ""
             } else if(currentShape == Shape.Triangle) {
                 let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor)
                 self.shapes[triangleView.uuid] = triangleView
@@ -435,7 +437,7 @@ class DrawViewController: UIViewController {
         }
             
         else  if shapeType == "ELLIPSE" {
-            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: "")
             view.center.x = 0 + view.frame.width/2
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
@@ -462,6 +464,12 @@ class DrawViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(relationInfoAlert), name: NSNotification.Name(rawValue: "relationInfoAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(relationInfoCancelAlert), name: NSNotification.Name(rawValue: "relationInfoCancelAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(setColorAlert), name: NSNotification.Name(rawValue: "setColorAlert"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(createUseCaseAlert), name: NSNotification.Name(rawValue: "createUseCaseAlert"), object: nil)
+    }
+    
+    @objc func createUseCaseAlert(sender: AnyObject) {
+        self.useCaseText = sender.userInfo["useCase"] as! String
+        self.ellipseTapped()
     }
     
     @objc func setColorAlert(sender: AnyObject) {
