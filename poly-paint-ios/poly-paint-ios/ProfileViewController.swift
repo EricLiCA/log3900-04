@@ -71,6 +71,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.friendsTableView.delegate = self
         self.friendsTableView.dataSource = self
         self.imagePicker.delegate = self
+        self.loadProfilePicture()
         self.getFriends()
     }
     
@@ -216,7 +217,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func loadProfilePicture() {
-        let url:URL = URL(string: UserDefaults.standard.string(forKey: "profileImage")!)!
+        let url: URL = URL(string: UserDefaults.standard.string(forKey: "profileImage")!)!
+        print("LOADING PROFILE: \(url)")
         let session = URLSession.shared
         let task = session.dataTask(with: url, completionHandler: {
             (data, response, error) in
@@ -242,11 +244,49 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             self.present(imagePicker, animated: true, completion: nil)
         }
+        self.changeProfilePicture(newURL: "https://s3.amazonaws.com/polypaintpro/profile-pictures/\(UserDefaults.standard.string(forKey: "username")!).jpeg")
+        UserDefaults.standard.set("https://s3.amazonaws.com/polypaintpro/profile-pictures/\(UserDefaults.standard.string(forKey: "username")!).jpeg", forKey: "profileImage")
+    }
+    
+    func changeProfilePicture(newURL: String) {
+        print("CHANGING PROFILE PICTURE WITH \(newURL)")
+        let urlString = "http://localhost:3000/v2/users/" + UserDefaults.standard.string(forKey: "id")!
+        let url = URL(string: urlString)
+        let session = URLSession.shared
+        var request = URLRequest(url: url!)
+        request.httpMethod = "PUT"
+        
+        // Setting data to send
+        let paramToSend: [String: Any] = ["profileImage": newURL as Any, "token": UserDefaults.standard.string(forKey: "token") as Any]
+        let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            let httpResponse = response as? HTTPURLResponse
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if (responseJSON as? [String: Any]) != nil {
+                DispatchQueue.main.async {
+                    UserDefaults.standard.set(newURL, forKey: "profileImage")
+                    print("PROFILE IMAGE CHANGED TO: \(newURL)")
+                }
+            } else {
+                print("Could not change profile image")
+            }
+        }
+        
+        task.resume()
+        
+        UserDefaults.standard.set("https://s3.amazonaws.com/polypaintpro/profile-pictures/\(UserDefaults.standard.string(forKey: "username")!)", forKey: "profileImage")
     }
     
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         self.profilePicture.image = chosenImage
+        S3Service.instance.upload(image: chosenImage)
         dismiss(animated: true, completion: nil)
     }
     
