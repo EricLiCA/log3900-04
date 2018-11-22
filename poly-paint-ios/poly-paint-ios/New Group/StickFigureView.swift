@@ -17,7 +17,7 @@ class StickFigureView: BasicShapeView {
     init(actorName: String) {
         let frame = CGRect(x: 0, y: 0, width: self.defaultWidth, height: self.defaultHeight)
         self.actorName = actorName
-        super.init(frame: frame, numberOfAnchorPoints: 2, color: UIColor.white, shapeType: "ACTOR")
+        super.init(frame: frame, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "ACTOR")
         let image = UIImage(named: "StickFigure")
         self.backgroundColor = UIColor(patternImage: image!)
         
@@ -48,9 +48,11 @@ class StickFigureView: BasicShapeView {
     }
     
     func initializeAnchorPoints() {
+        let topAnchorPoint = CGPoint(x: self.frame.size.width/2, y: 0)
         let rightAnchorPoint = CGPoint(x: self.frame.size.width, y: self.frame.size.height/2)
+        let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
         let leftAnchorPoint = CGPoint(x: 0, y: self.frame.size.height/2)
-        var anchorPoints = [rightAnchorPoint, leftAnchorPoint]
+        var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
             var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
