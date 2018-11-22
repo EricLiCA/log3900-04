@@ -24,7 +24,7 @@ class CreateNewImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.passwordStack.isHidden = true;
-        self.passMatch.isHidden = true;
+        self.passMatch.textColor = UIColor.white
         self.confirmPasswordField.widthAnchor.constraint(equalToConstant: 80).isActive = true
         self.setPasswordField.widthAnchor.constraint(equalToConstant: 80).isActive = true
     }
@@ -100,7 +100,7 @@ class CreateNewImageViewController: UIViewController {
             }
             task.resume()
         } else if password != confirmPassword {
-            self.passMatch.isHidden = false
+            self.passMatch.textColor = UIColor.red
         }
     }
 }
