@@ -2,8 +2,11 @@ using Newtonsoft.Json.Linq;
 using PolyPaint.DAO;
 using PolyPaint.Modeles;
 using PolyPaint.Services;
+using PolyPaint.Utilitaires;
 using RestSharp;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,55 +37,44 @@ namespace PolyPaint.Vues
 
         public void Load()
         {
-            if (ServerService.instance.user.isGuest)
-            {
+            if (ServerService.instance.isOffline())
                 RestrictPermissions();
-            }
-            else
-            {
-                ImageDao.GetByOwnerId();
-            }
+
+            ImageDao.GetByOwnerId();
             ImageDao.GetPublicExceptMine();
         }
 
         private void RestrictPermissions()
         {
-            MyImagesGroupBox.Visibility = Visibility.Collapsed;
             LikeButton.IsEnabled = false;
-            LockButton.IsEnabled = false;
-            PasswordButton.IsEnabled = false;
             CurrentComment.IsEnabled = false;
             AddCommentButton.IsEnabled = false;
+            ShareButton.IsEnabled = false;
         }
 
-        public void LoadMyImages(IRestResponse response)
+        public void LoadMyImages(string response)
         {
-            if (response.StatusCode == HttpStatusCode.OK)
+            MyImagesContainer.Children.Clear();
+            JArray responseImages = JArray.Parse(response);
+            for (int i = 0; i < responseImages.Count; i++)
             {
-                MyImagesContainer.Children.Clear();
-                JArray responseImages = JArray.Parse(response.Content);
-                for (int i = 0; i < responseImages.Count; i++)
+                dynamic data = JObject.Parse(responseImages[i].ToString());
+                Image image = new Image
                 {
-                    dynamic data = JObject.Parse(responseImages[i].ToString());
-                    Image image = new Image
-                    {
-                        id = data["id"],
-                        ownerId = data["ownerId"],
-                        title = data["title"],
-                        protectionLevel = data["protectionLevel"],
-                        password = data["password"],
-                        thumbnailUrl = data["thumbnailUrl"],
-                        fullImageUrl = data["fullImageUrl"],
-                    };
+                    id = data["id"],
+                    ownerId = data["ownerId"],
+                    title = data["title"],
+                    protectionLevel = data["protectionLevel"],
+                    password = data["password"],
+                    thumbnailUrl = ServerService.instance.isOffline() ? data["thumbnailUrl"] : Settings.URL_TO_GALLERY_IMAGES + data["id"] + ".png",
+                    fullImageUrl = ServerService.instance.isOffline() ? data["thumbnailUrl"] : Settings.URL_TO_GALLERY_IMAGES + data["id"] + ".png",
+                    authorName = data["authorName"]
+                };
 
-                    GalleryCard galleryCard = new GalleryCard(image);
-                    galleryCard.ViewButtonClicked += ViewButton_Click;
-                    MyImagesContainer.Children.Add(galleryCard);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Could not load the images", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                GalleryCard galleryCard = new GalleryCard(image);
+                galleryCard.ViewButtonClicked += ViewButton_Click;
+                MyImagesContainer.Children.Add(galleryCard);
             }
         }
 
@@ -102,8 +94,9 @@ namespace PolyPaint.Vues
                         title = data["title"],
                         protectionLevel = data["protectionLevel"],
                         password = data["password"],
-                        thumbnailUrl = data["thumbnailUrl"],
-                        fullImageUrl = data["fullImageUrl"],
+                        thumbnailUrl = Settings.URL_TO_GALLERY_IMAGES + data["id"] + ".png",
+                        fullImageUrl = Settings.URL_TO_GALLERY_IMAGES + data["id"] + ".png",
+                        authorName = data["authorName"]
                     };
 
                     GalleryCard galleryCard = new GalleryCard(image);
@@ -120,7 +113,7 @@ namespace PolyPaint.Vues
         public void CheckOrUncheckLikeButton()
         {
             LikeButton.IsChecked = false;
-            for (int i =0; i < ImagePreviewRoom.Likes.Count; i++)
+            for (int i = 0; i < ImagePreviewRoom.Likes.Count; i++)
             {
                 if (ImagePreviewRoom.Likes[i].userId == ServerService.instance.user.id)
                 {
@@ -136,6 +129,7 @@ namespace PolyPaint.Vues
             ImageView.Visibility = Visibility.Visible;
             ImageView.IsExpanded = true;
             ImageViewTitle.Text = CurrentGalleryCard.Image.title;
+            ImageViewAuthor.Text = "CreatedBy " + CurrentGalleryCard.Image.authorName;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
             Uri imageUri = new Uri(CurrentGalleryCard.Image.fullImageUrl);
             BitmapImage imageBitmap = new BitmapImage(imageUri);
@@ -143,20 +137,22 @@ namespace PolyPaint.Vues
 
             ImagePreviewRoom.ImageId = CurrentGalleryCard.Image.id;
             ImagePreviewRoom.PreviewImage();
-
-            if (!ServerService.instance.user.isGuest)
+            
+           
+            if (!ServerService.instance.isOffline())
             {
+                ShareButton.Visibility = CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id ? Visibility.Visible : Visibility.Collapsed;
                 if (CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
                 {
                     LikeButton.IsEnabled = false;
-                    PasswordButton.Visibility = Visibility.Visible;
+                    ImageInformationsButton.Visibility = Visibility.Visible;
                     LockButton.Visibility = Visibility.Visible;
                 }
                 else
                 {
                     LikeButton.IsEnabled = true;
-                    PasswordButton.Visibility = Visibility.Hidden;
-                    LockButton.Visibility = Visibility.Hidden;
+                    ImageInformationsButton.Visibility = Visibility.Collapsed;
+                    LockButton.Visibility = Visibility.Collapsed;
                 }
                 ConfigImageViewButtons();
             }
@@ -169,19 +165,19 @@ namespace PolyPaint.Vues
                 case "public":
                     {
                         LockButton.IsChecked = false;
-                        PasswordButton.IsEnabled = true;
+                        ImageInformationsButton.IsEnabled = true;
                         break;
                     }
                 case "private":
                     {
                         LockButton.IsChecked = true;
-                        PasswordButton.IsEnabled = false;
+                        ImageInformationsButton.IsEnabled = true;
                         break;
                     }
                 case "protected":
                     {
                         LockButton.IsChecked = false;
-                        PasswordButton.IsEnabled = true;
+                        ImageInformationsButton.IsEnabled = true;
                         break;
                     }
             }
@@ -193,9 +189,12 @@ namespace PolyPaint.Vues
             {
                 CurrentGalleryCard.Image.protectionLevel = "private";
             }
-            else
+            else if (CurrentGalleryCard.Image.password == null || CurrentGalleryCard.Image.password == "")
             {
                 CurrentGalleryCard.Image.protectionLevel = "public";
+            } else
+            {
+                CurrentGalleryCard.Image.protectionLevel = "protected";
             }
             CurrentGalleryCard.ConfigIcon();
             ImageDao.Put(CurrentGalleryCard.Image);
@@ -223,11 +222,12 @@ namespace PolyPaint.Vues
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             CreateImageContainer.Visibility = Visibility.Collapsed;
-            ChangePasswordContainer.Visibility = Visibility.Collapsed;
+            EditImageInformationsContainer.Visibility = Visibility.Collapsed;
             AccessImageContainer.Visibility = Visibility.Visible;
+            ShareImageContainer.Visibility = Visibility.Collapsed;
             ImageToAccessPassword.Text = "";
             WrongPasswordMessage.IsActive = false;
-            if (CurrentGalleryCard.Image.protectionLevel != "protected" || CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
+            if (ServerService.instance.isOffline() || CurrentGalleryCard.Image.protectionLevel != "protected" || CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id)
             {
                 ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
             }
@@ -239,40 +239,65 @@ namespace PolyPaint.Vues
             CurrentComment.Text = "";
         }
 
-        private void PasswordButton_Click(object sender, RoutedEventArgs e)
+        private void ImageInformationsButton_Click(object sender, RoutedEventArgs e)
         {
             CreateImageContainer.Visibility = Visibility.Collapsed;
-            ChangePasswordContainer.Visibility = Visibility.Visible;
+            EditImageInformationsContainer.Visibility = Visibility.Visible;
             AccessImageContainer.Visibility = Visibility.Collapsed;
+            ShareImageContainer.Visibility = Visibility.Collapsed;
+            CurrentImageTitle.Text = CurrentGalleryCard.Image.title;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
+            CurrentImagePassword.IsEnabled = (CurrentGalleryCard.Image.protectionLevel == "private") ? false : true;
         }
 
         private void AddImageButton_Click(object sender, RoutedEventArgs e)
         {
             CreateImageContainer.Visibility = Visibility.Visible;
-            ChangePasswordContainer.Visibility = Visibility.Collapsed;
+            EditImageInformationsContainer.Visibility = Visibility.Collapsed;
             AccessImageContainer.Visibility = Visibility.Collapsed;
+            ShareImageContainer.Visibility = Visibility.Collapsed;
             ImageTitle.Text = "";
             ImagePassword.Password = "";
             PrivateProtectionLevel.IsChecked = true;
         }
 
-        #region Dialog
-
-        private void AddPasswordButton_Click(object sender, RoutedEventArgs e)
+        private void ShareButton_Click(object sender, RoutedEventArgs e)
         {
-            CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
-            CurrentGalleryCard.Image.protectionLevel = "protected";
-            CurrentGalleryCard.ConfigIcon();
-            ImageDao.Put(CurrentGalleryCard.Image);
+            CreateImageContainer.Visibility = Visibility.Collapsed;
+            EditImageInformationsContainer.Visibility = Visibility.Collapsed;
+            AccessImageContainer.Visibility = Visibility.Collapsed;
+            ShareImageContainer.Visibility = Visibility.Visible;
+
+            var request = new RestRequest(Settings.API_VERSION + "/secret/generate/" + CurrentGalleryCard.Image.id, Method.GET);
+            ServerService.instance.server.ExecuteAsync(request, response =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ShareLink.Text = Settings.WEB_CLIENT_LINK + "secret/" + (string)response.Content;
+                });
+            });
         }
 
-        private void RemovePasswordButton_Click(object sender, RoutedEventArgs e)
+        #region Dialog
+
+        private void EditImageInformationsButton_Click(object sender, RoutedEventArgs e)
         {
-            CurrentGalleryCard.Image.password = null;
-            CurrentGalleryCard.Image.protectionLevel = "public";
-            CurrentGalleryCard.ConfigIcon();
-            CurrentImagePassword.Text = null;
+            CurrentGalleryCard.ImageTitle.Text = CurrentImageTitle.Text;
+            ImageViewTitle.Text = CurrentImageTitle.Text;
+            if (CurrentGalleryCard.Image.protectionLevel != "private")
+            {
+                if (CurrentImagePassword.Text == "")
+                {
+                    CurrentGalleryCard.Image.password = null;
+                    CurrentGalleryCard.Image.protectionLevel = "public";
+                }
+                else
+                {
+                    CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
+                    CurrentGalleryCard.Image.protectionLevel = "protected";
+                }
+                CurrentGalleryCard.ConfigIcon();
+            }
             ImageDao.Put(CurrentGalleryCard.Image);
         }
 
@@ -299,7 +324,8 @@ namespace PolyPaint.Vues
             Image newImage = new Image
             {
                 title = ImageTitle.Text,
-                ownerId = ServerService.instance.user.id,
+                ownerId = ServerService.instance.isOffline() ? null : ServerService.instance.user.id,
+                id = ServerService.instance.isOffline() ? Guid.NewGuid().ToString() : null,
                 password = ImagePassword.Password,
                 protectionLevel = protectionLevel
             };
@@ -321,6 +347,48 @@ namespace PolyPaint.Vues
             {
                 ((MainWindow)Application.Current.MainWindow).LoadImage(CurrentGalleryCard.Image.id);
             }
+        }
+
+        private void Search_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            List<GalleryCard> gallerycards = PublicImagesContainer.Children.Cast<GalleryCard>().ToList();
+            gallerycards.AddRange(MyImagesContainer.Children.Cast<GalleryCard>().ToList());
+            string filter = ((ComboBoxItem)SearchBy.SelectedValue).Content.ToString();
+            if (filter.Contains("author"))
+            {
+                gallerycards.ForEach(card =>
+                {
+                    if (card.Image.authorName.Contains(Search.Text))
+                    {
+                        card.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        card.Visibility = Visibility.Collapsed;
+                    }
+                    return;
+                });
+            }
+            else
+            {
+                gallerycards.ForEach(card =>
+                {
+                    if (card.Image.title.Contains(Search.Text))
+                    {
+                        card.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        card.Visibility = Visibility.Collapsed;
+                    }
+                    return;
+                });
+            }
+        }
+
+        private void CopyToClipboard_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(ShareLink.Text);
         }
     }
 }

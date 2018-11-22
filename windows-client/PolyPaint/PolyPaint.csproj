@@ -224,6 +224,7 @@
     <Compile Include="Modeles\Tools\UseCase.cs" />
     <Compile Include="Modeles\User.cs" />
     <Compile Include="Services\MessagingViewManager.cs" />
+    <Compile Include="Services\OfflineFileLoader.cs" />
     <Compile Include="Services\ServerService.cs" />
     <Compile Include="Services\UsersManager.cs" />
     <Compile Include="Utilitaires\RelayCommand.cs" />

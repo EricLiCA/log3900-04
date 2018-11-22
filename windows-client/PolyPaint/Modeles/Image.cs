@@ -15,5 +15,6 @@ namespace PolyPaint.Modeles
         public string password { get; set; }
         public string thumbnailUrl { get; set; }
         public string fullImageUrl { get; set; }
+        public string authorName { get; set; }
     }
 }

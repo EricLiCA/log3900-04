@@ -33,6 +33,7 @@ export class ImageComment {
                     row.Comment,
                     row.Timestamp,
                     row.Username,
+                    row.ProfileImage
                 );
             }));
         } else {
@@ -45,13 +46,15 @@ export class ImageComment {
     public Timestamp: Date;
     public Comment: string;
     public UserName: string;
+    public ProfileImage: string;
 
-    public constructor(imageId: string, userId: string, comment: string, timestamp?: Date, userName?: string) {
+    public constructor(imageId: string, userId: string, comment: string, timestamp?: Date, userName?: string, profileImage?: string) {
         this.ImageId = imageId;
         this.UserId = userId;
         this.Timestamp = timestamp;
         this.Comment = comment;
         this.UserName = userName;
+        this.ProfileImage = profileImage;
     }
     
 }

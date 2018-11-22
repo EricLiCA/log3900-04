@@ -44,7 +44,7 @@ export class ImageWithLikesAndComments {
     public async addComment(userId: string, comment: string): Promise<ImageComment> {
         const imageComment = await ImageComment.post(new ImageComment(this.id, userId, comment));
         if (imageComment != undefined) {
-            this.comments.push(imageComment);
+            this.comments.splice(0,0,imageComment);
         }
         return Promise.resolve(imageComment);
     }

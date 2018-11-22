@@ -82,8 +82,7 @@ namespace PolyPaint.Modeles
         public CustomStroke startEditing()
         {
             if (!this.Selected) return null;
-
-            Console.WriteLine("ALERT");
+            
             this.Editing = true;
             this.Refresh();
             return strokes.get(this.Id.ToString());
