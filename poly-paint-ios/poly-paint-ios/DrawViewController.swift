@@ -591,7 +591,10 @@ class DrawViewController: UIViewController {
         }
         
         self.drawingSocketManager.socketIOClient.on("removeStroke") { (data, ack) in
-            data[0]
+            let uuid = data[0] as! String
+            let shape = self.shapes[uuid]
+            shape?.removeFromSuperview()
+            self.shapes.removeValue(forKey: uuid)
         }
     }
     
