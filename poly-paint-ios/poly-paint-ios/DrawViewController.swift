@@ -503,6 +503,8 @@ class DrawViewController: UIViewController {
         layer.borderWidth = 2
         layer.strokeColor = UIColor.black.cgColor
         var line = Line(layer: layer, startPoint: self.startPointOfLine!, endPoint: self.endPointOfLine!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndLabel!, secondEndTextField: self.secondEndLabel!)
+        self.startPointView?.hideAnchorPoints()
+        self.endPointView?.hideAnchorPoints()
         line.firstAnchorShapeId = self.startPointView?.uuid
         line.firstAnchorShapeIndex = self.startAnchorNumber
         line.secondAnchorShapeId = self.endPointView?.uuid
