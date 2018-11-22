@@ -14,6 +14,7 @@ class MainMenuViewController: UIViewController {
     @IBOutlet weak var galleryButton: UIButton!
     @IBOutlet weak var newImageButton: UIButton!
     @IBOutlet weak var chatButton: UIBarButtonItem!
+    var image: Image?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,7 @@ class MainMenuViewController: UIViewController {
         self.checkIfAnonymous()
         print("Set username as \(UserDefaults.standard.string(forKey: "username")!)")
             ChatModel.instance.setUsername(username: UserDefaults.standard.string(forKey: "username")!)
+        self.setUpNotifications()
         // Do any additional setup after loading the view.
     }
 
@@ -64,6 +66,35 @@ class MainMenuViewController: UIViewController {
     func blockProfile() {
         self.profileButton.isEnabled = false
         self.profileButton.isHidden = true
+    }
+    
+    @IBAction func newImageTapped(_ sender: Any) {
+        
+        self.performSegue(withIdentifier: "toNewImageCanvas", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toNewImageCanvas" {
+            let NewimageVC = segue.destination as! CreateNewImageViewController
+            NewimageVC.popoverPresentationController?.sourceRect = CGRect(x: view.center.x, y: view.center.y, width: 0, height: 0)
+            NewimageVC.popoverPresentationController?.sourceView = view
+            NewimageVC.popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+        }
+        
+        if segue.identifier == "toImageEditor" {
+            let ImageEditorVC = segue.destination as! DrawViewController
+            ImageEditorVC.image = self.image
+        }
+    }
+    
+    func setUpNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(onNewImageCreated), name: NSNotification.Name(rawValue: "newImageCreated"), object: nil)
+    }
+    
+    
+    @objc func onNewImageCreated(_ notification:Notification) {
+        self.image = (notification.userInfo?["image"] as! Image)
+        self.performSegue(withIdentifier: "toImageEditor", sender: self)
     }
     
     

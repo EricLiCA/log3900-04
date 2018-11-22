@@ -25,7 +25,7 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let openEditorAction = UIAlertAction(title: "Open In Editor", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            //  Do some destructive action here.
+            self.performSegue(withIdentifier: "toImageEditorFromPrivate", sender: self)
         })
         alertController.addAction(openEditorAction)
         
@@ -75,6 +75,10 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
             let ProtectedImagePasswordVC = segue.destination as! ProtectedImagePasswordViewController
             ProtectedImagePasswordVC.image = self.image
             ProtectedImagePasswordVC.changeImagePasswordProtocol = self
+        }
+        if segue.identifier == "toImageEditorFromPrivate" {
+            let ImageEditorVC = segue.destination as! DrawViewController
+            ImageEditorVC.image = self.image
         }
     }
     

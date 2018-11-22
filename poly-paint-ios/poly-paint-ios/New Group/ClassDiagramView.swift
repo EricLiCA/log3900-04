@@ -8,15 +8,15 @@
 
 import UIKit
 
-class ClassDiagramView: BasicShapeView {
+public class ClassDiagramView: BasicShapeView {
     
     let defaultTextLineHeight: CGFloat = 40
     let defaultMaxNumOfLines = 5
     let textGap: CGFloat = 5
     var text = [String]()
 
-    init(text: [String]) {
-        let rectangle = CGRect(x: 100, y: 100, width: 200, height: 300)
+    init(text: [String], x: Double, y: Double, height: Double, width: Double) {
+        let rectangle = CGRect(x: x, y: y, width: width, height: height)
         super.init(frame: rectangle, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "CLASS")
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
@@ -28,7 +28,7 @@ class ClassDiagramView: BasicShapeView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         let insetRect = rect.insetBy(dx: lineWidth, dy: lineWidth)
         let path = UIBezierPath(roundedRect: insetRect, cornerRadius: 0)
         UIColor.white.setFill()
@@ -116,32 +116,30 @@ class ClassDiagramView: BasicShapeView {
             return CGPoint(x: 0, y: 0)
         }
     }
-
-}
-
-class classDiagramPopoverViewController: UIViewController {
     
-    @IBOutlet weak var rawText: UITextView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.rawText.text = "Class Name\n--\nAttributes\n--\nMethods"
-        // Do any additional setup after loading the view.
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    @IBAction func addClassTapped(_ sender: UIButton) {
-        self.sendCreateClassDiagramNotification()
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func sendCreateClassDiagramNotification() {
-        let userInfo = [ "text" : rawText.text! ]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil, userInfo: userInfo)
+    override func toShapeObject() -> Data? {
+        
+        let shape: [String: Any] = [
+            "Content": self.text,
+            "id": self.uuid,
+            "imageid": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "shapetype": self.shapeType!,
+            "index": -1,
+            "shapeinfo": [
+                "Center": [
+                    "X": self.center.x,
+                    "Y": self.center.y
+                ],
+                "Width": self.frame.width,
+                "Height": self.frame.height,
+                "Color": self.color?.hexString
+            ]
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+        return jsonData;
+        
     }
     
 }
+

@@ -17,14 +17,15 @@ enum Shape {
 }
 
 class DrawViewController: UIViewController {
+    
 
     @IBOutlet weak var optionsView: UIView!
     @IBOutlet weak var drawingPlace: UIView!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var colorButton: UIBarButtonItem!
-    @IBOutlet weak var stickFigure: UIButton!
-    @IBOutlet weak var classButton: UIButton!
-    @IBOutlet weak var lineButton: UIButton!
+    @IBOutlet weak var redoButton: UIBarButtonItem!
+    @IBOutlet weak var undoButton: UIBarButtonItem!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var chatButton: UIBarButtonItem!
     @IBOutlet weak var selectedColorButton: UIButton!
     
@@ -44,6 +45,10 @@ class DrawViewController: UIViewController {
     var endAnchorNumber: Int?
     var lines = [Line]()
     var shapes = [String: BasicShapeView]()
+    var undoRedoManager = UndoRedoManager()
+    var drawingSocketManager = DrawingSocketManager()
+    var image: Image?
+    var imageLoader = ImageLoader()
     var lineIndexEdit: Int?
     var lineEditing = false
     var lineBeingEdited: Line?
@@ -72,10 +77,8 @@ class DrawViewController: UIViewController {
                 self.chatButton.image = #imageLiteral(resourceName: "UnreadMessage")
             }
         })
-        let value = UIInterfaceOrientation.landscapeLeft.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
-        self.selectedColorButtonDefault()
-        self.setDrawingPlace()
+        self.navigationItem.title = image?.title!
+        self.handleSocketEmits()
         // Do any additional setup after loading the view.
     }
     
@@ -86,7 +89,11 @@ class DrawViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    @IBAction func saveTapped(_ sender: Any) {
+        for (uuid, view) in self.shapes{
+            self.drawingSocketManager.addShape(shape: view)
+        }
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -103,6 +110,12 @@ class DrawViewController: UIViewController {
     
     @IBAction func rectangleTapped(_ sender: UIButton) {
         self.rectangleTapped()
+    @IBAction func undoTapped(_ sender: Any) {
+        self.undoRedoManager.undo()
+    }
+    @IBAction func redoTapped(_ sender: Any) {
+        self.undoRedoManager.redo()
+    }
     }
     
     @IBAction func ellipseTapped(_ sender: UIButton) {
@@ -298,15 +311,21 @@ class DrawViewController: UIViewController {
                 let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor)
                 self.shapes[rectangleView.uuid] = rectangleView
                 self.drawingPlace.addSubview(rectangleView)
+                self.undoRedoManager.alertInsertion(shapeType: rectangleView.shapeType!, frame: rectangleView.frame, color: rectangleView.color!, uuid: rectangleView.uuid)
+                
             } else if(currentShape == Shape.Ellipse) {
                 let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: self.useCaseText)
                 self.shapes[ellipseView.uuid] = ellipseView
                 self.drawingPlace.addSubview(ellipseView)
                 self.useCaseText = ""
+                self.undoRedoManager.alertInsertion(shapeType: ellipseView.shapeType!, frame: ellipseView.frame, color: ellipseView.color!, uuid: ellipseView.uuid)
+                
             } else if(currentShape == Shape.Triangle) {
                 let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor)
                 self.shapes[triangleView.uuid] = triangleView
                 self.drawingPlace.addSubview(triangleView)
+                self.undoRedoManager.alertInsertion(shapeType: triangleView.shapeType!, frame: triangleView.frame, color: triangleView.color!, uuid: triangleView.uuid)
+                
             } else if(currentShape == Shape.Line) {
                 var line = Line(layer: layer, startPoint: self.firstTouch!, endPoint: self.secondTouch!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndLabel!, secondEndTextField: self.secondEndLabel!)
                 self.drawingPlace.layer.addSublayer(line.layer!)
@@ -368,6 +387,25 @@ class DrawViewController: UIViewController {
         self.cancelButton.isEnabled = false;
     }
     
+    @IBAction func colorPickerButton(_ sender: UIBarButtonItem) {
+        
+        let popoverVC = storyboard?.instantiateViewController(withIdentifier: "colorPickerPopover") as! ColorPickerViewController
+        popoverVC.modalPresentationStyle = .popover
+        popoverVC.preferredContentSize = CGSize(width: 284, height: 446)
+        if let popoverController = popoverVC.popoverPresentationController {
+            popoverController.barButtonItem = sender
+            popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
+            popoverController.permittedArrowDirections = .any
+           // popoverController.delegate? = self
+            popoverVC.delegate = self
+        }
+        present(popoverVC, animated: true, completion: nil)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
     func setButtonColor (_ color: UIColor) {
         self.selectedColor = color
         self.selectedColorButton.backgroundColor = color
@@ -406,8 +444,47 @@ class DrawViewController: UIViewController {
         
     }
     
+    @objc func onRestoreUndoRedo(_ notification:Notification) {
+        let shapeType = notification.userInfo?["shapeType"] as! String
+        
+        if shapeType == "RECTANGLE" {
+            let view = RectangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            view.uuid = notification.userInfo?["uuid"] as! String
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+            
+        else if shapeType == "TRIANGLE" {
+            let view = TriangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            view.uuid = notification.userInfo?["uuid"] as! String
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+            
+        else  if shapeType == "ELLIPSE" {
+            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            view.uuid = notification.userInfo?["uuid"] as! String
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+        self.drawingPlace.layer.sublayers?.popLast()
+        self.redrawLayers()
+        self.insideCanvas = false
+        self.stopDrawing()
+    }
+    
     @objc func onDelete(_ notification:Notification) {
         let uuid = notification.userInfo?["uuid"] as! String
+        let shape = self.shapes[uuid]
+        self.undoRedoManager.alertDeletion(shapeType: (shape?.shapeType)!, frame: (shape?.frame)!, color:(shape?.color)!, uuid: uuid)
+        shape?.removeFromSuperview()
+        self.shapes.removeValue(forKey: uuid)
+    }
+    
+    @objc func onDeletionUndoRedo(_ notification:Notification) {
+        let uuid = notification.userInfo?["uuid"] as! String
+        let shape = self.shapes[uuid]
+        shape?.removeFromSuperview()
         self.shapes.removeValue(forKey: uuid)
     }
     
@@ -417,6 +494,8 @@ class DrawViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(movedViewAlert), name: NSNotification.Name(rawValue: "movedView"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onDuplicate(_:)), name: .duplicate, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onDelete(_:)), name: .delete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onRestoreUndoRedo(_:)), name: .restoreUndoRedo, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onDeletionUndoRedo(_:)), name: .deletionUndoRedo, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(relationInfoAlert), name: NSNotification.Name(rawValue: "relationInfoAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(relationInfoCancelAlert), name: NSNotification.Name(rawValue: "relationInfoCancelAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(setColorAlert), name: NSNotification.Name(rawValue: "setColorAlert"), object: nil)
@@ -468,8 +547,8 @@ class DrawViewController: UIViewController {
     }
     
     @objc func createClassDiagramAlert(sender: AnyObject) {
-        var text = sender.userInfo["text"]
-        let classDiagram = ClassDiagramView(text: processText(text: text as! String))
+        let text = sender.userInfo["text"] as! String
+        let classDiagram = ClassDiagramView(text: processText(text: text ), x:100, y:100, height: 300, width:200)
         self.shapes[classDiagram.uuid] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
     }
@@ -554,10 +633,12 @@ class DrawViewController: UIViewController {
     }
     
     func redrawLayers() {
-        for layer in self.drawingPlace.layer.sublayers! {
-            self.drawingPlace.layer.sublayers?.popLast()
+        if let sublayers = self.drawingPlace.layer.sublayers {
+            for layer in sublayers {
+                self.drawingPlace.layer.sublayers?.popLast()
+            }
         }
-       for (uuid, view) in self.shapes{
+        for (uuid, view) in self.shapes{
             self.drawingPlace.layer.addSublayer(view.layer)
         }
         
@@ -571,12 +652,59 @@ class DrawViewController: UIViewController {
             
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toCreateClass" {
+            let CreateClassVC = segue.destination as! NewClassViewController
+        }
 
     func resetTouchAnchorPoint() {
         for (key, shape) in self.shapes {
             shape.touchAnchorPoint = false
         }
     }
+    
+    func handleSocketEmits() {
+        self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee048")
+        
+        self.drawingSocketManager.socketIOClient.on("imageData") { (data, ack) in
+            
+            let dataArray = data[0] as! NSArray
+            for i in 0 ..< dataArray.count {
+                let dataString = dataArray[i] as! [String: AnyObject]
+                
+                print(dataString["ShapeType"]) as? String
+                if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
+                    let view = self.imageLoader.parseShapes(shape: dataString)
+                    self.shapes[view!.uuid] = view
+                    self.drawingPlace.addSubview(view!)
+                    // self.drawingPlace.layer.sublayers?.popLast()
+                    self.redrawLayers()
+                    self.insideCanvas = false
+                }
+                    
+                else if(dataString["ShapeType"] as! String == "CLASS"){
+                    let classShape = self.imageLoader.parseClass(shape: dataString)!
+                    self.shapes[classShape.uuid] = classShape
+                    self.drawingPlace.addSubview(classShape)
+                }
+            }
+            
+        }
+        self.drawingSocketManager.socketIOClient.on("addStroke") { (data, ack) in
+            print(data[1])
+        }
+        
+        self.drawingSocketManager.socketIOClient.on("removeStroke") { (data, ack) in
+            let uuid = data[0] as! String
+            let shape = self.shapes[uuid]
+            shape?.removeFromSuperview()
+            self.shapes.removeValue(forKey: uuid)
+        }
+    }
+    
+} //end class
+
     
     func showRelationPopover() {
         self.performSegue(withIdentifier: "toRelationPopover", sender: nil)
@@ -585,11 +713,5 @@ class DrawViewController: UIViewController {
 }
 
 
-//  DrawViewController.swift
-//  poly-paint-ios
-//
-//  Created by Tomato on 2018-10-25.
-//  Copyright © 2018 PolyAcme. All rights reserved.
-//
 
 

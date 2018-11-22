@@ -8,15 +8,16 @@
 
 import UIKit
 
-class BasicShapeView: UIView {
+public class BasicShapeView: UIView {
 
     let lineWidth: CGFloat = 1
     var touchAnchorPoint = false
-    let uuid = NSUUID.init().uuidString.lowercased()
+    var uuid = NSUUID.init().uuidString.lowercased()
     var numberOfAnchorPoints: Int?
     var anchorPointsLayers = [CAShapeLayer]()
     var color: UIColor?
     var shapeType: String?
+    var index: Int?
     var showAnchors = false
     
     init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?) {
@@ -33,7 +34,7 @@ class BasicShapeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var canBecomeFirstResponder: Bool {
+    override public var canBecomeFirstResponder: Bool {
         return true
     }
     
@@ -169,7 +170,7 @@ class BasicShapeView: UIView {
     }
     
     @objc internal func handleDeleteAction(_ controller: UIMenuController) {
-        self.removeFromSuperview()
+       // self.removeFromSuperview()
          let uuid = ["uuid": self.uuid] as [String : Any]
          NotificationCenter.default.post(name: .delete, object: nil, userInfo: uuid)
         
@@ -215,7 +216,7 @@ class BasicShapeView: UIView {
         return CGPoint(x: 0, y: 0)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         var numAnchor = 0
         for layer in self.anchorPointsLayers {
             let touchArea = CGRect(x: (touches.first?.location(in: self).x)!, y: (touches.first?.location(in: self).y)!, width: 50, height: 50)
@@ -238,6 +239,29 @@ class BasicShapeView: UIView {
             }
             numAnchor = numAnchor + 1
         }
+    }
+    
+    func toShapeObject() -> Data? {
+        
+        let shape: [String: Any] = [
+            "id": self.uuid,
+            "imageid": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "shapetype": self.shapeType!,
+            "index": -1,
+            "shapeinfo": [
+                "Center": [
+                    "X": self.center.x,
+                    "Y": self.center.y
+                ],
+                "Width": self.frame.width,
+                "Height": self.frame.height,
+                "Color": self.color?.hexString
+            ]
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+        return jsonData;
+        
     }
     
     func isOnAnchorPoint(touchPoint: CGPoint) -> Int {
