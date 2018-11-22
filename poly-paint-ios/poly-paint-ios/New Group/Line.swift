@@ -232,9 +232,52 @@ class Line {
             bezier.move(to: arrowLine2)
             bezier.addLine(to: end)
         }
+
         
     }
     
+    func addLabels() -> [UILabel] {
+        // firstEndLabel
+        let firstEndLocation = self.getLabelPosition(p1: self.points[0], p2: self.points[1], labelWidth: 50, isAnchoredOnSide: true)
+        let firstEndLabel = UILabel()
+        firstEndLabel.frame = CGRect(x: firstEndLocation.x , y: firstEndLocation.y, width: 50, height: 30)
+        firstEndLabel.text = self.firstEndLabel
+        firstEndLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        firstEndLabel.numberOfLines = 10
+        firstEndLabel.textAlignment = NSTextAlignment.center
+        firstEndLabel.textColor = UIColor.black
+        firstEndLabel.font = UIFont(name: "Helvetica", size: 14)
+        
+        // secondEndLabel
+        let secondEndLocation = self.getLabelPosition(p1: self.points[self.points.count - 1], p2: self.points[self.points.count - 2], labelWidth: 50, isAnchoredOnSide: true)
+        let secondEndLabel = UILabel()
+        secondEndLabel.frame = CGRect(x: secondEndLocation.x , y: secondEndLocation.y, width: 50, height: 30)
+        secondEndLabel.text = self.secondEndLabel
+        secondEndLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
+        secondEndLabel.numberOfLines = 10
+        secondEndLabel.textAlignment = NSTextAlignment.center
+        secondEndLabel.textColor = UIColor.black
+        secondEndLabel.font = UIFont(name: "Helvetica", size: 14)
+        
+        return [firstEndLabel, secondEndLabel]
+    }
     
+    func getLabelPosition(p1: CGPoint, p2: CGPoint, labelWidth: CGFloat, isAnchoredOnSide: Bool) -> CGPoint {
     
+        var x: CGFloat;
+        if (p1.x < p2.x && isAnchoredOnSide || p1.x > p2.x && !isAnchoredOnSide) {
+            x = p1.x + 10
+        } else {
+            x = p1.x - labelWidth - 10
+        }
+        
+        var y: CGFloat;
+        if (p1.y > p2.y && isAnchoredOnSide || p1.y < p2.y && !isAnchoredOnSide) {
+            y = p1.y
+        } else {
+            y = p1.y - 25
+        }
+        
+        return CGPoint(x: x, y: y);
+    }
 }

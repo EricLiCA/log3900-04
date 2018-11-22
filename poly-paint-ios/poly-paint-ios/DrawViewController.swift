@@ -264,6 +264,8 @@ class DrawViewController: UIViewController {
                     }
                 }
             }
+
+            
             self.resetLineEditing()
             
         } else if(isUserEditingShape && self.insideCanvas) {
@@ -545,6 +547,12 @@ class DrawViewController: UIViewController {
         
         for line in lines {
             self.drawingPlace.layer.addSublayer(line.layer!)
+            let labels = line.addLabels()
+            
+            for label in labels {
+                self.drawingPlace.addSubview(label)
+            }
+            
         }
     }
 
