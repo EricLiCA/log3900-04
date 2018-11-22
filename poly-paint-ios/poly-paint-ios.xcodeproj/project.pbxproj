@@ -38,6 +38,7 @@
 		CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD528219C804900A14BAF /* BasicShapeView.swift */; };
 		CF3DD52F21A5E26700A14BAF /* UseCasePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */; };
 		CF3DD53121A5F14600A14BAF /* RelationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD53021A5F14600A14BAF /* RelationViewController.swift */; };
+		CF3DD53321A6533900A14BAF /* StickFigureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD53221A6533900A14BAF /* StickFigureViewController.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -101,6 +102,7 @@
 		CF3DD528219C804900A14BAF /* BasicShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicShapeView.swift; sourceTree = "<group>"; };
 		CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCasePopoverViewController.swift; sourceTree = "<group>"; };
 		CF3DD53021A5F14600A14BAF /* RelationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationViewController.swift; sourceTree = "<group>"; };
+		CF3DD53221A6533900A14BAF /* StickFigureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickFigureViewController.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				CCE6BC4C21925DE800C6DF31 /* ColorPickerViewController.swift */,
 				CCE6BC4921925CFA00C6DF31 /* colorPalette.plist */,
 				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
+				CF3DD53221A6533900A14BAF /* StickFigureViewController.swift */,
 				CF3DD53021A5F14600A14BAF /* RelationViewController.swift */,
 				CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */,
 				A77C46F021569CFB0056135A /* ChatViewController.swift */,
@@ -415,6 +418,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF3DD53121A5F14600A14BAF /* RelationViewController.swift in Sources */,
+				CF3DD53321A6533900A14BAF /* StickFigureViewController.swift in Sources */,
 				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,

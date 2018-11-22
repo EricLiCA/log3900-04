@@ -376,7 +376,9 @@
                                                 </constraints>
                                                 <state key="normal" image="stickman"/>
                                                 <connections>
-                                                    <action selector="stickFigureTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="Vdt-sC-KiF"/>
+                                                    <segue destination="Ang-4R-eAI" kind="popoverPresentation" popoverAnchorView="lX3-a4-gbP" id="qOO-mF-mUe">
+                                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                    </segue>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YPF-2C-ZwO">
@@ -480,6 +482,80 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="812.5" y="-963.28124999999989"/>
+        </scene>
+        <!--Stick Figure View Controller-->
+        <scene sceneID="xYI-lh-iJd">
+            <objects>
+                <viewController id="Ang-4R-eAI" customClass="StickFigureViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jy0-0c-kGf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hF8-2n-ARG">
+                                <rect key="frame" x="72" y="59" width="177" height="363"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="StickFigure" translatesAutoresizingMaskIntoConstraints="NO" id="FVv-8B-Q7r">
+                                        <rect key="frame" x="0.0" y="0.0" width="177" height="243"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="243" id="IUQ-po-7nX"/>
+                                            <constraint firstAttribute="width" constant="177" id="lYK-Qz-KSl"/>
+                                        </constraints>
+                                    </imageView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Actor" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZXX-9b-mgq">
+                                        <rect key="frame" x="0.0" y="253" width="177" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="62c-e8-nBv"/>
+                                            <constraint firstAttribute="width" constant="177" id="pme-HC-6bg"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bty-JS-P98">
+                                        <rect key="frame" x="0.0" y="293" width="177" height="30"/>
+                                        <color key="backgroundColor" red="0.0" green="0.56031829119999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="177" id="5cp-gG-48j"/>
+                                            <constraint firstAttribute="height" constant="30" id="j4R-m0-jl0"/>
+                                        </constraints>
+                                        <state key="normal" title="Insert Actor">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="insertActorTapped:" destination="Ang-4R-eAI" eventType="touchUpInside" id="e0P-7c-G1D"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pn0-lA-HfW">
+                                        <rect key="frame" x="0.0" y="333" width="177" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="177" id="4RQ-aZ-5t3"/>
+                                            <constraint firstAttribute="height" constant="30" id="bpa-gd-jaK"/>
+                                        </constraints>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelTapped:" destination="Ang-4R-eAI" eventType="touchUpInside" id="xFC-LU-MKj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hF8-2n-ARG" firstAttribute="centerY" secondItem="bWX-84-3m1" secondAttribute="centerY" id="rev-yt-fOe"/>
+                            <constraint firstItem="hF8-2n-ARG" firstAttribute="centerX" secondItem="bWX-84-3m1" secondAttribute="centerX" id="z6g-Li-E1S"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="bWX-84-3m1"/>
+                    </view>
+                    <connections>
+                        <outlet property="actorName" destination="ZXX-9b-mgq" id="XXG-2k-0Oe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WiJ-i1-fEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="643.75" y="-1959.3749999999998"/>
         </scene>
         <!--Relation View Controller-->
         <scene sceneID="IBl-pZ-KGH">
@@ -2913,6 +2989,7 @@
         <image name="Palette" width="268" height="430"/>
         <image name="Refuse" width="25" height="25"/>
         <image name="SignUp" width="22" height="22"/>
+        <image name="StickFigure" width="56" height="80"/>
         <image name="Unfriend" width="50" height="50"/>
         <image name="agg_left" width="50" height="19"/>
         <image name="arrow" width="86" height="38"/>

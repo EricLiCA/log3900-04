@@ -98,10 +98,6 @@ class DrawViewController: UIViewController {
         self.triangleTapped()
     }
     
-    @IBAction func stickFigureTapped(_ sender: UIButton) {
-        self.stickfigureTapped()
-    }
-    
     @IBAction func lineTapped(_ sender: UIButton) {
         //self.showRelationPopover()
     }
@@ -180,11 +176,7 @@ class DrawViewController: UIViewController {
     }
 
     
-    @IBAction func stickfigureTapped() {
-        let stickFigure = StickFigureView()
-        self.shapes[stickFigure.uuid] = stickFigure
-        self.drawingPlace.addSubview(stickFigure)
-    }
+
 
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -465,7 +457,15 @@ class DrawViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(relationInfoCancelAlert), name: NSNotification.Name(rawValue: "relationInfoCancelAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(setColorAlert), name: NSNotification.Name(rawValue: "setColorAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(createUseCaseAlert), name: NSNotification.Name(rawValue: "createUseCaseAlert"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(createStickFigureAlert), name: NSNotification.Name(rawValue: "createStickFigureAlert"), object: nil)
     }
+    
+    @objc func createStickFigureAlert(sender: AnyObject) {
+        let stickFigure = StickFigureView()
+        self.shapes[stickFigure.uuid] = stickFigure
+        self.drawingPlace.addSubview(stickFigure)
+    }
+    
     
     @objc func createUseCaseAlert(sender: AnyObject) {
         self.useCaseText = sender.userInfo["useCase"] as! String
