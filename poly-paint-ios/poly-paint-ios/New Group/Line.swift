@@ -52,23 +52,10 @@ class Line {
                 var distanceToSegment = findDistanceToSegment(touchPoint: touchPoint, p1: self.points[index], p2: self.points[index + 1])
 
                 if(distanceToSegment > 15) {
-                    //return false
+
                 } else if(distanceToSegment < 15) {
-                    /*if(self.selected) {
-                        self.hitStartPoint = nil
-                        self.hitEndPoint = nil
-                        //self.selected = false
-                        self.layer?.strokeColor = UIColor.black.cgColor
-                    } else {
-                        self.hitStartPoint = index
-                        self.hitEndPoint = index + 1
-                        //self.selected = true
-                        self.layer?.strokeColor = UIColor.green.cgColor
-                    }*/
                     self.hitStartPoint = index
                     self.hitEndPoint = index + 1
-                    //self.selected = true
-                    //self.layer?.strokeColor = UIColor.green.cgColor
                     self.select()
                     return true
                 }
@@ -87,7 +74,7 @@ class Line {
                 self.select()
                 return index
             } else {
-                //return false
+
             }
             
             index = index + 1
@@ -226,15 +213,7 @@ class Line {
         let average = CGPoint(x: (arrowLine1.x + arrowLine2.x)/2, y:(arrowLine1.y + arrowLine2.y)/2)
         let difference = CGPoint(x: average.x - end.x, y: average.y - end.y)
         let otherPoint = CGPoint(x: end.x + 2*difference.x, y: end.y + 2*difference.y)
-        /*bezier.move(to: end)
-        bezier.addLine(to: arrowLine1)
-        bezier.move(to: arrowLine1)
-        bezier.addLine(to: otherPoint)
-        bezier.move(to: otherPoint)
-        bezier.addLine(to: arrowLine2)
-        bezier.move(to: arrowLine2)
-        bezier.addLine(to: end)
-        */
+
         if(relation == Relation.Composition) {
             bezier.move(to: end)
             bezier.addLine(to: arrowLine1)
