@@ -24,7 +24,6 @@
 		CCA060EB219DD64000B558CA /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EA219DD64000B558CA /* ImageLoader.swift */; };
 		CCA060ED219F88A700B558CA /* NewClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EC219F88A700B558CA /* NewClassViewController.swift */; };
 		CCA060EF219F918A00B558CA /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EE219F918A00B558CA /* Stack.swift */; };
-		CCA060F1219F9AC100B558CA /* UndoRedoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060F0219F9AC100B558CA /* UndoRedoManager.swift */; };
 		CCA060F321A24C2300B558CA /* DrawingSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060F221A24C2300B558CA /* DrawingSocketManager.swift */; };
 		CCA060F521A3620A00B558CA /* CreateNewImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060F421A3620800B558CA /* CreateNewImageViewController.swift */; };
 		CCA46DAD2177E1BD00DC32EC /* PublicPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */; };
@@ -52,6 +51,7 @@
 		CF3DD52F21A5E26700A14BAF /* UseCasePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */; };
 		CF3DD53121A5F14600A14BAF /* RelationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD53021A5F14600A14BAF /* RelationViewController.swift */; };
 		CF3DD53321A6533900A14BAF /* StickFigureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD53221A6533900A14BAF /* StickFigureViewController.swift */; };
+		CF3DD53521A7223B00A14BAF /* UndoRedoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD53421A7223B00A14BAF /* UndoRedoManager.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -101,7 +101,6 @@
 		CCA060EA219DD64000B558CA /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		CCA060EC219F88A700B558CA /* NewClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClassViewController.swift; sourceTree = "<group>"; };
 		CCA060EE219F918A00B558CA /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
-		CCA060F0219F9AC100B558CA /* UndoRedoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UndoRedoManager.swift; path = "/Developer/log3900-04/poly-paint-ios/poly-paint-ios/UndoRedoManager.swift"; sourceTree = "<absolute>"; };
 		CCA060F221A24C2300B558CA /* DrawingSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingSocketManager.swift; sourceTree = "<group>"; };
 		CCA060F421A3620800B558CA /* CreateNewImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewImageViewController.swift; sourceTree = "<group>"; };
 		CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPhotosViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +128,7 @@
 		CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCasePopoverViewController.swift; sourceTree = "<group>"; };
 		CF3DD53021A5F14600A14BAF /* RelationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationViewController.swift; sourceTree = "<group>"; };
 		CF3DD53221A6533900A14BAF /* StickFigureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickFigureViewController.swift; sourceTree = "<group>"; };
+		CF3DD53421A7223B00A14BAF /* UndoRedoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoRedoManager.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
@@ -180,12 +180,12 @@
 		A77C46E221569CFB0056135A = {
 			isa = PBXGroup;
 			children = (
+				9A3E758073883F6A8C3A7375 /* Frameworks */,
+				C5A1E53E2867D25EE2393BFD /* Pods */,
 				A77C46ED21569CFB0056135A /* poly-paint-ios */,
 				A77C470521569CFB0056135A /* poly-paint-iosTests */,
 				A77C471021569CFC0056135A /* poly-paint-iosUITests */,
 				A77C46EC21569CFB0056135A /* Products */,
-				C5A1E53E2867D25EE2393BFD /* Pods */,
-				9A3E758073883F6A8C3A7375 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -202,34 +202,24 @@
 		A77C46ED21569CFB0056135A /* poly-paint-ios */ = {
 			isa = PBXGroup;
 			children = (
-				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
-				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
 				A77C46F821569CFB0056135A /* Assets.xcassets */,
 				CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */,
 				A74A5B0A219DC9B300051D14 /* Chat */,
-				A77C46F021569CFB0056135A /* ChatViewController.swift */,
-				CCE6BC4921925CFA00C6DF31 /* colorPalette.plist */,
 				CCE6BC4C21925DE800C6DF31 /* ColorPickerViewController.swift */,
 				CCE6BC4921925CFA00C6DF31 /* colorPalette.plist */,
 				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
+				CF3DD53421A7223B00A14BAF /* UndoRedoManager.swift */,
 				CF3DD53221A6533900A14BAF /* StickFigureViewController.swift */,
 				CF3DD53021A5F14600A14BAF /* RelationViewController.swift */,
 				CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */,
 				A77C46F021569CFB0056135A /* ChatViewController.swift */,
-				CF0099D82165066700E2D27E /* LoginViewController.swift */,
-				CF21E2D721820DB600F21F57 /* DrawViewController.swift */,
-				CF1F1E1C216980FF0023663E /* SignUpViewController.swift */,
 				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
-				CF0099DC216571B800E2D27E /* MainMenuViewController.swift */,
 				A78A7337215AE75D007A854F /* ConnectionViewController.swift */,
 				CCA060F421A3620800B558CA /* CreateNewImageViewController.swift */,
 				A78A7339215ED91C007A854F /* DateTime.swift */,
 				CCA060F221A24C2300B558CA /* DrawingSocketManager.swift */,
-				CF21E2D921820E7200F21F57 /* DrawView.swift */,
 				CF21E2D721820DB600F21F57 /* DrawViewController.swift */,
-				CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */,
 				A78A7335215ADDEF007A854F /* FrontPageViewController.swift */,
-				CCA46DAE2177E8AC00DC32EC /* Image.swift */,
 				CCA060EA219DD64000B558CA /* ImageLoader.swift */,
 				A77C46FD21569CFB0056135A /* Info.plist */,
 				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
@@ -251,7 +241,6 @@
 				CF21E3282188C2CE00F21F57 /* Shapes */,
 				CF1F1E1C216980FF0023663E /* SignUpViewController.swift */,
 				CCA060EE219F918A00B558CA /* Stack.swift */,
-				CCA060F0219F9AC100B558CA /* UndoRedoManager.swift */,
 				CFEF506721790C89001C93AB /* User.swift */,
 			);
 			path = "poly-paint-ios";
@@ -491,7 +480,6 @@
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				CCE6BC4D21925DE800C6DF31 /* ColorPickerViewController.swift in Sources */,
 				CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */,
-				CCA060F1219F9AC100B558CA /* UndoRedoManager.swift in Sources */,
 				CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */,
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
 				CF3DD51F2197A34600A14BAF /* CanevasViewController.swift in Sources */,
@@ -501,6 +489,7 @@
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,
 				CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */,
 				A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */,
+				CF3DD53521A7223B00A14BAF /* UndoRedoManager.swift in Sources */,
 				CCD4FA782186848A005E124B /* PrivateImageViewController.swift in Sources */,
 				CCA46DAD2177E1BD00DC32EC /* PublicPhotosViewController.swift in Sources */,
 				CCD4FA7A21891A72005E124B /* ProtectedImagePasswordViewController.swift in Sources */,

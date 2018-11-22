@@ -78,7 +78,8 @@ class DrawViewController: UIViewController {
             }
         })
         self.navigationItem.title = image?.title!
-        self.handleSocketEmits()
+        //self.handleSocketEmits()
+        //print(self.shapes)
         // Do any additional setup after loading the view.
     }
     
@@ -90,6 +91,7 @@ class DrawViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
     @IBAction func saveTapped(_ sender: Any) {
         for (uuid, view) in self.shapes{
             self.drawingSocketManager.addShape(shape: view)
@@ -110,13 +112,14 @@ class DrawViewController: UIViewController {
     
     @IBAction func rectangleTapped(_ sender: UIButton) {
         self.rectangleTapped()
+    }
     @IBAction func undoTapped(_ sender: Any) {
         self.undoRedoManager.undo()
     }
     @IBAction func redoTapped(_ sender: Any) {
         self.undoRedoManager.redo()
     }
-    }
+    
     
     @IBAction func ellipseTapped(_ sender: UIButton) {
         self.ellipseTapped()
@@ -161,6 +164,7 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print(self.shapes)
         self.firstTouch = touches.first?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touches.first?.location(in: self.view))!)
         var lineIndex = 0
@@ -209,7 +213,9 @@ class DrawViewController: UIViewController {
         
         // Shape Editing
         if(isUserEditingShape && self.insideCanvas) {
+            print(self.shapes)
             if(self.drawingPlace.layer.sublayers != nil) { // redraw layers
+                print("CRASH!!!!!!!!!!!!!!!!")
                 self.redrawLayers()
             }
             
@@ -331,11 +337,13 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
             }
-            
+            print("SHAPES !!!!!!!!!!!!!!!!!")
+            print(self.shapes)
             self.drawingPlace.layer.sublayers?.popLast()
             self.redrawLayers()
             self.insideCanvas = false
         }
+        self.handleSocketEmits()
         self.stopDrawing()
     }
     
@@ -462,7 +470,7 @@ class DrawViewController: UIViewController {
         }
             
         else  if shapeType == "ELLIPSE" {
-            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor)
+            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: "")
             view.uuid = notification.userInfo?["uuid"] as! String
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
@@ -633,12 +641,15 @@ class DrawViewController: UIViewController {
     }
     
     func redrawLayers() {
-        if let sublayers = self.drawingPlace.layer.sublayers {
-            for layer in sublayers {
+      if let sublayers = self.drawingPlace.layer.sublayers {
+        for layer in self.drawingPlace.layer.sublayers! {
                 self.drawingPlace.layer.sublayers?.popLast()
             }
         }
+
         for (uuid, view) in self.shapes{
+            print(view)
+            print(view.layer)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
         
@@ -657,6 +668,7 @@ class DrawViewController: UIViewController {
         if segue.identifier == "toCreateClass" {
             let CreateClassVC = segue.destination as! NewClassViewController
         }
+    }
 
     func resetTouchAnchorPoint() {
         for (key, shape) in self.shapes {
@@ -666,7 +678,7 @@ class DrawViewController: UIViewController {
     
     func handleSocketEmits() {
         self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee048")
-        
+        //self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee049")
         self.drawingSocketManager.socketIOClient.on("imageData") { (data, ack) in
             
             let dataArray = data[0] as! NSArray
@@ -678,7 +690,6 @@ class DrawViewController: UIViewController {
                     let view = self.imageLoader.parseShapes(shape: dataString)
                     self.shapes[view!.uuid] = view
                     self.drawingPlace.addSubview(view!)
-                    // self.drawingPlace.layer.sublayers?.popLast()
                     self.redrawLayers()
                     self.insideCanvas = false
                 }
@@ -702,8 +713,7 @@ class DrawViewController: UIViewController {
             self.shapes.removeValue(forKey: uuid)
         }
     }
-    
-} //end class
+
 
     
     func showRelationPopover() {
