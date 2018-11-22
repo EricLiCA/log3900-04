@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BasicShapeView: UIView {
+public class BasicShapeView: UIView {
 
     let lineWidth: CGFloat = 1
     var touchAnchorPoint = false
@@ -33,7 +33,7 @@ class BasicShapeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var canBecomeFirstResponder: Bool {
+    override public var canBecomeFirstResponder: Bool {
         return true
     }
     
@@ -207,7 +207,7 @@ class BasicShapeView: UIView {
         return CGPoint(x: 0, y: 0)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         var numAnchor = 0
         for layer in self.anchorPointsLayers {
             let touchArea = CGRect(x: (touches.first?.location(in: self).x)!, y: (touches.first?.location(in: self).y)!, width: 50, height: 50)

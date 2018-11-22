@@ -46,6 +46,7 @@ class DrawViewController: UIViewController {
     var undoRedoManager = UndoRedoManager()
     var drawingSocketManager = DrawingSocketManager()
     var image: Image?
+    var imageLoader = ImageLoader()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -560,14 +561,35 @@ class DrawViewController: UIViewController {
     
     func handleSocketEmits() {
         self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee048")
-        self.drawingSocketManager.socketIOClient.on("imageData") { (data: [Any], ack) in
-        print (data)
-                let data = data as! NSArray//after casting like this
-        /*do {
+        self.drawingSocketManager.socketIOClient.on("imageData") { (data, ack) in
             
-        
-            let jsonArray = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)  as! [[String:AnyObject]]
-            for dictionary in jsonArray{
+            let dataArray = data[0] as! NSArray
+            for i in 0 ..< dataArray.count {
+                let dataString = dataArray[i] as! [String: AnyObject]
+                print(dataString["ShapeType"]) as? String
+                if (dataString["ShapeType"] as! String != "CLASS" && dataString["ShapeType"] as! String != "USE"  && dataString["ShapeType"] as! String != "LINE"  ) {
+                    let view = self.imageLoader.parseShapes(shape: dataString)
+                    self.shapes[view!.uuid] = view
+                    self.drawingPlace.addSubview(view!)
+                   // self.drawingPlace.layer.sublayers?.popLast()
+                    self.redrawLayers()
+                    self.insideCanvas = false
+                }
+            }
+            /*let frames = CGRect(origin: CGPoint(x: 50, y: 50), size: CGSize(width: 100, height: 100))
+            let bezier = UIBezierPath(ovalIn: CGRect(x: 80, y: 80, width:100, height: 100))
+            bezier.close()
+            let view = RectangleView(frame: frames, color: UIColor.red)
+            view.uuid = "xxxx"*/
+           
+            
+            
+           // let dataNewNow = dataString.data(using: String.Encoding.utf8, allowLossyConversion: false)!
+        /*do {
+            let json = try JSONSerialization.jsonObject(with: dataNewNow, options: []) as! [[String: AnyObject]]
+            //let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)  as! [[String:AnyObject]]
+            print("helewfohjgwihfewpighewpohgpworhgpowrhjgop")
+            for dictionary in json{
                 
                 print(dictionary["id"] as? String)
             }
