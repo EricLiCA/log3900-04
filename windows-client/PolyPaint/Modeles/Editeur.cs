@@ -373,7 +373,6 @@ namespace PolyPaint.Modeles
 
         public void Do(EditionAction action)
         {
-            CanvasSize = new Size(100, 100);
             try
             {
                 if (history.Count > 0 && action is EditStroke && history.Peek() is EditStroke && history.Peek().Id == action.Id)
