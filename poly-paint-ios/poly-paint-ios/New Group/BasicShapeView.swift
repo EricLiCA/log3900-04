@@ -17,6 +17,7 @@ class BasicShapeView: UIView {
     var anchorPointsLayers = [CAShapeLayer]()
     var color: UIColor?
     var shapeType: String?
+    var showAnchors = false
     
     init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?) {
         self.shapeType = shapeType
@@ -78,6 +79,8 @@ class BasicShapeView: UIView {
             
             let userInfo = ["view": self.uuid] as [String : String]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
+        } else {
+            self.hideAnchorPoints()
         }
     }
     
@@ -178,6 +181,8 @@ class BasicShapeView: UIView {
         for index in 0...self.numberOfAnchorPoints! {
             self.layer.sublayers![index].isHidden = false
         }
+        
+        self.showAnchors = true
     }
     
     func hideAnchorPoints() {
@@ -186,6 +191,8 @@ class BasicShapeView: UIView {
             self.anchorPointsLayers[index].fillColor = UIColor.red.cgColor
             self.anchorPointsLayers[index].strokeColor = UIColor.red.cgColor
         }
+        
+        self.showAnchors = false
     }
     
     func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
