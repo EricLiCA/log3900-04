@@ -20,11 +20,7 @@ class DrawViewController: UIViewController {
 
     @IBOutlet weak var optionsView: UIView!
     @IBOutlet weak var drawingPlace: UIView!
-    @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var stickFigure: UIButton!
-    @IBOutlet weak var classButton: UIButton!
-    @IBOutlet weak var lineButton: UIButton!
     @IBOutlet weak var selectedColorButton: UIButton!
     
     var firstTouch : CGPoint?
@@ -51,8 +47,11 @@ class DrawViewController: UIViewController {
     var drawLineAlerted = false
     var useCaseText = ""
     
-
-    
+    // Options View
+    var firstEndRelation: Relation?
+    var secondEndRelation: Relation?
+    var firstEndLabel: String?
+    var secondEndLabel: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,9 +61,13 @@ class DrawViewController: UIViewController {
         let value = UIInterfaceOrientation.landscapeLeft.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         self.selectedColorButtonDefault()
+        self.setDrawingPlace()
+        // Do any additional setup after loading the view.
+    }
+    
+    func setDrawingPlace() {
         self.drawingPlace.layer.borderWidth = 2
         self.drawingPlace.layer.borderColor = UIColor.black.cgColor
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,8 +83,6 @@ class DrawViewController: UIViewController {
         return true
     }
 
-    
-    
     @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
         self.stopDrawing()
     }
@@ -99,63 +100,20 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func lineTapped(_ sender: UIButton) {
-        //self.showRelationPopover()
+
     }
     
     @IBAction func useCaseTapped(_ sender: UIButton) {
-        // TODO
-    }
-    
-    @IBAction func classDiagramTapped(_ sender: UIButton) {
-        // TODO
-        //self.createClassDiagramAlert(sender: self)
+        
     }
     
     @IBAction func selectedColorTapped(_ sender: UIButton) {
-        /*let popoverVC = storyboard?.instantiateViewController(withIdentifier: "colorPickerPopover") as! ColorPickerViewController
-        popoverVC.modalPresentationStyle = .popover
-        popoverVC.preferredContentSize = CGSize(width: 284, height: 446)
-        if let popoverController = popoverVC.popoverPresentationController {
-            //popoverController.barButtonItem = sender
-            popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
-            popoverController.permittedArrowDirections = .any
-            popoverVC.delegate = self
-        }
-        present(popoverVC, animated: true, completion: nil)*/
     }
     
     func selectedColorButtonDefault() {
         self.selectedColorButton.backgroundColor = UIColor.white
         self.selectedColorButton.layer.borderWidth = 3
         self.selectedColorButton.layer.borderColor = UIColor.black.cgColor
-    }
-    
-    
-    func showUseCasePopover(sender: UIViewController) {
-        /*let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UseCasePopoverViewController") as! UseCasePopoverViewController
-        viewController.modalPresentationStyle = .popover
-        viewController.preferredContentSize = CGSize(width: 320, height: 261)*/
-        
-        /*let popvc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UseCasePopoverViewController") as! UseCasePopoverViewController
-        
-        self.addChildViewController(popvc)
-        
-        popvc.view.frame = CGRect(x: self.view.frame.origin.x, y: self.view.frame.origin.x, width: 300, height: 300)
-        self.view.addSubview(popvc.view)
-        
-        popvc.didMove(toParentViewController: self)*/
-        
-        var popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "UseCasePopoverViewControllery") as! UseCasePopoverViewController
-        var nav = UINavigationController(rootViewController: popoverContent)
-        nav.modalPresentationStyle = UIModalPresentationStyle.popover
-        var popover = nav.popoverPresentationController
-        popoverContent.preferredContentSize = CGSize(width: 500, height: 600)
-        popover?.delegate = self as! DrawViewController as! UIPopoverPresentationControllerDelegate
-        popover?.sourceView = self.view
-        popover?.sourceRect = CGRect(x: 100,y: 100, width: 0, height: 0)
-        
-        self.present(nav, animated: true, completion: nil)
-        
     }
     
     func rectangleTapped() {
@@ -174,10 +132,6 @@ class DrawViewController: UIViewController {
         self.currentShape = Shape.Triangle
         self.cancelButton.isEnabled = true
     }
-
-    
-
-
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.firstTouch = touches.first?.location(in: drawingPlace)
@@ -397,11 +351,6 @@ class DrawViewController: UIViewController {
         self.currentShape = Shape.None
         self.cancelButton.isEnabled = false;
     }
-
-    
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }
     
     func setButtonColor (_ color: UIColor) {
         self.selectedColor = color
@@ -436,7 +385,6 @@ class DrawViewController: UIViewController {
             self.drawingPlace.addSubview(view)
         }
        self.drawingPlace.layer.sublayers?.popLast()
-        //self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
         self.redrawLayers()
         self.insideCanvas = false
         
@@ -481,7 +429,6 @@ class DrawViewController: UIViewController {
         self.secondEndLabel = sender.userInfo["secondEndLabel"] as! String
         self.firstEndRelation = sender.userInfo["firstEndRelation"] as! Relation
         self.secondEndRelation = sender.userInfo["secondEndRelation"] as! Relation
-        //self.drawLineAlertContinue()
         self.isUserEditingShape = true
         self.currentShape = Shape.Line
         
@@ -540,25 +487,6 @@ class DrawViewController: UIViewController {
             // draw line
             self.drawLineAlerted = true
             self.showRelationPopover()
-            /*var bezier = UIBezierPath()
-            bezier.move(to: self.startPointOfLine!)
-            bezier.addLine(to: self.endPointOfLine!)
-            self.currentContext = nil
-            bezier.close()
-            let layer = CAShapeLayer()
-            layer.path = bezier.cgPath
-            layer.borderWidth = 2
-            layer.strokeColor = UIColor.black.cgColor
-            var line = Line(layer: layer, startPoint: self.startPointOfLine!, endPoint: self.endPointOfLine!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!)
-            line.firstAnchorShapeId = self.startPointView?.uuid
-            line.firstAnchorShapeIndex = self.startAnchorNumber
-            line.secondAnchorShapeId = self.endPointView?.uuid
-            line.secondAnchorShapeIndex = self.endAnchorNumber
-            self.lines.append(line)
-            self.drawingPlace.layer.addSublayer(line.layer!)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
-            self.resetLineEndPoints()
-            self.redrawLayers()*/
         }
     }
     
@@ -620,24 +548,6 @@ class DrawViewController: UIViewController {
         }
     }
 
-    // Options View
-    var firstEndRelation: Relation?
-    var secondEndRelation: Relation?
-    var firstEndLabel: String?
-    var secondEndLabel: String?
-
-    @IBAction func insertLineTapped(_ sender: UIButton) {
-        if(self.drawLineAlerted) {
-            self.isUserEditingShape = false
-            self.optionsView.isHidden = true
-            self.drawLineAlertContinue()
-        } else {
-            self.isUserEditingShape = true
-            self.optionsView.isHidden = true
-            self.currentShape = Shape.Line
-        }
-    }
-    
     func resetTouchAnchorPoint() {
         for (key, shape) in self.shapes {
             shape.touchAnchorPoint = false
