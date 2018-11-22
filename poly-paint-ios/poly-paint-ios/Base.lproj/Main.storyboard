@@ -390,7 +390,7 @@
                                                 <state key="normal" image="line"/>
                                                 <connections>
                                                     <action selector="lineTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="HGs-xa-t98"/>
-                                                    <segue destination="5uQ-IG-6AB" kind="popoverPresentation" popoverAnchorView="YPF-2C-ZwO" id="9fu-Sy-e4b">
+                                                    <segue destination="5uQ-IG-6AB" kind="popoverPresentation" identifier="toRelationPopover" popoverAnchorView="YPF-2C-ZwO" id="9fu-Sy-e4b">
                                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                                     </segue>
                                                 </connections>
@@ -477,6 +477,9 @@
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="optionsView" destination="5kG-lC-orU" id="6uY-R2-Ob0"/>
                         <outlet property="selectedColorButton" destination="2IW-IU-ewm" id="mJU-Yl-buh"/>
+                        <segue destination="5uQ-IG-6AB" kind="popoverPresentation" identifier="toRelationPopover" popoverAnchorView="ltt-LG-ycF" id="Ekb-i3-Z78">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3006,5 +3009,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="IDQ-Qb-zNY"/>
+        <segue reference="Ekb-i3-Z78"/>
     </inferredMetricsTieBreakers>
 </document>
