@@ -618,33 +618,6 @@
             </objects>
             <point key="canvasLocation" x="812.5" y="119.53124999999999"/>
         </scene>
-        <!--Profile Picture View Controller-->
-        <scene sceneID="RLp-pX-Hcl">
-            <objects>
-                <viewController id="wZk-G9-zQj" customClass="ProfilePictureViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4iY-gw-8bm">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Modify Profile Picture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Yw-N7-ziN">
-                                <rect key="frame" x="301.5" y="63" width="165" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="9Yw-N7-ziN" firstAttribute="top" secondItem="YsZ-RN-jbf" secondAttribute="top" constant="43" id="CBQ-t1-cXA"/>
-                            <constraint firstItem="9Yw-N7-ziN" firstAttribute="centerX" secondItem="YsZ-RN-jbf" secondAttribute="centerX" id="Ncy-kl-ed9"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="YsZ-RN-jbf"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="irV-iA-tFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1595" y="-633"/>
-        </scene>
         <!--Profile-->
         <scene sceneID="5Ad-dn-gBR">
             <objects>
@@ -912,7 +885,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3de-HZ-5PF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2200.78125" y="-1247.4609375"/>
+            <point key="canvasLocation" x="2250" y="-705"/>
         </scene>
         <!--Title-->
         <scene sceneID="8qG-aZ-cHP">
@@ -2810,7 +2783,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="syA-9r-bXG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1627" y="-891"/>
+            <point key="canvasLocation" x="1482" y="-920"/>
         </scene>
     </scenes>
     <resources>
