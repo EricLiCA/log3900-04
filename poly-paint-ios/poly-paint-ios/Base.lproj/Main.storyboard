@@ -419,7 +419,9 @@
                                                 </constraints>
                                                 <state key="normal" image="classDiagram"/>
                                                 <connections>
-                                                    <action selector="classDiagramTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="0HG-5K-BS3"/>
+                                                    <segue destination="82l-V1-XRu" kind="popoverPresentation" popoverAnchorView="WjV-Og-47G" id="gdP-Xv-cWZ">
+                                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                    </segue>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -879,22 +881,22 @@
             </objects>
             <point key="canvasLocation" x="2202.34375" y="-1733.203125"/>
         </scene>
-        <!--View Controller-->
+        <!--Class Diagram Popover View Controller-->
         <scene sceneID="2JB-on-srr">
             <objects>
-                <viewController id="82l-V1-XRu" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4Hv-8g-iJq" customClass="classDiagramPopoverView" customModule="poly_paint_ios" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                <viewController id="82l-V1-XRu" customClass="classDiagramPopoverViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4Hv-8g-iJq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NlW-PG-7wi">
-                                <rect key="frame" x="16" y="115" width="736" height="850"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Empty" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NlW-PG-7wi">
+                                <rect key="frame" x="16" y="95" width="288" height="326"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" smartDashesType="no"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7n0-x0-Ndg">
-                                <rect key="frame" x="16" y="974" width="288" height="30"/>
+                                <rect key="frame" x="16" y="430" width="288" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="Gw1-IC-bCK"/>
@@ -904,11 +906,11 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="addClassTapped:" destination="4Hv-8g-iJq" eventType="touchUpInside" id="XZv-zO-1CV"/>
+                                    <action selector="addClassTapped:" destination="82l-V1-XRu" eventType="touchUpInside" id="fPF-GK-qi7"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write two dashes to draw a line" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVo-k0-NbN">
-                                <rect key="frame" x="16" y="64" width="288" height="21"/>
+                                <rect key="frame" x="16" y="44" width="288" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="288" id="M1C-q5-18P"/>
                                     <constraint firstAttribute="height" constant="21" id="Qey-2F-bfu"/>
@@ -931,10 +933,10 @@
                             <constraint firstItem="7n0-x0-Ndg" firstAttribute="leading" secondItem="q1D-W7-Ihn" secondAttribute="leading" constant="16" id="yJ6-ru-Fd0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="q1D-W7-Ihn"/>
-                        <connections>
-                            <outlet property="rawText" destination="NlW-PG-7wi" id="oXE-wN-AWz"/>
-                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="rawText" destination="NlW-PG-7wi" id="JsB-uY-Z44"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Cd-f8-ZiB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

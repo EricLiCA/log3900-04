@@ -108,7 +108,7 @@ class DrawViewController: UIViewController {
     
     @IBAction func classDiagramTapped(_ sender: UIButton) {
         // TODO
-        self.createClassDiagramAlert(sender: self)
+        //self.createClassDiagramAlert(sender: self)
     }
     
     @IBAction func selectedColorTapped(_ sender: UIButton) {
