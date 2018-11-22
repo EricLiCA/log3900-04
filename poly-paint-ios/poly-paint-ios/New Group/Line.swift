@@ -151,6 +151,7 @@ class Line {
     
     func redrawLine() {
         var bezier = UIBezierPath()
+
         for (index, point) in self.points.enumerated() {
             if(index < self.points.count - 1) {
                 bezier.move(to: self.points[index])
@@ -213,6 +214,9 @@ class Line {
         bezier.addLine(to: arrowLine2)
         bezier.move(to: arrowLine2)
         bezier.addLine(to: arrowLine1)
+        bezier.close()
+        UIColor.white.setFill()
+        bezier.fill()
     }
     
     func addAggregationComposition(start: CGPoint, end: CGPoint, pointerLineLength: CGFloat, arrowAngle: CGFloat, bezier: UIBezierPath, relation: Relation) {
