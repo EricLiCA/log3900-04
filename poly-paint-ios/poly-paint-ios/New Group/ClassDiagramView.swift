@@ -8,15 +8,15 @@
 
 import UIKit
 
-class ClassDiagramView: BasicShapeView {
+public class ClassDiagramView: BasicShapeView {
     
     let defaultTextLineHeight: CGFloat = 40
     let defaultMaxNumOfLines = 5
     let textGap: CGFloat = 5
     var text = [String]()
 
-    init(text: [String]) {
-        let rectangle = CGRect(x: 100, y: 100, width: 200, height: 300)
+    init(text: [String], x: Double, y: Double, height: Double, width: Double) {
+        let rectangle = CGRect(x: x, y: y, width: width, height: height)
         super.init(frame: rectangle, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "CLASS")
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
@@ -28,7 +28,7 @@ class ClassDiagramView: BasicShapeView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         let insetRect = rect.insetBy(dx: lineWidth, dy: lineWidth)
         let path = UIBezierPath(roundedRect: insetRect, cornerRadius: 0)
         UIColor.white.setFill()

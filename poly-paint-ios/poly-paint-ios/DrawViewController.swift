@@ -356,15 +356,15 @@ class DrawViewController: UIViewController {
             popoverController.barButtonItem = sender
             popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
             popoverController.permittedArrowDirections = .any
-           // popoverController.delegate? = self
+            // popoverController.delegate? = self
             popoverVC.delegate = self
         }
         present(popoverVC, animated: true, completion: nil)
     }
     
-   /* func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
-    }*/
+    /* func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+     return .none
+     }*/
     
     func setButtonColor (_ color: UIColor) {
         self.colorButton.tintColor = color
@@ -398,7 +398,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
         }
-       self.drawingPlace.layer.sublayers?.popLast()
+        self.drawingPlace.layer.sublayers?.popLast()
         //self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
         self.redrawLayers()
         self.insideCanvas = false
@@ -460,8 +460,8 @@ class DrawViewController: UIViewController {
     }
     
     @objc func createClassDiagramAlert(sender: AnyObject) {
-        var text = sender.userInfo["text"]
-        let classDiagram = ClassDiagramView(text: processText(text: text as! String))
+        let text = sender.userInfo["text"] as! String
+        let classDiagram = ClassDiagramView(text: processText(text: text ), x:100, y:100, height: 300, width:200)
         self.shapes[classDiagram.uuid] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
     }
@@ -518,7 +518,7 @@ class DrawViewController: UIViewController {
             self.drawingPlace.layer.addSublayer(line.layer!)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
             self.resetLineEndPoints()
-          //  self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
+            //  self.layersFromShapes.append((self.drawingPlace.layer.sublayers?.popLast())!)
             self.redrawLayers()
         }
     }
@@ -561,44 +561,38 @@ class DrawViewController: UIViewController {
     
     func handleSocketEmits() {
         self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee048")
+        
         self.drawingSocketManager.socketIOClient.on("imageData") { (data, ack) in
             
             let dataArray = data[0] as! NSArray
             for i in 0 ..< dataArray.count {
                 let dataString = dataArray[i] as! [String: AnyObject]
+                
                 print(dataString["ShapeType"]) as? String
-                if (dataString["ShapeType"] as! String != "CLASS" && dataString["ShapeType"] as! String != "USE"  && dataString["ShapeType"] as! String != "LINE"  ) {
+                if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
                     let view = self.imageLoader.parseShapes(shape: dataString)
                     self.shapes[view!.uuid] = view
                     self.drawingPlace.addSubview(view!)
-                   // self.drawingPlace.layer.sublayers?.popLast()
+                    // self.drawingPlace.layer.sublayers?.popLast()
                     self.redrawLayers()
                     self.insideCanvas = false
                 }
-            }
-            /*let frames = CGRect(origin: CGPoint(x: 50, y: 50), size: CGSize(width: 100, height: 100))
-            let bezier = UIBezierPath(ovalIn: CGRect(x: 80, y: 80, width:100, height: 100))
-            bezier.close()
-            let view = RectangleView(frame: frames, color: UIColor.red)
-            view.uuid = "xxxx"*/
-           
-            
-            
-           // let dataNewNow = dataString.data(using: String.Encoding.utf8, allowLossyConversion: false)!
-        /*do {
-            let json = try JSONSerialization.jsonObject(with: dataNewNow, options: []) as! [[String: AnyObject]]
-            //let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)  as! [[String:AnyObject]]
-            print("helewfohjgwihfewpighewpohgpworhgpowrhjgop")
-            for dictionary in json{
-                
-                print(dictionary["id"] as? String)
+                    
+                else if(dataString["ShapeType"] as! String == "CLASS"){
+                    let classShape = self.imageLoader.parseClass(shape: dataString)!
+                    self.shapes[classShape.uuid] = classShape
+                    self.drawingPlace.addSubview(classShape)
+                }
             }
             
-        } catch let jsonError {
-            print(jsonError)
-        }*/
+        }
+        self.drawingSocketManager.socketIOClient.on("addStroke") { (data, ack) in
+            print(data[1])
+        }
         
-    }
+        self.drawingSocketManager.socketIOClient.on("removeStroke") { (data, ack) in
+            data[0]
+        }
     }
     
 } //end class
