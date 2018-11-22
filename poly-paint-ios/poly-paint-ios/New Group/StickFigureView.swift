@@ -12,12 +12,16 @@ class StickFigureView: BasicShapeView {
 
     let defaultHeight: CGFloat = 60
     let defaultWidth: CGFloat = 50
+    var actorName = ""
     
-    init() {
+    init(actorName: String) {
         let frame = CGRect(x: 0, y: 0, width: self.defaultWidth, height: self.defaultHeight)
+        self.actorName = actorName
         super.init(frame: frame, numberOfAnchorPoints: 2, color: UIColor.white, shapeType: "ACTOR")
         let image = UIImage(named: "StickFigure")
         self.backgroundColor = UIColor(patternImage: image!)
+        
+        
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -28,6 +32,19 @@ class StickFigureView: BasicShapeView {
     override func draw(_ rect: CGRect) {
         
         self.initializeAnchorPoints()
+        self.addActorName()
+    }
+    
+    func addActorName() {
+        let label = UILabel()
+        label.frame = CGRect(x: 0 , y: self.defaultHeight, width: self.bounds.width + 10, height: self.bounds.height)
+        label.text = self.actorName
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.numberOfLines = 10
+        label.textAlignment = NSTextAlignment.center
+        label.textColor = UIColor.black
+        label.font = UIFont(name: "Helvetica", size: 14)
+        self.addSubview(label)
     }
     
     func initializeAnchorPoints() {

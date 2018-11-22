@@ -461,7 +461,7 @@ class DrawViewController: UIViewController {
     }
     
     @objc func createStickFigureAlert(sender: AnyObject) {
-        let stickFigure = StickFigureView()
+        let stickFigure = StickFigureView(actorName: sender.userInfo["actorName"] as! String)
         self.shapes[stickFigure.uuid] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
     }
