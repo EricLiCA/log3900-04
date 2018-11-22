@@ -36,7 +36,6 @@
 		CF3DD51F2197A34600A14BAF /* CanevasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */; };
 		CF3DD525219B6B4C00A14BAF /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD524219B6B4C00A14BAF /* Line.swift */; };
 		CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD528219C804900A14BAF /* BasicShapeView.swift */; };
-		CF3DD52B219D22AA00A14BAF /* UseCaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */; };
 		CF3DD52F21A5E26700A14BAF /* UseCasePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */; };
 		CF3DD53121A5F14600A14BAF /* RelationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD53021A5F14600A14BAF /* RelationViewController.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
@@ -100,7 +99,6 @@
 		CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanevasViewController.swift; sourceTree = "<group>"; };
 		CF3DD524219B6B4C00A14BAF /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		CF3DD528219C804900A14BAF /* BasicShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicShapeView.swift; sourceTree = "<group>"; };
-		CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseView.swift; sourceTree = "<group>"; };
 		CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCasePopoverViewController.swift; sourceTree = "<group>"; };
 		CF3DD53021A5F14600A14BAF /* RelationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationViewController.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -236,7 +234,6 @@
 				CF21E335218F93B000F21F57 /* StickFigureView.swift */,
 				CF3DD524219B6B4C00A14BAF /* Line.swift */,
 				CF3DD528219C804900A14BAF /* BasicShapeView.swift */,
-				CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */,
 			);
 			name = Shapes;
 			path = "New Group";
@@ -418,7 +415,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF3DD53121A5F14600A14BAF /* RelationViewController.swift in Sources */,
-				CF3DD52B219D22AA00A14BAF /* UseCaseView.swift in Sources */,
 				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
