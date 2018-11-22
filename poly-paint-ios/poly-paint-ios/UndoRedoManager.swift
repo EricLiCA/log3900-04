@@ -1,6 +1,6 @@
-//
+
 //  UndoRedoManager.swift
-//  
+//
 //
 //  Created by JP Cech on 11/16/18.
 //
