@@ -6,4 +6,5 @@ export class Image {
     password: String;
     thumbnailUrl: String;
     fullImageUrl: String;
+    date: Date;
   }
