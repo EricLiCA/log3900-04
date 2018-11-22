@@ -1,8 +1,11 @@
 ﻿using PolyPaint.Modeles;
+using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace PolyPaint.VueModeles
 {
@@ -14,7 +17,17 @@ namespace PolyPaint.VueModeles
         public ObservableCollection<ChatUser> Users
         {
             get => ChatRoom.Users;
-            set { PropertyModified(); }
+        }
+
+        private ObservableCollection<ChatUser> _availableUsers;
+        public ObservableCollection<ChatUser> AvailableUsers
+        {
+            get
+            {
+                _availableUsers.Clear();
+                UsersManager.instance.Users.Where(user => !ChatRoom.Users.Any(chatUser => chatUser.username == user.username)).ToList().ForEach(user => _availableUsers.Add(new ChatUser(user.username)));
+                return _availableUsers;
+            }
         }
 
         public string ThreadName
@@ -23,10 +36,11 @@ namespace PolyPaint.VueModeles
             set { PropertyModified(); }
         }
 
+        public Visibility canLeave { get => ThreadName == "Lobby" ? Visibility.Collapsed : Visibility.Visible; }
+
         public ObservableCollection<ChatMessage> Messages
         {
             get => ChatRoom.Messages;
-            set { PropertyModified(); }
         }
 
         public RelayCommand<string> SendMessage { get; set; }
@@ -39,7 +53,8 @@ namespace PolyPaint.VueModeles
             ChatRoom.PropertyChanged += new PropertyChangedEventHandler(ChatPropertyChanged);
 
             SendMessage = new RelayCommand<string>(ChatRoom.SendMessage);
-            AddPerson = new RelayCommand<string>(ChatRoom.AddPerson);
+            AddPerson = new RelayCommand<string>(ChatRoom.RequestAddPerson);
+            this._availableUsers = new ObservableCollection<ChatUser>();
         }
 
         protected virtual void PropertyModified([CallerMemberName] string propertyName = null)
@@ -51,11 +66,12 @@ namespace PolyPaint.VueModeles
         {
             if (e.PropertyName == "Users")
             {
-                this.Users = ChatRoom.Users;
+                this.PropertyModified("Users");
+                this.PropertyModified("AvailableUsers");
             }
             else if (e.PropertyName == "Messages")
             {
-                this.Messages = ChatRoom.Messages;
+                this.PropertyModified("Messages");
             }
             else if (e.PropertyName == "ThreadName")
             {

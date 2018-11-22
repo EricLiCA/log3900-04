@@ -21,6 +21,11 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var optionsView: UIView!
     @IBOutlet weak var drawingPlace: UIView!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var colorButton: UIBarButtonItem!
+    @IBOutlet weak var stickFigure: UIButton!
+    @IBOutlet weak var classButton: UIButton!
+    @IBOutlet weak var lineButton: UIButton!
+    @IBOutlet weak var chatButton: UIBarButtonItem!
     @IBOutlet weak var selectedColorButton: UIButton!
     
     var firstTouch : CGPoint?
@@ -58,6 +63,15 @@ class DrawViewController: UIViewController {
         self.drawingPlace.clipsToBounds = true
         self.cancelButton.isEnabled = false
         self.setUpNotifications()
+        
+        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
+            notifications in
+            if notifications == 0 {
+                self.chatButton.image = #imageLiteral(resourceName: "Chat")
+            } else {
+                self.chatButton.image = #imageLiteral(resourceName: "UnreadMessage")
+            }
+        })
         let value = UIInterfaceOrientation.landscapeLeft.rawValue
         UIDevice.current.setValue(value, forKey: "orientation")
         self.selectedColorButtonDefault()

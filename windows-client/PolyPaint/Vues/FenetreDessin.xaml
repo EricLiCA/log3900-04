@@ -14,9 +14,16 @@
         <convertisseurs:ConvertisseurBordure x:Key="convertisseurBordure" />
         <convertisseurs:ConvertisseurCouleurFond x:Key="convertisseurCouleurFond" />
         <convertisseurs:ConvertisseurModeEdition x:Key="convertisseurModeEdition" />
+        <convertisseurs:ToolIndexConverter x:Key="ToolIndexConverter" />
+
+        <x:Array x:Key="ToolOrder" Type="sys:String" xmlns:sys="clr-namespace:System;assembly=mscorlib" >
+            <sys:String>lasso</sys:String>
+            <sys:String>crayon</sys:String>
+            <sys:String>efface_segment</sys:String>
+            <sys:String>efface_trait</sys:String>
+        </x:Array>
     </Page.Resources>
     <DockPanel>
-
         <Border Name="Chat_Reserved_Zone" DockPanel.Dock="Right" BorderThickness="0.5,0,0,0" BorderBrush="#77000000" Width="250" Background="AliceBlue" Visibility="Collapsed">
             <Frame Name="Chat_Docker" />
         </Border>
@@ -25,6 +32,13 @@
             <ToolBarTray>
                 <ToolBar Style="{DynamicResource MaterialDesignToolBar}"
                          ClipToBounds="True">
+
+                    <Button x:Name="SaveButton"
+                            ToolTip="Save"
+                            Click="SaveButton_Click">
+                        <materialDesign:PackIcon Kind="ContentSave" Width="22" />
+                    </Button>
+
                     <Button x:Name="reinitialiser"
                             ToolTip="Erase canvas"
                             Command="{Binding Reinitialiser}">
@@ -53,64 +67,26 @@
                     </Button>
                     <Separator />
 
-                    <ListBox SelectedIndex="1" SelectionChanged="ChoisirOutil" Name="ToolSelection">
-                        <ListBoxItem Name="lasso" ToolTip="Lasso">
-                            <Image Source="/Resources/lasso-tool.png" Width="22" />
-                        </ListBoxItem>
-                        <ListBoxItem Name="crayon" ToolTip="Pencil">
-                            <materialDesign:PackIcon Kind="LeadPencil" Width="22" />
-                        </ListBoxItem>
-                        <ListBoxItem Name="efface_segment" ToolTip="Erase segment">
-                            <materialDesign:PackIcon Kind="Eraser" Width="22" />
-                        </ListBoxItem>
-                        <ListBoxItem Name="efface_trait" ToolTip="Erase trait">
-                            <materialDesign:PackIcon Kind="EraserVariant" Width="22" />
-                        </ListBoxItem>
+                    <ListBox SelectionChanged="ChoisirOutil"
+                             Name="ToolSelection"
+                             ItemsSource="{Binding Path=Tools, Mode=OneTime}">
+                        <ListBox.SelectedIndex>
+                            <MultiBinding Converter="{StaticResource ToolIndexConverter}" UpdateSourceTrigger="PropertyChanged">
+                                <MultiBinding.Bindings>
+                                    <Binding Path="OutilSelectionne" />
+                                    <Binding Path="Tools" Mode="OneTime" />
+                                </MultiBinding.Bindings>
+                            </MultiBinding>
+                        </ListBox.SelectedIndex>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Image Width="22"
+                                       Source="{Binding Path=ToolImage, Mode=OneWay}"
+                                       Tag="{Binding Path=ToolName, Mode=OneWay}"
+                                       ToolTip="{Binding Path=ToolTooltip, Mode=OneWay}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
-                    <Separator />
-
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <Button Name="PointeRonde" Width="24" Height="24" Margin="0" Padding="0"
-                                HorizontalContentAlignment="Center"              
-                                BorderBrush="Transparent" 
-                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=ronde, UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="ronde"
-                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
-                                <Ellipse Width="10" Height="10" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
-                            </Button>
-                            <Button Name="PointeCarree" Width="24" Height="24" Margin="0" Padding="0"
-                                HorizontalContentAlignment="Center"
-                                BorderBrush="Transparent" 
-                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=carree, UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="carree"
-                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
-                                <Rectangle Width="10" Height="10" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
-                            </Button>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Name="Verticale" Width="20" Height="20" Margin="2" Padding="0"
-                                HorizontalContentAlignment="Center"
-                                BorderBrush="Transparent" 
-                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=verticale, UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="verticale"
-                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
-                                <Rectangle Width="2" Height="10" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
-                            </Button>
-                            <Button Name="Horizontale" Width="24" Height="24" Margin="0" Padding="0"
-                                HorizontalContentAlignment="Center"
-                                BorderBrush="Transparent"
-                                Background="{Binding Path=PointeSelectionnee, Converter={StaticResource convertisseurCouleurFond}, ConverterParameter=horizontale, UpdateSourceTrigger=PropertyChanged}"
-                                Command="{Binding Path=ChoisirPointe}"
-                                CommandParameter="horizontale"
-                                materialDesign:ShadowAssist.ShadowDepth="Depth0">
-                                <Rectangle Width="10" Height="2" Fill="Black" Stroke="Black" StrokeThickness="2" HorizontalAlignment="Center"/>
-                            </Button>
-                        </StackPanel>
-                    </StackPanel>
                     <xctk:ColorPicker x:Name="selecteurCouleur"                             
                       VerticalContentAlignment="Stretch"
                       Background="#00000000"
@@ -125,11 +101,6 @@
                       RecentColorsHeader="Récemment utilisées"
                       UsingAlphaChannel="True"
                       AdvancedButtonHeader="Personnalisé" />
-                    <Slider Width="100" Height="26" Minimum="1" Maximum="50"
-                            Value="{Binding Path=TailleTrait, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                            Margin="12" Foreground="Gray"                        
-                            TickFrequency="10" TickPlacement="BottomRight" IsSnapToTickEnabled="False">
-                    </Slider>
                 </ToolBar>
             </ToolBarTray>
         </Border>
@@ -140,6 +111,8 @@
                 <TextBlock Name="textBlockPosition" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             </StackPanel>
         </Border>
+        <Frame BorderBrush="#77000000" MaxWidth="200" Background="AliceBlue" DockPanel.Dock="Right"
+               Content="{Binding Path=EditingFrameContent}" />
 
         <Grid DockPanel.Dock="Left" Margin="0,1,0,0">
             <Grid.ColumnDefinitions>
@@ -150,27 +123,35 @@
                 <RowDefinition Name="ligne" Height="310" />
                 <RowDefinition Height="6" />
             </Grid.RowDefinitions>
-            <Thumb Name="horizontal" Grid.Row="0" Grid.Column="1" Background="White" 
+            <Thumb x:Name="horizontal" Grid.Row="0" Grid.Column="1" Background="White" 
                       Width="6" Height="6" DragDelta="GlisserMouvementRecu" 
                       DragStarted="GlisserCommence" DragCompleted="GlisserTermine"
                       />
-            <Thumb Name="diagonal" Grid.Row="1" Grid.Column="1" Background="White" 
+            <Thumb x:Name="diagonal" Grid.Row="1" Grid.Column="1" Background="White" 
                       Width="6" Height="6" DragDelta="GlisserMouvementRecu" 
                       DragStarted="GlisserCommence" DragCompleted="GlisserTermine"
                       />
-            <Thumb Name="vertical" Grid.Row="1" Grid.Column="0" Background="White" 
+            <Thumb x:Name="vertical" Grid.Row="1" Grid.Column="0" Background="White" 
                       Width="6" Height="6" DragDelta="GlisserMouvementRecu" 
                       DragStarted="GlisserCommence" DragCompleted="GlisserTermine"
                       />
             <Border BorderThickness="5,5,0,0">
-                <InkCanvas ClipToBounds="True" Grid.Column="0" Grid.Row="0" Name="surfaceDessin" 
-                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"                           
-                           MouseLeave="surfaceDessin_MouseLeave" MouseMove="surfaceDessin_MouseMove"                                              
-                           Strokes="{Binding Path=Traits, Mode=OneTime}" EditingMode="{Binding Path=OutilSelectionne, Converter={StaticResource convertisseurModeEdition}, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
-                           DefaultDrawingAttributes="{Binding Path=AttributsDessin, Mode=OneTime}"/>
                 <Border.Effect>
                     <DropShadowEffect Opacity="0.3" BlurRadius="10"/>
                 </Border.Effect>
+                <InkCanvas ClipToBounds="True" Grid.Column="0" Grid.Row="0" x:Name="Canvas" 
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"                           
+                           MouseLeave="Canvas_MouseLeave" MouseMove="Canvas_MouseMove"                                              
+                           Strokes="{Binding Traits, Mode=OneTime}"
+                           EditingMode="{Binding OutilSelectionne, Converter={StaticResource convertisseurModeEdition}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                           DefaultDrawingAttributes="{Binding AttributsDessin, Mode=OneTime}"
+                           PreviewMouseMove="Canvas_PreviewMouseMove"
+                           PreviewMouseLeftButtonUp="Canvas_PreviewMouseLeftButtonUp"
+                           PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown"
+                           PreviewMouseRightButtonUp="Canvas_PreviewMouseRightButtonUp"
+                           SelectionChanged="Canvas_SelectionChanged"
+                           PreviewMouseWheel="Canvas_PreviewMouseWheel"
+                           StrokeErasing="Canvas_StrokeErasing"/>
             </Border>
         </Grid>
     </DockPanel>

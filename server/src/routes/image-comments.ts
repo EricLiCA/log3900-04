@@ -15,8 +15,10 @@ export class ImageCommentsRoute {
                         timestamp: row.Timestamp,
                         comment: row.Comment,
                         userName: row.Username,
+                        profileImage: row.ProfileImage
                     };
                 }));
+                return;
             }
             res.sendStatus(404); // Not found
         })
@@ -41,6 +43,7 @@ export class ImageCommentsRoute {
                     timestamp: result.Timestamp,
                     comment: result.Comment,
                 });
+                return;
             }
             res.sendStatus(204);
         })
@@ -60,6 +63,7 @@ export class ImageCommentsRoute {
                     timestamp: result.Timestamp,
                     comment: result.Comment,
                 });
+                return;
             }
             res.sendStatus(404);
         })

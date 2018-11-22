@@ -3,6 +3,7 @@ using PolyPaint.Services;
 using PolyPaint.VueModeles;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -24,6 +25,17 @@ namespace PolyPaint.Vues
         {
             DataContext = viewModel;
             InitializeComponent();
+
+            viewModel.PropertyChanged += new PropertyChangedEventHandler(PropertyChanged);
+            this.Loaded += (s, e) => this.ScrollWindow.ScrollToBottom();
+        }
+
+        private void PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Messages")
+            {
+                this.ScrollWindow.ScrollToBottom();
+            }
         }
 
         private void TextInput_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -39,6 +51,11 @@ namespace PolyPaint.Vues
         {
             ((ChatViewModel)DataContext).SendMessage.Execute(MessageToSend.Text);
             MessageToSend.Text = "";
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            ((ChatViewModel)DataContext).AddPerson.Execute(((Button)sender).Tag);
         }
     }
 }

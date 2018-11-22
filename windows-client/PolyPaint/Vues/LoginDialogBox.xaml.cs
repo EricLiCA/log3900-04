@@ -33,34 +33,21 @@ namespace PolyPaint.Vues
         {
             ConnectButton.IsEnabled = false;
             ConnectionProgress.Visibility = Visibility.Visible;
-            if ((bool)GuestConnection.IsChecked)
+            ServerService.instance.user = new User
             {
-                ServerService.instance.user = new User
-                {
-                    id = Guid.NewGuid().ToString(),
-                    username = UserName.Text,
-                    password = Password.Password,
-                    profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE),
-                    isGuest = true
-                };
-                Connect_Socket();
-            } 
-            else
-            {
-                ConnectToAccount();
-            }
-        }
-
-        private void GuestConnection_Checked(object sender, RoutedEventArgs e)
-        {
-            Password.IsEnabled = !(bool)GuestConnection.IsChecked;
-            EnableOrDisableCreateButton();
+                id = Guid.NewGuid().ToString(),
+                username = UserName.Text,
+                password = Password.Password,
+                profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE)
+            };
+            ConnectToAccount();
         }
 
         private void ConnectToServer()
         {
             var url = string.Format(Settings.SERVER_IP.StartsWith("http") ? "{0}" : "http://{0}", Settings.SERVER_IP);
             var client = new RestClient(url);
+            var S3 = new S3Communication();
             var request = new RestRequest(Settings.API_VERSION + Settings.SERVER_STATUS_PATH, Method.GET);
             client.ExecuteAsync(request, response =>
             {
@@ -69,6 +56,7 @@ namespace PolyPaint.Vues
                     if (response.Content == "log3900-server")
                     {
                         ServerService.instance.server = client;
+                        ServerService.instance.S3Communication = S3;
                     }
                     else
                     {
@@ -86,7 +74,7 @@ namespace PolyPaint.Vues
             {
                 username = UserName.Text,
                 password = Password.Password,
-                profileImage = new System.Uri(Settings.DEFAULT_PROFILE_IMAGE)
+                profileImage = new Uri(Settings.DEFAULT_PROFILE_IMAGE)
             };
             var request = new RestRequest(Settings.API_VERSION + Settings.SESSION_PATH, Method.POST);
             request.AddJsonBody(user);
@@ -97,17 +85,16 @@ namespace PolyPaint.Vues
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         dynamic data = JObject.Parse(response.Content);
-                        Connect_Socket();
-
                         ServerService.instance.user = new User(
                             UserName.Text,
                             (string)data["id"],
                             (string)data["profileImage"],
                             (string)data["token"],
                             (string)data["userLevel"],
-                            Password.Password,
-                            false
+                            Password.Password
                         );
+
+                        Connect_Socket();
                     }
                     else
                     {
@@ -137,6 +124,8 @@ namespace PolyPaint.Vues
                     this.Dispatcher.Invoke(() =>
                     {
                         DialogResult = true;
+                        MessagingViewManager.instance.loadViews();
+                        OfflineFileLoader.upload();
                     });
                 }
                 else
@@ -150,6 +139,15 @@ namespace PolyPaint.Vues
                     MessageBox.Show("Can't connect to the socket : " + server_params[0], "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }));
+
+            socket.On(Socket.EVENT_DISCONNECT, new CustomListener((object[] server_params) =>
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    ServerService.instance.disconnect();
+                    ((MainWindow)Application.Current.MainWindow).OfflineMode();
+                });
+            }));
         }
 
         private void UserNameOrPassword_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
@@ -162,13 +160,15 @@ namespace PolyPaint.Vues
             Boolean invalideUserName = UserName.Text.Length == 0 || UserName.Text.Contains(" ");
             Boolean invalidPassword = Password.Password.Length == 0 || Password.Password.Contains(" ");
 
-            if ((bool)GuestConnection.IsChecked || invalideUserName || invalidPassword)
+            if (invalideUserName || invalidPassword)
             {
                 CreateButton.IsEnabled = false;
+                ConnectButton.IsEnabled = false;
             }
             else
             {
                 CreateButton.IsEnabled = true;
+                ConnectButton.IsEnabled = true;
             }
         }
     }
