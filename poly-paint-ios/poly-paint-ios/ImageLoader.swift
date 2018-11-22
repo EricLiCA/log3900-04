@@ -48,6 +48,12 @@ public struct ImageLoader {
         
     }
     
+    public func parseClass(shape: [String: AnyObject]) {
+        let center = shape["ShapeInfo"]?["Center"] as! [String: AnyObject]
+        let userInfo = [ "text" : shape["ShapeInfo"]?["Content"] as! String, "x": center["X"] as! Double, "y": center["Y"] as! Double, "height": shape["ShapeInfo"]?["Height"] as! Double, "width": shape["ShapeInfo"]?["Width"] as! Double] as [String : Any]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil, userInfo: userInfo)
+    }
+    
     public func parseShapes(shape: [String: AnyObject]) ->BasicShapeView? {
         
         let type = shape["ShapeType"] as? String
