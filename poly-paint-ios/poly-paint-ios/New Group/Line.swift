@@ -32,6 +32,7 @@ class Line {
     var selected = false
     var hitStartPoint: Int?
     var hitEndPoint: Int?
+    var relationAngle = CGFloat(Double.pi / 6)
     
     init(layer: CAShapeLayer, startPoint: CGPoint, endPoint: CGPoint, firstEndRelation: Relation, secondEndRelation: Relation, firstEndTextField: String, secondEndTextField: String) {
         self.points.append(startPoint)
@@ -158,28 +159,28 @@ class Line {
         }
         
         if(self.firstEndRelation == Relation.Arrow) {
-            self.addArrow(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier)
+            self.addArrow(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: self.relationAngle, bezier: bezier)
         }
         if(self.secondEndRelation == Relation.Arrow) {
-            self.addArrow(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier)
+            self.addArrow(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: self.relationAngle, bezier: bezier)
         }
         if(self.firstEndRelation == Relation.Inheritance) {
-            self.addInheritance(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier)
+            self.addInheritance(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: self.relationAngle, bezier: bezier)
         }
         if(self.secondEndRelation == Relation.Inheritance) {
-            self.addInheritance(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier)
+            self.addInheritance(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: self.relationAngle, bezier: bezier)
         }
         if(self.firstEndRelation == Relation.Aggregation) {
-            self.addAggregationComposition(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier, relation: Relation.Aggregation)
+            self.addAggregationComposition(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: self.relationAngle, bezier: bezier, relation: Relation.Aggregation)
         }
         if(self.secondEndRelation == Relation.Aggregation) {
-            self.addAggregationComposition(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier, relation: Relation.Aggregation)
+            self.addAggregationComposition(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: self.relationAngle, bezier: bezier, relation: Relation.Aggregation)
         }
         if(self.firstEndRelation == Relation.Composition) {
-            self.addAggregationComposition(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier, relation: Relation.Composition)
+            self.addAggregationComposition(start: self.points[1], end: self.points[0], pointerLineLength: 30, arrowAngle: self.relationAngle, bezier: bezier, relation: Relation.Composition)
         }
         if(self.secondEndRelation == Relation.Composition) {
-            self.addAggregationComposition(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: CGFloat(Double.pi / 4), bezier: bezier, relation: Relation.Composition)
+            self.addAggregationComposition(start: self.points[self.points.count - 2], end: self.points[self.points.count - 1], pointerLineLength: 30, arrowAngle: self.relationAngle, bezier: bezier, relation: Relation.Composition)
         }
         
         

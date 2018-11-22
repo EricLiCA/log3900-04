@@ -103,7 +103,7 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func lineTapped(_ sender: UIButton) {
-        self.showRelationPopover()
+        //self.showRelationPopover()
     }
     
     @IBAction func useCaseTapped(_ sender: UIButton) {

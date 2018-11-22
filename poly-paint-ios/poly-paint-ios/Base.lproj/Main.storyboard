@@ -388,6 +388,9 @@
                                                 <state key="normal" image="line"/>
                                                 <connections>
                                                     <action selector="lineTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="HGs-xa-t98"/>
+                                                    <segue destination="5uQ-IG-6AB" kind="popoverPresentation" popoverAnchorView="YPF-2C-ZwO" id="9fu-Sy-e4b">
+                                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                    </segue>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jj9-Dh-xV3">
@@ -483,11 +486,11 @@
             <objects>
                 <viewController id="5uQ-IG-6AB" customClass="RelationViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5mM-X1-rDO">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="06G-4d-Uyt">
-                                <rect key="frame" x="269" y="324.5" width="230" height="395.5"/>
+                                <rect key="frame" x="45" y="42.5" width="230" height="395.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Line/Relation" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FgQ-Zf-S4F">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="20.5"/>
