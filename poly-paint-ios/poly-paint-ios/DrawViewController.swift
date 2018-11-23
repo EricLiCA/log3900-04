@@ -657,8 +657,7 @@ class DrawViewController: UIViewController {
                     let view = self.imageLoader.parseShapes(shape: dataString)
                     self.shapes[view!.uuid] = view
                     self.drawingPlace.addSubview(view!)
-                    self.redrawLayers()
-                    self.insideCanvas = false
+                    
                 }
                     
                 else if(dataString["ShapeType"] as! String == "CLASS"){
@@ -667,7 +666,8 @@ class DrawViewController: UIViewController {
                     self.drawingPlace.addSubview(classShape)
                 }
             }
-            
+            self.redrawLayers()
+            self.insideCanvas = false
         }
         self.drawingSocketManager.socketIOClient.on("addStroke") { (data, ack) in
             print(data[1])
