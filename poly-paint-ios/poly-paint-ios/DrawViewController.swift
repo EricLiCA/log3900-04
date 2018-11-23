@@ -78,8 +78,8 @@ class DrawViewController: UIViewController {
             }
         })
         self.navigationItem.title = image?.title!
-        //self.handleSocketEmits()
-        //print(self.shapes)
+        self.handleSocketEmits()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -337,13 +337,10 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
             }
-            print("SHAPES !!!!!!!!!!!!!!!!!")
-            print(self.shapes)
             self.drawingPlace.layer.sublayers?.popLast()
             self.redrawLayers()
             self.insideCanvas = false
         }
-        self.handleSocketEmits()
         self.stopDrawing()
     }
     
@@ -648,8 +645,6 @@ class DrawViewController: UIViewController {
         }
 
         for (uuid, view) in self.shapes{
-            print(view)
-            print(view.layer)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
         
