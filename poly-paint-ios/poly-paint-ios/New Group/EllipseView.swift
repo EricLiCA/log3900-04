@@ -15,7 +15,7 @@ class EllipseView: BasicShapeView {
     init(frame: CGRect, color: UIColor, useCase: String) {
         super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE")
         self.labelText = useCase
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = UIColor.clear
         self.initGestureRecognizers()
         
     }
