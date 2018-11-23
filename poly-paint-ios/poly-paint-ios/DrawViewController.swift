@@ -22,7 +22,6 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var optionsView: UIView!
     @IBOutlet weak var drawingPlace: UIView!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var colorButton: UIBarButtonItem!
     @IBOutlet weak var chatButton: UIBarButtonItem!
     @IBOutlet weak var selectedColorButton: UIButton!
     
@@ -65,7 +64,7 @@ class DrawViewController: UIViewController {
         self.drawingPlace.clipsToBounds = true
         self.cancelButton.isEnabled = false
         self.setUpNotifications()
-        
+        self.selectedColorButtonDefault()
         ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
             notifications in
             if notifications == 0 {
@@ -88,6 +87,7 @@ class DrawViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .landscapeLeft
@@ -383,21 +383,6 @@ class DrawViewController: UIViewController {
         self.cancelButton.isEnabled = false;
     }
     
-    @IBAction func colorPickerButton(_ sender: UIBarButtonItem) {
-        
-        let popoverVC = storyboard?.instantiateViewController(withIdentifier: "colorPickerPopover") as! ColorPickerViewController
-        popoverVC.modalPresentationStyle = .popover
-        popoverVC.preferredContentSize = CGSize(width: 284, height: 446)
-        if let popoverController = popoverVC.popoverPresentationController {
-            popoverController.barButtonItem = sender
-            popoverController.sourceRect = CGRect(x: 0, y: 0, width: 85, height: 30)
-            popoverController.permittedArrowDirections = .any
-           // popoverController.delegate? = self
-            popoverVC.delegate = self
-        }
-        present(popoverVC, animated: true, completion: nil)
-    }
-    
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
@@ -650,11 +635,7 @@ class DrawViewController: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toCreateClass" {
-            let CreateClassVC = segue.destination as! NewClassViewController
-        }
-    }
+
 
     func resetTouchAnchorPoint() {
         for (key, shape) in self.shapes {

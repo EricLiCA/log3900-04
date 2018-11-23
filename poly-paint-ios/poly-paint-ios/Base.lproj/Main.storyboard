@@ -591,20 +591,21 @@
                                     <action selector="cancelTapped:" destination="nxp-f4-1rm" id="UVY-kN-sBe"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Color" id="onF-ce-uHG">
-                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <barButtonItem tag="-1" title="Redo" width="11" id="nbC-No-vhD">
                                 <connections>
-                                    <action selector="colorPickerButton:" destination="nxp-f4-1rm" id="BfL-Wy-8f6"/>
+                                    <action selector="redoTapped:" destination="nxp-f4-1rm" id="2s5-fk-0nu"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem tag="-1" title="Redo" width="11" id="nbC-No-vhD"/>
-                            <barButtonItem title="Undo" id="5oG-1Z-XUe"/>
+                            <barButtonItem title="Undo" id="5oG-1Z-XUe">
+                                <connections>
+                                    <action selector="undoTapped:" destination="nxp-f4-1rm" id="qu4-tg-CTp"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="cancelButton" destination="XMc-53-DIO" id="Hfb-E2-GxG"/>
                         <outlet property="chatButton" destination="Teo-s5-50H" id="eYK-uH-ZcH"/>
-                        <outlet property="colorButton" destination="onF-ce-uHG" id="hCW-DP-93z"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="optionsView" destination="5kG-lC-orU" id="6uY-R2-Ob0"/>
                         <outlet property="selectedColorButton" destination="2IW-IU-ewm" id="mJU-Yl-buh"/>
@@ -689,7 +690,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WiJ-i1-fEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="643.75" y="-1959.3749999999998"/>
+            <point key="canvasLocation" x="813" y="-2244"/>
         </scene>
         <!--Relation View Controller-->
         <scene sceneID="IBl-pZ-KGH">
@@ -1070,7 +1071,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Cd-f8-ZiB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="655" y="-1993"/>
+            <point key="canvasLocation" x="594" y="-1579"/>
         </scene>
         <!--Login Scene-->
         <scene sceneID="maM-Fp-ADF">
