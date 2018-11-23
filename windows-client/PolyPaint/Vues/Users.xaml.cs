@@ -33,17 +33,17 @@ namespace PolyPaint.Vues
 
         public void Load()
         {
-            if (ServerService.instance.user.isGuest)
+            if (ServerService.instance.isOffline())
             {
                 RestrictPermissions();
             }
             else
             {
                 FriendDao.Get();
+                FriendDao.GetUsersExceptFriends();
                 PendingFriendRequestDao.Get();
                 PendingFriendRequestDao.GetByRequesterId();
             }
-            FriendDao.GetUsersExceptFriends();
         }
 
         private void RestrictPermissions()
@@ -137,7 +137,7 @@ namespace PolyPaint.Vues
             ProfileViewTitle.Text = CurrentUserCard.User.username;
             BitmapImage imageBitmap = new BitmapImage(CurrentUserCard.User.profileImage);
             ProfileViewPicture.Source = imageBitmap;
-            if (!ServerService.instance.user.isGuest)
+            if (!ServerService.instance.isOffline())
             {
                 if (SentRequests.Contains(userCard.User.id))
                 {

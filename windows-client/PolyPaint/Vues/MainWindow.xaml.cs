@@ -1,10 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using PolyPaint.DAO;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
+using PolyPaint.VueModeles;
 
 namespace PolyPaint.Vues
 {
@@ -13,54 +14,110 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Gallery Gallery;
+        public Tutorial tutorial = new Tutorial();
+        public Gallery Gallery = new Gallery();
         public Users Users;
-        private FenetreDessin FenetreDessin;
+        public FenetreDessin FenetreDessin = new FenetreDessin();
+        Window detached;
+        bool isDetached = true;
 
         public MainWindow()
         {
-            Server_Connect();
-            UsersManager.instance.fetchAll();
-            FenetreDessin = new FenetreDessin();
             InitializeComponent();
-            Gallery = new Gallery();
-            Users = new Users();
             GridMain.Content = Gallery;
-            InitDialogBox();
-            if (ServerService.instance.user.isGuest)
-            {
-                RestrictPermissions();
-            }
-            else
-            {
-                Uri profileImage = ServerService.instance.user.profileImage;
-                if(profileImage != null)
-                {
-                    AvatarImage.Source = new BitmapImage(profileImage);
-                }
-            }
+            OfflineMode();
+
+            Closing += new CancelEventHandler(((MainWindow)Application.Current.MainWindow).FenetreDessin.SaveButton_Click);
         }
 
-        private void RestrictPermissions()
+        public void showDetachedChat(object sender, EventArgs e)
         {
+            this.isDetached = true;
+            if (GridMain.Content is MessagingWindow)
+                GridMain.Content = Gallery;
+            RefreshView();
+            ButtonChat.Visibility = Visibility.Collapsed;
+            detached = new DetachedChat();
+            detached.Show();
+        }
+
+        public void showAttachedChat(object sender, EventArgs e)
+        {
+            detached.Hide();
+            ButtonChat.Visibility = Visibility.Visible;
+            this.isDetached = false;
+            RefreshView();
+        }
+
+        public void OfflineMode()
+        {
+            if (detached != null)
+                detached.Hide();
+
             ManageProfileButton.Visibility = Visibility.Collapsed;
-            AvatarButton.IsEnabled = false;
+            AvatarButton.Visibility = Visibility.Collapsed;
+            ConnectButton.Visibility = Visibility.Visible;
+            DisonnectButton.Visibility = Visibility.Collapsed;
+
+            ButtonUsers.Visibility = Visibility.Collapsed;
+            ButtonChat.Visibility = Visibility.Collapsed;
+            ButtonEdit.Visibility = Visibility.Collapsed;
+
+            Gallery = new Gallery();
+            GridMain.Content = Gallery;
+
+            RefreshView();
         }
 
-        private void Server_Connect()
+        public void OnlineMode()
         {
-            LoginDialogBox dlg = new LoginDialogBox();
-            if (dlg.ShowDialog() == false)
+            ManageProfileButton.Visibility = Visibility.Visible;
+            AvatarButton.Visibility = Visibility.Visible;
+            DisonnectButton.Visibility = Visibility.Visible;
+            ConnectButton.Visibility = Visibility.Collapsed;
+
+            Uri profileImage = ServerService.instance.user.profileImage;
+            if (profileImage != null)
             {
-                System.Environment.Exit(0);
+                AvatarImage.Source = new BitmapImage(profileImage);
+            }
+
+            Users = new Users();
+            Gallery = new Gallery();
+
+            ButtonUsers.Visibility = Visibility.Visible;
+            if (isDetached)
+                showDetachedChat(null, null);
+            else
+                showAttachedChat(null, null);
+
+            InitDialogBox();
+            UsersManager.instance.fetchAll();
+        }
+
+        private void RefreshView()
+        {
+            if (GridMain.Content is Gallery)
+            {
+                Button_Click(ButtonGallery, null);
+            }
+            else if (GridMain.Content is FenetreDessin)
+            {
+                Button_Click(ButtonEdit, null);
+            }
+            else if (GridMain.Content is Users)
+            {
+                Button_Click(ButtonUsers, null);
+            }
+            else if (GridMain.Content is MessagingWindow)
+            {
+                Button_Click(ButtonChat, null);
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            int index = int.Parse(((System.Windows.Controls.Button)e.Source).Uid);
-
-            GridCursor.Margin = new Thickness(10 + (150 * index), 0, 0, 0);
+            int index = int.Parse(((System.Windows.Controls.Button)sender).Uid);
 
             switch (index)
             {
@@ -68,19 +125,27 @@ namespace PolyPaint.Vues
                     {
                         Gallery.Load();
                         GridMain.Content = Gallery;
+                        GridCursor.Margin = new Thickness(10, 0, 0, 0);
                         break;
                     }
                 case 1:
                     {
                         Users.Load();
                         GridMain.Content = Users;
+                        GridCursor.Margin = new Thickness(160, 0, 0, 0);
                         break;
                     }
                 case 2:
+                    if (isDetached) break;
                     GridMain.Content = MessagingViewManager.instance.LargeMessagingView;
+                    GridCursor.Margin = new Thickness(310, 0, 0, 0);
                     break;
                 case 3:
                     GridMain.Content = this.FenetreDessin;
+                    GridCursor.Margin = new Thickness(10 + (150 * (index - (ServerService.instance.isOffline() ? 2 : (isDetached ? 1 : 0)))), 0, 0, 0);
+                    break;
+                case 4:
+                    GridMain.Content = this.tutorial;
                     break;
             }
         }
@@ -89,7 +154,7 @@ namespace PolyPaint.Vues
         {
             string fileName = null;
 
-            using (OpenFileDialog openFileDialog1 = new OpenFileDialog())
+            using (System.Windows.Forms.OpenFileDialog openFileDialog1 = new System.Windows.Forms.OpenFileDialog())
             {
                 openFileDialog1.InitialDirectory = "c:\\";
                 openFileDialog1.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
@@ -113,7 +178,7 @@ namespace PolyPaint.Vues
                 bitmap.EndInit();
                 AvatarImage.Source = bitmap;
 
-                ServerService.instance.S3Communication.UploadFileAsync(avatarLocation);
+                ServerService.instance.S3Communication.UploadProfileImageAsync(avatarLocation);
 
                 Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
                 ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
@@ -156,5 +221,28 @@ namespace PolyPaint.Vues
             }
         }
 
+        public void LoadImage(string imageId)
+        {
+            FenetreDessin.SaveButton_Click(null, null);
+            ServerService.instance.currentImageId = imageId;
+            ButtonEdit.Visibility = Visibility.Visible;
+            Button_Click(ButtonEdit, null);
+            ((VueModele)FenetreDessin.DataContext).editeur.SyncToServer();
+        }
+
+        private void ConnectButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginDialogBox dlg = new LoginDialogBox();
+            if (dlg.ShowDialog() == true)
+            {
+                OnlineMode();
+            }
+        }
+
+        private void DisonnectButton_Click(object sender, RoutedEventArgs e)
+        {
+            ServerService.instance.disconnect();
+            OfflineMode();
+        }
     }
 }

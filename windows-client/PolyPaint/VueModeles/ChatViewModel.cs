@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
 
 namespace PolyPaint.VueModeles
 {
@@ -34,6 +35,8 @@ namespace PolyPaint.VueModeles
             get => ChatRoom.Name;
             set { PropertyModified(); }
         }
+
+        public Visibility canLeave { get => ThreadName == "Lobby" ? Visibility.Collapsed : Visibility.Visible; }
 
         public ObservableCollection<ChatMessage> Messages
         {

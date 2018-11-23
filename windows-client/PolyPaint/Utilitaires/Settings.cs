@@ -23,21 +23,18 @@ namespace PolyPaint.Utilitaires
         public const string USERS_EXCEPT_FRIENDS_PATH = "/usersExceptFriends";
         public const string PENDING_FRIEND_REQUEST_PATH = "/pendingFriendRequest";
         public const string URL_TO_PROFILE_IMAGES = "https://s3.amazonaws.com/polypaintpro/profile-pictures/";
+        public const string URL_TO_GALLERY_IMAGES = "https://s3.amazonaws.com/polypaintpro/gallery-pictures/";
         public const string PROFILE_IMAGE_BUCKET = "polypaintpro/profile-pictures";
+        public const string GALLERY_IMAGE_BUCKET = "polypaintpro/gallery-pictures";
+        public const string SHAPE_OBJECT_PATH = "/shapeObject";
 
         public const string DEFAULT_PROFILE_IMAGE = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjqmTWoUhezVh6rd7F0DYqkpqDGAwbYoC_hEfi0nphYL1h08gCkA";
         public const string PENDING_FRIEND_REQUEST_BY_REQUESTER_ID_PATH = "/pendingFriendRequestByRequesterId";
-        //Tooltips text
-        public const string PASSWORD_BUTTON_CHECKED_TOOLTIP = "Remove the password";
-        public const string PASSWORD_BUTTON_UNCHECKED_TOOLTIP = "Protect the image with a password";
-        public const string LOCK_BUTTON_CHECKED_TOOLTIP = "Make the image public. A public image can be seen by anyone";
-        public const string LOCK_BUTTON_UNCHECKED_TOOLTIP = "Make the image private. A private image can be seen only by you";
-        public const string LIKE_BUTTON_CHECKED_TOOLTIP = "Dislike this image";
-        public const string LIKE_BUTTON_UNCHECKED_TOOLTIP = "Like this image";
 
         //Credentials
         public const string aws_access_key_id = "AKIAIZN6KZDRICBY76VA";
         public const string aws_secret_access_key = "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";
-        
+
+        public const string WEB_CLIENT_LINK = "localhost:4200/";
     }
 }

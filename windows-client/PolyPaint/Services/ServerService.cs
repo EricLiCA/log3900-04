@@ -27,6 +27,16 @@ namespace PolyPaint.Services
         public RestClient server { get; set; }
         public Socket Socket { get; set; }
         public User user { get; set; }
+
+        public bool isOffline() => user == null;
+
         public S3Communication S3Communication { get; set; }
+        public string currentImageId { get; set; }
+
+        internal void disconnect()
+        {
+            this.Socket.Disconnect();
+            user = null;
+        }
     }
 }

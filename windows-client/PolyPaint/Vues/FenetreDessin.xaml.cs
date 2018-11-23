@@ -13,6 +13,9 @@ using System.Windows.Ink;
 using PolyPaint.Modeles;
 using PolyPaint.Modeles.Strokes;
 using System.Collections.Generic;
+using PolyPaint.DAO;
+using System.Windows.Media.Imaging;
+using PolyPaint.Services;
 
 namespace PolyPaint
 {
@@ -28,6 +31,7 @@ namespace PolyPaint
             InitializeComponent();
             DataContext = new VueModele();
             ClipBoard = new StrokeCollection();
+
         }
 
         // Pour gérer les points de contrôles.
@@ -63,7 +67,10 @@ namespace PolyPaint
                 vueModele.editeur.EditingStroke = null;
                 selectedStrokes.ForEach(stroke =>
                 {
-                    ((VueModele)this.DataContext).Traits.Add(stroke.Duplicate());
+                    CustomStroke duplicate = stroke.Duplicate();
+                    ((VueModele)this.DataContext).Traits.Add(duplicate);
+                    duplicate.Select();
+                    EditionSocket.AddStroke(((Savable)duplicate).toJson());
                 });
             }
 
@@ -81,6 +88,7 @@ namespace PolyPaint
                 {
                     vueModele.Traits.Remove(stroke);
                     ClipBoard.Add(stroke);
+                    EditionSocket.RemoveStroke(((CustomStroke)stroke).Id.ToString());
                 });
             }
         }
@@ -175,6 +183,43 @@ namespace PolyPaint
             /* UNCOMMENT TO ENABLE ROTATING */
             //if (scrolled is ShapeStroke)
             //    ((ShapeStroke)scrolled).Rotation = ((ShapeStroke)scrolled).Rotation += e.Delta / 8.0;
+        }
+
+        public void SaveButton_Click(object sender, EventArgs e)
+        {
+            if (ServerService.instance.currentImageId == null) return;
+
+            this.ToolSelection.SelectedIndex = 0;
+            ((VueModele)this.DataContext).Traits.ToList().ForEach(temp =>
+            {
+                if (((CustomStroke)temp).isSelected()) ((CustomStroke)temp).Unselect();
+            });
+
+            Rect bounds = VisualTreeHelper.GetDescendantBounds(Canvas);
+            double dpi = 96d;
+
+            RenderTargetBitmap rtb = new RenderTargetBitmap((int)bounds.Width, (int)bounds.Height, dpi, dpi, PixelFormats.Default);
+            DrawingVisual dv = new DrawingVisual();
+            using (DrawingContext dc = dv.RenderOpen())
+            {
+                VisualBrush vb = new VisualBrush(Canvas);
+                dc.DrawRectangle(vb, null, new Rect(new Point(), bounds.Size));
+            }
+            rtb.Render(dv);
+
+            BitmapEncoder pngEncoder = new PngBitmapEncoder();
+            pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+            using (MemoryStream ms = new MemoryStream())
+            {
+                pngEncoder.Save(ms);
+                ((VueModele)this.DataContext).Save.Execute(ms.ToArray());
+            }
+        }
+
+        private void Canvas_StrokeErasing(object sender, InkCanvasStrokeErasingEventArgs e)
+        {
+            VueModele vueModele = ((VueModele)this.DataContext);
+            //Empiler la modification
         }
     }
 }

@@ -14,6 +14,8 @@ import { SessionsRoute } from './routes/sessions';
 import { UsersRoute } from './routes/users';
 import { ChatRooms } from './routes/chat-rooms';
 import { ShapeObjectRoute } from './routes/shape-objects';
+import { OfflineUpload } from './routes/offline-upload';
+import { Secret } from './routes/secret';
 
 export class Application {
     /**
@@ -69,6 +71,8 @@ export class Application {
         const imageComments : ImageCommentsRoute = new ImageCommentsRoute();
         const chatRooms : ChatRooms = new ChatRooms();
         const shapeObjectRoute: ShapeObjectRoute = new ShapeObjectRoute();
+        const offlineUpload: OfflineUpload = new OfflineUpload();
+        const secret: Secret = new Secret();
 
         // hello world path
         router.get('/status', serverStatus.status.bind(serverStatus.status));
@@ -107,6 +111,7 @@ export class Application {
         router.delete('/images/:id', imagesRoute.delete.bind(imagesRoute.delete));
 
         // ImageLikes
+        router.get('/imageLikes', imageLikes.getAll.bind(imageLikes.getAll));
         router.get('/imageLikes/:imageId', imageLikes.get.bind(imageLikes.get));
         router.post('/imageLikes', imageLikes.post.bind(imageLikes.post));
         router.delete('/imageLikes/:imageId/:userId', imageLikes.delete.bind(imageLikes.delete));
@@ -127,6 +132,12 @@ export class Application {
         router.put('/shapeObject/:imageId', shapeObjectRoute.update.bind(shapeObjectRoute.update));
         router.delete('/shapeObject/:id', shapeObjectRoute.delete.bind(shapeObjectRoute.delete));
 
+        // Offline Upload
+        router.put('/offlineupload/:id', offlineUpload.put.bind(offlineUpload.put));
+
+        // Unique Link
+        router.get('/secret/:secret', secret.get.bind(secret.get));
+        router.get('/secret/generate/:id', secret.generate.bind(secret.generate));
 
         // use router middleware
         this.app.use('/v2', router);

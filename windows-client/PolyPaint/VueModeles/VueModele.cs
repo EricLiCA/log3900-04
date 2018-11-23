@@ -89,7 +89,7 @@ namespace PolyPaint.VueModeles
                 if (stroke is BaseLine)
                     return this.lineEditor;
 
-                if (stroke is PersonStroke || stroke is ClassStroke || stroke is UseCaseStroke)
+                if (stroke is Textable)
                     return this.classEditor;
 
                 return null;
@@ -104,6 +104,7 @@ namespace PolyPaint.VueModeles
         public RelayCommand<Tool> ChoisirOutil { get; set; }
         public RelayCommand<object> Reinitialiser { get; set; }
         public RelayCommand<Point> MouseUp { get; set; }
+        public RelayCommand<byte[]> Save { get; set; }
         public RelayCommand<Point> MouseDown { get; set; }
         public RelayCommand<Point> MouseMove { get; set; }
         public RelayCommand<StrokeCollection> SelectStrokes { get; set; }
@@ -131,6 +132,7 @@ namespace PolyPaint.VueModeles
             // Pour chaque commande, on effectue la liaison avec des méthodes du modèle.            
             Empiler = new RelayCommand<object>(editeur.Empiler, editeur.PeutEmpiler);            
             Depiler = new RelayCommand<object>(editeur.Depiler, editeur.PeutDepiler);
+            Save = new RelayCommand<byte[]>(editeur.Save);
             // Pour les commandes suivantes, il est toujours possible des les activer.
             // Donc, aucune vérification de type Peut"Action" à faire.
             ChoisirOutil = new RelayCommand<Tool>(editeur.ChoisirOutil);

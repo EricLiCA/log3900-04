@@ -32,6 +32,13 @@
             <ToolBarTray>
                 <ToolBar Style="{DynamicResource MaterialDesignToolBar}"
                          ClipToBounds="True">
+
+                    <Button x:Name="SaveButton"
+                            ToolTip="Save"
+                            Click="SaveButton_Click">
+                        <materialDesign:PackIcon Kind="ContentSave" Width="22" />
+                    </Button>
+
                     <Button x:Name="reinitialiser"
                             ToolTip="Erase canvas"
                             Command="{Binding Reinitialiser}">
@@ -143,7 +150,8 @@
                            PreviewMouseLeftButtonDown="Canvas_PreviewMouseLeftButtonDown"
                            PreviewMouseRightButtonUp="Canvas_PreviewMouseRightButtonUp"
                            SelectionChanged="Canvas_SelectionChanged"
-                           PreviewMouseWheel="Canvas_PreviewMouseWheel"/>
+                           PreviewMouseWheel="Canvas_PreviewMouseWheel"
+                           StrokeErasing="Canvas_StrokeErasing"/>
             </Border>
         </Grid>
     </DockPanel>

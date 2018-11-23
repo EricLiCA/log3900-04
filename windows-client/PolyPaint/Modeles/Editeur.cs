@@ -1,13 +1,20 @@
-﻿using PolyPaint.Modeles.Outils;
+using Newtonsoft.Json.Linq;
+using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
+using PolyPaint.Services;
+using PolyPaint.Vues;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Ink;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace PolyPaint.Modeles
@@ -33,6 +40,7 @@ namespace PolyPaint.Modeles
         private Tool Line = new Line();
         private Tool ClassDiagram = new ClassDiagram();
         private Tool UseCase = new UseCase();
+        private Tool TextTool = new TextTool();
         public List<Tool> Tools;
 
         // Outil actif dans l'éditeur
@@ -46,13 +54,19 @@ namespace PolyPaint.Modeles
                 if (this.outilSelectionne != EditTool)
                 {
                     this.EditingStroke = null;
-                    this.traits.ToList().ForEach(stroke => {
-                        if (((CustomStroke)stroke).isSelectable())
-                            ((CustomStroke)stroke).Unselect();
-                    });
+                    EditionSocket.UnlockStrokes();
+                    
+                    if (ServerService.instance.isOffline())
+                    {
+                        this.traits.ToList().ForEach(temp =>
+                        {
+                            if (((CustomStroke)temp).isSelected()) ((CustomStroke)temp).Unselect();
+                        });
+                    }
                 }
 
-                this.traits.ToList().FindAll(stroke => stroke is Anchorable).ForEach(stroke => {
+                this.traits.ToList().FindAll(stroke => stroke is Anchorable).ForEach(stroke =>
+                {
                     if (this.outilSelectionne == Line)
                         ((Anchorable)stroke).showAnchorPoints();
                     else
@@ -63,7 +77,8 @@ namespace PolyPaint.Modeles
             }
         }
 
-        public string ActiveItemTextContent {
+        public string ActiveItemTextContent
+        {
             get
             {
                 if (this.traits.has(this.EditingStroke))
@@ -187,6 +202,8 @@ namespace PolyPaint.Modeles
             }
         }
 
+        private string waitingEdit;
+
         // Couleur des traits tracés par le crayon.
         private string couleurSelectionnee = "White";
         public string CouleurSelectionnee
@@ -230,7 +247,8 @@ namespace PolyPaint.Modeles
                 Person,
                 Line,
                 ClassDiagram,
-                UseCase
+                UseCase,
+                TextTool
             };
         }
 
@@ -256,43 +274,65 @@ namespace PolyPaint.Modeles
 
         internal void SelectStrokes(StrokeCollection strokes)
         {
-            strokes.ToList().ForEach(stroke => {
-                if (((CustomStroke)stroke).isSelected())
+            if (ServerService.instance.isOffline())
+            {
+                this.traits.ToList().ForEach(temp =>
                 {
-                    if (((CustomStroke)stroke).isEditing())
-                        this.EditingStroke = null;
+                    if (((CustomStroke)temp).isSelected()) ((CustomStroke)temp).Unselect();
+                });
+            }
 
-                    ((CustomStroke)stroke).Unselect();
+            if (strokes.Count == 0) return;
+
+            this.EditingStroke = null;
+            List<string> toProtect = new List<string>();
+            strokes.ToList().ForEach(stroke =>
+            {
+                if (!((CustomStroke)stroke).isSelected() && !((CustomStroke)stroke).isLocked())
+                {
+                    toProtect.Add(((CustomStroke)stroke).Id.ToString());
+                    if (ServerService.instance.isOffline())
+                    {
+                        ((CustomStroke)stroke).Select();
+                    }
+                }
+            });
+
+            EditionSocket.LockStroke(toProtect);
+        }
+
+        internal void Edit(CustomStroke s)
+        {
+            var stroke = this.traits.get(s.Id.ToString());
+            if (stroke.isLocked()) return;
+
+            if (stroke.isEditing())
+                this.EditingStroke = null;
+            else
+            {
+                if (stroke.isSelected())
+                {
+                    stroke.startEditing();
+                    this.EditingStroke = stroke.Id.ToString();
                 }
                 else
                 {
-                    ((CustomStroke)stroke).Select();
+                    if (ServerService.instance.isOffline())
+                    {
+                        this.traits.ToList().ForEach(temp =>
+                        {
+                            if (((CustomStroke)temp).isSelected()) ((CustomStroke)temp).Unselect();
+                        });
+                        stroke.Select();
+                        this.Edit(stroke);
+                    }
+                    else
+                    {
+                        EditionSocket.LockStroke(new List<string>() { stroke.Id.ToString() });
+                        this.EditingStroke = null;
+                        this.waitingEdit = stroke.Id.ToString();
+                    }
                 }
-            });
-        }
-
-        internal void Edit(CustomStroke stroke)
-        {
-            if (stroke.isLocked()) return;
-            if (!stroke.isSelected())
-            {
-                this.traits.ToList().ForEach(s => {
-                    if (((CustomStroke)s).isSelectable())
-                        ((CustomStroke)s).Unselect();
-                });
-
-                StrokeCollection sc = new StrokeCollection();
-                sc.Add(stroke);
-                this.SelectStrokes(sc);
-            };
-
-            if (stroke.isEditing())
-            {
-                this.EditingStroke = null;
-            } else
-            {
-                stroke.startEditing();
-                this.EditingStroke = stroke.Id.ToString();
             }
         }
 
@@ -314,6 +354,7 @@ namespace PolyPaint.Modeles
         }
 
         // On retire le trait le plus récent de la surface de dessin et on le place sur une pile.
+
         public void Empiler(object o)
         {
             try
@@ -321,7 +362,8 @@ namespace PolyPaint.Modeles
                 EditingStroke = null;
                 Stroke trait = traits.Last();
                 traitsRetires.Add(trait);
-                traits.Remove(trait);               
+                traits.Remove(trait);
+                EditionSocket.RemoveStroke(((CustomStroke)trait).Id.ToString());
             }
             catch { }
 
@@ -336,15 +378,188 @@ namespace PolyPaint.Modeles
             {
                 Stroke trait = traitsRetires.Last();
                 traits.Add(trait);
+                EditionSocket.AddStroke(((Savable)trait).toJson());
                 traitsRetires.Remove(trait);
             }
-            catch { }         
+            catch { }
         }
 
         // L'outil actif devient celui passé en paramètre.
         public void ChoisirOutil(Tool tool) => OutilSelectionne = tool;
 
         // On vide la surface de dessin de tous ses traits.
-        public void Reinitialiser(object o) => traits.Clear();
+        public void Reinitialiser(object o)  {
+            traits.Clear();
+            EditionSocket.ClearCanvas();
+        }
+
+        internal void Save(byte[] obj)
+        {
+            if (ServerService.instance.isOffline())
+            {
+
+                OfflineFileLoader.saveImage(obj);
+                
+                var tosave = this.traits.ToList().FindAll(stroke => stroke is Savable).ConvertAll<string>(stroke =>
+                {
+                    return ((Savable)stroke).toJson();
+                });
+                OfflineFileLoader.save(tosave);
+            }
+            else
+            {
+                string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
+                Directory.CreateDirectory(path2String);
+                string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
+                
+                File.WriteAllBytes(file, obj);
+
+                var id = ServerService.instance.currentImageId;
+                ServerService.instance.S3Communication.UploadImageAsync(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews", id + ".png"), id + ".png");
+                
+            }
+        }
+
+        public void SyncToServer()
+        {
+
+
+            if (ServerService.instance.isOffline())
+            {
+                this.Load(OfflineFileLoader.load(ServerService.instance.currentImageId));
+                return;
+            }
+
+            ServerService.instance.Socket.Emit("joinImage", ServerService.instance.currentImageId);
+
+            ServerService.instance.Socket.On("imageData", new CustomListener((object[] server_params) =>
+            {
+                Application.Current.Dispatcher.Invoke(() => this.Load((JArray)server_params[0]));
+            }));
+
+            ServerService.instance.Socket.On("addStroke", new CustomListener((object[] server_params) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    CustomStroke newStroke = SerializationHelper.stringToStroke((JObject)server_params[0], this.traits);
+                    this.traits.Add(newStroke);
+                    newStroke.Lock();
+                });
+            }));
+
+            ServerService.instance.Socket.On("editStroke", new CustomListener((object[] server_params) =>
+            {
+                CustomStroke updated = SerializationHelper.stringToStroke((JObject)server_params[0], this.traits);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Stroke old = this.traits.get(updated.Id.ToString());
+                    bool selected = ((CustomStroke)old).isSelected();
+                    bool editting = ((CustomStroke)old).isEditing();
+                    bool locked = ((CustomStroke)old).isLocked();
+                    ((CustomStroke)old).stopEditing();
+                    this.traits.Remove(this.traits.get(updated.Id.ToString()));
+
+                    int newindex = this.traits.ToList().FindIndex(stroke => ((CustomStroke)stroke).Index > updated.Index);
+
+                    try
+                    {
+                        this.traits.Insert(newindex, updated);
+                    }
+                    catch (ArgumentOutOfRangeException e)
+                    {
+                        this.traits.Add(updated);
+                    }
+
+                    if (selected) this.traits.get(updated.Id.ToString()).Select();
+                    if (editting) this.traits.get(updated.Id.ToString()).startEditing();
+                    if (locked) this.traits.get(updated.Id.ToString()).Lock();
+                });
+            }));
+
+            ServerService.instance.Socket.On("removeStroke", new CustomListener((object[] server_params) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Stroke old = this.traits.ToList().Find(stroke => ((CustomStroke)stroke).Id.ToString() == (string)server_params[0]);
+                    ((CustomStroke)old).stopEditing();
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        this.traits.Remove(old);
+                    });
+                });
+            }));
+
+            ServerService.instance.Socket.On("clearCanvas", new CustomListener((object[] server_params) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    this.traits.Clear();
+                });
+            }));
+
+            ServerService.instance.Socket.On("removeProtections", new CustomListener((object[] server_params) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    JArray toRemove = (JArray)server_params[0];
+                    toRemove.ToList().ForEach(id =>
+                    {
+                        if (!this.traits.has((string)id)) return;
+
+                        this.traits.get((string)id).Unselect();
+                        this.traits.get((string)id).Unlock();
+                    });
+                });
+            }));
+
+            ServerService.instance.Socket.On("addProtections", new CustomListener((object[] server_params) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    string holder = (string)server_params[0];
+                    JArray toProtect = (JArray)server_params[1];
+                    toProtect.ToList().ForEach(id =>
+                    {
+                        if (!this.traits.has((string)id)) return;
+
+                        if (holder == ServerService.instance.user.username)
+                        {
+
+                            this.traits.get((string)id).Select();
+                            if (this.waitingEdit == (string)id)
+                            {
+                                this.traits.get((string)id).startEditing();
+                                this.EditingStroke = (string)id;
+                                this.waitingEdit = null;
+                            }
+                        }
+                        else
+                            this.traits.get((string)id).Lock();
+                    });
+                });
+            }));
+        }
+
+        private void Load(List<string> list)
+        {
+            traits.Clear();
+            traitsRetires.Clear();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                this.traits.Add(SerializationHelper.stringToStroke(JObject.Parse(list[i]), this.traits));
+            }
+        }
+
+        public void Load(JArray shapeObjects)
+        {
+            traits.Clear();
+            traitsRetires.Clear();
+            
+            for (int i = 0; i < shapeObjects?.Count; i++)
+            {
+                this.traits.Add(SerializationHelper.stringToStroke((JObject)shapeObjects[i], this.traits));
+            }
+        }
     }
 }

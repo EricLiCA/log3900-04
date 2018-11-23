@@ -8,6 +8,9 @@
 
 import UIKit
 import SocketIO
+import AVFoundation
+import RxSwift
+import RxCocoa
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     // MARK: - View Elements
@@ -17,17 +20,26 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var dockViewHeightConstraint: NSLayoutConstraint!
     
     // MARK: - Models
+    let chatModel = ChatModel.instance
     var messagesArray = [String]()
-    var serverAddress: String = "http://ec2-18-214-40-211.compute-1.amazonaws.com"
+    var serverAddress: String = "http://localhost:3000/"
     var username: String = ""
     var invalidUsername: Bool = false
+    let systemSoundID: SystemSoundID = 1016
     // MARK: Sockets
     var manager: SocketManager!
     var socketIOClient: SocketIOClient!
     
+    // MARK: Observers
+    
     // MARK: - Initialization and Cleanup
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ChatModel.instance.notifications = 0
+        ChatModel.instance.notificationsSubject.onNext(0)
+        
+        messagesArray = chatModel.messagesArray
         
         // Add listeners for keyboard events
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
@@ -53,8 +65,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewWillDisappear(_ animated: Bool) {
         // Hide keyboard
         messageTextField.resignFirstResponder()
-        
-        socketIOClient.disconnect()
+        ChatModel.instance.notifications = 0
+        ChatModel.instance.notificationsSubject.onNext(0)
     }
     
     override func didReceiveMemoryWarning() {
@@ -87,56 +99,40 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    private func addToMessageTableView(message: String, sentBy username: String) {
+    /*private func addToMessageTableView(message: String, sentBy username: String) {
         let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
         let formattedMessage = "[\(currentTime())] \(username): \(message)"
         self.messagesArray.append(formattedMessage)
         self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
         self.messageTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
-    }
+    }*/
     
     // MARK: - Server communication
+    
     private func connectToSocket() {
-        self.setConnectionStatus(as: "connecting")
+        self.chatModel.connectionStatusSubject.asObservable().subscribe(onNext: {
+            status in
+            self.setConnectionStatus(as: status)
+        })
         
-        manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(true), .compress])
-        socketIOClient = manager.defaultSocket
-        
-        socketIOClient.on("setUsernameStatus") { (data, ack) in
-            if (data[0] as! String == "Username already taken!") {
-                self.invalidUsername = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.socketIOClient.disconnect()
-                    _ = self.navigationController?.popViewController(animated: true)
-                }
-            } else {
-                self.setConnectionStatus(as: "connected")
+        self.chatModel.disconnectSubject.asObservable().subscribe(onNext: {
+            disconnected in
+            if disconnected {
+                self.navigationController?.popViewController(animated: true)
             }
-        }
+        })
         
-        socketIOClient.on(clientEvent: .connect) {data, ack in
-            self.socketIOClient.emit("setUsername", self.username)
-        }
-        
-        socketIOClient.on(clientEvent: .error) { (data, ack) in
-            self.setConnectionStatus(as: "connecting")
-        }
-        
-        socketIOClient.on(clientEvent: .disconnect) { (data, ack) in
-            self.setConnectionStatus(as: "connecting")
-        }
-        
-        socketIOClient.on("message") { (data: [Any], ack) in
-            guard let username = data[0] as? String else { return }
-            guard let message = data[1] as? String else { return }
-            self.addToMessageTableView(message: message, sentBy: username)
-        }
-        
-        socketIOClient.on(clientEvent: SocketClientEvent.reconnect) { (data, ack) in
-            self.setConnectionStatus(as: "connecting")
-        }
-        
-        socketIOClient.connect()
+        self.chatModel.messagesSubject.asObservable().subscribe(onNext: {
+            messages in
+            print(messages)
+            self.messagesArray = messages
+            self.messageTableView.reloadData()
+            //ChatModel.instance.notifications = 0
+            //ChatModel.instance.notificationsSubject.onNext(0)
+            /*let newIndexPath = IndexPath(row: self.messagesArray.count, section: 0)
+            self.messageTableView.insertRows(at: [newIndexPath], with: .automatic)
+            self.messageTableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)*/
+        })
     }
     
     private func setConnectionStatus(as status: String) {
@@ -151,7 +147,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.connectionStatus.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             self.connectionStatus.text = "Connected"
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                if self.socketIOClient.status == .connected {
+                if self.chatModel.socketIOClient.status == .connected {
                     self.connectionStatus.isHidden = true
                 }
             }
@@ -161,10 +157,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     private func sendMessage() {
-        let trimmedMessage = messageTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-        if (!trimmedMessage.isEmpty) {
-            socketIOClient.emit("message", messageTextField.text!)
-        }
+        self.chatModel.sendMessage(message: messageTextField.text!)
         messageTextField.text = ""
     }
     
