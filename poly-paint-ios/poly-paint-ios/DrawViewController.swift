@@ -23,9 +23,6 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var drawingPlace: UIView!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var colorButton: UIBarButtonItem!
-    @IBOutlet weak var redoButton: UIBarButtonItem!
-    @IBOutlet weak var undoButton: UIBarButtonItem!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var chatButton: UIBarButtonItem!
     @IBOutlet weak var selectedColorButton: UIButton!
     
@@ -90,12 +87,6 @@ class DrawViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-    }
-    
-    @IBAction func saveTapped(_ sender: Any) {
-        for (uuid, view) in self.shapes{
-            self.drawingSocketManager.addShape(shape: view)
-        }
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
