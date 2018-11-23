@@ -178,6 +178,7 @@ namespace PolyPaint.Vues
             {
                 PendingFriendRequestDao.Send(CurrentUserCard.User.id);
                 FriendButton.IsEnabled = false;
+                SentRequests.Add(CurrentUserCard.User.id);
             }
             else
             {
@@ -188,14 +189,13 @@ namespace PolyPaint.Vues
 
         }
 
-        private void AddToChannelButton_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: Add to channel
-        }
-
         private void ViewImagesButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Go to gallery and filter image in order to show currentProfile images
+            Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
+            ((MainWindow)Application.Current.MainWindow).GoToGallery(0);
+            currentGallery.Search.Text = CurrentUserCard.User.username;
+            currentGallery.SearchByAuthor.IsSelected = true;
+            currentGallery.FilterImages();
         }
     }
 }

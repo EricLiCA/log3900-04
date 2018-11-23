@@ -68,9 +68,6 @@
                             <Button x:Name="ViewImagesButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="View profile images" Margin="0,0,10,0" Click="ViewImagesButton_Click" >
                                 <materialDesign:PackIcon  Kind="Image" Height="24" Width="24" />
                             </Button>
-                            <Button x:Name="AddToChannelButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Add to channel" Margin="0,0,10,0"  Click="AddToChannelButton_Click">
-                                <materialDesign:PackIcon  Kind="Allo" Height="24" Width="24" />
-                            </Button>
                             <ToggleButton x:Name="FriendButton" Width="40" Height="40" Margin="0,0,10,0" Click="FriendButton_Click">
                                 <ToggleButton.Style >
                                     <Style BasedOn="{StaticResource MaterialDesignActionToggleButton}" TargetType="ToggleButton">
