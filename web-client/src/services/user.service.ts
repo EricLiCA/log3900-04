@@ -52,7 +52,7 @@ export class UserService {
         return this.http.get(apiUrl).toPromise().then((likes: Likes[])=> {
             imagesWithLikes.forEach(image => {
                 likes.forEach(like => {
-                    if(image.id === like.imageId){
+                    if(image.id === like.ImageId){
                         image.imageLikes = image.imageLikes.valueOf() + 1;
                     }
                 });

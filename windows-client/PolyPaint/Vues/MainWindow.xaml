@@ -38,10 +38,16 @@
                     <Button Name="ManageProfileButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" DockPanel.Dock="Right" FontSize="12" Margin="0,9" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
                         Manage profile
                     </Button>
+                    <Button Name="ConnectButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" Margin="15 0" DockPanel.Dock="Right" FontSize="12" Click="ConnectButton_Click">
+                        Connect
+                    </Button>
+                    <Button Name="DisonnectButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" Margin="15 0" DockPanel.Dock="Right" FontSize="12" Click="DisonnectButton_Click">
+                        Disconnect
+                    </Button>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
                         <Button Name="ButtonGallery" Uid="0" Width="150" Content="GALLERY" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
-                        <Button Name="ButtonUsers" Uid="1" Width="150" Content="USERS" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
-                        <Button Name="ButtonChat" Uid="2" Width="150" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click">
+                        <Button Name="ButtonUsers" Uid="1" Width="150" Content="USERS" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" Visibility="Collapsed"/>
+                        <Button Name="ButtonChat" Uid="2" Width="150" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" Visibility="Collapsed">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="CHAT" Margin="0 0 10 0" />
@@ -52,6 +58,7 @@
                             </Button.Content>
                         </Button>
                         <Button Name="ButtonEdit" Uid="3" Width="150" Content="EDIT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" Visibility="Collapsed"/>
+                        <Button Name="ButtonTutorial" Uid="4" Width="150" Content="TUTORIAL" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
                     </StackPanel>
                 </DockPanel>
                 <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="10 0" VerticalAlignment="Bottom"/>

@@ -3,10 +3,12 @@ using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
 using PolyPaint.Services;
+using PolyPaint.Vues;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -53,6 +55,14 @@ namespace PolyPaint.Modeles
                 {
                     this.EditingStroke = null;
                     EditionSocket.UnlockStrokes();
+                    
+                    if (ServerService.instance.isOffline())
+                    {
+                        this.traits.ToList().ForEach(temp =>
+                        {
+                            if (((CustomStroke)temp).isSelected()) ((CustomStroke)temp).Unselect();
+                        });
+                    }
                 }
 
                 this.traits.ToList().FindAll(stroke => stroke is Anchorable).ForEach(stroke =>
@@ -173,16 +183,9 @@ namespace PolyPaint.Modeles
             get { return editingStroke; }
             set
             {
-                Console.WriteLine(">---000---");
-                Console.WriteLine(editingStroke);
-                Console.WriteLine(value);
-                Console.WriteLine("---000---<");
-
                 if (this.editingStroke != null && this.traits.has(this.editingStroke))
                 {
-                    Console.WriteLine("------is");
                     this.traits.get(this.editingStroke).stopEditing();
-                    Console.WriteLine("------is" + this.traits.get(this.editingStroke).isEditing());
                 }
 
                 this.editingStroke = value;
@@ -271,6 +274,14 @@ namespace PolyPaint.Modeles
 
         internal void SelectStrokes(StrokeCollection strokes)
         {
+            if (ServerService.instance.isOffline())
+            {
+                this.traits.ToList().ForEach(temp =>
+                {
+                    if (((CustomStroke)temp).isSelected()) ((CustomStroke)temp).Unselect();
+                });
+            }
+
             if (strokes.Count == 0) return;
 
             this.EditingStroke = null;
@@ -278,8 +289,15 @@ namespace PolyPaint.Modeles
             strokes.ToList().ForEach(stroke =>
             {
                 if (!((CustomStroke)stroke).isSelected() && !((CustomStroke)stroke).isLocked())
+                {
                     toProtect.Add(((CustomStroke)stroke).Id.ToString());
+                    if (ServerService.instance.isOffline())
+                    {
+                        ((CustomStroke)stroke).Select();
+                    }
+                }
             });
+
             EditionSocket.LockStroke(toProtect);
         }
 
@@ -299,9 +317,21 @@ namespace PolyPaint.Modeles
                 }
                 else
                 {
-                    EditionSocket.LockStroke(new List<string>() { stroke.Id.ToString() });
-                    this.EditingStroke = null;
-                    this.waitingEdit = stroke.Id.ToString();
+                    if (ServerService.instance.isOffline())
+                    {
+                        this.traits.ToList().ForEach(temp =>
+                        {
+                            if (((CustomStroke)temp).isSelected()) ((CustomStroke)temp).Unselect();
+                        });
+                        stroke.Select();
+                        this.Edit(stroke);
+                    }
+                    else
+                    {
+                        EditionSocket.LockStroke(new List<string>() { stroke.Id.ToString() });
+                        this.EditingStroke = null;
+                        this.waitingEdit = stroke.Id.ToString();
+                    }
                 }
             }
         }
@@ -363,8 +393,43 @@ namespace PolyPaint.Modeles
             EditionSocket.ClearCanvas();
         }
 
+        internal void Save(byte[] obj)
+        {
+            if (ServerService.instance.isOffline())
+            {
+
+                OfflineFileLoader.saveImage(obj);
+                
+                var tosave = this.traits.ToList().FindAll(stroke => stroke is Savable).ConvertAll<string>(stroke =>
+                {
+                    return ((Savable)stroke).toJson();
+                });
+                OfflineFileLoader.save(tosave);
+            }
+            else
+            {
+                string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
+                Directory.CreateDirectory(path2String);
+                string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
+                
+                File.WriteAllBytes(file, obj);
+
+                var id = ServerService.instance.currentImageId;
+                ServerService.instance.S3Communication.UploadImageAsync(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews", id + ".png"), id + ".png");
+                
+            }
+        }
+
         public void SyncToServer()
         {
+
+
+            if (ServerService.instance.isOffline())
+            {
+                this.Load(OfflineFileLoader.load(ServerService.instance.currentImageId));
+                return;
+            }
+
             ServerService.instance.Socket.Emit("joinImage", ServerService.instance.currentImageId);
 
             ServerService.instance.Socket.On("imageData", new CustomListener((object[] server_params) =>
@@ -388,7 +453,6 @@ namespace PolyPaint.Modeles
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Stroke old = this.traits.get(updated.Id.ToString());
-                    Console.WriteLine(((Savable)updated).toJson());
                     bool selected = ((CustomStroke)old).isSelected();
                     bool editting = ((CustomStroke)old).isEditing();
                     bool locked = ((CustomStroke)old).isLocked();
@@ -437,7 +501,6 @@ namespace PolyPaint.Modeles
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Console.WriteLine(server_params[0]);
                     JArray toRemove = (JArray)server_params[0];
                     toRemove.ToList().ForEach(id =>
                     {
@@ -475,6 +538,17 @@ namespace PolyPaint.Modeles
                     });
                 });
             }));
+        }
+
+        private void Load(List<string> list)
+        {
+            traits.Clear();
+            traitsRetires.Clear();
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                this.traits.Add(SerializationHelper.stringToStroke(JObject.Parse(list[i]), this.traits));
+            }
         }
 
         public void Load(JArray shapeObjects)

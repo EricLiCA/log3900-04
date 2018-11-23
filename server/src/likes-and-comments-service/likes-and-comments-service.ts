@@ -58,10 +58,11 @@ export class LikesAndCommentsService {
             this.users.delete(user);
         });
 
-        user.socket.on('addComment', async (userId: string, comment: string, userName: string) => {
+        user.socket.on('addComment', async (userId: string, comment: string, userName: string, profileImage: string) => {
             const previewedImage = await this.getUserPreviwedImage(user.socket.id);
             const addedComment = await previewedImage.addComment(userId, comment);
             addedComment.UserName = userName;
+            addedComment.ProfileImage = profileImage;
             if (addedComment != undefined) {
                 user.socket.emit('addComment', addedComment);
                 user.socket.to(this.users.get(user)).emit('addComment', addedComment);

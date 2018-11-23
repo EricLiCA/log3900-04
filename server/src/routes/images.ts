@@ -2,40 +2,15 @@ import * as express from 'express';
 import { PostgresDatabase } from '../postgres-database';
 import { DAO } from './dao';
 
-const RANDOM_IMAGE: string = 'https://picsum.photos/300/400/?random';
+const RANDOM_IMAGE: string = 'https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg';
 
 export class ImagesRoute implements DAO {
 
     public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT * FROM Images').then((query) => {
+        db.query('SELECT Images.*, Users."Username" FROM Images INNER JOIN "OwnerId" = Users."Id"').then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows.map((row) => {
-                    return {
-                        id: row.Id,
-                        ownerId: row.OwnerId,
-                        title: row.Title,
-                        protectionLevel: row.ProtectionLevel,
-                        password: row.Password,
-                        thumbnailUrl: row.ThumbnailUrl,
-                        fullImageUrl: row.FullImageUrl,
-                    };
-                }));
-                return;
-            }
-            res.sendStatus(404); // Not found
-        })
-            .catch((err) => {
-                res.sendStatus(400); // Bad request
-            });
-    }
-
-    public async getByOwnerId(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        const db = await PostgresDatabase.getInstance();
-        db.query('SELECT Images.*, Users."Username" FROM Images INNER JOIN Users ON "OwnerId" = Users."Id" where "OwnerId" = $1', [req.params.id]).then((query) => {
-            if (query.rowCount > 0) {
-                res.send(query.rows.map((row) => {
-                    console.log(row);
                     return {
                         id: row.Id,
                         ownerId: row.OwnerId,
@@ -49,7 +24,32 @@ export class ImagesRoute implements DAO {
                 }));
                 return;
             }
-            res.sendStatus(404); // Not found
+            res.send([]);
+        })
+            .catch((err) => {
+                res.sendStatus(400); // Bad request
+            });
+    }
+
+    public async getByOwnerId(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
+        const db = await PostgresDatabase.getInstance();
+        db.query('SELECT Images.*, Users."Username" FROM Images INNER JOIN Users ON "OwnerId" = Users."Id" where "OwnerId" = $1', [req.params.id]).then((query) => {
+            if (query.rowCount > 0) {
+                res.send(query.rows.map((row) => {
+                    return {
+                        id: row.Id,
+                        ownerId: row.OwnerId,
+                        title: row.Title,
+                        protectionLevel: row.ProtectionLevel,
+                        password: row.Password,
+                        thumbnailUrl: row.ThumbnailUrl,
+                        fullImageUrl: row.FullImageUrl,
+                        authorName: row.Username
+                    };
+                }));
+                return;
+            }
+            res.send([]);
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
@@ -74,7 +74,7 @@ export class ImagesRoute implements DAO {
                 }));
                 return;
             }
-            res.sendStatus(404); // Not found
+            res.send([]);
         })
             .catch((err) => {
                 res.sendStatus(400); // Bad request
