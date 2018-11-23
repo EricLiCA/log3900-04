@@ -680,8 +680,6 @@ class DrawViewController: UIViewController {
             self.shapes.removeValue(forKey: uuid)
         }
     }
-
-
     
     func showRelationPopover() {
         self.performSegue(withIdentifier: "toRelationPopover", sender: nil)

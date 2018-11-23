@@ -189,7 +189,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </objects>
-            <point key="canvasLocation" x="-245.3125" y="900.58593749999989"/>
+            <point key="canvasLocation" x="-633" y="904"/>
         </scene>
         <!--Chat-->
         <scene sceneID="tne-QT-ifu">
@@ -200,7 +200,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eoP-gJ-ha8">
-                                <rect key="frame" x="0.0" y="70" width="768" height="908"/>
+                                <rect key="frame" x="0.0" y="70" width="768" height="858"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" id="DVL-uI-Epi">
@@ -214,7 +214,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ml-0N-ERc" userLabel="DockView">
-                                <rect key="frame" x="0.0" y="978" width="768" height="46"/>
+                                <rect key="frame" x="0.0" y="928" width="768" height="46"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Send message" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="K9w-fb-oRX">
                                         <rect key="frame" x="8" y="8" width="752" height="30"/>
@@ -616,7 +616,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="812.5" y="-963.28124999999989"/>
+            <point key="canvasLocation" x="572" y="-836"/>
         </scene>
         <!--Stick Figure View Controller-->
         <scene sceneID="xYI-lh-iJd">
@@ -690,7 +690,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WiJ-i1-fEc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="813" y="-2244"/>
+            <point key="canvasLocation" x="534" y="-2403"/>
         </scene>
         <!--Relation View Controller-->
         <scene sceneID="IBl-pZ-KGH">
@@ -1796,7 +1796,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQ5-CB-Woq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1216" y="-596"/>
+            <point key="canvasLocation" x="1332" y="-627"/>
         </scene>
         <!--Account Settings View Controller-->
         <scene sceneID="NMK-hB-sAV">
@@ -3466,8 +3466,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="IDQ-Qb-zNY"/>
-        <segue reference="Ekb-i3-Z78"/>
+        <segue reference="9fu-Sy-e4b"/>
         <segue reference="sFe-vd-FYf"/>
-        <segue reference="Bkh-DL-s0X"/>
+        <segue reference="M00-kH-IRh"/>
     </inferredMetricsTieBreakers>
 </document>
