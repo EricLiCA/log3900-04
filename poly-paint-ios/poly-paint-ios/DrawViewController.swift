@@ -420,7 +420,7 @@ class DrawViewController: UIViewController {
             self.drawingPlace.addSubview(view)
         }
         
-        else  if shapeType == "USECASE" {
+        else  if shapeType == "USE" {
             let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: notification.userInfo?["useCase"] as! String)
             view.center.x = 0 + view.frame.width/2
             view.center.y = 0 + view.frame.height/2

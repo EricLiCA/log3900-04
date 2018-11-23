@@ -14,7 +14,7 @@ class EllipseView: BasicShapeView {
     
     init(frame: CGRect, color: UIColor, useCase: String) {
         if(useCase != "") {
-            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "USECASE")
+            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "USE")
         } else {
             super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE")
         }
