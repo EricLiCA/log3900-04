@@ -6,6 +6,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -196,6 +197,29 @@ namespace PolyPaint.Vues
             currentGallery.Search.Text = CurrentUserCard.User.username;
             currentGallery.SearchByAuthor.IsSelected = true;
             currentGallery.FilterImages();
+        }
+
+        private void Search_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            FilterUsers();
+        }
+
+        public void FilterUsers()
+        {
+            List<UsersCard> usercards = FriendsContainer.Children.Cast<UsersCard>().ToList();
+            usercards.AddRange(ConnectedUsersContainer.Children.Cast<UsersCard>().ToList());
+            usercards.ForEach(card =>
+            {
+                if (card.User.username.Contains(Search.Text))
+                {
+                    card.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    card.Visibility = Visibility.Collapsed;
+                }
+                return;
+            });
         }
     }
 }
