@@ -13,7 +13,11 @@ class EllipseView: BasicShapeView {
     var labelText: String?
     
     init(frame: CGRect, color: UIColor, useCase: String) {
-        super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE")
+        if(useCase != "") {
+            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "USECASE")
+        } else {
+            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE")
+        }
         self.labelText = useCase
         self.backgroundColor = UIColor.clear
         self.initGestureRecognizers()

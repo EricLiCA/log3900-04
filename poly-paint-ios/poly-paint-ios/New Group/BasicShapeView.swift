@@ -162,8 +162,15 @@ public class BasicShapeView: UIView {
     }
     
     @objc internal func handleDuplicateAction(_ controller: UIMenuController) {
-        let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!, "shapeType": self.shapeType!] as [String : Any]
-        NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+        if(self.shapeType == "USECASE") {
+            let ellipseView = self as! EllipseView
+            let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!, "shapeType": self.shapeType!, "useCase": ellipseView.labelText!] as [String : Any]
+            NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+        } else {
+            let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!, "shapeType": self.shapeType!] as [String : Any]
+            NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+        }
+        
     }
     
     @objc internal func handleEditAction(_ controller: UIMenuController) {

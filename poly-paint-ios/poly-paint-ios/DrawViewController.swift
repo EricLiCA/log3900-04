@@ -419,6 +419,15 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
         }
+        
+        else  if shapeType == "USECASE" {
+            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: notification.userInfo?["useCase"] as! String)
+            view.center.x = 0 + view.frame.width/2
+            view.center.y = 0 + view.frame.height/2
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+        
        self.drawingPlace.layer.sublayers?.popLast()
         self.redrawLayers()
         self.insideCanvas = false
