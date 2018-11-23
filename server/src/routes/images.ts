@@ -8,7 +8,7 @@ export class ImagesRoute implements DAO {
 
     public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT Images.*, Users."Username" FROM Images INNER JOIN "OwnerId" = Users."Id"').then((query) => {
+        db.query('SELECT Images.*, Users."Username" FROM Images INNER JOIN Users ON "OwnerId" = Users."Id"').then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows.map((row) => {
                     return {
