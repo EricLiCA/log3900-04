@@ -166,6 +166,10 @@ public class BasicShapeView: UIView {
             let ellipseView = self as! EllipseView
             let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!, "shapeType": self.shapeType!, "useCase": ellipseView.labelText!] as [String : Any]
             NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+        } else if(self.shapeType == "ACTOR") {
+            let stickFigureView = self as! StickFigureView
+            let shapeData = ["shapeType": self.shapeType!, "actor": stickFigureView.actorName] as [String : Any]
+            NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
         } else {
             let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!, "shapeType": self.shapeType!] as [String : Any]
             NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)

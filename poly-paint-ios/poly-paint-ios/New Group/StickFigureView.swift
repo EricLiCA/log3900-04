@@ -21,7 +21,6 @@ class StickFigureView: BasicShapeView {
         let image = UIImage(named: "StickFigure")
         self.backgroundColor = UIColor(patternImage: image!)
         
-        
     }
     
     // We need to implement init(coder) to avoid compilation errors

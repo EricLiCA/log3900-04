@@ -428,7 +428,15 @@ class DrawViewController: UIViewController {
             self.drawingPlace.addSubview(view)
         }
         
-       self.drawingPlace.layer.sublayers?.popLast()
+        else  if shapeType == "ACTOR" {
+            let view = StickFigureView(actorName: notification.userInfo?["actor"] as! String)
+            view.center.x = 0 + view.frame.width/2
+            view.center.y = 0 + view.frame.height/2
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+        
+        self.drawingPlace.layer.sublayers?.popLast()
         self.redrawLayers()
         self.insideCanvas = false
         
