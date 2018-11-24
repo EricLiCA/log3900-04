@@ -777,10 +777,26 @@ class DrawViewController: UIViewController {
         }
         self.drawingSocketManager.socketIOClient.on("addStroke") { (data, ack) in
             print("received")
-            print(data[1])
-            let shape = data[1] as! [String: AnyObject]
-            print(shape)
-            print("received")
+            print(data)
+            let dataString = data[0] as! [String: AnyObject]
+
+            print(dataString)
+            
+            if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
+                let view = self.imageLoader.parseShapes(shape: dataString)
+                self.shapes[view!.uuid] = view
+                self.drawingPlace.addSubview(view!)
+                
+            }
+                
+            else if(dataString["ShapeType"] as! String == "CLASS"){
+                let classShape = self.imageLoader.parseClass(shape: dataString)!
+                self.shapes[classShape.uuid] = classShape
+                self.drawingPlace.addSubview(classShape)
+            }
+        
+            self.redrawLayers()
+            self.insideCanvas = false
         }
         
         self.drawingSocketManager.socketIOClient.on("removeStroke") { (data, ack) in
