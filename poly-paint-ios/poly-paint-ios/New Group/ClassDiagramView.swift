@@ -126,11 +126,11 @@ public class ClassDiagramView: BasicShapeView {
         
         let shape: [String: Any] = [
             "Content": self.text,
-            "id": self.uuid,
-            "imageid": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
-            "shapetype": self.shapeType!,
-            "index": -1,
-            "shapeinfo": [
+            "Id": self.uuid,
+            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ShapeType": self.shapeType!,
+            "Index": 1,
+            "ShapeInfo": [
                 "Center": [
                     "X": self.center.x,
                     "Y": self.center.y
