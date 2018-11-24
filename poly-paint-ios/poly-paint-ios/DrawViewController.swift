@@ -526,6 +526,18 @@ class DrawViewController: UIViewController {
         self.shapes.removeValue(forKey: uuid)
     }
     
+    @objc func onDeletionLineUndoRedo(_ notification:Notification) {
+        let line = notification.userInfo?["line"] as! Line
+        if let index = self.lines.index(of: line) {
+            self.lines.remove(at: index)
+        }
+    }
+    
+    @objc func onRestoreLineUndoRedo(_ notification:Notification) {
+        let line = notification.userInfo?["line"] as! Line
+        self.lines.append(line)
+    }
+    
     func setUpNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(createClassDiagramAlert), name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(drawLineAlert), name: NSNotification.Name(rawValue: "drawLineAlert"), object: nil)
@@ -539,6 +551,8 @@ class DrawViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(setColorAlert), name: NSNotification.Name(rawValue: "setColorAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(createUseCaseAlert), name: NSNotification.Name(rawValue: "createUseCaseAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(createStickFigureAlert), name: NSNotification.Name(rawValue: "createStickFigureAlert"), object: nil)
+          NotificationCenter.default.addObserver(self, selector: #selector(onRestoreLineUndoRedo(_:)), name: .restoreLineUndoRedo, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onDeletionLineUndoRedo(_:)), name: .deletionLineUndoRedo, object: nil)
     }
     
     @objc func createStickFigureAlert(sender: AnyObject) {

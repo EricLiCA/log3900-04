@@ -17,7 +17,7 @@ public enum Relation {
     case Arrow
 }
 
-public class Line {
+public class Line: Equatable {
     
     var layer: CAShapeLayer?
     var points = [CGPoint]()
@@ -33,6 +33,7 @@ public class Line {
     var hitStartPoint: Int?
     var hitEndPoint: Int?
     var relationAngle = CGFloat(Double.pi / 6)
+    var uuid = NSUUID.init().uuidString.lowercased()
     
     public init(layer: CAShapeLayer, startPoint: CGPoint, endPoint: CGPoint, firstEndRelation: Relation, secondEndRelation: Relation, firstEndTextField: String, secondEndTextField: String) {
         self.points.append(startPoint)
@@ -279,5 +280,9 @@ public class Line {
         }
         
         return CGPoint(x: x, y: y);
+    }
+    
+    static func == (lhs: Line, rhs: Line) -> Bool{
+        return lhs.uuid == rhs.uuid
     }
 }
