@@ -436,6 +436,14 @@ class DrawViewController: UIViewController {
             self.drawingPlace.addSubview(view)
         }
         
+        else if shapeType == "CLASS" {
+            let view = ClassDiagramView(text: notification.userInfo?["text"] as! [String], x: notification.userInfo?["x"] as! CGFloat, y: notification.userInfo?["y"] as! CGFloat, height: notification.userInfo?["height"] as! CGFloat, width: notification.userInfo?["width"] as! CGFloat)
+            view.center.x = 0 + view.frame.width/2
+            view.center.y = 0 + view.frame.height/2
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+        
         self.drawingPlace.layer.sublayers?.popLast()
         self.redrawLayers()
         self.insideCanvas = false
@@ -562,7 +570,7 @@ class DrawViewController: UIViewController {
         let text = self.processText(text: sender.userInfo["text"] as! String)
         
         let rectangle = self.resizeFrame(words: text, x: 100, y: 100, width: 200)
-        let classDiagram = ClassDiagramView(text: text, x:100, y:100, height: Double(rectangle.height), width:200)
+        let classDiagram = ClassDiagramView(text: text, x:100, y:100, height: rectangle.height, width:200)
         self.shapes[classDiagram.uuid] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
     }

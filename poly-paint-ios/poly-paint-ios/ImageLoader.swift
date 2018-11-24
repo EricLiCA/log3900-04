@@ -50,7 +50,7 @@ public struct ImageLoader {
     
     public func parseClass(shape: [String: AnyObject]) -> ClassDiagramView? {
         let center = shape["ShapeInfo"]?["Center"] as! [String: AnyObject]
-        return ClassDiagramView(text: shape["ShapeInfo"]?["Content"] as! [String], x: center["X"] as! Double, y: center["Y"] as! Double, height: shape["ShapeInfo"]?["Height"] as! Double, width:shape["ShapeInfo"]?["Width"] as! Double)
+        return ClassDiagramView(text: shape["ShapeInfo"]?["Content"] as! [String], x: center["X"] as! CGFloat, y: center["Y"] as! CGFloat, height: shape["ShapeInfo"]?["Height"] as! CGFloat, width:shape["ShapeInfo"]?["Width"] as! CGFloat)
         
     }
     

@@ -17,9 +17,9 @@ public class ClassDiagramView: BasicShapeView {
     var x: CGFloat?
     var y: CGFloat?
 
-    init(text: [String], x: Double, y: Double, height: Double, width: Double) {
-        self.x = CGFloat(x)
-        self.y = CGFloat(y)
+    init(text: [String], x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat) {
+        self.x = x
+        self.y = y
         let rectangle = CGRect(x: x, y: y, width: width, height: height)
         super.init(frame: rectangle, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "CLASS")
         self.initGestureRecognizers()

@@ -170,6 +170,10 @@ public class BasicShapeView: UIView {
             let stickFigureView = self as! StickFigureView
             let shapeData = ["shapeType": self.shapeType!, "actor": stickFigureView.actorName] as [String : Any]
             NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+        } else if(self.shapeType == "CLASS") {
+            let classDiagramView = self as! ClassDiagramView
+            let shapeData = ["shapeType": classDiagramView.shapeType!, "text": classDiagramView.text, "x": classDiagramView.x, "y": classDiagramView.y, "height": classDiagramView.frame.height, "width": classDiagramView.frame.width] as [String : Any]
+            NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
         } else {
             let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!, "shapeType": self.shapeType!] as [String : Any]
             NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
