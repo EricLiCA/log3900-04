@@ -324,6 +324,7 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.addSubview(ellipseView)
                 self.useCaseText = ""
                 self.undoRedoManager.alertInsertion(shapeType: ellipseView.shapeType!, frame: ellipseView.frame, color: ellipseView.color!, uuid: ellipseView.uuid)
+                self.drawingSocketManager.addShape(shape: ellipseView)
                 
             } else if(currentShape == Shape.UseCase) {
                 let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: self.useCaseText)
