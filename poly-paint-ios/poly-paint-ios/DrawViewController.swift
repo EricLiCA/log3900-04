@@ -346,6 +346,7 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
             }
+            
             self.drawingPlace.layer.sublayers?.popLast()
             self.redrawLayers()
             self.insideCanvas = false
