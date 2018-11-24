@@ -13,6 +13,7 @@ enum Shape {
     case Ellipse
     case Triangle
     case Line
+    case UseCase
     case None
 }
 
@@ -148,6 +149,12 @@ class DrawViewController: UIViewController {
         self.cancelButton.isEnabled = true
     }
     
+    func useCaseTapped() {
+        self.isUserEditingShape = true
+        self.currentShape = Shape.UseCase
+        self.cancelButton.isEnabled = true
+    }
+    
     func triangleTapped() {
         self.isUserEditingShape = true
         self.currentShape = Shape.Triangle
@@ -221,6 +228,9 @@ class DrawViewController: UIViewController {
                 case .Rectangle:
                     bezier = self.drawRectangle(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
                 case .Ellipse:
+                    bezier = self.drawEllipse(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
+                case .UseCase:
+                    print("usecase")
                     bezier = self.drawEllipse(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
                 case .Triangle:
                     bezier = self.drawTriangle(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
@@ -311,6 +321,13 @@ class DrawViewController: UIViewController {
                 self.undoRedoManager.alertInsertion(shapeType: rectangleView.shapeType!, frame: rectangleView.frame, color: rectangleView.color!, uuid: rectangleView.uuid)
                 
             } else if(currentShape == Shape.Ellipse) {
+                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: "")
+                self.shapes[ellipseView.uuid] = ellipseView
+                self.drawingPlace.addSubview(ellipseView)
+                self.useCaseText = ""
+                self.undoRedoManager.alertInsertion(shapeType: ellipseView.shapeType!, frame: ellipseView.frame, color: ellipseView.color!, uuid: ellipseView.uuid)
+                
+            } else if(currentShape == Shape.UseCase) {
                 let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: self.useCaseText)
                 self.shapes[ellipseView.uuid] = ellipseView
                 self.drawingPlace.addSubview(ellipseView)
@@ -532,7 +549,7 @@ class DrawViewController: UIViewController {
     
     @objc func createUseCaseAlert(sender: AnyObject) {
         self.useCaseText = sender.userInfo["useCase"] as! String
-        self.ellipseTapped()
+        self.useCaseTapped()
     }
     
     @objc func setColorAlert(sender: AnyObject) {
