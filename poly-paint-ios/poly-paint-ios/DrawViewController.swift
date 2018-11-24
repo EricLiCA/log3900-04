@@ -465,6 +465,20 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
         }
+        
+        else  if shapeType == "USE" {
+            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: notification.userInfo?["useCase"] as! String)
+            view.uuid = notification.userInfo?["uuid"] as! String
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+            
+        else  if shapeType == "ACTOR" {
+            let view = StickFigureView(actorName: notification.userInfo?["actor"] as! String)
+            view.uuid = notification.userInfo?["uuid"] as! String
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
         self.drawingPlace.layer.sublayers?.popLast()
         self.redrawLayers()
         self.insideCanvas = false
@@ -545,11 +559,43 @@ class DrawViewController: UIViewController {
     }
     
     @objc func createClassDiagramAlert(sender: AnyObject) {
-        let text = sender.userInfo["text"] as! String
-        let classDiagram = ClassDiagramView(text: processText(text: text ), x:100, y:100, height: 300, width:200)
+        let text = self.processText(text: sender.userInfo["text"] as! String)
+        
+        let rectangle = self.resizeFrame(words: text, x: 100, y: 100, width: 200)
+        let classDiagram = ClassDiagramView(text: text, x:100, y:100, height: Double(rectangle.height), width:200)
         self.shapes[classDiagram.uuid] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
     }
+    
+    func resizeFrame(words: [String], x: CGFloat, y: CGFloat, width: CGFloat) -> CGRect {
+        let height = self.calculateHeight(words: words, width: width)
+        let rectangle = CGRect(x: x, y: y, width: width, height: height)
+        return rectangle
+    }
+    
+    func calculateHeight(words: [String], width: CGFloat) -> CGFloat {
+        var currentHeight = CGFloat(0)
+        for word in words {
+            let label = UILabel(frame: CGRect(x: 5, y: currentHeight, width: width - 5, height: 30))
+            label.contentMode = .scaleToFill
+            label.numberOfLines = 5
+            label.text = word
+            label.lineBreakMode = NSLineBreakMode.byWordWrapping
+            
+            if(currentHeight == CGFloat(0)) {
+                label.textAlignment = NSTextAlignment.center
+            } else {
+                label.sizeToFit()
+            }
+            
+            currentHeight += label.frame.height
+        }
+        
+        currentHeight += 20
+        
+        return currentHeight
+    }
+    
     
     @objc func movedViewAlert(sender: AnyObject) {
         let viewUUID = sender.userInfo["view"] as! String
