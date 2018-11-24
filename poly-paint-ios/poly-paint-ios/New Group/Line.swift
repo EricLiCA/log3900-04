@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-enum Relation {
+public enum Relation {
     case Composition
     case Association
     case Aggregation
@@ -17,7 +17,7 @@ enum Relation {
     case Arrow
 }
 
-class Line {
+public class Line {
     
     var layer: CAShapeLayer?
     var points = [CGPoint]()
@@ -34,7 +34,7 @@ class Line {
     var hitEndPoint: Int?
     var relationAngle = CGFloat(Double.pi / 6)
     
-    init(layer: CAShapeLayer, startPoint: CGPoint, endPoint: CGPoint, firstEndRelation: Relation, secondEndRelation: Relation, firstEndTextField: String, secondEndTextField: String) {
+    public init(layer: CAShapeLayer, startPoint: CGPoint, endPoint: CGPoint, firstEndRelation: Relation, secondEndRelation: Relation, firstEndTextField: String, secondEndTextField: String) {
         self.points.append(startPoint)
         self.points.append(endPoint)
         self.layer = layer
