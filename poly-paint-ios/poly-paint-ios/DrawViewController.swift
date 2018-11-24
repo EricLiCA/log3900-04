@@ -607,6 +607,7 @@ class DrawViewController: UIViewController {
         let classDiagram = ClassDiagramView(text: text, x:100, y:100, height: rectangle.height, width:200)
         self.shapes[classDiagram.uuid] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
+        self.drawingSocketManager.addShape(shape: classDiagram)
     }
     
     func resizeFrame(words: [String], x: CGFloat, y: CGFloat, width: CGFloat) -> CGRect {
