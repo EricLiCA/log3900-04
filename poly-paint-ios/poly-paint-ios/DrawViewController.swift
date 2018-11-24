@@ -13,6 +13,7 @@ enum Shape {
     case Ellipse
     case Triangle
     case Line
+    case UseCase
     case None
 }
 
@@ -148,6 +149,12 @@ class DrawViewController: UIViewController {
         self.cancelButton.isEnabled = true
     }
     
+    func useCaseTapped() {
+        self.isUserEditingShape = true
+        self.currentShape = Shape.UseCase
+        self.cancelButton.isEnabled = true
+    }
+    
     func triangleTapped() {
         self.isUserEditingShape = true
         self.currentShape = Shape.Triangle
@@ -218,6 +225,9 @@ class DrawViewController: UIViewController {
                 case .Rectangle:
                     bezier = self.drawRectangle(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
                 case .Ellipse:
+                    bezier = self.drawEllipse(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
+                case .UseCase:
+                    print("usecase")
                     bezier = self.drawEllipse(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
                 case .Triangle:
                     bezier = self.drawTriangle(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
@@ -309,6 +319,13 @@ class DrawViewController: UIViewController {
                  self.drawingSocketManager.addShape(shape: rectangleView)
                 
             } else if(currentShape == Shape.Ellipse) {
+                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: "")
+                self.shapes[ellipseView.uuid] = ellipseView
+                self.drawingPlace.addSubview(ellipseView)
+                self.useCaseText = ""
+                self.undoRedoManager.alertInsertion(shapeType: ellipseView.shapeType!, frame: ellipseView.frame, color: ellipseView.color!, uuid: ellipseView.uuid)
+                
+            } else if(currentShape == Shape.UseCase) {
                 let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: self.useCaseText)
                 self.shapes[ellipseView.uuid] = ellipseView
                 self.drawingPlace.addSubview(ellipseView)
@@ -429,7 +446,23 @@ class DrawViewController: UIViewController {
             self.drawingPlace.addSubview(view)
         }
         
-       self.drawingPlace.layer.sublayers?.popLast()
+        else  if shapeType == "ACTOR" {
+            let view = StickFigureView(actorName: notification.userInfo?["actor"] as! String)
+            view.center.x = 0 + view.frame.width/2
+            view.center.y = 0 + view.frame.height/2
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+        
+        else if shapeType == "CLASS" {
+            let view = ClassDiagramView(text: notification.userInfo?["text"] as! [String], x: notification.userInfo?["x"] as! CGFloat, y: notification.userInfo?["y"] as! CGFloat, height: notification.userInfo?["height"] as! CGFloat, width: notification.userInfo?["width"] as! CGFloat)
+            view.center.x = 0 + view.frame.width/2
+            view.center.y = 0 + view.frame.height/2
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+        
+        self.drawingPlace.layer.sublayers?.popLast()
         self.redrawLayers()
         self.insideCanvas = false
         
@@ -454,6 +487,20 @@ class DrawViewController: UIViewController {
             
         else  if shapeType == "ELLIPSE" {
             let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: "")
+            view.uuid = notification.userInfo?["uuid"] as! String
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+        
+        else  if shapeType == "USE" {
+            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: notification.userInfo?["useCase"] as! String)
+            view.uuid = notification.userInfo?["uuid"] as! String
+            self.shapes[view.uuid] = view
+            self.drawingPlace.addSubview(view)
+        }
+            
+        else  if shapeType == "ACTOR" {
+            let view = StickFigureView(actorName: notification.userInfo?["actor"] as! String)
             view.uuid = notification.userInfo?["uuid"] as! String
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
@@ -503,7 +550,7 @@ class DrawViewController: UIViewController {
     
     @objc func createUseCaseAlert(sender: AnyObject) {
         self.useCaseText = sender.userInfo["useCase"] as! String
-        self.ellipseTapped()
+        self.useCaseTapped()
     }
     
     @objc func setColorAlert(sender: AnyObject) {
@@ -538,11 +585,43 @@ class DrawViewController: UIViewController {
     }
     
     @objc func createClassDiagramAlert(sender: AnyObject) {
-        let text = sender.userInfo["text"] as! String
-        let classDiagram = ClassDiagramView(text: processText(text: text ), x:100, y:100, height: 300, width:200)
+        let text = self.processText(text: sender.userInfo["text"] as! String)
+        
+        let rectangle = self.resizeFrame(words: text, x: 100, y: 100, width: 200)
+        let classDiagram = ClassDiagramView(text: text, x:100, y:100, height: rectangle.height, width:200)
         self.shapes[classDiagram.uuid] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
     }
+    
+    func resizeFrame(words: [String], x: CGFloat, y: CGFloat, width: CGFloat) -> CGRect {
+        let height = self.calculateHeight(words: words, width: width)
+        let rectangle = CGRect(x: x, y: y, width: width, height: height)
+        return rectangle
+    }
+    
+    func calculateHeight(words: [String], width: CGFloat) -> CGFloat {
+        var currentHeight = CGFloat(0)
+        for word in words {
+            let label = UILabel(frame: CGRect(x: 5, y: currentHeight, width: width - 5, height: 30))
+            label.contentMode = .scaleToFill
+            label.numberOfLines = 5
+            label.text = word
+            label.lineBreakMode = NSLineBreakMode.byWordWrapping
+            
+            if(currentHeight == CGFloat(0)) {
+                label.textAlignment = NSTextAlignment.center
+            } else {
+                label.sizeToFit()
+            }
+            
+            currentHeight += label.frame.height
+        }
+        
+        currentHeight += 20
+        
+        return currentHeight
+    }
+    
     
     @objc func movedViewAlert(sender: AnyObject) {
         let viewUUID = sender.userInfo["view"] as! String
