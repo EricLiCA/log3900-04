@@ -20,6 +20,8 @@
 		A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7335215ADDEF007A854F /* FrontPageViewController.swift */; };
 		A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7337215AE75D007A854F /* ConnectionViewController.swift */; };
 		A78A733A215ED91C007A854F /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7339215ED91C007A854F /* DateTime.swift */; };
+		A7AC4ADC21A882E5009C2F5B /* PublicImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AC4ADB21A882E5009C2F5B /* PublicImagesViewController.swift */; };
+		A7AC4ADE21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AC4ADD21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift */; };
 		A7E542FF219F3CA900261E9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E542FE219F3CA900261E9B /* User.swift */; };
 		A7E54302219F44A200261E9B /* S3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E54301219F44A200261E9B /* S3Service.swift */; };
 		CCA060E9219D151A00B558CA /* UIColorExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060E8219D151A00B558CA /* UIColorExtentions.swift */; };
@@ -91,6 +93,8 @@
 		A78A7335215ADDEF007A854F /* FrontPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontPageViewController.swift; sourceTree = "<group>"; };
 		A78A7337215AE75D007A854F /* ConnectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionViewController.swift; sourceTree = "<group>"; };
 		A78A7339215ED91C007A854F /* DateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTime.swift; sourceTree = "<group>"; };
+		A7AC4ADB21A882E5009C2F5B /* PublicImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicImagesViewController.swift; sourceTree = "<group>"; };
+		A7AC4ADD21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		A7E542FE219F3CA900261E9B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A7E54301219F44A200261E9B /* S3Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3Service.swift; sourceTree = "<group>"; };
 		BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_poly_paint_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,6 +233,8 @@
 				CCA46DB0217815D500DC32EC /* PublicImageCell.swift */,
 				CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */,
 				A7E542FE219F3CA900261E9B /* User.swift */,
+				A7AC4ADB21A882E5009C2F5B /* PublicImagesViewController.swift */,
+				A7AC4ADD21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift */,
 			);
 			path = "poly-paint-ios";
 			sourceTree = "<group>";
@@ -474,12 +480,14 @@
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
 				CFEF506621784173001C93AB /* ProfilePictureViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
+				A7AC4ADE21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift in Sources */,
 				CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */,
 				CCE6BC4D21925DE800C6DF31 /* ColorPickerViewController.swift in Sources */,
 				CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */,
 				CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */,
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
 				CF3DD51F2197A34600A14BAF /* CanevasViewController.swift in Sources */,
+				A7AC4ADC21A882E5009C2F5B /* PublicImagesViewController.swift in Sources */,
 				CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */,
 				A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */,
 				CCA46DAF2177E8AC00DC32EC /* Image.swift in Sources */,
