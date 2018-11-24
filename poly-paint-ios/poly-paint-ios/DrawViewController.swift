@@ -162,7 +162,6 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print(self.shapes)
         self.firstTouch = touches.first?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touches.first?.location(in: self.view))!)
         var lineIndex = 0
@@ -211,9 +210,7 @@ class DrawViewController: UIViewController {
         
         // Shape Editing
         if(isUserEditingShape && self.insideCanvas) {
-            print(self.shapes)
             if(self.drawingPlace.layer.sublayers != nil) { // redraw layers
-                print("CRASH!!!!!!!!!!!!!!!!")
                 self.redrawLayers()
             }
             
@@ -319,6 +316,7 @@ class DrawViewController: UIViewController {
                 self.shapes[rectangleView.uuid] = rectangleView
                 self.drawingPlace.addSubview(rectangleView)
                 self.undoRedoManager.alertInsertion(shapeType: rectangleView.shapeType!, frame: rectangleView.frame, color: rectangleView.color!, uuid: rectangleView.uuid)
+                 self.drawingSocketManager.addShape(shape: rectangleView)
                 
             } else if(currentShape == Shape.Ellipse) {
                 let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: "")
@@ -333,12 +331,14 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.addSubview(ellipseView)
                 self.useCaseText = ""
                 self.undoRedoManager.alertInsertion(shapeType: ellipseView.shapeType!, frame: ellipseView.frame, color: ellipseView.color!, uuid: ellipseView.uuid)
+                 self.drawingSocketManager.addShape(shape: ellipseView)
                 
             } else if(currentShape == Shape.Triangle) {
                 let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor)
                 self.shapes[triangleView.uuid] = triangleView
                 self.drawingPlace.addSubview(triangleView)
                 self.undoRedoManager.alertInsertion(shapeType: triangleView.shapeType!, frame: triangleView.frame, color: triangleView.color!, uuid: triangleView.uuid)
+                 self.drawingSocketManager.addShape(shape: triangleView)
                 
             } else if(currentShape == Shape.Line) {
                 var line = Line(layer: layer, startPoint: self.firstTouch!, endPoint: self.secondTouch!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndLabel!, secondEndTextField: self.secondEndLabel!)
@@ -348,6 +348,7 @@ class DrawViewController: UIViewController {
             self.drawingPlace.layer.sublayers?.popLast()
             self.redrawLayers()
             self.insideCanvas = false
+           
         }
         self.stopDrawing()
     }
@@ -525,6 +526,18 @@ class DrawViewController: UIViewController {
         self.shapes.removeValue(forKey: uuid)
     }
     
+    @objc func onDeletionLineUndoRedo(_ notification:Notification) {
+        let line = notification.userInfo?["line"] as! Line
+        if let index = self.lines.index(of: line) {
+            self.lines.remove(at: index)
+        }
+    }
+    
+    @objc func onRestoreLineUndoRedo(_ notification:Notification) {
+        let line = notification.userInfo?["line"] as! Line
+        self.lines.append(line)
+    }
+    
     func setUpNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(createClassDiagramAlert), name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(drawLineAlert), name: NSNotification.Name(rawValue: "drawLineAlert"), object: nil)
@@ -538,6 +551,8 @@ class DrawViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(setColorAlert), name: NSNotification.Name(rawValue: "setColorAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(createUseCaseAlert), name: NSNotification.Name(rawValue: "createUseCaseAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(createStickFigureAlert), name: NSNotification.Name(rawValue: "createStickFigureAlert"), object: nil)
+          NotificationCenter.default.addObserver(self, selector: #selector(onRestoreLineUndoRedo(_:)), name: .restoreLineUndoRedo, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onDeletionLineUndoRedo(_:)), name: .deletionLineUndoRedo, object: nil)
     }
     
     @objc func createStickFigureAlert(sender: AnyObject) {
@@ -758,7 +773,11 @@ class DrawViewController: UIViewController {
             self.insideCanvas = false
         }
         self.drawingSocketManager.socketIOClient.on("addStroke") { (data, ack) in
+            print("received")
             print(data[1])
+            let shape = data[1] as! [String: AnyObject]
+            print(shape)
+            print("received")
         }
         
         self.drawingSocketManager.socketIOClient.on("removeStroke") { (data, ack) in
