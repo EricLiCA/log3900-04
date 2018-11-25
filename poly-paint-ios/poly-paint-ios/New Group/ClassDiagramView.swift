@@ -129,7 +129,7 @@ public class ClassDiagramView: BasicShapeView {
             "Id": self.uuid,
             "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
             "ShapeType": self.shapeType!,
-            "Index": 1,
+            "Index": self.index,
             "ShapeInfo": [
                 "Content": self.text,
                 "Center": [
