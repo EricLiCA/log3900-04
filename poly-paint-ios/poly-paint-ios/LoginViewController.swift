@@ -66,6 +66,9 @@ class LoginViewController: UIViewController {
                     UserDefaults.standard.set(user, forKey: "username")
                     UserDefaults.standard.set(responseJSON["id"], forKey: "id")
                     UserDefaults.standard.set(responseJSON["token"], forKey: "token")
+                    UserDefaults.standard.set(responseJSON["profileImage"], forKey: "profileImage")
+                    print("PICTURE!")
+                    print(UserDefaults.standard.string(forKey: "profileImage"))
                     self.loginDone()
                 }
             } else {
