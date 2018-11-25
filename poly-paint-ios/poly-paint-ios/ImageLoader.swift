@@ -54,6 +54,11 @@ public struct ImageLoader {
         
     }
     
+    public func parseActor(shape: [String: AnyObject]) -> StickFigureView? {
+        let center = shape["ShapeInfo"]?["Center"] as! [String: AnyObject]
+        return StickFigureView(actorName: shape["ShapeInfo"]?["Content"] as! String, x: center["X"] as! CGFloat, y: center["Y"] as! CGFloat, height: shape["ShapeInfo"]?["Height"] as! CGFloat, width:shape["ShapeInfo"]?["Width"] as! CGFloat, index: shape["Index"] as! Int )
+    }
+    
     public func parseShapes(shape: [String: AnyObject]) ->BasicShapeView? {
         
         let type = shape["ShapeType"] as? String

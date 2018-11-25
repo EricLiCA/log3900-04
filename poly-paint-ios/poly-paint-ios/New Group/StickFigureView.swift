@@ -8,14 +8,14 @@
 
 import UIKit
 
-class StickFigureView: BasicShapeView {
+public class StickFigureView: BasicShapeView {
 
     let defaultHeight: CGFloat = 60
     let defaultWidth: CGFloat = 50
     var actorName = ""
     
-    init(actorName: String, index: Int) {
-        let frame = CGRect(x: 0, y: 0, width: self.defaultWidth, height: self.defaultHeight)
+    init(actorName: String, x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int) {
+        let frame = CGRect(x: x, y: y, width: height, height: width)
         self.actorName = actorName
         super.init(frame: frame, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "ACTOR", index: index)
         let image = UIImage(named: "StickFigure")
@@ -28,7 +28,7 @@ class StickFigureView: BasicShapeView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         
         self.initializeAnchorPoints()
         self.addActorName()

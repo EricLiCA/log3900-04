@@ -19,7 +19,7 @@ enum Shape {
 
 class DrawViewController: UIViewController {
     
-
+    
     @IBOutlet weak var optionsView: UIView!
     @IBOutlet weak var drawingPlace: UIView!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
@@ -105,13 +105,13 @@ class DrawViewController: UIViewController {
     
     func disableEdittingButtons() {
         /*self.deleteButton.alpha = 0.5
-        self.deleteButton.isEnabled = false
-        self.pasteButton.alpha = 0.5
-        self.pasteButton.isEnabled = false
-        self.copyButton.alpha = 0.5
-        self.copyButton.isEnabled = false
-        self.cutButton.alpha = 0.5
-        self.cutButton.isEnabled = false*/
+         self.deleteButton.isEnabled = false
+         self.pasteButton.alpha = 0.5
+         self.pasteButton.isEnabled = false
+         self.copyButton.alpha = 0.5
+         self.copyButton.isEnabled = false
+         self.cutButton.alpha = 0.5
+         self.cutButton.isEnabled = false*/
         self.deleteButton.isHidden = true
         self.pasteButton.isHidden = true
         self.copyButton.isHidden = true
@@ -139,7 +139,7 @@ class DrawViewController: UIViewController {
             self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
         }
     }
-
+    
     func setDrawingPlace() {
         self.drawingPlace.layer.borderWidth = 2
         self.drawingPlace.layer.borderColor = UIColor.black.cgColor
@@ -157,7 +157,7 @@ class DrawViewController: UIViewController {
     override var shouldAutorotate: Bool {
         return true
     }
-
+    
     @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
         self.stopDrawing()
     }
@@ -182,7 +182,7 @@ class DrawViewController: UIViewController {
     }
     
     @IBAction func lineTapped(_ sender: UIButton) {
-
+        
     }
     
     @IBAction func useCaseTapped(_ sender: UIButton) {
@@ -400,7 +400,7 @@ class DrawViewController: UIViewController {
                     }
                 }
             }
-
+            
             
             self.resetLineEditing()
             
@@ -421,7 +421,7 @@ class DrawViewController: UIViewController {
                 self.shapes[rectangleView.uuid] = rectangleView
                 self.drawingPlace.addSubview(rectangleView)
                 self.undoRedoManager.alertInsertion(shape:rectangleView)
-                 self.drawingSocketManager.addShape(shape: rectangleView)
+                self.drawingSocketManager.addShape(shape: rectangleView)
                 
             } else if(currentShape == Shape.Ellipse) {
                 let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: "", index: self.shapes.count + 1)
@@ -437,7 +437,7 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.addSubview(ellipseView)
                 self.useCaseText = ""
                 self.undoRedoManager.alertInsertion(shape:ellipseView)
-                 self.drawingSocketManager.addShape(shape: ellipseView)
+                self.drawingSocketManager.addShape(shape: ellipseView)
                 
             } else if(currentShape == Shape.Triangle) {
                 let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, index: self.shapes.count + 1)
@@ -457,7 +457,7 @@ class DrawViewController: UIViewController {
             self.drawingPlace.layer.sublayers?.popLast()
             self.redrawLayers()
             self.insideCanvas = false
-           
+            
         } else if (self.lassoActive && !self.finishedDrawingLasso) {
             self.selectLassoShapes()
             self.redrawLayers()
@@ -490,7 +490,7 @@ class DrawViewController: UIViewController {
     func selectLassoShapes() {
         for (_, shape) in self.shapes {
             if((self.currentBezierPath?.bounds.contains(shape.frame.origin))!) {
-
+                
                 self.lassoShapes.append(shape.uuid)
                 shape.showAnchorPoints()
             }
@@ -584,10 +584,10 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
-             self.drawingSocketManager.addShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
-        
+            
         else  if shapeType == "USE" {
             let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: notification.userInfo?["useCase"] as! String, index: self.shapes.count + 1)
             view.center.x = 0 + view.frame.width/2
@@ -597,9 +597,9 @@ class DrawViewController: UIViewController {
             self.drawingSocketManager.addShape(shape: view)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
-        
+            
         else  if shapeType == "ACTOR" {
-            let view = StickFigureView(actorName: notification.userInfo?["actor"] as! String, index: self.shapes.count + 1)
+            let view = StickFigureView(actorName: notification.userInfo?["actor"] as! String, x: 0, y:0, height: 60 , width: 50, index: self.shapes.count + 1)
             view.center.x = 0 + view.frame.width/2
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
@@ -607,7 +607,7 @@ class DrawViewController: UIViewController {
             self.drawingSocketManager.addShape(shape: view)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
-        
+            
         else if shapeType == "CLASS" {
             let view = ClassDiagramView(text: notification.userInfo?["text"] as! [String], x: notification.userInfo?["x"] as! CGFloat, y: notification.userInfo?["y"] as! CGFloat, height: notification.userInfo?["height"] as! CGFloat, width: notification.userInfo?["width"] as! CGFloat, index: self.shapes.count + 1)
             view.center.x = 0 + view.frame.width/2
@@ -619,7 +619,7 @@ class DrawViewController: UIViewController {
         }
         
         //self.drawingPlace.layer.sublayers?.popLast()
-       
+        
         //self.insideCanvas = false
         
     }
@@ -651,7 +651,7 @@ class DrawViewController: UIViewController {
             self.drawingSocketManager.editShape(shape: view)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
-        
+            
         else  if shapeType == "USE" {
             let view = shape
             self.shapes[view.uuid] = view
@@ -714,12 +714,12 @@ class DrawViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(setColorAlert), name: NSNotification.Name(rawValue: "setColorAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(createUseCaseAlert), name: NSNotification.Name(rawValue: "createUseCaseAlert"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(createStickFigureAlert), name: NSNotification.Name(rawValue: "createStickFigureAlert"), object: nil)
-          NotificationCenter.default.addObserver(self, selector: #selector(onRestoreLineUndoRedo(_:)), name: .restoreLineUndoRedo, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onRestoreLineUndoRedo(_:)), name: .restoreLineUndoRedo, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onDeletionLineUndoRedo(_:)), name: .deletionLineUndoRedo, object: nil)
     }
     
     @objc func createStickFigureAlert(sender: AnyObject) {
-        let stickFigure = StickFigureView(actorName: sender.userInfo["actorName"] as! String, index: self.shapes.count + 1)
+        let stickFigure = StickFigureView(actorName: sender.userInfo["actorName"] as! String, x: 0, y:0, height: 60 , width: 50,  index: self.shapes.count + 1)
         self.shapes[stickFigure.uuid] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
     }
@@ -807,7 +807,7 @@ class DrawViewController: UIViewController {
             if(line.firstAnchorShapeId == viewUUID) {
                 line.points[0] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.firstAnchorShapeIndex!))!
                 self.drawLine(line: line)
-                    
+                
             } else if(line.secondAnchorShapeId == viewUUID) {
                 line.points[line.points.count - 1] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.secondAnchorShapeIndex!))!
                 self.drawLine(line: line)
@@ -887,16 +887,13 @@ class DrawViewController: UIViewController {
     }
     
     func redrawLayers() {
-      if let sublayers = self.drawingPlace.layer.sublayers {
-        for layer in self.drawingPlace.layer.sublayers! {
+        if let sublayers = self.drawingPlace.layer.sublayers {
+            for layer in self.drawingPlace.layer.sublayers! {
                 self.drawingPlace.layer.sublayers?.popLast()
             }
         }
-
+        
         for (uuid, view) in self.shapes{
-            print("yoooooooewngepingvewipbhpvw")
-            print(uuid)
-            print(view.layer)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
         
@@ -911,8 +908,8 @@ class DrawViewController: UIViewController {
         }
     }
     
-
-
+    
+    
     func resetTouchAnchorPoint() {
         for (key, shape) in self.shapes {
             shape.touchAnchorPoint = false
@@ -960,6 +957,12 @@ class DrawViewController: UIViewController {
                 let classShape = self.imageLoader.parseClass(shape: dataString)!
                 self.shapes[classShape.uuid] = classShape
                 self.drawingPlace.addSubview(classShape)
+            }
+                
+            else if(dataString["ShapeType"] as! String == "ACTOR"){
+                let actorShape = self.imageLoader.parseActor(shape: dataString)!
+                self.shapes[actorShape.uuid] = actorShape
+                self.drawingPlace.addSubview(actorShape)
             }
         }
         
