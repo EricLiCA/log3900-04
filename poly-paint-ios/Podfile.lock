@@ -1,4 +1,7 @@
 PODS:
+  - AWSCore (2.7.2)
+  - AWSS3 (2.7.2):
+    - AWSCore (= 2.7.2)
   - RxCocoa (4.3.1):
     - RxSwift (~> 4.0)
   - RxSwift (4.3.1)
@@ -7,23 +10,28 @@ PODS:
   - Starscream (3.0.5)
 
 DEPENDENCIES:
+  - AWSS3
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
   - Socket.IO-Client-Swift (~> 13.3.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AWSCore
+    - AWSS3
     - RxCocoa
     - RxSwift
     - Socket.IO-Client-Swift
     - Starscream
 
 SPEC CHECKSUMS:
+  AWSCore: 5734e075ffb7470019f85035623adbe0332d7efd
+  AWSS3: eb4f5fbd5b5bb675294f8add5be554436ec6857d
   RxCocoa: 78763c7b07d02455598d9fc3c1ad091a28b73635
   RxSwift: fe0fd770a43acdb7d0a53da411c9b892e69bb6e4
   Socket.IO-Client-Swift: 0afb192a562db90d50e3f7f7421c06925a3f0179
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
 
-PODFILE CHECKSUM: 12662d4c15867a52645f95cfb82ad9819869f407
+PODFILE CHECKSUM: f7ebe316653de9bb1e508a4480547a0bd958247f
 
 COCOAPODS: 1.5.3
