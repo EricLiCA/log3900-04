@@ -515,7 +515,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.addShape(shape: view)
-            self.redrawLayers()
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
             
         else if shapeType == "TRIANGLE" {
@@ -525,9 +525,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.addShape(shape: view)
-            print("TESSSSSSSSSSST")
-            print(view.layer)
-            self.redrawLayers()
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
             
         else  if shapeType == "ELLIPSE" {
@@ -537,7 +535,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
              self.drawingSocketManager.addShape(shape: view)
-            self.redrawLayers()
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
         
         else  if shapeType == "USE" {
@@ -547,7 +545,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.addShape(shape: view)
-            self.redrawLayers()
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
         
         else  if shapeType == "ACTOR" {
@@ -557,7 +555,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.addShape(shape: view)
-            self.redrawLayers()
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
         
         else if shapeType == "CLASS" {
@@ -567,7 +565,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.addShape(shape: view)
-            self.redrawLayers()
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
         
         //self.drawingPlace.layer.sublayers?.popLast()
@@ -585,6 +583,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.editShape(shape: view)
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
             
         else if shapeType == "TRIANGLE" {
@@ -592,6 +591,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.editShape(shape: view)
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
             
         else  if shapeType == "ELLIPSE" {
@@ -599,6 +599,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.editShape(shape: view)
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
         
         else  if shapeType == "USE" {
@@ -606,6 +607,7 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.editShape(shape: view)
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
             
         else  if shapeType == "ACTOR" {
@@ -613,10 +615,9 @@ class DrawViewController: UIViewController {
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.editShape(shape: view)
+            self.drawingPlace.layer.addSublayer(view.layer)
         }
-        self.redrawLayers()
-        self.insideCanvas = false
-        self.stopDrawing()
+        
     }
     
     @objc func onDelete(_ notification:Notification) {
