@@ -88,6 +88,30 @@ class StickFigureView: BasicShapeView {
         }
     }
     
+    override func toShapeObject() -> Data? {
+        
+        let shape: [String: Any] = [
+            
+            "Id": self.uuid,
+            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ShapeType": self.shapeType!,
+            "Index": self.index,
+            "ShapeInfo": [
+                "Content": self.actorName,
+                "Center": [
+                    "X": self.center.x,
+                    "Y": self.center.y
+                ],
+                "Width": self.frame.width,
+                "Height": self.frame.height,
+                "Color": "#FF000000"
+            ]
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+        return jsonData;
+        
+    }
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
