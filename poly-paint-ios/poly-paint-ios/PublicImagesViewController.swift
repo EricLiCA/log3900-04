@@ -11,7 +11,7 @@ import UIKit
 class PublicImagesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var imageCollectionView: UICollectionView!
-    
+    var search = ""
     fileprivate let reuseIdentifier = "PublicImageCell"
     fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0);
     fileprivate var allImages = [Image]();
@@ -66,6 +66,9 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
         self.fetchPublicImages()
         self.searchBar.enablesReturnKeyAutomatically = true
         self.searchBar.delegate = self
+        if self.search != "" {
+            self.searchBar.isHidden = true
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -130,6 +133,13 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
                 DispatchQueue.main.async {
                     
                     self.images = self.allImages
+                    if self.search != "" {
+                        self.images = self.allImages.filter { (image) -> Bool in
+                            image.ownerId?.lowercased().contains(self.search.lowercased()) ?? false || image.title?.lowercased().contains(self.search.lowercased()) ?? false
+                        }
+                        self.searchBar.isHidden = true
+                        self.imageCollectionView.reloadData()
+                    }
                     self.imageCollectionView.reloadData()
                     self.activityIndicator.stopAnimating()
                 }

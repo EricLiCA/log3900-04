@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eoP-gJ-ha8">
-                                <rect key="frame" x="0.0" y="70" width="768" height="858"/>
+                                <rect key="frame" x="0.0" y="70" width="768" height="908"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MessageCell" id="DVL-uI-Epi">
@@ -33,7 +33,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ml-0N-ERc" userLabel="DockView">
-                                <rect key="frame" x="0.0" y="928" width="768" height="46"/>
+                                <rect key="frame" x="0.0" y="978" width="768" height="46"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Send message" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="K9w-fb-oRX">
                                         <rect key="frame" x="8" y="8" width="752" height="30"/>
@@ -729,6 +729,7 @@
                                                             <state key="normal" image="Gallery"/>
                                                             <connections>
                                                                 <action selector="friendGalleryTapped:" destination="Hjb-Hq-Eta" eventType="touchUpInside" id="MNZ-22-IkS"/>
+                                                                <segue destination="rcZ-Yt-Veb" kind="show" identifier="toFriendGallery" id="G8n-Og-bjM"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fb8-Md-X2z">
@@ -2750,7 +2751,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pGk-Pc-EZI">
-                                <rect key="frame" x="0.0" y="126" width="768" height="848"/>
+                                <rect key="frame" x="0.0" y="126" width="768" height="898"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5gL-SU-Ssu">
                                     <size key="itemSize" width="200" height="200"/>
@@ -2807,7 +2808,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCU-Jk-ovq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2319.53125" y="-1392.1875"/>
+            <point key="canvasLocation" x="2284" y="-849"/>
         </scene>
     </scenes>
     <resources>
@@ -2824,7 +2825,8 @@
         <image name="Unfriend" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="G8n-Og-bjM"/>
         <segue reference="IDQ-Qb-zNY"/>
-        <segue reference="M00-kH-IRh"/>
+        <segue reference="Scu-Rl-Q2B"/>
     </inferredMetricsTieBreakers>
 </document>

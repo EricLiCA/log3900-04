@@ -85,6 +85,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         if(segue.identifier == "toAddFriends" || segue.identifier == "toPendingFriendRequests") {
             let destinationViewController: FriendsManagementViewController  = segue.destination as! FriendsManagementViewController
             destinationViewController.segueName = segue.identifier!
+        } else if (segue.identifier == "toFriendGallery") {
+            let destinationViewController = segue.destination as! PublicImagesViewController
+            let button = sender as! UIButton
+            let index = button.tag
+            let username = friends[index].username
+            destinationViewController.search = username
+            print(destinationViewController.search)
         }
     }
     
@@ -111,6 +118,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         })
         
         task.resume()
+        cell.friendGallery.tag = indexPath.row
         return cell
     }
     
