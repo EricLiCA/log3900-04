@@ -82,8 +82,15 @@ class DrawViewController: UIViewController {
         })
         self.navigationItem.title = image?.title!
         self.handleSocketEmits()
-        
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParentViewController {
+            self.drawingSocketManager.requestQuit()
+        }
     }
     
     func setDrawingPlace() {
@@ -802,7 +809,7 @@ class DrawViewController: UIViewController {
     }
     
     func redrawLayers() {
-      if let sublayers = self.drawingPlace.layer.sublayers {
+      /*if let sublayers = self.drawingPlace.layer.sublayers {
         for layer in self.drawingPlace.layer.sublayers! {
                 self.drawingPlace.layer.sublayers?.popLast()
             }
@@ -810,7 +817,7 @@ class DrawViewController: UIViewController {
 
         for (uuid, view) in self.shapes{
             self.drawingPlace.layer.addSublayer(view.layer)
-        }
+        }*/
         
         for line in lines {
             self.drawingPlace.layer.addSublayer(line.layer!)
