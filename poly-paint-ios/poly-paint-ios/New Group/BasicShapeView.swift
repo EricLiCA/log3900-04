@@ -74,15 +74,15 @@ public class BasicShapeView: UIView {
             panGR.setTranslation(.zero, in: self)
             
             if(panGR.state == .ended) {
-                self.hideAnchorPoints()
+                //self.hideAnchorPoints()
             } else if(panGR.state == .began) {
-                self.showAnchorPoints()
+                //self.showAnchorPoints()
             }
             
             let userInfo = ["view": self.uuid] as [String : String]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
         } else {
-            self.hideAnchorPoints()
+            //self.hideAnchorPoints()
         }
     }
     
