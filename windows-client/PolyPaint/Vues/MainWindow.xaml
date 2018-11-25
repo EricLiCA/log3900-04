@@ -58,6 +58,7 @@
                             </Button.Content>
                         </Button>
                         <Button Name="ButtonEdit" Uid="3" Width="150" Content="EDIT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" Visibility="Collapsed"/>
+                        <Button Name="ButtonTutorial" Uid="4" Width="150" Content="TUTORIAL" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
                     </StackPanel>
                 </DockPanel>
                 <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="10 0" VerticalAlignment="Bottom"/>
