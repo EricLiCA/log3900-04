@@ -25,6 +25,7 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var chatButton: UIBarButtonItem!
     @IBOutlet weak var selectedColorButton: UIButton!
+    @IBOutlet weak var lassoButton: UIButton!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -53,6 +54,11 @@ class DrawViewController: UIViewController {
     var pointIndexEditing: Int?
     var drawLineAlerted = false
     var useCaseText = ""
+    // LASSO
+    var lassoActive = false
+    var lassoShapes = [String]()
+    var finishedDrawingLasso = false
+    
     
     // Options View
     var firstEndRelation: Relation?
@@ -132,6 +138,19 @@ class DrawViewController: UIViewController {
     @IBAction func selectedColorTapped(_ sender: UIButton) {
     }
     
+    @IBAction func lassoTapped(_ sender: Any) {
+        if (self.lassoActive) {
+            self.lassoActive = false
+            self.cancelButton.isEnabled = false
+            self.lassoButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            self.unprotectLassoShapes()
+        } else {
+            self.lassoActive = true
+            self.cancelButton.isEnabled = true
+            self.lassoButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        }
+    }
+    
     func selectedColorButtonDefault() {
         self.selectedColorButton.backgroundColor = UIColor.white
         self.selectedColorButton.layer.borderWidth = 3
@@ -162,27 +181,39 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         self.firstTouch = touches.first?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touches.first?.location(in: self.view))!)
         var lineIndex = 0
         
-        for line in self.lines {
-            var hitPointTest = line.hitPointTest(touchPoint: self.firstTouch!)
-            
-            if(hitPointTest != -1) { // editing point in line
-                self.editingPointOnLine(line: line, pointBeingEdited: hitPointTest, lineIndex: lineIndex)
-                if(hitPointTest == 0) { // first end
-                    self.lineBeingEdited?.firstAnchorShapeId = nil
-                    self.lineBeingEdited?.firstAnchorShapeIndex = nil
-                } else if(hitPointTest == ((self.lineBeingEdited?.points.count)! - 1)) { // second end
-                    self.lineBeingEdited?.secondAnchorShapeId = nil
-                    self.lineBeingEdited?.secondAnchorShapeIndex = nil
+        self.hideAllAnchorsNotInLasso()
+        if(!self.lassoActive) {
+            for line in self.lines {
+                var hitPointTest = line.hitPointTest(touchPoint: self.firstTouch!)
+                
+                if(hitPointTest != -1) { // editing point in line
+                    self.editingPointOnLine(line: line, pointBeingEdited: hitPointTest, lineIndex: lineIndex)
+                    if(hitPointTest == 0) { // first end
+                        self.lineBeingEdited?.firstAnchorShapeId = nil
+                        self.lineBeingEdited?.firstAnchorShapeIndex = nil
+                    } else if(hitPointTest == ((self.lineBeingEdited?.points.count)! - 1)) { // second end
+                        self.lineBeingEdited?.secondAnchorShapeId = nil
+                        self.lineBeingEdited?.secondAnchorShapeIndex = nil
+                    }
+                } else if (line.hitTest(touchPoint: self.firstTouch!)) { // adding angle to line
+                    self.editingPointOnLine(line: line, pointBeingEdited: -1, lineIndex: lineIndex)
                 }
-            } else if (line.hitTest(touchPoint: self.firstTouch!)) { // adding angle to line
-                self.editingPointOnLine(line: line, pointBeingEdited: -1, lineIndex: lineIndex)
+                
+                lineIndex += 1
             }
-            
-            lineIndex += 1
+        }
+    }
+    
+    func hideAllAnchorsNotInLasso() {
+        for (key, shape) in self.shapes {
+            if(!lassoShapes.contains(key)) {
+                shape.hideAnchorPoints()
+            }
         }
     }
     
@@ -227,7 +258,6 @@ class DrawViewController: UIViewController {
                 case .Ellipse:
                     bezier = self.drawEllipse(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
                 case .UseCase:
-                    print("usecase")
                     bezier = self.drawEllipse(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
                 case .Triangle:
                     bezier = self.drawTriangle(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
@@ -241,6 +271,23 @@ class DrawViewController: UIViewController {
                 self.addCurrentBezierPathToContext(bezier: bezier)
                 self.addShapeLayer()
             }
+        } else if (self.lassoActive && !self.finishedDrawingLasso) {
+            self.drawingLasso(touches)
+        }
+    }
+    
+    func drawingLasso(_ touches: Set<UITouch>) {
+        if(self.drawingPlace.layer.sublayers != nil) { // redraw layers
+            self.redrawLayers()
+        }
+        
+        for touch in touches {
+            self.secondTouch = touch.location(in: drawingPlace)
+            self.setContext()
+            var bezier = UIBezierPath()
+            bezier = self.drawRectangle(startPoint: self.firstTouch!, secondPoint: self.secondTouch!)
+            self.addCurrentBezierPathToContext(bezier: bezier)
+            self.addShapeLayer()
         }
     }
     
@@ -351,8 +398,39 @@ class DrawViewController: UIViewController {
             self.redrawLayers()
             self.insideCanvas = false
            
+        } else if (self.lassoActive && !self.finishedDrawingLasso) {
+            self.selectLassoShapes()
+            self.redrawLayers()
+            self.protectLassoShapes()
         }
+        
         self.stopDrawing()
+    }
+    
+    // TODO: send to server
+    func protectLassoShapes() {
+        self.finishedDrawingLasso = true
+    }
+    
+    // TODO: send to server
+    func unprotectLassoShapes() {
+        self.finishedDrawingLasso = false
+        for shapeUUID in self.lassoShapes {
+            self.shapes[shapeUUID]?.hideAnchorPoints()
+        }
+        self.finishedDrawingLasso = false
+        self.lassoShapes = [String]()
+    }
+    
+    
+    func selectLassoShapes() {
+        for (_, shape) in self.shapes {
+            if((self.currentBezierPath?.bounds.contains(shape.frame.origin))!) {
+
+                self.lassoShapes.append(shape.uuid)
+                shape.showAnchorPoints()
+            }
+        }
     }
     
     func drawRectangle(startPoint: CGPoint, secondPoint: CGPoint) -> UIBezierPath {
@@ -758,7 +836,6 @@ class DrawViewController: UIViewController {
             for i in 0 ..< dataArray.count {
                 let dataString = dataArray[i] as! [String: AnyObject]
                 
-                print(dataString["ShapeType"]) as? String
                 if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
                     let view = self.imageLoader.parseShapes(shape: dataString)
                     self.shapes[view!.uuid] = view
@@ -776,11 +853,7 @@ class DrawViewController: UIViewController {
             self.insideCanvas = false
         }
         self.drawingSocketManager.socketIOClient.on("addStroke") { (data, ack) in
-            print("received")
-            print(data)
             let dataString = data[0] as! [String: AnyObject]
-
-            print(dataString)
             
             if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
                 let view = self.imageLoader.parseShapes(shape: dataString)
