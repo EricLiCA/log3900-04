@@ -574,30 +574,35 @@ class DrawViewController: UIViewController {
             let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+            self.drawingSocketManager.editShape(shape: view)
         }
             
         else if shapeType == "TRIANGLE" {
             let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+            self.drawingSocketManager.editShape(shape: view)
         }
             
         else  if shapeType == "ELLIPSE" {
             let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+            self.drawingSocketManager.editShape(shape: view)
         }
         
         else  if shapeType == "USE" {
             let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+            self.drawingSocketManager.editShape(shape: view)
         }
             
         else  if shapeType == "ACTOR" {
             let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+            self.drawingSocketManager.editShape(shape: view)
         }
         self.drawingPlace.layer.sublayers?.popLast()
         self.redrawLayers()
@@ -611,6 +616,7 @@ class DrawViewController: UIViewController {
         self.undoRedoManager.alertDeletion(shape: shape!)
         shape?.removeFromSuperview()
         self.shapes.removeValue(forKey: uuid)
+        self.drawingSocketManager.removeShape(shape: shape!)
     }
     
     @objc func onDeletionUndoRedo(_ notification:Notification) {
@@ -618,10 +624,10 @@ class DrawViewController: UIViewController {
         let shape = self.shapes[uuid]
         shape?.removeFromSuperview()
         self.shapes.removeValue(forKey: uuid)
+        self.drawingSocketManager.removeShape(shape: shape!)
     }
     
     @objc func onDeletionLineUndoRedo(_ notification:Notification) {
-        print("yooooooooooooooooooooo")
         let line = notification.userInfo?["line"] as! Line
         if let index = self.lines.index(of: line) {
             self.lines.remove(at: index)
