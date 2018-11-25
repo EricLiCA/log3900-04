@@ -512,6 +512,7 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+            self.drawingSocketManager.editShape(shape: view)
         }
             
         else if shapeType == "TRIANGLE" {
@@ -520,6 +521,7 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+             self.drawingSocketManager.editShape(shape: view)
         }
             
         else  if shapeType == "ELLIPSE" {
@@ -528,6 +530,7 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+             self.drawingSocketManager.editShape(shape: view)
         }
         
         else  if shapeType == "USE" {
@@ -536,6 +539,7 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+            self.drawingSocketManager.editShape(shape: view)
         }
         
         else  if shapeType == "ACTOR" {
@@ -544,6 +548,7 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+            self.drawingSocketManager.editShape(shape: view)
         }
         
         else if shapeType == "CLASS" {
@@ -552,6 +557,7 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
+            self.drawingSocketManager.editShape(shape: view)
         }
         
         self.drawingPlace.layer.sublayers?.popLast()
@@ -878,6 +884,7 @@ class DrawViewController: UIViewController {
                 self.shapes[classShape.uuid] = classShape
                 self.drawingPlace.addSubview(classShape)
             }
+            
         
             self.redrawLayers()
             self.insideCanvas = false

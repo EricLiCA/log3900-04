@@ -22,8 +22,7 @@ class DrawingSocketManager {
     }
     
     public func editShape(shape: BasicShapeView) {
-        let jsonData = (shape.toShapeObject())
-        socketIOClient.emit("editStroke", jsonData!);
+        socketIOClient.emit("editStroke", shape.toShapeObject()!);
     }
     
     public func  requestJoinImage(imageId: String) {
