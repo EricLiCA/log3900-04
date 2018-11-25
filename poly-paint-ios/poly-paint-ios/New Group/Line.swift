@@ -178,6 +178,7 @@ public class Line: Equatable {
         layer.borderWidth = 2
         layer.strokeColor = UIColor.black.cgColor
         self.layer = layer
+        self.select()
     }
     
     func addArrow(start: CGPoint, end: CGPoint, pointerLineLength: CGFloat, arrowAngle: CGFloat, bezier: UIBezierPath) {

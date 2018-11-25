@@ -763,7 +763,7 @@ class DrawViewController: UIViewController {
         let layer = CAShapeLayer()
         layer.path = bezier.cgPath
         layer.borderWidth = 2
-        layer.strokeColor = UIColor.black.cgColor
+        layer.strokeColor = UIColor.green.cgColor
         var line = Line(layer: layer, startPoint: self.startPointOfLine!, endPoint: self.endPointOfLine!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndLabel!, secondEndTextField: self.secondEndLabel!)
         self.startPointView?.hideAnchorPoints()
         self.endPointView?.hideAnchorPoints()
@@ -771,6 +771,7 @@ class DrawViewController: UIViewController {
         line.firstAnchorShapeIndex = self.startAnchorNumber
         line.secondAnchorShapeId = self.endPointView?.uuid
         line.secondAnchorShapeIndex = self.endAnchorNumber
+        line.select()
         self.lines.append(line)
         self.drawingPlace.layer.addSublayer(line.layer!)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
