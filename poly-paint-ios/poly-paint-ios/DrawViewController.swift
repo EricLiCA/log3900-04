@@ -26,6 +26,10 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var chatButton: UIBarButtonItem!
     @IBOutlet weak var selectedColorButton: UIButton!
     @IBOutlet weak var lassoButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var pasteButton: UIButton!
+    @IBOutlet weak var copyButton: UIButton!
+    @IBOutlet weak var cutButton: UIButton!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -54,6 +58,7 @@ class DrawViewController: UIViewController {
     var pointIndexEditing: Int?
     var drawLineAlerted = false
     var useCaseText = ""
+    
     // LASSO
     var lassoActive = false
     var lassoShapes = [String]()
@@ -82,7 +87,47 @@ class DrawViewController: UIViewController {
         })
         self.navigationItem.title = image?.title!
         self.handleSocketEmits()
+        
+        self.disableEdittingButtons()
         // Do any additional setup after loading the view.
+    }
+    
+    func enableEditingButtons() {
+        self.deleteButton.alpha = 1
+        self.deleteButton.isEnabled = true
+        self.pasteButton.alpha = 1
+        self.pasteButton.isEnabled = true
+        self.copyButton.alpha = 1
+        self.copyButton.isEnabled = true
+        self.cutButton.alpha = 1
+        self.cutButton.isEnabled = true
+    }
+    
+    func disableEdittingButtons() {
+        /*self.deleteButton.alpha = 0.5
+        self.deleteButton.isEnabled = false
+        self.pasteButton.alpha = 0.5
+        self.pasteButton.isEnabled = false
+        self.copyButton.alpha = 0.5
+        self.copyButton.isEnabled = false
+        self.cutButton.alpha = 0.5
+        self.cutButton.isEnabled = false*/
+        self.deleteButton.isHidden = true
+        self.pasteButton.isHidden = true
+        self.copyButton.isHidden = true
+        self.cutButton.isHidden = true
+    }
+    
+    @IBAction func deleteTapped(_ sender: UIButton) {
+    }
+    
+    @IBAction func pasteTapped(_ sender: Any) {
+    }
+    
+    @IBAction func copyTapped(_ sender: UIButton) {
+    }
+    
+    @IBAction func cutTapped(_ sender: UIButton) {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -92,9 +137,6 @@ class DrawViewController: UIViewController {
             self.drawingSocketManager.requestQuit()
             self.shapes.removeAll()
                self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
-        }
-    }
-    
     func setDrawingPlace() {
         self.drawingPlace.layer.borderWidth = 2
         self.drawingPlace.layer.borderColor = UIColor.black.cgColor
@@ -214,6 +256,10 @@ class DrawViewController: UIViewController {
                 }
                 
                 lineIndex += 1
+            }
+            
+            if(self.lineBeingEdited == nil) {
+                self.disableEdittingButtons()
             }
         }
     }
@@ -402,6 +448,7 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
                 self.undoRedoManager.alertLineInsertion(line: line)
+                self.selectLine(line: line)
             }
             
             self.drawingPlace.layer.sublayers?.popLast()
@@ -792,7 +839,7 @@ class DrawViewController: UIViewController {
         let layer = CAShapeLayer()
         layer.path = bezier.cgPath
         layer.borderWidth = 2
-        layer.strokeColor = UIColor.black.cgColor
+        layer.strokeColor = UIColor.green.cgColor
         var line = Line(layer: layer, startPoint: self.startPointOfLine!, endPoint: self.endPointOfLine!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndLabel!, secondEndTextField: self.secondEndLabel!)
         self.startPointView?.hideAnchorPoints()
         self.endPointView?.hideAnchorPoints()
@@ -800,6 +847,7 @@ class DrawViewController: UIViewController {
         line.firstAnchorShapeIndex = self.startAnchorNumber
         line.secondAnchorShapeId = self.endPointView?.uuid
         line.secondAnchorShapeIndex = self.endAnchorNumber
+        self.selectLine(line: line)
         self.lines.append(line)
         self.drawingPlace.layer.addSublayer(line.layer!)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "lineDrawnAlert"), object: nil)
@@ -813,6 +861,11 @@ class DrawViewController: UIViewController {
         line.redrawLine()
         self.currentContext = nil
         redrawLayers()
+    }
+    
+    func selectLine(line: Line) {
+        line.select()
+        //self.enableEditingButtons()
     }
     
     func resetLineEndPoints() {

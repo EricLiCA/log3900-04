@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-public enum Relation {
-    case Composition
-    case Association
-    case Aggregation
-    case Inheritance
-    case Arrow
+public enum Relation: String {
+    case Composition = "COMPOSITION"
+    case Association = "ASSOCIATION"
+    case Aggregation = "AGGREGATION"
+    case Inheritance = "INHERITANCE"
+    case Arrow = "ARROW"
 }
 
 public class Line: Equatable {
@@ -135,7 +135,10 @@ public class Line: Equatable {
     func select() {
         self.selected = true
         self.layer?.strokeColor = UIColor.green.cgColor
+        
+        
     }
+
     
     func redrawLine() {
         var bezier = UIBezierPath()
@@ -178,6 +181,7 @@ public class Line: Equatable {
         layer.borderWidth = 2
         layer.strokeColor = UIColor.black.cgColor
         self.layer = layer
+        self.select()
     }
     
     func addArrow(start: CGPoint, end: CGPoint, pointerLineLength: CGFloat, arrowAngle: CGFloat, bezier: UIBezierPath) {
@@ -284,5 +288,34 @@ public class Line: Equatable {
     
     static public func == (lhs: Line, rhs: Line) -> Bool{
         return lhs.uuid == rhs.uuid
+    }
+    
+    func toShapeObject() -> Data? {
+        var pointsArray = [Any]()
+        for point in self.points {
+            pointsArray.append(["X": point.x, "Y": point.y])
+        }
+
+        let shape: [String: Any] = [
+            "Id": self.uuid,
+            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ShapeType": "LINE",
+            "Index": 1,
+            "ShapeInfo": [
+                "Points": pointsArray,
+                "FirstAnchorId": self.firstAnchorShapeId,
+                "FirstAnchorIndex": self.firstAnchorShapeIndex,
+                "SecondAnchorId": self.secondAnchorShapeId,
+                "SecondAnchorIndex": self.secondAnchorShapeIndex,
+                "FirstEndLabel": self.firstEndLabel,
+                "SecondEndLabel": self.secondEndLabel,
+                "FirstEndRelation": self.firstEndRelation?.rawValue,
+                "SecondEndRelation": self.secondEndRelation?.rawValue
+            ]
+        ]
+        
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+        return jsonData
     }
 }
