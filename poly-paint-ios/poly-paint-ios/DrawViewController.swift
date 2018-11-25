@@ -90,6 +90,8 @@ class DrawViewController: UIViewController {
         
         if self.isMovingFromParentViewController {
             self.drawingSocketManager.requestQuit()
+            self.shapes.removeAll()
+               self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
         }
     }
     
@@ -512,7 +514,8 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.editShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view)
+            self.redrawLayers()
         }
             
         else if shapeType == "TRIANGLE" {
@@ -521,7 +524,10 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
-             self.drawingSocketManager.editShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view)
+            print("TESSSSSSSSSSST")
+            print(view.layer)
+            self.redrawLayers()
         }
             
         else  if shapeType == "ELLIPSE" {
@@ -530,7 +536,8 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
-             self.drawingSocketManager.editShape(shape: view)
+             self.drawingSocketManager.addShape(shape: view)
+            self.redrawLayers()
         }
         
         else  if shapeType == "USE" {
@@ -539,7 +546,8 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.editShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view)
+            self.redrawLayers()
         }
         
         else  if shapeType == "ACTOR" {
@@ -548,7 +556,8 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.editShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view)
+            self.redrawLayers()
         }
         
         else if shapeType == "CLASS" {
@@ -557,12 +566,13 @@ class DrawViewController: UIViewController {
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.editShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view)
+            self.redrawLayers()
         }
         
-        self.drawingPlace.layer.sublayers?.popLast()
-        self.redrawLayers()
-        self.insideCanvas = false
+        //self.drawingPlace.layer.sublayers?.popLast()
+       
+        //self.insideCanvas = false
         
     }
     
@@ -604,7 +614,6 @@ class DrawViewController: UIViewController {
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.editShape(shape: view)
         }
-        self.drawingPlace.layer.sublayers?.popLast()
         self.redrawLayers()
         self.insideCanvas = false
         self.stopDrawing()
@@ -821,15 +830,18 @@ class DrawViewController: UIViewController {
     }
     
     func redrawLayers() {
-      /*if let sublayers = self.drawingPlace.layer.sublayers {
+      if let sublayers = self.drawingPlace.layer.sublayers {
         for layer in self.drawingPlace.layer.sublayers! {
                 self.drawingPlace.layer.sublayers?.popLast()
             }
         }
 
         for (uuid, view) in self.shapes{
+            print("yoooooooewngepingvewipbhpvw")
+            print(uuid)
+            print(view.layer)
             self.drawingPlace.layer.addSublayer(view.layer)
-        }*/
+        }
         
         for line in lines {
             self.drawingPlace.layer.addSublayer(line.layer!)
@@ -861,19 +873,21 @@ class DrawViewController: UIViewController {
                 
                 if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
                     let view = self.imageLoader.parseShapes(shape: dataString)
+                    view?.uuid = dataString["Id"] as! String
                     self.shapes[view!.uuid] = view
                     self.drawingPlace.addSubview(view!)
+                    self.redrawLayers()
                     
                 }
                     
                 else if(dataString["ShapeType"] as! String == "CLASS"){
                     let classShape = self.imageLoader.parseClass(shape: dataString)!
+                    classShape.uuid = dataString["Id"] as! String
                     self.shapes[classShape.uuid] = classShape
                     self.drawingPlace.addSubview(classShape)
+                    self.redrawLayers()
                 }
             }
-            self.redrawLayers()
-            self.insideCanvas = false
         }
         self.drawingSocketManager.socketIOClient.on("addStroke") { (data, ack) in
             let dataString = data[0] as! [String: AnyObject]
@@ -890,10 +904,6 @@ class DrawViewController: UIViewController {
                 self.shapes[classShape.uuid] = classShape
                 self.drawingPlace.addSubview(classShape)
             }
-            
-        
-            self.redrawLayers()
-            self.insideCanvas = false
         }
         
         self.drawingSocketManager.socketIOClient.on("removeStroke") { (data, ack) in
