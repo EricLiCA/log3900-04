@@ -103,14 +103,18 @@ class DrawViewController: UIViewController {
     }
     
     func disableEdittingButtons() {
-        self.deleteButton.alpha = 0.5
+        /*self.deleteButton.alpha = 0.5
         self.deleteButton.isEnabled = false
         self.pasteButton.alpha = 0.5
         self.pasteButton.isEnabled = false
         self.copyButton.alpha = 0.5
         self.copyButton.isEnabled = false
         self.cutButton.alpha = 0.5
-        self.cutButton.isEnabled = false
+        self.cutButton.isEnabled = false*/
+        self.deleteButton.isHidden = true
+        self.pasteButton.isHidden = true
+        self.copyButton.isHidden = true
+        self.cutButton.isHidden = true
     }
     
     @IBAction func deleteTapped(_ sender: UIButton) {
@@ -833,7 +837,7 @@ class DrawViewController: UIViewController {
     
     func selectLine(line: Line) {
         line.select()
-        self.enableEditingButtons()
+        //self.enableEditingButtons()
     }
     
     func resetLineEndPoints() {
