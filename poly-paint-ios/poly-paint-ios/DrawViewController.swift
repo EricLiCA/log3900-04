@@ -136,7 +136,10 @@ class DrawViewController: UIViewController {
         if self.isMovingFromParentViewController {
             self.drawingSocketManager.requestQuit()
             self.shapes.removeAll()
-               self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
+            self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
+        }
+    }
+
     func setDrawingPlace() {
         self.drawingPlace.layer.borderWidth = 2
         self.drawingPlace.layer.borderColor = UIColor.black.cgColor
