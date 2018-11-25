@@ -20,7 +20,7 @@ public class BasicShapeView: UIView {
     var index: Int?
     var showAnchors = false
     
-    init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?) {
+    init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?, index: Int) {
         self.shapeType = shapeType
         self.numberOfAnchorPoints = numberOfAnchorPoints - 1;
         super.init(frame: frame)
@@ -28,6 +28,7 @@ public class BasicShapeView: UIView {
         self.backgroundColor = UIColor.blue
         self.setUpNotifications()
         self.color = color
+        self.index = index
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -261,7 +262,7 @@ public class BasicShapeView: UIView {
             "Id": self.uuid,
             "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
             "ShapeType": self.shapeType!,
-            "Index": 1,
+            "Index": self.index,
             "ShapeInfo": [
                 "Center": [
                     "X": self.center.x,

@@ -17,11 +17,11 @@ public class ClassDiagramView: BasicShapeView {
     var x: CGFloat?
     var y: CGFloat?
 
-    init(text: [String], x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat) {
+    init(text: [String], x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int) {
         self.x = x
         self.y = y
         let rectangle = CGRect(x: x, y: y, width: width, height: height)
-        super.init(frame: rectangle, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "CLASS")
+        super.init(frame: rectangle, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "CLASS", index: index)
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.text = text

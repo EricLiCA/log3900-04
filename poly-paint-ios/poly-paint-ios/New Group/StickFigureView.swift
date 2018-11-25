@@ -14,10 +14,10 @@ class StickFigureView: BasicShapeView {
     let defaultWidth: CGFloat = 50
     var actorName = ""
     
-    init(actorName: String) {
+    init(actorName: String, index: Int) {
         let frame = CGRect(x: 0, y: 0, width: self.defaultWidth, height: self.defaultHeight)
         self.actorName = actorName
-        super.init(frame: frame, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "ACTOR")
+        super.init(frame: frame, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "ACTOR", index: index)
         let image = UIImage(named: "StickFigure")
         self.backgroundColor = UIColor(patternImage: image!)
         
