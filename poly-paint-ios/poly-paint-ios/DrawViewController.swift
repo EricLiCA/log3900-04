@@ -392,6 +392,7 @@ class DrawViewController: UIViewController {
                 var line = Line(layer: layer, startPoint: self.firstTouch!, endPoint: self.secondTouch!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndLabel!, secondEndTextField: self.secondEndLabel!)
                 self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
+                self.undoRedoManager.alertLineInsertion(line: line)
             }
             
             self.drawingPlace.layer.sublayers?.popLast()
@@ -607,15 +608,18 @@ class DrawViewController: UIViewController {
     }
     
     @objc func onDeletionLineUndoRedo(_ notification:Notification) {
+        print("yooooooooooooooooooooo")
         let line = notification.userInfo?["line"] as! Line
         if let index = self.lines.index(of: line) {
             self.lines.remove(at: index)
         }
+        self.redrawLayers()
     }
     
     @objc func onRestoreLineUndoRedo(_ notification:Notification) {
         let line = notification.userInfo?["line"] as! Line
         self.lines.append(line)
+        self.redrawLayers()
     }
     
     func setUpNotifications() {
