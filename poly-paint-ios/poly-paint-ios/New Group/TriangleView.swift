@@ -10,8 +10,8 @@ import UIKit
 
 class TriangleView: BasicShapeView {
     
-    init(frame: CGRect, color: UIColor) {
-        super.init(frame: frame, numberOfAnchorPoints: 3, color: color, shapeType: "TRIANGLE")
+    init(frame: CGRect, color: UIColor, index: Int) {
+        super.init(frame: frame, numberOfAnchorPoints: 3, color: color, shapeType: "TRIANGLE", index: index)
         self.backgroundColor = UIColor.clear
         self.initGestureRecognizers()
     }

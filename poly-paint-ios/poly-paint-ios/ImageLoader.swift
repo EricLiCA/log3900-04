@@ -50,7 +50,7 @@ public struct ImageLoader {
     
     public func parseClass(shape: [String: AnyObject]) -> ClassDiagramView? {
         let center = shape["ShapeInfo"]?["Center"] as! [String: AnyObject]
-        return ClassDiagramView(text: shape["ShapeInfo"]?["Content"] as! [String], x: center["X"] as! CGFloat, y: center["Y"] as! CGFloat, height: shape["ShapeInfo"]?["Height"] as! CGFloat, width:shape["ShapeInfo"]?["Width"] as! CGFloat)
+        return ClassDiagramView(text: shape["ShapeInfo"]?["Content"] as! [String], x: center["X"] as! CGFloat, y: center["Y"] as! CGFloat, height: shape["ShapeInfo"]?["Height"] as! CGFloat, width:shape["ShapeInfo"]?["Width"] as! CGFloat, index: shape["Index"] as! Int )
         
     }
     
@@ -60,12 +60,12 @@ public struct ImageLoader {
         print(type!)
         switch type! {
         case "RECTANGLE" :
-            return RectangleView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String))
+            return RectangleView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String), index: shape["Index"] as! Int)
             
         case "ELLIPSE" :
-            return EllipseView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String), useCase: "")
+            return EllipseView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String), useCase: "", index: shape["Index"] as! Int)
         case "TRIANGLE" :
-            return TriangleView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String))
+            return TriangleView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String), index: shape["Index"] as! Int)
             
         default:
             print("error in loading image frame")

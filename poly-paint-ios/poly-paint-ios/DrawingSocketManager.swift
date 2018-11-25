@@ -14,11 +14,6 @@ class DrawingSocketManager {
     var socketIOClient: SocketIOClient = ChatModel.instance.socketIOClient
     
     public func addShape(shape: BasicShapeView) {
-        //print("YOOOOOOOOOOO")
-       // print(shape.toShapeObject()!)
-        if let JSONString = String(data: shape.toShapeObject()!, encoding: String.Encoding.utf8) {
-            print(JSONString)
-        }
         socketIOClient.emit("addStroke", shape.toShapeObject()!);
     }
     
@@ -27,8 +22,7 @@ class DrawingSocketManager {
     }
     
     public func editShape(shape: BasicShapeView) {
-        let jsonData = (shape.toShapeObject())
-        socketIOClient.emit("editStroke", jsonData!);
+        socketIOClient.emit("editStroke", shape.toShapeObject()!);
     }
     
     public func  requestJoinImage(imageId: String) {

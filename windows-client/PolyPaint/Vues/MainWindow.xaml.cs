@@ -14,6 +14,7 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Tutorial tutorial = new Tutorial();
         public Gallery Gallery = new Gallery();
         public Users Users;
         public FenetreDessin FenetreDessin = new FenetreDessin();
@@ -142,6 +143,9 @@ namespace PolyPaint.Vues
                 case 3:
                     GridMain.Content = this.FenetreDessin;
                     GridCursor.Margin = new Thickness(10 + (150 * (index - (ServerService.instance.isOffline() ? 2 : (isDetached ? 1 : 0)))), 0, 0, 0);
+                    break;
+                case 4:
+                    GridMain.Content = this.tutorial;
                     break;
             }
         }
