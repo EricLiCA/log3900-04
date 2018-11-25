@@ -58,7 +58,7 @@ class DrawViewController: UIViewController {
     var lassoActive = false
     var lassoShapes = [String]()
     var finishedDrawingLasso = false
-    
+    var inaccessibleShapes = [String]()
     
     // Options View
     var firstEndRelation: Relation?
@@ -422,6 +422,10 @@ class DrawViewController: UIViewController {
         self.lassoShapes = [String]()
     }
     
+    // TODO: receive from server
+    func setInaccessibleShapes(shapesUUID: [String]) {
+        self.inaccessibleShapes = shapesUUID
+    }
     
     func selectLassoShapes() {
         for (_, shape) in self.shapes {
