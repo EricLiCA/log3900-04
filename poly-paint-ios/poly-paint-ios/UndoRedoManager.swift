@@ -14,17 +14,17 @@ enum Action {
 
 public struct UndoRedoManager {
     
-    private var undoStack = Stack<(String,String,CGRect,UIColor,String)>()
-    private var redoStack = Stack<(String,String,CGRect,UIColor,String)>()
+    private var undoStack = Stack<(String,BasicShapeView)>()
+    private var redoStack = Stack<(String,BasicShapeView)>()
     private var undoLineStack = Stack<(String, Line)>()
     private var redoLineStack = Stack<(String, Line)>()
     
-    public mutating func alertInsertion (shapeType: String, frame: CGRect, color: UIColor, uuid: String) {
-        self.undoStack.push(("INSERTION",shapeType,frame,color, uuid))
+    public mutating func alertInsertion (shape: BasicShapeView) {
+        self.undoStack.push(("INSERTION",shape))
     }
     
-    public mutating func alertDeletion (shapeType: String, frame: CGRect, color: UIColor,uuid: String) {
-        self.undoStack.push(("DELETION",shapeType,frame,color, uuid))
+    public mutating func alertDeletion (shape: BasicShapeView) {
+        self.undoStack.push(("DELETION",shape))
     }
     
     public mutating func alertLineInsertion (line: Line) {
@@ -56,13 +56,13 @@ public struct UndoRedoManager {
             let action = self.undoStack.pop()!
             
             if (action.0 == "INSERTION"){
-                let uuid = ["uuid": action.4] as [String : Any]
+                let uuid = ["uuid": action.1.uuid] as [String : Any]
                 NotificationCenter.default.post(name: .deletionUndoRedo, object: nil, userInfo: uuid)
                 redoStack.push(action)
             }
                 
             else if(action.0 == "DELETION"){
-                let shapeData = ["frame": action.2,  "color": action.3, "shapeType": action.1, "uuid": action.4] as [String : Any]
+                let shapeData = ["shape": action.1] as [String : Any]
                 NotificationCenter.default.post(name: .restoreUndoRedo, object: nil, userInfo: shapeData)
                 redoStack.push(action)
             }
@@ -92,13 +92,13 @@ public struct UndoRedoManager {
             let action = self.redoStack.pop()!
 
             if (action.0 == "INSERTION"){
-                let shapeData = ["frame": action.2,  "color": action.3, "shapeType": action.1 ,"uuid": action.4] as [String : Any]
+                let shapeData = ["shape": action.1] as [String : Any]
                 NotificationCenter.default.post(name: .restoreUndoRedo, object: nil, userInfo: shapeData)
                 undoStack.push(action)
             }
                 
             else if(action.0 == "DELETION"){
-                let uuid = ["uuid": action.4] as [String : Any]
+                let uuid = ["uuid": action.1.uuid] as [String : Any]
                 NotificationCenter.default.post(name: .deletionUndoRedo, object: nil, userInfo: uuid)
                 undoStack.push(action)
             }

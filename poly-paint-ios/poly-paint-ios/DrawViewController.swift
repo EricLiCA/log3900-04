@@ -362,7 +362,7 @@ class DrawViewController: UIViewController {
                 let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, index: self.shapes.count + 1)
                 self.shapes[rectangleView.uuid] = rectangleView
                 self.drawingPlace.addSubview(rectangleView)
-                self.undoRedoManager.alertInsertion(shapeType: rectangleView.shapeType!, frame: rectangleView.frame, color: rectangleView.color!, uuid: rectangleView.uuid)
+                self.undoRedoManager.alertInsertion(shape:rectangleView)
                  self.drawingSocketManager.addShape(shape: rectangleView)
                 
             } else if(currentShape == Shape.Ellipse) {
@@ -370,7 +370,7 @@ class DrawViewController: UIViewController {
                 self.shapes[ellipseView.uuid] = ellipseView
                 self.drawingPlace.addSubview(ellipseView)
                 self.useCaseText = ""
-                self.undoRedoManager.alertInsertion(shapeType: ellipseView.shapeType!, frame: ellipseView.frame, color: ellipseView.color!, uuid: ellipseView.uuid)
+                self.undoRedoManager.alertInsertion(shape:ellipseView)
                 self.drawingSocketManager.addShape(shape: ellipseView)
                 
             } else if(currentShape == Shape.UseCase) {
@@ -378,15 +378,15 @@ class DrawViewController: UIViewController {
                 self.shapes[ellipseView.uuid] = ellipseView
                 self.drawingPlace.addSubview(ellipseView)
                 self.useCaseText = ""
-                self.undoRedoManager.alertInsertion(shapeType: ellipseView.shapeType!, frame: ellipseView.frame, color: ellipseView.color!, uuid: ellipseView.uuid)
+                self.undoRedoManager.alertInsertion(shape:ellipseView)
                  self.drawingSocketManager.addShape(shape: ellipseView)
                 
             } else if(currentShape == Shape.Triangle) {
                 let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, index: self.shapes.count + 1)
                 self.shapes[triangleView.uuid] = triangleView
                 self.drawingPlace.addSubview(triangleView)
-                self.undoRedoManager.alertInsertion(shapeType: triangleView.shapeType!, frame: triangleView.frame, color: triangleView.color!, uuid: triangleView.uuid)
-                 self.drawingSocketManager.addShape(shape: triangleView)
+                self.undoRedoManager.alertInsertion(shape:triangleView)
+                self.drawingSocketManager.addShape(shape: triangleView)
                 
             } else if(currentShape == Shape.Line) {
                 var line = Line(layer: layer, startPoint: self.firstTouch!, endPoint: self.secondTouch!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndLabel!, secondEndTextField: self.secondEndLabel!)
@@ -553,39 +553,35 @@ class DrawViewController: UIViewController {
     }
     
     @objc func onRestoreUndoRedo(_ notification:Notification) {
-        let shapeType = notification.userInfo?["shapeType"] as! String
+        let shape = notification.userInfo?["shape"] as! BasicShapeView
+        let shapeType = shape.shapeType
         
         if shapeType == "RECTANGLE" {
-            let view = RectangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, index: self.shapes.count + 1)
-            view.uuid = notification.userInfo?["uuid"] as! String
+            let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
         }
             
         else if shapeType == "TRIANGLE" {
-            let view = TriangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, index: self.shapes.count + 1)
-            view.uuid = notification.userInfo?["uuid"] as! String
+            let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
         }
             
         else  if shapeType == "ELLIPSE" {
-            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: "", index: self.shapes.count + 1)
-            view.uuid = notification.userInfo?["uuid"] as! String
+            let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
         }
         
         else  if shapeType == "USE" {
-            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: notification.userInfo?["useCase"] as! String, index: self.shapes.count + 1)
-            view.uuid = notification.userInfo?["uuid"] as! String
+            let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
         }
             
         else  if shapeType == "ACTOR" {
-            let view = StickFigureView(actorName: notification.userInfo?["actor"] as! String, index: self.shapes.count + 1)
-            view.uuid = notification.userInfo?["uuid"] as! String
+            let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
         }
@@ -598,7 +594,7 @@ class DrawViewController: UIViewController {
     @objc func onDelete(_ notification:Notification) {
         let uuid = notification.userInfo?["uuid"] as! String
         let shape = self.shapes[uuid]
-        self.undoRedoManager.alertDeletion(shapeType: (shape?.shapeType)!, frame: (shape?.frame)!, color:(shape?.color)!, uuid: uuid)
+        self.undoRedoManager.alertDeletion(shape: shape!)
         shape?.removeFromSuperview()
         self.shapes.removeValue(forKey: uuid)
     }
