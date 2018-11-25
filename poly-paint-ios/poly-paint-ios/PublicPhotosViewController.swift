@@ -25,8 +25,8 @@ final class PublicPhotosViewController: UICollectionViewController {
         else{
             return "http://localhost:3000/v2/imagesPublicExceptMine/" + UUID().uuidString
         }
-        
     }
+    
     func fetchPublicImages() {
         guard let url = URL(string: getPublicImageUrl()) else { return }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
