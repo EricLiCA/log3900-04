@@ -125,12 +125,13 @@ public class ClassDiagramView: BasicShapeView {
     override func toShapeObject() -> Data? {
         
         let shape: [String: Any] = [
-            "Content": self.text,
+            
             "Id": self.uuid,
             "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
             "ShapeType": self.shapeType!,
             "Index": 1,
             "ShapeInfo": [
+                "Content": self.text,
                 "Center": [
                     "X": self.center.x,
                     "Y": self.center.y
