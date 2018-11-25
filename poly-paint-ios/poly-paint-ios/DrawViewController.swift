@@ -917,7 +917,7 @@ class DrawViewController: UIViewController {
     }
     
     func handleSocketEmits() {
-        self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee048")
+        self.drawingSocketManager.requestJoinImage(imageId: "d88caf72-d9dc-494b-bac7-1fbc3886ae68")
         //self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee049")
         self.drawingSocketManager.socketIOClient.on("imageData") { (data, ack) in
             
@@ -941,6 +941,23 @@ class DrawViewController: UIViewController {
                     self.drawingPlace.addSubview(classShape)
                     self.redrawLayers()
                 }
+                
+                else if(dataString["ShapeType"] as! String == "ACTOR"){
+                    let actorShape = self.imageLoader.parseActor(shape: dataString)!
+                    self.shapes[actorShape.uuid] = actorShape
+                    self.drawingPlace.addSubview(actorShape)
+                }
+                    
+                else if(dataString["ShapeType"] as! String == "LINE"){
+                    /* let line = self.imageLoader.parseLine(shape: dataString)!
+                     self.lines[line.uuid] = line
+                     self.drawingPlace.layer.addSublayer(line.layer!)
+                     let labels = line.addLabels()
+                     for label in labels {
+                     self.drawingPlace.addSubview(label)
+                     }*/
+                    
+                }
             }
         }
         self.drawingSocketManager.socketIOClient.on("addStroke") { (data, ack) in
@@ -963,6 +980,17 @@ class DrawViewController: UIViewController {
                 let actorShape = self.imageLoader.parseActor(shape: dataString)!
                 self.shapes[actorShape.uuid] = actorShape
                 self.drawingPlace.addSubview(actorShape)
+            }
+            
+            else if(dataString["ShapeType"] as! String == "LINE"){
+               /* let line = self.imageLoader.parseLine(shape: dataString)!
+                self.lines[line.uuid] = line
+                self.drawingPlace.layer.addSublayer(line.layer!)
+                let labels = line.addLabels()
+                for label in labels {
+                    self.drawingPlace.addSubview(label)
+                }*/
+                
             }
         }
         
