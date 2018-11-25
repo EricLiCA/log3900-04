@@ -135,7 +135,10 @@ public class Line: Equatable {
     func select() {
         self.selected = true
         self.layer?.strokeColor = UIColor.green.cgColor
+        
+        
     }
+
     
     func redrawLine() {
         var bezier = UIBezierPath()
