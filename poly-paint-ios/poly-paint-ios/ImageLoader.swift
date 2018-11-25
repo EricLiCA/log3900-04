@@ -24,7 +24,7 @@ public struct ImageLoader {
             
         case "RECTANGLE" :
             let center = shape["ShapeInfo"]?["Center"] as! [String: AnyObject]
-            return CGRect(origin: CGPoint(x: center["X"] as! Double , y: center["Y"] as! Double), size: CGSize(width: shape["ShapeInfo"]?["Width"] as! Int, height: shape["ShapeInfo"]?["Height"] as! Int))
+            return CGRect(origin: CGPoint(x: center["X"] as! Double , y: center["Y"] as! Double), size: CGSize(width: shape["ShapeInfo"]?["Width"] as! Double, height: shape["ShapeInfo"]?["Height"] as! Double))
             
         case "ELLIPSE" :
             let center = shape["ShapeInfo"]?["Center"] as! [String: AnyObject]

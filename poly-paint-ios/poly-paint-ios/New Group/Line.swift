@@ -282,7 +282,7 @@ public class Line: Equatable {
         return CGPoint(x: x, y: y);
     }
     
-    static func == (lhs: Line, rhs: Line) -> Bool{
+    static public func == (lhs: Line, rhs: Line) -> Bool{
         return lhs.uuid == rhs.uuid
     }
 }

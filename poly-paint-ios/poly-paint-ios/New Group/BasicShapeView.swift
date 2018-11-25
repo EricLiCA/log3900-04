@@ -128,7 +128,6 @@ public class BasicShapeView: UIView {
         }
         
         let menuController = UIMenuController.shared
-        
         guard !menuController.isMenuVisible, gestureView.canBecomeFirstResponder else {
             return
         }
@@ -260,10 +259,10 @@ public class BasicShapeView: UIView {
         
         let shape: [String: Any] = [
             "Id": self.uuid,
-            "Imageid": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
-            "Shapetype": self.shapeType!,
+            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ShapeType": self.shapeType!,
             "Index": 1,
-            "Shapeinfo": [
+            "ShapeInfo": [
                 "Center": [
                     "X": self.center.x,
                     "Y": self.center.y

@@ -324,6 +324,7 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.addSubview(ellipseView)
                 self.useCaseText = ""
                 self.undoRedoManager.alertInsertion(shapeType: ellipseView.shapeType!, frame: ellipseView.frame, color: ellipseView.color!, uuid: ellipseView.uuid)
+                self.drawingSocketManager.addShape(shape: ellipseView)
                 
             } else if(currentShape == Shape.UseCase) {
                 let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: self.useCaseText)
@@ -345,6 +346,7 @@ class DrawViewController: UIViewController {
                 self.drawingPlace.layer.addSublayer(line.layer!)
                 lines.append(line)
             }
+            
             self.drawingPlace.layer.sublayers?.popLast()
             self.redrawLayers()
             self.insideCanvas = false
@@ -605,6 +607,7 @@ class DrawViewController: UIViewController {
         let classDiagram = ClassDiagramView(text: text, x:100, y:100, height: rectangle.height, width:200)
         self.shapes[classDiagram.uuid] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
+        self.drawingSocketManager.addShape(shape: classDiagram)
     }
     
     func resizeFrame(words: [String], x: CGFloat, y: CGFloat, width: CGFloat) -> CGRect {
@@ -774,10 +777,26 @@ class DrawViewController: UIViewController {
         }
         self.drawingSocketManager.socketIOClient.on("addStroke") { (data, ack) in
             print("received")
-            print(data[1])
-            let shape = data[1] as! [String: AnyObject]
-            print(shape)
-            print("received")
+            print(data)
+            let dataString = data[0] as! [String: AnyObject]
+
+            print(dataString)
+            
+            if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
+                let view = self.imageLoader.parseShapes(shape: dataString)
+                self.shapes[view!.uuid] = view
+                self.drawingPlace.addSubview(view!)
+                
+            }
+                
+            else if(dataString["ShapeType"] as! String == "CLASS"){
+                let classShape = self.imageLoader.parseClass(shape: dataString)!
+                self.shapes[classShape.uuid] = classShape
+                self.drawingPlace.addSubview(classShape)
+            }
+        
+            self.redrawLayers()
+            self.insideCanvas = false
         }
         
         self.drawingSocketManager.socketIOClient.on("removeStroke") { (data, ack) in
