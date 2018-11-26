@@ -18,19 +18,22 @@ class MainMenuViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
-            notifications in
-            if notifications == 0 {
-                self.chatButton.image = #imageLiteral(resourceName: "Chat")
-            } else {
-                self.chatButton.image = #imageLiteral(resourceName: "UnreadMessage")
-            }
-        })
+        if (UserDefaults.standard.string(forKey: "id") != nil) {
+            ChatModel.instance.notificationsSubject.asObservable().subscribe(onNext: {
+                notifications in
+                if notifications == 0 {
+                    self.chatButton.image = #imageLiteral(resourceName: "Chat")
+                } else {
+                    self.chatButton.image = #imageLiteral(resourceName: "UnreadMessage")
+                }
+            })
+        }
         self.navigationItem.hidesBackButton = true
         let newBackButton = UIBarButtonItem(title: "Logout", style: UIBarButtonItemStyle.plain, target: self, action: #selector(MainMenuViewController.back(sender:)))
         self.navigationItem.leftBarButtonItem = newBackButton
         self.checkIfAnonymous()
-        print("Set username as \(UserDefaults.standard.string(forKey: "username")!)")
+        if (UserDefaults.standard.string(forKey: "id") != nil) {
+            print("Set username as \(UserDefaults.standard.string(forKey: "username")!)")
             ChatModel.instance.setUsername(username: UserDefaults.standard.string(forKey: "username")!)
         self.setUpNotifications()
         // Do any additional setup after loading the view.
