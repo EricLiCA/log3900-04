@@ -115,7 +115,7 @@ namespace PolyPaint.Modeles
                         userName = data["UserName"],
                         profileImage = data["ProfileImage"]
                     };
-                    this.Comments.Children.Add(new GalleryComment(newComment));
+                    this.Comments.Children.Insert(0, new GalleryComment(newComment));
                     Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
                     currentGallery.CheckOrUncheckLikeButton();
                 });
