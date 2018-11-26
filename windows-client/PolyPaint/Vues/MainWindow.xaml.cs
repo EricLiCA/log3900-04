@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using PolyPaint.DAO;
+using PolyPaint.Modeles;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using PolyPaint.VueModeles;
@@ -14,6 +15,7 @@ namespace PolyPaint.Vues
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Tutorial tutorial = new Tutorial();
         public Gallery Gallery = new Gallery();
         public Users Users;
         public FenetreDessin FenetreDessin = new FenetreDessin();
@@ -90,7 +92,6 @@ namespace PolyPaint.Vues
             else
                 showAttachedChat(null, null);
 
-            InitDialogBox();
             UsersManager.instance.fetchAll();
         }
 
@@ -123,8 +124,8 @@ namespace PolyPaint.Vues
                 case 0:
                     {
                         Gallery.Load();
-                        GridMain.Content = Gallery;
-                        GridCursor.Margin = new Thickness(10, 0, 0, 0);
+                        GoToGallery();
+
                         break;
                     }
                 case 1:
@@ -140,10 +141,24 @@ namespace PolyPaint.Vues
                     GridCursor.Margin = new Thickness(310, 0, 0, 0);
                     break;
                 case 3:
-                    GridMain.Content = this.FenetreDessin;
-                    GridCursor.Margin = new Thickness(10 + (150 * (index - (ServerService.instance.isOffline() ? 2 : (isDetached ? 1 : 0)))), 0, 0, 0);
+                    GoToEditMode(3);
+                    break;
+                case 4:
+                    GridMain.Content = this.tutorial;
                     break;
             }
+        }
+
+        public void GoToGallery()
+        {
+            GridMain.Content = Gallery;
+            GridCursor.Margin = new Thickness(10, 0, 0, 0);
+        }
+
+        public void GoToEditMode(int index)
+        {
+            GridMain.Content = this.FenetreDessin;
+            GridCursor.Margin = new Thickness(10 + (150 * (index - (ServerService.instance.isOffline() ? 2 : (isDetached ? 1 : 0)))), 0, 0, 0);
         }
 
         private void Menu_Change_Avatar_Click(object sender, System.EventArgs e)
@@ -165,24 +180,32 @@ namespace PolyPaint.Vues
 
             if (fileName != null)
             {
-                String avatarLocation = fileName;
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(avatarLocation);
-                bitmap.DecodePixelHeight = 40;
-                bitmap.DecodePixelWidth = 40;
-                bitmap.EndInit();
-                AvatarImage.Source = bitmap;
+                try 
+                {
+                    String avatarLocation = fileName;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(avatarLocation);
+                    bitmap.DecodePixelHeight = 40;
+                    bitmap.DecodePixelWidth = 40;
+                    bitmap.EndInit();
+                    AvatarImage.Source = bitmap;
 
-                ServerService.instance.S3Communication.UploadProfileImageAsync(avatarLocation);
+                    ServerService.instance.S3Communication.UploadProfileImageAsync(avatarLocation);
 
-                Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
-                ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
-                UserDao.Put(ServerService.instance.user);
+                    Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
+                    ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
+                    UserDao.Put(ServerService.instance.user);
+                }
+                catch(Exception exception)
+                {
+                    MessageBox.Show("The image is not valid", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
             }
         }
 
-        private void InitDialogBox()
+        private void ManageProfileButton_Click(object sender, RoutedEventArgs e)
         {
             CurrentProfileName.Text = ServerService.instance.user.username;
             CurrentProfilePassword.Password = ServerService.instance.user.password;
@@ -190,15 +213,23 @@ namespace PolyPaint.Vues
 
         private void ChangeProfileInformationsButton_Click(object sender, System.EventArgs e)
         {
-            ServerService.instance.user.username = CurrentProfileName.Text;
-            ServerService.instance.user.password = CurrentProfilePassword.Password;
-            UserDao.Put(ServerService.instance.user);
+            User userToUpdate = new User()
+            {
+                id = ServerService.instance.user.id,
+                token = ServerService.instance.user.token,
+                password = ServerService.instance.user.password,
+                profileImage = ServerService.instance.user.profileImage,
+                userLevel = ServerService.instance.user.userLevel,
+                username = ServerService.instance.user.username
+            };
+            userToUpdate.username = CurrentProfileName.Text;
+            userToUpdate.password = CurrentProfilePassword.Password;
+            UserDao.Put(userToUpdate);
             ChangeProfileInformationsButton.IsEnabled = false;
         }
 
         private void CloseDialogButton_Click(object sender, RoutedEventArgs e)
         {
-            InitDialogBox();
             ChangeProfileInformationsButton.IsEnabled = false;
         }
 
@@ -219,6 +250,7 @@ namespace PolyPaint.Vues
 
         public void LoadImage(string imageId)
         {
+            GoToEditMode(3);
             FenetreDessin.SaveButton_Click(null, null);
             ServerService.instance.currentImageId = imageId;
             ButtonEdit.Visibility = Visibility.Visible;

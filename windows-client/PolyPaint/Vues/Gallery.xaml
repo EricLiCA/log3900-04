@@ -210,10 +210,10 @@
                         <materialDesign:PackIcon Kind="Magnify" Foreground="{Binding ElementName=Sea, Path=BorderBrush}" Margin="0,0,5,0" />
                         <TextBox x:Name="Search" materialDesign:HintAssist.Hint="Search" Width="300" KeyUp="Search_KeyUp"/>
                         <ComboBox materialDesign:HintAssist.Hint="SearchBy" Name="SearchBy">
-                            <ComboBoxItem IsSelected="True">
+                            <ComboBoxItem Name="SearchByAuthor" IsSelected="True">
                                 Search by author
                             </ComboBoxItem>
-                            <ComboBoxItem>
+                            <ComboBoxItem Name="SearchByName">
                                 Search by image name
                             </ComboBoxItem>
                         </ComboBox>

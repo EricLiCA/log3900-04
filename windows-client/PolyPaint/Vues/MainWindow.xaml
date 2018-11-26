@@ -10,7 +10,7 @@
     <materialDesign:DialogHost x:Name="dialogHost" Canvas.Left="50" Canvas.Top="50" Margin="0">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="16">
-                <TextBlock>Manage your profile informations</TextBlock>
+                <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Top" HorizontalAlignment="Center"> Manage your profile</TextBlock>
                 <StackPanel Margin="10,20" Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
                     <TextBox x:Name="CurrentProfileName" materialDesign:HintAssist.Hint="User Name" Width="300" KeyUp="CurrentProfileInformations_KeyUp"/>
@@ -35,7 +35,7 @@
                     <Button Name="AvatarButton" DockPanel.Dock="Right" Width="40" Height="40" Background="Gray" Margin="15 5" Click="Menu_Change_Avatar_Click" Padding="0">
                         <Image Name="AvatarImage" Source="/PolyPaint;component/Resources/defaultImage.png" Width="40" Height="40"/>
                     </Button>
-                    <Button Name="ManageProfileButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" DockPanel.Dock="Right" FontSize="12" Margin="0,9" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                    <Button Name="ManageProfileButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" DockPanel.Dock="Right" FontSize="12" Margin="0,9" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="ManageProfileButton_Click" >
                         Manage profile
                     </Button>
                     <Button Name="ConnectButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" Margin="15 0" DockPanel.Dock="Right" FontSize="12" Click="ConnectButton_Click">
@@ -58,6 +58,7 @@
                             </Button.Content>
                         </Button>
                         <Button Name="ButtonEdit" Uid="3" Width="150" Content="EDIT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" Visibility="Collapsed"/>
+                        <Button Name="ButtonTutorial" Uid="4" Width="150" Content="TUTORIAL" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
                     </StackPanel>
                 </DockPanel>
                 <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="10 0" VerticalAlignment="Bottom"/>

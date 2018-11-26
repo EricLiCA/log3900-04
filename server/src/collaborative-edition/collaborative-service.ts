@@ -123,6 +123,14 @@ export class CollaborativeService {
             canvas.clear();
         });
 
+        user.socket.on('imageProtectionLevelChanged', async (canvasId: string) => {
+            const usersInCanvas: User[] = await this.getUsersInCanvas(canvasId);
+            usersInCanvas.forEach(userInCanvas => {
+                userInCanvas.socket.emit("kickUser");
+                this.closeConnection(user);
+            });
+        });
+
         user.socket.on('resizeCanvas', async (width: number, height: number) => {
             let canvas = await this.getUserCanvas(user.socket.id);
             canvas.size = new Size(width, height);
