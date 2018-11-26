@@ -169,20 +169,28 @@ namespace PolyPaint.Vues
 
             if (fileName != null)
             {
-                String avatarLocation = fileName;
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(avatarLocation);
-                bitmap.DecodePixelHeight = 40;
-                bitmap.DecodePixelWidth = 40;
-                bitmap.EndInit();
-                AvatarImage.Source = bitmap;
+                try 
+                {
+                    String avatarLocation = fileName;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(avatarLocation);
+                    bitmap.DecodePixelHeight = 40;
+                    bitmap.DecodePixelWidth = 40;
+                    bitmap.EndInit();
+                    AvatarImage.Source = bitmap;
 
-                ServerService.instance.S3Communication.UploadProfileImageAsync(avatarLocation);
+                    ServerService.instance.S3Communication.UploadProfileImageAsync(avatarLocation);
 
-                Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
-                ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
-                UserDao.Put(ServerService.instance.user);
+                    Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
+                    ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
+                    UserDao.Put(ServerService.instance.user);
+                }
+                catch(Exception exception)
+                {
+                    MessageBox.Show("The image is not valid", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
             }
         }
 
