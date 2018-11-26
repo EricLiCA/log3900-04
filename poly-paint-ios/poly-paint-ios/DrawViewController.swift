@@ -133,11 +133,11 @@ class DrawViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if self.isMovingFromParentViewController {
-            self.drawingSocketManager.requestQuit()
+        /*if self.isMovingFromParentViewController {
+            //self.drawingSocketManager.requestQuit()
             self.shapes.removeAll()
             self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
-        }
+        }*/
     }
     
     func setDrawingPlace() {
@@ -419,6 +419,7 @@ class DrawViewController: UIViewController {
             if(currentShape == Shape.Rectangle) {
                 let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, index: self.shapes.count + 1)
                 self.shapes[rectangleView.uuid] = rectangleView
+                print("DEBUGGIN SHAPES \(self.shapes)")
                 self.drawingPlace.addSubview(rectangleView)
                 self.undoRedoManager.alertInsertion(shape:rectangleView)
                 self.drawingSocketManager.addShape(shape: rectangleView)
@@ -809,7 +810,12 @@ class DrawViewController: UIViewController {
                 self.drawLine(line: line)
                 
             } else if(line.secondAnchorShapeId == viewUUID) {
-                line.points[line.points.count - 1] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.secondAnchorShapeIndex!))!
+                let currentShape = self.shapes[viewUUID]!
+                let secondAnchorIndex = line.secondAnchorShapeIndex!
+                let anchorPoint = currentShape.getAnchorPoint(index: secondAnchorIndex)
+                line.points[line.points.count - 1] = anchorPoint
+                
+                //line.points[line.points.count - 1] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.secondAnchorShapeIndex!))!
                 self.drawLine(line: line)
             }
         }
