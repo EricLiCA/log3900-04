@@ -19,7 +19,8 @@ export class ImagesRoute implements DAO {
                         password: row.Password,
                         thumbnailUrl: row.ThumbnailUrl,
                         fullImageUrl: row.FullImageUrl,
-                        authorName: row.Username
+                        authorName: row.Username,
+                        date: row.creationdate
                     };
                 }));
                 return;
@@ -44,7 +45,8 @@ export class ImagesRoute implements DAO {
                         password: row.Password,
                         thumbnailUrl: row.ThumbnailUrl,
                         fullImageUrl: row.FullImageUrl,
-                        authorName: row.Username
+                        authorName: row.Username,
+                        date: row.creationdate
                     };
                 }));
                 return;
@@ -69,7 +71,8 @@ export class ImagesRoute implements DAO {
                         password: row.Password,
                         thumbnailUrl: row.ThumbnailUrl,
                         fullImageUrl: row.FullImageUrl,
-                        authorName: row.Username
+                        authorName: row.Username,
+                        date: row.creationdate
                     };
                 }));
                 return;
@@ -94,6 +97,7 @@ export class ImagesRoute implements DAO {
                     password: result.Password,
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
+                    date: result.creationdate
                 });
                 return;
             }
