@@ -44,9 +44,9 @@ namespace PolyPaint.Modeles
             }
         }
 
-        public void LeaveImage()
+        public void LeavePreviewImage()
         {
-            ServerService.instance.Socket.Emit("leaveImage");
+            ServerService.instance.Socket.Emit("leavePreviewImage");
         }
 
         public void AddComment(string comment)
