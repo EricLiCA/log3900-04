@@ -121,6 +121,14 @@ export class CollaborativeService {
             user.socket.to(this.users.get(user)).emit('clearCanvas');
             canvas.clear();
         });
+
+        user.socket.on('imageProtectionLevelChanged', async (canvasId: string) => {
+            const usersInCanvas: User[] = await this.getUsersInCanvas(canvasId);
+            usersInCanvas.forEach(userInCanvas => {
+                userInCanvas.socket.emit("kickUser");
+                this.closeConnection(user);
+            });
+        });
     }
 
     public async closeConnection(user: User) {
