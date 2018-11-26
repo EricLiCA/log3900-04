@@ -545,7 +545,7 @@ namespace PolyPaint.Modeles
                 {
                     ((MainWindow)Application.Current.MainWindow).Gallery.Load();
                     ((MainWindow)Application.Current.MainWindow).GoToGallery();
-                    ((MainWindow)Application.Current.MainWindow).ButtonEdit.Visibility = Visibility.Collapsed;
+                    ((MainWindow)Application.Current.MainWindow).ButtonEdit.IsEnabled = false;
                 });
             });
         }
