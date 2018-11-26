@@ -45,9 +45,10 @@
                         Disconnect
                     </Button>
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Margin="10 0">
-                        <Button Name="ButtonGallery" Uid="0" Width="150" Content="GALLERY" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
-                        <Button Name="ButtonUsers" Uid="1" Width="150" Content="USERS" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" Visibility="Collapsed"/>
-                        <Button Name="ButtonChat" Uid="2" Width="150" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" Visibility="Collapsed">
+                        <Button Name="ButtonTutorial" Uid="0" Width="150" Content="TUTORIAL" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+                        <Button Name="ButtonGallery" Uid="1" Width="150" Content="GALLERY" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+                        <Button Name="ButtonUsers" Uid="2" Width="150" Content="USERS" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" IsEnabled="False"/>
+                        <Button Name="ButtonChat" Uid="3" Width="150" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" IsEnabled="False">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="CHAT" Margin="0 0 10 0" />
@@ -57,8 +58,7 @@
                                 </StackPanel>
                             </Button.Content>
                         </Button>
-                        <Button Name="ButtonEdit" Uid="3" Width="150" Content="EDIT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" Visibility="Collapsed"/>
-                        <Button Name="ButtonTutorial" Uid="4" Width="150" Content="TUTORIAL" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click"/>
+                        <Button Name="ButtonEdit" Uid="4" Width="150" Content="EDIT" Height="50" Background="Transparent" BorderBrush="Transparent" Foreground="#FF2196F3" Click="Button_Click" IsEnabled="False"/>
                     </StackPanel>
                 </DockPanel>
                 <Grid x:Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" Margin="10 0" VerticalAlignment="Bottom"/>

@@ -68,7 +68,7 @@ export class Canvas {
             this.protections.set(user, [newObject.Id]);
         }
 
-        newObject.Index = this.strokes[this.strokes.length - 1].Index + 1;
+        newObject.Index = (this.strokes.length > 0) ? this.strokes[this.strokes.length - 1].Index + 1 : 1 ;
         this.strokes.push(newObject)
         ShapeObject.post(newObject);
         return newObject;
