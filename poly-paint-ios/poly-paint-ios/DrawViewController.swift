@@ -165,6 +165,7 @@ class DrawViewController: UIViewController {
             view.removeFromSuperview()
         }
         self.drawingPlace.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        self.drawingSocketManager.clearCanvas()
     }
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .landscapeLeft
