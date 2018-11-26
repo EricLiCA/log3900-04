@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using PolyPaint.DAO;
+using PolyPaint.Modeles;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using PolyPaint.VueModeles;
@@ -91,7 +92,6 @@ namespace PolyPaint.Vues
             else
                 showAttachedChat(null, null);
 
-            InitDialogBox();
             UsersManager.instance.fetchAll();
         }
 
@@ -186,7 +186,7 @@ namespace PolyPaint.Vues
             }
         }
 
-        private void InitDialogBox()
+        private void ManageProfileButton_Click(object sender, RoutedEventArgs e)
         {
             CurrentProfileName.Text = ServerService.instance.user.username;
             CurrentProfilePassword.Password = ServerService.instance.user.password;
@@ -194,15 +194,23 @@ namespace PolyPaint.Vues
 
         private void ChangeProfileInformationsButton_Click(object sender, System.EventArgs e)
         {
-            ServerService.instance.user.username = CurrentProfileName.Text;
-            ServerService.instance.user.password = CurrentProfilePassword.Password;
-            UserDao.Put(ServerService.instance.user);
+            User userToUpdate = new User()
+            {
+                id = ServerService.instance.user.id,
+                token = ServerService.instance.user.token,
+                password = ServerService.instance.user.password,
+                profileImage = ServerService.instance.user.profileImage,
+                userLevel = ServerService.instance.user.userLevel,
+                username = ServerService.instance.user.username
+            };
+            userToUpdate.username = CurrentProfileName.Text;
+            userToUpdate.password = CurrentProfilePassword.Password;
+            UserDao.Put(userToUpdate);
             ChangeProfileInformationsButton.IsEnabled = false;
         }
 
         private void CloseDialogButton_Click(object sender, RoutedEventArgs e)
         {
-            InitDialogBox();
             ChangeProfileInformationsButton.IsEnabled = false;
         }
 

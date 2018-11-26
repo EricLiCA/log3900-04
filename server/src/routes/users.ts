@@ -68,6 +68,7 @@ export class UsersRoute {
                     username: user.Username,
                     userLevel: user.UserLevel,
                     profileImage: user.ProfileImage,
+                    password: user.Password
                 });
             }
         });
