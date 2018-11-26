@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
+using PolyPaint.Modeles.Actions;
 using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
 
@@ -110,6 +111,7 @@ namespace PolyPaint.Modeles.Tools
                 strokes.Add(clone);
                 ((CustomStroke)clone).Select();
                 EditionSocket.AddStroke(((Savable)clone).toJson());
+                Editeur.instance.Do(new NewStroke(((CustomStroke)clone).Id.ToString(), ((Savable)clone).toJson()));
             }
             IsDrawing = false;
             this.FirstAnchorPointId = null;

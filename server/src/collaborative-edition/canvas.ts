@@ -1,6 +1,7 @@
 import { ShapeObject } from "../models/Shape-object";
 import { User } from "../connected-users-service.ts/user";
 import { SocketServer } from "../socket-server";
+import { PostgresDatabase } from "../postgres-database";
 
 export class Canvas {
     public id: string;
@@ -13,18 +14,50 @@ export class Canvas {
         this.protections = new Map<User, string[]>();
     }
 
-    public load(): Promise<ShapeObject[]> {
-        return new Promise<ShapeObject[]>((resolve, reject) => {
-            ShapeObject.get(this.id).then(
-                (value: ShapeObject[]) => {
-                    if (value === undefined)
-                        value = [];
+    private _size: Size;
+    get size(): Size {
+        return this._size;
+    }
+    set size(value: Size) {
+        this._size = value;
+        this.updateDb();
+    }
 
-                    this.strokes = value;
-                    resolve(value.sort((a, b) => a.Index - b.Index));
-                },
-                (rejectReason: any) =>  reject(rejectReason)
-            );
+    async updateDb() {
+        const db = await PostgresDatabase.getInstance();
+            db.query(
+                `UPDATE Images SET "width" = ${this.size.width}, "height" = ${this.size.height} WHERE "Id" = '${this.id}' RETURNING *`
+            ).catch((err) => {
+                console.log(err);
+            });
+    }
+
+    public load(): Promise<ShapeObject[]> {
+        return new Promise<ShapeObject[]>(async(resolve, reject) => {
+
+            const db = await PostgresDatabase.getInstance();
+            db.query('SELECT * FROM Images WHERE "Id" = $1', [this.id]).then((query) => {
+                if (query.rowCount > 0) {
+                    this.size = new Size(query.rows[0].width, query.rows[0].height);
+                    
+                    ShapeObject.get(this.id).then(
+                        (value: ShapeObject[]) => {
+                            if (value === undefined)
+                                value = [];
+        
+                            this.strokes = value;
+                            resolve(value.sort((a, b) => a.Index - b.Index));
+                        },
+                        (rejectReason: any) =>  reject(rejectReason)
+                    );
+
+                    return;
+                }
+                reject("image with id " + this.id + " does not exist.");
+            })
+                .catch((err) => {
+                    reject(err) // Bad request
+                });
         });
     }
 
@@ -78,4 +111,8 @@ export class Canvas {
         this.strokes = [];
     }
 
+}
+
+export class Size {
+    constructor(public width: number, public height: number) {}
 }
