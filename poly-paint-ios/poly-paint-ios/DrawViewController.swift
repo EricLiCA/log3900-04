@@ -628,46 +628,13 @@ class DrawViewController: UIViewController {
         let shape = notification.userInfo?["shape"] as! BasicShapeView
         let shapeType = shape.shapeType
         
-        if shapeType == "RECTANGLE" {
+        if (shapeType != "LINE") {
             let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
             self.drawingSocketManager.editShape(shape: view)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
-            
-        else if shapeType == "TRIANGLE" {
-            let view = shape
-            self.shapes[view.uuid] = view
-            self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.editShape(shape: view)
-            self.drawingPlace.layer.addSublayer(view.layer)
-        }
-            
-        else  if shapeType == "ELLIPSE" {
-            let view = shape
-            self.shapes[view.uuid] = view
-            self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.editShape(shape: view)
-            self.drawingPlace.layer.addSublayer(view.layer)
-        }
-            
-        else  if shapeType == "USE" {
-            let view = shape
-            self.shapes[view.uuid] = view
-            self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.editShape(shape: view)
-            self.drawingPlace.layer.addSublayer(view.layer)
-        }
-            
-        else  if shapeType == "ACTOR" {
-            let view = shape
-            self.shapes[view.uuid] = view
-            self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.editShape(shape: view)
-            self.drawingPlace.layer.addSublayer(view.layer)
-        }
-        
     }
     
     @objc func onDelete(_ notification:Notification) {
@@ -768,6 +735,7 @@ class DrawViewController: UIViewController {
         let classDiagram = ClassDiagramView(text: text, x:100, y:100, height: rectangle.height, width:200, index: self.shapes.count + 1)
         self.shapes[classDiagram.uuid] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
+        self.undoRedoManager.alertInsertion(shape: classDiagram)
         self.drawingSocketManager.addShape(shape: classDiagram)
     }
     
