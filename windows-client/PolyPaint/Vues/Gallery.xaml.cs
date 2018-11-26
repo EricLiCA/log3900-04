@@ -139,8 +139,8 @@ namespace PolyPaint.Vues
 
             ImagePreviewRoom.ImageId = CurrentGalleryCard.Image.id;
             ImagePreviewRoom.PreviewImage();
-            
-           
+
+
             if (!ServerService.instance.isOffline())
             {
                 ShareButton.Visibility = CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id ? Visibility.Visible : Visibility.Collapsed;
@@ -189,12 +189,14 @@ namespace PolyPaint.Vues
         {
             if ((bool)LockButton.IsChecked)
             {
+                ServerService.instance.Socket.Emit("imageProtectionLevelChanged", CurrentGalleryCard.Image.id);
                 CurrentGalleryCard.Image.protectionLevel = "private";
             }
             else if (CurrentGalleryCard.Image.password == null || CurrentGalleryCard.Image.password == "")
             {
                 CurrentGalleryCard.Image.protectionLevel = "public";
-            } else
+            }
+            else
             {
                 CurrentGalleryCard.Image.protectionLevel = "protected";
             }
@@ -295,6 +297,7 @@ namespace PolyPaint.Vues
                 }
                 else
                 {
+                    ServerService.instance.Socket.Emit("imageProtectionLevelChanged", CurrentGalleryCard.Image.id);
                     CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
                     CurrentGalleryCard.Image.protectionLevel = "protected";
                 }

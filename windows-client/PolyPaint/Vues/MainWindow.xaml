@@ -35,7 +35,7 @@
                     <Button Name="AvatarButton" DockPanel.Dock="Right" Width="40" Height="40" Background="Gray" Margin="15 5" Click="Menu_Change_Avatar_Click" Padding="0">
                         <Image Name="AvatarImage" Source="/PolyPaint;component/Resources/defaultImage.png" Width="40" Height="40"/>
                     </Button>
-                    <Button Name="ManageProfileButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" DockPanel.Dock="Right" FontSize="12" Margin="0,9" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                    <Button Name="ManageProfileButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" DockPanel.Dock="Right" FontSize="12" Margin="0,9" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Click="ManageProfileButton_Click" >
                         Manage profile
                     </Button>
                     <Button Name="ConnectButton" Style="{StaticResource MaterialDesignRaisedButton}" Width="117" Margin="15 0" DockPanel.Dock="Right" FontSize="12" Click="ConnectButton_Click">

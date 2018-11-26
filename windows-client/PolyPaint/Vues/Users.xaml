@@ -99,18 +99,18 @@
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon  Kind="EyeOff" Height="32" Width="32" VerticalAlignment="Center" />
+                                    <materialDesign:PackIcon  Kind="AccountMultiple" Height="32" Width="32" VerticalAlignment="Center" />
                                     <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}" />
                                 </StackPanel>
                             </DataTemplate>
                         </GroupBox.HeaderTemplate>
                         <WrapPanel x:Name="FriendsContainer" Margin="10"/>
                     </GroupBox>
-                    <GroupBox Name="ConnectedUsersGroupBox" Header="Connected Users"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+                    <GroupBox Name="ConnectedUsersGroupBox" Header="All Users"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon  Kind="Eye" Height="32" Width="32" VerticalAlignment="Center" />
+                                    <materialDesign:PackIcon  Kind="Account" Height="32" Width="32" VerticalAlignment="Center" />
                                     <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}" />
                                 </StackPanel>
                             </DataTemplate>
