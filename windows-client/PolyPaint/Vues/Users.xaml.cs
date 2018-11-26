@@ -6,6 +6,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -178,6 +179,7 @@ namespace PolyPaint.Vues
             {
                 PendingFriendRequestDao.Send(CurrentUserCard.User.id);
                 FriendButton.IsEnabled = false;
+                SentRequests.Add(CurrentUserCard.User.id);
             }
             else
             {
@@ -188,14 +190,36 @@ namespace PolyPaint.Vues
 
         }
 
-        private void AddToChannelButton_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: Add to channel
-        }
-
         private void ViewImagesButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Go to gallery and filter image in order to show currentProfile images
+            Gallery currentGallery = ((MainWindow)Application.Current.MainWindow).Gallery;
+            ((MainWindow)Application.Current.MainWindow).GoToGallery();
+            currentGallery.Search.Text = CurrentUserCard.User.username;
+            currentGallery.SearchByAuthor.IsSelected = true;
+            currentGallery.FilterImages();
+        }
+
+        private void Search_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            FilterUsers();
+        }
+
+        public void FilterUsers()
+        {
+            List<UsersCard> usercards = FriendsContainer.Children.Cast<UsersCard>().ToList();
+            usercards.AddRange(ConnectedUsersContainer.Children.Cast<UsersCard>().ToList());
+            usercards.ForEach(card =>
+            {
+                if (card.User.username.Contains(Search.Text))
+                {
+                    card.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    card.Visibility = Visibility.Collapsed;
+                }
+                return;
+            });
         }
     }
 }

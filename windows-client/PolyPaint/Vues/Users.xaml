@@ -12,7 +12,7 @@
     <materialDesign:DialogHost Canvas.Left="50" Canvas.Top="50" Margin="0">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="16" Width="500" Height="600">
-                <TextBlock>Manage your friend requests</TextBlock>
+                <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Top" HorizontalAlignment="Center"> Manage your friend requests</TextBlock>
                 <ScrollViewer Width="500" Height="500" Margin="0,20">
                     <ItemsControl Name="PendingFriendRequestsContainer">
                         <ItemsControl.ItemTemplate>
@@ -54,22 +54,14 @@
                     </TextBlock>
                 </Expander.Header>
                 <DockPanel Width="676">
-                    <Grid DockPanel.Dock="Top" Height="438">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="269" />
-                            <RowDefinition Height="0*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Image  x:Name="ProfileViewPicture" Stretch="UniformToFill" Margin="1,0,0,286.92" Grid.RowSpan="3" />
-                        <StackPanel Grid.Row="2" Margin="8,114,167,241.92" >
-                            <TextBlock x:Name="ProfileViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <StackPanel DockPanel.Dock="Top" Height="620">
+                        <Image  x:Name="ProfileViewPicture" Height="550" Width="676"/>
+                        <StackPanel Grid.Row="2" >
+                            <TextBlock x:Name="ProfileViewTitle" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" TextTrimming="WordEllipsis"/>
                         </StackPanel>
-                        <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="0,114,8,241.92">
+                        <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="0,-15,0,0">
                             <Button x:Name="ViewImagesButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="View profile images" Margin="0,0,10,0" Click="ViewImagesButton_Click" >
                                 <materialDesign:PackIcon  Kind="Image" Height="24" Width="24" />
-                            </Button>
-                            <Button x:Name="AddToChannelButton"  Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="Add to channel" Margin="0,0,10,0"  Click="AddToChannelButton_Click">
-                                <materialDesign:PackIcon  Kind="Allo" Height="24" Width="24" />
                             </Button>
                             <ToggleButton x:Name="FriendButton" Width="40" Height="40" Margin="0,0,10,0" Click="FriendButton_Click">
                                 <ToggleButton.Style >
@@ -89,32 +81,36 @@
                                     Kind="AccountPlus" />
                             </ToggleButton>
                         </StackPanel>
-                    </Grid>
+                    </StackPanel>
                 </DockPanel>
 
             </Expander>
             <ScrollViewer>
                 <StackPanel>
-                    <Button Name="PendingFriendRequestsButton" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,10,10,10" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" >
+                    <Button Name="PendingFriendRequestsButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,-40" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" >
                         Friend requests
                     </Button>
+                    <StackPanel Margin="10,10,0,10" Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Magnify" Foreground="{Binding ElementName=Sea, Path=BorderBrush}" Margin="0,0,5,0" />
+                        <TextBox x:Name="Search" materialDesign:HintAssist.Hint="Search" Width="300" KeyUp="Search_KeyUp"/>
+                    </StackPanel>
 
                     <GroupBox Name="FriendsGroupBox" Header="Friends"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon  Kind="EyeOff" Height="32" Width="32" VerticalAlignment="Center" />
+                                    <materialDesign:PackIcon  Kind="AccountMultiple" Height="32" Width="32" VerticalAlignment="Center" />
                                     <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}" />
                                 </StackPanel>
                             </DataTemplate>
                         </GroupBox.HeaderTemplate>
                         <WrapPanel x:Name="FriendsContainer" Margin="10"/>
                     </GroupBox>
-                    <GroupBox Name="ConnectedUsersGroupBox" Header="Connected Users"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+                    <GroupBox Name="ConnectedUsersGroupBox" Header="All Users"  Margin="10"   Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
                         <GroupBox.HeaderTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon  Kind="Eye" Height="32" Width="32" VerticalAlignment="Center" />
+                                    <materialDesign:PackIcon  Kind="Account" Height="32" Width="32" VerticalAlignment="Center" />
                                     <TextBlock Margin="8,0,0,0" VerticalAlignment="Center" Style="{StaticResource MaterialDesignSubheadingTextBlock}" Text="{Binding}" />
                                 </StackPanel>
                             </DataTemplate>

@@ -87,7 +87,7 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
     private func getPublicImageURL() -> String {
         let username = UserDefaults.standard.string(forKey: "username")
         let apiURL = "http://localhost:3000/v2/imagesPublicExceptMine/"
-        if (username == "anonymous") {
+        if (username != "anonymous") {
             let id = UserDefaults.standard.string(forKey: "id")!
             return "\(apiURL)\(id)"
         } else {
