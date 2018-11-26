@@ -516,7 +516,7 @@ namespace PolyPaint.Modeles
                     ((CustomStroke)old).stopEditing();
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        this.traits.Remove(old);
+                        this.traits.Remove(this.traits.ToList().Find(stroke => ((CustomStroke)stroke).Id.ToString() == (string)server_params[0]));
                     });
                 });
             }));
