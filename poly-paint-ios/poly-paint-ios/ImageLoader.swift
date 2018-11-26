@@ -60,14 +60,17 @@ public struct ImageLoader {
         return StickFigureView(actorName: actorName[0], x: center["X"] as! CGFloat, y: center["Y"] as! CGFloat, height: shape["ShapeInfo"]?["Height"] as! CGFloat, width:shape["ShapeInfo"]?["Width"] as! CGFloat, index: shape["Index"] as! Int )
     }
     
-    /*public func parseLine(shape: [String: AnyObject]) -> Line? {
-        return Line(layer: <#T##CAShapeLayer#>, startPoint: <#T##CGPoint#>, endPoint: <#T##CGPoint#>, firstEndRelation: <#T##Relation#>, secondEndRelation: <#T##Relation#>, firstEndTextField: <#T##String#>, secondEndTextField: <#T##String#>)
-    }*/
+    public func parseLine(shape: [String: AnyObject]) -> Line? {
+        let points = shape["ShapeInfo"]?["Points"] as! [[String: AnyObject]]
+        let firstPoint = CGPoint (x: points[0]["X"] as! CGFloat, y: points[0]["Y"] as! CGFloat)
+        let secondPoint = CGPoint (x: points[1]["X"] as! CGFloat, y: points[1]["Y"] as! CGFloat)
+        let layer = CAShapeLayer()
+        return Line(layer: layer, startPoint: firstPoint, endPoint: secondPoint, firstEndRelation: Relation(rawValue: shape["ShapeInfo"]?["FirstEndRelation"] as! String)!, secondEndRelation: Relation(rawValue: shape["ShapeInfo"]?["SecondEndRelation"] as! String)!, firstEndTextField: shape["ShapeInfo"]?["FirstEndLabel"] as! String, secondEndTextField: shape["ShapeInfo"]?["SecondEndLabel"] as! String)
+    }
     
     public func parseShapes(shape: [String: AnyObject]) ->BasicShapeView? {
         
         let type = shape["ShapeType"] as? String
-        print(type!)
         switch type! {
         case "RECTANGLE" :
             return RectangleView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String), index: shape["Index"] as! Int)
