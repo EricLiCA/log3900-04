@@ -42,6 +42,8 @@ namespace PolyPaint.Vues
 
             ImageDao.GetByOwnerId();
             ImageDao.GetPublicExceptMine();
+            SearchByAuthor.IsSelected = true;
+            Search.Text = "";
         }
 
         private void RestrictPermissions()
@@ -350,6 +352,11 @@ namespace PolyPaint.Vues
         }
 
         private void Search_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            FilterImages();
+        }
+
+        public void FilterImages()
         {
             List<GalleryCard> gallerycards = PublicImagesContainer.Children.Cast<GalleryCard>().ToList();
             gallerycards.AddRange(MyImagesContainer.Children.Cast<GalleryCard>().ToList());

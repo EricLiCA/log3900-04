@@ -124,8 +124,8 @@ namespace PolyPaint.Vues
                 case 0:
                     {
                         Gallery.Load();
-                        GridMain.Content = Gallery;
-                        GridCursor.Margin = new Thickness(10, 0, 0, 0);
+                        GoToGallery();
+
                         break;
                     }
                 case 1:
@@ -141,13 +141,24 @@ namespace PolyPaint.Vues
                     GridCursor.Margin = new Thickness(310, 0, 0, 0);
                     break;
                 case 3:
-                    GridMain.Content = this.FenetreDessin;
-                    GridCursor.Margin = new Thickness(10 + (150 * (index - (ServerService.instance.isOffline() ? 2 : (isDetached ? 1 : 0)))), 0, 0, 0);
+                    GoToEditMode(3);
                     break;
                 case 4:
                     GridMain.Content = this.tutorial;
                     break;
             }
+        }
+
+        public void GoToGallery()
+        {
+            GridMain.Content = Gallery;
+            GridCursor.Margin = new Thickness(10, 0, 0, 0);
+        }
+
+        public void GoToEditMode(int index)
+        {
+            GridMain.Content = this.FenetreDessin;
+            GridCursor.Margin = new Thickness(10 + (150 * (index - (ServerService.instance.isOffline() ? 2 : (isDetached ? 1 : 0)))), 0, 0, 0);
         }
 
         private void Menu_Change_Avatar_Click(object sender, System.EventArgs e)
@@ -239,6 +250,7 @@ namespace PolyPaint.Vues
 
         public void LoadImage(string imageId)
         {
+            GoToEditMode(3);
             FenetreDessin.SaveButton_Click(null, null);
             ServerService.instance.currentImageId = imageId;
             ButtonEdit.Visibility = Visibility.Visible;

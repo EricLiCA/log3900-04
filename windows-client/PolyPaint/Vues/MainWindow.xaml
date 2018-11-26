@@ -10,7 +10,7 @@
     <materialDesign:DialogHost x:Name="dialogHost" Canvas.Left="50" Canvas.Top="50" Margin="0">
         <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="16">
-                <TextBlock>Manage your profile informations</TextBlock>
+                <TextBlock Style="{StaticResource MaterialDesignHeadlineTextBlock}" VerticalAlignment="Top" HorizontalAlignment="Center"> Manage your profile</TextBlock>
                 <StackPanel Margin="10,20" Orientation="Horizontal">
                     <materialDesign:PackIcon Kind="Account" Foreground="{Binding ElementName=CurrentProfileName, Path=BorderBrush}" Margin="0,0,5,0" />
                     <TextBox x:Name="CurrentProfileName" materialDesign:HintAssist.Hint="User Name" Width="300" KeyUp="CurrentProfileInformations_KeyUp"/>
