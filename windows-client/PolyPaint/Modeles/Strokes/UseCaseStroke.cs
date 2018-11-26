@@ -79,6 +79,42 @@ namespace PolyPaint.Modeles.Strokes
 
         public override StrokeType StrokeType() => Strokes.StrokeType.USE;
 
+        public static List<string> toServerStyle(List<string> content)
+        {
+            List<string> returnList = new List<string>() { "" };
+            for (int index = 0; index < content.Count; index++)
+            {
+                if (content[index] == "--")
+                {
+                    returnList.Add("");
+                } else
+                {
+                    if (returnList.Last() != "")
+                        returnList[returnList.Count - 1] += "\\n";
+
+                    returnList[returnList.Count - 1] += content[index];
+                }
+            }
+            return returnList;
+        }
+
+        public static List<string> fromServerStyle(List<string> content)
+        {
+            List<string> returnList = new List<string>() {};
+            for (int index = 0; index < content.Count; index++)
+            {
+                if (returnList.Count > 0)
+                    returnList.Add("--");
+
+                if (content[index] == "") continue;
+
+                var sections = content[index].Split(new[] { "\\n" }, StringSplitOptions.None);
+                for (int i = 0; i < sections.Length; i++)
+                    returnList.Add(sections[i]);
+            }
+            return returnList;
+        }
+
         public override ShapeInfo GetShapeInfo()
         {
             return new TextableShapeInfo
@@ -86,7 +122,7 @@ namespace PolyPaint.Modeles.Strokes
                 Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y },
                 Height = this.Height,
                 Width = this.Width,
-                Content  = this.textContent,
+                Content  = toServerStyle( this.textContent ),
                 Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
             };
         }
