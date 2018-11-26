@@ -37,6 +37,7 @@ class MainMenuViewController: UIViewController {
             ChatModel.instance.setUsername(username: UserDefaults.standard.string(forKey: "username")!)
         self.setUpNotifications()
         // Do any additional setup after loading the view.
+        }
     }
 
     override func didReceiveMemoryWarning() {
