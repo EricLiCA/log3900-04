@@ -533,7 +533,9 @@ namespace PolyPaint.Modeles
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    _CanvasSize = new Size(int.Parse(server_params[0].ToString()), int.Parse(server_params[1].ToString()));
+                    int x = int.Parse(server_params[0].ToString().Split(new char[] { ',', '.' })[0]);
+                    int y = int.Parse(server_params[1].ToString().Split(new char[] { ',', '.' })[0]);
+                    _CanvasSize = new Size(x, y);
                     ProprieteModifiee("CanvasSize");
                 });
             }));
