@@ -617,11 +617,6 @@ class DrawViewController: UIViewController {
             self.drawingSocketManager.addShape(shape: view)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
-        
-        //self.drawingPlace.layer.sublayers?.popLast()
-        
-        //self.insideCanvas = false
-        
     }
     
     @objc func onRestoreUndoRedo(_ notification:Notification) {
@@ -632,7 +627,7 @@ class DrawViewController: UIViewController {
             let view = shape
             self.shapes[view.uuid] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.editShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
     }
@@ -660,12 +655,14 @@ class DrawViewController: UIViewController {
             self.lines.remove(at: index)
         }
         self.redrawLayers()
+        self.drawingSocketManager.removeLine(shape: line)
     }
     
     @objc func onRestoreLineUndoRedo(_ notification:Notification) {
         let line = notification.userInfo?["line"] as! Line
         self.lines.append(line)
         self.redrawLayers()
+        self.drawingSocketManager.addLine(shape: line)
     }
     
     func setUpNotifications() {
