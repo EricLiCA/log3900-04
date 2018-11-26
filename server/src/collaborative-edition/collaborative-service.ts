@@ -55,6 +55,7 @@ export class CollaborativeService {
             
             if (canvas != undefined) {
                 user.socket.leave(canvas.id);
+                canvas.removeProtections(user);
                 //Tel clients user left
             }
 
