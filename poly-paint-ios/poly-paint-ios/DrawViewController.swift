@@ -135,8 +135,6 @@ class DrawViewController: UIViewController {
         
         if self.isMovingFromParentViewController {
             self.drawingSocketManager.requestQuit()
-            self.shapes.removeAll()
-            self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
         }
     }
     
@@ -149,7 +147,25 @@ class DrawViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
+    @IBAction func resetTapped(_ sender: Any) {
+        let alert = UIAlertController(title: "Warning", message: "Resetting the image will erase all shapes", preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style:  UIAlertAction.Style.cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Continue", style: UIAlertAction.Style.default,handler: { action in
+            self.deleteAllShapes()
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
     
+    func deleteAllShapes() {
+        self.shapes.removeAll()
+        self.lines.removeAll()
+        for view in self.drawingPlace.subviews {
+            view.removeFromSuperview()
+        }
+        self.drawingPlace.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+    }
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .landscapeLeft
     }
@@ -906,7 +922,7 @@ class DrawViewController: UIViewController {
                     self.drawingPlace.addSubview(classShape)
                     self.redrawLayers()
                 }
-                
+                    
                 else if(dataString["ShapeType"] as! String == "ACTOR"){
                     let actorShape = self.imageLoader.parseActor(shape: dataString)!
                     self.shapes[actorShape.uuid] = actorShape
@@ -914,13 +930,13 @@ class DrawViewController: UIViewController {
                 }
                     
                 else if(dataString["ShapeType"] as! String == "LINE"){
-                     let line = self.imageLoader.parseLine(shape: dataString)!
-                     self.lines.append(line)
-                     self.drawingPlace.layer.addSublayer(line.layer!)
-                     let labels = line.addLabels()
-                     for label in labels {
-                     self.drawingPlace.addSubview(label)
-                     }
+                    let line = self.imageLoader.parseLine(shape: dataString)!
+                    self.lines.append(line)
+                    self.drawingPlace.layer.addSublayer(line.layer!)
+                    let labels = line.addLabels()
+                    for label in labels {
+                        self.drawingPlace.addSubview(label)
+                    }
                     
                 }
             }
@@ -946,7 +962,7 @@ class DrawViewController: UIViewController {
                 self.shapes[actorShape.uuid] = actorShape
                 self.drawingPlace.addSubview(actorShape)
             }
-            
+                
             else if(dataString["ShapeType"] as! String == "LINE"){
                 let line = self.imageLoader.parseLine(shape: dataString)!
                 self.lines.append(line)
