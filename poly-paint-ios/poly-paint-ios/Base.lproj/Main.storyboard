@@ -1074,9 +1074,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i0a-2l-wuc">
-                                <rect key="frame" x="0.0" y="62" width="768" height="879"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="i0a-2l-wuc">
+                                <rect key="frame" x="0.0" y="78" width="768" height="863"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qr4-ec-deY">
@@ -1100,6 +1099,12 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="i0a-2l-wuc" firstAttribute="leading" secondItem="Is7-h1-ww2" secondAttribute="leading" id="Mtd-Jl-QKi"/>
+                            <constraint firstItem="Is7-h1-ww2" firstAttribute="trailing" secondItem="i0a-2l-wuc" secondAttribute="trailing" id="Teu-pS-gWB"/>
+                            <constraint firstItem="Is7-h1-ww2" firstAttribute="bottom" secondItem="i0a-2l-wuc" secondAttribute="bottom" constant="83" id="b2s-Nk-74P"/>
+                            <constraint firstItem="i0a-2l-wuc" firstAttribute="top" secondItem="Is7-h1-ww2" secondAttribute="top" constant="8" id="baM-Po-4Vs"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Is7-h1-ww2"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="Xq9-dy-yf8">
@@ -1120,7 +1125,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAa-l9-Bnp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3035" y="-270"/>
+            <point key="canvasLocation" x="3034.375" y="-270.1171875"/>
         </scene>
         <!--Protected Image Password View Controller-->
         <scene sceneID="E42-QH-oSh">

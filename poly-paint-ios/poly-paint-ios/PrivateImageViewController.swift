@@ -29,6 +29,15 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
         })
         alertController.addAction(openEditorAction)
         
+        let copyURLAction = UIAlertAction(title: "Copy URL", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            UIPasteboard.general.string = self.image!.fullImageUrl!
+            let alert = UIAlertController(title: "URL copied to clipboard", message: nil, preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default,handler: { action in
+            }))
+            self.present(alert, animated: true, completion: nil)
+        })
+        alertController.addAction(copyURLAction)
+        
         if image?.protectionLevel != "public" {
             let makePublicAction = UIAlertAction(title: "Set As Public", style: .default, handler: { (alert: UIAlertAction!) -> Void in
                 self.setImageAsPublic()
