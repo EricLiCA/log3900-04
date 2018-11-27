@@ -19,7 +19,9 @@ export class FilterPipe implements PipeTransform {
         }
         else {
             return items.filter( it => {
-                return it.title.toLowerCase().includes(searchText);
+                if(it.title.toLowerCase().includes(searchText) || it.authorName.toLowerCase().includes(searchText)) {
+                    return it;
+                }
             });
         }
     }

@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using PolyPaint.Modeles.Actions;
 using PolyPaint.Services;
 using System;
 using System.Linq;
@@ -52,6 +53,7 @@ namespace PolyPaint.Modeles.Strokes
 
         protected bool AnchorPointVisibility = false;
         protected Color Color;
+        private string beforeDrag;
 
         public ShapeStroke(StylusPointCollection pts, CustomStrokeCollection strokes) : base(pts, strokes)
         {
@@ -172,6 +174,8 @@ namespace PolyPaint.Modeles.Strokes
 
         public void Move(StylusPointCollection newPoints)
         {
+            if (this.beforeDrag == null) this.beforeDrag = this.toJson();
+
             this.StylusPoints = newPoints;
             this.Refresh();
             this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableMoved(this));
@@ -179,6 +183,8 @@ namespace PolyPaint.Modeles.Strokes
 
         public virtual void handleMoved(Guid id, Point point)
         {
+            if (this.beforeDrag == null) this.beforeDrag = this.toJson();
+
             Point oppo;
             if (id.ToString() == TOP_RIGHT.ToString())
             {
@@ -300,12 +306,16 @@ namespace PolyPaint.Modeles.Strokes
         {
             EditionSocket.EditStroke(this.toJson());
             this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableDoneMoving(this));
+            Editeur.instance.Do(new EditStroke(this.Id.ToString(), this.beforeDrag, this.toJson()));
+            this.beforeDrag = null;
         }
 
         public virtual void HandleStoped(Guid id)
         {
             EditionSocket.EditStroke(this.toJson());
             this.strokes.ToList().FindAll(stroke => stroke is BaseLine).ForEach(stroke => ((BaseLine)stroke).anchorableDoneMoving(this));
+            Editeur.instance.Do(new EditStroke(this.Id.ToString(), this.beforeDrag, this.toJson()));
+            this.beforeDrag = null;
         }
 
         public virtual string toJson()

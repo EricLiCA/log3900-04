@@ -1,4 +1,5 @@
-﻿using PolyPaint.Modeles.Outils;
+﻿using PolyPaint.Modeles.Actions;
+using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
 using System.Windows;
 using System.Windows.Ink;
@@ -46,6 +47,7 @@ namespace PolyPaint.Modeles.Tools
                 strokes.Add(clone);
                 ((CustomStroke)clone).Select();
                 EditionSocket.AddStroke(((Savable)clone).toJson());
+                Editeur.instance.Do(new NewStroke(((CustomStroke)clone).Id.ToString(), ((Savable)clone).toJson()));
             }
             IsDrawing = false;
         }

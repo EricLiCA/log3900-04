@@ -134,13 +134,17 @@ namespace PolyPaint.Vues
             ImageViewAuthor.Text = "CreatedBy " + CurrentGalleryCard.Image.authorName;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
             Uri imageUri = new Uri(CurrentGalleryCard.Image.fullImageUrl);
-            BitmapImage imageBitmap = new BitmapImage(imageUri);
+            BitmapImage imageBitmap = new BitmapImage();
+            imageBitmap.BeginInit();
+            imageBitmap.UriSource = imageUri;
+            imageBitmap.CacheOption = BitmapCacheOption.OnLoad;
+            imageBitmap.EndInit();
             ImageViewPicture.Source = imageBitmap;
 
             ImagePreviewRoom.ImageId = CurrentGalleryCard.Image.id;
             ImagePreviewRoom.PreviewImage();
-            
-           
+
+
             if (!ServerService.instance.isOffline())
             {
                 ShareButton.Visibility = CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id ? Visibility.Visible : Visibility.Collapsed;
@@ -189,12 +193,14 @@ namespace PolyPaint.Vues
         {
             if ((bool)LockButton.IsChecked)
             {
+                ServerService.instance.Socket.Emit("imageProtectionLevelChanged", CurrentGalleryCard.Image.id);
                 CurrentGalleryCard.Image.protectionLevel = "private";
             }
             else if (CurrentGalleryCard.Image.password == null || CurrentGalleryCard.Image.password == "")
             {
                 CurrentGalleryCard.Image.protectionLevel = "public";
-            } else
+            }
+            else
             {
                 CurrentGalleryCard.Image.protectionLevel = "protected";
             }
@@ -295,6 +301,7 @@ namespace PolyPaint.Vues
                 }
                 else
                 {
+                    ServerService.instance.Socket.Emit("imageProtectionLevelChanged", CurrentGalleryCard.Image.id);
                     CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
                     CurrentGalleryCard.Image.protectionLevel = "protected";
                 }

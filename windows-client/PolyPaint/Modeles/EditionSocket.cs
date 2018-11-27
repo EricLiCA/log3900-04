@@ -61,5 +61,11 @@ namespace PolyPaint.Modeles
             if (!ServerService.instance.isOffline())
                 ServerService.instance.Socket.Emit("clearCanvas");
         }
+
+        internal static void resizeCanvas(Size value)
+        {
+            if (!ServerService.instance.isOffline())
+                ServerService.instance.Socket.Emit("resizeCanvas", value.Width, value.Height);
+        }
     }
 }

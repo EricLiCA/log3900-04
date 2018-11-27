@@ -8,7 +8,7 @@ export class ImagesRoute implements DAO {
 
     public async getAll(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
         const db = await PostgresDatabase.getInstance();
-        db.query('SELECT Images.*, Users."Username" FROM Images INNER JOIN "OwnerId" = Users."Id"').then((query) => {
+        db.query('SELECT Images.*, Users."Username" FROM Images INNER JOIN Users ON "OwnerId" = Users."Id"').then((query) => {
             if (query.rowCount > 0) {
                 res.send(query.rows.map((row) => {
                     return {
@@ -19,7 +19,8 @@ export class ImagesRoute implements DAO {
                         password: row.Password,
                         thumbnailUrl: row.ThumbnailUrl,
                         fullImageUrl: row.FullImageUrl,
-                        authorName: row.Username
+                        authorName: row.Username,
+                        date: row.creationdate
                     };
                 }));
                 return;
@@ -44,7 +45,8 @@ export class ImagesRoute implements DAO {
                         password: row.Password,
                         thumbnailUrl: row.ThumbnailUrl,
                         fullImageUrl: row.FullImageUrl,
-                        authorName: row.Username
+                        authorName: row.Username,
+                        date: row.creationdate
                     };
                 }));
                 return;
@@ -69,7 +71,8 @@ export class ImagesRoute implements DAO {
                         password: row.Password,
                         thumbnailUrl: row.ThumbnailUrl,
                         fullImageUrl: row.FullImageUrl,
-                        authorName: row.Username
+                        authorName: row.Username,
+                        date: row.creationdate
                     };
                 }));
                 return;
@@ -94,6 +97,7 @@ export class ImagesRoute implements DAO {
                     password: result.Password,
                     thumbnailUrl: result.ThumbnailUrl,
                     fullImageUrl: result.FullImageUrl,
+                    date: result.creationdate
                 });
                 return;
             }
