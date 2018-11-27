@@ -189,7 +189,7 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
             self.images = self.allImages
             if self.search != "" {
                 self.images = self.allImages.filter { (image) -> Bool in
-                    image.ownerId?.lowercased().contains(self.search.lowercased()) ?? false || image.title?.lowercased().contains(self.search.lowercased()) ?? false
+                    image.ownerId?.lowercased().contains(self.search.lowercased()) ?? false
                 }
                 self.searchBar.isHidden = true
                 self.imageCollectionView.reloadData()
