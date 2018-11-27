@@ -12,16 +12,11 @@ class FriendTableViewCell: UITableViewCell {
     
     @IBOutlet weak var friendUsernameLabel: UILabel!
     @IBOutlet weak var removeAsFriendButton: UIButton!
-    @IBOutlet weak var startChatButton: UIButton!
     @IBOutlet weak var friendGallery: UIButton!
     @IBOutlet weak var friendProfileImage: UIImageView!
     
     @IBAction func removeAsFriendTapped(_ sender: UIButton) {
         self.sendRemoveAsFriend()
-    }
-
-    @IBAction func startChatTapped(_ sender: UIButton) {
-        self.startChat()
     }
     
     @IBAction func friendGalleryTapped(_ sender: UIButton) {
