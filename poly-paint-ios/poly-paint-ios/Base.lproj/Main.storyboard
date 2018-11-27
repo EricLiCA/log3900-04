@@ -600,64 +600,13 @@
                                             </segue>
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="vmZ-rd-E6J">
-                                        <rect key="frame" x="8" y="19" width="180" height="30"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b3U-aL-W4H">
-                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="BqX-rH-g4q"/>
-                                                    <constraint firstAttribute="width" constant="30" id="yVf-f4-vRr"/>
-                                                </constraints>
-                                                <state key="normal" image="delete"/>
-                                                <connections>
-                                                    <action selector="deleteTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="w7D-nz-bJ3"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mfW-yu-x2v">
-                                                <rect key="frame" x="50" y="0.0" width="30" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="CkJ-Vv-rq5"/>
-                                                    <constraint firstAttribute="height" constant="30" id="T7n-n9-HY9"/>
-                                                </constraints>
-                                                <state key="normal" image="paste"/>
-                                                <connections>
-                                                    <action selector="pasteTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="o8l-OM-F0E"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AHe-ZM-DGv">
-                                                <rect key="frame" x="100" y="0.0" width="30" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="Dnl-6a-JB1"/>
-                                                    <constraint firstAttribute="height" constant="30" id="hnn-pc-FsF"/>
-                                                </constraints>
-                                                <state key="normal" image="copy"/>
-                                                <connections>
-                                                    <action selector="copyTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="gq7-vN-qzV"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rQE-wh-v1D">
-                                                <rect key="frame" x="150" y="0.0" width="30" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="Sg4-6l-DQV"/>
-                                                    <constraint firstAttribute="height" constant="30" id="vF7-tM-ELw"/>
-                                                </constraints>
-                                                <state key="normal" image="cut"/>
-                                                <connections>
-                                                    <action selector="cutTapped:" destination="nxp-f4-1rm" eventType="touchUpInside" id="Pfi-4Z-ryk"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="LVA-FW-V92" firstAttribute="centerX" secondItem="5kG-lC-orU" secondAttribute="centerX" id="1RT-Kb-hg7"/>
-                                    <constraint firstItem="vmZ-rd-E6J" firstAttribute="leading" secondItem="5kG-lC-orU" secondAttribute="leading" constant="8" id="2uZ-W9-LN6"/>
                                     <constraint firstAttribute="trailing" secondItem="2IW-IU-ewm" secondAttribute="trailing" constant="20" id="5Bm-h7-Wjd"/>
                                     <constraint firstItem="2IW-IU-ewm" firstAttribute="centerY" secondItem="5kG-lC-orU" secondAttribute="centerY" id="SUv-ru-q0b"/>
                                     <constraint firstItem="LVA-FW-V92" firstAttribute="centerY" secondItem="5kG-lC-orU" secondAttribute="centerY" id="TeH-bY-f8j"/>
-                                    <constraint firstItem="vmZ-rd-E6J" firstAttribute="centerY" secondItem="5kG-lC-orU" secondAttribute="centerY" id="mVa-Bq-C9c"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -702,14 +651,10 @@
                     <connections>
                         <outlet property="cancelButton" destination="XMc-53-DIO" id="Hfb-E2-GxG"/>
                         <outlet property="chatButton" destination="Teo-s5-50H" id="eYK-uH-ZcH"/>
-                        <outlet property="copyButton" destination="AHe-ZM-DGv" id="FDs-s8-Tb1"/>
-                        <outlet property="cutButton" destination="rQE-wh-v1D" id="04L-aJ-374"/>
-                        <outlet property="deleteButton" destination="b3U-aL-W4H" id="Tjl-jY-YPe"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
                         <outlet property="ellipseButton" destination="hjN-GK-GHk" id="jDI-LM-6BM"/>
                         <outlet property="lassoButton" destination="wcL-4c-zkb" id="jYk-zW-clb"/>
                         <outlet property="optionsView" destination="5kG-lC-orU" id="6uY-R2-Ob0"/>
-                        <outlet property="pasteButton" destination="mfW-yu-x2v" id="nlm-9e-rnk"/>
                         <outlet property="rectangleButton" destination="s1B-D5-5HM" id="176-YN-RWT"/>
                         <outlet property="selectedColorButton" destination="2IW-IU-ewm" id="mJU-Yl-buh"/>
                         <outlet property="stickFigureButton" destination="lX3-a4-gbP" id="g9T-Jz-lbS"/>
@@ -3683,13 +3628,9 @@
         <image name="association" width="36" height="20"/>
         <image name="classDiagram" width="100" height="100"/>
         <image name="comp_left" width="41" height="20"/>
-        <image name="copy" width="50" height="50"/>
-        <image name="cut" width="50" height="50"/>
-        <image name="delete" width="50" height="50"/>
         <image name="ellipse" width="50" height="50"/>
         <image name="inh_left" width="40" height="22"/>
         <image name="line" width="50" height="50"/>
-        <image name="paste" width="50" height="50"/>
         <image name="plus_square" width="50" height="50"/>
         <image name="profile" width="50" height="50"/>
         <image name="rectangle" width="50" height="50"/>
@@ -3703,6 +3644,6 @@
         <segue reference="IDQ-Qb-zNY"/>
         <segue reference="noE-tU-kW1"/>
         <segue reference="bzh-NQ-wv2"/>
-        <segue reference="hXl-r4-fNY"/>
+        <segue reference="Bkh-DL-s0X"/>
     </inferredMetricsTieBreakers>
 </document>
