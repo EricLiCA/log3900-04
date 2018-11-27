@@ -12,7 +12,7 @@ public class BasicShapeView: UIView {
 
     let lineWidth: CGFloat = 1
     var touchAnchorPoint = false
-    var uuid = NSUUID.init().uuidString.lowercased()
+    var uuid : String?
     var numberOfAnchorPoints: Int?
     var anchorPointsLayers = [CAShapeLayer]()
     var color: UIColor?
@@ -29,6 +29,7 @@ public class BasicShapeView: UIView {
         self.setUpNotifications()
         self.color = color
         self.index = index
+        self.uuid = NSUUID.init().uuidString.lowercased()
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -79,7 +80,7 @@ public class BasicShapeView: UIView {
                 //self.showAnchorPoints()
             }
             
-            let userInfo = ["view": self.uuid] as [String : String]
+            let userInfo = ["view": self.uuid!] as [String : String]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
         } else {
             //self.hideAnchorPoints()

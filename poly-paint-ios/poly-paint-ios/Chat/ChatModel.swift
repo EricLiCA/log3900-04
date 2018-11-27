@@ -37,7 +37,7 @@ class ChatModel {
         notificationsSubject = BehaviorSubject<Int>(value: 0)
         // self.setConnectionStatus(as: "connecting")
         
-        manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(true), .compress])
+        manager = SocketManager(socketURL: URL(string: serverAddress)!, config: [.log(false), .compress])
         socketIOClient = manager.defaultSocket
         
         socketIOClient.on("setUsernameStatus") { (data, ack) in
