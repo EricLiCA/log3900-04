@@ -207,7 +207,7 @@ public class BasicShapeView: UIView {
             self.anchorPointsLayers[index].fillColor = UIColor.red.cgColor
             self.anchorPointsLayers[index].strokeColor = UIColor.red.cgColor
         }
-        
+        self.touchAnchorPoint = false
         self.showAnchors = false
     }
     
