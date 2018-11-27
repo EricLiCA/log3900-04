@@ -129,12 +129,12 @@ public class Line: Equatable {
         self.hitStartPoint = nil
         self.hitEndPoint = nil
         self.selected = false
-        self.layer?.strokeColor = UIColor.black.cgColor
+        //self.layer?.strokeColor = UIColor.black.cgColor
     }
     
     func select() {
         self.selected = true
-        self.layer?.strokeColor = UIColor.green.cgColor
+        //self.layer?.strokeColor = UIColor.green.cgColor
         
         
     }

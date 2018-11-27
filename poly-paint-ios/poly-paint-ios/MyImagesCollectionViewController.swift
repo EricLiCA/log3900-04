@@ -12,8 +12,8 @@ final class MyImagesCollectionViewController: UICollectionViewController {
     
     func getPrivateImageUrl() -> String{
         
-        //return "http://localhost:3000/v2/imagesByOwnerId/" + UserDefaults.standard.string(forKey: "id")!
-        return "http://localhost:3000/v2/imagesByOwnerId/" + "694caab3-c611-4331-9e8a-7d0737d578a9" //Can be used for testing purposes while if no images are created for current logged in user
+        return SERVER.URL.rawValue + "v2/imagesByOwnerId/" + UserDefaults.standard.string(forKey: "id")!
+        //return SERVER.URL.rawValue + "v2/imagesByOwnerId/" + "694caab3-c611-4331-9e8a-7d0737d578a9" //Can be used for testing purposes while if no images are created for current logged in user
     }
     func fetchPrivateImages() {
         guard let url = URL(string: getPrivateImageUrl()) else { return }

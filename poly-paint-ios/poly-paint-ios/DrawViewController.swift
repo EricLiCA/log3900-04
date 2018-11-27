@@ -26,10 +26,10 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var chatButton: UIBarButtonItem!
     @IBOutlet weak var selectedColorButton: UIButton!
     @IBOutlet weak var lassoButton: UIButton!
-    @IBOutlet weak var deleteButton: UIButton!
-    @IBOutlet weak var pasteButton: UIButton!
-    @IBOutlet weak var copyButton: UIButton!
-    @IBOutlet weak var cutButton: UIButton!
+    @IBOutlet weak var rectangleButton: UIButton!
+    @IBOutlet weak var ellipseButton: UIButton!
+    @IBOutlet weak var triangleButton: UIButton!
+    @IBOutlet weak var stickFigureButton: UIButton!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -87,38 +87,26 @@ class DrawViewController: UIViewController {
         })
         self.navigationItem.title = image?.title!
         self.handleSocketEmits()
-        
+        self.shapes = [String: BasicShapeView]()
         self.disableEdittingButtons()
+        self.drawingPlace.layer.borderWidth = 2
+        self.drawingPlace.layer.borderColor = UIColor.black.cgColor
         // Do any additional setup after loading the view.
     }
     
-    func enableEditingButtons() {
-        self.deleteButton.alpha = 1
-        self.deleteButton.isEnabled = true
-        self.pasteButton.alpha = 1
-        self.pasteButton.isEnabled = true
-        self.copyButton.alpha = 1
-        self.copyButton.isEnabled = true
-        self.cutButton.alpha = 1
-        self.cutButton.isEnabled = true
+    
+    func resetBasicShapeButton(){
+        self.triangleButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.ellipseButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.rectangleButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
     func disableEdittingButtons() {
-        /*self.deleteButton.alpha = 0.5
-         self.deleteButton.isEnabled = false
-         self.pasteButton.alpha = 0.5
-         self.pasteButton.isEnabled = false
-         self.copyButton.alpha = 0.5
-         self.copyButton.isEnabled = false
-         self.cutButton.alpha = 0.5
-         self.cutButton.isEnabled = false*/
-        self.deleteButton.isHidden = true
-        self.pasteButton.isHidden = true
-        self.copyButton.isHidden = true
-        self.cutButton.isHidden = true
+
     }
-    
+
     @IBAction func deleteTapped(_ sender: UIButton) {
+        
     }
     
     @IBAction func pasteTapped(_ sender: Any) {
@@ -131,11 +119,8 @@ class DrawViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
         super.viewWillDisappear(animated)
-        
-        if self.isMovingFromParentViewController {
-            //self.drawingSocketManager.requestQuit()
-        }
     }
     
     func setDrawingPlace() {
@@ -183,6 +168,7 @@ class DrawViewController: UIViewController {
     
     @IBAction func rectangleTapped(_ sender: UIButton) {
         self.rectangleTapped()
+        self.rectangleButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     }
     @IBAction func undoTapped(_ sender: Any) {
         self.undoRedoManager.undo()
@@ -194,10 +180,12 @@ class DrawViewController: UIViewController {
     
     @IBAction func ellipseTapped(_ sender: UIButton) {
         self.ellipseTapped()
+        self.ellipseButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     }
     
     @IBAction func triangleTapped(_ sender: UIButton) {
         self.triangleTapped()
+        self.triangleButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     }
     
     @IBAction func lineTapped(_ sender: UIButton) {
@@ -258,10 +246,35 @@ class DrawViewController: UIViewController {
         self.firstTouch = touches.first?.location(in: drawingPlace)
         self.insideCanvas = self.drawingPlace.frame.contains((touches.first?.location(in: self.view))!)
         var lineIndex = 0
-        
+        var foundLine = false
         self.hideAllAnchorsNotInLasso()
         if(!self.lassoActive) {
-            for line in self.lines {
+            while(!foundLine && self.lines.count > lineIndex) {
+                var hitPointTest = self.lines[lineIndex].hitPointTest(touchPoint: self.firstTouch!)
+                
+                if(hitPointTest != -1) { // editing point in line
+                    self.editingPointOnLine(line: self.lines[lineIndex], pointBeingEdited: hitPointTest, lineIndex: lineIndex)
+                    if(hitPointTest == 0) { // first end
+                        self.lineBeingEdited?.firstAnchorShapeId = nil
+                        self.lineBeingEdited?.firstAnchorShapeIndex = nil
+                    } else if(hitPointTest == ((self.lineBeingEdited?.points.count)! - 1)) { // second end
+                        self.lineBeingEdited?.secondAnchorShapeId = nil
+                        self.lineBeingEdited?.secondAnchorShapeIndex = nil
+                    }
+                    self.selectLine(line: self.lines[lineIndex])
+                    foundLine = true
+                } else if (self.lines[lineIndex].hitTest(touchPoint: self.firstTouch!)) { // adding angle to line
+                    self.editingPointOnLine(line: self.lines[lineIndex], pointBeingEdited: -1, lineIndex: lineIndex)
+                    foundLine = true
+                    self.selectLine(line: self.lines[lineIndex])
+                } else {
+                    self.unselectLine(line: self.lines[lineIndex])
+                }
+                
+                lineIndex += 1
+            }
+            
+            /*for line in self.lines {
                 var hitPointTest = line.hitPointTest(touchPoint: self.firstTouch!)
                 
                 if(hitPointTest != -1) { // editing point in line
@@ -278,7 +291,7 @@ class DrawViewController: UIViewController {
                 }
                 
                 lineIndex += 1
-            }
+            }*/
             
             if(self.lineBeingEdited == nil) {
                 self.disableEdittingButtons()
@@ -379,7 +392,7 @@ class DrawViewController: UIViewController {
     
     func setContext() {
         if(self.currentContext == nil) {
-            UIGraphicsBeginImageContext(drawingPlace.frame.size)
+            //UIGraphicsBeginImageContext(drawingPlace.frame.size)
             self.currentContext = UIGraphicsGetCurrentContext()
         } else {
             self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
@@ -563,7 +576,8 @@ class DrawViewController: UIViewController {
     func stopDrawing(){
         self.isUserEditingShape = false
         self.currentShape = Shape.None
-        self.cancelButton.isEnabled = false;
+        self.cancelButton.isEnabled = false
+        self.resetBasicShapeButton()
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -829,7 +843,7 @@ class DrawViewController: UIViewController {
         var bezier = UIBezierPath()
         bezier.move(to: self.startPointOfLine!)
         bezier.addLine(to: self.endPointOfLine!)
-        self.currentContext = nil
+        //self.currentContext = nil
         bezier.close()
         let layer = CAShapeLayer()
         layer.path = bezier.cgPath
@@ -860,7 +874,10 @@ class DrawViewController: UIViewController {
     
     func selectLine(line: Line) {
         line.select()
-        //self.enableEditingButtons()
+    }
+    
+    func unselectLine(line: Line) {
+        line.unselect()
     }
     
     func resetLineEndPoints() {

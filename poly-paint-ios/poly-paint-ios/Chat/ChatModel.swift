@@ -21,7 +21,7 @@ class ChatModel {
     var disconnectSubject: BehaviorSubject<Bool>
     var notifications = 0
     var notificationsSubject: BehaviorSubject<Int>
-    var serverAddress: String = "http://localhost:3000/"
+    var serverAddress: String = SERVER.URL.rawValue
     var username: String = ""
     var invalidUsername: Bool = false
     var usernameSet: Bool = false
