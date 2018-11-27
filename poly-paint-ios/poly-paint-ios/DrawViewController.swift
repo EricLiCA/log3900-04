@@ -725,6 +725,7 @@ class DrawViewController: UIViewController {
         let stickFigure = StickFigureView(actorName: sender.userInfo["actorName"] as! String, x: 0, y:0, height: 60 , width: 50,  index: self.shapes.count + 1)
         self.shapes[stickFigure.uuid!] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
+        self.undoRedoManager.alertInsertion(shape: stickFigure)
     }
     
     
@@ -926,8 +927,9 @@ class DrawViewController: UIViewController {
     }
     
     func handleSocketEmits() {
-        self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee048")
+        //self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee048")
         //self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee049")
+        self.drawingSocketManager.requestJoinImage(imageId: self.image!.id!)
         self.drawingSocketManager.socketIOClient.on("imageData") { (data, ack) in
             
             let dataArray = data[0] as! NSArray

@@ -41,7 +41,7 @@ class RectangleView: BasicShapeView {
         let anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
-            let circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            let circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             let shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor

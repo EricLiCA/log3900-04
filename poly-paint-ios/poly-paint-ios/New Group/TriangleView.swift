@@ -54,7 +54,7 @@ class TriangleView: BasicShapeView {
         var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
