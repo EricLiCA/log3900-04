@@ -792,7 +792,9 @@ class DrawViewController: UIViewController {
     
     
     @objc func movedViewAlert(sender: AnyObject) {
-        let viewUUID = sender.userInfo["view"] as! String
+        let view =  sender.userInfo["shape"] as! BasicShapeView
+        self.drawingSocketManager.editShape(shape: view)
+        let viewUUID = view.uuid!
         for line in self.lines {
             if(line.firstAnchorShapeId == viewUUID) {
                 line.points[0] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.firstAnchorShapeIndex!))!
@@ -1004,11 +1006,17 @@ class DrawViewController: UIViewController {
         
         self.drawingSocketManager.socketIOClient.on("editStroke") { (data, ack) in
             let dataString = data[0] as! [String: AnyObject]
-            
-            if (dataString["ShapeType"] as! String != "LINE") {
+            print("got it")
+            if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
+                let uuid = dataString["Id"] as! String
+                let shape = self.shapes[uuid]
+                shape?.removeFromSuperview()
                 let view = self.imageLoader.parseShapes(shape: dataString)
                 view?.uuid = dataString["Id"] as! String
-                self.shapes[view!.uuid!] = view
+                self.shapes.updateValue(view!, forKey: dataString["Id"] as! String)
+                self.drawingPlace.addSubview(view!)
+                //let userInfo = ["shape":view!] as [String : BasicShapeView]
+                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
             }
                 
             else if(dataString["ShapeType"] as! String == "LINE"){

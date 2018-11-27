@@ -19,6 +19,7 @@ public class BasicShapeView: UIView {
     var shapeType: String?
     var index: Int?
     var showAnchors = false
+    var drawingSocketManager = DrawingSocketManager()
     
     init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?, index: Int) {
         self.shapeType = shapeType
@@ -76,11 +77,12 @@ public class BasicShapeView: UIView {
             
             if(panGR.state == .ended) {
                 //self.hideAnchorPoints()
+                self.drawingSocketManager.editShape(shape: self)
             } else if(panGR.state == .began) {
                 //self.showAnchorPoints()
             }
             
-            let userInfo = ["view": self.uuid!] as [String : String]
+            let userInfo = ["shape": self] as [String : BasicShapeView]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
         } else {
             //self.hideAnchorPoints()
@@ -260,10 +262,10 @@ public class BasicShapeView: UIView {
     func toShapeObject() -> Data? {
         
         let shape: [String: Any] = [
-            "Id": self.uuid,
+            "Id": self.uuid!,
             "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
             "ShapeType": self.shapeType!,
-            "Index": self.index,
+            "Index": self.index!,
             "ShapeInfo": [
                 "Center": [
                     "X": self.center.x,
