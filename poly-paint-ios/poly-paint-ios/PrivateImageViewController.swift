@@ -122,7 +122,7 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
     }
     
     func setImageAsPrivate() {
-        let urlString = "http://localhost:3000/v2/images/" + (image?.id)!
+        let urlString = SERVER.URL.rawValue + "v2/images/" + (image?.id)!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)

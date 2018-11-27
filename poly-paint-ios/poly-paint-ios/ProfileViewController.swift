@@ -167,7 +167,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func getFriends() {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: SERVER.URL.rawValue + "v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "GET"
@@ -199,7 +199,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func deleteFriendship(friendId: String, friendNumberInArray: Int) {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: SERVER.URL.rawValue + "v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "DELETE"
@@ -276,7 +276,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func changeProfilePicture(newURL: String) {
         print("CHANGING PROFILE PICTURE WITH \(newURL)")
-        let urlString = "http://localhost:3000/v2/users/" + UserDefaults.standard.string(forKey: "id")!
+        let urlString = SERVER.URL.rawValue + "v2/users/" + UserDefaults.standard.string(forKey: "id")!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)

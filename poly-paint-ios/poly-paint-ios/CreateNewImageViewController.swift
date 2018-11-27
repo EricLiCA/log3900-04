@@ -56,7 +56,7 @@ class CreateNewImageViewController: UIViewController {
         let confirmPassword = self.confirmPasswordField.text!
         
         if ((self.selectedProtectionLevel == "protected" && password != "" && password == confirmPassword) || self.selectedProtectionLevel != "protected" ) {
-            let urlString = "http://localhost:3000/v2/images"
+            let urlString = SERVER.URL.rawValue + "v2/images"
             let url = URL(string: urlString)
             let session = URLSession.shared
             var request = URLRequest(url: url!)
