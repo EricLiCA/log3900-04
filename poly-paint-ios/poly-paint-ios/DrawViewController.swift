@@ -87,10 +87,12 @@ class DrawViewController: UIViewController {
         })
         self.navigationItem.title = image?.title!
         self.handleSocketEmits()
-        
+        self.shapes = [String: BasicShapeView]()
         self.disableEdittingButtons()
         // Do any additional setup after loading the view.
     }
+    
+    
     
     func enableEditingButtons() {
         self.deleteButton.alpha = 1
@@ -104,14 +106,6 @@ class DrawViewController: UIViewController {
     }
     
     func disableEdittingButtons() {
-        /*self.deleteButton.alpha = 0.5
-         self.deleteButton.isEnabled = false
-         self.pasteButton.alpha = 0.5
-         self.pasteButton.isEnabled = false
-         self.copyButton.alpha = 0.5
-         self.copyButton.isEnabled = false
-         self.cutButton.alpha = 0.5
-         self.cutButton.isEnabled = false*/
         self.deleteButton.isHidden = true
         self.pasteButton.isHidden = true
         self.copyButton.isHidden = true
@@ -131,13 +125,8 @@ class DrawViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
         super.viewWillDisappear(animated)
-        
-        /*if self.isMovingFromParentViewController {
-            //self.drawingSocketManager.requestQuit()
-            self.shapes.removeAll()
-            self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
-        }*/
     }
     
     func setDrawingPlace() {
@@ -360,7 +349,7 @@ class DrawViewController: UIViewController {
     
     func setContext() {
         if(self.currentContext == nil) {
-            UIGraphicsBeginImageContext(drawingPlace.frame.size)
+            //UIGraphicsBeginImageContext(drawingPlace.frame.size)
             self.currentContext = UIGraphicsGetCurrentContext()
         } else {
             self.currentContext?.clear(CGRect(x: 0, y: 0, width: self.drawingPlace.frame.width, height: self.drawingPlace.frame.height))
@@ -419,7 +408,6 @@ class DrawViewController: UIViewController {
             if(currentShape == Shape.Rectangle) {
                 let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, index: self.shapes.count + 1)
                 self.shapes[rectangleView.uuid] = rectangleView
-                print("DEBUGGIN SHAPES \(self.shapes)")
                 self.drawingPlace.addSubview(rectangleView)
                 self.undoRedoManager.alertInsertion(shape:rectangleView)
                 self.drawingSocketManager.addShape(shape: rectangleView)
@@ -810,12 +798,7 @@ class DrawViewController: UIViewController {
                 self.drawLine(line: line)
                 
             } else if(line.secondAnchorShapeId == viewUUID) {
-                let currentShape = self.shapes[viewUUID]!
-                let secondAnchorIndex = line.secondAnchorShapeIndex!
-                let anchorPoint = currentShape.getAnchorPoint(index: secondAnchorIndex)
-                line.points[line.points.count - 1] = anchorPoint
-                
-                //line.points[line.points.count - 1] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.secondAnchorShapeIndex!))!
+                line.points[line.points.count - 1] = (self.shapes[viewUUID]?.getAnchorPoint(index: line.secondAnchorShapeIndex!))!
                 self.drawLine(line: line)
             }
         }
@@ -843,7 +826,7 @@ class DrawViewController: UIViewController {
         var bezier = UIBezierPath()
         bezier.move(to: self.startPointOfLine!)
         bezier.addLine(to: self.endPointOfLine!)
-        self.currentContext = nil
+        //self.currentContext = nil
         bezier.close()
         let layer = CAShapeLayer()
         layer.path = bezier.cgPath
