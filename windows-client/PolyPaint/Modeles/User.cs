@@ -1,4 +1,5 @@
 using PolyPaint.Utilitaires;
+using System;
 using System.Windows.Media.Imaging;
 
 namespace PolyPaint.Modeles
@@ -24,9 +25,9 @@ namespace PolyPaint.Modeles
         {
             this.username = username;
             this.id = id;
-            this.profileImage = new System.Uri(profileImage);
+            this.profileImage = (profileImage != null) ?  new System.Uri(profileImage) : new Uri(Settings.DEFAULT_PROFILE_IMAGE);
             this.token = token;
-            this.userLevel = userLevel;
+            this.userLevel = (userLevel != null) ? userLevel : "user";
             this.password = password;
         }
 

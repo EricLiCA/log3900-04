@@ -1,10 +1,10 @@
-﻿using RestSharp;
-using PolyPaint.Utilitaires;
-using PolyPaint.Services;
-using System.Windows;
-using PolyPaint.Vues;
+﻿using Newtonsoft.Json.Linq;
 using PolyPaint.Modeles;
+using PolyPaint.Services;
+using PolyPaint.Utilitaires;
+using RestSharp;
 using System.Net;
+using System.Windows;
 
 namespace PolyPaint.DAO
 {
@@ -18,7 +18,13 @@ namespace PolyPaint.DAO
             {
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    MessageBox.Show("Could not update your profile", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Could not update your profile. Username already choosen", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    dynamic data = JObject.Parse(response.Content);
+                    ServerService.instance.user.username = (string)data["username"];
+                    ServerService.instance.user.password = (string)data["password"];
                 }
             });
         }

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using PolyPaint.DAO;
+using PolyPaint.Modeles;
 using PolyPaint.Services;
 using PolyPaint.Utilitaires;
 using PolyPaint.VueModeles;
@@ -24,7 +25,7 @@ namespace PolyPaint.Vues
         public MainWindow()
         {
             InitializeComponent();
-            GridMain.Content = Gallery;
+            GridMain.Content = tutorial;
             OfflineMode();
 
             Closing += new CancelEventHandler(((MainWindow)Application.Current.MainWindow).FenetreDessin.SaveButton_Click);
@@ -34,9 +35,9 @@ namespace PolyPaint.Vues
         {
             this.isDetached = true;
             if (GridMain.Content is MessagingWindow)
-                GridMain.Content = Gallery;
+                GoToGallery();
             RefreshView();
-            ButtonChat.Visibility = Visibility.Collapsed;
+            ButtonChat.IsEnabled = false;
             detached = new DetachedChat();
             detached.Show();
         }
@@ -44,7 +45,7 @@ namespace PolyPaint.Vues
         public void showAttachedChat(object sender, EventArgs e)
         {
             detached.Hide();
-            ButtonChat.Visibility = Visibility.Visible;
+            ButtonChat.IsEnabled = true;
             this.isDetached = false;
             RefreshView();
         }
@@ -59,12 +60,12 @@ namespace PolyPaint.Vues
             ConnectButton.Visibility = Visibility.Visible;
             DisonnectButton.Visibility = Visibility.Collapsed;
 
-            ButtonUsers.Visibility = Visibility.Collapsed;
-            ButtonChat.Visibility = Visibility.Collapsed;
-            ButtonEdit.Visibility = Visibility.Collapsed;
+            ButtonUsers.IsEnabled = false;
+            ButtonChat.IsEnabled = false;
+            ButtonEdit.IsEnabled = false;
 
             Gallery = new Gallery();
-            GridMain.Content = Gallery;
+            GridMain.Content = tutorial;
 
             RefreshView();
         }
@@ -85,13 +86,12 @@ namespace PolyPaint.Vues
             Users = new Users();
             Gallery = new Gallery();
 
-            ButtonUsers.Visibility = Visibility.Visible;
+            ButtonUsers.IsEnabled = true;
             if (isDetached)
                 showDetachedChat(null, null);
             else
                 showAttachedChat(null, null);
 
-            InitDialogBox();
             UsersManager.instance.fetchAll();
         }
 
@@ -123,31 +123,42 @@ namespace PolyPaint.Vues
             {
                 case 0:
                     {
-                        Gallery.Load();
-                        GridMain.Content = Gallery;
+                        GridMain.Content = this.tutorial;
                         GridCursor.Margin = new Thickness(10, 0, 0, 0);
                         break;
                     }
                 case 1:
                     {
-                        Users.Load();
-                        GridMain.Content = Users;
-                        GridCursor.Margin = new Thickness(160, 0, 0, 0);
+                        Gallery.Load();
+                        GoToGallery();
                         break;
                     }
                 case 2:
-                    if (isDetached) break;
-                    GridMain.Content = MessagingViewManager.instance.LargeMessagingView;
-                    GridCursor.Margin = new Thickness(310, 0, 0, 0);
+                    Users.Load();
+                    GridMain.Content = Users;
+                    GridCursor.Margin = new Thickness(10 + 150 * 2, 0, 0, 0);
                     break;
                 case 3:
-                    GridMain.Content = this.FenetreDessin;
-                    GridCursor.Margin = new Thickness(10 + (150 * (index - (ServerService.instance.isOffline() ? 2 : (isDetached ? 1 : 0)))), 0, 0, 0);
+                    if (isDetached) break;
+                    GridMain.Content = MessagingViewManager.instance.LargeMessagingView;
+                    GridCursor.Margin = new Thickness(10 + 150 *3, 0, 0, 0);
                     break;
                 case 4:
-                    GridMain.Content = this.tutorial;
+                    GoToEditMode(4);
                     break;
             }
+        }
+
+        public void GoToGallery()
+        {
+            GridMain.Content = Gallery;
+            GridCursor.Margin = new Thickness(10 + 150, 0, 0, 0);
+        }
+
+        public void GoToEditMode(int index)
+        {
+            GridMain.Content = this.FenetreDessin;
+            GridCursor.Margin = new Thickness(10 + 150*4, 0, 0, 0);
         }
 
         private void Menu_Change_Avatar_Click(object sender, System.EventArgs e)
@@ -169,24 +180,32 @@ namespace PolyPaint.Vues
 
             if (fileName != null)
             {
-                String avatarLocation = fileName;
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(avatarLocation);
-                bitmap.DecodePixelHeight = 40;
-                bitmap.DecodePixelWidth = 40;
-                bitmap.EndInit();
-                AvatarImage.Source = bitmap;
+                try 
+                {
+                    String avatarLocation = fileName;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(avatarLocation);
+                    bitmap.DecodePixelHeight = 40;
+                    bitmap.DecodePixelWidth = 40;
+                    bitmap.EndInit();
+                    AvatarImage.Source = bitmap;
 
-                ServerService.instance.S3Communication.UploadProfileImageAsync(avatarLocation);
+                    ServerService.instance.S3Communication.UploadProfileImageAsync(avatarLocation);
 
-                Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
-                ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
-                UserDao.Put(ServerService.instance.user);
+                    Uri avatarImageToUploadToSQL = new Uri(Settings.URL_TO_PROFILE_IMAGES + ServerService.instance.user.id);
+                    ServerService.instance.user.profileImage = avatarImageToUploadToSQL;
+                    UserDao.Put(ServerService.instance.user);
+                }
+                catch(Exception exception)
+                {
+                    MessageBox.Show("The image is not valid", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
             }
         }
 
-        private void InitDialogBox()
+        private void ManageProfileButton_Click(object sender, RoutedEventArgs e)
         {
             CurrentProfileName.Text = ServerService.instance.user.username;
             CurrentProfilePassword.Password = ServerService.instance.user.password;
@@ -194,15 +213,23 @@ namespace PolyPaint.Vues
 
         private void ChangeProfileInformationsButton_Click(object sender, System.EventArgs e)
         {
-            ServerService.instance.user.username = CurrentProfileName.Text;
-            ServerService.instance.user.password = CurrentProfilePassword.Password;
-            UserDao.Put(ServerService.instance.user);
+            User userToUpdate = new User()
+            {
+                id = ServerService.instance.user.id,
+                token = ServerService.instance.user.token,
+                password = ServerService.instance.user.password,
+                profileImage = ServerService.instance.user.profileImage,
+                userLevel = ServerService.instance.user.userLevel,
+                username = ServerService.instance.user.username
+            };
+            userToUpdate.username = CurrentProfileName.Text;
+            userToUpdate.password = CurrentProfilePassword.Password;
+            UserDao.Put(userToUpdate);
             ChangeProfileInformationsButton.IsEnabled = false;
         }
 
         private void CloseDialogButton_Click(object sender, RoutedEventArgs e)
         {
-            InitDialogBox();
             ChangeProfileInformationsButton.IsEnabled = false;
         }
 
@@ -223,9 +250,10 @@ namespace PolyPaint.Vues
 
         public void LoadImage(string imageId)
         {
+            GoToEditMode(3);
             FenetreDessin.SaveButton_Click(null, null);
             ServerService.instance.currentImageId = imageId;
-            ButtonEdit.Visibility = Visibility.Visible;
+            ButtonEdit.IsEnabled = true;
             Button_Click(ButtonEdit, null);
             ((VueModele)FenetreDessin.DataContext).editeur.SyncToServer();
         }
@@ -244,5 +272,5 @@ namespace PolyPaint.Vues
             ServerService.instance.disconnect();
             OfflineMode();
         }
-    }
+    } 
 }

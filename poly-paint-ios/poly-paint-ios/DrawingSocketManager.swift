@@ -18,7 +18,7 @@ class DrawingSocketManager {
     }
     
     public func removeShape(shape: BasicShapeView) {
-        socketIOClient.emit("removeStroke", shape.uuid);
+        socketIOClient.emit("removeStroke", shape.uuid!);
     }
     
     public func editShape(shape: BasicShapeView) {
@@ -43,5 +43,17 @@ class DrawingSocketManager {
     
     public func  clearCanvas() {
         socketIOClient.emit("clearCanvas");
+    }
+    
+    public func addLine(shape: Line) {
+        socketIOClient.emit("addStroke", shape.toShapeObject()!);
+    }
+    
+    public func removeLine(shape: Line) {
+        socketIOClient.emit("removeStroke", shape.uuid);
+    }
+    
+    public func editLine(shape: BasicShapeView) {
+        socketIOClient.emit("editStroke", shape.toShapeObject()!);
     }
 }

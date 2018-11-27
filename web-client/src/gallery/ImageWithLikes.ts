@@ -9,6 +9,8 @@ export class ImageWithLikes extends img {
     thumbnailUrl: String;
     fullImageUrl: String;
     imageLikes: Number;
+    authorName: String;
+    date: Date;
 
     constructor(image: img, likes: number) {
         super()
@@ -20,5 +22,7 @@ export class ImageWithLikes extends img {
         this.thumbnailUrl = image.thumbnailUrl;
         this.fullImageUrl = image.fullImageUrl;
         this.imageLikes = likes;
+        this.date = image.date;
+        this.authorName = image.authorName;
     }
   }

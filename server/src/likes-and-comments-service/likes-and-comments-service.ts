@@ -52,7 +52,7 @@ export class LikesAndCommentsService {
             user.socket.emit('previewImage', previewedImage);
         });
 
-        user.socket.on('leaveImage', async () => {
+        user.socket.on('leavePreviewImage', async () => {
             const previewedImage = await this.getUserPreviwedImage(user.socket.id);
             user.socket.leave(previewedImage.id);
             this.users.delete(user);
