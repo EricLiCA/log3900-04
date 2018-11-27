@@ -5,17 +5,14 @@ using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
 using PolyPaint.Services;
 using PolyPaint.Vues;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Ink;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace PolyPaint.Modeles
@@ -58,7 +55,7 @@ namespace PolyPaint.Modeles
                 {
                     this.EditingStroke = null;
                     EditionSocket.UnlockStrokes();
-                    
+
                     if (ServerService.instance.isOffline())
                     {
                         this.traits.ToList().ForEach(temp =>
@@ -359,7 +356,8 @@ namespace PolyPaint.Modeles
         private Stack<EditionAction> undoStack = new Stack<EditionAction>();
 
         private Size _CanvasSize = new Size(550, 310);
-        public Size CanvasSize {
+        public Size CanvasSize
+        {
             get => _CanvasSize;
             set
             {
@@ -401,7 +399,8 @@ namespace PolyPaint.Modeles
                 action.Undo(this.traits);
                 undoStack.Push(action);
             }
-            catch {
+            catch
+            {
                 this.Undo(o);
             }
         }
@@ -425,7 +424,8 @@ namespace PolyPaint.Modeles
         public void ChoisirOutil(Tool tool) => OutilSelectionne = tool;
 
         // On vide la surface de dessin de tous ses traits.
-        public void Reinitialiser(object o)  {
+        public void Reinitialiser(object o)
+        {
             traits.Clear();
             EditionSocket.ClearCanvas();
         }
@@ -442,15 +442,21 @@ namespace PolyPaint.Modeles
             }
             else
             {
-                string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
-                Directory.CreateDirectory(path2String);
-                string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
-                
-                File.WriteAllBytes(file, obj);
+                try
+                {
+                    string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
+                    Directory.CreateDirectory(path2String);
+                    string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
 
-                var id = ServerService.instance.currentImageId;
-                ServerService.instance.S3Communication.UploadImageAsync(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews", id + ".png"), id + ".png");
-                
+                    File.WriteAllBytes(file, obj);
+
+                    var id = ServerService.instance.currentImageId;
+                    ServerService.instance.S3Communication.UploadImageAsync(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews", id + ".png"), id + ".png");
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
 
