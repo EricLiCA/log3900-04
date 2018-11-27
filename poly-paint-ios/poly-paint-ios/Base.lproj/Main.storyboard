@@ -867,7 +867,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVN-w7-E5K">
-                                                        <rect key="frame" x="147" y="0.0" width="34" height="22"/>
+                                                        <rect key="frame" x="147" y="0.0" width="35" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="1V4-UI-Vru"/>
                                                             <constraint firstAttribute="height" constant="22" id="LCp-wG-6xh"/>
@@ -878,7 +878,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-UT-PUr">
-                                                        <rect key="frame" x="195" y="0.0" width="35" height="22"/>
+                                                        <rect key="frame" x="196" y="0.0" width="34" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="KSY-wl-7iy"/>
                                                             <constraint firstAttribute="height" constant="22" id="TF6-1h-DWF"/>
@@ -1305,54 +1305,93 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" image="Paint" translatesAutoresizingMaskIntoConstraints="NO" id="17Y-KH-9rq">
                                 <rect key="frame" x="184" y="70" width="400" height="300"/>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RTE-Dt-BDa">
-                                <rect key="frame" x="269" y="492" width="230" height="110"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="Ef4-Go-wkt">
+                                <rect key="frame" x="159" y="470" width="450" height="154"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yid-28-lYT">
-                                        <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
-                                        <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Profile">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="r8R-KD-eft" kind="show" id="qaV-19-8m4"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="khw-eQ-Wnu">
-                                        <rect key="frame" x="0.0" y="40" width="230" height="30"/>
-                                        <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Gallery">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="t0d-qx-rGF" kind="show" id="n8I-44-X1y"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VfY-2l-VR3">
-                                        <rect key="frame" x="0.0" y="80" width="230" height="30"/>
-                                        <color key="backgroundColor" red="0.0" green="0.43529411759999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="New Image">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="newImageTapped:" destination="fbK-Vc-Znj" eventType="touchUpInside" id="kwd-Jn-ZLB"/>
-                                            <segue destination="vM9-gr-Oy8" kind="popoverPresentation" identifier="toNewImageCanvas" popoverAnchorView="VfY-2l-VR3" id="Yle-g8-Lz2">
-                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                            </segue>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WgH-Ab-xIq">
+                                        <rect key="frame" x="0.0" y="0.0" width="130" height="154"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yid-28-lYT">
+                                                <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="130" id="80t-kU-QiI"/>
+                                                    <constraint firstAttribute="height" constant="130" id="KFm-kL-a5W"/>
+                                                </constraints>
+                                                <state key="normal" backgroundImage="profile">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="r8R-KD-eft" kind="show" id="qaV-19-8m4"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTb-6B-XF2">
+                                                <rect key="frame" x="0.0" y="130" width="130" height="24"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bx6-BE-v68">
+                                        <rect key="frame" x="160" y="0.0" width="130" height="154"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="khw-eQ-Wnu">
+                                                <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="130" id="4ib-3Z-YB1"/>
+                                                    <constraint firstAttribute="width" constant="130" id="Gao-PY-fFg"/>
+                                                </constraints>
+                                                <state key="normal" backgroundImage="Gallery">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="t0d-qx-rGF" kind="show" id="n8I-44-X1y"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gallery" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKc-KU-cwI">
+                                                <rect key="frame" x="0.0" y="130" width="130" height="24"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="OYS-cc-icU">
+                                        <rect key="frame" x="320" y="0.0" width="130" height="154"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VfY-2l-VR3">
+                                                <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="130" id="QCK-La-plG"/>
+                                                    <constraint firstAttribute="width" constant="130" id="j4c-Tj-o5b"/>
+                                                </constraints>
+                                                <state key="normal" backgroundImage="plus_square">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="newImageTapped:" destination="fbK-Vc-Znj" eventType="touchUpInside" id="kwd-Jn-ZLB"/>
+                                                    <segue destination="vM9-gr-Oy8" kind="popoverPresentation" identifier="toNewImageCanvas" popoverAnchorView="VfY-2l-VR3" id="Yle-g8-Lz2">
+                                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                    </segue>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tMV-V6-QXn">
+                                                <rect key="frame" x="0.0" y="130" width="130" height="24"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="230" id="Ciu-q3-QWb"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Ef4-Go-wkt" firstAttribute="centerX" secondItem="rmb-tG-Dbt" secondAttribute="centerX" id="EPm-LG-ufV"/>
                             <constraint firstItem="17Y-KH-9rq" firstAttribute="centerX" secondItem="rmb-tG-Dbt" secondAttribute="centerX" id="X2m-IH-vXa"/>
+                            <constraint firstItem="Ef4-Go-wkt" firstAttribute="centerY" secondItem="rmb-tG-Dbt" secondAttribute="centerY" id="XNM-nZ-t6w"/>
                             <constraint firstItem="17Y-KH-9rq" firstAttribute="top" secondItem="rmb-tG-Dbt" secondAttribute="top" id="qRK-cD-N8L"/>
-                            <constraint firstItem="RTE-Dt-BDa" firstAttribute="centerY" secondItem="rmb-tG-Dbt" secondAttribute="centerY" id="rWp-CX-cUG"/>
-                            <constraint firstItem="RTE-Dt-BDa" firstAttribute="centerX" secondItem="rmb-tG-Dbt" secondAttribute="centerX" id="w6t-rW-I5L"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rmb-tG-Dbt"/>
                     </view>
@@ -1374,7 +1413,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEf-0y-fS6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="459" y="120"/>
+            <point key="canvasLocation" x="458.59375" y="119.53124999999999"/>
         </scene>
         <!--Profile-->
         <scene sceneID="5Ad-dn-gBR">
@@ -3651,6 +3690,8 @@
         <image name="inh_left" width="40" height="22"/>
         <image name="line" width="50" height="50"/>
         <image name="paste" width="50" height="50"/>
+        <image name="plus_square" width="50" height="50"/>
+        <image name="profile" width="50" height="50"/>
         <image name="rectangle" width="50" height="50"/>
         <image name="select_white" width="50" height="50"/>
         <image name="stickman" width="50" height="50"/>
@@ -3661,7 +3702,7 @@
         <segue reference="G8n-Og-bjM"/>
         <segue reference="IDQ-Qb-zNY"/>
         <segue reference="noE-tU-kW1"/>
-        <segue reference="sFe-vd-FYf"/>
-        <segue reference="Scu-Rl-Q2B"/>
+        <segue reference="bzh-NQ-wv2"/>
+        <segue reference="hXl-r4-fNY"/>
     </inferredMetricsTieBreakers>
 </document>
