@@ -431,7 +431,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GcN-G4-lI2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-109" y="-585"/>
+            <point key="canvasLocation" x="-734" y="-536"/>
         </scene>
         <!--New Image-->
         <scene sceneID="NqV-OZ-aUY">
@@ -676,14 +676,11 @@
                         <outlet property="optionsView" destination="5kG-lC-orU" id="6uY-R2-Ob0"/>
                         <outlet property="pasteButton" destination="mfW-yu-x2v" id="nlm-9e-rnk"/>
                         <outlet property="selectedColorButton" destination="2IW-IU-ewm" id="mJU-Yl-buh"/>
-                        <segue destination="5uQ-IG-6AB" kind="popoverPresentation" identifier="toRelationPopover" popoverAnchorView="ltt-LG-ycF" id="Ekb-i3-Z78">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="571.875" y="-836.71875"/>
+            <point key="canvasLocation" x="140" y="-1155"/>
         </scene>
         <!--Stick Figure View Controller-->
         <scene sceneID="xYI-lh-iJd">
@@ -832,7 +829,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVN-w7-E5K">
-                                                        <rect key="frame" x="147" y="0.0" width="35" height="22"/>
+                                                        <rect key="frame" x="147" y="0.0" width="34" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="1V4-UI-Vru"/>
                                                             <constraint firstAttribute="height" constant="22" id="LCp-wG-6xh"/>
@@ -843,7 +840,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-UT-PUr">
-                                                        <rect key="frame" x="196" y="0.0" width="34" height="22"/>
+                                                        <rect key="frame" x="195" y="0.0" width="35" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="KSY-wl-7iy"/>
                                                             <constraint firstAttribute="height" constant="22" id="TF6-1h-DWF"/>
@@ -1232,7 +1229,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KdE-6k-mJy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-108" y="-1263"/>
+            <point key="canvasLocation" x="-734" y="-1406"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="pJf-Kx-dYa">
@@ -1253,7 +1250,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TQU-tl-ObV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-926" y="-980"/>
+            <point key="canvasLocation" x="-1547" y="-1102"/>
         </scene>
         <!--Home-->
         <scene sceneID="iZw-0f-YJ5">
@@ -1441,7 +1438,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="sor-Uu-gaO">
-                                                    <rect key="frame" x="806" y="46.5" width="163" height="50"/>
+                                                    <rect key="frame" x="550" y="46.5" width="163" height="50"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cu6-QQ-hfX">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -2037,7 +2034,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pI3-no-Z31">
-                                                    <rect key="frame" x="298" y="15" width="37" height="30"/>
+                                                    <rect key="frame" x="243" y="15" width="37" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="37" id="KAJ-X7-hNr"/>
                                                         <constraint firstAttribute="height" constant="30" id="mf5-Df-eCo"/>
@@ -3622,7 +3619,6 @@
         <segue reference="G8n-Og-bjM"/>
         <segue reference="IDQ-Qb-zNY"/>
         <segue reference="noE-tU-kW1"/>
-        <segue reference="9fu-Sy-e4b"/>
         <segue reference="sFe-vd-FYf"/>
         <segue reference="Bkh-DL-s0X"/>
     </inferredMetricsTieBreakers>
