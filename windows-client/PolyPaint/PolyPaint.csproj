@@ -173,6 +173,10 @@
     <Compile Include="DAO\ImageDao.cs" />
     <Compile Include="DAO\ShapeObjectDao.cs" />
     <Compile Include="DAO\UserDao.cs" />
+    <Compile Include="Modeles\Actions\EditionAction.cs" />
+    <Compile Include="Modeles\Actions\DeleteStroke.cs" />
+    <Compile Include="Modeles\Actions\EditStroke.cs" />
+    <Compile Include="Modeles\Actions\NewStroke.cs" />
     <Compile Include="Modeles\ChatMessage.cs" />
     <Compile Include="Modeles\ChatModel.cs" />
     <Compile Include="Modeles\EditionSocket.cs" />

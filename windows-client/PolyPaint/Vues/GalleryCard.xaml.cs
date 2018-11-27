@@ -1,5 +1,6 @@
 using MaterialDesignThemes.Wpf;
 using System;
+using System.Windows.Media.Imaging;
 using Image = PolyPaint.Modeles.Image;
 
 namespace PolyPaint.Vues
@@ -17,6 +18,15 @@ namespace PolyPaint.Vues
             Image = image;
             DataContext = this;
             ConfigIcon();
+
+            Uri imageUri = new Uri(image.fullImageUrl);
+            BitmapImage imageBitmap = new BitmapImage();
+            imageBitmap.BeginInit();
+            imageBitmap.UriSource = imageUri;
+            imageBitmap.CacheOption = BitmapCacheOption.OnLoad;
+            imageBitmap.EndInit();
+
+            this.ImagePlaceholder.Source = imageBitmap;
         }
 
         public event EventHandler ViewButtonClicked;
