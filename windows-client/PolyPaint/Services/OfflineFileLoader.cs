@@ -41,8 +41,8 @@ namespace PolyPaint.Services
                 title = newImage.title,
                 protectionLevel = newImage.protectionLevel,
                 password = newImage.password,
-                thumbnailUrl = "https://picsum.photos/300/400/?random",
-                fullImageUrl = "https://picsum.photos/300/400/?random",
+                thumbnailUrl = "https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg",
+                fullImageUrl = "https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg",
                 shapes = new List<string>()
             };
 
@@ -79,6 +79,8 @@ namespace PolyPaint.Services
 
         internal static void save(byte[] obj, List<string> tosave)
         {
+            try
+            { 
             string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
             Directory.CreateDirectory(path2String);
             string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
@@ -94,6 +96,11 @@ namespace PolyPaint.Services
             image.thumbnailUrl = file;
             
             File.WriteAllText(pathString + "\\" + image.id, JsonConvert.SerializeObject(image));
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         internal static void upload()

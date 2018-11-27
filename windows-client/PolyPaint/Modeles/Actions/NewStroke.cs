@@ -24,6 +24,7 @@ namespace PolyPaint.Modeles.Actions
             {
                 strokes.Add(SerializationHelper.stringToStroke(JObject.Parse(SerializedStroke), strokes));
                 EditionSocket.AddStroke(SerializedStroke);
+                strokes.get(Id).Select();
             }
         }
 
