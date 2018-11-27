@@ -81,40 +81,86 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create a new Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVY-YR-01d">
-                                <rect key="frame" x="76" y="20" width="186" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="UNX-td-O6R">
+                                <rect key="frame" x="45" y="347" width="230" height="82"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQ0-Du-sS4">
+                                        <rect key="frame" x="0.0" y="0.0" width="230" height="36"/>
+                                        <color key="backgroundColor" red="0.20392156859999999" green="0.76862745099999996" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="230" id="erR-lY-MIx"/>
+                                            <constraint firstAttribute="height" constant="36" id="tEX-M3-rl4"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="tintColor" red="0.2156862745" green="0.80392156859999997" blue="0.98431372549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Create">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="okTapped:" destination="vM9-gr-Oy8" eventType="touchUpInside" id="h85-sv-QgW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfu-w9-hLO">
+                                        <rect key="frame" x="0.0" y="46" width="230" height="36"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="6MJ-jJ-BGS"/>
+                                            <constraint firstAttribute="width" constant="230" id="8ku-Wp-jZT"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelTapped:" destination="vM9-gr-Oy8" eventType="touchUpInside" id="5qW-Zb-y7Y"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="rpw-v5-d2p">
+                                <rect key="frame" x="45" y="130" width="230" height="68"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Image title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2il-ml-mGU">
+                                        <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="AeV-4F-yeI"/>
+                                            <constraint firstAttribute="width" constant="230" id="aRR-62-MtX"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hqx-kT-gEe">
+                                        <rect key="frame" x="0.0" y="40" width="230" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="mjn-PW-Ggh"/>
+                                            <constraint firstAttribute="width" constant="230" id="vYj-6u-cKN"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="Public"/>
+                                            <segment title="Private"/>
+                                            <segment title="Protected"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="onTapProtection:" destination="vM9-gr-Oy8" eventType="valueChanged" id="Ip8-S9-9pC"/>
+                                        </connections>
+                                    </segmentedControl>
+                                </subviews>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create a new image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVY-YR-01d">
+                                <rect key="frame" x="67.5" y="74" width="185" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Image" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2il-ml-mGU">
-                                <rect key="frame" x="76" y="99" width="186" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Hqx-kT-gEe">
-                                <rect key="frame" x="66" y="160" width="206" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Public"/>
-                                    <segment title="Private"/>
-                                    <segment title="Protected"/>
-                                </segments>
-                                <connections>
-                                    <action selector="onTapProtection:" destination="vM9-gr-Oy8" eventType="valueChanged" id="Ip8-S9-9pC"/>
-                                </connections>
-                            </segmentedControl>
-                            <stackView opaque="NO" contentMode="center" fixedFrame="YES" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QMK-ZQ-dSR">
-                                <rect key="frame" x="54" y="213" width="230" height="100.5"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6EL-n0-GT8">
+                                <rect key="frame" x="45" y="229" width="230" height="100.5"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Set password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="azJ-Ws-88E">
                                         <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="230" id="DJR-hu-T52"/>
+                                            <constraint firstAttribute="width" constant="230" id="k0C-RE-Is7"/>
                                             <constraint firstAttribute="height" constant="30" id="vIL-yy-yvh"/>
                                         </constraints>
                                         <nil key="textColor"/>
@@ -125,7 +171,7 @@
                                         <rect key="frame" x="0.0" y="40" width="230" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="LpD-lw-fU7"/>
-                                            <constraint firstAttribute="width" constant="230" id="hF4-Rm-xH5"/>
+                                            <constraint firstAttribute="width" constant="230" id="wwb-Fu-qOM"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -138,41 +184,29 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="230" id="ycZ-3U-Zcj"/>
+                                </constraints>
                             </stackView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter image title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sho-GD-a9q">
-                                <rect key="frame" x="103" y="52" width="133" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hQ0-Du-sS4">
-                                <rect key="frame" x="103" y="336" width="30" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Ok"/>
-                                <connections>
-                                    <action selector="okTapped:" destination="vM9-gr-Oy8" eventType="touchUpInside" id="h85-sv-QgW"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfu-w9-hLO">
-                                <rect key="frame" x="175" y="336" width="61" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="cancelTapped:" destination="vM9-gr-Oy8" eventType="touchUpInside" id="5qW-Zb-y7Y"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UNX-td-O6R" firstAttribute="top" secondItem="6EL-n0-GT8" secondAttribute="bottom" constant="17.5" id="00o-Z6-Mde"/>
+                            <constraint firstItem="UNX-td-O6R" firstAttribute="top" secondItem="rwH-jB-jbE" secondAttribute="top" constant="347" id="CPx-bT-Jic"/>
+                            <constraint firstItem="rpw-v5-d2p" firstAttribute="centerX" secondItem="rwH-jB-jbE" secondAttribute="centerX" id="O2Q-lc-Rld"/>
+                            <constraint firstItem="UNX-td-O6R" firstAttribute="centerX" secondItem="rwH-jB-jbE" secondAttribute="centerX" id="PcC-IA-kwV"/>
+                            <constraint firstItem="pVY-YR-01d" firstAttribute="top" secondItem="rwH-jB-jbE" secondAttribute="top" constant="74" id="ate-mB-bYL"/>
+                            <constraint firstItem="rpw-v5-d2p" firstAttribute="top" secondItem="pVY-YR-01d" secondAttribute="bottom" constant="32" id="jVO-KS-NWY"/>
+                            <constraint firstItem="pVY-YR-01d" firstAttribute="centerX" secondItem="rwH-jB-jbE" secondAttribute="centerX" id="lPY-Jd-LfT"/>
+                            <constraint firstItem="6EL-n0-GT8" firstAttribute="centerX" secondItem="rwH-jB-jbE" secondAttribute="centerX" id="x8P-yU-98X"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="rwH-jB-jbE"/>
                     </view>
                     <connections>
                         <outlet property="confirmPasswordField" destination="7YI-UE-o6u" id="1aa-CQ-y1I"/>
                         <outlet property="imageTitle" destination="2il-ml-mGU" id="C57-7z-nwp"/>
                         <outlet property="passMatch" destination="9Cf-fT-Lft" id="sdR-ix-pVR"/>
-                        <outlet property="passwordStack" destination="QMK-ZQ-dSR" id="Csh-iQ-MI4"/>
+                        <outlet property="passwordStack" destination="6EL-n0-GT8" id="bFZ-td-KAU"/>
                         <outlet property="segmentedControl" destination="Hqx-kT-gEe" id="pX8-Wp-Dd6"/>
                         <outlet property="setPasswordField" destination="azJ-Ws-88E" id="rk4-hl-Ewn"/>
                     </connections>
@@ -189,7 +223,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </objects>
-            <point key="canvasLocation" x="-633" y="904"/>
+            <point key="canvasLocation" x="-633.59375" y="903.51562499999989"/>
         </scene>
         <!--Chat-->
         <scene sceneID="tne-QT-ifu">
