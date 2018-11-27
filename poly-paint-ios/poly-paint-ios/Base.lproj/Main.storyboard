@@ -849,7 +849,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rkt-xv-5Io">
-                                <rect key="frame" x="0.0" y="57" width="768" height="859"/>
+                                <rect key="frame" x="0.0" y="130" width="768" height="786"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QHs-Uy-sF4">
@@ -909,16 +909,25 @@
                                     <constraint firstItem="W3z-oy-bRf" firstAttribute="centerY" secondItem="QHs-Uy-sF4" secondAttribute="centerY" id="liM-bX-xux"/>
                                 </constraints>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Modify image title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ayc-Wn-pU3">
+                                <rect key="frame" x="20" y="92" width="728" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="QHs-Uy-sF4" firstAttribute="leading" secondItem="3LB-gt-3Oc" secondAttribute="leading" id="5rn-cp-4bs"/>
-                            <constraint firstItem="3LB-gt-3Oc" firstAttribute="top" secondItem="Rkt-xv-5Io" secondAttribute="top" constant="13" id="At2-QQ-yxF"/>
                             <constraint firstItem="3LB-gt-3Oc" firstAttribute="trailing" secondItem="Rkt-xv-5Io" secondAttribute="trailing" id="Cka-ZH-uso"/>
                             <constraint firstItem="Rkt-xv-5Io" firstAttribute="leading" secondItem="3LB-gt-3Oc" secondAttribute="leading" id="Kl9-OC-2uC"/>
                             <constraint firstItem="3LB-gt-3Oc" firstAttribute="bottom" secondItem="QHs-Uy-sF4" secondAttribute="bottom" id="L90-hN-J2W"/>
+                            <constraint firstItem="Rkt-xv-5Io" firstAttribute="top" secondItem="3LB-gt-3Oc" secondAttribute="top" constant="60" id="MwV-Vg-yuK"/>
                             <constraint firstItem="QHs-Uy-sF4" firstAttribute="firstBaseline" secondItem="Rkt-xv-5Io" secondAttribute="baseline" constant="8" symbolType="layoutAnchor" id="ZWD-td-53h"/>
+                            <constraint firstItem="ayc-Wn-pU3" firstAttribute="leading" secondItem="3LB-gt-3Oc" secondAttribute="leading" constant="20" id="c2B-M8-A4X"/>
+                            <constraint firstItem="3LB-gt-3Oc" firstAttribute="trailing" secondItem="ayc-Wn-pU3" secondAttribute="trailing" constant="20" id="g5b-56-b0n"/>
                             <constraint firstItem="3LB-gt-3Oc" firstAttribute="trailing" secondItem="QHs-Uy-sF4" secondAttribute="trailing" id="hlG-Lc-OTY"/>
+                            <constraint firstItem="ayc-Wn-pU3" firstAttribute="top" secondItem="3LB-gt-3Oc" secondAttribute="top" constant="22" id="wz6-3M-ygp"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="3LB-gt-3Oc"/>
                     </view>
@@ -928,6 +937,7 @@
                         <outlet property="imageView" destination="Rkt-xv-5Io" id="iar-2m-6ii"/>
                         <outlet property="likeButton" destination="elL-sf-gxs" id="1jz-od-wV1"/>
                         <outlet property="likesLabel" destination="XmG-0F-JeD" id="gCS-ch-VmN"/>
+                        <outlet property="modifyNameField" destination="ayc-Wn-pU3" id="kiN-aW-DJC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IDe-SH-Yb4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1009,7 +1019,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hoI-Hg-5EN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3861.71875" y="-1280.2734375"/>
+            <point key="canvasLocation" x="3910" y="-1542"/>
         </scene>
         <!--My Images-->
         <scene sceneID="zQT-O3-ylN">

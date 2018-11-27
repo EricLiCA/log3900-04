@@ -8,16 +8,18 @@
 
 import UIKit
 
-class PublicImageViewController: UIViewController {
+class PublicImageViewController: UIViewController, UITextFieldDelegate {
     
     var image: Image?
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageProtectionLevelLabel: UILabel!
     @IBOutlet weak var likesLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var modifyNameField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.modifyNameField.delegate = self
         self.updateView()
     }
     
@@ -27,6 +29,49 @@ class PublicImageViewController: UIViewController {
         imageProtectionLevelLabel.text = "Protection: \(image?.protectionLevel ?? defaultProtection)"
         self.navigationItem.title = image?.title
         self.updateLikes()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let newName = self.modifyNameField.text!
+        self.modifyName(newName: newName)
+        self.modifyNameField.text = ""
+        return true
+    }
+    
+    private func getModifyImageURL() -> String {
+        let imageId = image!.id!
+        return "http://localhost:3000/v2/images/\(imageId)"
+    }
+    
+    private func modifyName(newName: String) {
+        guard let url = URL(string: getModifyImageURL()) else { return }
+        let session = URLSession.shared
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        
+        // Setting data to send
+        let paramToSend: [String: Any] = ["title": newName]
+        let jsonData = try? JSONSerialization.data(withJSONObject: paramToSend, options: .prettyPrinted)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                DispatchQueue.main.async {
+                    self.title = newName
+                }
+            } else {
+                DispatchQueue.main.async {
+                    // TODO: Decide what we do in case of failure
+                }
+            }
+        }
+        
+        task.resume()
     }
     
     func updateLikes() {
