@@ -30,6 +30,10 @@ class DrawViewController: UIViewController {
     @IBOutlet weak var pasteButton: UIButton!
     @IBOutlet weak var copyButton: UIButton!
     @IBOutlet weak var cutButton: UIButton!
+    @IBOutlet weak var rectangleButton: UIButton!
+    @IBOutlet weak var ellipseButton: UIButton!
+    @IBOutlet weak var triangleButton: UIButton!
+    @IBOutlet weak var stickFigureButton: UIButton!
     
     var firstTouch : CGPoint?
     var secondTouch : CGPoint?
@@ -93,6 +97,12 @@ class DrawViewController: UIViewController {
     }
     
     
+    func resetBasicShapeButton(){
+        self.triangleButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.ellipseButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        self.rectangleButton.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+    }
+    
     
     func enableEditingButtons() {
         self.deleteButton.alpha = 1
@@ -111,7 +121,7 @@ class DrawViewController: UIViewController {
         self.copyButton.isHidden = true
         self.cutButton.isHidden = true
     }
-    
+
     @IBAction func deleteTapped(_ sender: UIButton) {
     }
     
@@ -153,6 +163,7 @@ class DrawViewController: UIViewController {
     
     @IBAction func rectangleTapped(_ sender: UIButton) {
         self.rectangleTapped()
+        self.rectangleButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     }
     @IBAction func undoTapped(_ sender: Any) {
         self.undoRedoManager.undo()
@@ -164,10 +175,12 @@ class DrawViewController: UIViewController {
     
     @IBAction func ellipseTapped(_ sender: UIButton) {
         self.ellipseTapped()
+        self.ellipseButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     }
     
     @IBAction func triangleTapped(_ sender: UIButton) {
         self.triangleTapped()
+        self.triangleButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
     }
     
     @IBAction func lineTapped(_ sender: UIButton) {
@@ -531,7 +544,8 @@ class DrawViewController: UIViewController {
     func stopDrawing(){
         self.isUserEditingShape = false
         self.currentShape = Shape.None
-        self.cancelButton.isEnabled = false;
+        self.cancelButton.isEnabled = false
+        self.resetBasicShapeButton()
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {

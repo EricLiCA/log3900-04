@@ -672,10 +672,14 @@
                         <outlet property="cutButton" destination="rQE-wh-v1D" id="04L-aJ-374"/>
                         <outlet property="deleteButton" destination="b3U-aL-W4H" id="Tjl-jY-YPe"/>
                         <outlet property="drawingPlace" destination="tNz-CW-3rW" id="gC0-qG-6SX"/>
+                        <outlet property="ellipseButton" destination="hjN-GK-GHk" id="jDI-LM-6BM"/>
                         <outlet property="lassoButton" destination="wcL-4c-zkb" id="jYk-zW-clb"/>
                         <outlet property="optionsView" destination="5kG-lC-orU" id="6uY-R2-Ob0"/>
                         <outlet property="pasteButton" destination="mfW-yu-x2v" id="nlm-9e-rnk"/>
+                        <outlet property="rectangleButton" destination="s1B-D5-5HM" id="176-YN-RWT"/>
                         <outlet property="selectedColorButton" destination="2IW-IU-ewm" id="mJU-Yl-buh"/>
+                        <outlet property="stickFigureButton" destination="lX3-a4-gbP" id="g9T-Jz-lbS"/>
+                        <outlet property="triangleButton" destination="XcA-4R-4hJ" id="AdB-xa-i5W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gss-it-yO5" userLabel="First Responder" sceneMemberID="firstResponder"/>
