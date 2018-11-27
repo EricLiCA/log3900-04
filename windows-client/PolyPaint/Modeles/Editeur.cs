@@ -426,6 +426,7 @@ namespace PolyPaint.Modeles
         // On vide la surface de dessin de tous ses traits.
         public void Reinitialiser(object o)
         {
+            this.EditingStroke = null;
             traits.Clear();
             EditionSocket.ClearCanvas();
         }
@@ -601,6 +602,7 @@ namespace PolyPaint.Modeles
 
         private void Load(List<string> list)
         {
+            this.EditingStroke = null;
             traits.Clear();
             history.Clear();
             undoStack.Clear();
@@ -613,6 +615,7 @@ namespace PolyPaint.Modeles
 
         public void Load(JArray shapeObjects)
         {
+            this.EditingStroke = null;
             traits.Clear();
             history.Clear();
             undoStack.Clear();
