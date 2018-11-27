@@ -134,7 +134,11 @@ namespace PolyPaint.Vues
             ImageViewAuthor.Text = "CreatedBy " + CurrentGalleryCard.Image.authorName;
             CurrentImagePassword.Text = CurrentGalleryCard.Image.password;
             Uri imageUri = new Uri(CurrentGalleryCard.Image.fullImageUrl);
-            BitmapImage imageBitmap = new BitmapImage(imageUri);
+            BitmapImage imageBitmap = new BitmapImage();
+            imageBitmap.BeginInit();
+            imageBitmap.UriSource = imageUri;
+            imageBitmap.CacheOption = BitmapCacheOption.OnLoad;
+            imageBitmap.EndInit();
             ImageViewPicture.Source = imageBitmap;
 
             ImagePreviewRoom.ImageId = CurrentGalleryCard.Image.id;

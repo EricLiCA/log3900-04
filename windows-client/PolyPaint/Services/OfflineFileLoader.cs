@@ -4,11 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PolyPaint.Modeles;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Utilitaires;
+using PolyPaint.Vues;
 using RestSharp;
 
 namespace PolyPaint.Services
@@ -39,8 +41,8 @@ namespace PolyPaint.Services
                 title = newImage.title,
                 protectionLevel = newImage.protectionLevel,
                 password = newImage.password,
-                thumbnailUrl = "https://picsum.photos/300/400/?random",
-                fullImageUrl = "https://picsum.photos/300/400/?random",
+                thumbnailUrl = "https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg",
+                fullImageUrl = "https://i.pinimg.com/originals/f5/05/24/f50524ee5f161f437400aaf215c9e12f.jpg",
                 shapes = new List<string>()
             };
 
@@ -75,20 +77,10 @@ namespace PolyPaint.Services
             return image.shapes;
         }
 
-        internal static void save(List<string> tosave)
+        internal static void save(byte[] obj, List<string> tosave)
         {
-            string pathString = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\offlinefiles";
-            Directory.CreateDirectory(pathString);
-
-            string fileContent = File.ReadAllText(Path.Combine(pathString, ServerService.instance.currentImageId));
-            OfflineFileImage image = JObject.Parse(fileContent).ToObject<OfflineFileImage>();
-            image.shapes = tosave;
-
-            File.WriteAllText(pathString + "\\" + image.id, JsonConvert.SerializeObject(image));
-        }
-
-        internal static void saveImage(byte[] obj)
-        {
+            try
+            { 
             string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
             Directory.CreateDirectory(path2String);
             string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
@@ -99,10 +91,16 @@ namespace PolyPaint.Services
 
             string fileContent = File.ReadAllText(Path.Combine(pathString, ServerService.instance.currentImageId));
             OfflineFileImage image = JObject.Parse(fileContent).ToObject<OfflineFileImage>();
+            image.shapes = tosave;
             image.fullImageUrl = file;
             image.thumbnailUrl = file;
-
+            
             File.WriteAllText(pathString + "\\" + image.id, JsonConvert.SerializeObject(image));
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         internal static void upload()
