@@ -101,17 +101,22 @@ namespace PolyPaint.Modeles.Strokes
         public static List<string> fromServerStyle(List<string> content)
         {
             List<string> returnList = new List<string>() {};
-            for (int index = 0; index < content.Count; index++)
-            {
-                if (returnList.Count > 0)
-                    returnList.Add("--");
 
-                if (content[index] == "") continue;
+            if (content != null)
+                for (int index = 0; index < content.Count; index++)
+                {
+                    if (returnList.Count > 0)
+                        returnList.Add("--");
 
-                var sections = content[index].Split(new[] { "\\n" }, StringSplitOptions.None);
-                for (int i = 0; i < sections.Length; i++)
-                    returnList.Add(sections[i]);
-            }
+                    if (content[index] == "") continue;
+
+                    var sections = content[index].Split(new[] { "\\n" }, StringSplitOptions.None);
+                    for (int i = 0; i < sections.Length; i++)
+                        returnList.Add(sections[i]);
+                }
+            else
+                returnList.Add("");
+
             return returnList;
         }
 
