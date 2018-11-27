@@ -15,7 +15,7 @@ public class StickFigureView: BasicShapeView {
     var actorName = ""
     
     init(actorName: String, x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int) {
-        let frame = CGRect(x: x, y: y, width: height, height: width)
+        let frame = CGRect(x: x, y: y, width: width, height: height)
         self.actorName = actorName
         super.init(frame: frame, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "ACTOR", index: index)
         let image = UIImage(named: "StickFigure")

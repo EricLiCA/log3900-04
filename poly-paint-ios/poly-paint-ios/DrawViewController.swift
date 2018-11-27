@@ -1032,8 +1032,31 @@ class DrawViewController: UIViewController {
                 view?.uuid = dataString["Id"] as! String
                 self.shapes.updateValue(view!, forKey: dataString["Id"] as! String)
                 self.drawingPlace.addSubview(view!)
+                let userInfo = ["shape":view!] as [String : BasicShapeView]
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
+            }
+            if (dataString["ShapeType"] as! String == "CLASS") {
+                let uuid = dataString["Id"] as! String
+                let shape = self.shapes[uuid]
+                shape?.removeFromSuperview()
+                let view = self.imageLoader.parseClass(shape: dataString)
+                view?.uuid = dataString["Id"] as! String
+                self.shapes.updateValue(view!, forKey: dataString["Id"] as! String)
+                self.drawingPlace.addSubview(view!)
                 //let userInfo = ["shape":view!] as [String : BasicShapeView]
-                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
+               // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
+            }
+                
+            if (dataString["ShapeType"] as! String == "ACTOR") {
+                let uuid = dataString["Id"] as! String
+                let shape = self.shapes[uuid]
+                shape?.removeFromSuperview()
+                let view = self.imageLoader.parseActor(shape: dataString)
+                view?.uuid = dataString["Id"] as! String
+                self.shapes.updateValue(view!, forKey: dataString["Id"] as! String)
+                self.drawingPlace.addSubview(view!)
+                //let userInfo = ["shape":view!] as [String : BasicShapeView]
+                // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
             }
                 
             else if(dataString["ShapeType"] as! String == "LINE"){
