@@ -488,10 +488,16 @@ namespace PolyPaint.Modeles
 
             ServerService.instance.Socket.On("editStroke", new CustomListener((object[] server_params) =>
             {
+                bool isLineEditing = this.traits.Any(stroke => stroke is AnchorPoint);
+
                 CustomStroke updated = SerializationHelper.stringToStroke((JObject)server_params[0], this.traits);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Stroke old = this.traits.get(updated.Id.ToString());
+                    
+                    if (old is Anchorable)
+                        ((Anchorable)old).hideAnchorPoints();
+
                     bool selected = ((CustomStroke)old).isSelected();
                     bool editting = ((CustomStroke)old).isEditing();
                     bool locked = ((CustomStroke)old).isLocked();
@@ -512,6 +518,7 @@ namespace PolyPaint.Modeles
                     if (selected) this.traits.get(updated.Id.ToString()).Select();
                     if (editting) this.traits.get(updated.Id.ToString()).startEditing();
                     if (locked) this.traits.get(updated.Id.ToString()).Lock();
+                    if (isLineEditing) ((Anchorable)this.traits.get(updated.Id.ToString())).showAnchorPoints();
                 });
             }));
 
