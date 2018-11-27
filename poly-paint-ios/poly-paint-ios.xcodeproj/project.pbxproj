@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4A0815B34FF7B9EEEA4C20F2 /* Pods_poly_paint_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */; };
+		A73BEBAD21AC53370001C692 /* PhotoCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73BEBAC21AC53370001C692 /* PhotoCommentTableViewCell.swift */; };
+		A73BEBAF21AC6D5A0001C692 /* PhotoCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73BEBAE21AC6D5A0001C692 /* PhotoCommentViewController.swift */; };
+		A73BEBB221AC6DC20001C692 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73BEBB121AC6DC20001C692 /* Comment.swift */; };
 		A74A5B0C219DDFE600051D14 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A5B0B219DDFE600051D14 /* ChatModel.swift */; };
 		A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46EE21569CFB0056135A /* AppDelegate.swift */; };
 		A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F021569CFB0056135A /* ChatViewController.swift */; };
@@ -75,6 +78,9 @@
 
 /* Begin PBXFileReference section */
 		142B8D5CF9AB57002345952A /* Pods-poly-paint-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.release.xcconfig"; sourceTree = "<group>"; };
+		A73BEBAC21AC53370001C692 /* PhotoCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCommentTableViewCell.swift; sourceTree = "<group>"; };
+		A73BEBAE21AC6D5A0001C692 /* PhotoCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCommentViewController.swift; sourceTree = "<group>"; };
+		A73BEBB121AC6DC20001C692 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		A74A5B0B219DDFE600051D14 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		A77C46EB21569CFB0056135A /* poly-paint-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "poly-paint-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77C46EE21569CFB0056135A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -165,6 +171,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A73BEBB021AC6DB00001C692 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A73BEBB121AC6DC20001C692 /* Comment.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		A74A5B0A219DC9B300051D14 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +212,7 @@
 		A77C46ED21569CFB0056135A /* poly-paint-ios */ = {
 			isa = PBXGroup;
 			children = (
+				A73BEBB021AC6DB00001C692 /* Models */,
 				A7E54300219F447F00261E9B /* S3 */,
 				CCD4FA772186848A005E124B /* PrivateImageViewController.swift */,
 				CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */,
@@ -235,6 +250,8 @@
 				A7E542FE219F3CA900261E9B /* User.swift */,
 				A7AC4ADB21A882E5009C2F5B /* PublicImagesViewController.swift */,
 				A7AC4ADD21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift */,
+				A73BEBAC21AC53370001C692 /* PhotoCommentTableViewCell.swift */,
+				A73BEBAE21AC6D5A0001C692 /* PhotoCommentViewController.swift */,
 			);
 			path = "poly-paint-ios";
 			sourceTree = "<group>";
@@ -478,6 +495,7 @@
 				A74A5B0C219DDFE600051D14 /* ChatModel.swift in Sources */,
 				CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
+				A73BEBAD21AC53370001C692 /* PhotoCommentTableViewCell.swift in Sources */,
 				CFEF506621784173001C93AB /* ProfilePictureViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
 				A7AC4ADE21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift in Sources */,
@@ -485,6 +503,7 @@
 				CCE6BC4D21925DE800C6DF31 /* ColorPickerViewController.swift in Sources */,
 				CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */,
 				CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */,
+				A73BEBAF21AC6D5A0001C692 /* PhotoCommentViewController.swift in Sources */,
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
 				CF3DD51F2197A34600A14BAF /* CanevasViewController.swift in Sources */,
 				A7AC4ADC21A882E5009C2F5B /* PublicImagesViewController.swift in Sources */,
@@ -500,6 +519,7 @@
 				CCD4FA7221801444005E124B /* MyImagesCollectionViewController.swift in Sources */,
 				CCA060E9219D151A00B558CA /* UIColorExtentions.swift in Sources */,
 				A7E542FF219F3CA900261E9B /* User.swift in Sources */,
+				A73BEBB221AC6DC20001C692 /* Comment.swift in Sources */,
 				CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */,
 				A7E54302219F44A200261E9B /* S3Service.swift in Sources */,
 				CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */,

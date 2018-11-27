@@ -122,4 +122,11 @@ class PublicImageViewController: UIViewController {
         
         task.resume()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "CommentsPopoverSegue") {
+            let commentViewController = segue.destination as! PhotoCommentViewController
+            commentViewController.image = image
+        }
+    }
 }
