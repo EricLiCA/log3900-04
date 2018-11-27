@@ -100,7 +100,7 @@ namespace PolyPaint.Modeles.Strokes
                 Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y},
                 Height = this.Height,
                 Width = this.Width,
-                Content = this.textContent,
+                Content = UseCaseStroke.toServerStyle(this.textContent),
                 Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
             };
         }
