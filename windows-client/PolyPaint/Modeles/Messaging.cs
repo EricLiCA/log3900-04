@@ -89,6 +89,8 @@ namespace PolyPaint.Modeles
             {
                 ChatRoom room;
 
+                if ((string)server_params[0] == "Lobby" && (string)server_params[1] == ServerService.instance.user.username) return;
+
                 if (this.SubscribedChatRooms.Any(ChatRoom => ChatRoom.Name == (string)server_params[0]))
                 {
                     room = this.SubscribedChatRooms.First(ChatRoom => ChatRoom.Name == (string)server_params[0]);

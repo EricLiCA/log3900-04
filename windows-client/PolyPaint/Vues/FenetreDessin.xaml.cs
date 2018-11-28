@@ -216,12 +216,12 @@ namespace PolyPaint
             Rect bounds = VisualTreeHelper.GetDescendantBounds(Canvas);
             double dpi = 96d;
 
-            RenderTargetBitmap rtb = new RenderTargetBitmap((int)bounds.Width, (int)bounds.Height, dpi, dpi, PixelFormats.Default);
+            RenderTargetBitmap rtb = new RenderTargetBitmap(((VueModele)this.DataContext).CanvasWidth, ((VueModele)this.DataContext).CanvasHeight, dpi, dpi, PixelFormats.Default);
             DrawingVisual dv = new DrawingVisual();
             using (DrawingContext dc = dv.RenderOpen())
             {
                 VisualBrush vb = new VisualBrush(Canvas);
-                dc.DrawRectangle(vb, null, new Rect(new Point(), bounds.Size));
+                dc.DrawRectangle(vb, null, new Rect(new Point(), new Size(((VueModele)this.DataContext).CanvasWidth, ((VueModele)this.DataContext).CanvasHeight)));
             }
             rtb.Render(dv);
 

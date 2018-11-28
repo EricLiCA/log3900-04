@@ -81,21 +81,21 @@ namespace PolyPaint.Services
         {
             try
             { 
-            string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
-            Directory.CreateDirectory(path2String);
-            string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
-            File.WriteAllBytes(file, obj);
+                string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
+                Directory.CreateDirectory(path2String);
+                string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
+                File.WriteAllBytes(file, obj);
 
-            string pathString = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\offlinefiles";
-            Directory.CreateDirectory(pathString);
+                string pathString = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\offlinefiles";
+                Directory.CreateDirectory(pathString);
 
-            string fileContent = File.ReadAllText(Path.Combine(pathString, ServerService.instance.currentImageId));
-            OfflineFileImage image = JObject.Parse(fileContent).ToObject<OfflineFileImage>();
-            image.shapes = tosave;
-            image.fullImageUrl = file;
-            image.thumbnailUrl = file;
+                string fileContent = File.ReadAllText(Path.Combine(pathString, ServerService.instance.currentImageId));
+                OfflineFileImage image = JObject.Parse(fileContent).ToObject<OfflineFileImage>();
+                image.shapes = tosave;
+                image.fullImageUrl = file;
+                image.thumbnailUrl = file;
             
-            File.WriteAllText(pathString + "\\" + image.id, JsonConvert.SerializeObject(image));
+                File.WriteAllText(pathString + "\\" + image.id, JsonConvert.SerializeObject(image));
             }
             catch(Exception e)
             {
