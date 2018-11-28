@@ -119,7 +119,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create a new image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVY-YR-01d">
-                                <rect key="frame" x="68" y="49" width="185" height="24"/>
+                                <rect key="frame" x="67.5" y="49" width="185" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -817,7 +817,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVN-w7-E5K">
-                                                        <rect key="frame" x="147" y="0.0" width="34" height="22"/>
+                                                        <rect key="frame" x="147" y="0.0" width="35" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="1V4-UI-Vru"/>
                                                             <constraint firstAttribute="height" constant="22" id="LCp-wG-6xh"/>
@@ -828,7 +828,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-UT-PUr">
-                                                        <rect key="frame" x="195" y="0.0" width="35" height="22"/>
+                                                        <rect key="frame" x="196" y="0.0" width="34" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="KSY-wl-7iy"/>
                                                             <constraint firstAttribute="height" constant="22" id="TF6-1h-DWF"/>
@@ -1216,6 +1216,7 @@
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="anonymousLoginButton" destination="SRX-hL-G4h" id="vxq-mC-9Aq"/>
                         <outlet property="authenticationFailedLabel" destination="Puh-Hd-Lg8" id="0BA-I5-LJZ"/>
                         <outlet property="loginButton" destination="ZnL-a7-3af" id="UqL-uJ-T9y"/>
                         <outlet property="passwordTextField" destination="AKD-8H-mqh" id="Euq-Zl-o1v"/>
@@ -1643,7 +1644,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rkt-xv-5Io">
-                                <rect key="frame" x="0.0" y="130" width="768" height="786"/>
+                                <rect key="frame" x="0.0" y="80" width="768" height="836"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QHs-Uy-sF4">
@@ -1704,7 +1705,7 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Modify image title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ayc-Wn-pU3">
-                                <rect key="frame" x="20" y="92" width="728" height="30"/>
+                                <rect key="frame" x="20" y="42" width="728" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -1734,7 +1735,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="editBtn" destination="fmz-Sz-H4R" id="DIG-35-vxJ"/>
-                        <outlet property="imageProtectionLevelLabel" destination="fpj-Rf-U1Q" id="Zup-jw-i7s"/>
                         <outlet property="imageProtectionLevelLabel" destination="W3z-oy-bRf" id="Rc4-vK-zj5"/>
                         <outlet property="imageView" destination="Rkt-xv-5Io" id="iar-2m-6ii"/>
                         <outlet property="likeButton" destination="elL-sf-gxs" id="1jz-od-wV1"/>
