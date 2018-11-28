@@ -528,6 +528,8 @@ namespace PolyPaint.Modeles
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Stroke old = this.traits.ToList().Find(stroke => ((CustomStroke)stroke).Id.ToString() == (string)server_params[0]);
+                    if (old == null) return;
+
                     ((CustomStroke)old).stopEditing();
                     Application.Current.Dispatcher.Invoke(() =>
                     {
