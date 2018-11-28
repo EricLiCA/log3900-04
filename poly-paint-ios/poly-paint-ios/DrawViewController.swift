@@ -449,36 +449,36 @@ class DrawViewController: UIViewController {
             layer.strokeColor = UIColor.black.cgColor
             
             if(currentShape == Shape.Rectangle) {
-                let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, index: self.shapes.count + 1)
+                let rectangleView = RectangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, index: self.shapes.count + 1, imageID: (self.image?.id)!)
                 print(rectangleView.index!)
                 print(self.shapes.count + 1)
                 self.shapes[rectangleView.uuid!] = rectangleView
                 self.drawingPlace.addSubview(rectangleView)
                 self.undoRedoManager.alertInsertion(shape:rectangleView)
-                self.drawingSocketManager.addShape(shape: rectangleView)
+                self.drawingSocketManager.addShape(shape: rectangleView, imageID: (self.image?.id)!)
                 
             } else if(currentShape == Shape.Ellipse) {
-                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: "", index: self.shapes.count + 1)
+                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: "", index: self.shapes.count + 1, imageID: (self.image?.id)!)
                 self.shapes[ellipseView.uuid!] = ellipseView
                 self.drawingPlace.addSubview(ellipseView)
                 self.useCaseText = ""
                 self.undoRedoManager.alertInsertion(shape:ellipseView)
-                self.drawingSocketManager.addShape(shape: ellipseView)
+                self.drawingSocketManager.addShape(shape: ellipseView, imageID: (self.image?.id)!)
                 
             } else if(currentShape == Shape.UseCase) {
-                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: self.useCaseText, index: self.shapes.count + 1)
+                let ellipseView = EllipseView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, useCase: self.useCaseText, index: self.shapes.count + 1, imageID: (self.image?.id)!)
                 self.shapes[ellipseView.uuid!] = ellipseView
                 self.drawingPlace.addSubview(ellipseView)
                 self.useCaseText = ""
                 self.undoRedoManager.alertInsertion(shape:ellipseView)
-                self.drawingSocketManager.addShape(shape: ellipseView)
+                self.drawingSocketManager.addShape(shape: ellipseView, imageID: (self.image?.id)!)
                 
             } else if(currentShape == Shape.Triangle) {
-                let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, index: self.shapes.count + 1)
+                let triangleView = TriangleView(frame: (self.currentBezierPath?.bounds)!, color: self.selectedColor, index: self.shapes.count + 1, imageID: (self.image?.id)!)
                 self.shapes[triangleView.uuid!] = triangleView
                 self.drawingPlace.addSubview(triangleView)
                 self.undoRedoManager.alertInsertion(shape:triangleView)
-                self.drawingSocketManager.addShape(shape: triangleView)
+                self.drawingSocketManager.addShape(shape: triangleView, imageID: (self.image?.id)!)
                 
             } else if(currentShape == Shape.Line) {
                 var line = Line(layer: layer, startPoint: self.firstTouch!, endPoint: self.secondTouch!, firstEndRelation: self.firstEndRelation!, secondEndRelation: self.secondEndRelation!, firstEndTextField: self.firstEndLabel!, secondEndTextField: self.secondEndLabel!)
@@ -594,63 +594,63 @@ class DrawViewController: UIViewController {
         
         
         if shapeType == "RECTANGLE" {
-            let view = RectangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, index: self.shapes.count + 1)
+            let view = RectangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, index: self.shapes.count + 1, imageID: (self.image?.id)!)
             view.center.x = 0 + view.frame.width/2
             view.center.y = 0 + view.frame.height/2
             print("mamamamamaamamamamamamamamamamamamaamamamammaamam" , view.uuid!)
             self.shapes[view.uuid!] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.addShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view, imageID: (self.image?.id)!)
             // self.drawingPlace.layer.addSublayer(view.layer)
         }
             
         else if shapeType == "TRIANGLE" {
-            let view = TriangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, index: self.shapes.count + 1)
+            let view = TriangleView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, index: self.shapes.count + 1, imageID: (self.image?.id)!)
             view.center.x = 0 + view.frame.width/2
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid!] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.addShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view, imageID: (self.image?.id)!)
             //self.drawingPlace.layer.addSublayer(view.layer)
         }
             
         else  if shapeType == "ELLIPSE" {
-            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: "", index: self.shapes.count + 1)
+            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: "", index: self.shapes.count + 1, imageID: (self.image?.id)!)
             view.center.x = 0 + view.frame.width/2
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid!] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.addShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view, imageID: (self.image?.id)!)
             //self.drawingPlace.layer.addSublayer(view.layer)
         }
             
         else  if shapeType == "USE" {
-            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: notification.userInfo?["useCase"] as! String, index: self.shapes.count + 1)
+            let view = EllipseView(frame: notification.userInfo?["frame"] as! CGRect, color: notification.userInfo?["color"] as! UIColor, useCase: notification.userInfo?["useCase"] as! String, index: self.shapes.count + 1,  imageID: (self.image?.id)!)
             view.center.x = 0 + view.frame.width/2
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid!] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.addShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view, imageID: (self.image?.id)!)
             //self.drawingPlace.layer.addSublayer(view.layer)
         }
             
         else  if shapeType == "ACTOR" {
-            let view = StickFigureView(actorName: notification.userInfo?["actor"] as! String, x: 0, y:0, height: 60 , width: 50, index: self.shapes.count + 1)
+            let view = StickFigureView(actorName: notification.userInfo?["actor"] as! String, x: 0, y:0, height: 60 , width: 50, index: self.shapes.count + 1,  imageID: (self.image?.id)!)
             view.center.x = 0 + view.frame.width/2
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid!] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.addShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view, imageID: (self.image?.id)!)
             //self.drawingPlace.layer.addSublayer(view.layer)
         }
             
         else if shapeType == "CLASS" {
-            let view = ClassDiagramView(text: notification.userInfo?["text"] as! [String], x: notification.userInfo?["x"] as! CGFloat, y: notification.userInfo?["y"] as! CGFloat, height: notification.userInfo?["height"] as! CGFloat, width: notification.userInfo?["width"] as! CGFloat, index: self.shapes.count + 1)
+            let view = ClassDiagramView(text: notification.userInfo?["text"] as! [String], x: notification.userInfo?["x"] as! CGFloat, y: notification.userInfo?["y"] as! CGFloat, height: notification.userInfo?["height"] as! CGFloat, width: notification.userInfo?["width"] as! CGFloat, index: self.shapes.count + 1,  imageID: (self.image?.id)!)
             view.center.x = 0 + view.frame.width/2
             view.center.y = 0 + view.frame.height/2
             self.shapes[view.uuid!] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.addShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view, imageID: ((self.image?.id)!))
             //self.drawingPlace.layer.addSublayer(view.layer)
         }
     }
@@ -663,7 +663,7 @@ class DrawViewController: UIViewController {
             let view = shape
             self.shapes[view.uuid!] = view
             self.drawingPlace.addSubview(view)
-            self.drawingSocketManager.addShape(shape: view)
+            self.drawingSocketManager.addShape(shape: view,  imageID: (self.image?.id)!)
             self.drawingPlace.layer.addSublayer(view.layer)
         }
     }
@@ -701,7 +701,7 @@ class DrawViewController: UIViewController {
         let line = notification.userInfo?["line"] as! Line
         self.lines.append(line)
         self.redrawLayers()
-        self.drawingSocketManager.addLine(shape: line)
+        self.drawingSocketManager.addLine(shape: line,  imageID: (self.image?.id)!)
     }
     
     func setUpNotifications() {
@@ -722,9 +722,10 @@ class DrawViewController: UIViewController {
     }
     
     @objc func createStickFigureAlert(sender: AnyObject) {
-        let stickFigure = StickFigureView(actorName: sender.userInfo["actorName"] as! String, x: 0, y:0, height: 60 , width: 50,  index: self.shapes.count + 1)
+        let stickFigure = StickFigureView(actorName: sender.userInfo["actorName"] as! String, x: 0, y:0, height: 60 , width: 50,  index: self.shapes.count + 1,  imageID: (self.image?.id)!)
         self.shapes[stickFigure.uuid!] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
+        self.undoRedoManager.alertInsertion(shape: stickFigure)
     }
     
     
@@ -768,11 +769,11 @@ class DrawViewController: UIViewController {
         let text = self.processText(text: sender.userInfo["text"] as! String)
         
         let rectangle = self.resizeFrame(words: text, x: 100, y: 100, width: 200)
-        let classDiagram = ClassDiagramView(text: text, x:100, y:100, height: rectangle.height, width:200, index: self.shapes.count + 1)
+        let classDiagram = ClassDiagramView(text: text, x:100, y:100, height: rectangle.height, width:200, index: self.shapes.count + 1,  imageID: (self.image?.id)!)
         self.shapes[classDiagram.uuid!] = classDiagram
         self.drawingPlace.addSubview(classDiagram)
         self.undoRedoManager.alertInsertion(shape: classDiagram)
-        self.drawingSocketManager.addShape(shape: classDiagram)
+        self.drawingSocketManager.addShape(shape: classDiagram,  imageID: (self.image?.id)!)
     }
     
     func resizeFrame(words: [String], x: CGFloat, y: CGFloat, width: CGFloat) -> CGRect {
@@ -807,7 +808,7 @@ class DrawViewController: UIViewController {
     
     @objc func movedViewAlert(sender: AnyObject) {
         let view =  sender.userInfo["shape"] as! BasicShapeView
-        self.drawingSocketManager.editShape(shape: view)
+        self.drawingSocketManager.editShape(shape: view,  imageID: (self.image?.id)!)
         let viewUUID = view.uuid!
         for line in self.lines {
             if(line.firstAnchorShapeId == viewUUID) {
@@ -926,8 +927,9 @@ class DrawViewController: UIViewController {
     }
     
     func handleSocketEmits() {
-        self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee048")
+        //self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee048")
         //self.drawingSocketManager.requestJoinImage(imageId: "9db006f6-cd93-11e8-ad4f-12e4abeee049")
+        self.drawingSocketManager.requestJoinImage(imageId: self.image!.id!)
         self.drawingSocketManager.socketIOClient.on("imageData") { (data, ack) in
             
             let dataArray = data[0] as! NSArray
@@ -935,7 +937,7 @@ class DrawViewController: UIViewController {
                 let dataString = dataArray[i] as! [String: AnyObject]
                 
                 if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
-                    let view = self.imageLoader.parseShapes(shape: dataString)
+                    let view = self.imageLoader.parseShapes(shape: dataString,  imageID: (self.image?.id)!)
                     view?.uuid = dataString["Id"] as! String
                     self.shapes[view!.uuid!] = view
                     self.drawingPlace.addSubview(view!)
@@ -944,7 +946,7 @@ class DrawViewController: UIViewController {
                 }
                     
                 else if(dataString["ShapeType"] as! String == "CLASS"){
-                    let classShape = self.imageLoader.parseClass(shape: dataString)!
+                    let classShape = self.imageLoader.parseClass(shape: dataString,  imageID: (self.image?.id)!)!
                     classShape.uuid = dataString["Id"] as! String
                     self.shapes[classShape.uuid!] = classShape
                     self.drawingPlace.addSubview(classShape)
@@ -952,7 +954,7 @@ class DrawViewController: UIViewController {
                 }
                     
                 else if(dataString["ShapeType"] as! String == "ACTOR"){
-                    let actorShape = self.imageLoader.parseActor(shape: dataString)!
+                    let actorShape = self.imageLoader.parseActor(shape: dataString,  imageID: (self.image?.id)!)!
                     actorShape.uuid = dataString["Id"] as! String
                     self.shapes[actorShape.uuid!] = actorShape
                     self.drawingPlace.addSubview(actorShape)
@@ -976,7 +978,7 @@ class DrawViewController: UIViewController {
             let dataString = data[0] as! [String: AnyObject]
             
             if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
-                let view = self.imageLoader.parseShapes(shape: dataString)
+                let view = self.imageLoader.parseShapes(shape: dataString,  imageID: (self.image?.id)!)
                 view?.uuid = dataString["Id"] as! String
                 self.shapes[view!.uuid!] = view
                 self.drawingPlace.addSubview(view!)
@@ -984,14 +986,14 @@ class DrawViewController: UIViewController {
             }
                 
             else if(dataString["ShapeType"] as! String == "CLASS"){
-                let classShape = self.imageLoader.parseClass(shape: dataString)!
+                let classShape = self.imageLoader.parseClass(shape: dataString,  imageID: (self.image?.id)!)!
                 classShape.uuid = dataString["Id"] as! String
                 self.shapes[classShape.uuid!] = classShape
                 self.drawingPlace.addSubview(classShape)
             }
                 
             else if(dataString["ShapeType"] as! String == "ACTOR"){
-                let actorShape = self.imageLoader.parseActor(shape: dataString)!
+                let actorShape = self.imageLoader.parseActor(shape: dataString, imageID: (self.image?.id)!)!
                 actorShape.uuid = dataString["Id"] as! String
                 self.shapes[actorShape.uuid!] = actorShape
                 self.drawingPlace.addSubview(actorShape)
@@ -1028,18 +1030,19 @@ class DrawViewController: UIViewController {
                 let uuid = dataString["Id"] as! String
                 let shape = self.shapes[uuid]
                 shape?.removeFromSuperview()
-                let view = self.imageLoader.parseShapes(shape: dataString)
+                let view = self.imageLoader.parseShapes(shape: dataString,  imageID: (self.image?.id)!)
                 view?.uuid = dataString["Id"] as! String
+                
                 self.shapes.updateValue(view!, forKey: dataString["Id"] as! String)
                 self.drawingPlace.addSubview(view!)
-                let userInfo = ["shape":view!] as [String : BasicShapeView]
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
+                //let userInfo = ["shape":view!] as [String : BasicShapeView]
+                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
             }
             if (dataString["ShapeType"] as! String == "CLASS") {
                 let uuid = dataString["Id"] as! String
                 let shape = self.shapes[uuid]
                 shape?.removeFromSuperview()
-                let view = self.imageLoader.parseClass(shape: dataString)
+                let view = self.imageLoader.parseClass(shape: dataString,  imageID: (self.image?.id)!)
                 view?.uuid = dataString["Id"] as! String
                 self.shapes.updateValue(view!, forKey: dataString["Id"] as! String)
                 self.drawingPlace.addSubview(view!)
@@ -1051,7 +1054,7 @@ class DrawViewController: UIViewController {
                 let uuid = dataString["Id"] as! String
                 let shape = self.shapes[uuid]
                 shape?.removeFromSuperview()
-                let view = self.imageLoader.parseActor(shape: dataString)
+                let view = self.imageLoader.parseActor(shape: dataString,  imageID: (self.image?.id)!)
                 view?.uuid = dataString["Id"] as! String
                 self.shapes.updateValue(view!, forKey: dataString["Id"] as! String)
                 self.drawingPlace.addSubview(view!)

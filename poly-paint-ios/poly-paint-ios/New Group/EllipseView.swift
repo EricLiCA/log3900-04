@@ -12,11 +12,11 @@ class EllipseView: BasicShapeView {
     
     var labelText: String?
     
-    init(frame: CGRect, color: UIColor, useCase: String, index: Int ) {
+    init(frame: CGRect, color: UIColor, useCase: String, index: Int, imageID: String) {
         if(useCase != "") {
-            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "USE", index: index)
+            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "USE", index: index, imageID: imageID)
         } else {
-            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE", index: index)
+            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE", index: index, imageID: imageID)
         }
         self.labelText = useCase
         self.backgroundColor = UIColor.clear
@@ -63,7 +63,7 @@ class EllipseView: BasicShapeView {
         var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor

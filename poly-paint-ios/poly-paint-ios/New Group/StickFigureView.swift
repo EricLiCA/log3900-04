@@ -10,15 +10,18 @@ import UIKit
 
 public class StickFigureView: BasicShapeView {
 
-    let defaultHeight: CGFloat = 60
-    let defaultWidth: CGFloat = 50
+    let defaultHeight: CGFloat = 100
+    let defaultWidth: CGFloat = 80
     var actorName = ""
     
-    init(actorName: String, x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int) {
-        let frame = CGRect(x: x, y: y, width: width, height: height)
+    init(actorName: String, x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int, imageID: String) {
+        let frame = CGRect(x: x, y: y, width: self.defaultWidth, height: self.defaultHeight)
         self.actorName = actorName
-        super.init(frame: frame, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "ACTOR", index: index)
+        super.init(frame: frame, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "ACTOR", index: index, imageID: imageID)
         let image = UIImage(named: "StickFigure")
+        //image?.draw(in: frame)
+        //image?.size.height = self.defaultHeight
+        //image?.size.width = self.defaultWidth
         self.backgroundColor = UIColor(patternImage: image!)
         
     }
@@ -54,7 +57,7 @@ public class StickFigureView: BasicShapeView {
         var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
@@ -88,19 +91,19 @@ public class StickFigureView: BasicShapeView {
         }
     }
     
-    override func toShapeObject() -> Data? {
+    override func toShapeObject(imageID: String) -> Data? {
         
         let shape: [String: Any] = [
             
             "Id": self.uuid,
-            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ImageId": imageID,
             "ShapeType": self.shapeType!,
             "Index": self.index,
             "ShapeInfo": [
-                "Content": self.actorName,
+                "Content": [self.actorName],
                 "Center": [
-                    "X": self.center.x,
-                    "Y": self.center.y
+                    "X": self.frame.origin.x,
+                    "Y": self.frame.origin.y
                 ],
                 "Width": self.frame.width,
                 "Height": self.frame.height,

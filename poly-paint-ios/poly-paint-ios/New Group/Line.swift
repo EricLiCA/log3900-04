@@ -52,9 +52,9 @@ public class Line: Equatable {
             if(index != (self.points.count - 1)) {
                 var distanceToSegment = findDistanceToSegment(touchPoint: touchPoint, p1: self.points[index], p2: self.points[index + 1])
 
-                if(distanceToSegment > 15) {
+                if(distanceToSegment > 20) {
 
-                } else if(distanceToSegment < 15) {
+                } else if(distanceToSegment < 20) {
                     self.hitStartPoint = index
                     self.hitEndPoint = index + 1
                     self.select()
@@ -70,7 +70,7 @@ public class Line: Equatable {
         var index = 0
         for point in self.points {
             var distanceToPoint = self.findDistanceBetween(p1: touchPoint, p2: point)
-            if(distanceToPoint < 10) {
+            if(distanceToPoint < 15) {
                 print("TOUCHED POINT!!")
                 self.select()
                 return index
@@ -290,7 +290,7 @@ public class Line: Equatable {
         return lhs.uuid == rhs.uuid
     }
     
-    func toShapeObject() -> Data? {
+    func toShapeObject(imageID: String) -> Data? {
         var pointsArray = [Any]()
         for point in self.points {
             pointsArray.append(["X": point.x, "Y": point.y])
@@ -298,7 +298,7 @@ public class Line: Equatable {
 
         let shape: [String: Any] = [
             "Id": self.uuid,
-            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ImageId": imageID,
             "ShapeType": "LINE",
             "Index": 1,
             "ShapeInfo": [

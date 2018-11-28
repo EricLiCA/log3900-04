@@ -17,11 +17,11 @@ public class ClassDiagramView: BasicShapeView {
     var x: CGFloat?
     var y: CGFloat?
 
-    init(text: [String], x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int) {
+    init(text: [String], x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int, imageID: String) {
         self.x = x
         self.y = y
         let rectangle = CGRect(x: x, y: y, width: width, height: height)
-        super.init(frame: rectangle, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "CLASS", index: index)
+        super.init(frame: rectangle, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "CLASS", index: index, imageID: imageID)
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.text = text
@@ -52,7 +52,7 @@ public class ClassDiagramView: BasicShapeView {
         var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
@@ -122,19 +122,19 @@ public class ClassDiagramView: BasicShapeView {
         }
     }
     
-    override func toShapeObject() -> Data? {
+    override func toShapeObject(imageID: String) -> Data? {
         
         let shape: [String: Any] = [
             
             "Id": self.uuid,
-            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ImageId": imageID,
             "ShapeType": self.shapeType!,
             "Index": self.index,
             "ShapeInfo": [
                 "Content": self.text,
                 "Center": [
-                    "X": self.center.x,
-                    "Y": self.center.y
+                    "X": self.frame.origin.x,
+                    "Y": self.frame.origin.y
                 ],
                 "Width": self.frame.width,
                 "Height": self.frame.height,

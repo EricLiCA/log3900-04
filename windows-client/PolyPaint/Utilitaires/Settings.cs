@@ -32,8 +32,8 @@ namespace PolyPaint.Utilitaires
         public const string PENDING_FRIEND_REQUEST_BY_REQUESTER_ID_PATH = "/pendingFriendRequestByRequesterId";
 
         //Credentials
-        public const string aws_access_key_id = "AKIAIZN6KZDRICBY76VA";
-        public const string aws_secret_access_key = "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";
+        public const string aws_access_key_id = "AKIAJMM7EPKCBVSXTHCA";
+        public const string aws_secret_access_key = "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";
 
         public const string WEB_CLIENT_LINK = "localhost:4200/";
     }

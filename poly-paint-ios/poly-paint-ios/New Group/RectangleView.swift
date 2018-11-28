@@ -11,8 +11,8 @@ import UIKit
 class RectangleView: BasicShapeView {
     
     
-    init(frame: CGRect, color: UIColor, index: Int ) {
-        super.init(frame: frame, numberOfAnchorPoints: 4, color: color, shapeType: "RECTANGLE",index: index)
+    init(frame: CGRect, color: UIColor, index: Int, imageID: String) {
+        super.init(frame: frame, numberOfAnchorPoints: 4, color: color, shapeType: "RECTANGLE",index: index, imageID: imageID)
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
     }
@@ -41,7 +41,7 @@ class RectangleView: BasicShapeView {
         let anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
-            let circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            let circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             let shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor

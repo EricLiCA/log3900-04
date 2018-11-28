@@ -20,8 +20,9 @@ public class BasicShapeView: UIView {
     var index: Int?
     var showAnchors = false
     var drawingSocketManager = DrawingSocketManager()
+    var imageID: String?
     
-    init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?, index: Int) {
+    init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?, index: Int, imageID: String) {
         self.shapeType = shapeType
         self.numberOfAnchorPoints = numberOfAnchorPoints - 1;
         super.init(frame: frame)
@@ -31,6 +32,7 @@ public class BasicShapeView: UIView {
         self.color = color
         self.index = index
         self.uuid = NSUUID.init().uuidString.lowercased()
+        self.imageID = imageID
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -77,7 +79,7 @@ public class BasicShapeView: UIView {
             
             if(panGR.state == .ended) {
                 //self.hideAnchorPoints()
-                self.drawingSocketManager.editShape(shape: self)
+                self.drawingSocketManager.editShape(shape: self, imageID: imageID!)
             } else if(panGR.state == .began) {
                 //self.showAnchorPoints()
             }
@@ -259,26 +261,47 @@ public class BasicShapeView: UIView {
         }
     }
     
-    func toShapeObject() -> Data? {
-        
-        let shape: [String: Any] = [
-            "Id": self.uuid!,
-            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
-            "ShapeType": self.shapeType!,
-            "Index": self.index!,
-            "ShapeInfo": [
-                "Center": [
-                    "X": self.center.x,
-                    "Y": self.center.y
-                ],
-                "Width": self.frame.width,
-                "Height": self.frame.height,
-                "Color": self.color?.hexString
+    func toShapeObject(imageID: String) -> Data? {
+        if(self.shapeType! == "TRIANGLE") {
+            let shape: [String: Any] = [
+                "Id": self.uuid!,
+                "ImageId": imageID,
+                "ShapeType": self.shapeType!,
+                "Index": self.index!,
+                "ShapeInfo": [
+                    "Center": [
+                        "X": self.center.x,
+                        "Y": self.center.y
+                    ],
+                    "Width": self.frame.width,
+                    "Height": self.frame.height,
+                    "Color": self.color?.hexString
+                ]
             ]
-        ]
+            
+            let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+            return jsonData;
+        } else {
+            let shape: [String: Any] = [
+                "Id": self.uuid!,
+                "ImageId": imageID,
+                "ShapeType": self.shapeType!,
+                "Index": self.index!,
+                "ShapeInfo": [
+                    "Center": [
+                        "X": self.frame.origin.x,
+                        "Y": self.frame.origin.y
+                    ],
+                    "Width": self.frame.width,
+                    "Height": self.frame.height,
+                    "Color": self.color?.hexString
+                ]
+            ]
+            
+            let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+            return jsonData;
+        }
         
-        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
-        return jsonData;
         
     }
     

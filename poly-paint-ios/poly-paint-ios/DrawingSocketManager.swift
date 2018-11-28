@@ -13,16 +13,16 @@ class DrawingSocketManager {
     
     var socketIOClient: SocketIOClient = ChatModel.instance.socketIOClient
     
-    public func addShape(shape: BasicShapeView) {
-        socketIOClient.emit("addStroke", shape.toShapeObject()!);
+    public func addShape(shape: BasicShapeView, imageID: String) {
+        socketIOClient.emit("addStroke", shape.toShapeObject(imageID: imageID)!);
     }
     
     public func removeShape(shape: BasicShapeView) {
         socketIOClient.emit("removeStroke", shape.uuid!);
     }
     
-    public func editShape(shape: BasicShapeView) {
-        socketIOClient.emit("editStroke", shape.toShapeObject()!);
+    public func editShape(shape: BasicShapeView, imageID: String) {
+        socketIOClient.emit("editStroke", shape.toShapeObject(imageID: imageID)!);
     }
     
     public func  requestJoinImage(imageId: String) {
@@ -45,15 +45,15 @@ class DrawingSocketManager {
         socketIOClient.emit("clearCanvas");
     }
     
-    public func addLine(shape: Line) {
-        socketIOClient.emit("addStroke", shape.toShapeObject()!);
+    public func addLine(shape: Line, imageID: String) {
+        socketIOClient.emit("addStroke", shape.toShapeObject(imageID: imageID)!);
     }
     
     public func removeLine(shape: Line) {
         socketIOClient.emit("removeStroke", shape.uuid);
     }
     
-    public func editLine(shape: BasicShapeView) {
-        socketIOClient.emit("editStroke", shape.toShapeObject()!);
+    public func editLine(shape: BasicShapeView, imageID: String) {
+        socketIOClient.emit("editStroke", shape.toShapeObject(imageID: imageID)!);
     }
 }
