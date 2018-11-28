@@ -290,7 +290,7 @@ public class Line: Equatable {
         return lhs.uuid == rhs.uuid
     }
     
-    func toShapeObject() -> Data? {
+    func toShapeObject(imageID: String) -> Data? {
         var pointsArray = [Any]()
         for point in self.points {
             pointsArray.append(["X": point.x, "Y": point.y])
@@ -298,7 +298,7 @@ public class Line: Equatable {
 
         let shape: [String: Any] = [
             "Id": self.uuid,
-            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ImageId": imageID,
             "ShapeType": "LINE",
             "Index": 1,
             "ShapeInfo": [

@@ -14,10 +14,10 @@ public class StickFigureView: BasicShapeView {
     let defaultWidth: CGFloat = 80
     var actorName = ""
     
-    init(actorName: String, x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int) {
+    init(actorName: String, x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int, imageID: String) {
         let frame = CGRect(x: x, y: y, width: self.defaultWidth, height: self.defaultHeight)
         self.actorName = actorName
-        super.init(frame: frame, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "ACTOR", index: index)
+        super.init(frame: frame, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "ACTOR", index: index, imageID: imageID)
         let image = UIImage(named: "StickFigure")
         //image?.draw(in: frame)
         //image?.size.height = self.defaultHeight
@@ -91,12 +91,12 @@ public class StickFigureView: BasicShapeView {
         }
     }
     
-    override func toShapeObject() -> Data? {
+    override func toShapeObject(imageID: String) -> Data? {
         
         let shape: [String: Any] = [
             
             "Id": self.uuid,
-            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ImageId": imageID,
             "ShapeType": self.shapeType!,
             "Index": self.index,
             "ShapeInfo": [

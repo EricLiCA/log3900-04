@@ -12,11 +12,11 @@ class EllipseView: BasicShapeView {
     
     var labelText: String?
     
-    init(frame: CGRect, color: UIColor, useCase: String, index: Int ) {
+    init(frame: CGRect, color: UIColor, useCase: String, index: Int, imageID: String) {
         if(useCase != "") {
-            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "USE", index: index)
+            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "USE", index: index, imageID: imageID)
         } else {
-            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE", index: index)
+            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE", index: index, imageID: imageID)
         }
         self.labelText = useCase
         self.backgroundColor = UIColor.clear

@@ -11,8 +11,8 @@ import UIKit
 class RectangleView: BasicShapeView {
     
     
-    init(frame: CGRect, color: UIColor, index: Int ) {
-        super.init(frame: frame, numberOfAnchorPoints: 4, color: color, shapeType: "RECTANGLE",index: index)
+    init(frame: CGRect, color: UIColor, index: Int, imageID: String) {
+        super.init(frame: frame, numberOfAnchorPoints: 4, color: color, shapeType: "RECTANGLE",index: index, imageID: imageID)
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
     }
