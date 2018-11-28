@@ -9,8 +9,8 @@
 import UIKit
 
 enum SERVER: String{
-    case URL = "http://ec2-34-200-247-233.compute-1.amazonaws.com/"
-    //case URL = "http://localhost:3000/"
+    //case URL = "http://ec2-34-200-247-233.compute-1.amazonaws.com/"
+    case URL = "http://localhost:3000/"
 }
 
 class LoginViewController: UIViewController {
