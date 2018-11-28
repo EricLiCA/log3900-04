@@ -3,6 +3,7 @@ import { PostgresDatabase } from '../postgres-database';
 export class ShapeObject {
 
     public static async post(newShapeObject: ShapeObject): Promise<ShapeObject> {
+        console.log("new shape obk=ject: ", newShapeObject)
         const db = await PostgresDatabase.getInstance();
         const queryResponse = await db.query(
             'INSERT INTO shapeobjects("id", "imageid", "shapetype", "index", "shapeinfo") VALUES($1, $2, $3, $4, $5) RETURNING *',

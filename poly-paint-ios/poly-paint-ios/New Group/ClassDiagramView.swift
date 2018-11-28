@@ -8,27 +8,31 @@
 
 import UIKit
 
-class ClassDiagramView: BasicShapeView {
+public class ClassDiagramView: BasicShapeView {
     
-    let defaultTextLineHeight: CGFloat = 40
+    let defaultTextLineHeight: CGFloat = 30
     let defaultMaxNumOfLines = 5
     let textGap: CGFloat = 5
     var text = [String]()
+    var x: CGFloat?
+    var y: CGFloat?
 
-    init(text: [String]) {
-        let rectangle = CGRect(x: 100, y: 100, width: 200, height: 300)
-        super.init(frame: rectangle, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "CLASS")
+    init(text: [String], x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int) {
+        self.x = x
+        self.y = y
+        let rectangle = CGRect(x: x, y: y, width: width, height: height)
+        super.init(frame: rectangle, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "CLASS", index: index)
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
         self.text = text
     }
     
     // We need to implement init(coder) to avoid compilation errors
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         let insetRect = rect.insetBy(dx: lineWidth, dy: lineWidth)
         let path = UIBezierPath(roundedRect: insetRect, cornerRadius: 0)
         UIColor.white.setFill()
@@ -48,7 +52,7 @@ class ClassDiagramView: BasicShapeView {
         var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
@@ -87,6 +91,7 @@ class ClassDiagramView: BasicShapeView {
             currentHeight += label.frame.height
             self.addSubview(label)
         }
+        
     }
     
     func drawLine(fromPoint: CGPoint, toPoint: CGPoint) {
@@ -116,26 +121,31 @@ class ClassDiagramView: BasicShapeView {
             return CGPoint(x: 0, y: 0)
         }
     }
-
-}
-
-class classDiagramPopoverView: UIView {
     
-    @IBOutlet weak var rawText: UITextView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.rawText.text = "Class Name\n--\nAttributes\n--\nMethods"
-    }
-    
-    @IBAction func addClassTapped(_ sender: UIButton) {
-        self.sendCreateClassDiagramNotification()
+    override func toShapeObject() -> Data? {
+        
+        let shape: [String: Any] = [
+            
+            "Id": self.uuid,
+            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ShapeType": self.shapeType!,
+            "Index": self.index,
+            "ShapeInfo": [
+                "Content": self.text,
+                "Center": [
+                    "X": self.center.x,
+                    "Y": self.center.y
+                ],
+                "Width": self.frame.width,
+                "Height": self.frame.height,
+                "Color": self.color?.hexString
+            ]
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+        return jsonData;
         
     }
     
-    func sendCreateClassDiagramNotification() {
-        let userInfo = [ "text" : rawText.text! ]
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "createClassDiagramAlert"), object: nil, userInfo: userInfo)
-    }
-    
 }
+

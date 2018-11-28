@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum SERVER: String{
+    case URL = "http://ec2-34-200-247-233.compute-1.amazonaws.com/"
+    //case URL = "http://localhost:3000/"
+}
+
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var usernameTextField: UITextField!
@@ -44,7 +49,7 @@ class LoginViewController: UIViewController {
     }
     
     func login(_ user: String, _ psw: String) {
-        let url = URL(string: "http://localhost:3000/v2/sessions")
+        let url = URL(string: SERVER.URL.rawValue + "v2/sessions")
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"

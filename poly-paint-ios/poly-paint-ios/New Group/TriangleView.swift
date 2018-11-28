@@ -10,8 +10,8 @@ import UIKit
 
 class TriangleView: BasicShapeView {
     
-    init(frame: CGRect, color: UIColor) {
-        super.init(frame: frame, numberOfAnchorPoints: 3, color: color, shapeType: "TRIANGLE")
+    init(frame: CGRect, color: UIColor, index: Int) {
+        super.init(frame: frame, numberOfAnchorPoints: 3, color: color, shapeType: "TRIANGLE", index: index)
         self.backgroundColor = UIColor.clear
         self.initGestureRecognizers()
     }
@@ -29,7 +29,7 @@ class TriangleView: BasicShapeView {
         self.color?.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
-        self.color?.setStroke()
+        UIColor.black.setStroke()
         path.stroke()
         self.initializeAnchorPoints()
     }
@@ -54,7 +54,7 @@ class TriangleView: BasicShapeView {
         var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor

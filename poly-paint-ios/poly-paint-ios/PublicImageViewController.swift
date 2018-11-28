@@ -11,11 +11,14 @@ import UIKit
 class PublicImageViewController: UIViewController, UITextFieldDelegate {
     
     var image: Image?
+    var enteredPassword: String?
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageProtectionLevelLabel: UILabel!
     @IBOutlet weak var likesLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var modifyNameField: UITextField!
+    @IBOutlet weak var editBtn: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +40,59 @@ class PublicImageViewController: UIViewController, UITextFieldDelegate {
         self.modifyNameField.text = ""
         return true
     }
+    @IBAction func editImage(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let openEditorAction = UIAlertAction(title: "Open In Editor", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            if (self.image?.protectionLevel! == "protected") {
+                self.askCorrectPassword()
+            }
+            else {
+                self.performSegue(withIdentifier: "toImageEditorWithExistingImage", sender: self)
+            }
+        })
+        alertController.addAction(openEditorAction)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
+        })
+        alertController.addAction(cancelAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.barButtonItem = sender
+        }
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
     
     private func getModifyImageURL() -> String {
         let imageId = image!.id!
         return "http://localhost:3000/v2/images/\(imageId)"
+    }
+    func askCorrectPassword() -> Void {
+        let alertPassword = UIAlertController(title: "Open protected image", message: "Enter password", preferredStyle: UIAlertControllerStyle.alert)
+        
+        alertPassword.addTextField(configurationHandler: {(textField: UITextField!) in
+            textField.placeholder = "Enter password"
+            textField.isSecureTextEntry = true // for password input
+        })
+        let confirmPassword = UIAlertAction(title: "Ok", style: .default, handler: { (alert: UIAlertAction!) -> Void in
+            if(self.checkCorrectPassword(password: alertPassword.textFields![0].text!)) {
+                self.performSegue(withIdentifier: "toImageEditorWithExistingImage", sender: self)
+            }
+            else {
+                alertPassword.message = "Invalid password"
+                self.present(alertPassword, animated: true, completion: nil)
+                let message  = "Invalid password"
+                //hack to change message color
+                alertPassword.setValue(NSAttributedString(string: message, attributes: [NSAttributedStringKey.font : UIFont.systemFont(ofSize: 17),NSAttributedStringKey.foregroundColor : UIColor.red]), forKey: "attributedMessage")
+            }
+            
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: { (alert: UIAlertAction!) -> Void in
+        })
+        alertPassword.addAction(cancelAction)
+        alertPassword.addAction(confirmPassword)
+        self.present(alertPassword, animated: true, completion: nil)
     }
     
     private func modifyName(newName: String) {
@@ -168,8 +220,15 @@ class PublicImageViewController: UIViewController, UITextFieldDelegate {
         task.resume()
     }
     
+    func checkCorrectPassword (password: String) -> Bool {
+        return password == self.image?.password!
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "CommentsPopoverSegue") {
+        if segue.identifier == "toImageEditorWithExistingImage" {
+            let ImageEditorVC = segue.destination as! DrawViewController
+            ImageEditorVC.image = self.image
+        } else if (segue.identifier == "CommentsPopoverSegue") {
             let commentViewController = segue.destination as! PhotoCommentViewController
             commentViewController.image = image
         }

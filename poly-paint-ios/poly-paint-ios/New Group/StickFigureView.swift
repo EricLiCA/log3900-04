@@ -8,16 +8,22 @@
 
 import UIKit
 
-class StickFigureView: BasicShapeView {
+public class StickFigureView: BasicShapeView {
 
-    let defaultHeight: CGFloat = 60
-    let defaultWidth: CGFloat = 50
+    let defaultHeight: CGFloat = 100
+    let defaultWidth: CGFloat = 80
+    var actorName = ""
     
-    init() {
-        let frame = CGRect(x: 0, y: 0, width: self.defaultWidth, height: self.defaultHeight)
-        super.init(frame: frame, numberOfAnchorPoints: 2, color: UIColor.white, shapeType: "ACTOR")
+    init(actorName: String, x: CGFloat, y: CGFloat, height: CGFloat, width: CGFloat, index: Int) {
+        let frame = CGRect(x: x, y: y, width: self.defaultWidth, height: self.defaultHeight)
+        self.actorName = actorName
+        super.init(frame: frame, numberOfAnchorPoints: 4, color: UIColor.white, shapeType: "ACTOR", index: index)
         let image = UIImage(named: "StickFigure")
+        //image?.draw(in: frame)
+        //image?.size.height = self.defaultHeight
+        //image?.size.width = self.defaultWidth
         self.backgroundColor = UIColor(patternImage: image!)
+        
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -25,18 +31,33 @@ class StickFigureView: BasicShapeView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func draw(_ rect: CGRect) {
+    override public func draw(_ rect: CGRect) {
         
         self.initializeAnchorPoints()
+        self.addActorName()
+    }
+    
+    func addActorName() {
+        let label = UILabel()
+        label.frame = CGRect(x: 0 , y: self.defaultHeight, width: self.bounds.width + 10, height: self.bounds.height)
+        label.text = self.actorName
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.numberOfLines = 10
+        label.textAlignment = NSTextAlignment.center
+        label.textColor = UIColor.black
+        label.font = UIFont(name: "Helvetica", size: 14)
+        self.addSubview(label)
     }
     
     func initializeAnchorPoints() {
+        let topAnchorPoint = CGPoint(x: self.frame.size.width/2, y: 0)
         let rightAnchorPoint = CGPoint(x: self.frame.size.width, y: self.frame.size.height/2)
+        let bottomAnchorPoint = CGPoint(x: self.frame.size.width/2, y: self.frame.size.height)
         let leftAnchorPoint = CGPoint(x: 0, y: self.frame.size.height/2)
-        var anchorPoints = [rightAnchorPoint, leftAnchorPoint]
+        var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
@@ -70,6 +91,30 @@ class StickFigureView: BasicShapeView {
         }
     }
     
+    override func toShapeObject() -> Data? {
+        
+        let shape: [String: Any] = [
+            
+            "Id": self.uuid,
+            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ShapeType": self.shapeType!,
+            "Index": self.index,
+            "ShapeInfo": [
+                "Content": [self.actorName],
+                "Center": [
+                    "X": self.center.x,
+                    "Y": self.center.y
+                ],
+                "Width": self.frame.width,
+                "Height": self.frame.height,
+                "Color": "#FF000000"
+            ]
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+        return jsonData;
+        
+    }
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
