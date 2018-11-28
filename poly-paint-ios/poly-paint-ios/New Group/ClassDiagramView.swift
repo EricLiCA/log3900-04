@@ -133,8 +133,8 @@ public class ClassDiagramView: BasicShapeView {
             "ShapeInfo": [
                 "Content": self.text,
                 "Center": [
-                    "X": self.center.x,
-                    "Y": self.center.y
+                    "X": self.frame.origin.x,
+                    "Y": self.frame.origin.y
                 ],
                 "Width": self.frame.width,
                 "Height": self.frame.height,

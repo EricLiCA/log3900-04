@@ -260,7 +260,7 @@ public class BasicShapeView: UIView {
     }
     
     func toShapeObject() -> Data? {
-        
+        let center = self.frame.origin
         let shape: [String: Any] = [
             "Id": self.uuid!,
             "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
@@ -268,8 +268,8 @@ public class BasicShapeView: UIView {
             "Index": self.index!,
             "ShapeInfo": [
                 "Center": [
-                    "X": self.center.x,
-                    "Y": self.center.y
+                    "X": self.frame.origin.x,
+                    "Y": self.frame.origin.y
                 ],
                 "Width": self.frame.width,
                 "Height": self.frame.height,
