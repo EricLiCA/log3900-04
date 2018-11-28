@@ -66,8 +66,7 @@ namespace PolyPaint.Vues
 
             Gallery = new Gallery();
             GridMain.Content = tutorial;
-
-            RefreshView();
+            GridCursor.Margin = new Thickness(10, 0, 0, 0);
         }
 
         public void OnlineMode()

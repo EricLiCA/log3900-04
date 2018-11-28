@@ -92,6 +92,8 @@ namespace PolyPaint.Modeles.Strokes
                     return Relation.COMPOSITION;
                 case "INHERITANCE":
                     return Relation.INHERITANCE;
+                case "ARROW":
+                    return Relation.ARROW;
             }
             return Relation.ASSOCIATION;
         }
@@ -341,7 +343,7 @@ namespace PolyPaint.Modeles.Strokes
             if (this.FirstRelation == Relation.COMPOSITION)
                 drawingContext.DrawRectangle(new SolidColorBrush(Colors.Black), outlinePen, new Rect(firstRelationPosition.X - symbolSize, firstRelationPosition.Y - symbolSize, symbolSize * 2, symbolSize * 2));
 
-            if (this.FirstRelation == Relation.INHERITANCE)
+            if (this.FirstRelation == Relation.INHERITANCE || this.FirstRelation == Relation.ARROW)
             {
 
                 var segments = new[]
@@ -358,7 +360,7 @@ namespace PolyPaint.Modeles.Strokes
                        firstRelationPosition.X + symbolSize,
                        firstRelationPosition.Y + symbolSize), segments, true);
                 var geo = new PathGeometry(new[] { figure });
-                drawingContext.DrawGeometry(new SolidColorBrush(Colors.White), outlinePen, geo);
+                drawingContext.DrawGeometry(new SolidColorBrush(this.FirstRelation == Relation.INHERITANCE ? Colors.White : Colors.Black), outlinePen, geo);
             }
 
             drawingContext.Pop();
@@ -375,7 +377,7 @@ namespace PolyPaint.Modeles.Strokes
             if (this.SecondRelation == Relation.COMPOSITION)
                 drawingContext.DrawRectangle(new SolidColorBrush(Colors.Black), outlinePen, new Rect(secondRelationPosition.X - symbolSize, secondRelationPosition.Y - symbolSize, symbolSize * 2, symbolSize * 2));
 
-            if (this.SecondRelation == Relation.INHERITANCE)
+            if (this.SecondRelation == Relation.INHERITANCE || this.SecondRelation == Relation.ARROW)
             {
 
                 var segments = new[]
@@ -392,7 +394,7 @@ namespace PolyPaint.Modeles.Strokes
                        secondRelationPosition.X + symbolSize,
                        secondRelationPosition.Y + symbolSize), segments, true);
                 var geo = new PathGeometry(new[] { figure });
-                drawingContext.DrawGeometry(new SolidColorBrush(Colors.White), outlinePen, geo);
+                drawingContext.DrawGeometry(new SolidColorBrush(this.SecondRelation == Relation.INHERITANCE ? Colors.White : Colors.Black), outlinePen, geo);
             }
 
             drawingContext.Pop();
@@ -499,6 +501,6 @@ namespace PolyPaint.Modeles.Strokes
 
     public enum Relation
     {
-        ASSOCIATION, AGGREGATION, COMPOSITION, INHERITANCE
+        ASSOCIATION, AGGREGATION, COMPOSITION, INHERITANCE, ARROW
     }
 }
