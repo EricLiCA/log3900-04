@@ -31,7 +31,7 @@ export class AuthenticationService {
         this.password = Password;
         this.userName = Username;
         var body = {username: Username, password: Password};
-        const apiUrl = 'http://localhost:3000/v2/sessions';
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/sessions';
         return this.http.post(apiUrl, body).toPromise().then((data: Credentials) => {
             if(data.id) {
                 this._loggedIn = true;
@@ -59,7 +59,7 @@ export class AuthenticationService {
 
     public changeUsername(newUsername: String, Password: String): boolean {
         const body = {username: newUsername, token: this.user.token};
-        const apiUrl = 'http://localhost:3000/v2/users/' + this.user.id;
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/users/' + this.user.id;
         if(Password === this.password){
             this.http.put(apiUrl, body).toPromise().then(result => {
                 return true;
@@ -72,7 +72,7 @@ export class AuthenticationService {
 
     public changPassword(Password: String, newPassword: String): boolean {
         const body = {password: newPassword, token: this.user.token};
-        const apiUrl = 'http://localhost:3000/v2/users/' + this.user.id;
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/users/' + this.user.id;
         if(Password === this.password){
             this.http.put(apiUrl, body).toPromise().then(result => {
                 return true;
@@ -85,18 +85,18 @@ export class AuthenticationService {
 
     public createUser(name: String, pass: String): void {
         const body = {username: name, password: pass};
-        const apiUrl = 'http://localhost:3000/v2/users';
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/users';
         this.http.post(apiUrl, body).toPromise();
     }
 
     public deleteUser(userToDelete: String): void {
-        const apiUrl = 'http://localhost:3000/v2/users/' + userToDelete;
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/users/' + userToDelete;
         this.http.delete(apiUrl).toPromise();
     }
 
     public changeUserPermissions(user: User): void {
         console.log(user);
-        const apiUrl = 'http://localhost:3000/v2/users/' + user.id;
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/users/' + user.id;
         this.http.put(apiUrl, user).toPromise();
     }
 }
