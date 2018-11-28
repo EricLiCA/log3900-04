@@ -8,8 +8,8 @@ namespace PolyPaint.Utilitaires
 {
     class Settings
     {
-        public const string SERVER_IP = "http://localhost:3000/";
-        //public const string SERVER_IP = "http://ec2-34-200-247-233.compute-1.amazonaws.com
+        //public const string SERVER_IP = "http://localhost:3000/";
+        public const string SERVER_IP = "http://ec2-34-200-247-233.compute-1.amazonaws.com/";
         public const string SERVER_STATUS_PATH = "/status";
         public const string API_VERSION = "v2";
         public const string IMAGES_PATH = "/images";
@@ -32,8 +32,8 @@ namespace PolyPaint.Utilitaires
         public const string PENDING_FRIEND_REQUEST_BY_REQUESTER_ID_PATH = "/pendingFriendRequestByRequesterId";
 
         //Credentials
-        public const string aws_access_key_id = "AKIAJMM7EPKCBVSXTHCA";
-        public const string aws_secret_access_key = "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";
+        public const string aws_access_key_id = "AKIAIPDXLQHFFWAOQNXQ";
+        public const string aws_secret_access_key = "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";
 
         public const string WEB_CLIENT_LINK = "localhost:4200/";
     }
