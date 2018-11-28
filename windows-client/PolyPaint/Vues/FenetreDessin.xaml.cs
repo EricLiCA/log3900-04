@@ -85,6 +85,7 @@ namespace PolyPaint
             }
             else
             {
+                EditionSocket.UnlockStrokes();
                 vueModele.editeur.EditingStroke = null;
                 selectedStrokes.ForEach(stroke =>
                 {
