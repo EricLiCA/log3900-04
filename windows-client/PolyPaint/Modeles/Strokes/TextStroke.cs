@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PolyPaint.Modeles.Actions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -41,9 +42,11 @@ namespace PolyPaint.Modeles.Strokes
 
         public void SetText(string text)
         {
+            string before = this.toJson();
             this.textContent = text.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
             this.Refresh();
             EditionSocket.EditStroke(this.toJson());
+            Editeur.instance.Do(new EditStroke(this.Id.ToString(), before, this.toJson()));
         }
 
         public override void HandleStoped(Guid id)
@@ -97,7 +100,7 @@ namespace PolyPaint.Modeles.Strokes
                 Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y},
                 Height = this.Height,
                 Width = this.Width,
-                Content = this.textContent,
+                Content = UseCaseStroke.toServerStyle(this.textContent),
                 Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
             };
         }

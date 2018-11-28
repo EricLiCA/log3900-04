@@ -1,20 +1,18 @@
 using Newtonsoft.Json.Linq;
+using PolyPaint.Modeles.Actions;
 using PolyPaint.Modeles.Outils;
 using PolyPaint.Modeles.Strokes;
 using PolyPaint.Modeles.Tools;
 using PolyPaint.Services;
 using PolyPaint.Vues;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Ink;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace PolyPaint.Modeles
@@ -26,9 +24,11 @@ namespace PolyPaint.Modeles
     /// </summary>
     public class Editeur : INotifyPropertyChanged
     {
+        private static Editeur _instance;
+        public static Editeur instance { get => _instance; }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public CustomStrokeCollection traits = new CustomStrokeCollection();
-        private CustomStrokeCollection traitsRetires = new CustomStrokeCollection();
 
         private Tool EditTool = new Edit();
         private Tool Lasso = new Lasso();
@@ -55,7 +55,7 @@ namespace PolyPaint.Modeles
                 {
                     this.EditingStroke = null;
                     EditionSocket.UnlockStrokes();
-                    
+
                     if (ServerService.instance.isOffline())
                     {
                         this.traits.ToList().ForEach(temp =>
@@ -234,6 +234,7 @@ namespace PolyPaint.Modeles
 
         public Editeur()
         {
+            _instance = this;
             this.outilSelectionne = this.EditTool;
 
             this.Tools = new List<Tool>
@@ -263,9 +264,6 @@ namespace PolyPaint.Modeles
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        // S'il y a au moins 1 trait sur la surface, il est possible d'exécuter Empiler.
-        public bool PeutEmpiler(object o) => (traits.Count > 0);
 
         internal void MouseUp(Point point)
         {
@@ -353,42 +351,82 @@ namespace PolyPaint.Modeles
             this.outilSelectionne.MouseDown(point, traits);
         }
 
+
+        private Stack<EditionAction> history = new Stack<EditionAction>();
+        private Stack<EditionAction> undoStack = new Stack<EditionAction>();
+
+        private Size _CanvasSize = new Size(550, 310);
+        public Size CanvasSize
+        {
+            get => _CanvasSize;
+            set
+            {
+                _CanvasSize = value;
+                ProprieteModifiee();
+                EditionSocket.resizeCanvas(value);
+            }
+        }
+
         // On retire le trait le plus récent de la surface de dessin et on le place sur une pile.
 
-        public void Empiler(object o)
+        public void Do(EditionAction action)
         {
             try
             {
-                EditingStroke = null;
-                Stroke trait = traits.Last();
-                traitsRetires.Add(trait);
-                traits.Remove(trait);
-                EditionSocket.RemoveStroke(((CustomStroke)trait).Id.ToString());
+                if (history.Count > 0 && action is EditStroke && history.Peek() is EditStroke && history.Peek().Id == action.Id)
+                    ((EditStroke)history.Peek()).UpdateAfter(((EditStroke)action).SerializedStrokeAfter);
+                else
+                    history.Push(action);
+
+                undoStack.Clear();
             }
             catch { }
 
         }
 
         // S'il y a au moins 1 trait sur la pile de traits retirés, il est possible d'exécuter Depiler.
-        public bool PeutDepiler(object o) => (traitsRetires.Count > 0);
-        // On retire le trait du dessus de la pile de traits retirés et on le place sur la surface de dessin.
-        public void Depiler(object o)
+        public bool PeutRedo(object o) => (undoStack.Count > 0);
+
+        // S'il y a au moins 1 trait sur la surface, il est possible d'exécuter Empiler.
+        public bool PeutUndo(object o) => (history.Count > 0);
+
+        public void Undo(object o)
         {
             try
             {
-                Stroke trait = traitsRetires.Last();
-                traits.Add(trait);
-                EditionSocket.AddStroke(((Savable)trait).toJson());
-                traitsRetires.Remove(trait);
+                EditingStroke = null;
+                EditionAction action = history.Pop();
+                action.Undo(this.traits);
+                undoStack.Push(action);
             }
-            catch { }
+            catch
+            {
+                this.Undo(o);
+            }
+        }
+
+        public void Redo(object o)
+        {
+            try
+            {
+                EditingStroke = null;
+                EditionAction action = undoStack.Pop();
+                action.Redo(this.traits);
+                history.Push(action);
+            }
+            catch
+            {
+                this.Redo(o);
+            }
         }
 
         // L'outil actif devient celui passé en paramètre.
         public void ChoisirOutil(Tool tool) => OutilSelectionne = tool;
 
         // On vide la surface de dessin de tous ses traits.
-        public void Reinitialiser(object o)  {
+        public void Reinitialiser(object o)
+        {
+            this.EditingStroke = null;
             traits.Clear();
             EditionSocket.ClearCanvas();
         }
@@ -397,33 +435,34 @@ namespace PolyPaint.Modeles
         {
             if (ServerService.instance.isOffline())
             {
-
-                OfflineFileLoader.saveImage(obj);
-                
                 var tosave = this.traits.ToList().FindAll(stroke => stroke is Savable).ConvertAll<string>(stroke =>
                 {
                     return ((Savable)stroke).toJson();
                 });
-                OfflineFileLoader.save(tosave);
+                OfflineFileLoader.save(obj, tosave);
             }
             else
             {
-                string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
-                Directory.CreateDirectory(path2String);
-                string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
-                
-                File.WriteAllBytes(file, obj);
+                try
+                {
+                    string path2String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews";
+                    Directory.CreateDirectory(path2String);
+                    string file = Path.Combine(path2String, ServerService.instance.currentImageId + ".png");
 
-                var id = ServerService.instance.currentImageId;
-                ServerService.instance.S3Communication.UploadImageAsync(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews", id + ".png"), id + ".png");
-                
+                    File.WriteAllBytes(file, obj);
+
+                    var id = ServerService.instance.currentImageId;
+                    ServerService.instance.S3Communication.UploadImageAsync(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\polypaint\\previews", id + ".png"), id + ".png");
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
 
         public void SyncToServer()
         {
-
-
             if (ServerService.instance.isOffline())
             {
                 this.Load(OfflineFileLoader.load(ServerService.instance.currentImageId));
@@ -449,10 +488,16 @@ namespace PolyPaint.Modeles
 
             ServerService.instance.Socket.On("editStroke", new CustomListener((object[] server_params) =>
             {
+                bool isLineEditing = this.traits.Any(stroke => stroke is AnchorPoint);
+
                 CustomStroke updated = SerializationHelper.stringToStroke((JObject)server_params[0], this.traits);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Stroke old = this.traits.get(updated.Id.ToString());
+                    
+                    if (old is Anchorable)
+                        ((Anchorable)old).hideAnchorPoints();
+
                     bool selected = ((CustomStroke)old).isSelected();
                     bool editting = ((CustomStroke)old).isEditing();
                     bool locked = ((CustomStroke)old).isLocked();
@@ -473,6 +518,7 @@ namespace PolyPaint.Modeles
                     if (selected) this.traits.get(updated.Id.ToString()).Select();
                     if (editting) this.traits.get(updated.Id.ToString()).startEditing();
                     if (locked) this.traits.get(updated.Id.ToString()).Lock();
+                    if (isLineEditing) ((Anchorable)this.traits.get(updated.Id.ToString())).showAnchorPoints();
                 });
             }));
 
@@ -484,7 +530,7 @@ namespace PolyPaint.Modeles
                     ((CustomStroke)old).stopEditing();
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        this.traits.Remove(old);
+                        this.traits.Remove(this.traits.ToList().Find(stroke => ((CustomStroke)stroke).Id.ToString() == (string)server_params[0]));
                     });
                 });
             }));
@@ -494,6 +540,17 @@ namespace PolyPaint.Modeles
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     this.traits.Clear();
+                });
+            }));
+
+            ServerService.instance.Socket.On("resizeCanvas", new CustomListener((object[] server_params) =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    int x = int.Parse(server_params[0].ToString().Split(new char[] { ',', '.' })[0]);
+                    int y = int.Parse(server_params[1].ToString().Split(new char[] { ',', '.' })[0]);
+                    _CanvasSize = new Size(x, y);
+                    ProprieteModifiee("CanvasSize");
                 });
             }));
 
@@ -545,15 +602,17 @@ namespace PolyPaint.Modeles
                 {
                     ((MainWindow)Application.Current.MainWindow).Gallery.Load();
                     ((MainWindow)Application.Current.MainWindow).GoToGallery();
-                    ((MainWindow)Application.Current.MainWindow).ButtonEdit.Visibility = Visibility.Collapsed;
+                    ((MainWindow)Application.Current.MainWindow).ButtonEdit.IsEnabled = false;
                 });
             });
         }
 
         private void Load(List<string> list)
         {
+            this.EditingStroke = null;
             traits.Clear();
-            traitsRetires.Clear();
+            history.Clear();
+            undoStack.Clear();
 
             for (int i = 0; i < list.Count; i++)
             {
@@ -563,9 +622,11 @@ namespace PolyPaint.Modeles
 
         public void Load(JArray shapeObjects)
         {
+            this.EditingStroke = null;
             traits.Clear();
-            traitsRetires.Clear();
-            
+            history.Clear();
+            undoStack.Clear();
+
             for (int i = 0; i < shapeObjects?.Count; i++)
             {
                 this.traits.Add(SerializationHelper.stringToStroke((JObject)shapeObjects[i], this.traits));

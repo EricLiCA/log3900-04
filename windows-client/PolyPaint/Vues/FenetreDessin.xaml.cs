@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using PolyPaint.DAO;
 using System.Windows.Media.Imaging;
 using PolyPaint.Services;
+using PolyPaint.Modeles.Actions;
+using System.ComponentModel;
 
 namespace PolyPaint
 {
@@ -32,11 +34,25 @@ namespace PolyPaint
             DataContext = new VueModele();
             ClipBoard = new StrokeCollection();
 
+            ((VueModele)DataContext).PropertyChanged += new PropertyChangedEventHandler(EditeurProprieteModifiee);
+        }
+
+        private void EditeurProprieteModifiee(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "CanvasSize")
+            {
+                colonne.Width = new GridLength(((VueModele)DataContext).CanvasWidth);
+                ligne.Height = new GridLength(((VueModele)DataContext).CanvasHeight);
+            }
         }
 
         // Pour gérer les points de contrôles.
         private void GlisserCommence(object sender, DragStartedEventArgs e) => (sender as Thumb).Background = Brushes.Black;
-        private void GlisserTermine(object sender, DragCompletedEventArgs e) => (sender as Thumb).Background = Brushes.White;
+        private void GlisserTermine(object sender, DragCompletedEventArgs e)
+        {
+            (sender as Thumb).Background = Brushes.White;
+            ((VueModele)DataContext).CanvasSize = new Size(colonne.ActualWidth, ligne.ActualHeight);
+        }
         private void GlisserMouvementRecu(object sender, DragDeltaEventArgs e)
         {
             String nom = (sender as Thumb).Name;
@@ -71,6 +87,7 @@ namespace PolyPaint
                     ((VueModele)this.DataContext).Traits.Add(duplicate);
                     duplicate.Select();
                     EditionSocket.AddStroke(((Savable)duplicate).toJson());
+                    Editeur.instance.Do(new NewStroke(((CustomStroke)duplicate).Id.ToString(), ((Savable)duplicate).toJson()));
                 });
             }
 
@@ -89,6 +106,7 @@ namespace PolyPaint
                     vueModele.Traits.Remove(stroke);
                     ClipBoard.Add(stroke);
                     EditionSocket.RemoveStroke(((CustomStroke)stroke).Id.ToString());
+                    Editeur.instance.Do(new DeleteStroke(((CustomStroke)stroke).Id.ToString(), ((Savable)stroke).toJson()));
                 });
             }
         }
@@ -198,12 +216,12 @@ namespace PolyPaint
             Rect bounds = VisualTreeHelper.GetDescendantBounds(Canvas);
             double dpi = 96d;
 
-            RenderTargetBitmap rtb = new RenderTargetBitmap((int)bounds.Width, (int)bounds.Height, dpi, dpi, PixelFormats.Default);
+            RenderTargetBitmap rtb = new RenderTargetBitmap(((VueModele)this.DataContext).CanvasWidth, ((VueModele)this.DataContext).CanvasHeight, dpi, dpi, PixelFormats.Default);
             DrawingVisual dv = new DrawingVisual();
             using (DrawingContext dc = dv.RenderOpen())
             {
                 VisualBrush vb = new VisualBrush(Canvas);
-                dc.DrawRectangle(vb, null, new Rect(new Point(), bounds.Size));
+                dc.DrawRectangle(vb, null, new Rect(new Point(), new Size(((VueModele)this.DataContext).CanvasWidth, ((VueModele)this.DataContext).CanvasHeight)));
             }
             rtb.Render(dv);
 
@@ -220,6 +238,16 @@ namespace PolyPaint
         {
             VueModele vueModele = ((VueModele)this.DataContext);
             //Empiler la modification
+            if (e.Stroke is Savable && !((CustomStroke)e.Stroke).isLocked())
+            {
+                CustomStroke erasedStroke = (CustomStroke)e.Stroke;
+                vueModele.editeur.Do(new DeleteStroke(erasedStroke.Id.ToString(), ((Savable)erasedStroke).toJson()));
+                EditionSocket.RemoveStroke(erasedStroke.Id.ToString());
+            }
+            else if (((CustomStroke)e.Stroke).isLocked())
+            {
+                e.Cancel = true;
+            }
         }
     }
 }

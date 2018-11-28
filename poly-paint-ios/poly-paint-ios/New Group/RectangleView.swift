@@ -11,8 +11,8 @@ import UIKit
 class RectangleView: BasicShapeView {
     
     
-    init(frame: CGRect, color: UIColor) {
-        super.init(frame: frame, numberOfAnchorPoints: 4, color: color, shapeType: "RECTANGLE")
+    init(frame: CGRect, color: UIColor, index: Int, imageID: String) {
+        super.init(frame: frame, numberOfAnchorPoints: 4, color: color, shapeType: "RECTANGLE",index: index, imageID: imageID)
         self.initGestureRecognizers()
         self.backgroundColor = UIColor.blue
     }
@@ -29,7 +29,6 @@ class RectangleView: BasicShapeView {
         self.color?.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
-        // self.color?.setStroke()
         path.stroke()
         self.initializeAnchorPoints()
     }
@@ -42,7 +41,7 @@ class RectangleView: BasicShapeView {
         let anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
-            let circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            let circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             let shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
@@ -75,36 +74,5 @@ class RectangleView: BasicShapeView {
             return CGPoint(x: 0, y: 0)
         }
     }
-    
-    /*
-     // Only override draw() if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func draw(_ rect: CGRect) {
-     // Drawing code
-     }
-     */
-    
-    /* func toShapeObject() -> Data? {
-     
-     let shape: [String: Any] = [
-     "id": self.uuid,
-     "imageid": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
-     "shapetype": "RECTANGLE",
-     "index": -1,
-     "shapeinfo": [
-     "Center": [
-     "X": self.center.x,
-     "Y": self.center.y
-     ],
-     "Width": self.myframe?.width,
-     "Height": self.myframe?.height,
-     "Color": self.color?.hexString
-     ]
-     ]
-     
-     let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
-     return jsonData;
-     
-     }    */
 }
 

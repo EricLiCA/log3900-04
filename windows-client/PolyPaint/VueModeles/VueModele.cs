@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -78,6 +79,15 @@ namespace PolyPaint.VueModeles
             get { return editeur.TailleTrait; }
             set { editeur.TailleTrait = value; }
         }
+        
+        public Size CanvasSize
+        {
+            get => editeur.CanvasSize;
+            set => editeur.CanvasSize = value;
+        }
+
+        public int CanvasWidth { get => (int)editeur.CanvasSize.Width; }
+        public int CanvasHeight { get => (int)editeur.CanvasSize.Height; }
 
         public Page EditingFrameContent
         {
@@ -99,8 +109,8 @@ namespace PolyPaint.VueModeles
         public StrokeCollection Traits { get; set; }
 
         // Commandes sur lesquels la vue pourra se connecter.
-        public RelayCommand<object> Empiler { get; set; }
-        public RelayCommand<object> Depiler { get; set; }
+        public RelayCommand<object> Undo { get; set; }
+        public RelayCommand<object> Redo { get; set; }
         public RelayCommand<Tool> ChoisirOutil { get; set; }
         public RelayCommand<object> Reinitialiser { get; set; }
         public RelayCommand<Point> MouseUp { get; set; }
@@ -130,8 +140,8 @@ namespace PolyPaint.VueModeles
             Traits = editeur.traits;
             
             // Pour chaque commande, on effectue la liaison avec des méthodes du modèle.            
-            Empiler = new RelayCommand<object>(editeur.Empiler, editeur.PeutEmpiler);            
-            Depiler = new RelayCommand<object>(editeur.Depiler, editeur.PeutDepiler);
+            Undo = new RelayCommand<object>(editeur.Undo, editeur.PeutUndo);            
+            Redo = new RelayCommand<object>(editeur.Redo, editeur.PeutRedo);
             Save = new RelayCommand<byte[]>(editeur.Save);
             // Pour les commandes suivantes, il est toujours possible des les activer.
             // Donc, aucune vérification de type Peut"Action" à faire.
@@ -197,6 +207,10 @@ namespace PolyPaint.VueModeles
             else if (e.PropertyName == "EditingStroke")
             {
                 this.ProprieteModifiee("EditingFrameContent");
+            }
+            else if (e.PropertyName == "CanvasSize")
+            {
+                this.ProprieteModifiee("CanvasSize");
             }
         }
     }

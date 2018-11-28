@@ -40,7 +40,7 @@ class SignUpViewController: UIViewController {
     }
     
     func signUp(_ username: String, _ password: String) {
-        let url = URL(string: "http://localhost:3000/v2/users")
+        let url = URL(string: SERVER.URL.rawValue + "v2/users")
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"

@@ -3,11 +3,13 @@ import { PostgresDatabase } from '../postgres-database';
 export class ShapeObject {
 
     public static async post(newShapeObject: ShapeObject): Promise<ShapeObject> {
+        console.log("new shape obk=ject: ", newShapeObject)
         const db = await PostgresDatabase.getInstance();
         const queryResponse = await db.query(
             'INSERT INTO shapeobjects("id", "imageid", "shapetype", "index", "shapeinfo") VALUES($1, $2, $3, $4, $5) RETURNING *',
             [newShapeObject.Id, newShapeObject.ImageId, newShapeObject.ShapeType, newShapeObject.Index, newShapeObject.ShapeInfo],
         )
+        console.log("queryResponse:", queryResponse)
         if (queryResponse.rowCount > 0) {
             const row = queryResponse.rows[0];
             return Promise.resolve(new ShapeObject(
@@ -18,6 +20,7 @@ export class ShapeObject {
                 row.shapeinfo,
             ));
         } else {
+            console.log("POST FAILED")
             return Promise.resolve(undefined);
         }
     }

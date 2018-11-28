@@ -25,7 +25,7 @@ namespace PolyPaint.Vues
         public MainWindow()
         {
             InitializeComponent();
-            GridMain.Content = Gallery;
+            GridMain.Content = tutorial;
             OfflineMode();
 
             Closing += new CancelEventHandler(((MainWindow)Application.Current.MainWindow).FenetreDessin.SaveButton_Click);
@@ -35,9 +35,9 @@ namespace PolyPaint.Vues
         {
             this.isDetached = true;
             if (GridMain.Content is MessagingWindow)
-                GridMain.Content = Gallery;
+                GoToGallery();
             RefreshView();
-            ButtonChat.Visibility = Visibility.Collapsed;
+            ButtonChat.IsEnabled = false;
             detached = new DetachedChat();
             detached.Show();
         }
@@ -45,7 +45,7 @@ namespace PolyPaint.Vues
         public void showAttachedChat(object sender, EventArgs e)
         {
             detached.Hide();
-            ButtonChat.Visibility = Visibility.Visible;
+            ButtonChat.IsEnabled = true;
             this.isDetached = false;
             RefreshView();
         }
@@ -60,14 +60,13 @@ namespace PolyPaint.Vues
             ConnectButton.Visibility = Visibility.Visible;
             DisonnectButton.Visibility = Visibility.Collapsed;
 
-            ButtonUsers.Visibility = Visibility.Collapsed;
-            ButtonChat.Visibility = Visibility.Collapsed;
-            ButtonEdit.Visibility = Visibility.Collapsed;
+            ButtonUsers.IsEnabled = false;
+            ButtonChat.IsEnabled = false;
+            ButtonEdit.IsEnabled = false;
 
             Gallery = new Gallery();
-            GridMain.Content = Gallery;
-
-            RefreshView();
+            GridMain.Content = tutorial;
+            GridCursor.Margin = new Thickness(10, 0, 0, 0);
         }
 
         public void OnlineMode()
@@ -86,7 +85,7 @@ namespace PolyPaint.Vues
             Users = new Users();
             Gallery = new Gallery();
 
-            ButtonUsers.Visibility = Visibility.Visible;
+            ButtonUsers.IsEnabled = true;
             if (isDetached)
                 showDetachedChat(null, null);
             else
@@ -123,28 +122,28 @@ namespace PolyPaint.Vues
             {
                 case 0:
                     {
-                        Gallery.Load();
-                        GoToGallery();
-
+                        GridMain.Content = this.tutorial;
+                        GridCursor.Margin = new Thickness(10, 0, 0, 0);
                         break;
                     }
                 case 1:
                     {
-                        Users.Load();
-                        GridMain.Content = Users;
-                        GridCursor.Margin = new Thickness(160, 0, 0, 0);
+                        Gallery.Load();
+                        GoToGallery();
                         break;
                     }
                 case 2:
-                    if (isDetached) break;
-                    GridMain.Content = MessagingViewManager.instance.LargeMessagingView;
-                    GridCursor.Margin = new Thickness(310, 0, 0, 0);
+                    Users.Load();
+                    GridMain.Content = Users;
+                    GridCursor.Margin = new Thickness(10 + 150 * 2, 0, 0, 0);
                     break;
                 case 3:
-                    GoToEditMode(3);
+                    if (isDetached) break;
+                    GridMain.Content = MessagingViewManager.instance.LargeMessagingView;
+                    GridCursor.Margin = new Thickness(10 + 150 *3, 0, 0, 0);
                     break;
                 case 4:
-                    GridMain.Content = this.tutorial;
+                    GoToEditMode(4);
                     break;
             }
         }
@@ -152,13 +151,13 @@ namespace PolyPaint.Vues
         public void GoToGallery()
         {
             GridMain.Content = Gallery;
-            GridCursor.Margin = new Thickness(10, 0, 0, 0);
+            GridCursor.Margin = new Thickness(10 + 150, 0, 0, 0);
         }
 
         public void GoToEditMode(int index)
         {
             GridMain.Content = this.FenetreDessin;
-            GridCursor.Margin = new Thickness(10 + (150 * (index - (ServerService.instance.isOffline() ? 2 : (isDetached ? 1 : 0)))), 0, 0, 0);
+            GridCursor.Margin = new Thickness(10 + 150*4, 0, 0, 0);
         }
 
         private void Menu_Change_Avatar_Click(object sender, System.EventArgs e)
@@ -253,7 +252,7 @@ namespace PolyPaint.Vues
             GoToEditMode(3);
             FenetreDessin.SaveButton_Click(null, null);
             ServerService.instance.currentImageId = imageId;
-            ButtonEdit.Visibility = Visibility.Visible;
+            ButtonEdit.IsEnabled = true;
             Button_Click(ButtonEdit, null);
             ((VueModele)FenetreDessin.DataContext).editeur.SyncToServer();
         }
@@ -272,5 +271,5 @@ namespace PolyPaint.Vues
             ServerService.instance.disconnect();
             OfflineMode();
         }
-    }
+    } 
 }

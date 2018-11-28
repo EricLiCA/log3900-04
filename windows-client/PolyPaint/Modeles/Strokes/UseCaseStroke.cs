@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PolyPaint.Modeles.Actions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -39,9 +40,11 @@ namespace PolyPaint.Modeles.Strokes
 
         public void SetText(string text)
         {
+            string before = this.toJson();
             this.textContent = text.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
             this.Refresh();
             EditionSocket.EditStroke(this.toJson());
+            Editeur.instance.Do(new EditStroke(this.Id.ToString(), before, this.toJson()));
         }
 
         protected override void DrawCore(DrawingContext drawingContext, DrawingAttributes drawingAttributes)
@@ -76,6 +79,47 @@ namespace PolyPaint.Modeles.Strokes
 
         public override StrokeType StrokeType() => Strokes.StrokeType.USE;
 
+        public static List<string> toServerStyle(List<string> content)
+        {
+            List<string> returnList = new List<string>() { "" };
+            for (int index = 0; index < content.Count; index++)
+            {
+                if (content[index] == "--")
+                {
+                    returnList.Add("");
+                } else
+                {
+                    if (returnList.Last() != "")
+                        returnList[returnList.Count - 1] += "\\n";
+
+                    returnList[returnList.Count - 1] += content[index];
+                }
+            }
+            return returnList;
+        }
+
+        public static List<string> fromServerStyle(List<string> content)
+        {
+            List<string> returnList = new List<string>() {};
+
+            if (content != null)
+                for (int index = 0; index < content.Count; index++)
+                {
+                    if (returnList.Count > 0)
+                        returnList.Add("--");
+
+                    if (content[index] == "") continue;
+
+                    var sections = content[index].Split(new[] { "\\n" }, StringSplitOptions.None);
+                    for (int i = 0; i < sections.Length; i++)
+                        returnList.Add(sections[i]);
+                }
+            else
+                returnList.Add("");
+
+            return returnList;
+        }
+
         public override ShapeInfo GetShapeInfo()
         {
             return new TextableShapeInfo
@@ -83,7 +127,7 @@ namespace PolyPaint.Modeles.Strokes
                 Center = new ShapePoint() { X = this.Center.X, Y = this.Center.Y },
                 Height = this.Height,
                 Width = this.Width,
-                Content  = this.textContent,
+                Content  = toServerStyle( this.textContent ),
                 Color = new ColorConverter().ConvertToString(this.DrawingAttributes.Color)
             };
         }

@@ -137,7 +137,7 @@ export class ImagesRoute implements DAO {
     }
 
     public async update(req: express.Request, res: express.Response, next: express.NextFunction): Promise<void> {
-        const updates = [
+        let updates = [
             ['OwnerId', req.body.ownerId],
             ['Title', req.body.title],
             ['ProtectionLevel', req.body.protectionLevel],
@@ -146,6 +146,7 @@ export class ImagesRoute implements DAO {
             ['FullImageUrl', req.body.fullImageUrl],
         ];
 
+        updates = updates.filter((update) => update[1] !== undefined);
         // Build the query : UPDATE Users SET col1 = val1, col2 = val2, ... WHERE Id = <id>;
         let queryText = 'UPDATE Images SET ';
         updates.forEach((update, i) => {
@@ -160,6 +161,8 @@ export class ImagesRoute implements DAO {
             text: queryText,
             values: updates.map((update) => update[1]).concat([req.params.id]),
         };
+
+        console.log(preparedQuery);
 
         // Query the database
         const db = await PostgresDatabase.getInstance();

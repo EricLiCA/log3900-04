@@ -10,10 +10,18 @@ import UIKit
 
 class EllipseView: BasicShapeView {
     
-    init(frame: CGRect, color: UIColor) {
-        super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE")
+    var labelText: String?
+    
+    init(frame: CGRect, color: UIColor, useCase: String, index: Int, imageID: String) {
+        if(useCase != "") {
+            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "USE", index: index, imageID: imageID)
+        } else {
+            super.init(frame:frame, numberOfAnchorPoints: 4, color: color, shapeType: "ELLIPSE", index: index, imageID: imageID)
+        }
+        self.labelText = useCase
         self.backgroundColor = UIColor.clear
         self.initGestureRecognizers()
+        
     }
     
     // We need to implement init(coder) to avoid compilation errors
@@ -22,16 +30,27 @@ class EllipseView: BasicShapeView {
     }
     
     
-    
+    func addLabel() {
+        let label = UILabel()
+        label.frame = CGRect(x: 0 , y: 0, width: self.bounds.width, height: self.bounds.height)
+        label.text = self.labelText!
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.numberOfLines = 10
+        label.textAlignment = NSTextAlignment.center
+        label.textColor = UIColor.black
+        label.font = UIFont(name: "Helvetica", size: 14)
+        self.addSubview(label)
+    }
     
     
     override func draw(_ rect: CGRect) {
+
         let insetRect = rect.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         let path = UIBezierPath(ovalIn: insetRect)
         self.color?.setFill()
         path.fill()
         path.lineWidth = self.lineWidth
-        self.color?.setStroke()
+        UIColor.black.setStroke()
         path.stroke()
         self.initializeAnchorPoints()
     }
@@ -44,7 +63,7 @@ class EllipseView: BasicShapeView {
         var anchorPoints = [rightAnchorPoint, bottomAnchorPoint, leftAnchorPoint, topAnchorPoint]
         
         for anchor in anchorPoints {
-            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(7), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            var circlePath = UIBezierPath(arcCenter: anchor, radius: CGFloat(15), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             var shapeLayer = CAShapeLayer()
             shapeLayer.path = circlePath.cgPath
             shapeLayer.fillColor = UIColor.red.cgColor
@@ -56,6 +75,7 @@ class EllipseView: BasicShapeView {
         for anchor in self.anchorPointsLayers {
             self.layer.addSublayer(anchor)
         }
+        self.addLabel()
         
         self.hideAnchorPoints()
     }
