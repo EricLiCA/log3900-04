@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4A0815B34FF7B9EEEA4C20F2 /* Pods_poly_paint_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDC1C13329DB51A28CBF33E9 /* Pods_poly_paint_ios.framework */; };
+		A73BEBAD21AC53370001C692 /* PhotoCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73BEBAC21AC53370001C692 /* PhotoCommentTableViewCell.swift */; };
+		A73BEBAF21AC6D5A0001C692 /* PhotoCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73BEBAE21AC6D5A0001C692 /* PhotoCommentViewController.swift */; };
+		A73BEBB221AC6DC20001C692 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73BEBB121AC6DC20001C692 /* Comment.swift */; };
 		A74A5B0C219DDFE600051D14 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A5B0B219DDFE600051D14 /* ChatModel.swift */; };
 		A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46EE21569CFB0056135A /* AppDelegate.swift */; };
 		A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F021569CFB0056135A /* ChatViewController.swift */; };
@@ -20,6 +23,12 @@
 		A78A7336215ADDEF007A854F /* FrontPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7335215ADDEF007A854F /* FrontPageViewController.swift */; };
 		A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7337215AE75D007A854F /* ConnectionViewController.swift */; };
 		A78A733A215ED91C007A854F /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A78A7339215ED91C007A854F /* DateTime.swift */; };
+		CCA060E9219D151A00B558CA /* UIColorExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060E8219D151A00B558CA /* UIColorExtentions.swift */; };
+		CCA060EB219DD64000B558CA /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EA219DD64000B558CA /* ImageLoader.swift */; };
+		CCA060ED219F88A700B558CA /* NewClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EC219F88A700B558CA /* NewClassViewController.swift */; };
+		CCA060EF219F918A00B558CA /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060EE219F918A00B558CA /* Stack.swift */; };
+		CCA060F321A24C2300B558CA /* DrawingSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060F221A24C2300B558CA /* DrawingSocketManager.swift */; };
+		CCA060F521A3620A00B558CA /* CreateNewImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA060F421A3620800B558CA /* CreateNewImageViewController.swift */; };
 		A7AC4ADC21A882E5009C2F5B /* PublicImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AC4ADB21A882E5009C2F5B /* PublicImagesViewController.swift */; };
 		A7AC4ADE21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AC4ADD21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift */; };
 		A7E542FF219F3CA900261E9B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E542FE219F3CA900261E9B /* User.swift */; };
@@ -40,7 +49,6 @@
 		CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0099DC216571B800E2D27E /* MainMenuViewController.swift */; };
 		CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1F1E1C216980FF0023663E /* SignUpViewController.swift */; };
 		CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2D721820DB600F21F57 /* DrawViewController.swift */; };
-		CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E2D921820E7200F21F57 /* DrawView.swift */; };
 		CF21E32C2188EEA100F21F57 /* RectangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32B2188EEA100F21F57 /* RectangleView.swift */; };
 		CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E32F2188EEC300F21F57 /* EllipseView.swift */; };
 		CF21E3342189361C00F21F57 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21E3332189361C00F21F57 /* TriangleView.swift */; };
@@ -49,7 +57,10 @@
 		CF3DD51F2197A34600A14BAF /* CanevasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */; };
 		CF3DD525219B6B4C00A14BAF /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD524219B6B4C00A14BAF /* Line.swift */; };
 		CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD528219C804900A14BAF /* BasicShapeView.swift */; };
-		CF3DD52B219D22AA00A14BAF /* UseCaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */; };
+		CF3DD52F21A5E26700A14BAF /* UseCasePopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */; };
+		CF3DD53121A5F14600A14BAF /* RelationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD53021A5F14600A14BAF /* RelationViewController.swift */; };
+		CF3DD53321A6533900A14BAF /* StickFigureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD53221A6533900A14BAF /* StickFigureViewController.swift */; };
+		CF3DD53521A7223B00A14BAF /* UndoRedoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3DD53421A7223B00A14BAF /* UndoRedoManager.swift */; };
 		CF4084DB216AAED700DA9B7F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */; };
 		CF4084DF216D11FA00DA9B7F /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */; };
 		CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */; };
@@ -75,6 +86,9 @@
 
 /* Begin PBXFileReference section */
 		142B8D5CF9AB57002345952A /* Pods-poly-paint-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.release.xcconfig"; sourceTree = "<group>"; };
+		A73BEBAC21AC53370001C692 /* PhotoCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCommentTableViewCell.swift; sourceTree = "<group>"; };
+		A73BEBAE21AC6D5A0001C692 /* PhotoCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCommentViewController.swift; sourceTree = "<group>"; };
+		A73BEBB121AC6DC20001C692 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		A74A5B0B219DDFE600051D14 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		A77C46EB21569CFB0056135A /* poly-paint-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "poly-paint-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77C46EE21569CFB0056135A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +115,12 @@
 		C83DCF8B210537D23F9A45E1 /* Pods-poly-paint-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-poly-paint-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-poly-paint-ios/Pods-poly-paint-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		CCA060E8219D151A00B558CA /* UIColorExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtentions.swift; sourceTree = "<group>"; };
 		CCA060EA219DD64000B558CA /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		CCA060EC219F88A700B558CA /* NewClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClassViewController.swift; sourceTree = "<group>"; };
+		CCA060EE219F918A00B558CA /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		CCA060F221A24C2300B558CA /* DrawingSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingSocketManager.swift; sourceTree = "<group>"; };
+		CCA060F421A3620800B558CA /* CreateNewImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewImageViewController.swift; sourceTree = "<group>"; };
+		CCA060E8219D151A00B558CA /* UIColorExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtentions.swift; sourceTree = "<group>"; };
+		CCA060EA219DD64000B558CA /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPhotosViewController.swift; sourceTree = "<group>"; };
 		CCA46DAE2177E8AC00DC32EC /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		CCA46DB0217815D500DC32EC /* PublicImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicImageCell.swift; sourceTree = "<group>"; };
@@ -115,7 +135,6 @@
 		CF0099DC216571B800E2D27E /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		CF1F1E1C216980FF0023663E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		CF21E2D721820DB600F21F57 /* DrawViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
-		CF21E2D921820E7200F21F57 /* DrawView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawView.swift; sourceTree = "<group>"; };
 		CF21E32B2188EEA100F21F57 /* RectangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleView.swift; sourceTree = "<group>"; };
 		CF21E32F2188EEC300F21F57 /* EllipseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipseView.swift; sourceTree = "<group>"; };
 		CF21E3332189361C00F21F57 /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
@@ -124,7 +143,10 @@
 		CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanevasViewController.swift; sourceTree = "<group>"; };
 		CF3DD524219B6B4C00A14BAF /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		CF3DD528219C804900A14BAF /* BasicShapeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicShapeView.swift; sourceTree = "<group>"; };
-		CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseView.swift; sourceTree = "<group>"; };
+		CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCasePopoverViewController.swift; sourceTree = "<group>"; };
+		CF3DD53021A5F14600A14BAF /* RelationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationViewController.swift; sourceTree = "<group>"; };
+		CF3DD53221A6533900A14BAF /* StickFigureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickFigureViewController.swift; sourceTree = "<group>"; };
+		CF3DD53421A7223B00A14BAF /* UndoRedoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoRedoManager.swift; sourceTree = "<group>"; };
 		CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsManagementViewController.swift; sourceTree = "<group>"; };
@@ -165,6 +187,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A73BEBB021AC6DB00001C692 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A73BEBB121AC6DC20001C692 /* Comment.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		A74A5B0A219DC9B300051D14 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,12 +206,12 @@
 		A77C46E221569CFB0056135A = {
 			isa = PBXGroup;
 			children = (
+				9A3E758073883F6A8C3A7375 /* Frameworks */,
+				C5A1E53E2867D25EE2393BFD /* Pods */,
 				A77C46ED21569CFB0056135A /* poly-paint-ios */,
 				A77C470521569CFB0056135A /* poly-paint-iosTests */,
 				A77C471021569CFC0056135A /* poly-paint-iosUITests */,
 				A77C46EC21569CFB0056135A /* Products */,
-				C5A1E53E2867D25EE2393BFD /* Pods */,
-				9A3E758073883F6A8C3A7375 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -198,43 +228,56 @@
 		A77C46ED21569CFB0056135A /* poly-paint-ios */ = {
 			isa = PBXGroup;
 			children = (
+				A73BEBB021AC6DB00001C692 /* Models */,
+				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
+				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
+				A77C46F821569CFB0056135A /* Assets.xcassets */,
 				A7E54300219F447F00261E9B /* S3 */,
 				CCD4FA772186848A005E124B /* PrivateImageViewController.swift */,
 				CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */,
 				A74A5B0A219DC9B300051D14 /* Chat */,
-				CF21E3282188C2CE00F21F57 /* Shapes */,
-				A77C46FD21569CFB0056135A /* Info.plist */,
-				CCA060EA219DD64000B558CA /* ImageLoader.swift */,
-				CCE6BC4C21925DE800C6DF31 /* ColorPickerViewController.swift */,
-				CCE6BC4921925CFA00C6DF31 /* colorPalette.plist */,
-				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
 				A77C46F021569CFB0056135A /* ChatViewController.swift */,
-				CF0099D82165066700E2D27E /* LoginViewController.swift */,
-				CF21E2D721820DB600F21F57 /* DrawViewController.swift */,
-				CF1F1E1C216980FF0023663E /* SignUpViewController.swift */,
-				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
-				CF0099DC216571B800E2D27E /* MainMenuViewController.swift */,
+				CCE6BC4921925CFA00C6DF31 /* colorPalette.plist */,
+				CCE6BC4C21925DE800C6DF31 /* ColorPickerViewController.swift */,
 				A78A7337215AE75D007A854F /* ConnectionViewController.swift */,
+				CCA060F421A3620800B558CA /* CreateNewImageViewController.swift */,
 				CFEF506521784173001C93AB /* ProfilePictureViewController.swift */,
 				A78A7339215ED91C007A854F /* DateTime.swift */,
-				A78A7335215ADDEF007A854F /* FrontPageViewController.swift */,
-				CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */,
-				A77C46F821569CFB0056135A /* Assets.xcassets */,
-				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
-				A77C46F221569CFB0056135A /* Main.storyboard */,
-				CCD4FA7921891A72005E124B /* ProtectedImagePasswordViewController.swift */,
-				CCD4FA752186536B005E124B /* PublicImageViewController.swift */,
-				CCD4FA7321801C98005E124B /* PrivateImageCell.swift */,
-				CCD4FA7121801444005E124B /* MyImagesCollectionViewController.swift */,
-				CF21E2D921820E7200F21F57 /* DrawView.swift */,
+				CCA060F221A24C2300B558CA /* DrawingSocketManager.swift */,
+				CF21E2D721820DB600F21F57 /* DrawViewController.swift */,
 				CF4084E0216F911900DA9B7F /* FriendsManagementViewController.swift */,
+				A78A7335215ADDEF007A854F /* FrontPageViewController.swift */,
 				CCA46DAE2177E8AC00DC32EC /* Image.swift */,
+				CCA060EA219DD64000B558CA /* ImageLoader.swift */,
+				A77C46FD21569CFB0056135A /* Info.plist */,
+				A77C46FA21569CFB0056135A /* LaunchScreen.storyboard */,
+				CF0099D82165066700E2D27E /* LoginViewController.swift */,
+				A77C46F221569CFB0056135A /* Main.storyboard */,
+				CF0099DC216571B800E2D27E /* MainMenuViewController.swift */,
+				CCD4FA7121801444005E124B /* MyImagesCollectionViewController.swift */,
+				CCA060EC219F88A700B558CA /* NewClassViewController.swift */,
 				A77C46F521569CFB0056135A /* poly_paint_ios.xcdatamodeld */,
+				CCD4FA7321801C98005E124B /* PrivateImageCell.swift */,
+				CCD4FA772186848A005E124B /* PrivateImageViewController.swift */,
+				CF4084DA216AAED700DA9B7F /* ProfileViewController.swift */,
+				CCD4FA7921891A72005E124B /* ProtectedImagePasswordViewController.swift */,
 				CCA46DB0217815D500DC32EC /* PublicImageCell.swift */,
+				CCD4FA752186536B005E124B /* PublicImageViewController.swift */,
+				CCA46DAC2177E1BD00DC32EC /* PublicPhotosViewController.swift */,
+				CF3DD53021A5F14600A14BAF /* RelationViewController.swift */,
+				CF21E3282188C2CE00F21F57 /* Shapes */,
+				CF1F1E1C216980FF0023663E /* SignUpViewController.swift */,
+				CCA060EE219F918A00B558CA /* Stack.swift */,
+				CF3DD53221A6533900A14BAF /* StickFigureViewController.swift */,
+				CF3DD53421A7223B00A14BAF /* UndoRedoManager.swift */,
+				CF3DD52E21A5E26700A14BAF /* UseCasePopoverViewController.swift */,
+				CFEF506721790C89001C93AB /* User.swift */,
 				CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */,
 				A7E542FE219F3CA900261E9B /* User.swift */,
 				A7AC4ADB21A882E5009C2F5B /* PublicImagesViewController.swift */,
 				A7AC4ADD21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift */,
+				A73BEBAC21AC53370001C692 /* PhotoCommentTableViewCell.swift */,
+				A73BEBAE21AC6D5A0001C692 /* PhotoCommentViewController.swift */,
 			);
 			path = "poly-paint-ios";
 			sourceTree = "<group>";
@@ -285,7 +328,6 @@
 				CF21E335218F93B000F21F57 /* StickFigureView.swift */,
 				CF3DD524219B6B4C00A14BAF /* Line.swift */,
 				CF3DD528219C804900A14BAF /* BasicShapeView.swift */,
-				CF3DD52A219D22AA00A14BAF /* UseCaseView.swift */,
 			);
 			name = Shapes;
 			path = "New Group";
@@ -474,10 +516,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCA060F521A3620A00B558CA /* CreateNewImageViewController.swift in Sources */,
+				CF3DD53121A5F14600A14BAF /* RelationViewController.swift in Sources */,
+				CF3DD53321A6533900A14BAF /* StickFigureViewController.swift in Sources */,
+				CFEF506821790C89001C93AB /* User.swift in Sources */,
 				CF3DD52B219D22AA00A14BAF /* UseCaseView.swift in Sources */,
 				A74A5B0C219DDFE600051D14 /* ChatModel.swift in Sources */,
 				CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
+				CCA060F321A24C2300B558CA /* DrawingSocketManager.swift in Sources */,
+				A73BEBAD21AC53370001C692 /* PhotoCommentTableViewCell.swift in Sources */,
 				CFEF506621784173001C93AB /* ProfilePictureViewController.swift in Sources */,
 				CF0099D92165066700E2D27E /* LoginViewController.swift in Sources */,
 				A7AC4ADE21A893C9009C2F5B /* SearchableImageCollectionViewCell.swift in Sources */,
@@ -485,6 +533,7 @@
 				CCE6BC4D21925DE800C6DF31 /* ColorPickerViewController.swift in Sources */,
 				CF21E2D821820DB600F21F57 /* DrawViewController.swift in Sources */,
 				CF3DD529219C804900A14BAF /* BasicShapeView.swift in Sources */,
+				A73BEBAF21AC6D5A0001C692 /* PhotoCommentViewController.swift in Sources */,
 				A77C46F721569CFB0056135A /* poly_paint_ios.xcdatamodeld in Sources */,
 				CF3DD51F2197A34600A14BAF /* CanevasViewController.swift in Sources */,
 				A7AC4ADC21A882E5009C2F5B /* PublicImagesViewController.swift in Sources */,
@@ -494,12 +543,14 @@
 				A78A7338215AE75D007A854F /* ConnectionViewController.swift in Sources */,
 				CF4084E1216F911900DA9B7F /* FriendsManagementViewController.swift in Sources */,
 				A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */,
+				CF3DD53521A7223B00A14BAF /* UndoRedoManager.swift in Sources */,
 				CCD4FA782186848A005E124B /* PrivateImageViewController.swift in Sources */,
 				CCA46DAD2177E1BD00DC32EC /* PublicPhotosViewController.swift in Sources */,
 				CCD4FA7A21891A72005E124B /* ProtectedImagePasswordViewController.swift in Sources */,
 				CCD4FA7221801444005E124B /* MyImagesCollectionViewController.swift in Sources */,
 				CCA060E9219D151A00B558CA /* UIColorExtentions.swift in Sources */,
 				A7E542FF219F3CA900261E9B /* User.swift in Sources */,
+				A73BEBB221AC6DC20001C692 /* Comment.swift in Sources */,
 				CF21E2DA21820E7200F21F57 /* DrawView.swift in Sources */,
 				A7E54302219F44A200261E9B /* S3Service.swift in Sources */,
 				CF21E3302188EEC300F21F57 /* EllipseView.swift in Sources */,
@@ -507,12 +558,15 @@
 				CF1F1E1D216980FF0023663E /* SignUpViewController.swift in Sources */,
 				CCD4FA7421801C98005E124B /* PrivateImageCell.swift in Sources */,
 				CF21E32C2188EEA100F21F57 /* RectangleView.swift in Sources */,
+				CCA060ED219F88A700B558CA /* NewClassViewController.swift in Sources */,
 				CF21E336218F93B000F21F57 /* StickFigureView.swift in Sources */,
 				CF21E3342189361C00F21F57 /* TriangleView.swift in Sources */,
 				A78A733A215ED91C007A854F /* DateTime.swift in Sources */,
+				CF3DD52F21A5E26700A14BAF /* UseCasePopoverViewController.swift in Sources */,
 				CF3DD525219B6B4C00A14BAF /* Line.swift in Sources */,
 				CF21E338218F9FC400F21F57 /* ClassDiagramView.swift in Sources */,
 				A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */,
+				CCA060EF219F918A00B558CA /* Stack.swift in Sources */,
 				CCD4FA762186536B005E124B /* PublicImageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

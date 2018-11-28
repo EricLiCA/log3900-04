@@ -20,10 +20,10 @@ final class PublicPhotosViewController: UICollectionViewController {
     
     func getPublicImageUrl() -> String{
         if (UserDefaults.standard.string(forKey: "username") != "anonymous"){
-            return "http://localhost:3000/v2/imagesPublicExceptMine/" + UserDefaults.standard.string(forKey: "id")!
+            return SERVER.URL.rawValue + "v2/imagesPublicExceptMine/" + UserDefaults.standard.string(forKey: "id")!
         }
         else{
-            return "http://localhost:3000/v2/imagesPublicExceptMine/" + UUID().uuidString
+            return SERVER.URL.rawValue + "v2/imagesPublicExceptMine/" + UUID().uuidString
         }
     }
     

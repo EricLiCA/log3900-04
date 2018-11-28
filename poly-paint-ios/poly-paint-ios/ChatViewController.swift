@@ -22,7 +22,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - Models
     let chatModel = ChatModel.instance
     var messagesArray = [String]()
-    var serverAddress: String = "http://localhost:3000/"
+    var serverAddress: String = SERVER.URL.rawValue
     var username: String = ""
     var invalidUsername: Bool = false
     let systemSoundID: SystemSoundID = 1016

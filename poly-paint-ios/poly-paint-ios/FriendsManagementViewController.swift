@@ -176,7 +176,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func sendFriendRequest(user: User) {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: SERVER.URL.rawValue + "v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
@@ -207,7 +207,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func sendAcceptFriendship(user: User) {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: SERVER.URL.rawValue + "v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
@@ -235,7 +235,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func sendRefuseFriendship(userId: String) {
-        let url = URL(string: "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
+        let url = URL(string: SERVER.URL.rawValue + "v2/friendships/" + UserDefaults.standard.string(forKey: "id")!)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
         request.httpMethod = "DELETE"
@@ -262,7 +262,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func loadPendingFrienships() {
-        let urlString = "http://localhost:3000/v2/friendships/" + UserDefaults.standard.string(forKey: "id")! + "?pending=true"
+        let urlString = SERVER.URL.rawValue + "v2/friendships/" + UserDefaults.standard.string(forKey: "id")! + "?pending=true"
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
@@ -290,7 +290,7 @@ class FriendsManagementViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func loadUsersNotInFriends() {
-        let urlString = "http://localhost:3000/v2/usersExceptFriends/" + UserDefaults.standard.string(forKey: "id")!
+        let urlString = SERVER.URL.rawValue + "v2/usersExceptFriends/" + UserDefaults.standard.string(forKey: "id")!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
