@@ -260,25 +260,46 @@ public class BasicShapeView: UIView {
     }
     
     func toShapeObject() -> Data? {
-        
-        let shape: [String: Any] = [
-            "Id": self.uuid!,
-            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
-            "ShapeType": self.shapeType!,
-            "Index": self.index!,
-            "ShapeInfo": [
-                "Center": [
-                    "X": self.center.x,
-                    "Y": self.center.y
-                ],
-                "Width": self.frame.width,
-                "Height": self.frame.height,
-                "Color": self.color?.hexString
+        if(self.shapeType! == "TRIANGLE") {
+            let shape: [String: Any] = [
+                "Id": self.uuid!,
+                "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+                "ShapeType": self.shapeType!,
+                "Index": self.index!,
+                "ShapeInfo": [
+                    "Center": [
+                        "X": self.center.x,
+                        "Y": self.center.y
+                    ],
+                    "Width": self.frame.width,
+                    "Height": self.frame.height,
+                    "Color": self.color?.hexString
+                ]
             ]
-        ]
+            
+            let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+            return jsonData;
+        } else {
+            let shape: [String: Any] = [
+                "Id": self.uuid!,
+                "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+                "ShapeType": self.shapeType!,
+                "Index": self.index!,
+                "ShapeInfo": [
+                    "Center": [
+                        "X": self.frame.origin.x,
+                        "Y": self.frame.origin.y
+                    ],
+                    "Width": self.frame.width,
+                    "Height": self.frame.height,
+                    "Color": self.color?.hexString
+                ]
+            ]
+            
+            let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+            return jsonData;
+        }
         
-        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
-        return jsonData;
         
     }
     
