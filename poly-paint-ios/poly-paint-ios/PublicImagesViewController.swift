@@ -19,6 +19,7 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
     
     var images: [Image]?
     var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+    var likesUpdated = 0
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.images?.count ?? 0
@@ -27,6 +28,7 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! SearchableImageCollectionViewCell
         cell.image.image = images?[indexPath.item].fullImage
+        cell.likesLabel.text = "Likes: \(images![indexPath.item].likes.count)"
         return cell
     }
     
@@ -131,17 +133,7 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
                 }
                 
                 DispatchQueue.main.async {
-                    
-                    self.images = self.allImages
-                    if self.search != "" {
-                        self.images = self.allImages.filter { (image) -> Bool in
-                            image.ownerId?.lowercased().contains(self.search.lowercased()) ?? false || image.title?.lowercased().contains(self.search.lowercased()) ?? false
-                        }
-                        self.searchBar.isHidden = true
-                        self.imageCollectionView.reloadData()
-                    }
-                    self.imageCollectionView.reloadData()
-                    self.activityIndicator.stopAnimating()
+                    self.updateLikes()
                 }
                 
                 
@@ -150,6 +142,64 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
             }
             
             }.resume()
+    }
+    
+    private func getLikeURL(image: Image) -> String {
+        return "http://localhost:3000/v2/imageLikes/\(image.id!)"
+    }
+    
+    func updateLikes() {
+        self.likesUpdated = 0
+        for i in 0...allImages.count - 1 {
+            guard let url = URL(string: getLikeURL(image: allImages[i])) else { return }
+            URLSession.shared.dataTask(with: url) { (data, response, error) in
+                
+                if error != nil {
+                    print(error ?? "")
+                    return
+                }
+                
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
+                    
+                    for dictionary in json as! [[String: AnyObject]] {
+                        self.allImages[i].likes.insert(dictionary["userId"] as! String)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.likesUpdated += 1
+                    }
+                } catch let jsonError {
+                    DispatchQueue.main.async {
+                        self.likesUpdated += 1
+                    }
+                    print(jsonError)
+                }
+            }.resume()
+        }
+        self.initializeImages()
+    }
+    
+    func initializeImages() {
+        if self.likesUpdated < self.allImages.count {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.initializeImages()
+            }
+        } else {
+            self.images = self.allImages
+            if self.search != "" {
+                self.images = self.allImages.filter { (image) -> Bool in
+                    image.ownerId?.lowercased().contains(self.search.lowercased()) ?? false
+                }
+                self.searchBar.isHidden = true
+                self.imageCollectionView.reloadData()
+            }
+            self.imageCollectionView.reloadData()
+            self.activityIndicator.stopAnimating()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.updateLikes()
+            }
+        }
     }
     
 

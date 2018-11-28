@@ -19,6 +19,7 @@ class Image: NSObject {
     var fullImageUrl: String?
     var thumbnail: UIImage?
     var fullImage: UIImage?
+    var likes = Set<String>()
     
     func getThumbnailUrl()  -> URL? {
         if self.thumbnailUrl != nil {
