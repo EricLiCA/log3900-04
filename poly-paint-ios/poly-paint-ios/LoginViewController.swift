@@ -9,8 +9,8 @@
 import UIKit
 
 enum SERVER: String{
-    case URL = "http://ec2-34-200-247-233.compute-1.amazonaws.com/"
-    //case URL = "http://localhost:3000/"
+    //case URL = "http://ec2-34-200-247-233.compute-1.amazonaws.com/"
+    case URL = "http://localhost:3000/"
 }
 
 class LoginViewController: UIViewController {
@@ -19,10 +19,12 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var authenticationFailedLabel: UILabel!
+    @IBOutlet weak var anonymousLoginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         authenticationFailedLabel.isHidden = true
+        self.anonymousLoginButton.isHidden = true
         // Do any additional setup after loading the view.
     }
 

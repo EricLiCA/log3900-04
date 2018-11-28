@@ -119,7 +119,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create a new image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVY-YR-01d">
-                                <rect key="frame" x="68" y="49" width="185" height="24"/>
+                                <rect key="frame" x="67.5" y="49" width="185" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1216,6 +1216,7 @@
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="anonymousLoginButton" destination="SRX-hL-G4h" id="vxq-mC-9Aq"/>
                         <outlet property="authenticationFailedLabel" destination="Puh-Hd-Lg8" id="0BA-I5-LJZ"/>
                         <outlet property="loginButton" destination="ZnL-a7-3af" id="UqL-uJ-T9y"/>
                         <outlet property="passwordTextField" destination="AKD-8H-mqh" id="Euq-Zl-o1v"/>
@@ -1632,7 +1633,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3de-HZ-5PF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2196" y="-1303"/>
+            <point key="canvasLocation" x="2284" y="-1498"/>
         </scene>
         <!--Title-->
         <scene sceneID="8qG-aZ-cHP">
@@ -1734,7 +1735,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="editBtn" destination="fmz-Sz-H4R" id="DIG-35-vxJ"/>
-                        <outlet property="imageProtectionLevelLabel" destination="fpj-Rf-U1Q" id="Zup-jw-i7s"/>
                         <outlet property="imageProtectionLevelLabel" destination="W3z-oy-bRf" id="Rc4-vK-zj5"/>
                         <outlet property="imageView" destination="Rkt-xv-5Io" id="iar-2m-6ii"/>
                         <outlet property="likeButton" destination="elL-sf-gxs" id="1jz-od-wV1"/>
@@ -3800,7 +3800,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="G8n-Og-bjM"/>
         <segue reference="IDQ-Qb-zNY"/>
-        <segue reference="5Cn-Ey-vaa"/>
+        <segue reference="noE-tU-kW1"/>
         <segue reference="4Zh-W7-tx9"/>
         <segue reference="Scu-Rl-Q2B"/>
     </inferredMetricsTieBreakers>
