@@ -25,7 +25,7 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let openEditorAction = UIAlertAction(title: "Open In Editor", style: .default, handler: { (alert: UIAlertAction!) -> Void in
-            //  Do some destructive action here.
+            self.performSegue(withIdentifier: "toImageEditorFromPrivate", sender: self)
         })
         alertController.addAction(openEditorAction)
         
@@ -76,6 +76,10 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
             ProtectedImagePasswordVC.image = self.image
             ProtectedImagePasswordVC.changeImagePasswordProtocol = self
         }
+        if segue.identifier == "toImageEditorFromPrivate" {
+            let ImageEditorVC = segue.destination as! DrawViewController
+            ImageEditorVC.image = self.image
+        }
     }
     
     func setImageAsPublic() {
@@ -118,7 +122,7 @@ class PrivateImageViewController: UIViewController, ChangeImagePasswordProtocol 
     }
     
     func setImageAsPrivate() {
-        let urlString = "http://localhost:3000/v2/images/" + (image?.id)!
+        let urlString = SERVER.URL.rawValue + "v2/images/" + (image?.id)!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)

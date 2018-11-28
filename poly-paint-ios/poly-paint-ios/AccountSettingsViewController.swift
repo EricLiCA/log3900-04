@@ -49,7 +49,7 @@ class AccountSettingsViewController: UIViewController {
     }
 
     func changePassword(password: String) {
-        let urlString = "http://localhost:3000/v2/users/" + UserDefaults.standard.string(forKey: "id")!
+        let urlString = SERVER.URL.rawValue +  "v2/users/" + UserDefaults.standard.string(forKey: "id")!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)
@@ -78,7 +78,7 @@ class AccountSettingsViewController: UIViewController {
     }
     
     func changeUsername(username: String) {
-        let urlString = "http://localhost:3000/v2/users/" + UserDefaults.standard.string(forKey: "id")!
+        let urlString = SERVER.URL.rawValue + "v2/users/" + UserDefaults.standard.string(forKey: "id")!
         let url = URL(string: urlString)
         let session = URLSession.shared
         var request = URLRequest(url: url!)

@@ -98,7 +98,13 @@ class ColorPickerViewController: UIViewController, UICollectionViewDelegate, UIC
 			var hexString = colorPalette[cell.tag]
 			color = hexStringToUIColor(hexString)
 			self.view.backgroundColor = color
-			delegate?.setButtonColor(color)
+            self.setColor()
+			//delegate?.setButtonColor(color)
 		}
 	}
+    
+    func setColor() {
+        let userInfo = ["color": self.view.backgroundColor]
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setColorAlert"), object: nil, userInfo: userInfo)
+    }
 }

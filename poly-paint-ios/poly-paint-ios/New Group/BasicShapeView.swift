@@ -8,17 +8,20 @@
 
 import UIKit
 
-class BasicShapeView: UIView {
+public class BasicShapeView: UIView {
 
     let lineWidth: CGFloat = 1
     var touchAnchorPoint = false
-    let uuid = NSUUID.init().uuidString.lowercased()
+    var uuid : String?
     var numberOfAnchorPoints: Int?
     var anchorPointsLayers = [CAShapeLayer]()
     var color: UIColor?
     var shapeType: String?
+    var index: Int?
+    var showAnchors = false
+    var drawingSocketManager = DrawingSocketManager()
     
-    init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?) {
+    init(frame: CGRect, numberOfAnchorPoints: Int, color:UIColor, shapeType: String?, index: Int) {
         self.shapeType = shapeType
         self.numberOfAnchorPoints = numberOfAnchorPoints - 1;
         super.init(frame: frame)
@@ -26,13 +29,15 @@ class BasicShapeView: UIView {
         self.backgroundColor = UIColor.blue
         self.setUpNotifications()
         self.color = color
+        self.index = index
+        self.uuid = NSUUID.init().uuidString.lowercased()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var canBecomeFirstResponder: Bool {
+    override public var canBecomeFirstResponder: Bool {
         return true
     }
     
@@ -71,13 +76,16 @@ class BasicShapeView: UIView {
             panGR.setTranslation(.zero, in: self)
             
             if(panGR.state == .ended) {
-                self.hideAnchorPoints()
+                //self.hideAnchorPoints()
+                self.drawingSocketManager.editShape(shape: self)
             } else if(panGR.state == .began) {
-                self.showAnchorPoints()
+                //self.showAnchorPoints()
             }
             
-            let userInfo = ["view": self.uuid] as [String : String]
+            let userInfo = ["shape": self] as [String : BasicShapeView]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
+        } else {
+            //self.hideAnchorPoints()
         }
     }
     
@@ -124,7 +132,6 @@ class BasicShapeView: UIView {
         }
         
         let menuController = UIMenuController.shared
-        
         guard !menuController.isMenuVisible, gestureView.canBecomeFirstResponder else {
             return
         }
@@ -158,15 +165,30 @@ class BasicShapeView: UIView {
     }
     
     @objc internal func handleDuplicateAction(_ controller: UIMenuController) {
-        let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!, "shapeType": self.shapeType!] as [String : Any]
-        NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+        if(self.shapeType == "USE") {
+            let ellipseView = self as! EllipseView
+            let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!, "shapeType": self.shapeType!, "useCase": ellipseView.labelText!] as [String : Any]
+            NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+        } else if(self.shapeType == "ACTOR") {
+            let stickFigureView = self as! StickFigureView
+            let shapeData = ["shapeType": self.shapeType!, "actor": stickFigureView.actorName] as [String : Any]
+            NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+        } else if(self.shapeType == "CLASS") {
+            let classDiagramView = self as! ClassDiagramView
+            let shapeData = ["shapeType": classDiagramView.shapeType!, "text": classDiagramView.text, "x": classDiagramView.x, "y": classDiagramView.y, "height": classDiagramView.frame.height, "width": classDiagramView.frame.width] as [String : Any]
+            NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+        } else {
+            let shapeData = ["frame": self.frame, "layer": self.layer, "color": self.color!, "shapeType": self.shapeType!] as [String : Any]
+            NotificationCenter.default.post(name: .duplicate, object: nil, userInfo: shapeData)
+        }
+        
     }
     
     @objc internal func handleEditAction(_ controller: UIMenuController) {
     }
     
     @objc internal func handleDeleteAction(_ controller: UIMenuController) {
-        self.removeFromSuperview()
+       // self.removeFromSuperview()
          let uuid = ["uuid": self.uuid] as [String : Any]
          NotificationCenter.default.post(name: .delete, object: nil, userInfo: uuid)
         
@@ -178,12 +200,18 @@ class BasicShapeView: UIView {
         for index in 0...self.numberOfAnchorPoints! {
             self.layer.sublayers![index].isHidden = false
         }
+        
+        self.showAnchors = true
     }
     
     func hideAnchorPoints() {
         for index in 0...self.numberOfAnchorPoints! {
             self.layer.sublayers![index].isHidden = true
+            self.anchorPointsLayers[index].fillColor = UIColor.red.cgColor
+            self.anchorPointsLayers[index].strokeColor = UIColor.red.cgColor
         }
+        self.touchAnchorPoint = false
+        self.showAnchors = false
     }
     
     func axisFromPoints(p1: CGPoint, _ p2: CGPoint) -> String {
@@ -206,7 +234,7 @@ class BasicShapeView: UIView {
         return CGPoint(x: 0, y: 0)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         var numAnchor = 0
         for layer in self.anchorPointsLayers {
             let touchArea = CGRect(x: (touches.first?.location(in: self).x)!, y: (touches.first?.location(in: self).y)!, width: 50, height: 50)
@@ -221,6 +249,7 @@ class BasicShapeView: UIView {
                     layer.fillColor = UIColor.green.cgColor
                     layer.strokeColor = UIColor.green.cgColor
                     self.touchAnchorPoint = true
+                    print("touched anchor")
                 }
                 
                 let userInfo = ["view": self, "point" : touches.first?.location(in: self.superview), "anchorNumber": numAnchor] as [String : Any]
@@ -228,6 +257,45 @@ class BasicShapeView: UIView {
             }
             numAnchor = numAnchor + 1
         }
+    }
+    
+    func toShapeObject() -> Data? {
+        
+        let shape: [String: Any] = [
+            "Id": self.uuid!,
+            "ImageId": "9db006f6-cd93-11e8-ad4f-12e4abeee048",
+            "ShapeType": self.shapeType!,
+            "Index": self.index!,
+            "ShapeInfo": [
+                "Center": [
+                    "X": self.center.x,
+                    "Y": self.center.y
+                ],
+                "Width": self.frame.width,
+                "Height": self.frame.height,
+                "Color": self.color?.hexString
+            ]
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: shape, options: .prettyPrinted)
+        return jsonData;
+        
+    }
+    
+    func isOnAnchorPoint(touchPoint: CGPoint) -> Int {
+        var numAnchor = 0
+        for layer in self.anchorPointsLayers {
+            let touchArea = CGRect(x: touchPoint.x, y: touchPoint.y, width: 50, height: 50)
+
+            if (layer.path?.contains(touchPoint))! {
+                layer.fillColor = UIColor.green.cgColor
+                layer.strokeColor = UIColor.green.cgColor
+                print("touched anchor")
+                return numAnchor
+            }
+            numAnchor = numAnchor + 1
+        }
+        return -1
     }
 }
 
