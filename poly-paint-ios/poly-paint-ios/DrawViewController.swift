@@ -1032,10 +1032,11 @@ class DrawViewController: UIViewController {
                 shape?.removeFromSuperview()
                 let view = self.imageLoader.parseShapes(shape: dataString)
                 view?.uuid = dataString["Id"] as! String
+                
                 self.shapes.updateValue(view!, forKey: dataString["Id"] as! String)
                 self.drawingPlace.addSubview(view!)
-                let userInfo = ["shape":view!] as [String : BasicShapeView]
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
+                //let userInfo = ["shape":view!] as [String : BasicShapeView]
+                //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "movedView"), object: nil, userInfo: userInfo)
             }
             if (dataString["ShapeType"] as! String == "CLASS") {
                 let uuid = dataString["Id"] as! String

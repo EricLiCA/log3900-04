@@ -312,13 +312,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UrE-C2-vBY">
-                                <rect key="frame" x="269" y="203" width="230" height="638"/>
+                                <rect key="frame" x="269" y="353" width="230" height="338"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Paint" translatesAutoresizingMaskIntoConstraints="NO" id="tOM-FH-CKM">
-                                        <rect key="frame" x="0.0" y="0.0" width="230" height="600"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="230" height="300"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xWi-GF-gOh">
-                                        <rect key="frame" x="0.0" y="608" width="230" height="30"/>
+                                        <rect key="frame" x="0.0" y="308" width="230" height="30"/>
                                         <color key="backgroundColor" red="0.20392156859999999" green="0.76862745099999996" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="230" id="Eug-xk-Z7J"/>
@@ -817,7 +817,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVN-w7-E5K">
-                                                        <rect key="frame" x="147" y="0.0" width="35" height="22"/>
+                                                        <rect key="frame" x="147" y="0.0" width="34" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="1V4-UI-Vru"/>
                                                             <constraint firstAttribute="height" constant="22" id="LCp-wG-6xh"/>
@@ -828,7 +828,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-UT-PUr">
-                                                        <rect key="frame" x="196" y="0.0" width="34" height="22"/>
+                                                        <rect key="frame" x="195" y="0.0" width="35" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="KSY-wl-7iy"/>
                                                             <constraint firstAttribute="height" constant="22" id="TF6-1h-DWF"/>
@@ -3640,7 +3640,7 @@
         <image name="Palette" width="268" height="430"/>
         <image name="Refuse" width="25" height="25"/>
         <image name="SignUp" width="22" height="22"/>
-        <image name="StickFigure" width="56" height="80"/>
+        <image name="StickFigure" width="85" height="120"/>
         <image name="Unfriend" width="50" height="50"/>
         <image name="agg_left" width="50" height="19"/>
         <image name="arrow" width="86" height="38"/>
@@ -3663,6 +3663,6 @@
         <segue reference="IDQ-Qb-zNY"/>
         <segue reference="noE-tU-kW1"/>
         <segue reference="sFe-vd-FYf"/>
-        <segue reference="Scu-Rl-Q2B"/>
+        <segue reference="Bkh-DL-s0X"/>
     </inferredMetricsTieBreakers>
 </document>
