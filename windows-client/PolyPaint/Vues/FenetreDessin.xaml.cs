@@ -238,11 +238,15 @@ namespace PolyPaint
         {
             VueModele vueModele = ((VueModele)this.DataContext);
             //Empiler la modification
-            if (e.Stroke is Savable)
+            if (e.Stroke is Savable && !((CustomStroke)e.Stroke).isLocked())
             {
                 CustomStroke erasedStroke = (CustomStroke)e.Stroke;
                 vueModele.editeur.Do(new DeleteStroke(erasedStroke.Id.ToString(), ((Savable)erasedStroke).toJson()));
                 EditionSocket.RemoveStroke(erasedStroke.Id.ToString());
+            }
+            else if (((CustomStroke)e.Stroke).isLocked())
+            {
+                e.Cancel = true;
             }
         }
     }
