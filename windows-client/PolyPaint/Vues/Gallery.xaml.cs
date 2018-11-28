@@ -42,6 +42,8 @@ namespace PolyPaint.Vues
 
             ImageDao.GetByOwnerId();
             ImageDao.GetPublicExceptMine();
+            SearchByAuthor.IsSelected = true;
+            Search.Text = "";
         }
 
         private void RestrictPermissions()
@@ -137,8 +139,8 @@ namespace PolyPaint.Vues
 
             ImagePreviewRoom.ImageId = CurrentGalleryCard.Image.id;
             ImagePreviewRoom.PreviewImage();
-            
-           
+
+
             if (!ServerService.instance.isOffline())
             {
                 ShareButton.Visibility = CurrentGalleryCard.Image.ownerId == ServerService.instance.user.id ? Visibility.Visible : Visibility.Collapsed;
@@ -187,12 +189,14 @@ namespace PolyPaint.Vues
         {
             if ((bool)LockButton.IsChecked)
             {
+                ServerService.instance.Socket.Emit("imageProtectionLevelChanged", CurrentGalleryCard.Image.id);
                 CurrentGalleryCard.Image.protectionLevel = "private";
             }
             else if (CurrentGalleryCard.Image.password == null || CurrentGalleryCard.Image.password == "")
             {
                 CurrentGalleryCard.Image.protectionLevel = "public";
-            } else
+            }
+            else
             {
                 CurrentGalleryCard.Image.protectionLevel = "protected";
             }
@@ -293,6 +297,7 @@ namespace PolyPaint.Vues
                 }
                 else
                 {
+                    ServerService.instance.Socket.Emit("imageProtectionLevelChanged", CurrentGalleryCard.Image.id);
                     CurrentGalleryCard.Image.password = CurrentImagePassword.Text;
                     CurrentGalleryCard.Image.protectionLevel = "protected";
                 }
@@ -350,6 +355,11 @@ namespace PolyPaint.Vues
         }
 
         private void Search_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            FilterImages();
+        }
+
+        public void FilterImages()
         {
             List<GalleryCard> gallerycards = PublicImagesContainer.Children.Cast<GalleryCard>().ToList();
             gallerycards.AddRange(MyImagesContainer.Children.Cast<GalleryCard>().ToList());

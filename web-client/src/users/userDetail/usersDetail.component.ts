@@ -45,10 +45,7 @@ export class UsersDetailComponent {
     
     this.userService.getUserImages(id).then((images: Image[]) => {
         images.forEach(image => {
-          if(image.protectionLevel === "public" || image.protectionLevel === "protected"){
-            this.userImages.push(image);
-          }
-          if(this.loginService.user && image.ownerId === this.loginService.user.id && image.protectionLevel === "private" || this.admin || this.imagePermissions) {
+          if(image.protectionLevel != "private" || (this.loginService.user && image.ownerId === this.loginService.user.id) || this.admin || this.imagePermissions) {
             this.userImages.push(image);
           }
         });
@@ -65,6 +62,7 @@ export class UsersDetailComponent {
         return image;
       }
       else {
+        this.likesAndCommentsService.socket.emit("imageProtectionLevelChanged", clickedImage.id);
         this.userService.deleteUserImage(clickedImage.id);
       }
     });

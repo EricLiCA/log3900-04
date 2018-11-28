@@ -538,6 +538,16 @@ namespace PolyPaint.Modeles
                     });
                 });
             }));
+
+            ServerService.instance.Socket.On("kickUser", () =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ((MainWindow)Application.Current.MainWindow).Gallery.Load();
+                    ((MainWindow)Application.Current.MainWindow).GoToGallery();
+                    ((MainWindow)Application.Current.MainWindow).ButtonEdit.Visibility = Visibility.Collapsed;
+                });
+            });
         }
 
         private void Load(List<string> list)
