@@ -29,6 +29,8 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! SearchableImageCollectionViewCell
         cell.image.image = images?[indexPath.item].fullImage
         cell.likesLabel.text = "Likes: \(images![indexPath.item].likes.count)"
+        cell.layer.borderWidth = 1
+        cell.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         return cell
     }
     
@@ -124,7 +126,7 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
                     image.fullImageUrl = dictionary["fullImageUrl"] as? String
                     guard let url = image.getFullImageUrl(),
                         let imageData = try? Data(contentsOf: url as URL) else {
-                            break
+                            continue
                     }
                     if let downloadedImage = UIImage(data: imageData){
                         image.fullImage = downloadedImage
@@ -145,11 +147,15 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     private func getLikeURL(image: Image) -> String {
-        return "http://localhost:3000/v2/imageLikes/\(image.id!)"
+        return "\(SERVER.URL.rawValue)v2/imageLikes/\(image.id!)"
     }
     
     func updateLikes() {
         self.likesUpdated = 0
+        guard allImages.count > 0 else {
+            self.initializeImages()
+            return
+        }
         for i in 0...allImages.count - 1 {
             guard let url = URL(string: getLikeURL(image: allImages[i])) else { return }
             URLSession.shared.dataTask(with: url) { (data, response, error) in
