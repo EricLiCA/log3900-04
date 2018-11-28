@@ -13,7 +13,7 @@ export class UserService {
         ) { }
 
     getUsers (): Promise<User[]> {
-        const apiUrl = 'http://localhost:3000/v2/users';  
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/users';  
         return this.http.get(apiUrl).toPromise().then((data: Array<User>) => {
             const users = data;
             return users;
@@ -21,28 +21,28 @@ export class UserService {
     }
     
     getUserById (id: String): Promise<User> {
-        const apiUrl = 'http://localhost:3000/v2/users/' + id;
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/users/' + id;
         return this.http.get(apiUrl).toPromise().then((data: User) => {
             return data;
         })
     }
  
     getUserImages(id: String): Promise<Image[]> {
-        const apiUrl = 'http://localhost:3000/v2/imagesByOwnerId/' + id;  
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/imagesByOwnerId/' + id;  
         return this.http.get(apiUrl).toPromise().then((data: Array<Image>) => {
             return data;
         });
     }
 
     deleteUserImage(id: String): void {
-        const apiUrl = 'http://localhost:3000/v2/images/' + id;
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/images/' + id;
         this.http.delete(apiUrl).toPromise().then(result => {
             console.log(result);
         })
     }
 
     getUserImagesLikes(images: Image[]): Promise<ImageWithLikes[]> {
-        const apiUrl = 'http://localhost:3000/v2/imageLikes/';
+        const apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/imageLikes/';
         let imageIds: string[] = [];
         let imagesWithLikes: ImageWithLikes[] = [];
         images.forEach(image => {

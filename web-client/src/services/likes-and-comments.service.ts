@@ -7,14 +7,14 @@ import { Guid } from "guid-typescript";
 @Injectable({ providedIn: 'root' })
 export class LikesAndCommentsService {
 
-    private apiUrl = 'http://localhost:3000/v2/images';
+    private apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/images';
     public socket;
     public imageId: String;
     public likes: Likes[];
     public comments: Comment[];
 
     constructor() {
-        this.socket = io("http://localhost:3000/");
+        this.socket = io("http://ec2-34-200-247-233.compute-1.amazonaws.com/");
         this.socket.emit("setUsername", Guid.raw());
         this.likes = [];
         this.comments = [];

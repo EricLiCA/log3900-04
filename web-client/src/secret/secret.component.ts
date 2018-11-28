@@ -18,7 +18,7 @@ export class SecretComponent {
   ngOnInit()  {
     this.route.params.forEach((params: Params) => {
         let secret = params['secret'];
-        this.http.get(`http://localhost:3000/v2/secret/${secret}`).toPromise().then(
+        this.http.get(`http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/secret/${secret}`).toPromise().then(
             value => {
                 console.log(value);
                 this.imageSource = value.toString();

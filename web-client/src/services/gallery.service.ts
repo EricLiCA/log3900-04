@@ -5,7 +5,7 @@ import { Image } from '../gallery/Image';
 @Injectable({ providedIn: 'root' })
 export class ImageService {
 
-  private apiUrl = 'http://localhost:3000/v2/images';
+  private apiUrl = 'http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/images';
 
   constructor(
     private http: HttpClient,
