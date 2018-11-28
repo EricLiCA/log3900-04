@@ -817,7 +817,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVN-w7-E5K">
-                                                        <rect key="frame" x="147" y="0.0" width="35" height="22"/>
+                                                        <rect key="frame" x="147" y="0.0" width="34" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="1V4-UI-Vru"/>
                                                             <constraint firstAttribute="height" constant="22" id="LCp-wG-6xh"/>
@@ -828,7 +828,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-UT-PUr">
-                                                        <rect key="frame" x="196" y="0.0" width="34" height="22"/>
+                                                        <rect key="frame" x="195" y="0.0" width="35" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="KSY-wl-7iy"/>
                                                             <constraint firstAttribute="height" constant="22" id="TF6-1h-DWF"/>
@@ -1633,7 +1633,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3de-HZ-5PF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2196" y="-1303"/>
+            <point key="canvasLocation" x="2284" y="-1498"/>
         </scene>
         <!--Title-->
         <scene sceneID="8qG-aZ-cHP">
@@ -1644,7 +1644,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rkt-xv-5Io">
-                                <rect key="frame" x="0.0" y="80" width="768" height="836"/>
+                                <rect key="frame" x="0.0" y="130" width="768" height="786"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QHs-Uy-sF4">
@@ -1705,7 +1705,7 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Modify image title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ayc-Wn-pU3">
-                                <rect key="frame" x="20" y="42" width="728" height="30"/>
+                                <rect key="frame" x="20" y="92" width="728" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -3800,7 +3800,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="G8n-Og-bjM"/>
         <segue reference="IDQ-Qb-zNY"/>
-        <segue reference="5Cn-Ey-vaa"/>
+        <segue reference="noE-tU-kW1"/>
         <segue reference="4Zh-W7-tx9"/>
         <segue reference="Scu-Rl-Q2B"/>
     </inferredMetricsTieBreakers>

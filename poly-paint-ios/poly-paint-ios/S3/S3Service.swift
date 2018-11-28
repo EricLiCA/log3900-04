@@ -12,8 +12,8 @@ import AWSCore
 
 class S3Service {
     static let instance = S3Service()
-    let accessKey = "AKIAJMM7EPKCBVSXTHCA"
-    let secretKey = "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"
+    let accessKey = "AKIAIPDXLQHFFWAOQNXQ"
+    let secretKey = "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"
     var credentialsProvider: AWSStaticCredentialsProvider
     var serviceConfiguration: AWSServiceConfiguration
     var transferManager: AWSS3TransferManager
