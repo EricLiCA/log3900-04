@@ -76,6 +76,11 @@ namespace PolyPaint
             if (selectedStrokes.Count == 0)
             {
                 vueModele.Traits.Add(ClipBoard);
+                ClipBoard.ToList().ForEach(stroke =>
+                {
+                    EditionSocket.AddStroke(((Savable)stroke).toJson());
+                    Editeur.instance.Do(new NewStroke(((CustomStroke)stroke).Id.ToString(), ((Savable)stroke).toJson()));
+                });
                 ClipBoard.Clear();
             }
             else
