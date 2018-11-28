@@ -127,7 +127,8 @@ namespace PolyPaint.Modeles
 
         public CustomStroke Duplicate()
         {
-            this.stopEditing();
+            this.strokes.get(this.Id.ToString()).stopEditing();
+            this.strokes.get(this.Id.ToString()).Unselect();
             CustomStroke duplicate = (CustomStroke)this.Clone();
             duplicate.RefreshGuids();
             for (int i = 0; i < duplicate.StylusPoints.Count; i++)

@@ -35,7 +35,7 @@ namespace PolyPaint.Services
 
         internal void disconnect()
         {
-            this.Socket.Disconnect();
+            this.Socket?.Disconnect();
             user = null;
         }
     }
