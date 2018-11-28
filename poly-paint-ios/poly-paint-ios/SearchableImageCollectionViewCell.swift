@@ -10,4 +10,5 @@ import UIKit
 
 class SearchableImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var likesLabel: UILabel!
 }
