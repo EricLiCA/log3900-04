@@ -8,12 +8,14 @@ PODS:
   - Socket.IO-Client-Swift (13.3.0):
     - Starscream (~> 3.0.2)
   - Starscream (3.0.5)
+  - SwiftGifOrigin (1.6.1)
 
 DEPENDENCIES:
   - AWSS3
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
   - Socket.IO-Client-Swift (~> 13.3.0)
+  - SwiftGifOrigin (~> 1.6.1)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -23,6 +25,7 @@ SPEC REPOS:
     - RxSwift
     - Socket.IO-Client-Swift
     - Starscream
+    - SwiftGifOrigin
 
 SPEC CHECKSUMS:
   AWSCore: 5734e075ffb7470019f85035623adbe0332d7efd
@@ -31,7 +34,8 @@ SPEC CHECKSUMS:
   RxSwift: fe0fd770a43acdb7d0a53da411c9b892e69bb6e4
   Socket.IO-Client-Swift: 0afb192a562db90d50e3f7f7421c06925a3f0179
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
+  SwiftGifOrigin: d6679d3ebe9df2e049a84bc52582635107b581f6
 
-PODFILE CHECKSUM: f7ebe316653de9bb1e508a4480547a0bd958247f
+PODFILE CHECKSUM: 5fe36e6e0c950622eedf487490a44291be235d02
 
 COCOAPODS: 1.5.3
