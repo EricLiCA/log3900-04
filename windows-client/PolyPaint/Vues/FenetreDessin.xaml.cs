@@ -76,10 +76,16 @@ namespace PolyPaint
             if (selectedStrokes.Count == 0)
             {
                 vueModele.Traits.Add(ClipBoard);
+                ClipBoard.ToList().ForEach(stroke =>
+                {
+                    EditionSocket.AddStroke(((Savable)stroke).toJson());
+                    Editeur.instance.Do(new NewStroke(((CustomStroke)stroke).Id.ToString(), ((Savable)stroke).toJson()));
+                });
                 ClipBoard.Clear();
             }
             else
             {
+                EditionSocket.UnlockStrokes();
                 vueModele.editeur.EditingStroke = null;
                 selectedStrokes.ForEach(stroke =>
                 {
@@ -238,11 +244,15 @@ namespace PolyPaint
         {
             VueModele vueModele = ((VueModele)this.DataContext);
             //Empiler la modification
-            if (e.Stroke is Savable)
+            if (e.Stroke is Savable && !((CustomStroke)e.Stroke).isLocked())
             {
                 CustomStroke erasedStroke = (CustomStroke)e.Stroke;
                 vueModele.editeur.Do(new DeleteStroke(erasedStroke.Id.ToString(), ((Savable)erasedStroke).toJson()));
                 EditionSocket.RemoveStroke(erasedStroke.Id.ToString());
+            }
+            else if (((CustomStroke)e.Stroke).isLocked())
+            {
+                e.Cancel = true;
             }
         }
     }

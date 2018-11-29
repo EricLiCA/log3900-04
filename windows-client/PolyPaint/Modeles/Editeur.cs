@@ -491,6 +491,7 @@ namespace PolyPaint.Modeles
                 bool isLineEditing = this.traits.Any(stroke => stroke is AnchorPoint);
 
                 CustomStroke updated = SerializationHelper.stringToStroke((JObject)server_params[0], this.traits);
+                isLineEditing = !(updated is BaseLine) && isLineEditing;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Stroke old = this.traits.get(updated.Id.ToString());
@@ -527,6 +528,8 @@ namespace PolyPaint.Modeles
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Stroke old = this.traits.ToList().Find(stroke => ((CustomStroke)stroke).Id.ToString() == (string)server_params[0]);
+                    if (old == null) return;
+
                     ((CustomStroke)old).stopEditing();
                     Application.Current.Dispatcher.Invoke(() =>
                     {

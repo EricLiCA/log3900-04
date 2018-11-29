@@ -90,7 +90,7 @@ namespace PolyPaint.Modeles.Strokes
                 } else
                 {
                     if (returnList.Last() != "")
-                        returnList[returnList.Count - 1] += "\\n";
+                        returnList[returnList.Count - 1] += "\n";
 
                     returnList[returnList.Count - 1] += content[index];
                 }
@@ -110,7 +110,7 @@ namespace PolyPaint.Modeles.Strokes
 
                     if (content[index] == "") continue;
 
-                    var sections = content[index].Split(new[] { "\\n" }, StringSplitOptions.None);
+                    var sections = content[index].Split(new[] { "\n" }, StringSplitOptions.None);
                     for (int i = 0; i < sections.Length; i++)
                         returnList.Add(sections[i]);
                 }

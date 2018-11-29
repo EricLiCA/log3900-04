@@ -29,7 +29,7 @@ export class ImagePreviewComponent implements OnInit {
   }
   set askedForShareLink(value: boolean) {
     this._askedForShareLink = value;
-    this.http.get(`http://localhost:3000/v2/secret/generate/${this.image.id}`).toPromise().then(
+    this.http.get(`http://ec2-34-200-247-233.compute-1.amazonaws.com/v2/secret/generate/${this.image.id}`).toPromise().then(
             value => {
                 this.shareLink = "http://localhost:4200/secret/" + value.toString();
             },
