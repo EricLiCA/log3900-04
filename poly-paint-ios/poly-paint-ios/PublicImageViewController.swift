@@ -66,7 +66,7 @@ class PublicImageViewController: UIViewController, UITextFieldDelegate {
     
     private func getModifyImageURL() -> String {
         let imageId = image!.id!
-        return "http://localhost:3000/v2/images/\(imageId)"
+        return SERVER.URL.rawValue + "v2/images/\(imageId)"
     }
     func askCorrectPassword() -> Void {
         let alertPassword = UIAlertController(title: "Open protected image", message: "Enter password", preferredStyle: UIAlertControllerStyle.alert)
@@ -144,7 +144,7 @@ class PublicImageViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func getLikeURL() -> String {
-        return "http://localhost:3000/v2/imageLikes/"
+        return SERVER.URL.rawValue + "v2/imageLikes/"
     }
     
     @IBAction func likeAction(_ sender: Any) {
