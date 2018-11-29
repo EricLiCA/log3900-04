@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import SwiftGifOrigin
 
 class TutorialViewController: UIViewController {
     @IBOutlet weak var tutorialImage: UIImageView!
-    var imageToDisplay: UIImage?
+    var imageURL: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        tutorialImage.image = imageToDisplay
+        
+        tutorialImage.image = UIImage.gif(name: imageURL!)
         // Do any additional setup after loading the view.
     }
     

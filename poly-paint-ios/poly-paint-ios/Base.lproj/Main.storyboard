@@ -846,7 +846,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVN-w7-E5K">
-                                                        <rect key="frame" x="147" y="0.0" width="35" height="22"/>
+                                                        <rect key="frame" x="147" y="0.0" width="34" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="1V4-UI-Vru"/>
                                                             <constraint firstAttribute="height" constant="22" id="LCp-wG-6xh"/>
@@ -857,7 +857,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-UT-PUr">
-                                                        <rect key="frame" x="196" y="0.0" width="34" height="22"/>
+                                                        <rect key="frame" x="195" y="0.0" width="35" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="KSY-wl-7iy"/>
                                                             <constraint firstAttribute="height" constant="22" id="TF6-1h-DWF"/>
@@ -1416,9 +1416,15 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="viU-GT-vXx">
-                                <rect key="frame" x="355.5" y="634" width="57" height="33"/>
+                                <rect key="frame" x="309" y="971" width="150" height="33"/>
+                                <color key="backgroundColor" red="0.24705882352941178" green="0.77254901960784317" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="OcP-VC-0WS"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Tutorial"/>
+                                <state key="normal" title="Tutorial">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <segue destination="DDd-Zb-wUp" kind="show" id="vLA-9q-qHm"/>
                                 </connections>
@@ -1429,8 +1435,8 @@
                             <constraint firstItem="Ef4-Go-wkt" firstAttribute="centerX" secondItem="rmb-tG-Dbt" secondAttribute="centerX" id="EPm-LG-ufV"/>
                             <constraint firstItem="17Y-KH-9rq" firstAttribute="centerX" secondItem="rmb-tG-Dbt" secondAttribute="centerX" id="X2m-IH-vXa"/>
                             <constraint firstItem="Ef4-Go-wkt" firstAttribute="centerY" secondItem="rmb-tG-Dbt" secondAttribute="centerY" id="XNM-nZ-t6w"/>
+                            <constraint firstItem="rmb-tG-Dbt" firstAttribute="bottom" secondItem="viU-GT-vXx" secondAttribute="bottom" constant="20" id="ZqS-F7-05j"/>
                             <constraint firstItem="viU-GT-vXx" firstAttribute="centerX" secondItem="rmb-tG-Dbt" secondAttribute="centerX" id="bkE-RV-XpA"/>
-                            <constraint firstItem="viU-GT-vXx" firstAttribute="top" secondItem="Ef4-Go-wkt" secondAttribute="bottom" constant="10" id="iGC-l1-D2Z"/>
                             <constraint firstItem="17Y-KH-9rq" firstAttribute="top" secondItem="rmb-tG-Dbt" secondAttribute="top" id="qRK-cD-N8L"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rmb-tG-Dbt"/>
@@ -3887,6 +3893,6 @@
         <segue reference="IDQ-Qb-zNY"/>
         <segue reference="5Cn-Ey-vaa"/>
         <segue reference="bzh-NQ-wv2"/>
-        <segue reference="Scu-Rl-Q2B"/>
+        <segue reference="hXl-r4-fNY"/>
     </inferredMetricsTieBreakers>
 </document>
