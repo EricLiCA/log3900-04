@@ -105,7 +105,6 @@ class EllipseView: BasicShapeView {
                 "Id": self.uuid!,
                 "ImageId": imageID,
                 "ShapeType": self.shapeType!,
-                "Content": self.labelText!,
                 "Index": self.index!,
                 "ShapeInfo": [
                     "Center": [
@@ -114,7 +113,8 @@ class EllipseView: BasicShapeView {
                     ],
                     "Width": self.frame.width,
                     "Height": self.frame.height,
-                    "Color": self.color?.hexString
+                    "Color": self.color?.hexString,
+                    "Content": [self.labelText!]
                 ]
             ]
             

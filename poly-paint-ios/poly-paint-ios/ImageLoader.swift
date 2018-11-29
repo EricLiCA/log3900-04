@@ -40,6 +40,11 @@ public struct ImageLoader {
             path.addLine(to: CGPoint(x: center["X"] as! Double + (shape["ShapeInfo"]?["Width"] as! Double)/2, y: center["Y"] as! Double + (shape["ShapeInfo"]?["Height"] as! Double)/2))
             path.close()
             return path.bounds
+        case "USE" :
+            let center = shape["ShapeInfo"]?["Center"] as! [String: AnyObject]
+            let path = UIBezierPath(ovalIn: CGRect(x: center["X"] as! Double, y: center["Y"] as! Double, width:shape["ShapeInfo"]?["Width"] as! Double, height:shape["ShapeInfo"]?["Height"] as! Double))
+            path.close()
+            return path.bounds
             
         default:
             print("error in loading image frame")
@@ -81,7 +86,7 @@ public struct ImageLoader {
             return TriangleView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String), index: shape["Index"] as! Int, imageID: imageID)
         case "USE" :
             let content = shape["ShapeInfo"]?["Content"] as! [String]
-            return EllipseView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String), useCase: content[0], index: shape["Index"] as! Int, imageID: imageID)
+            return EllipseView(frame: self.buildFrame(shape: shape, type: type!)!, color: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), useCase: content[0], index: shape["Index"] as! Int, imageID: imageID)
             
         default:
             print("error in loading image frame")
