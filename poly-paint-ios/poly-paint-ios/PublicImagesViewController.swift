@@ -10,6 +10,7 @@ import UIKit
 
 class PublicImagesViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate {
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchType: UISegmentedControl!
     @IBOutlet weak var imageCollectionView: UICollectionView!
     var search = ""
     fileprivate let reuseIdentifier = "PublicImageCell"
@@ -20,6 +21,8 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
     var images: [Image]?
     var activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
     var likesUpdated = 0
+    var searching = false
+    var searchByUser = true
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.images?.count ?? 0
@@ -76,16 +79,35 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func searchFilterTapped(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            searchByUser = true
+        case 1:
+            searchByUser = false
+        default:
+            searchByUser = true
+        }
+    }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             images = allImages
             self.imageCollectionView.reloadData()
         } else {
             images = allImages.filter { (image) -> Bool in
-                image.ownerId?.lowercased().contains(searchText.lowercased()) ?? false || image.title?.lowercased().contains(searchText.lowercased()) ?? false
+                
+                searchByUser && image.ownerId?.lowercased().contains(searchText.lowercased()) ?? false || !searchByUser && image.title?.lowercased().contains(searchText.lowercased()) ?? false
             }
             self.imageCollectionView.reloadData()
         }
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searching = true
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searching = false
     }
     
     private func getPublicImageURL() -> String {
@@ -198,9 +220,13 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
                     image.ownerId?.lowercased().contains(self.search.lowercased()) ?? false
                 }
                 self.searchBar.isHidden = true
+                if (!searching) {
+                    self.imageCollectionView.reloadData()
+                }
+            }
+            if (!searching) {
                 self.imageCollectionView.reloadData()
             }
-            self.imageCollectionView.reloadData()
             self.activityIndicator.stopAnimating()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.updateLikes()
