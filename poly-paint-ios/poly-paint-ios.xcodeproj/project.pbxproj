@@ -14,6 +14,16 @@
 		A74A5B0C219DDFE600051D14 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A5B0B219DDFE600051D14 /* ChatModel.swift */; };
 		A778604F21AF559500A5C077 /* TutorialTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778604E21AF559500A5C077 /* TutorialTableViewController.swift */; };
 		A778605321AF5BAF00A5C077 /* TutorialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778605221AF5BAF00A5C077 /* TutorialTableViewCell.swift */; };
+		A778605521AF608B00A5C077 /* create_public_image.gif in Resources */ = {isa = PBXBuildFile; fileRef = A778605421AF608800A5C077 /* create_public_image.gif */; };
+		A778605721AF609000A5C077 /* create_protected_image.gif in Resources */ = {isa = PBXBuildFile; fileRef = A778605621AF608F00A5C077 /* create_protected_image.gif */; };
+		A778605921AF609600A5C077 /* insert_shapes.gif in Resources */ = {isa = PBXBuildFile; fileRef = A778605821AF609500A5C077 /* insert_shapes.gif */; };
+		A778605B21AF60C800A5C077 /* anchor_points.gif in Resources */ = {isa = PBXBuildFile; fileRef = A778605A21AF60C700A5C077 /* anchor_points.gif */; };
+		A778606121AF60D500A5C077 /* change_color.gif in Resources */ = {isa = PBXBuildFile; fileRef = A778605C21AF60CE00A5C077 /* change_color.gif */; };
+		A778606221AF60D500A5C077 /* moving_lines_around.gif in Resources */ = {isa = PBXBuildFile; fileRef = A778605D21AF60D000A5C077 /* moving_lines_around.gif */; };
+		A778606321AF60D500A5C077 /* delete_shape.gif in Resources */ = {isa = PBXBuildFile; fileRef = A778605E21AF60D100A5C077 /* delete_shape.gif */; };
+		A778606421AF60D500A5C077 /* shapes_that_have_anchors.gif in Resources */ = {isa = PBXBuildFile; fileRef = A778605F21AF60D200A5C077 /* shapes_that_have_anchors.gif */; };
+		A778606521AF60D500A5C077 /* duplicate_shape.gif in Resources */ = {isa = PBXBuildFile; fileRef = A778606021AF60D400A5C077 /* duplicate_shape.gif */; };
+		A778606B21AF68BF00A5C077 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A778606A21AF68BF00A5C077 /* TutorialViewController.swift */; };
 		A77C46EF21569CFB0056135A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46EE21569CFB0056135A /* AppDelegate.swift */; };
 		A77C46F121569CFB0056135A /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A77C46F021569CFB0056135A /* ChatViewController.swift */; };
 		A77C46F421569CFB0056135A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A77C46F221569CFB0056135A /* Main.storyboard */; };
@@ -92,6 +102,16 @@
 		A74A5B0B219DDFE600051D14 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		A778604E21AF559500A5C077 /* TutorialTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialTableViewController.swift; sourceTree = "<group>"; };
 		A778605221AF5BAF00A5C077 /* TutorialTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialTableViewCell.swift; sourceTree = "<group>"; };
+		A778605421AF608800A5C077 /* create_public_image.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = create_public_image.gif; path = "../../../Desktop/polypaint-tutorial/create_public_image.gif"; sourceTree = "<group>"; };
+		A778605621AF608F00A5C077 /* create_protected_image.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = create_protected_image.gif; path = "../../../Desktop/polypaint-tutorial/create_protected_image.gif"; sourceTree = "<group>"; };
+		A778605821AF609500A5C077 /* insert_shapes.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = insert_shapes.gif; path = "../../../Desktop/polypaint-tutorial/insert_shapes.gif"; sourceTree = "<group>"; };
+		A778605A21AF60C700A5C077 /* anchor_points.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = anchor_points.gif; path = "../../../Desktop/polypaint-tutorial/anchor_points.gif"; sourceTree = "<group>"; };
+		A778605C21AF60CE00A5C077 /* change_color.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = change_color.gif; path = "../../../Desktop/polypaint-tutorial/change_color.gif"; sourceTree = "<group>"; };
+		A778605D21AF60D000A5C077 /* moving_lines_around.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = moving_lines_around.gif; path = "../../../Desktop/polypaint-tutorial/moving_lines_around.gif"; sourceTree = "<group>"; };
+		A778605E21AF60D100A5C077 /* delete_shape.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = delete_shape.gif; path = "../../../Desktop/polypaint-tutorial/delete_shape.gif"; sourceTree = "<group>"; };
+		A778605F21AF60D200A5C077 /* shapes_that_have_anchors.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = shapes_that_have_anchors.gif; path = "../../../Desktop/polypaint-tutorial/shapes_that_have_anchors.gif"; sourceTree = "<group>"; };
+		A778606021AF60D400A5C077 /* duplicate_shape.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = duplicate_shape.gif; path = "../../../Desktop/polypaint-tutorial/duplicate_shape.gif"; sourceTree = "<group>"; };
+		A778606A21AF68BF00A5C077 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		A77C46EB21569CFB0056135A /* poly-paint-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "poly-paint-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77C46EE21569CFB0056135A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A77C46F021569CFB0056135A /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -230,6 +250,15 @@
 			children = (
 				CCE6BC4921925CFA00C6DF31 /* colorPalette.plist */,
 				A77C46FD21569CFB0056135A /* Info.plist */,
+				A778605421AF608800A5C077 /* create_public_image.gif */,
+				A778605621AF608F00A5C077 /* create_protected_image.gif */,
+				A778605821AF609500A5C077 /* insert_shapes.gif */,
+				A778605A21AF60C700A5C077 /* anchor_points.gif */,
+				A778605C21AF60CE00A5C077 /* change_color.gif */,
+				A778605E21AF60D100A5C077 /* delete_shape.gif */,
+				A778606021AF60D400A5C077 /* duplicate_shape.gif */,
+				A778605D21AF60D000A5C077 /* moving_lines_around.gif */,
+				A778605F21AF60D200A5C077 /* shapes_that_have_anchors.gif */,
 				CF4084DE216D11FA00DA9B7F /* AccountSettingsViewController.swift */,
 				A77C46EE21569CFB0056135A /* AppDelegate.swift */,
 				CF3DD51E2197A34600A14BAF /* CanevasViewController.swift */,
@@ -277,6 +306,7 @@
 				A7E54300219F447F00261E9B /* S3 */,
 				CF21E3282188C2CE00F21F57 /* Shapes */,
 				A778605221AF5BAF00A5C077 /* TutorialTableViewCell.swift */,
+				A778606A21AF68BF00A5C077 /* TutorialViewController.swift */,
 			);
 			path = "poly-paint-ios";
 			sourceTree = "<group>";
@@ -439,9 +469,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCE6BC4F2192696A00C6DF31 /* colorPalette.plist in Resources */,
+				A778605521AF608B00A5C077 /* create_public_image.gif in Resources */,
 				A77C46FC21569CFB0056135A /* LaunchScreen.storyboard in Resources */,
+				A778606221AF60D500A5C077 /* moving_lines_around.gif in Resources */,
+				A778605721AF609000A5C077 /* create_protected_image.gif in Resources */,
+				A778605B21AF60C800A5C077 /* anchor_points.gif in Resources */,
 				A77C46F921569CFB0056135A /* Assets.xcassets in Resources */,
+				A778606121AF60D500A5C077 /* change_color.gif in Resources */,
+				A778606421AF60D500A5C077 /* shapes_that_have_anchors.gif in Resources */,
 				A77C46F421569CFB0056135A /* Main.storyboard in Resources */,
+				A778606521AF60D500A5C077 /* duplicate_shape.gif in Resources */,
+				A778605921AF609600A5C077 /* insert_shapes.gif in Resources */,
+				A778606321AF60D500A5C077 /* delete_shape.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -523,6 +562,7 @@
 				A74A5B0C219DDFE600051D14 /* ChatModel.swift in Sources */,
 				CCA46DB1217815D500DC32EC /* PublicImageCell.swift in Sources */,
 				CF0099DD216571B800E2D27E /* MainMenuViewController.swift in Sources */,
+				A778606B21AF68BF00A5C077 /* TutorialViewController.swift in Sources */,
 				CCA060F321A24C2300B558CA /* DrawingSocketManager.swift in Sources */,
 				A73BEBAD21AC53370001C692 /* PhotoCommentTableViewCell.swift in Sources */,
 				CFEF506621784173001C93AB /* ProfilePictureViewController.swift in Sources */,
@@ -741,15 +781,18 @@
 			baseConfigurationReference = C83DCF8B210537D23F9A45E1 /* Pods-poly-paint-ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BD9BVH6D7D;
 				INFOPLIST_FILE = "poly-paint-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "polymtl.polyacme.poly-paint-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -760,15 +803,18 @@
 			baseConfigurationReference = 142B8D5CF9AB57002345952A /* Pods-poly-paint-ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BD9BVH6D7D;
 				INFOPLIST_FILE = "poly-paint-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "polymtl.polyacme.poly-paint-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

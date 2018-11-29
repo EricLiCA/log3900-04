@@ -32,9 +32,9 @@ class TutorialTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TutorialCell", for: indexPath) as! TutorialTableViewCell
 
         // Configure the cell...
-        cell.tutorialDescription.text = tutorialsTitles[indexPath.item]
-        //cell.tutorialImage.image = UIImage.gif(name: tutorialGifs[indexPath.item])
-
+    cell.tutorialDescription.setTitle(tutorialsTitles[indexPath.item], for: .normal)
+        cell.tutorialDescription.tag = indexPath.item
+        
         return cell
     }
 
@@ -73,14 +73,17 @@ class TutorialTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
+        let destinationViewController = segue.destination as! TutorialViewController
+        let button = sender as! UIButton
+        let index = button.tag
         // Pass the selected object to the new view controller.
+        let gifURL = tutorialGifs[index]
+        destinationViewController.imageToDisplay = UIImage.gif(name: gifURL)
     }
-    */
 
 }

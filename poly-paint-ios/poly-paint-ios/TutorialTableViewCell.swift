@@ -9,8 +9,7 @@
 import UIKit
 
 class TutorialTableViewCell: UITableViewCell {
-    @IBOutlet weak var tutorialImage: UIImageView!
-    @IBOutlet weak var tutorialDescription: UILabel!
+    @IBOutlet weak var tutorialDescription: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
