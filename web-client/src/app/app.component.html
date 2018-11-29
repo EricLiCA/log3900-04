@@ -1,0 +1,57 @@
+<mdb-navbar SideClass="navbar navbar-expand-sm navbar-dark indigo fixed-top scrolling-navbar">
+    <mdb-navbar-brand class="Title">PolyPaintPro</mdb-navbar-brand>
+
+    <links>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" [routerLinkActive]="['active']">
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/gallery']">Gallery</a>
+            </li>
+            <li class="nav-item" [routerLinkActive]="['active']">
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/users']">Users</a>
+            </li>
+            <li *ngIf="authenticated" class="nav-item" [routerLinkActive]="['active']">
+                <a class="nav-link waves-light" mdbWavesEffect [routerLink]="['/admin']">Administration</a>
+            </li>
+        </ul>
+        <button *ngIf="!authenticated" class="login_button" data-toggle="modal" data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>Login</button>
+        <img *ngIf="authenticated" width="40" height="40" src={{avatar}} class="rounded-circle">
+        <button *ngIf="authenticated" class="logout_button" (click)="logout()" [routerLink]="['/gallery']" mdbWavesEffect>Logout</button>
+
+    </links>
+</mdb-navbar>
+
+
+
+<div class="container" style="margin-top: 5rem;">
+    <router-outlet></router-outlet>
+</div>
+
+<div mdbModal #frame="mdbModal" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <i class="fa fa-envelope prefix grey-text"></i>
+          <input #username type="email" id="defaultForm-email" [formControl]="loginFormModalUsername" class="form-control validate" mdbInputDirective>
+          <label data-error="wrong" data-success="right" for="defaultForm-email">Your username</label>
+        </div>
+        <div class="md-form mb-4">
+          <i class="fa fa-lock prefix grey-text"></i>
+          <input #password type="password" id="defaultForm-pass" [formControl]="loginFormModalPassword" class="form-control validate" mdbInputDirective>
+          <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button mdbBtn color="default" class="waves-light" (click)="authenticate(username.value, password.value)" (click)="frame.hide()" mdbWavesEffect>Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

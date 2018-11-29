@@ -1,99 +1,108 @@
-﻿-- Exported from QuickDBD: https://www.quickdatatabasediagrams.com/
--- Link to schema: https://app.quickdatabasediagrams.com/#/schema/kdJL4nUy4U2Uu1hCryLe1w
--- NOTE! If you have used non-SQL datatypes in your design, you will have to change these here.
+﻿CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- Modify this code to update the DB schema diagram.
--- To reset the sample schema, replace everything with
--- two dots ('..' - without quotes).
+create type imageprotection as enum ('public', 'protected', 'private')
+;
 
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+create type userpermissionlevel as enum ('admin', 'user', 'management', 'image', 'permissions')
+;
 
-CREATE TYPE ImageProtection AS ENUM ('public', 'protected', 'private');
+create table if not exists users
+(
+	"Id" uuid default uuid_generate_v4() not null
+		constraint "pk_User"
+			primary key,
+	"Username" varchar(32) not null
+		constraint "uc_User_Username"
+			unique,
+	"Password" varchar(200) not null,
+	"UserLevel" userpermissionlevel default 'user'::userpermissionlevel not null,
+    "ProfileImage" VARCHAR
+)
+;
 
-CREATE TABLE "Image" (
-    "Id" UUID   NOT NULL DEFAULT uuid_generate_v1(),
-    "OwnerId" UUID   NOT NULL,
-    "Title" VARCHAR(128) NOT NULL,
-    "ProtectionType" ImageProtection NOT NULL DEFAULT 'private',
-    "Password" varchar(32),
-    "ThumbnailUrl" VARCHAR(128),
-    "FullImageUrl" VARCHAR(128),
-    CONSTRAINT "pk_Image" PRIMARY KEY (
-        "Id"
-     )
-);
+create table if not exists images
+(
+	"Id" uuid default uuid_generate_v1() not null
+		constraint "pk_Image"
+			primary key,
+	"OwnerId" uuid not null
+		constraint "fk_Image_OwnerId"
+			references users,
+	"Title" varchar(128) not null,
+	"ProtectionLevel" imageprotection default 'private'::imageprotection not null,
+	"Password" varchar(32),
+	"ThumbnailUrl" varchar(128),
+	"FullImageUrl" varchar(128)
+)
+;
 
-CREATE TABLE "PendingFriendRequest" (
-    "RequesterId" UUID   NOT NULL,
-    "ReceiverId" UUID   NOT NULL,
-    "Notified" BOOLEAN   NOT NULL DEFAULT FALSE,
-    CONSTRAINT "pk_PendingFriendRequest" PRIMARY KEY (
-        "RequesterId","ReceiverId"
-     )
-);
+create table if not exists pending_friend_requests
+(
+	"RequesterId" uuid not null
+		constraint "fk_PendingFriendRequest_RequesterId"
+			references users,
+	"ReceiverId" uuid not null
+		constraint "fk_PendingFriendRequest_ReceiverId"
+			references users,
+	"Notified" boolean default false not null,
+	constraint "pk_PendingFriendRequest"
+		primary key ("RequesterId", "ReceiverId")
+)
+;
 
-CREATE TABLE "Friendship" (
-    "UserId" UUID   NOT NULL,
-    "FriendId" UUID   NOT NULL,
-    CONSTRAINT "pk_Friendship" PRIMARY KEY (
-        "UserId","FriendId"
-     )
-);
+create table if not exists friendships
+(
+	"UserId" uuid not null
+		constraint "fk_Friendship_UserId"
+			references users,
+	"FriendId" uuid not null
+		constraint "fk_Friendship_FriendId"
+			references users,
+	constraint "pk_Friendship"
+		primary key ("UserId", "FriendId")
+)
+;
 
-CREATE TABLE "User" (
-    "Id" UUID   NOT NULL DEFAULT uuid_generate_v1(),
-    "Username" varchar(32)   NOT NULL,
-    "Password" varchar(200)   NOT NULL,
-    CONSTRAINT "pk_User" PRIMARY KEY (
-        "Id"
-     ),
-    CONSTRAINT "uc_User_Username" UNIQUE (
-        "Username"
-    )
-);
+create table if not exists image_likes
+(
+	"ImageId" uuid not null
+		constraint "fk_ImageLike_ImageId"
+			references images,
+	"UserId" uuid not null
+		constraint "fk_ImageLike_UserId"
+			references users,
+	constraint "pk_ImageLike"
+		primary key ("ImageId", "UserId")
+)
+;
 
-CREATE TABLE "ImageLike" (
-    "ImageId" UUID   NOT NULL,
-    "UserId" UUID   NOT NULL,
-    CONSTRAINT "pk_ImageLike" PRIMARY KEY (
-        "ImageId","UserId"
-     )
-);
+create table if not exists image_comments
+(
+	"ImageId" uuid not null
+		constraint "fk_ImageComment_ImageId"
+			references images,
+	"UserId" uuid not null
+		constraint "fk_ImageComment_UserId"
+			references users,
+	"Timestamp" timestamp default now() not null,
+	"Comment" varchar(512) not null,
+	constraint "pk_ImageComment"
+		primary key ("ImageId", "UserId", "Timestamp")
+)
+;
 
-CREATE TABLE "ImageComment" (
-    "ImageId" UUID   NOT NULL,
-    "UserId" UUID   NOT NULL,
-    "Timestamp" Timestamp   NOT NULL DEFAULT NOW(),
-    "Comment" VARCHAR(512)   NOT NULL,
-    CONSTRAINT "pk_ImageComment" PRIMARY KEY (
-        "ImageId","UserId","Timestamp"
-     )
-);
+create table if not exists sessions
+(
+	userid uuid not null
+		constraint sessions_pkey
+			primary key
+		constraint sessions_users_id_fk
+			references users
+				on delete cascade,
+	token uuid default uuid_generate_v4() not null
+)
+;
 
-ALTER TABLE "Image" ADD CONSTRAINT "fk_Image_OwnerId" FOREIGN KEY("OwnerId")
-REFERENCES "User" ("Id");
-
-ALTER TABLE "PendingFriendRequest" ADD CONSTRAINT "fk_PendingFriendRequest_RequesterId" FOREIGN KEY("RequesterId")
-REFERENCES "User" ("Id");
-
-ALTER TABLE "PendingFriendRequest" ADD CONSTRAINT "fk_PendingFriendRequest_ReceiverId" FOREIGN KEY("ReceiverId")
-REFERENCES "User" ("Id");
-
-ALTER TABLE "Friendship" ADD CONSTRAINT "fk_Friendship_UserId" FOREIGN KEY("UserId")
-REFERENCES "User" ("Id");
-
-ALTER TABLE "Friendship" ADD CONSTRAINT "fk_Friendship_FriendId" FOREIGN KEY("FriendId")
-REFERENCES "User" ("Id");
-
-ALTER TABLE "ImageLike" ADD CONSTRAINT "fk_ImageLike_ImageId" FOREIGN KEY("ImageId")
-REFERENCES "Image" ("Id");
-
-ALTER TABLE "ImageLike" ADD CONSTRAINT "fk_ImageLike_UserId" FOREIGN KEY("UserId")
-REFERENCES "User" ("Id");
-
-ALTER TABLE "ImageComment" ADD CONSTRAINT "fk_ImageComment_ImageId" FOREIGN KEY("ImageId")
-REFERENCES "Image" ("Id");
-
-ALTER TABLE "ImageComment" ADD CONSTRAINT "fk_ImageComment_UserId" FOREIGN KEY("UserId")
-REFERENCES "User" ("Id");
-
+create unique index if not exists sessions_userid_uindex
+	on sessions (userid)
+;

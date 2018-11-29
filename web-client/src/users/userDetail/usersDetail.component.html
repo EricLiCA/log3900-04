@@ -1,0 +1,53 @@
+<p>Gallery of {{currentUser.username}}</p>
+
+<div class="md-form my-0">
+    <input [(ngModel)]="searchText" class="form-control" type="text" placeholder="Search" aria-label="Search">
+</div>
+
+<div class="d-flex flex-wrap">
+    <li class="image" *ngFor="let image of userImagesWithLikes | filter : searchText">
+        <!--Card-->
+    <mdb-card>
+      <button *ngIf="admin || imagePermissions" type="button" class="close" aria-label="Close" (click)="removeImage(image)">
+        <span aria-hidden="true">&times;</span>
+      </button>
+        <!--Card image-->
+        <div class="view overlay waves-light" mdbWavesEffect (click)="this.openDialog(image)">
+          <mdb-card-img src={{image.fullImageUrl}}></mdb-card-img>
+          <a>
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+        <!--/.Card image-->
+      
+        <!--Card content-->
+        <mdb-card-body>
+      
+          <!--Title-->
+          <mdb-card-title>
+            <h4>{{image.title}}</h4>
+          </mdb-card-title>
+          <hr>
+          <!--Text-->
+          <h4>Author: {{currentUser.username}}</h4>
+          <h5>Protection level: {{image.protectionLevel}}</h5>
+        </mdb-card-body>
+        <!--/.Card content-->
+
+        <!-- Card footer -->
+        <mdb-card-footer class="mdb-color lighten-3 text-center">
+          <ul class="list-unstyled list-inline font-small mt-3">
+            <li class="list-inline-item pr-2 white-text">
+              <i class="fa fa-clock-o pr-1"></i>{{image.date}}</li>
+            <li class="list-inline-item pr-2">
+              <a href="#" class="white-text">
+                <i class="fa fa-thumbs-up pr-1"> {{image.imageLikes}} </i></a>
+            </li>
+          </ul>
+        </mdb-card-footer>
+        <!-- Card footer -->
+      </mdb-card>
+      <!--/.Card-->
+    </li>
+</div>
+

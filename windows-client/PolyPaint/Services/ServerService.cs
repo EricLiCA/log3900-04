@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Quobject.SocketIoClientDotNet.Client;
+﻿using PolyPaint.Modeles;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +24,19 @@ namespace PolyPaint.Services
             }
         }
 
-        private String ip { get; set; }
-        private UInt16 port { get; set; }
-        private String email { get; set; }
-        private String password { get; set; }
+        public RestClient server { get; set; }
+        public Socket Socket { get; set; }
+        public User user { get; set; }
+
+        public bool isOffline() => user == null;
+
+        public S3Communication S3Communication { get; set; }
+        public string currentImageId { get; set; }
+
+        internal void disconnect()
+        {
+            this.Socket?.Disconnect();
+            user = null;
+        }
     }
 }

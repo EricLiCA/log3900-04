@@ -2,4 +2,8 @@ use_frameworks!
 
 target 'poly-paint-ios' do
   pod 'Socket.IO-Client-Swift', '~> 13.3.0'
+  pod 'RxSwift',    '~> 4.0'
+  pod 'RxCocoa',    '~> 4.0'
+  pod 'AWSS3'
+  pod 'SwiftGifOrigin', '~> 1.6.1'
 end
