@@ -167,7 +167,7 @@ class PublicImagesViewController: UIViewController, UICollectionViewDataSource, 
                 
                 do {
                     let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-                    
+                    print(json)
                     for dictionary in json as! [[String: AnyObject]] {
                         self.allImages[i].likes.insert(dictionary["userId"] as! String)
                     }

@@ -52,7 +52,7 @@ class PhotoCommentViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     private func getImageCommentCreationUrl() -> String {
-        return "http://localhost:3000/v2/imageComments/"
+        return SERVER.URL.rawValue + "v2/imageComments/"
     }
     
     private func addComment() {
@@ -90,7 +90,7 @@ class PhotoCommentViewController: UIViewController, UITableViewDelegate, UITable
     
     private func getImageCommentURL() -> String {
         let imageId = self.image!.id!
-        return "http://localhost:3000/v2/imageComments/\(imageId)"
+        return SERVER.URL.rawValue + "v2/imageComments/\(imageId)"
     }
     
     func loadComments() {
