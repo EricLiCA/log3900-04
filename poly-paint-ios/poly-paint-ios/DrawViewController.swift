@@ -726,6 +726,7 @@ class DrawViewController: UIViewController {
         self.shapes[stickFigure.uuid!] = stickFigure
         self.drawingPlace.addSubview(stickFigure)
         self.undoRedoManager.alertInsertion(shape: stickFigure)
+        self.drawingSocketManager.addShape(shape: stickFigure, imageID: self.image!.id!)
     }
     
     
