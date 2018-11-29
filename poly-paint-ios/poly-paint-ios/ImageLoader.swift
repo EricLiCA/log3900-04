@@ -79,6 +79,9 @@ public struct ImageLoader {
             return EllipseView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String), useCase: "", index: shape["Index"] as! Int, imageID: imageID)
         case "TRIANGLE" :
             return TriangleView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String), index: shape["Index"] as! Int, imageID: imageID)
+        case "USE" :
+            let content = shape["ShapeInfo"]?["Content"] as! [String]
+            return EllipseView(frame: self.buildFrame(shape: shape, type: type!)!, color: UIColor(hexString: shape["ShapeInfo"]?["Color"] as! String), useCase: content[0], index: shape["Index"] as! Int, imageID: imageID)
             
         default:
             print("error in loading image frame")

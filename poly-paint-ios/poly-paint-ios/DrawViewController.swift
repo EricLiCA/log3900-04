@@ -937,7 +937,7 @@ class DrawViewController: UIViewController {
             for i in 0 ..< dataArray.count {
                 let dataString = dataArray[i] as! [String: AnyObject]
                 
-                if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
+                if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE" || dataString["ShapeType"] as! String == "USE" ) {
                     let view = self.imageLoader.parseShapes(shape: dataString,  imageID: (self.image?.id)!)
                     view?.uuid = dataString["Id"] as! String
                     self.shapes[view!.uuid!] = view
@@ -978,7 +978,7 @@ class DrawViewController: UIViewController {
         self.drawingSocketManager.socketIOClient.on("addStroke") { (data, ack) in
             let dataString = data[0] as! [String: AnyObject]
             
-            if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
+            if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE" || dataString["ShapeType"] as! String == "USE") {
                 let view = self.imageLoader.parseShapes(shape: dataString,  imageID: (self.image?.id)!)
                 view?.uuid = dataString["Id"] as! String
                 self.shapes[view!.uuid!] = view
@@ -1027,7 +1027,7 @@ class DrawViewController: UIViewController {
         self.drawingSocketManager.socketIOClient.on("editStroke") { (data, ack) in
             let dataString = data[0] as! [String: AnyObject]
             print("got it")
-            if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE") {
+            if (dataString["ShapeType"] as! String == "RECTANGLE" || dataString["ShapeType"] as! String == "ELLIPSE"  || dataString["ShapeType"] as! String == "TRIANGLE" || dataString["ShapeType"] as! String == "USE") {
                 let uuid = dataString["Id"] as! String
                 let shape = self.shapes[uuid]
                 shape?.removeFromSuperview()
