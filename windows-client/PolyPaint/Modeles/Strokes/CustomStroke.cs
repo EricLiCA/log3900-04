@@ -120,7 +120,8 @@ namespace PolyPaint.Modeles
                     ((Handleable)strokes.get(this.Id.ToString())).deleteDragHandles();
 
                 index = strokes.IndexOf(strokes.get(this.Id.ToString()));
-                strokes.Remove(strokes.get(this.Id.ToString()));
+                if (strokes.has(this.Id.ToString()))
+                    strokes.Remove(strokes.get(this.Id.ToString()));
             }
             strokes.Insert(index, this.Clone());
         }

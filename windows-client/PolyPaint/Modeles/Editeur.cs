@@ -542,7 +542,10 @@ namespace PolyPaint.Modeles
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
+                    this.EditingStroke = null;
                     this.traits.Clear();
+                    this.history.Clear();
+                    this.undoStack.Clear();
                 });
             }));
 
