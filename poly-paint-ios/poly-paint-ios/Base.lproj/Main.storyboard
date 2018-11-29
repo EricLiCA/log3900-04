@@ -73,6 +73,35 @@
             </objects>
             <point key="canvasLocation" x="56" y="904"/>
         </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="PkP-yk-VTg">
+            <objects>
+                <viewController id="vhl-ex-c2M" customClass="TutorialViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lEp-Nx-YzV">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlankProfile" translatesAutoresizingMaskIntoConstraints="NO" id="awR-DU-XwS">
+                                <rect key="frame" x="20" y="70" width="728" height="934"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="EBD-fp-dnI" firstAttribute="bottom" secondItem="awR-DU-XwS" secondAttribute="bottom" constant="20" id="4Wq-zY-2S0"/>
+                            <constraint firstItem="EBD-fp-dnI" firstAttribute="trailing" secondItem="awR-DU-XwS" secondAttribute="trailing" constant="20" id="ZXa-49-36y"/>
+                            <constraint firstItem="awR-DU-XwS" firstAttribute="leading" secondItem="EBD-fp-dnI" secondAttribute="leading" constant="20" id="dXD-1k-H8A"/>
+                            <constraint firstItem="awR-DU-XwS" firstAttribute="top" secondItem="EBD-fp-dnI" secondAttribute="top" id="wkl-kJ-gEQ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EBD-fp-dnI"/>
+                    </view>
+                    <connections>
+                        <outlet property="tutorialImage" destination="awR-DU-XwS" id="3hi-Ls-VwM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j9Y-wq-yoi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-785.9375" y="779.296875"/>
+        </scene>
         <!--Create New Image View Controller-->
         <scene sceneID="ceB-3f-zga">
             <objects>
@@ -223,7 +252,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </objects>
-            <point key="canvasLocation" x="-633.59375" y="903.51562499999989"/>
+            <point key="canvasLocation" x="-498" y="1147"/>
         </scene>
         <!--Chat-->
         <scene sceneID="tne-QT-ifu">
@@ -817,7 +846,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZVN-w7-E5K">
-                                                        <rect key="frame" x="147" y="0.0" width="34" height="22"/>
+                                                        <rect key="frame" x="147" y="0.0" width="35" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="1V4-UI-Vru"/>
                                                             <constraint firstAttribute="height" constant="22" id="LCp-wG-6xh"/>
@@ -828,7 +857,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrb-UT-PUr">
-                                                        <rect key="frame" x="195" y="0.0" width="35" height="22"/>
+                                                        <rect key="frame" x="196" y="0.0" width="34" height="22"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="35" id="KSY-wl-7iy"/>
                                                             <constraint firstAttribute="height" constant="22" id="TF6-1h-DWF"/>
@@ -1131,7 +1160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Cd-f8-ZiB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2925.78125" y="-1679.296875"/>
+            <point key="canvasLocation" x="2603" y="-2095"/>
         </scene>
         <!--Login Scene-->
         <scene sceneID="maM-Fp-ADF">
@@ -1249,6 +1278,52 @@
             </objects>
             <point key="canvasLocation" x="-1547" y="-1102"/>
         </scene>
+        <!--Tutorial Table View Controller-->
+        <scene sceneID="MOb-gi-8d8">
+            <objects>
+                <tableViewController id="DDd-Zb-wUp" customClass="TutorialTableViewController" customModule="poly_paint_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="J4d-GT-VfY">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TutorialCell" rowHeight="100" id="hvu-vL-Ef0" customClass="TutorialTableViewCell" customModule="poly_paint_ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="768" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hvu-vL-Ef0" id="1cw-VH-Tzz">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="99.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ppk-Em-jgx">
+                                            <rect key="frame" x="20" y="32" width="728" height="36"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <state key="normal" title="Description"/>
+                                            <connections>
+                                                <segue destination="vhl-ex-c2M" kind="show" id="Wr1-kM-kUZ"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Ppk-Em-jgx" firstAttribute="centerY" secondItem="1cw-VH-Tzz" secondAttribute="centerY" id="A6O-ky-irF"/>
+                                        <constraint firstItem="Ppk-Em-jgx" firstAttribute="leading" secondItem="1cw-VH-Tzz" secondAttribute="leading" constant="20" id="vqV-or-vZP"/>
+                                        <constraint firstAttribute="trailing" secondItem="Ppk-Em-jgx" secondAttribute="trailing" constant="20" id="zq8-sW-stz"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="tutorialDescription" destination="Ppk-Em-jgx" id="G6m-DD-ih7"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="DDd-Zb-wUp" id="8xJ-ob-hr7"/>
+                            <outlet property="delegate" destination="DDd-Zb-wUp" id="x5N-9b-mXh"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s4p-dK-RuI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-234.375" y="104.8828125"/>
+        </scene>
         <!--Home-->
         <scene sceneID="iZw-0f-YJ5">
             <objects>
@@ -1340,12 +1415,22 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="viU-GT-vXx">
+                                <rect key="frame" x="355.5" y="634" width="57" height="33"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Tutorial"/>
+                                <connections>
+                                    <segue destination="DDd-Zb-wUp" kind="show" id="vLA-9q-qHm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Ef4-Go-wkt" firstAttribute="centerX" secondItem="rmb-tG-Dbt" secondAttribute="centerX" id="EPm-LG-ufV"/>
                             <constraint firstItem="17Y-KH-9rq" firstAttribute="centerX" secondItem="rmb-tG-Dbt" secondAttribute="centerX" id="X2m-IH-vXa"/>
                             <constraint firstItem="Ef4-Go-wkt" firstAttribute="centerY" secondItem="rmb-tG-Dbt" secondAttribute="centerY" id="XNM-nZ-t6w"/>
+                            <constraint firstItem="viU-GT-vXx" firstAttribute="centerX" secondItem="rmb-tG-Dbt" secondAttribute="centerX" id="bkE-RV-XpA"/>
+                            <constraint firstItem="viU-GT-vXx" firstAttribute="top" secondItem="Ef4-Go-wkt" secondAttribute="bottom" constant="10" id="iGC-l1-D2Z"/>
                             <constraint firstItem="17Y-KH-9rq" firstAttribute="top" secondItem="rmb-tG-Dbt" secondAttribute="top" id="qRK-cD-N8L"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rmb-tG-Dbt"/>
@@ -1633,7 +1718,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3de-HZ-5PF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2284" y="-1498"/>
+            <point key="canvasLocation" x="2302" y="-1489"/>
         </scene>
         <!--Title-->
         <scene sceneID="8qG-aZ-cHP">
@@ -1644,7 +1729,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rkt-xv-5Io">
-                                <rect key="frame" x="0.0" y="130" width="768" height="786"/>
+                                <rect key="frame" x="0.0" y="80" width="768" height="836"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QHs-Uy-sF4">
@@ -1705,7 +1790,7 @@
                                 </constraints>
                             </view>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Modify image title" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ayc-Wn-pU3">
-                                <rect key="frame" x="20" y="92" width="728" height="30"/>
+                                <rect key="frame" x="20" y="42" width="728" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -1745,7 +1830,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IDe-SH-Yb4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3154.6875" y="-1102.1484375"/>
+            <point key="canvasLocation" x="3098" y="-1155"/>
         </scene>
         <!--Photo Comment View Controller-->
         <scene sceneID="Pdj-Ks-3td">
@@ -1867,7 +1952,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R7C-w8-umq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3251" y="425"/>
+            <point key="canvasLocation" x="3155" y="428"/>
         </scene>
         <!--Title-->
         <scene sceneID="K5n-fK-FCd">
@@ -3765,7 +3850,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCU-Jk-ovq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2283.59375" y="-849.0234375"/>
+            <point key="canvasLocation" x="2283" y="-834"/>
         </scene>
     </scenes>
     <resources>
@@ -3800,8 +3885,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="G8n-Og-bjM"/>
         <segue reference="IDQ-Qb-zNY"/>
-        <segue reference="noE-tU-kW1"/>
-        <segue reference="4Zh-W7-tx9"/>
+        <segue reference="5Cn-Ey-vaa"/>
+        <segue reference="bzh-NQ-wv2"/>
         <segue reference="Scu-Rl-Q2B"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -5,4 +5,5 @@ target 'poly-paint-ios' do
   pod 'RxSwift',    '~> 4.0'
   pod 'RxCocoa',    '~> 4.0'
   pod 'AWSS3'
+  pod 'SwiftGifOrigin', '~> 1.6.1'
 end
